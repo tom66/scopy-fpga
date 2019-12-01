@@ -32,7 +32,7 @@ design_1 (
     .FCLK_CLK0(clk50)
 );
 
-reg [18:0] counter;
+reg [23:0] counter;
 reg led = 1;
 
 assign led_PL0 = led;

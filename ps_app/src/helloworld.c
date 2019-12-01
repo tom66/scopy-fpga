@@ -46,16 +46,120 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
+
 #include "platform.h"
 #include "xil_printf.h"
 
+uint32_t *mem_addr;
+uint32_t *base;
+
+void debug_printf(char *fmt, ...)
+{
+	char buffer[1024];
+
+	va_list args;
+	va_start(args, fmt);
+
+	vsnprintf(buffer, 1024, fmt, args);
+	print(buffer);
+
+	va_end(args);
+}
+
+void arb_delay(uint32_t n)
+{
+	while(n--) {
+		__asm__("nop");
+	}
+}
 
 int main()
 {
+	uint32_t data;
+	uint32_t i;
+	uint32_t loops = 0;
+	int32_t k;
+
     init_platform();
 
     while(1) {
-    	print("Hello World\n\r");
+		debug_printf("\r\n\r\nSequential Write with Random Data...\r\n\r\n");
+
+		base = 0x00100000;
+		mem_addr = base;
+		srand(loops);
+
+		for(i = 0; i < ((1024 * 1024 * 63)); i++) {
+			data = rand() * rand();
+			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
+				debug_printf("Write: 0x%08x to 0x%08x (%3.3f KiB)\r\n", data, mem_addr, (mem_addr - base) / 256.0f);
+			}
+			*mem_addr = data;
+			mem_addr++;
+		}
+
+		mem_addr = base;
+		srand(loops);
+
+		debug_printf("\r\n\r\nSequential Read of Same Random Data...\r\n\r\n");
+
+		for(i = 0; i < ((1024 * 1024 * 63)); i++) {
+			data = rand() * rand();
+			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
+				debug_printf("Read: 0x%08x from 0x%08x expect 0x%08x (%3.3f KiB) (%d loop passes)\r\n", *mem_addr, mem_addr, data, (mem_addr - base) / 256.0f, loops);
+			}
+
+			if(((*mem_addr) != data)) {
+				debug_printf("FAIL: 0x%08x from 0x%08x expect 0x%08x\r\n", *mem_addr, mem_addr, data);
+				while(1) ;
+			}
+			mem_addr++;
+		}
+
+		debug_printf("\r\n\r\nRandom Write with Random Data...\r\n\r\n");
+
+		base = 0x00100000;
+		srand(loops);
+
+		for(i = 0; i < ((1024 * 1024 * 255)); i++) {
+			mem_addr = base + (rand() % ((1024 * 1024 * 63)));
+			k = (uint32_t)mem_addr;
+			data = (k * k) + 0x12345679;
+
+			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
+				debug_printf("Write: 0x%08x to 0x%08x\r\n", data, mem_addr);
+			}
+			*mem_addr = data;
+			mem_addr++;
+		}
+
+		debug_printf("\r\n\r\nRandom Read of Same Data...\r\n\r\n");
+
+		base = 0x00100000;
+		srand(loops);
+
+		for(i = 0; i < ((1024 * 1024 * 255)); i++) {
+			mem_addr = base + (rand() % ((1024 * 1024 * 63)));
+			k = (uint32_t)mem_addr;
+			data = (k * k) + 0x12345679;
+
+			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
+				debug_printf("Read: 0x%08x from 0x%08x expect 0x%08x (%d loop passes)\r\n", *mem_addr, mem_addr, data, loops);
+			}
+
+			if(((*mem_addr) != data)) {
+				debug_printf("FAIL: 0x%08x from 0x%08x expect 0x%08x\r\n", *mem_addr, mem_addr, data);
+				while(1) ;
+			}
+			*mem_addr = data;
+			mem_addr++;
+		}
+		loops++;
+    }
+
+    while(1) {
+    	arb_delay(1000000);
     }
 
     cleanup_platform();

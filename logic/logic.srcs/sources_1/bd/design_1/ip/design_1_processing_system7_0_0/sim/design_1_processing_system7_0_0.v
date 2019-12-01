@@ -59,6 +59,23 @@ module design_1_processing_system7_0_0 (
 FCLK_CLK0, 
 FCLK_RESET0_N, 
 MIO, 
+DDR_CAS_n, 
+DDR_CKE, 
+DDR_Clk_n, 
+DDR_Clk, 
+DDR_CS_n, 
+DDR_DRSTB, 
+DDR_ODT, 
+DDR_RAS_n, 
+DDR_WEB, 
+DDR_BankAddr, 
+DDR_Addr, 
+DDR_VRN, 
+DDR_VRP, 
+DDR_DM, 
+DDR_DQ, 
+DDR_DQS_n, 
+DDR_DQS, 
 PS_SRSTB, 
 PS_CLK, 
 PS_PORB 
@@ -66,6 +83,23 @@ PS_PORB
 output FCLK_CLK0;
 output FCLK_RESET0_N;
 input [53 : 0] MIO;
+input DDR_CAS_n;
+input DDR_CKE;
+input DDR_Clk_n;
+input DDR_Clk;
+input DDR_CS_n;
+input DDR_DRSTB;
+input DDR_ODT;
+input DDR_RAS_n;
+input DDR_WEB;
+input [2 : 0] DDR_BankAddr;
+input [14 : 0] DDR_Addr;
+input DDR_VRN;
+input DDR_VRP;
+input [3 : 0] DDR_DM;
+input [31 : 0] DDR_DQ;
+input [3 : 0] DDR_DQS_n;
+input [3 : 0] DDR_DQS;
 input PS_SRSTB;
 input PS_CLK;
 input PS_PORB;

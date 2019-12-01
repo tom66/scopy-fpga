@@ -1,8 +1,40 @@
-21:05:33 **** Incremental Build of configuration Debug for project ps_app ****
+22:18:18 **** Incremental Build of configuration Debug for project ps_app ****
 make pre-build main-build 
 a9-linaro-pre-build-step
 ' '
-make: Nothing to be done for 'main-build'.
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:89:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x00100000;
+        ^
+../src/helloworld.c:91:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:94:11: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    data = rand() * rand();
+           ^~~~
+../src/helloworld.c:122:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x00100000;
+        ^
+../src/helloworld.c:139:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x00100000;
+        ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65500	   2580	   9008	  77088	  12d20	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
 
-21:05:34 Build Finished (took 318ms)
+22:18:19 Build Finished (took 982ms)
 
