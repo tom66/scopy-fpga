@@ -83,6 +83,9 @@ int main()
 
     init_platform();
 
+    while(1) ;
+
+#if 0
     while(1) {
 		debug_printf("\r\n\r\nSequential Write with Random Data...\r\n\r\n");
 
@@ -161,6 +164,7 @@ int main()
     while(1) {
     	arb_delay(1000000);
     }
+#endif
 
     cleanup_platform();
     return 0;

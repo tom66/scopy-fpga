@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Mon Dec  2 21:58:57 2019
+| Date         : Fri Dec 13 13:12:05 2019
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_methodology -file main_methodology_drc_routed.rpt -pb main_methodology_drc_routed.pb -rpx main_methodology_drc_routed.rpx
 | Design       : main
@@ -23,28 +23,16 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 31
-+-----------+----------+----------------------------------------------------+------------+
-| Rule      | Severity | Description                                        | Violations |
-+-----------+----------+----------------------------------------------------+------------+
-| SYNTH-13  | Warning  | combinational multiplier                           | 2          |
-| TIMING-2  | Warning  | Invalid primary clock source pin                   | 1          |
-| TIMING-4  | Warning  | Invalid primary clock redefinition on a clock tree | 1          |
-| TIMING-16 | Warning  | Large setup violation                              | 27         |
-+-----------+----------+----------------------------------------------------+------------+
+             Violations found: 2
++----------+----------+----------------------------------------------------+------------+
+| Rule     | Severity | Description                                        | Violations |
++----------+----------+----------------------------------------------------+------------+
+| TIMING-2 | Warning  | Invalid primary clock source pin                   | 1          |
+| TIMING-4 | Warning  | Invalid primary clock redefinition on a clock tree | 1          |
++----------+----------+----------------------------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
-SYNTH-13#1 Warning
-combinational multiplier  
-Detected combinational multiplier in DSP instance sine_scale_int3.
-Related violations: <none>
-
-SYNTH-13#2 Warning
-combinational multiplier  
-Detected combinational multiplier in DSP instance sine_scale_int3__0.
-Related violations: <none>
-
 TIMING-2#1 Warning
 Invalid primary clock source pin  
 A primary clock nolabel_line46/inst/clk_in1 is created on an inappropriate pin nolabel_line46/inst/clk_in1. It is recommended to create a primary clock only on a proper clock source (input port or primitive output pin with no timing arc)
@@ -53,141 +41,6 @@ Related violations: <none>
 TIMING-4#1 Warning
 Invalid primary clock redefinition on a clock tree  
 Invalid clock redefinition on a clock tree. The primary clock nolabel_line46/inst/clk_in1 is defined downstream of clock clk_fpga_0 and overrides its insertion delay and/or waveform definition
-Related violations: <none>
-
-TIMING-16#1 Warning
-Large setup violation  
-There is a large setup violation of -1.095 ns between nolabel_line110/mod_clk_div_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line110/bufgce_mipi_clkout_div/CE0 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#2 Warning
-Large setup violation  
-There is a large setup violation of -1.365 ns between nolabel_line110/oddr_tclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line110/OSERDESE2_lane_clk_inst/TCE (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#3 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[0] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#4 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[1] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#5 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[2] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#6 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[3] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#7 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[4] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#8 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[5] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#9 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[6] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#10 Warning
-Large setup violation  
-There is a large setup violation of -2.140 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[7] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#11 Warning
-Large setup violation  
-There is a large setup violation of -2.329 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[8] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#12 Warning
-Large setup violation  
-There is a large setup violation of -2.414 ns between nolabel_line110/oddr_rst_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line110/OSERDESE2_lane_clk_inst/RST (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#13 Warning
-Large setup violation  
-There is a large setup violation of -3.714 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[15] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#14 Warning
-Large setup violation  
-There is a large setup violation of -3.714 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[19] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#15 Warning
-Large setup violation  
-There is a large setup violation of -3.852 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[11] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#16 Warning
-Large setup violation  
-There is a large setup violation of -3.853 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[13] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#17 Warning
-Large setup violation  
-There is a large setup violation of -3.853 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[17] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#18 Warning
-Large setup violation  
-There is a large setup violation of -3.853 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[23] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#19 Warning
-Large setup violation  
-There is a large setup violation of -3.862 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[22] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#20 Warning
-Large setup violation  
-There is a large setup violation of -3.863 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[20] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#21 Warning
-Large setup violation  
-There is a large setup violation of -3.903 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[10] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#22 Warning
-Large setup violation  
-There is a large setup violation of -3.903 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[14] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#23 Warning
-Large setup violation  
-There is a large setup violation of -3.903 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[18] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#24 Warning
-Large setup violation  
-There is a large setup violation of -3.904 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[9] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#25 Warning
-Large setup violation  
-There is a large setup violation of -3.992 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[21] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#26 Warning
-Large setup violation  
-There is a large setup violation of -3.996 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[12] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#27 Warning
-Large setup violation  
-There is a large setup violation of -3.996 ns between data_lines_reg[3]/C (clocked by clk_out1_0_clk_wiz_0) and sine_scale_int1/A[16] (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 

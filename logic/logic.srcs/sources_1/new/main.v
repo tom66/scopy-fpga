@@ -54,6 +54,7 @@ clk_wiz_0 (
     .clk_in1(clk_master_50)
 );
 
+parameter STATE_INIT_TX = 1;                        // Initialisation of transmit state
 parameter STATE_FRAME_START = 10;                   // Send start-of-frame packet
 parameter STATE_FRAME_START_BUSY_WAIT = 20;         // Wait for start-of-frame packet to complete
 parameter STATE_FRAME_START_IDLE = 30;              // Idle period after start-of-frame packet 
@@ -85,8 +86,10 @@ wire clk_mipi_ref;
 wire [7:0] mipi_test_word;
 
 reg [1:0] mipi_vc_id = 0;
-reg [5:0] mipi_dt_id = 0;
+reg [5:0] mipi_dt_id = 8'h2b;
 reg [15:0] mipi_wct_short = 0;
+
+reg mipi_sleep = 1;
 
 // Test counters for test pattern generation
 reg [31:0] counter;
@@ -122,12 +125,16 @@ mipi_csi (
     .init_short_packet(mipi_short_packet),
     .init_long_packet(mipi_long_packet),
     .init_idle(mipi_idle_packet),
-    .sleep_mode(0),
+    .sleep_mode(mipi_sleep),
     .tx_size(mipi_tx_size),
     .done(mipi_done_status),
     .busy(mipi_busy_status),
     .error(mipi_error_status),
     .debug(mipi_debug),
+    
+    // LED outputs
+    .debug_led0(debug_led0),
+    .debug_led1(debug_led1),
     
     // Clock gating: 
     //  1 - clock stops during idle periods
@@ -149,6 +156,11 @@ mipi_csi (
     // Other packet header parameters
     .dt_id(mipi_dt_id),
     .wct_short(mipi_wct_short),
+    
+    // Clock and data P/N swaps. Currently all enabled.
+    .pn_swap_d0(1),
+    .pn_swap_d1(1),
+    .pn_swap_clk(1),
     
     // Interface to outside world
     .csi_clkp(csi_clk_p),
@@ -181,7 +193,7 @@ parameter STATE_INIT_MIPI = 2;
 parameter STATE_SEND_PACKET = 3;
 reg test0, test1;
 
-reg [7:0] cam_state = STATE_FRAME_START;
+reg [7:0] cam_state = STATE_INIT_TX;
 reg [23:0] cam_start_idle_counter = 16'h0100;
 reg [23:0] cam_end_idle_counter = 16'h8000;
 
@@ -200,11 +212,14 @@ integer prng_signed = 0;
 
 integer sine_scale_int = 0;
 
+reg [12:0] sleep_init_timer = 0;
+
 // blinkenled
 reg [22:0] blinky_ctr;
 reg blinky_led = 1;
 
-assign led_PL0 = blinky_led;
+assign led_PL0 = debug_led0;
+assign led_PL1 = debug_led1;
 
 always @(posedge clk_mipi_ref) begin
 
@@ -215,6 +230,16 @@ always @(posedge clk_mipi_ref) begin
     blinky_ctr <= blinky_ctr + 1;
 
     case (cam_state) 
+    
+        // start of transmission - init MIPI controller
+        STATE_INIT_TX: begin
+            mipi_sleep <= 0;
+            sleep_init_timer <= sleep_init_timer + 1;
+            
+            if (sleep_init_timer > 1023) begin
+                cam_state <= STATE_FRAME_START;
+            end
+        end
     
         // start of frame - 00h with frame counter (typically)
         STATE_FRAME_START: begin
@@ -243,7 +268,7 @@ always @(posedge clk_mipi_ref) begin
             if (!mipi_busy_status) begin
                 // Move to STATE_FRAME_START_IDLE state with idle counter loaded
                 cam_state <= STATE_FRAME_START_IDLE;
-                cam_start_idle_counter <= 16'h0200;
+                cam_start_idle_counter <= 16'h0040;
             end
         end
                     
@@ -264,7 +289,7 @@ always @(posedge clk_mipi_ref) begin
                 mipi_idle_packet <= 0;  
                 
                 // Load line counter
-                data_lines <= 256; // 2048;
+                data_lines <= 2048;
             end else begin
                 cam_start_idle_counter = cam_start_idle_counter - 1;
                 cam_state <= STATE_FRAME_START_IDLE; // almost certainly redundant
@@ -272,12 +297,12 @@ always @(posedge clk_mipi_ref) begin
         end
     
         // prepares for data lines transmission
-        // RAW10 with WC representing bytes to be sent
+        // RAWxx with WC representing bytes to be sent
         // immediately advances to STATE_FRAME_DATA_LINE state
         STATE_FRAME_DATA_LINE_PREP: begin
             // Virtual Channel 0 and RAW10 format 0x2b
             mipi_vc_id <= 0;            
-            mipi_dt_id <= 6'h2a; // RAW8      
+            mipi_dt_id <= 6'h2b; // RAW10      
             
             // Jump state
             cam_state <= STATE_FRAME_DATA_LINE;
@@ -292,10 +317,7 @@ always @(posedge clk_mipi_ref) begin
             //
             // The tx size must be in blocks of 2 bytes as the module works on 16-bit packets,
             // to reduce input clock rates.  FIXME:  Data length transmitted seems to be wrong?
-            //mipi_wct_short <= 16'h0800; 
-            //mipi_tx_size <= 16'h0800; 
-            //mipi_wct_short <= 16'b1010101010101010; 
-            mipi_wct_short <= 2048; // 3240 typically.  this sets us to 2456 real pixels width.
+            mipi_wct_short <= 2048; 
             mipi_tx_size <= 2048; 
                     
             // Set flag for long packet
@@ -359,7 +381,7 @@ always @(posedge clk_mipi_ref) begin
             mipi_long_packet <= 0;
             mipi_short_packet <= 0;
             mipi_idle_packet <= 1;
-            cam_end_idle_counter <= 16'h0200;
+            cam_end_idle_counter <= 16'h0040;
             cam_state <= STATE_FRAME_END_IDLE;
         end
         
@@ -385,7 +407,8 @@ always @(posedge clk_mipi_ref) begin
         sine_scale_int <= ((((16'h8000 - sine_data) * ((((data_lines & 255) * 3) >> 2) + 30)) >> 8) * ((frame >> 4) & 255)) >> 8;
         sine_scale_reg <= (((sine_scale_int + 16'h8000) & 16'hff00) >> 8) * 16'h0101;
         //sine_scale_reg <= ((((sine_data * (data_lines & 255)) >> 8) & 16'hff00) >> 8) * 16'h0101;
-        mem_test_data <= sine_scale_reg;
+        //mem_test_data <= sine_scale_reg;
+        mem_test_data <= 16'h0001;
     end
             
     /* Test Pattern for Noisy Sine */

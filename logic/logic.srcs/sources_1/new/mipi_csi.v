@@ -66,6 +66,10 @@ module mipi_csi(
     output reg error,
     output reg [3:0] debug,
     
+    // LED debug outputs
+    output reg debug_led0,
+    output reg debug_led1,
+    
     // Memory bus interface.  This should be an interface to a BlockRAM large enough
     // for the current transfer.  Data is transferred from the DDR into a BlockRAM buffer
     // for transfer.
@@ -94,6 +98,13 @@ module mipi_csi(
     
     // Word count input for packet header.
     input [15:0] wct_short,
+    
+    // Configuration for output: P/N swap of data bits, P/N swap of clock.
+    // Set to 1 to swap P/N (when swapped: P out on N, N out on P)
+    // ** This does NOT swap LP signals - ONLY swaps the differential signals for ease of routing! **
+    input pn_swap_d0,
+    input pn_swap_d1,
+    input pn_swap_clk,
     
     // Interface to the real world.  The application circuit as used in XAPP462 is used.
     output csi_clkp,             // Gated clocks,  DIFF_HSTL_I_18 logic
@@ -186,16 +197,14 @@ reg oddr_hiz = 1;
 //  10 = HS trail at end of packet for T(hs-trail);     advances to state 11
 //  11 = LP line return pre-init state;                 advances to state 12
 //  12 = LP line return at end of packet for T(reot);   resets to state 0 (idle), drives DONE, resets BUSY
-//  15 = TX inactive state;                             idle until state change then jumps to prepare clock state 16 (from clk LP-11)
-//  16 = Clock prepare state;                           LP-01 for clock lane then advances to state 17
-//  17 = Clock low state;                               LP-00 for clock lane then advances to state 18
-//  18 = Clock zero state;                              HS-00 for clock lane then advances to state 19
-//  19 = Clock active state;                            clock enabled then advances to state 0 to begin transmission
+//  13 = TX inactive state;                             idle until state change then jumps to prepare clock state 16 (from clk LP-11)
+//  15 = TX waiting for clock;                          advances to LP idle state after clock is started
+//  16 = TX clock shutdown;                             advances to TX_INACTIVE after clock is stopped and LP11 is asserted
 //
 reg [7:0] current_state;
 
-parameter STATE_LP_IDLE    = 0;
-parameter STATE_LP_INIT    = 1;
+parameter STATE_LP_IDLE = 0;
+parameter STATE_LP_INIT = 1;
 parameter STATE_LP_SETTLE = 2;
 parameter STATE_LP_SETTLE_POST = 3;
 //parameter STATE_LP_SETTLE_HS_ZERO_INIT = 3;
@@ -208,13 +217,21 @@ parameter STATE_HS_TRAIL = 10;
 parameter STATE_LP_RETURN_PRE = 11;
 parameter STATE_LP_RETURN = 12;
 parameter STATE_TX_INACTIVE = 13;
-parameter STATE_PRE_RESET_STATE = 14;
-parameter STATE_CLK_OFF_STATE = 15;
-parameter STATE_CLK_PREP_STATE = 16;
-parameter STATE_CLK_LOW_STATE = 17;
-parameter STATE_CLK_ZERO_STATE = 18;
-parameter STATE_CLK_ACTIVE_STATE = 19;
-parameter STATE_CLK_EXIT_TX_END = 20;
+parameter STATE_TX_WAITING_FOR_CLOCK = 15;  // new state - out of order
+parameter STATE_TX_CLK_SHUTDOWN = 16;   
+
+reg [7:0] clk_current_state;
+
+parameter STATE_CLK_SLEEP = 1;
+parameter STATE_CLK_OFF_STATE = 2;
+parameter STATE_CLK_PREP_STATE = 3;
+parameter STATE_CLK_LOW_STATE = 4;
+parameter STATE_CLK_ZERO_STATE = 5;
+parameter STATE_CLK_ACTIVE_STATE = 6;
+parameter STATE_CLK_WAIT_STATE = 7;
+parameter STATE_CLK_SHUTDOWN_HS00_STATE = 8;
+parameter STATE_CLK_SHUTDOWN_LP00_STATE = 9;
+parameter STATE_CLK_SHUTDOWN_LP11_STATE = 10;
 
 // Diagnostic registers
 reg [31:0] tx_counter;
@@ -222,12 +239,14 @@ reg [7:0] test = 8'h55;
 
 // State timer - arbitrary timer used by multiple states
 reg [15:0] state_timer;
-reg [2:0] state_timer_2;
+reg [15:0] state_timer_2;
+reg [15:0] clk_state_timer;
 
 // New state change register.  Set when the state is changed, this triggers a reset of the state timer shared
 // resource.
 // TODO: use separate timers instead?
 reg state_timer_rst;
+reg clk_state_timer_rst;
 
 // Short packet/long packet register (0 or 1)
 // 0 = short,  1 = long
@@ -263,22 +282,6 @@ assign mem_read_clk = mod_clk_div4;
 wire d0_bit_a, d0_bit_b;
 wire d1_bit_a, d1_bit_b;
 
-// Initial state
-initial begin
-
-    busy <= 0;
-    done <= 0;
-    error <= 0;
-    mem_read_en <= 0;
-    // mem_read_clk_en <= 0;
-    ready_state <= 1;
-    current_state <= STATE_TX_INACTIVE;
-    oddr_hiz <= 0;
-    ready_state <= 1;
-    oddr_ctr_reset <= 0;
-
-end
-
 // Set if an end of line trail is to be generated.  Two clock cycle delay implemented
 // to position trail in correct location.
 //
@@ -286,10 +289,6 @@ end
 reg oddr_trail = 0;
 reg oddr_trail_dly_a = 0;
 reg oddr_trail_dly_b = 0;
-
-// ODDR driver reset, should toggle at start of transaction to reset SERDESes
-// Init state is in reset.
-reg oddr_rst = 1;
 
 // for alternate trail generation mechanism
 reg oddr_trail_latch = 0;
@@ -331,7 +330,11 @@ BUFGCE BUFGCE_mipi_oserderse_clk (
 );
 
 // clock-aligned ODDR reset (aligned to rising edge of clkdiv)
-reg oddr_rst_clkalign, oddr_hiz_latch;
+reg oddr_rst_clkalign, oddr_rst;
+reg oddr_hiz_latch;
+
+// clock-aligned CLK reset
+reg clk_rst_clkalign, clk_rst;
 
 // clock-aligned clock enables
 reg oddr_oclk_en_clkalign, oddr_tclk_en_clkalign;
@@ -342,25 +345,41 @@ reg clkout_hiz = 1;
 reg clkout_gen = 0;
 
 // initial line state, prior to clock output enable
+// TODO: make this latched on reset pulse instead?
 initial begin
 
-   csi_dn0_lp_lat <= 1;
-   csi_dp0_lp_lat <= 1;
-   csi_dn1_lp_lat <= 1;
-   csi_dp1_lp_lat <= 1;
-   oddr_hiz_latch <= 1;
-   oddr_hiz <= 1;
-   clkout_hiz <= 1;  // high disables output
-   oddr_rst <= 0;
-   oddr_rst_clkalign <= 0;
-   clkout_gen <= 0;
-   csi_clkp_lp_lat <= 1;
-   csi_clkn_lp_lat <= 1;
-   oddr_oclk_en_clkalign <= 0;
-   oddr_tclk_en_clkalign <= 0;
+    csi_dn0_lp_lat <= 1;
+    csi_dp0_lp_lat <= 1;
+    csi_dn1_lp_lat <= 1;
+    csi_dp1_lp_lat <= 1;
+    oddr_hiz_latch <= 1;
+    oddr_hiz <= 1;
+    clkout_hiz <= 1;  // high disables output
+    oddr_rst <= 0;
+    oddr_rst_clkalign <= 0;
+    clk_rst <= 0;
+    clk_rst_clkalign <= 0;
+    clkout_gen <= 0;
+    csi_clkp_lp_lat <= 1;
+    csi_clkn_lp_lat <= 1;
+    oddr_oclk_en_clkalign <= 0;
+    oddr_tclk_en_clkalign <= 0;
+    current_state <= STATE_TX_INACTIVE;
+    clk_current_state <= STATE_CLK_SLEEP;
+    clk_state_timer_rst <= 1;
+    state_timer_rst <= 1; // XXX: Evaluate ???
+    
+    busy <= 0;
+    done <= 0;
+    error <= 0;
+    mem_read_en <= 0;
+    ready_state <= 1;
+    ready_state <= 1;
 
 end
 
+// This block latches state of data, clock align signals according to lane byte 
+// clock signal mod_clk_div4_oserdese_ln0
 always @(posedge mod_clk_div4_oserdese_ln0) begin
     
     d0_latch <= hs_tx_byte_d0;
@@ -368,6 +387,7 @@ always @(posedge mod_clk_div4_oserdese_ln0) begin
     oddr_oclk_en_clkalign <= oddr_oclk_en;
     oddr_tclk_en_clkalign <= oddr_tclk_en;
     oddr_rst_clkalign <= oddr_rst;
+    clk_rst_clkalign <= clk_rst;
     oddr_hiz_latch <= oddr_hiz;
     csi_lp_state_lat <= csi_lp_state; 
     
@@ -420,7 +440,7 @@ always @(posedge mod_clk_I_bufg_oserdese) begin
     
         // Both LP lines high and clk disabled
         LPCLK_STATE_IDLE_11 : begin
-            clkout_hiz <= 1;  // high disables output
+            clkout_hiz <= 1;  // high disables output of clock
             clkout_gen <= 0;
             csi_clkp_lp_lat <= 1;
             csi_clkn_lp_lat <= 1;
@@ -436,22 +456,22 @@ always @(posedge mod_clk_I_bufg_oserdese) begin
         
         // Both LP lines low which triggers terminator (glitch seen on scope)
         LPCLK_STATE_CLK_INIT_00 : begin
-            clkout_hiz <= 1;  // high disables output
+            clkout_hiz <= 1; 
             clkout_gen <= 0;
             csi_clkp_lp_lat <= 0;
             csi_clkn_lp_lat <= 0;
         end
     
         // LP lines stay low and clock is transmitting zero in this period
-        // Also performed at end of clock operation keeping lines low
+        // Also performed at end of clock operation as part of clk shutdown
         LPCLK_STATE_CLK_ZERO : begin
-            clkout_hiz <= 0;  // output enabled
+            clkout_hiz <= 0;  // output enabled for clock
             clkout_gen <= 0;  // clock not generated
             csi_clkp_lp_lat <= 1'bZ; // LP lines tristated
             csi_clkn_lp_lat <= 1'bZ;
         end
         
-        // Both LP lines high and clk disabled
+        // Both LP lines high-Z and clk output - normal HS TX operation
         LPCLK_STATE_CLK_RUN : begin
             clkout_hiz <= 0;  // output enabled
             clkout_gen <= 1;  // clock generated - this should sync with a clock edge
@@ -464,7 +484,7 @@ always @(posedge mod_clk_I_bufg_oserdese) begin
 end
 
 // ** Serialising OSERDESE block **
-// This generates a 25% duty clock.  But that is not an issue for this design
+// This generates a 25% duty clock.  But that is not an issue for this design.
 BUFGCE bufgce_mipi_clkdiv (
     .I(mod_clk_I),
     .O(mod_clk_div4),
@@ -498,14 +518,15 @@ OSERDESE2 #(
     .TCE(oddr_tclk_en_clkalign),
     .RST(oddr_rst_clkalign),
     // Bits are numbered 1-8.
-    .D1(d0_latch[0]),
-    .D2(d0_latch[1]),
-    .D3(d0_latch[2]),
-    .D4(d0_latch[3]),
-    .D5(d0_latch[4]),
-    .D6(d0_latch[5]),
-    .D7(d0_latch[6]),
-    .D8(d0_latch[7])
+    // These bits inverted if P/N swap of data is set.
+    .D1(d0_latch[0] ^ pn_swap_d0),
+    .D2(d0_latch[1] ^ pn_swap_d0),
+    .D3(d0_latch[2] ^ pn_swap_d0),
+    .D4(d0_latch[3] ^ pn_swap_d0),
+    .D5(d0_latch[4] ^ pn_swap_d0),
+    .D6(d0_latch[5] ^ pn_swap_d0),
+    .D7(d0_latch[6] ^ pn_swap_d0),
+    .D8(d0_latch[7] ^ pn_swap_d0)
 );
 
 OSERDESE2 #(
@@ -530,14 +551,15 @@ OSERDESE2 #(
     .TCE(oddr_tclk_en_clkalign),
     .RST(oddr_rst_clkalign),
     // Bits are numbered 1-8.
-    .D1(d1_latch[0]),
-    .D2(d1_latch[1]),
-    .D3(d1_latch[2]),
-    .D4(d1_latch[3]),
-    .D5(d1_latch[4]),
-    .D6(d1_latch[5]),
-    .D7(d1_latch[6]),
-    .D8(d1_latch[7])
+    // These bits inverted if P/N swap of data is set.
+    .D1(d1_latch[0] ^ pn_swap_d1),
+    .D2(d1_latch[1] ^ pn_swap_d1),
+    .D3(d1_latch[2] ^ pn_swap_d1),
+    .D4(d1_latch[3] ^ pn_swap_d1),
+    .D5(d1_latch[4] ^ pn_swap_d1),
+    .D6(d1_latch[5] ^ pn_swap_d1),
+    .D7(d1_latch[6] ^ pn_swap_d1),
+    .D8(d1_latch[7] ^ pn_swap_d1)
 );
 
 OBUFTDS #(
@@ -545,7 +567,7 @@ OBUFTDS #(
 ) OBUFDS_inst_lane0 (
     .O(csi_dp0),
     .OB(csi_dn0),
-    .I(d0_oddr_out),    // d0_oddr_out, mod_clk_div4_oserdese_ln0
+    .I(d0_oddr_out),    
     .T(d0_t_oddr_out)   // oddr_hiz
 );
 
@@ -554,14 +576,14 @@ OBUFTDS #(
 ) OBUFDS_inst_lane1 (
     .O(csi_dp1), 
     .OB(csi_dn1),
-    .I(d1_oddr_out),    // d1_oddr_out, mod_clk_div4_oserdese_ln1
+    .I(d1_oddr_out),    
     .T(d1_t_oddr_out)   // oddr_hiz
 );
 
 //wire mod_clk_p_out_gate, mod_clk_n_out_gate;
 
-// This OSERDESE2 is used to generate the output clock.  It is loaded with "01010101" to accomplish
-// this task.
+// This OSERDESE2 is used to generate the output clock.  It is loaded with "01010101",
+// or "10101010" (depending on selected polarity) to accomplish this task.
 wire mod_clk_Q_oserdese_bufg_clk;
 wire mod_clk_Q_div4_clk;
 wire clk_t_oserdese_out; // Output from OSERDESE2 module for clock tristate
@@ -604,17 +626,18 @@ OSERDESE2 #(
     //.OCE(oddr_clk_en),
     //.TCE(oddr_clk_en),
     .OCE(clkout_gen),
-    .TCE(oddr_tclk_en_clkalign),
-    .RST(oddr_rst_clkalign),
+    .TCE(clkout_gen),
+    .RST(clk_rst_clkalign),
     // Bits are numbered 1-8.
-    .D1(1),
-    .D2(0),
-    .D3(1),
-    .D4(0),
-    .D5(1),
-    .D6(0),
-    .D7(1),
-    .D8(0)
+    // PN swap of clock changes load parameters.
+    .D1(~pn_swap_clk),
+    .D2( pn_swap_clk),
+    .D3(~pn_swap_clk),
+    .D4( pn_swap_clk),
+    .D5(~pn_swap_clk),
+    .D6( pn_swap_clk),
+    .D7(~pn_swap_clk),
+    .D8( pn_swap_clk)
 );
     
 OBUFTDS #(
@@ -622,7 +645,7 @@ OBUFTDS #(
 ) OBUFDS_inst_lane_clk (
     .O(csi_clkp), 
     .OB(csi_clkn),
-    .I(clk_q_oserdese_out), 
+    .I(clk_q_oserdese_out),    // inverted: p/n swap (todo: make this an input flag)
     .T(clk_t_oserdese_out)
 );
 
@@ -655,10 +678,168 @@ reg [15:0] crc16;
 wire [15:0] crc16_data;
 assign crc16_data = hs_tx_byte_d0 | (hs_tx_byte_d1 << 8);
 
-reg clock_exited = 1;
+reg clock_exited;
 
 reg [15:0] bytes_output_ctr;
 assign bytes_output = bytes_output_ctr;
+
+// Signal to awaken clock from main state machine.
+reg clk_sleep_awaken = 0;
+
+// Signal from clock state machine that clock is ready and transmission of data may begin.
+reg clk_is_ready = 0;
+
+// Signal from clock state machine that clock is idle and ready to indicate that the 
+// shutdown is complete.
+reg clk_is_idle = 1;
+
+// Signal to sleep clock at end of any operation.  Only assertable 
+reg clk_sleep_go;
+
+// Clock state logic
+always @(posedge mod_clk_div4) begin
+
+    // Handle the shared timer resource
+    // XXX: This is broken but the verilog is hacked to work with this.  Prob. best to use
+    // independent simple timers.
+    if (clk_state_timer_rst) begin
+        clk_state_timer_rst = 0;
+        clk_state_timer <= 0;
+    end else begin
+        clk_state_timer <= clk_state_timer + 1;
+    end
+    
+    //clk_current_state <= STATE_CLK_ACTIVE_STATE;
+    //debug_led <= clk_state_timer;
+              
+    case (clk_current_state) 
+    
+        // Sleep mode state.  Remains in this state until signal received
+        // to enable clock.
+        STATE_CLK_SLEEP : begin
+            clk_is_ready <= 0;
+            clk_is_idle <= 1;
+            clk_rst <= 1; // send reset to clk OSERDESE2
+            clk_state_timer_rst = 1;
+            //debug_led0 <= ~debug_led0;
+            
+            if (clk_sleep_awaken) begin
+                clk_current_state <= STATE_CLK_OFF_STATE;
+            end
+        end
+        
+        // Clock off state.  Sets clock lane to 11 to ensure line starts in OFF state.
+        STATE_CLK_OFF_STATE : begin
+            clk_is_idle <= 0;
+            csi_lpclk_state <= LPCLK_STATE_IDLE_11;
+            //clk_current_state <= STATE_CLK_OFF_STATE;
+            //debug_led1 <= ~debug_led1;
+            
+            if (clk_state_timer & 3'b100) begin
+                clk_current_state <= STATE_CLK_PREP_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+        
+        // Clock prep state. Sets clock lane to 01 state in preparation for clock termination
+        STATE_CLK_PREP_STATE : begin
+            csi_lpclk_state <= LPCLK_STATE_PREP_CLK_01;
+            
+            if (clk_state_timer & 3'b100) begin
+                clk_current_state <= STATE_CLK_LOW_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+
+        // Clock low state. Sets clock lane to 00 state in preparation for clock termination
+        // We need to wait for the driver termination to engage (~100ns) so a moderate delay is added.
+        STATE_CLK_LOW_STATE : begin
+            csi_lpclk_state <= LPCLK_STATE_CLK_INIT_00;
+            clk_rst <= 0; // deassert reset
+            
+            if (clk_state_timer & 4'b1000) begin
+                clk_current_state <= STATE_CLK_ZERO_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+
+        // Clock zero state. Turns on clock drivers and transmits a zero state while the driver
+        // termination settles.
+        STATE_CLK_ZERO_STATE : begin
+            csi_lpclk_state <= LPCLK_STATE_CLK_ZERO;
+            
+            if (clk_state_timer & 3'b100) begin
+                clk_current_state <= STATE_CLK_ACTIVE_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+    
+        // Clock run state. Enables clock then jumps to the wait state.
+        // The clock stays active until the clk_stop_in is sent.
+        // This signal causes 
+        STATE_CLK_ACTIVE_STATE : begin 
+            //debug_led <= 1;
+            csi_lpclk_state <= LPCLK_STATE_CLK_RUN;
+            
+            if (clk_state_timer & 5'b10000) begin
+                clk_current_state <= STATE_CLK_WAIT_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+    
+        // Clock run state. Enables clock then jumps to the wait state.
+        // The clock stays active until the clk_stop_in is sent.
+        // This signal causes 
+        STATE_CLK_WAIT_STATE : begin
+            //debug_led <= 0;
+            clk_is_ready <= 1;
+            
+            if (clk_sleep_go) begin
+                clk_current_state <= STATE_CLK_SHUTDOWN_HS00_STATE;
+            end
+        end
+        
+        // Clock shutdown state. Sets TX driver to 0 output, switches to
+        // LP idle 00 state.
+        STATE_CLK_SHUTDOWN_HS00_STATE : begin
+            clk_is_ready <= 0;
+            csi_lpclk_state <= LPCLK_STATE_CLK_ZERO;
+            
+            if (clk_state_timer & 4'b1000) begin
+                clk_current_state <= STATE_CLK_SHUTDOWN_LP00_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+        
+        // Clock shutdown state. Sets lines to LP-00 then moves to LP-11 state.
+        STATE_CLK_SHUTDOWN_LP00_STATE : begin
+            csi_lpclk_state <= LPCLK_STATE_CLK_INIT_00;
+            
+            if (clk_state_timer & 4'b1000) begin
+                clk_current_state <= STATE_CLK_SHUTDOWN_LP11_STATE;
+                clk_state_timer_rst = 1;
+            end
+        end
+        
+        // Clock shutdown state. Sets lines to LP-11 then moves immediately to sleep state.
+        STATE_CLK_SHUTDOWN_LP11_STATE : begin
+            csi_lpclk_state <= LPCLK_STATE_IDLE_11;
+            
+            if (clk_state_timer & 4'b1000) begin
+                clk_current_state <= STATE_CLK_SLEEP;
+                clk_state_timer_rst = 1;
+            end
+        end
+        
+        default : begin
+            // shouldn't be possible to enter this state... but if we do, pretend as
+            // if it never happened.
+            clk_current_state <= STATE_CLK_SLEEP;
+        end
+        
+    endcase
+    
+end
 
 // Main state logic
 always @(posedge mod_clk_div4) begin
@@ -669,7 +850,8 @@ always @(posedge mod_clk_div4) begin
     if (sleep_mode) begin
         oddr_clk_en <= 0;
         current_state <= STATE_TX_INACTIVE;
-        clock_exited <= 1;
+        //clk_current_state <= STATE_CLK_SLEEP;  ???
+        //debug_led <= ~debug_led;
     end
 
     // Handle the shared timer resource
@@ -682,71 +864,8 @@ always @(posedge mod_clk_div4) begin
         state_timer <= state_timer + 1;
     end
     
-    //current_state <= STATE_CLK_OFF_STATE;
-    
     // Handle the current state, and transitions to new states
     case (current_state)
-
-        // Pre-reset state - advances to clock off state, drives reset line of ODDR module
-        STATE_PRE_RESET_STATE : begin
-            clock_exited <= 0;
-            current_state <= STATE_CLK_OFF_STATE;
-        end
-            
-        // Clock off state.  Sets clock lane to 11 to ensure line starts in OFF state.
-        STATE_CLK_OFF_STATE : begin
-            csi_lpclk_state <= LPCLK_STATE_IDLE_11;
-            current_state <= STATE_CLK_PREP_STATE;
-        end
-        
-        // Clock prep state. Sets clock lane to 01 state in preparation for clock termination
-        STATE_CLK_PREP_STATE : begin
-            csi_lpclk_state <= LPCLK_STATE_PREP_CLK_01;
-            current_state <= STATE_CLK_LOW_STATE;
-        end
-
-        // Clock low state. Sets clock lane to 00 state in preparation for clock termination
-        // We need to wait for the driver termination to engage (~100ns) so a delay is added.
-        STATE_CLK_LOW_STATE : begin
-            csi_lpclk_state <= LPCLK_STATE_CLK_INIT_00;
-            
-            if (state_timer & 4'b1000) begin
-                current_state <= STATE_CLK_ZERO_STATE;
-                state_timer_rst = 1;
-            end
-        end
-
-        // Clock zero state. Turns on clock drivers and transmits a zero state while the driver
-        // termination settles.
-        STATE_CLK_ZERO_STATE : begin
-            csi_lpclk_state <= LPCLK_STATE_CLK_ZERO;
-            
-            if (state_timer & 4'b1000) begin
-                current_state <= STATE_CLK_ACTIVE_STATE;
-                state_timer_rst = 1;
-            end
-        end
-    
-        // Clock run state. Enables clock and advances to LP idle state.
-        STATE_CLK_ACTIVE_STATE : begin
-            csi_lpclk_state <= LPCLK_STATE_CLK_RUN;
-            
-            if (state_timer & 5'b10000) begin
-                current_state <= STATE_LP_IDLE;
-                state_timer_rst = 1;
-            end
-        end
-        
-        // Clock exit state - drives extended "zero" from clock and jumps to TX_INACTIVE
-        STATE_CLK_EXIT_TX_END : begin
-            clock_exited <= 1;
-            csi_lpclk_state <= LPCLK_STATE_CLK_ZERO;
-            
-            if (state_timer & 6'b100000) begin
-                csi_lpclk_state <= LPCLK_STATE_IDLE_11;
-                current_state <= STATE_TX_INACTIVE;
-            end
-        end
         
         // TX inactive state.  Effectively idle - keeps LP lines high and data tristated,
         // and clock lane remains inactive.
@@ -761,13 +880,16 @@ always @(posedge mod_clk_div4) begin
                     tx_words_counter <= tx_size;
                 end
                 
-                // Drive to next state based on clock_exit status
-                // If clock was exited we need to go through clock entry procedure
-                if (clock_exited) begin
-                    current_state <= STATE_PRE_RESET_STATE;
+                // If the clock is idle, then go through the initialisation process
+                // before starting transmit.
+                if (clk_is_idle) begin
+                    clk_sleep_awaken <= 1;
+                    
+                    // wait for clock then start transmission in LP_IDLE state
+                    current_state <= STATE_TX_WAITING_FOR_CLOCK;
                 end else begin
-                    // Otherwise start tx immediately
-                    current_state <= STATE_LP_IDLE; 
+                    // start transmission in LP_IDLE state
+                    current_state <= STATE_LP_IDLE;
                 end
                 
                 // Set transmission parameters
@@ -780,24 +902,23 @@ always @(posedge mod_clk_div4) begin
                 ready_state <= 0;
                 oddr_trail_latch <= 0;
             end else begin
-                // Set bus state to idle
+                // Set data bus state to idle
                 csi_lp_state <= LP_STATE_BUS_IDLE_11;
-                
-                // Set clock idle if we have stopped the output clock
-                if (clock_exited) begin
-                    csi_lpclk_state <= LPCLK_STATE_IDLE_11;
-                end
-                
-                // If in idle state, set clock exit flag
-                // This will cause the clock to return to LP-11 after 
-                if (init_idle == 1) begin
-                    clock_exited <= 1;
-                end
             end
             
             state_timer_rst = 1;
             oddr_rst <= 1;
             mem_read_clk_en <= 0;
+        end
+        
+        // Waiting for clock state.  Awaits clock start sequence.
+        // Advances to LP idle once clock is ready
+        // clk_sleep_awaken signal should have been asserted before this
+        // state is entered into.
+        STATE_TX_WAITING_FOR_CLOCK : begin
+            if (clk_is_ready) begin
+                current_state <= STATE_LP_IDLE;
+            end
         end
 
         // LP idle state
@@ -814,7 +935,7 @@ always @(posedge mod_clk_div4) begin
             oddr_ctr_reset <= 0;            
             test <= test + 1;
             
-            if (state_timer & 1'b1) begin
+            if (state_timer & 2'b10) begin
                 current_state <= STATE_LP_INIT;
                 //state_timer_rst = 1;
             end
@@ -826,7 +947,7 @@ always @(posedge mod_clk_div4) begin
         STATE_LP_INIT : begin
             csi_lp_state <= LP_STATE_PREP_HS_01;
             
-            if (state_timer & 1'b1) begin
+            if (state_timer & 2'b10) begin
                 current_state <= STATE_LP_SETTLE;
                 //state_timer_rst = 1;
             end
@@ -844,7 +965,7 @@ always @(posedge mod_clk_div4) begin
             hs_tx_byte_d0 <= 0;
             hs_tx_byte_d1 <= 0;
             
-            if (state_timer & 3'b110) begin
+            if (state_timer & 4'b1000) begin
                 current_state <= STATE_LP_SETTLE_POST;
                 //state_timer_rst = 1;
             end
@@ -942,6 +1063,7 @@ always @(posedge mod_clk_div4) begin
                 
                 // Jump state to complete trail sequence
                 current_state <= STATE_HS_TRAIL;  
+                state_timer_2 <= 0;
                 state_timer_rst = 1;
                 mem_read_en <= 0;
             end else begin
@@ -985,7 +1107,7 @@ always @(posedge mod_clk_div4) begin
 
             // this kinda works but not as expected - may need to be fixed
             state_timer_2 <= state_timer_2 + 1;
-            if (state_timer_2 == 2) begin
+            if (state_timer_2 == 20) begin
                 current_state <= STATE_LP_RETURN_PRE;
                 state_timer_rst = 1;
             end
@@ -1018,14 +1140,24 @@ always @(posedge mod_clk_div4) begin
             done <= 1;
             tx_counter <= tx_counter + 1;
             
-            // Advance to TX_INACTIVE as new idle state, where we remain until we receive
-            // another request
+            // Advance to TX_INACTIVE as new idle state;  send sleep signal to clock block 
+            // if clock gating is enabled.
             if (clock_gate_en) begin
-                current_state <= STATE_CLK_EXIT_TX_END;
-            end else begin
+                clk_sleep_go <= 1;
+                current_state <= STATE_TX_CLK_SHUTDOWN;
+            end else begin 
                 current_state <= STATE_TX_INACTIVE;
             end
+            
             state_timer_rst = 1;
+        end
+        
+        // CLK transmit shutdown signal sent - waits for clock module to shutdown
+        // then jumps to TX_INACTIVE.
+        STATE_TX_CLK_SHUTDOWN : begin
+            if (clk_is_idle) begin
+                current_state <= STATE_TX_INACTIVE;
+            end
         end
         
         default : begin
