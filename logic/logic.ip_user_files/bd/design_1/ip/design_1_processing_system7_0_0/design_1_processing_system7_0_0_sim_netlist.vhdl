@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sun Dec  1 20:41:04 2019
+-- Date        : Sun Dec  1 21:39:15 2019
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0_sim_netlist.vhdl
+--               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0_sim_netlist.vhdl
 -- Design      : design_1_processing_system7_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -817,7 +817,7 @@ entity design_1_processing_system7_0_0_processing_system7_v5_5_processing_system
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "processing_system7_v5_5_processing_system7";
   attribute POWER : string;
-  attribute POWER of design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "<PROCESSOR name={system} numA9Cores={2} clockFreq={666.666666} load={0.5} /><MEMORY name={code} memType={} dataWidth={} clockFreq={533.333} readRate={0.5} writeRate={0.5} /><PLL domain={Processor} vco={1333.333} /><PLL domain={Memory} vco={1066.667} /><PLL domain={IO} vco={1600.000} />/>";
+  attribute POWER of design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "<PROCESSOR name={system} numA9Cores={2} clockFreq={666.666666} load={0.5} /><MEMORY name={code} memType={DDR3} dataWidth={16} clockFreq={533.333} readRate={0.5} writeRate={0.5} /><IO interface={UART} ioStandard={LVCMOS33} bidis={2} ioBank={Vcco_p1} clockFreq={100.000000} usageRate={0.5} /><PLL domain={Processor} vco={1333.333} /><PLL domain={Memory} vco={1066.667} /><PLL domain={IO} vco={1600.000} />/>";
   attribute USE_TRACE_DATA_EDGE_DETECTOR : integer;
   attribute USE_TRACE_DATA_EDGE_DETECTOR of design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is 0;
 end design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7;
@@ -3362,6 +3362,23 @@ entity design_1_processing_system7_0_0 is
     FCLK_CLK0 : out STD_LOGIC;
     FCLK_RESET0_N : out STD_LOGIC;
     MIO : inout STD_LOGIC_VECTOR ( 53 downto 0 );
+    DDR_CAS_n : inout STD_LOGIC;
+    DDR_CKE : inout STD_LOGIC;
+    DDR_Clk_n : inout STD_LOGIC;
+    DDR_Clk : inout STD_LOGIC;
+    DDR_CS_n : inout STD_LOGIC;
+    DDR_DRSTB : inout STD_LOGIC;
+    DDR_ODT : inout STD_LOGIC;
+    DDR_RAS_n : inout STD_LOGIC;
+    DDR_WEB : inout STD_LOGIC;
+    DDR_BankAddr : inout STD_LOGIC_VECTOR ( 2 downto 0 );
+    DDR_Addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
+    DDR_VRN : inout STD_LOGIC;
+    DDR_VRP : inout STD_LOGIC;
+    DDR_DM : inout STD_LOGIC_VECTOR ( 3 downto 0 );
+    DDR_DQ : inout STD_LOGIC_VECTOR ( 31 downto 0 );
+    DDR_DQS_n : inout STD_LOGIC_VECTOR ( 3 downto 0 );
+    DDR_DQS : inout STD_LOGIC_VECTOR ( 3 downto 0 );
     PS_SRSTB : inout STD_LOGIC;
     PS_CLK : inout STD_LOGIC;
     PS_PORB : inout STD_LOGIC
@@ -3379,17 +3396,6 @@ end design_1_processing_system7_0_0;
 architecture STRUCTURE of design_1_processing_system7_0_0 is
   signal NLW_inst_CAN0_PHY_TX_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_CAN1_PHY_TX_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_CAS_n_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_CKE_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_CS_n_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_Clk_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_Clk_n_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_DRSTB_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_ODT_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_RAS_n_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_VRN_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_VRP_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_WEB_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_DMA0_DAVALID_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_DMA0_DRREADY_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_DMA0_RSTN_UNCONNECTED : STD_LOGIC;
@@ -3595,12 +3601,6 @@ architecture STRUCTURE of design_1_processing_system7_0_0 is
   signal NLW_inst_USB0_VBUS_PWRSELECT_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_USB1_VBUS_PWRSELECT_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_WDT_RST_OUT_UNCONNECTED : STD_LOGIC;
-  signal NLW_inst_DDR_Addr_UNCONNECTED : STD_LOGIC_VECTOR ( 14 downto 0 );
-  signal NLW_inst_DDR_BankAddr_UNCONNECTED : STD_LOGIC_VECTOR ( 2 downto 0 );
-  signal NLW_inst_DDR_DM_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
-  signal NLW_inst_DDR_DQ_UNCONNECTED : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal NLW_inst_DDR_DQS_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
-  signal NLW_inst_DDR_DQS_n_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal NLW_inst_DMA0_DATYPE_UNCONNECTED : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal NLW_inst_DMA1_DATYPE_UNCONNECTED : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal NLW_inst_DMA2_DATYPE_UNCONNECTED : STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -3827,10 +3827,21 @@ architecture STRUCTURE of design_1_processing_system7_0_0 is
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of inst : label is "design_1_processing_system7_0_0.hwdef";
   attribute POWER : string;
-  attribute POWER of inst : label is "<PROCESSOR name={system} numA9Cores={2} clockFreq={666.666666} load={0.5} /><MEMORY name={code} memType={} dataWidth={} clockFreq={533.333} readRate={0.5} writeRate={0.5} /><PLL domain={Processor} vco={1333.333} /><PLL domain={Memory} vco={1066.667} /><PLL domain={IO} vco={1600.000} />/>";
+  attribute POWER of inst : label is "<PROCESSOR name={system} numA9Cores={2} clockFreq={666.666666} load={0.5} /><MEMORY name={code} memType={DDR3} dataWidth={16} clockFreq={533.333} readRate={0.5} writeRate={0.5} /><IO interface={UART} ioStandard={LVCMOS33} bidis={2} ioBank={Vcco_p1} clockFreq={100.000000} usageRate={0.5} /><PLL domain={Processor} vco={1333.333} /><PLL domain={Memory} vco={1066.667} /><PLL domain={IO} vco={1600.000} />/>";
   attribute USE_TRACE_DATA_EDGE_DETECTOR : integer;
   attribute USE_TRACE_DATA_EDGE_DETECTOR of inst : label is 0;
   attribute X_INTERFACE_INFO : string;
+  attribute X_INTERFACE_INFO of DDR_CAS_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CAS_N";
+  attribute X_INTERFACE_INFO of DDR_CKE : signal is "xilinx.com:interface:ddrx:1.0 DDR CKE";
+  attribute X_INTERFACE_INFO of DDR_CS_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CS_N";
+  attribute X_INTERFACE_INFO of DDR_Clk : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_P";
+  attribute X_INTERFACE_INFO of DDR_Clk_n : signal is "xilinx.com:interface:ddrx:1.0 DDR CK_N";
+  attribute X_INTERFACE_INFO of DDR_DRSTB : signal is "xilinx.com:interface:ddrx:1.0 DDR RESET_N";
+  attribute X_INTERFACE_INFO of DDR_ODT : signal is "xilinx.com:interface:ddrx:1.0 DDR ODT";
+  attribute X_INTERFACE_INFO of DDR_RAS_n : signal is "xilinx.com:interface:ddrx:1.0 DDR RAS_N";
+  attribute X_INTERFACE_INFO of DDR_VRN : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN";
+  attribute X_INTERFACE_INFO of DDR_VRP : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP";
+  attribute X_INTERFACE_INFO of DDR_WEB : signal is "xilinx.com:interface:ddrx:1.0 DDR WE_N";
   attribute X_INTERFACE_INFO of FCLK_CLK0 : signal is "xilinx.com:signal:clock:1.0 FCLK_CLK0 CLK";
   attribute X_INTERFACE_PARAMETER : string;
   attribute X_INTERFACE_PARAMETER of FCLK_CLK0 : signal is "XIL_INTERFACENAME FCLK_CLK0, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0";
@@ -3840,6 +3851,13 @@ architecture STRUCTURE of design_1_processing_system7_0_0 is
   attribute X_INTERFACE_INFO of PS_PORB : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB";
   attribute X_INTERFACE_PARAMETER of PS_PORB : signal is "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false";
   attribute X_INTERFACE_INFO of PS_SRSTB : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB";
+  attribute X_INTERFACE_INFO of DDR_Addr : signal is "xilinx.com:interface:ddrx:1.0 DDR ADDR";
+  attribute X_INTERFACE_INFO of DDR_BankAddr : signal is "xilinx.com:interface:ddrx:1.0 DDR BA";
+  attribute X_INTERFACE_INFO of DDR_DM : signal is "xilinx.com:interface:ddrx:1.0 DDR DM";
+  attribute X_INTERFACE_INFO of DDR_DQ : signal is "xilinx.com:interface:ddrx:1.0 DDR DQ";
+  attribute X_INTERFACE_INFO of DDR_DQS : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_P";
+  attribute X_INTERFACE_PARAMETER of DDR_DQS : signal is "XIL_INTERFACENAME DDR, CAN_DEBUG false, TIMEPERIOD_PS 1250, MEMORY_TYPE COMPONENTS, DATA_WIDTH 8, CS_ENABLED true, DATA_MASK_ENABLED true, SLOT Single, MEM_ADDR_MAP ROW_COLUMN_BANK, BURST_LENGTH 8, AXI_ARBITRATION_SCHEME TDM, CAS_LATENCY 11, CAS_WRITE_LATENCY 11";
+  attribute X_INTERFACE_INFO of DDR_DQS_n : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_N";
   attribute X_INTERFACE_INFO of MIO : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
 begin
 inst: entity work.design_1_processing_system7_0_0_processing_system7_v5_5_processing_system7
@@ -3853,23 +3871,23 @@ inst: entity work.design_1_processing_system7_0_0_processing_system7_v5_5_proces
       Core1_nFIQ => '0',
       Core1_nIRQ => '0',
       DDR_ARB(3 downto 0) => B"0000",
-      DDR_Addr(14 downto 0) => NLW_inst_DDR_Addr_UNCONNECTED(14 downto 0),
-      DDR_BankAddr(2 downto 0) => NLW_inst_DDR_BankAddr_UNCONNECTED(2 downto 0),
-      DDR_CAS_n => NLW_inst_DDR_CAS_n_UNCONNECTED,
-      DDR_CKE => NLW_inst_DDR_CKE_UNCONNECTED,
-      DDR_CS_n => NLW_inst_DDR_CS_n_UNCONNECTED,
-      DDR_Clk => NLW_inst_DDR_Clk_UNCONNECTED,
-      DDR_Clk_n => NLW_inst_DDR_Clk_n_UNCONNECTED,
-      DDR_DM(3 downto 0) => NLW_inst_DDR_DM_UNCONNECTED(3 downto 0),
-      DDR_DQ(31 downto 0) => NLW_inst_DDR_DQ_UNCONNECTED(31 downto 0),
-      DDR_DQS(3 downto 0) => NLW_inst_DDR_DQS_UNCONNECTED(3 downto 0),
-      DDR_DQS_n(3 downto 0) => NLW_inst_DDR_DQS_n_UNCONNECTED(3 downto 0),
-      DDR_DRSTB => NLW_inst_DDR_DRSTB_UNCONNECTED,
-      DDR_ODT => NLW_inst_DDR_ODT_UNCONNECTED,
-      DDR_RAS_n => NLW_inst_DDR_RAS_n_UNCONNECTED,
-      DDR_VRN => NLW_inst_DDR_VRN_UNCONNECTED,
-      DDR_VRP => NLW_inst_DDR_VRP_UNCONNECTED,
-      DDR_WEB => NLW_inst_DDR_WEB_UNCONNECTED,
+      DDR_Addr(14 downto 0) => DDR_Addr(14 downto 0),
+      DDR_BankAddr(2 downto 0) => DDR_BankAddr(2 downto 0),
+      DDR_CAS_n => DDR_CAS_n,
+      DDR_CKE => DDR_CKE,
+      DDR_CS_n => DDR_CS_n,
+      DDR_Clk => DDR_Clk,
+      DDR_Clk_n => DDR_Clk_n,
+      DDR_DM(3 downto 0) => DDR_DM(3 downto 0),
+      DDR_DQ(31 downto 0) => DDR_DQ(31 downto 0),
+      DDR_DQS(3 downto 0) => DDR_DQS(3 downto 0),
+      DDR_DQS_n(3 downto 0) => DDR_DQS_n(3 downto 0),
+      DDR_DRSTB => DDR_DRSTB,
+      DDR_ODT => DDR_ODT,
+      DDR_RAS_n => DDR_RAS_n,
+      DDR_VRN => DDR_VRN,
+      DDR_VRP => DDR_VRP,
+      DDR_WEB => DDR_WEB,
       DMA0_ACLK => '0',
       DMA0_DAREADY => '0',
       DMA0_DATYPE(1 downto 0) => NLW_inst_DMA0_DATYPE_UNCONNECTED(1 downto 0),

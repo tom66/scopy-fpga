@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date             : Fri Dec 13 13:12:05 2019
+| Date             : Sat Dec 14 13:26:43 2019
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.518        |
+| Total On-Chip Power (W)  | 1.538        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.382        |
-| Device Static (W)        | 0.136        |
+| Dynamic (W)              | 1.399        |
+| Device Static (W)        | 0.139        |
 | Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 67.5         |
-| Junction Temperature (C) | 42.5         |
+| Max Ambient (C)          | 67.3         |
+| Junction Temperature (C) | 42.7         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,18 +52,18 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.002 |        7 |       --- |             --- |
-| Slice Logic    |    <0.001 |      733 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      241 |     40600 |            0.59 |
-|   CARRY4       |    <0.001 |       38 |     13300 |            0.29 |
-|   Register     |    <0.001 |      283 |     81200 |            0.35 |
+| Clocks         |     0.015 |        7 |       --- |             --- |
+| Slice Logic    |     0.002 |      784 |       --- |             --- |
+|   LUT as Logic |     0.001 |      264 |     40600 |            0.65 |
+|   CARRY4       |    <0.001 |       40 |     13300 |            0.30 |
+|   Register     |    <0.001 |      314 |     81200 |            0.39 |
 |   Others       |     0.000 |      141 |       --- |             --- |
-| Signals        |    <0.001 |      451 |       --- |             --- |
-| MMCM           |     0.105 |        1 |         4 |           25.00 |
-| I/O            |     0.002 |       14 |       125 |           11.20 |
+| Signals        |     0.003 |      520 |       --- |             --- |
+| MMCM           |     0.102 |        1 |         4 |           25.00 |
+| I/O            |     0.006 |       14 |       125 |           11.20 |
 | PS7            |     1.272 |        1 |       --- |             --- |
-| Static Power   |     0.136 |          |           |                 |
-| Total          |     1.518 |          |           |                 |
+| Static Power   |     0.139 |          |           |                 |
+| Total          |     1.538 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,11 +73,11 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.017 |       0.003 |      0.014 |
-| Vccaux    |       1.800 |     0.073 |       0.058 |      0.015 |
+| Vccint    |       1.000 |     0.036 |       0.022 |      0.014 |
+| Vccaux    |       1.800 |     0.070 |       0.056 |      0.015 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
-| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
-| Vcco18    |       1.800 |     0.002 |       0.001 |      0.001 |
+| Vcco25    |       2.500 |     0.001 |       0.000 |      0.001 |
+| Vcco18    |       1.800 |     0.004 |       0.003 |      0.001 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
@@ -138,8 +138,8 @@ Table of Contents
 +-----------------------+-----------------------------------------------------------------+-----------------+
 | clk_fpga_0            | nolabel_line42/processing_system7_0/inst/FCLK_CLK0              |            20.0 |
 | clk_fpga_0            | nolabel_line42/processing_system7_0/inst/FCLK_CLK_unbuffered[0] |            20.0 |
-| clk_out1_0_clk_wiz_0  | nolabel_line46/inst/clk_out1_0_clk_wiz_0                        |            25.0 |
-| clk_out1_90_clk_wiz_0 | nolabel_line46/inst/clk_out1_90_clk_wiz_0                       |            25.0 |
+| clk_out1_0_clk_wiz_0  | nolabel_line46/inst/clk_out1_0_clk_wiz_0                        |             3.3 |
+| clk_out1_90_clk_wiz_0 | nolabel_line46/inst/clk_out1_90_clk_wiz_0                       |             3.3 |
 | clkfbout_clk_wiz_0    | nolabel_line46/inst/clkfbout_clk_wiz_0                          |            20.0 |
 +-----------------------+-----------------------------------------------------------------+-----------------+
 
@@ -153,13 +153,16 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| main                     |     1.382 |
-|   nolabel_line113        |     0.004 |
+| main                     |     1.399 |
+|   nolabel_line115        |     0.019 |
+|     OBUFDS_inst_lane0    |     0.002 |
+|     OBUFDS_inst_lane1    |     0.002 |
+|     OBUFDS_inst_lane_clk |     0.002 |
 |   nolabel_line42         |     1.272 |
 |     processing_system7_0 |     1.272 |
 |       inst               |     1.272 |
-|   nolabel_line46         |     0.106 |
-|     inst                 |     0.106 |
+|   nolabel_line46         |     0.103 |
+|     inst                 |     0.103 |
 +--------------------------+-----------+
 
 

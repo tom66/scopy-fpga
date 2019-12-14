@@ -89,7 +89,7 @@ reg [1:0] mipi_vc_id = 0;
 reg [5:0] mipi_dt_id = 8'h2b;
 reg [15:0] mipi_wct_short = 0;
 
-reg mipi_sleep = 1;
+reg mipi_sleep = 0;
 
 // Test counters for test pattern generation
 reg [31:0] counter;
@@ -99,7 +99,7 @@ reg [15:0] mem_test_data = 16'hf0f0;
 reg [15:0] mem_test_reg = 1;
 
 // *** testing ***
-reg [15:0] data_lines;
+reg [15:0] data_lines = 0;
 reg [15:0] frame = 1;
 reg [15:0] xcoord;
 
@@ -109,6 +109,8 @@ reg [31:0] sine_scale_reg;
 reg [15:0] sine_scale;
 
 wire [15:0] mipi_bytes_output;
+
+wire debug_led0, debug_led1;
 
 mipi_csi (
     // master clock references
@@ -137,7 +139,7 @@ mipi_csi (
     .debug_led1(debug_led1),
     
     // Clock gating: 
-    //  1 - clock stops during idle periods
+    //  1 - clock stops during idle periods (auto-reconnect after CSI interruption is possible)
     //  0 - clock continues after initialisation period indefinitely
     //
     // Note that '1' seems to break the Pi's communication interface - further work required on this
@@ -193,7 +195,7 @@ parameter STATE_INIT_MIPI = 2;
 parameter STATE_SEND_PACKET = 3;
 reg test0, test1;
 
-reg [7:0] cam_state = STATE_INIT_TX;
+reg [7:0] cam_state = STATE_FRAME_START;
 reg [23:0] cam_start_idle_counter = 16'h0100;
 reg [23:0] cam_end_idle_counter = 16'h8000;
 
@@ -231,6 +233,7 @@ always @(posedge clk_mipi_ref) begin
 
     case (cam_state) 
     
+        /*
         // start of transmission - init MIPI controller
         STATE_INIT_TX: begin
             mipi_sleep <= 0;
@@ -240,7 +243,8 @@ always @(posedge clk_mipi_ref) begin
                 cam_state <= STATE_FRAME_START;
             end
         end
-    
+        */
+        
         // start of frame - 00h with frame counter (typically)
         STATE_FRAME_START: begin
             // Virtual Channel 0 with Frame Start Code 0x00
@@ -268,7 +272,7 @@ always @(posedge clk_mipi_ref) begin
             if (!mipi_busy_status) begin
                 // Move to STATE_FRAME_START_IDLE state with idle counter loaded
                 cam_state <= STATE_FRAME_START_IDLE;
-                cam_start_idle_counter <= 16'h0040;
+                cam_start_idle_counter <= 16'h0100;
             end
         end
                     
@@ -276,9 +280,6 @@ always @(posedge clk_mipi_ref) begin
             mipi_long_packet <= 0;
             mipi_short_packet <= 0;
             mipi_idle_packet <= 1;
-            
-            //am_state <= STATE_FRAME_DATA_LINE;
-            //data_lines <= 10;
                             
             // Pause of "N" clocks before sending data
             if (cam_start_idle_counter == 0) begin      
@@ -381,7 +382,7 @@ always @(posedge clk_mipi_ref) begin
             mipi_long_packet <= 0;
             mipi_short_packet <= 0;
             mipi_idle_packet <= 1;
-            cam_end_idle_counter <= 16'h0040;
+            cam_end_idle_counter <= 16'h0100;
             cam_state <= STATE_FRAME_END_IDLE;
         end
         
@@ -408,7 +409,7 @@ always @(posedge clk_mipi_ref) begin
         sine_scale_reg <= (((sine_scale_int + 16'h8000) & 16'hff00) >> 8) * 16'h0101;
         //sine_scale_reg <= ((((sine_data * (data_lines & 255)) >> 8) & 16'hff00) >> 8) * 16'h0101;
         //mem_test_data <= sine_scale_reg;
-        mem_test_data <= 16'h0001;
+        mem_test_data <= counter;
     end
             
     /* Test Pattern for Noisy Sine */

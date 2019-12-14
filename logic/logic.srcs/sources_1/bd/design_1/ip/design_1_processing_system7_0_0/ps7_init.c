@@ -2288,6 +2288,16 @@ unsigned long ps7_post_config_3_0[] = {
     // .. .. START: AFI3 REGISTERS
     // .. .. FINISH: AFI3 REGISTERS
     // .. .. START: AFI2 SECURE REGISTER
+    // .. .. gp0_axi = 1
+    // .. .. ==> 0XF890001C[0:0] = 0x00000001U
+    // .. ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
+    // .. .. 
+    EMIT_WRITE(0XF890001C, 0x00000001U),
+    // .. .. gp1_axi = 1
+    // .. .. ==> 0XF8900020[0:0] = 0x00000001U
+    // .. ..     ==> MASK : 0x00000001U    VAL : 0x00000001U
+    // .. .. 
+    EMIT_WRITE(0XF8900020, 0x00000001U),
     // .. .. FINISH: AFI2 SECURE REGISTER
     // .. FINISH: AFI REGISTERS
     // .. START: LOCK IT BACK
