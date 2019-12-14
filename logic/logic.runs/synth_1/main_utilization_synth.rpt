@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Sat Dec 14 13:24:56 2019
+| Date         : Sat Dec 14 18:53:51 2019
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |  266 |     0 |     40600 |  0.66 |
-|   LUT as Logic          |  266 |     0 |     40600 |  0.66 |
+| Slice LUTs*             |  265 |     0 |     40600 |  0.65 |
+|   LUT as Logic          |  265 |     0 |     40600 |  0.65 |
 |   LUT as Memory         |    0 |     0 |     17400 |  0.00 |
-| Slice Registers         |  334 |     0 |     81200 |  0.41 |
-|   Register as Flip Flop |  334 |     0 |     81200 |  0.41 |
+| Slice Registers         |  292 |     0 |     81200 |  0.36 |
+|   Register as Flip Flop |  292 |     0 |     81200 |  0.36 |
 |   Register as Latch     |    0 |     0 |     81200 |  0.00 |
 | F7 Muxes                |    0 |     0 |     26600 |  0.00 |
 | F8 Muxes                |    0 |     0 |     13300 |  0.00 |
@@ -57,7 +57,7 @@ Table of Contents
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 1     |          Yes |         Set |            - |
-| 333   |          Yes |       Reset |            - |
+| 291   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -147,11 +147,11 @@ Table of Contents
 +-----------+------+---------------------+
 |  Ref Name | Used | Functional Category |
 +-----------+------+---------------------+
-| FDRE      |  333 |        Flop & Latch |
-| LUT1      |   86 |                 LUT |
+| FDRE      |  291 |        Flop & Latch |
+| LUT1      |   85 |                 LUT |
 | LUT4      |   64 |                 LUT |
 | LUT6      |   59 |                 LUT |
-| CARRY4    |   43 |          CarryLogic |
+| CARRY4    |   39 |          CarryLogic |
 | LUT5      |   32 |                 LUT |
 | LUT3      |   24 |                 LUT |
 | LUT2      |   24 |                 LUT |
@@ -172,7 +172,11 @@ Table of Contents
 +---------------------------------+------+
 |             Ref Name            | Used |
 +---------------------------------+------+
+| design_1_rst_ps7_0_50M_0        |    1 |
 | design_1_processing_system7_0_0 |    1 |
+| design_1_axi_smc_0              |    1 |
+| design_1_axi_bram_ctrl_0_bram_0 |    1 |
+| design_1_axi_bram_ctrl_0_0      |    1 |
 | clk_wiz_0                       |    1 |
 | blk_mem_gen_0                   |    1 |
 +---------------------------------+------+

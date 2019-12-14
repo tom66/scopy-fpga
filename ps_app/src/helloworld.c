@@ -50,6 +50,8 @@
 
 #include "platform.h"
 #include "xil_printf.h"
+#include "xil_types.h"
+#include "xil_io.h"
 
 uint32_t *mem_addr;
 uint32_t *base;
@@ -83,7 +85,51 @@ int main()
 
     init_platform();
 
-    while(1) ;
+	debug_printf("DemoApp v1.0\r\n");
+
+	base = 0x40000000;
+
+    while(1) {
+		debug_printf("Running %d\r\n", loops++);
+
+		/* Block 1 */
+		srand(loops);
+		mem_addr = base;
+
+		for(i = 0; i < 1024; i++) {
+			data = 0xff00ff00;
+			debug_printf("addr=0x%08x data_write=0x%08x\r\n", mem_addr, data);
+			*mem_addr = data;
+			mem_addr++;
+		}
+
+		srand(loops);
+		mem_addr = base;
+
+		for(i = 0; i < 1024; i++) {
+			debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+			mem_addr++;
+		}
+
+		/* Block 2 */
+		srand(loops);
+		mem_addr = base;
+
+		for(i = 0; i < 1024; i++) {
+			data = rand();
+			debug_printf("addr=0x%08x data_write=0x%08x\r\n", mem_addr, data);
+			*mem_addr = data;
+			mem_addr++;
+		}
+
+		srand(loops);
+		mem_addr = base;
+
+		for(i = 0; i < 1024; i++) {
+			debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+			mem_addr++;
+		}
+    }
 
 #if 0
     while(1) {

@@ -39,8 +39,23 @@ output led_PL0, led_PL1;
 
 wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
+wire [13:0] bram_addr;
+//wire [31:0] bram_din;
+wire [31:0] bram_dout;
+wire bram_en;
+reg bram_rst = 0;
+reg bram_we = 0;
+wire bram_clk;
+
 design_1 (
-    .FCLK_CLK0(clk_master_50)
+    .FCLK_CLK0(clk_master_50),
+    .BRAM_PORTB_0_addr(bram_addr),
+    .BRAM_PORTB_0_clk(bram_clk),
+    //.BRAM_PORTB_0_din(bram_din),
+    .BRAM_PORTB_0_dout(bram_dout),
+    .BRAM_PORTB_0_en(1),
+    .BRAM_PORTB_0_rst(1),
+    .BRAM_PORTB_0_we(0)
 );
 
 clk_wiz_0 (
@@ -146,10 +161,17 @@ mipi_csi (
     .clock_gate_en(0),
     
     // BlockRAM memory interface
+    /*
     .mem_read_clk(mipi_mem_read_clk),
     .mem_read_en(mipi_mem_read_en),
     .mem_addr(mipi_mem_addr),
     .mem_data(mem_test_data), 
+    .bytes_output(mipi_bytes_output),
+    */
+    .mem_read_clk(bram_clk),
+    .mem_read_en(bram_en),
+    .mem_addr(bram_addr),
+    .mem_data(bram_dout), 
     .bytes_output(mipi_bytes_output),
     
     // Virtual channel ID, for debugging attach to s7/s6
@@ -403,7 +425,7 @@ always @(posedge clk_mipi_ref) begin
     xcoord <= xcoord + 1;
 
     /* Test Pattern for Slow AM Sine */
-    if (1) begin
+    if (0) begin
         sine_addr <= ((mipi_bytes_output >> 1) + 0) & 2047;
         sine_scale_int <= ((((16'h8000 - sine_data) * ((((data_lines & 255) * 3) >> 2) + 30)) >> 8) * ((frame >> 4) & 255)) >> 8;
         sine_scale_reg <= (((sine_scale_int + 16'h8000) & 16'hff00) >> 8) * 16'h0101;

@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Sat Dec 14 13:26:42 2019
+| Date         : Sat Dec 14 18:56:19 2019
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_methodology -file main_methodology_drc_routed.rpt -pb main_methodology_drc_routed.pb -rpx main_methodology_drc_routed.rpx
 | Design       : main
@@ -23,155 +23,190 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 28
+             Violations found: 35
 +-----------+----------+----------------------------------------------------+------------+
 | Rule      | Severity | Description                                        | Violations |
 +-----------+----------+----------------------------------------------------+------------+
-| TIMING-2  | Warning  | Invalid primary clock source pin                   | 1          |
 | TIMING-4  | Warning  | Invalid primary clock redefinition on a clock tree | 1          |
-| TIMING-16 | Warning  | Large setup violation                              | 26         |
+| TIMING-16 | Warning  | Large setup violation                              | 33         |
+| TIMING-27 | Warning  | Invalid primary clock on hierarchical pin          | 1          |
 +-----------+----------+----------------------------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
-TIMING-2#1 Warning
-Invalid primary clock source pin  
-A primary clock nolabel_line46/inst/clk_in1 is created on an inappropriate pin nolabel_line46/inst/clk_in1. It is recommended to create a primary clock only on a proper clock source (input port or primitive output pin with no timing arc)
-Related violations: <none>
-
 TIMING-4#1 Warning
 Invalid primary clock redefinition on a clock tree  
-Invalid clock redefinition on a clock tree. The primary clock nolabel_line46/inst/clk_in1 is defined downstream of clock clk_fpga_0 and overrides its insertion delay and/or waveform definition
+Invalid clock redefinition on a clock tree. The primary clock nolabel_line61/inst/clk_in1 is defined downstream of clock clk_fpga_0 and overrides its insertion delay and/or waveform definition
 Related violations: <none>
 
 TIMING-16#1 Warning
 Large setup violation  
-There is a large setup violation of -1.112 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and data_lines_reg[1]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.012 ns between nolabel_line130/state_timer_2_reg[7]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/FSM_onehot_current_state_reg[3]/CE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#2 Warning
 Large setup violation  
-There is a large setup violation of -1.112 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and data_lines_reg[2]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.012 ns between nolabel_line130/state_timer_2_reg[7]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/FSM_onehot_current_state_reg[5]/CE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#3 Warning
 Large setup violation  
-There is a large setup violation of -1.112 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and data_lines_reg[3]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.056 ns between cam_end_idle_counter_reg[4]/C (clocked by clk_out1_0_clk_wiz_0) and cam_end_idle_counter_reg[17]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#4 Warning
 Large setup violation  
-There is a large setup violation of -1.112 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and data_lines_reg[4]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.056 ns between cam_end_idle_counter_reg[4]/C (clocked by clk_out1_0_clk_wiz_0) and cam_end_idle_counter_reg[18]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#5 Warning
 Large setup violation  
-There is a large setup violation of -1.114 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[14]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.056 ns between cam_end_idle_counter_reg[4]/C (clocked by clk_out1_0_clk_wiz_0) and cam_end_idle_counter_reg[22]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#6 Warning
 Large setup violation  
-There is a large setup violation of -1.114 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[20]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[12]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#7 Warning
 Large setup violation  
-There is a large setup violation of -1.114 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[21]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[1]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#8 Warning
 Large setup violation  
-There is a large setup violation of -1.209 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[13]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[2]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#9 Warning
 Large setup violation  
-There is a large setup violation of -1.209 ns between cam_start_idle_counter_reg[22]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[17]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[3]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#10 Warning
 Large setup violation  
-There is a large setup violation of -1.247 ns between nolabel_line115/oddr_hiz_latch_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d1_inst/T1 (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[4]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#11 Warning
 Large setup violation  
-There is a large setup violation of -1.248 ns between nolabel_line115/oddr_hiz_latch_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d0_inst/T1 (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[5]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#12 Warning
 Large setup violation  
-There is a large setup violation of -1.289 ns between nolabel_line115/oddr_tclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d1_inst/TCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[6]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#13 Warning
 Large setup violation  
-There is a large setup violation of -1.337 ns between nolabel_line115/oddr_tclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d0_inst/TCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.085 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[7]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#14 Warning
 Large setup violation  
-There is a large setup violation of -1.389 ns between nolabel_line115/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/D6 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.103 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[10]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#15 Warning
 Large setup violation  
-There is a large setup violation of -1.390 ns between nolabel_line115/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/D4 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.103 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[11]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#16 Warning
 Large setup violation  
-There is a large setup violation of -1.402 ns between nolabel_line115/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/D2 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.103 ns between cam_start_idle_counter_reg[19]/C (clocked by clk_out1_0_clk_wiz_0) and cam_start_idle_counter_reg[9]/R (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#17 Warning
 Large setup violation  
-There is a large setup violation of -1.403 ns between nolabel_line115/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/D8 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.204 ns between nolabel_line130/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and csi_lpd0_n_OBUFT_inst_i_1/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#18 Warning
 Large setup violation  
-There is a large setup violation of -1.576 ns between nolabel_line115/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and csi_lpd0_n_OBUFT_inst_i_1/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.389 ns between nolabel_line130/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/D6 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#19 Warning
 Large setup violation  
-There is a large setup violation of -1.708 ns between nolabel_line115/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/csi_dn0_lp_lat_tristate_oe_reg/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.390 ns between nolabel_line130/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/D4 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#20 Warning
 Large setup violation  
-There is a large setup violation of -1.712 ns between csi_lpclk_n_OBUFT_inst_i_1/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/T1 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.402 ns between nolabel_line130/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/D2 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#21 Warning
 Large setup violation  
-There is a large setup violation of -1.764 ns between nolabel_line115/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/csi_dp0_lp_lat_tristate_oe_reg/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.403 ns between nolabel_line130/clkout_gen_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/D8 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#22 Warning
 Large setup violation  
-There is a large setup violation of -1.772 ns between nolabel_line115/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/csi_dp0_lp_lat_tristate_oe_reg_lopt_replica/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.468 ns between nolabel_line130/oddr_tclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d1_inst/TCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#23 Warning
 Large setup violation  
-There is a large setup violation of -1.991 ns between nolabel_line115/oddr_oclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d0_inst/OCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.469 ns between nolabel_line130/oddr_tclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d0_inst/TCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#24 Warning
 Large setup violation  
-There is a large setup violation of -2.068 ns between nolabel_line115/oddr_oclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_d1_inst/OCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.477 ns between nolabel_line130/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/csi_dn0_lp_lat_tristate_oe_reg/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#25 Warning
 Large setup violation  
-There is a large setup violation of -2.694 ns between nolabel_line115/mod_clk_div_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/bufgce_mipi_clkout_div/CE0 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.534 ns between nolabel_line130/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/csi_dp0_lp_lat_tristate_oe_reg/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#26 Warning
 Large setup violation  
-There is a large setup violation of -3.605 ns between nolabel_line115/clk_rst_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line115/OSERDESE2_lane_clk_inst/RST (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.549 ns between nolabel_line130/csi_lp_state_lat_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/csi_dp0_lp_lat_tristate_oe_reg_lopt_replica/D (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#27 Warning
+Large setup violation  
+There is a large setup violation of -1.712 ns between csi_lpclk_n_OBUFT_inst_i_1/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/T1 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#28 Warning
+Large setup violation  
+There is a large setup violation of -2.019 ns between nolabel_line130/oddr_hiz_latch_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d0_inst/T1 (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#29 Warning
+Large setup violation  
+There is a large setup violation of -2.038 ns between nolabel_line130/oddr_hiz_latch_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d1_inst/T1 (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#30 Warning
+Large setup violation  
+There is a large setup violation of -2.060 ns between nolabel_line130/oddr_oclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d1_inst/OCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#31 Warning
+Large setup violation  
+There is a large setup violation of -2.079 ns between nolabel_line130/oddr_oclk_en_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_d0_inst/OCE (clocked by clk_out1_0_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#32 Warning
+Large setup violation  
+There is a large setup violation of -2.675 ns between nolabel_line130/mod_clk_div_reg[1]/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/bufgce_mipi_clkout_div/CE0 (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#33 Warning
+Large setup violation  
+There is a large setup violation of -4.085 ns between nolabel_line130/clk_rst_clkalign_reg/C (clocked by clk_out1_0_clk_wiz_0) and nolabel_line130/OSERDESE2_lane_clk_inst/RST (clocked by clk_out1_90_clk_wiz_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-27#1 Warning
+Invalid primary clock on hierarchical pin  
+A primary clock nolabel_line61/inst/clk_in1 is created on an inappropriate internal pin nolabel_line61/inst/clk_in1. It is not recommended to create a primary clock on a hierarchical pin when its driver pin has a fanout connected to multiple clock pins
 Related violations: <none>
 
 

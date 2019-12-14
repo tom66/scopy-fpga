@@ -1276,3 +1276,740 @@ make pre-build main-build
 a9-linaro-pre-build-step
 ' '
 make: Nothing to be done for 'main-build'.
+16:30:43 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:86:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63748	   2580	   9008	  75336	  12648	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:30:48 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:31:22 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:31:56 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:33:07 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:33:59 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:36:49 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63764	   2580	   9008	  75352	  12658	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:36:51 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:37:38 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63844	   2580	   9008	  75432	  126a8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:37:39 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:38:04 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63844	   2580	   9008	  75432	  126a8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:38:06 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:39:15 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63844	   2580	   9008	  75432	  126a8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:39:22 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:55:24 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:45:15 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64004	   2580	   9008	  75592	  12748	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:46:00 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64068	   2580	   9008	  75656	  12788	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:47:31 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63700	   2580	   9008	  75288	  12618	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:51:42 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64068	   2580	   9008	  75656	  12788	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:51:57 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+18:52:29 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:88:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:82:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:81:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:79:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64004	   2580	   9008	  75592	  12748	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:57:14 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:06:43 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:92:2: error: 'Xil_32Out' undeclared (first use in this function); did you mean 'Xil_Out8'?
+  Xil_32Out
+  ^~~~~~~~~
+  Xil_Out8
+../src/helloworld.c:92:2: note: each undeclared identifier is reported only once for each function it appears in
+../src/helloworld.c:94:5: error: expected ';' before 'while'
+     while(1) {
+     ^~~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:83:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:82:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:81:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+make: *** [src/subdir.mk:26: src/helloworld.o] Error 1
+19:07:22 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:83:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:81:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64004	   2580	   9008	  75592	  12748	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:08:02 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:95:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(i);
+   ^~~~~
+   scanf
+../src/helloworld.c:100:16: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    *mem_addr = rand();
+                ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:83:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:81:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64148	   2580	   9008	  75736	  127d8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:08:04 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:09:46 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:95:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(i);
+   ^~~~~
+   scanf
+../src/helloworld.c:99:11: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    data = rand();
+           ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:83:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64228	   2580	   9008	  75816	  12828	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:09:49 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:10:43 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:95:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:99:11: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    data = rand();
+           ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64228	   2580	   9008	  75816	  12828	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:10:48 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:14:10 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:95:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:109:88: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+                                                                                        ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64228	   2580	   9008	  75816	  12828	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:14:18 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:15:00 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:95:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:109:88: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+                                                                                        ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64228	   2580	   9008	  75816	  12828	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:15:02 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:15:20 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:16:37 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:96:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:110:88: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+                                                                                        ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64484	   2580	   9008	  76072	  12928	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:16:39 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:90:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x40000000;
+       ^
+../src/helloworld.c:96:3: warning: implicit declaration of function 'srand'; did you mean 'scanf'? [-Wimplicit-function-declaration]
+   srand(loops);
+   ^~~~~
+   scanf
+../src/helloworld.c:110:88: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+    debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
+                                                                                        ^~~~
+../src/helloworld.c:84:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64484	   2580	   9008	  76072	  12928	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:16:41 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.

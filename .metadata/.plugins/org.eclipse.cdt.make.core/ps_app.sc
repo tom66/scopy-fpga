@@ -2,6 +2,9 @@
 <?scdStore version="2"?><scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
 <instance id="xilinx.gnu.armv7.exe.debug.1749208168;xilinx.gnu.armv7.exe.debug.1749208168.">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="#undef __thumb__" removed="true"/>
+<includePath path="#undef __thumb2__" removed="true"/>
+<includePath path="#undef __THUMBEL__" removed="true"/>
 <includePath path="#undef __ARM_FEATURE_DOTPROD" removed="true"/>
 <includePath path="g:\xilinx\sdk\2018.3\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../lib/gcc/arm-none-eabi/7.3.1/include"/>
 <includePath path="#undef __ARM_FEATURE_CMSE" removed="true"/>
