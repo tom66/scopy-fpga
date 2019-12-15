@@ -1,4 +1,3 @@
-  
 `timescale 1ns / 1ns
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -39,24 +38,52 @@ output led_PL0, led_PL1;
 
 wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
-wire [13:0] bram_addr;
-//wire [31:0] bram_din;
-wire [31:0] bram_dout;
-wire bram_en;
-reg bram_rst = 0;
-reg bram_we = 0;
-wire bram_clk;
+reg [31:0] straxi_data_in = 8'h00000000;
+reg [31:0] axi_internal_timer = 0;
+reg straxi_valid = 0, straxi_rstn = 0; 
+reg straxi_clk = 0;
+wire straxi_ready;
+wire [31:0] straxi_wrtcnt_dbg;
+
+//assign led_PL1 = (straxi_wrtcnt_dbg & 8'h00000001) != 0;
+
+assign led_PL0 = straxi_valid;
+assign led_PL1 = straxi_ready;
 
 design_1 (
     .FCLK_CLK0(clk_master_50),
-    .BRAM_PORTB_0_addr(bram_addr),
-    .BRAM_PORTB_0_clk(bram_clk),
-    //.BRAM_PORTB_0_din(bram_din),
-    .BRAM_PORTB_0_dout(bram_dout),
-    .BRAM_PORTB_0_en(1),
-    .BRAM_PORTB_0_rst(1),
-    .BRAM_PORTB_0_we(0)
+    .STRAXI_DATA_PORT(8'h55cc55cc),
+    .STRAXI_DATA_VALID(straxi_valid),   // data ~always valid
+    .STRAXI_DATA_ARSTN(straxi_rstn),    // reset not asserted
+    .STRAXI_DATA_CLK(straxi_clk),
+    .STRAXI_DATA_READY(straxi_ready),
+    .STRAXI_DATA_WRTCNT(straxi_wrtcnt_dbg)
 );
+
+always @(posedge clk_master_50) begin
+    // DMA xfer test: data port with continuous counter used
+    // PS will DMA this into buffers as required
+    axi_internal_timer <= axi_internal_timer + 1;
+    
+    if (axi_internal_timer > 100) begin
+        straxi_rstn <= 1;
+    end
+    
+    if (axi_internal_timer > 200) begin
+        straxi_data_in <= 8'h55555555 + axi_internal_timer;
+        straxi_clk <= ~straxi_clk;
+        
+        // toggle VALID on every frame for 2 cycles
+        if ((axi_internal_timer & 31) < 2) begin
+            straxi_valid <= 0;
+        end else begin
+            straxi_valid <= 1;
+        end
+    end else begin
+        straxi_valid <= 0;
+        straxi_data_in <= 0;
+    end
+end
 
 clk_wiz_0 (
     .clk_out1_0(clk_mipi_0),
@@ -125,7 +152,7 @@ reg [15:0] sine_scale;
 
 wire [15:0] mipi_bytes_output;
 
-wire debug_led0, debug_led1;
+//wire debug_led0, debug_led1;
 
 mipi_csi (
     // master clock references
@@ -150,8 +177,8 @@ mipi_csi (
     .debug(mipi_debug),
     
     // LED outputs
-    .debug_led0(debug_led0),
-    .debug_led1(debug_led1),
+    //.debug_led0(debug_led0),
+    //.debug_led1(debug_led1),
     
     // Clock gating: 
     //  1 - clock stops during idle periods (auto-reconnect after CSI interruption is possible)
@@ -161,18 +188,18 @@ mipi_csi (
     .clock_gate_en(0),
     
     // BlockRAM memory interface
-    /*
     .mem_read_clk(mipi_mem_read_clk),
     .mem_read_en(mipi_mem_read_en),
     .mem_addr(mipi_mem_addr),
     .mem_data(mem_test_data), 
     .bytes_output(mipi_bytes_output),
-    */
+    /*
     .mem_read_clk(bram_clk),
     .mem_read_en(bram_en),
     .mem_addr(bram_addr),
     .mem_data(bram_dout), 
     .bytes_output(mipi_bytes_output),
+    */
     
     // Virtual channel ID, for debugging attach to s7/s6
     .vc_id(mipi_vc_id),
@@ -242,9 +269,6 @@ reg [12:0] sleep_init_timer = 0;
 reg [22:0] blinky_ctr;
 reg blinky_led = 1;
 
-assign led_PL0 = debug_led0;
-assign led_PL1 = debug_led1;
-
 always @(posedge clk_mipi_ref) begin
 
     if (blinky_ctr == 0) begin
@@ -252,7 +276,7 @@ always @(posedge clk_mipi_ref) begin
     end
     
     blinky_ctr <= blinky_ctr + 1;
-
+    
     case (cam_state) 
     
         /*

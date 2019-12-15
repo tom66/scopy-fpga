@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Sat Dec 14 16:21:23 2019
+//Date        : Sun Dec 15 17:00:47 2019
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -10,14 +10,7 @@
 `timescale 1 ps / 1 ps
 
 module design_1_wrapper
-   (BRAM_PORTB_0_addr,
-    BRAM_PORTB_0_clk,
-    BRAM_PORTB_0_din,
-    BRAM_PORTB_0_dout,
-    BRAM_PORTB_0_en,
-    BRAM_PORTB_0_rst,
-    BRAM_PORTB_0_we,
-    DDR_addr,
+   (DDR_addr,
     DDR_ba,
     DDR_cas_n,
     DDR_ck_n,
@@ -39,15 +32,12 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    rsta_busy_0,
-    rstb_busy_0);
-  input [31:0]BRAM_PORTB_0_addr;
-  input BRAM_PORTB_0_clk;
-  input [31:0]BRAM_PORTB_0_din;
-  output [31:0]BRAM_PORTB_0_dout;
-  input BRAM_PORTB_0_en;
-  input BRAM_PORTB_0_rst;
-  input [3:0]BRAM_PORTB_0_we;
+    STRAXI_DATA_ARSTN,
+    STRAXI_DATA_CLK,
+    STRAXI_DATA_PORT,
+    STRAXI_DATA_READY,
+    STRAXI_DATA_VALID,
+    STRAXI_DATA_WRTCNT);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -70,16 +60,13 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  output rsta_busy_0;
-  output rstb_busy_0;
+  input STRAXI_DATA_ARSTN;
+  input STRAXI_DATA_CLK;
+  input STRAXI_DATA_PORT;
+  output STRAXI_DATA_READY;
+  input STRAXI_DATA_VALID;
+  output [31:0]STRAXI_DATA_WRTCNT;
 
-  wire [31:0]BRAM_PORTB_0_addr;
-  wire BRAM_PORTB_0_clk;
-  wire [31:0]BRAM_PORTB_0_din;
-  wire [31:0]BRAM_PORTB_0_dout;
-  wire BRAM_PORTB_0_en;
-  wire BRAM_PORTB_0_rst;
-  wire [3:0]BRAM_PORTB_0_we;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -102,18 +89,15 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
-  wire rsta_busy_0;
-  wire rstb_busy_0;
+  wire STRAXI_DATA_ARSTN;
+  wire STRAXI_DATA_CLK;
+  wire STRAXI_DATA_PORT;
+  wire STRAXI_DATA_READY;
+  wire STRAXI_DATA_VALID;
+  wire [31:0]STRAXI_DATA_WRTCNT;
 
   design_1 design_1_i
-       (.BRAM_PORTB_0_addr(BRAM_PORTB_0_addr),
-        .BRAM_PORTB_0_clk(BRAM_PORTB_0_clk),
-        .BRAM_PORTB_0_din(BRAM_PORTB_0_din),
-        .BRAM_PORTB_0_dout(BRAM_PORTB_0_dout),
-        .BRAM_PORTB_0_en(BRAM_PORTB_0_en),
-        .BRAM_PORTB_0_rst(BRAM_PORTB_0_rst),
-        .BRAM_PORTB_0_we(BRAM_PORTB_0_we),
-        .DDR_addr(DDR_addr),
+       (.DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),
         .DDR_ck_n(DDR_ck_n),
@@ -135,6 +119,10 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .rsta_busy_0(rsta_busy_0),
-        .rstb_busy_0(rstb_busy_0));
+        .STRAXI_DATA_ARSTN(STRAXI_DATA_ARSTN),
+        .STRAXI_DATA_CLK(STRAXI_DATA_CLK),
+        .STRAXI_DATA_PORT(STRAXI_DATA_PORT),
+        .STRAXI_DATA_READY(STRAXI_DATA_READY),
+        .STRAXI_DATA_VALID(STRAXI_DATA_VALID),
+        .STRAXI_DATA_WRTCNT(STRAXI_DATA_WRTCNT));
 endmodule

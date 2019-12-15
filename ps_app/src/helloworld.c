@@ -51,10 +51,15 @@
 #include "platform.h"
 #include "xil_printf.h"
 #include "xil_types.h"
+#include "xil_cache.h"
 #include "xil_io.h"
+#include "xaxidma.h"
+#include "xdebug.h"
 
 uint32_t *mem_addr;
 uint32_t *base;
+
+uint32_t buffer[16384] __attribute__((aligned (4096)));
 
 void debug_printf(char *fmt, ...)
 {
@@ -82,11 +87,47 @@ int main()
 	uint32_t i;
 	uint32_t loops = 0;
 	int32_t k;
+	int32_t error;
+	uint32_t addr;
+	uint32_t *ptr;
+
+	XAxiDma dma0_pointer;
+	XAxiDma_Config *dma0_config;
 
     init_platform();
 
-	debug_printf("DemoApp v1.0\r\n");
+	debug_printf("DemoApp v1.0 - DMA controlled transfers\r\n");
 
+	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
+	error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
+
+	debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
+
+	while(1) {
+		addr = &buffer;
+		//addr = (((uint32_t)(&buffer) & ~0xfff) + 0x1000);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+
+		debug_printf("Initialise Xfer error=%d addr 0x%08x buffer_at 0x%08x\r\n", error, addr, &buffer);
+
+		ptr = addr;
+		for(k = 0; k < 128; k++) {
+			debug_printf("0x%08x ", *ptr++);
+			if(((k + 1) & 7) == 0) {
+				debug_printf("\r\n");
+			}
+		}
+
+		debug_printf("\r\n");
+
+		/*
+		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
+			debug_printf(".");
+		}
+		*/
+	}
+
+#if 0
 	base = 0x40000000;
 
     while(1) {
@@ -130,6 +171,7 @@ int main()
 			mem_addr++;
 		}
     }
+#endif
 
 #if 0
     while(1) {

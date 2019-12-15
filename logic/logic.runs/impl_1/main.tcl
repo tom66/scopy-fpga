@@ -166,7 +166,6 @@ set rc [catch {
   create_msg_db write_bitstream.pb
   set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
   catch { write_mem_info -force main.mmi }
-  catch { write_bmm -force main_bd.bmm }
   write_bitstream -force main.bit 
   catch { write_sysdef -hwdef main.hwdef -bitfile main.bit -meminfo main.mmi -file main.sysdef }
   catch {write_debug_probes -quiet -force main}

@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Sat Dec 14 18:54:44 2019
+| Date         : Sun Dec 15 17:02:30 2019
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_drc -file main_drc_opted.rpt -pb main_drc_opted.pb -rpx main_drc_opted.rpx
 | Design       : main
@@ -24,28 +24,34 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 3
+             Violations found: 4
 +-----------+----------+-----------------+------------+
 | Rule      | Severity | Description     | Violations |
 +-----------+----------+-----------------+------------+
 | REQP-1580 | Warning  | Phase alignment | 3          |
+| REQP-181  | Advisory | writefirst      | 1          |
 +-----------+----------+-----------------+------------+
 
 2. REPORT DETAILS
 -----------------
 REQP-1580#1 Warning
 Phase alignment  
-Unsupported clocking topology used for OSERDESE2 nolabel_line130/OSERDESE2_lane_clk_inst. This can result in corrupted data. The nolabel_line130/OSERDESE2_lane_clk_inst/CLK / nolabel_line130/OSERDESE2_lane_clk_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
+Unsupported clocking topology used for OSERDESE2 nolabel_line157/OSERDESE2_lane_clk_inst. This can result in corrupted data. The nolabel_line157/OSERDESE2_lane_clk_inst/CLK / nolabel_line157/OSERDESE2_lane_clk_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
 Related violations: <none>
 
 REQP-1580#2 Warning
 Phase alignment  
-Unsupported clocking topology used for OSERDESE2 nolabel_line130/OSERDESE2_lane_d0_inst. This can result in corrupted data. The nolabel_line130/OSERDESE2_lane_d0_inst/CLK / nolabel_line130/OSERDESE2_lane_d0_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
+Unsupported clocking topology used for OSERDESE2 nolabel_line157/OSERDESE2_lane_d0_inst. This can result in corrupted data. The nolabel_line157/OSERDESE2_lane_d0_inst/CLK / nolabel_line157/OSERDESE2_lane_d0_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
 Related violations: <none>
 
 REQP-1580#3 Warning
 Phase alignment  
-Unsupported clocking topology used for OSERDESE2 nolabel_line130/OSERDESE2_lane_d1_inst. This can result in corrupted data. The nolabel_line130/OSERDESE2_lane_d1_inst/CLK / nolabel_line130/OSERDESE2_lane_d1_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
+Unsupported clocking topology used for OSERDESE2 nolabel_line157/OSERDESE2_lane_d1_inst. This can result in corrupted data. The nolabel_line157/OSERDESE2_lane_d1_inst/CLK / nolabel_line157/OSERDESE2_lane_d1_inst/CLKDIV pins should be driven by the same source through the same buffer type or by a BUFIO / BUFR combination in order to have a proper phase relationship. Please refer to the Select I/O User Guide for supported clocking topologies of the chosen INTERFACE_TYPE mode.
+Related violations: <none>
+
+REQP-181#1 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (nolabel_line53/axi_dma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
 Related violations: <none>
 
 

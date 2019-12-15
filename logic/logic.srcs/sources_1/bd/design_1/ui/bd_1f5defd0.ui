@@ -1,34 +1,45 @@
 {
    "ExpandedHierarchyInLayout":"",
+   "commentid":"",
    "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -y 60 -defaultsOSRD
-preplace port BRAM_PORTB_0 -pg 1 -y 300 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -y 80 -defaultsOSRD
-preplace port rsta_busy_0 -pg 1 -y 280 -defaultsOSRD
-preplace port FCLK_CLK0 -pg 1 -y 120 -defaultsOSRD
-preplace port rstb_busy_0 -pg 1 -y 300 -defaultsOSRD
-preplace inst rst_ps7_0_50M -pg 1 -lvl 1 -y 120 -defaultsOSRD
-preplace inst axi_bram_ctrl_0_bram -pg 1 -lvl 4 -y 290 -defaultsOSRD
-preplace inst axi_smc -pg 1 -lvl 2 -y 100 -defaultsOSRD
-preplace inst axi_bram_ctrl_0 -pg 1 -lvl 3 -y 170 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 4 -y 100 -defaultsOSRD
-preplace netloc processing_system7_0_DDR 1 4 1 NJ
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 4 350 200 650J 300 970J 200 1410
-preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 3 1 980
-preplace netloc axi_smc_M00_AXI 1 2 1 630
-preplace netloc axi_bram_ctrl_0_bram_rsta_busy 1 4 1 NJ
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 5 -10 220 NJ 220 640J 320 990J 220 1400
-preplace netloc axi_bram_ctrl_0_bram_rstb_busy 1 4 1 NJ
-preplace netloc processing_system7_0_FIXED_IO 1 4 1 NJ
-preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 1 2 340 10 650
-preplace netloc BRAM_PORTB_0_1 1 0 4 NJ 300 NJ 300 630J 400 1000J
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 5 -10 20 330 20 640 40 990 210 1420
-levelinfo -pg 1 -30 160 490 810 1200 1440 -top 0 -bot 410
+preplace port DDR -pg 1 -y 120 -defaultsOSRD
+preplace port STRAXI_DATA_VALID -pg 1 -y 850 -defaultsOSRD
+preplace port STRAXI_DATA_CLK -pg 1 -y 890 -defaultsOSRD
+preplace port STRAXI_DATA_PORT -pg 1 -y 810 -defaultsOSRD
+preplace port STRAXI_DATA_ARSTN -pg 1 -y 870 -defaultsOSRD
+preplace port STRAXI_DATA_READY -pg 1 -y 730 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 140 -defaultsOSRD
+preplace port FCLK_CLK0 -pg 1 -y 180 -defaultsOSRD
+preplace portBus STRAXI_DATA_WRTCNT -pg 1 -y 900 -defaultsOSRD
+preplace inst rst_ps7_0_50M -pg 1 -lvl 1 -y 410 -defaultsOSRD
+preplace inst axi_dma_0 -pg 1 -lvl 3 -y 570 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 4 -y 170 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 170 -defaultsOSRD
+preplace inst axis_data_fifo_0 -pg 1 -lvl 5 -y 850 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 5 -y 160 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 5 1 NJ
+preplace netloc STRAXI_DATA_VALID_1 1 0 5 NJ 850 NJ 850 NJ 850 NJ 850 NJ
+preplace netloc STRAXI_DATA_CLK_1 1 0 5 NJ 890 NJ 890 NJ 890 NJ 890 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 390 290 NJ 290 NJ 290 1470J 10 2000
+preplace netloc axis_data_fifo_0_s_axis_tready 1 4 2 1490 730 NJ
+preplace netloc STRAXI_DATA_ARSTN_1 1 0 5 NJ 870 NJ 870 NJ 870 NJ 870 NJ
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 6 20 300 NJ 300 NJ 300 1150J 310 NJ 310 1990
+preplace netloc processing_system7_0_FIXED_IO 1 5 1 NJ
+preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 1 3 380 310 710 310 1140
+preplace netloc axi_dma_0_M_AXI_S2MM 1 3 1 1160
+preplace netloc axi_interconnect_0_M00_AXI 1 4 1 1480
+preplace netloc axis_data_fifo_0_M_AXIS 1 2 4 720 330 NJ 330 NJ 330 1990
+preplace netloc STRAXI_DATA_1 1 0 5 NJ 810 NJ 810 NJ 810 NJ 810 NJ
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 30 310 370 320 700 320 1170 300 1480 320 2000
+preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 690
+preplace netloc axis_data_fifo_0_axis_wr_data_count 1 5 1 NJ
+levelinfo -pg 1 0 200 540 930 1320 1740 2020 -top 0 -bot 970
 "
 }
 {
-   "da_axi4_cnt":"1",
+   "da_axi4_cnt":"4",
    "da_bram_cntlr_cnt":"2",
+   "da_clkrst_cnt":"1",
    "da_ps7_cnt":"1"
 }
