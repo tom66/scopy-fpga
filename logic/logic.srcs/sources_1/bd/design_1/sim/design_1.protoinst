@@ -276,6 +276,17 @@
 						"TVALID": { "actual": "m_axis_tvalid"}
 					}
 				},
+				"/axis_data_fifo_0/S_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "s_axis_aclk"},
+						"ARESETN": { "actual": "s_axis_aresetn"},
+						"TDATA": { "actual": "s_axis_tdata"},
+						"TLAST": { "actual": "s_axis_tlast"},
+						"TREADY": { "actual": "s_axis_tready"},
+						"TVALID": { "actual": "s_axis_tvalid"}
+					}
+				},
 				"/processing_system7_0/M_AXI_GP0": {
 					"interface": "xilinx.com:interface:aximm:1.0",
 					"ports": {
@@ -654,6 +665,17 @@
 						"TLAST": { "actual": "SLOT_2_AXIS_tlast"},
 						"TREADY": { "actual": "SLOT_2_AXIS_tready"},
 						"TVALID": { "actual": "SLOT_2_AXIS_tvalid"}
+					}
+				},
+				"/system_ila_0/SLOT_3_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "clk"},
+						"ARESETN": { "actual": "resetn"},
+						"TDATA": { "actual": "SLOT_3_AXIS_tdata"},
+						"TLAST": { "actual": "SLOT_3_AXIS_tlast"},
+						"TREADY": { "actual": "SLOT_3_AXIS_tready"},
+						"TVALID": { "actual": "SLOT_3_AXIS_tvalid"}
 					}
 				}
 			}

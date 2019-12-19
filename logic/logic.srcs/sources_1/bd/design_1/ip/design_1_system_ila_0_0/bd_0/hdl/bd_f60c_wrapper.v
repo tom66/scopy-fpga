@@ -71,6 +71,10 @@ module bd_f60c_wrapper
     SLOT_2_AXIS_tlast,
     SLOT_2_AXIS_tready,
     SLOT_2_AXIS_tvalid,
+    SLOT_3_AXIS_tdata,
+    SLOT_3_AXIS_tlast,
+    SLOT_3_AXIS_tready,
+    SLOT_3_AXIS_tvalid,
     clk,
     resetn);
   input [31:0]SLOT_0_AXI_araddr;
@@ -137,6 +141,10 @@ module bd_f60c_wrapper
   input SLOT_2_AXIS_tlast;
   input SLOT_2_AXIS_tready;
   input SLOT_2_AXIS_tvalid;
+  input [7:0]SLOT_3_AXIS_tdata;
+  input SLOT_3_AXIS_tlast;
+  input SLOT_3_AXIS_tready;
+  input SLOT_3_AXIS_tvalid;
   input clk;
   input resetn;
 
@@ -204,6 +212,10 @@ module bd_f60c_wrapper
   wire SLOT_2_AXIS_tlast;
   wire SLOT_2_AXIS_tready;
   wire SLOT_2_AXIS_tvalid;
+  wire [7:0]SLOT_3_AXIS_tdata;
+  wire SLOT_3_AXIS_tlast;
+  wire SLOT_3_AXIS_tready;
+  wire SLOT_3_AXIS_tvalid;
   wire clk;
   wire resetn;
 
@@ -272,6 +284,10 @@ module bd_f60c_wrapper
         .SLOT_2_AXIS_tlast(SLOT_2_AXIS_tlast),
         .SLOT_2_AXIS_tready(SLOT_2_AXIS_tready),
         .SLOT_2_AXIS_tvalid(SLOT_2_AXIS_tvalid),
+        .SLOT_3_AXIS_tdata(SLOT_3_AXIS_tdata),
+        .SLOT_3_AXIS_tlast(SLOT_3_AXIS_tlast),
+        .SLOT_3_AXIS_tready(SLOT_3_AXIS_tready),
+        .SLOT_3_AXIS_tvalid(SLOT_3_AXIS_tvalid),
         .clk(clk),
         .resetn(resetn));
 endmodule

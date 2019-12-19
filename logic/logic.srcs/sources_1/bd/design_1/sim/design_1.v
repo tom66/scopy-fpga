@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Wed Dec 18 23:57:59 2019
+//Date        : Thu Dec 19 01:36:00 2019
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=12,numReposBlks=8,numNonXlnxBlks=0,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=4,da_bram_cntlr_cnt=2,da_clkrst_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=12,numReposBlks=8,numNonXlnxBlks=0,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=4,da_bram_cntlr_cnt=2,da_clkrst_cnt=9,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -40,39 +40,39 @@ module design_1
     STRAXI_DATA_TLAST,
     STRAXI_DATA_VALID,
     STRAXI_DATA_WRTCNT);
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR CK_N" *) inout DDR_ck_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR CK_P" *) inout DDR_ck_p;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR CKE" *) inout DDR_cke;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR CS_N" *) inout DDR_cs_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR DM" *) inout [3:0]DDR_dm;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR DQ" *) inout [31:0]DDR_dq;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR DQS_N" *) inout [3:0]DDR_dqs_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR DQS_P" *) inout [3:0]DDR_dqs_p;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR ODT" *) inout DDR_odt;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR RAS_N" *) inout DDR_ras_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR RESET_N" *) inout DDR_reset_n;
-  (* x_interface_info = "xilinx.com:interface:ddrx:1.0 DDR WE_N" *) inout DDR_we_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CK_N" *) inout DDR_ck_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CK_P" *) inout DDR_ck_p;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CKE" *) inout DDR_cke;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CS_N" *) inout DDR_cs_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR DM" *) inout [3:0]DDR_dm;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR DQ" *) inout [31:0]DDR_dq;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR DQS_N" *) inout [3:0]DDR_dqs_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR DQS_P" *) inout [3:0]DDR_dqs_p;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ODT" *) inout DDR_odt;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR RAS_N" *) inout DDR_ras_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR RESET_N" *) inout DDR_reset_n;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR WE_N" *) inout DDR_we_n;
   output FCLK_CLK0;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN" *) (* x_interface_parameter = "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false" *) inout FIXED_IO_ddr_vrn;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP" *) inout FIXED_IO_ddr_vrp;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO" *) inout [53:0]FIXED_IO_mio;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK" *) inout FIXED_IO_ps_clk;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
-  (* x_interface_info = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false" *) inout FIXED_IO_ddr_vrn;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP" *) inout FIXED_IO_ddr_vrp;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO" *) inout [53:0]FIXED_IO_mio;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK" *) inout FIXED_IO_ps_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
+  (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
   input STRAXI_DATA_ARSTN;
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 CLK.STRAXI_DATA_CLK CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME CLK.STRAXI_DATA_CLK, ASSOCIATED_RESET STRAXI_DATA_ARSTN, CLK_DOMAIN design_1_STRAXI_DATA_CLK, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) input STRAXI_DATA_CLK;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.STRAXI_DATA_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.STRAXI_DATA_CLK, ASSOCIATED_RESET STRAXI_DATA_ARSTN, CLK_DOMAIN design_1_STRAXI_DATA_CLK, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) input STRAXI_DATA_CLK;
   input STRAXI_DATA_PORT;
   output STRAXI_DATA_READY;
   input STRAXI_DATA_TLAST;
   input STRAXI_DATA_VALID;
   output [31:0]STRAXI_DATA_WRTCNT;
 
-  wire STRAXI_DATA_1;
   wire STRAXI_DATA_ARSTN_1;
   wire STRAXI_DATA_CLK_1;
+  wire STRAXI_DATA_PORT_1;
   wire STRAXI_DATA_TLAST_1;
   wire STRAXI_DATA_VALID_1;
   wire [31:0]axi_dma_0_M_AXI_S2MM_AWADDR;
@@ -198,10 +198,9 @@ module design_1
   wire ps7_0_axi_periph_M00_AXI_WVALID;
   wire [0:0]rst_ps7_0_50M_peripheral_aresetn;
 
-  assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
-  assign STRAXI_DATA_1 = STRAXI_DATA_PORT;
   assign STRAXI_DATA_ARSTN_1 = STRAXI_DATA_ARSTN;
   assign STRAXI_DATA_CLK_1 = STRAXI_DATA_CLK;
+  assign STRAXI_DATA_PORT_1 = STRAXI_DATA_PORT;
   assign STRAXI_DATA_READY = axis_data_fifo_0_s_axis_tready;
   assign STRAXI_DATA_TLAST_1 = STRAXI_DATA_TLAST;
   assign STRAXI_DATA_VALID_1 = STRAXI_DATA_VALID;
@@ -301,7 +300,7 @@ module design_1
         .m_axis_tvalid(axis_data_fifo_0_M_AXIS_TVALID),
         .s_axis_aclk(STRAXI_DATA_CLK_1),
         .s_axis_aresetn(STRAXI_DATA_ARSTN_1),
-        .s_axis_tdata({STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1,STRAXI_DATA_1}),
+        .s_axis_tdata({STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1,STRAXI_DATA_PORT_1}),
         .s_axis_tlast(STRAXI_DATA_TLAST_1),
         .s_axis_tready(axis_data_fifo_0_s_axis_tready),
         .s_axis_tvalid(STRAXI_DATA_VALID_1));
@@ -541,8 +540,12 @@ module design_1
         .SLOT_2_AXIS_tlast(axis_data_fifo_0_M_AXIS_TLAST),
         .SLOT_2_AXIS_tready(axis_data_fifo_0_M_AXIS_TREADY),
         .SLOT_2_AXIS_tvalid(axis_data_fifo_0_M_AXIS_TVALID),
+        .SLOT_3_AXIS_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .SLOT_3_AXIS_tlast(1'b0),
+        .SLOT_3_AXIS_tready(1'b1),
+        .SLOT_3_AXIS_tvalid(1'b0),
         .clk(processing_system7_0_FCLK_CLK0),
-        .resetn(1'b1));
+        .resetn(rst_ps7_0_50M_peripheral_aresetn));
 endmodule
 
 module design_1_axi_interconnect_0_0
