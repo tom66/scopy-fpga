@@ -5136,3 +5136,2922 @@ make pre-build main-build
 a9-linaro-pre-build-step
 ' '
 make: Nothing to be done for 'main-build'.
+17:16:47 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:111:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:88:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:87:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:86:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63652	   2580	  81936	 148168	  242c8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:16:51 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:17:18 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:111:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:113:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:117:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:88:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:87:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:86:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63652	   2580	  81936	 148168	  242c8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:17:57 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:111:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:113:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:117:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:88:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:87:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:86:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63652	   2580	  81936	 148168	  242c8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:18:42 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:18:44 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:19:12 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:111:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:113:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:117:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:88:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:87:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:86:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63652	   2580	  81936	 148168	  242c8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:19:17 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+15:15:50 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+15:19:43 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:26:44 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:27:46 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:111:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:113:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:113:30: error: 'MARK_UNCACHEABLE' undeclared (first use in this function)
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+                              ^~~~~~~~~~~~~~~~
+../src/helloworld.c:113:30: note: each undeclared identifier is reported only once for each function it appears in
+../src/helloworld.c:114:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:118:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:88:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:87:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:86:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+make: *** [src/subdir.mk:26: src/helloworld.o] Error 1
+16:29:51 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:113:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:115:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:116:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:120:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63652	   2580	  81936	 148168	  242c8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:29:56 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:30:16 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:111:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:112:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:116:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74600	   2648	  81936	 159184	  26dd0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:30:17 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:31:06 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:112:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74712	   2648	  81936	 159296	  26e40	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:31:29 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:31:34 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:31:55 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:112:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74720	   2648	  81936	 159304	  26e48	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:33:35 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:42:42 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74720	   2648	  81936	 159304	  26e48	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:42:56 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:46:07 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:112:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	   2648	  81936	 159320	  26e58	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:46:09 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:47:45 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:112:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	  68184	   9008	 151928	  25178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:48:54 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	  68184	   9008	 151928	  25178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:49:02 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:112:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:115:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	  68184	   9008	 151928	  25178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:49:06 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:50:07 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:139:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  base = 0x01000000;
+       ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:91:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  64468	  68116	   9008	 141592	  22918	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:50:38 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:188:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:221:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x00100000;
+        ^
+../src/helloworld.c:238:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x00100000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65500	  68116	   9008	 142624	  22d20	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:50:58 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:188:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:221:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:238:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65500	  68116	   9008	 142624	  22d20	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:51:00 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:52:00 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:55:00 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:221:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:238:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65500	  68116	   9008	 142624	  22d20	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:55:10 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:55:18 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:188:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:221:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:238:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01000000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65500	  68116	   9008	 142624	  22d20	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:55:20 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:55:55 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:188:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65436	  68116	   9008	 142560	  22ce0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:55:56 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:57:10 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:188:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65436	  68116	   9008	 142560	  22ce0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:57:30 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:190:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65468	  68116	   9008	 142592	  22d00	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:57:33 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:58:05 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:190:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65468	  68116	   9008	 142592	  22d00	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:58:06 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+16:58:59 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:190:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65468	  68116	   9008	 142592	  22d00	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:59:01 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:00:16 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:190:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65532	  68116	   9008	 142656	  22d40	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:00:20 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:01:10 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:190:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   base = 0x01400000;
+        ^
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  65468	  68116	   9008	 142592	  22d00	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:01:12 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:02:53 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:91:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63604	  68116	   9008	 140728	  225b8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:03:16 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:97:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:96:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:94:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:93:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:92:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:91:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:90:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:89:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:88:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63604	  68116	   9008	 140728	  225b8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:03:32 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:99:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:98:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:96:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:95:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:94:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:93:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  63604	  68116	   9008	 140728	  225b8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:07:19 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:115:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:118:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:122:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	  68184	   9008	 151928	  25178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:07:23 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:18:06 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:20:01 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:20:59 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:21:29 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:23:41 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:34:12 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:36:15 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:46:26 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:115:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:118:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:122:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	 264792	   9008	 348536	  55178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:46:33 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:46:41 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:49:18 **** Auto Build of project ps_app_bsp ****
+make -k all 
+"Running Make include in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make libs in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling axidma"
+"Running Make libs in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling coresightps_dcc"
+"Running Make libs in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling cpu_cortexa9"
+"Running Make libs in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling ddrps"
+"Running Make libs in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling devcfg"
+"Running Make libs in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling dmaps"
+"Running Make libs in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scugic"
+"Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scutimer"
+"Running Make libs in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scuwdt"
+"Running Make libs in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling standalone"
+In file included from usleep.c:56:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from sleep.c:53:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xil_sleeptimer.c:51:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xtime_l.c:49:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+"Running Make libs in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling uartps"
+"Running Make libs in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling xadcps"
+'Finished building libraries'
+19:49:36 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:115:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:118:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:122:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	 264792	   9008	 348536	  55178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:54:24 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:119:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:123:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74480	 264792	   9008	 348280	  55078	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:55:14 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:55:19 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:55:42 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:119:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:123:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74480	 264792	   9008	 348280	  55078	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:55:54 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:120:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:124:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74480	 264792	   9008	 348280	  55078	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:55:56 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:119:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:123:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74480	 264792	   9008	 348280	  55078	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:55:59 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:58:21 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:05:54 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:18:20 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:112:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:114:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:119:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:123:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74736	 264792	   9008	 348536	  55178	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:18:25 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:21:39 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:34:20 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:104:5: warning: implicit declaration of function 'Xil_TestMem32'; did you mean 'Xil_Out32'? [-Wimplicit-function-declaration]
+     Xil_TestMem32(0x01100000, 0x03a00000)
+     ^~~~~~~~~~~~~
+     Xil_Out32
+../src/helloworld.c:273:5: error: expected ';' before 'cleanup_platform'
+     cleanup_platform();
+     ^~~~~~~~~~~~~~~~
+../src/helloworld.c:99:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:98:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:96:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:95:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:94:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:93:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+make: *** [src/subdir.mk:26: src/helloworld.o] Error 1
+21:35:22 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:56:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:106:11: warning: implicit declaration of function 'Xil_TestMem32'; did you mean 'Xil_Out32'? [-Wimplicit-function-declaration]
+  result = Xil_TestMem32(0x01100000, 0x03a00000,  XIL_TESTMEM_ALLMEMTESTS);
+           ^~~~~~~~~~~~~
+           Xil_Out32
+../src/helloworld.c:106:50: error: 'XIL_TESTMEM_ALLMEMTESTS' undeclared (first use in this function)
+  result = Xil_TestMem32(0x01100000, 0x03a00000,  XIL_TESTMEM_ALLMEMTESTS);
+                                                  ^~~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:106:50: note: each undeclared identifier is reported only once for each function it appears in
+../src/helloworld.c:100:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:99:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:96:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:95:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:94:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:93:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:92:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:91:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:90:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+make: *** [src/subdir.mk:26: src/helloworld.o] Error 1
+21:35:57 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:107:25: warning: passing argument 1 of 'Xil_TestMem32' makes pointer from integer without a cast [-Wint-conversion]
+  result = Xil_TestMem32(0x01100000, 0x03a00000,  XIL_TESTMEM_ALLMEMTESTS);
+                         ^~~~~~~~~~
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:143:12: note: expected 'u32 * {aka long unsigned int *}' but argument is of type 'int'
+ extern s32 Xil_TestMem32(u32 *Addr, u32 Words, u32 Pattern, u8 Subtest);
+            ^~~~~~~~~~~~~
+../src/helloworld.c:107:11: error: too few arguments to function 'Xil_TestMem32'
+  result = Xil_TestMem32(0x01100000, 0x03a00000,  XIL_TESTMEM_ALLMEMTESTS);
+           ^~~~~~~~~~~~~
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:143:12: note: declared here
+ extern s32 Xil_TestMem32(u32 *Addr, u32 Words, u32 Pattern, u8 Subtest);
+            ^~~~~~~~~~~~~
+../src/helloworld.c:101:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:100:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:96:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:95:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+make: *** [src/subdir.mk:26: src/helloworld.o] Error 1
+21:36:06 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:107:25: warning: passing argument 1 of 'Xil_TestMem32' makes pointer from integer without a cast [-Wint-conversion]
+  result = Xil_TestMem32(0x01100000, 0x03a00000, 0, XIL_TESTMEM_ALLMEMTESTS);
+                         ^~~~~~~~~~
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:143:12: note: expected 'u32 * {aka long unsigned int *}' but argument is of type 'int'
+ extern s32 Xil_TestMem32(u32 *Addr, u32 Words, u32 Pattern, u8 Subtest);
+            ^~~~~~~~~~~~~
+../src/helloworld.c:101:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:100:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:96:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:95:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66052	 264724	   9008	 339784	  52f48	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:36:11 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:39:56 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:109:26: warning: passing argument 1 of 'Xil_TestMem32' makes pointer from integer without a cast [-Wint-conversion]
+   result = Xil_TestMem32(0x01100000, 0x03a00000, 0, XIL_TESTMEM_ALLMEMTESTS);
+                          ^~~~~~~~~~
+In file included from ../src/helloworld.c:56:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:143:12: note: expected 'u32 * {aka long unsigned int *}' but argument is of type 'int'
+ extern s32 Xil_TestMem32(u32 *Addr, u32 Words, u32 Pattern, u8 Subtest);
+            ^~~~~~~~~~~~~
+../src/helloworld.c:101:18: warning: unused variable 'dma0_config' [-Wunused-variable]
+  XAxiDma_Config *dma0_config;
+                  ^~~~~~~~~~~
+../src/helloworld.c:100:10: warning: unused variable 'dma0_pointer' [-Wunused-variable]
+  XAxiDma dma0_pointer;
+          ^~~~~~~~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:96:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:95:10: warning: unused variable 'error' [-Wunused-variable]
+  int32_t error;
+          ^~~~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66052	 264724	   9008	 339784	  52f48	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:39:59 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:46:36 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:134:3: warning: implicit declaration of function 'Xil_SetTlbAttributes' [-Wimplicit-function-declaration]
+   Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+   ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74784	 264792	   9008	 348584	  551a8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:46:41 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74488	 264792	   9008	 348288	  55080	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:46:43 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:47:18 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 64, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74488	 264792	   9008	 348288	  55080	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:47:20 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:47:49 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 512, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74488	 264792	   9008	 348288	  55080	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:47:50 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:48:16 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 256, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74488	 264792	   9008	 348288	  55080	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:48:18 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+21:48:42 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 128, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:143:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+   ptr = addr;
+       ^
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74488	 264792	   9008	 348288	  55080	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+21:48:46 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+22:47:50 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+22:51:23 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:132:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:139:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 128, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74272	 264792	   9008	 348072	  54fa8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+22:51:25 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+22:54:02 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:133:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:140:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 128, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74336	 264792	   9008	 348136	  54fe8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+22:54:04 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+23:57:28 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:57:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:133:8: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+   addr = &buffer;
+        ^
+../src/helloworld.c:140:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 32, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/helloworld.c:57:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint32_t * {aka long unsigned int *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:98:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:97:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:94:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:93:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:92:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:91:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  74336	 264792	   9008	 348136	  54fe8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+23:57:34 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.

@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Sun Dec 15 17:01:38 2019
+| Date         : Thu Dec 19 00:18:19 2019
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |  269 |     0 |     40600 |  0.66 |
-|   LUT as Logic          |  269 |     0 |     40600 |  0.66 |
+| Slice LUTs*             |   21 |     0 |     40600 |  0.05 |
+|   LUT as Logic          |   21 |     0 |     40600 |  0.05 |
 |   LUT as Memory         |    0 |     0 |     17400 |  0.00 |
-| Slice Registers         |  313 |     0 |     81200 |  0.39 |
-|   Register as Flip Flop |  313 |     0 |     81200 |  0.39 |
+| Slice Registers         |   62 |     0 |     81200 |  0.08 |
+|   Register as Flip Flop |   62 |     0 |     81200 |  0.08 |
 |   Register as Latch     |    0 |     0 |     81200 |  0.00 |
 | F7 Muxes                |    0 |     0 |     26600 |  0.00 |
 | F8 Muxes                |    0 |     0 |     13300 |  0.00 |
@@ -56,8 +56,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 1     |          Yes |         Set |            - |
-| 312   |          Yes |       Reset |            - |
+| 0     |          Yes |         Set |            - |
+| 62    |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -90,7 +90,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   14 |     0 |       125 | 11.20 |
+| Bonded IOB                  |   34 |     0 |       125 | 27.20 |
 | Bonded IPADs                |    0 |     0 |         2 |  0.00 |
 | Bonded IOPADs               |    0 |     0 |       130 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         4 |  0.00 |
@@ -98,13 +98,12 @@ Table of Contents
 | OUT_FIFO                    |    0 |     0 |        16 |  0.00 |
 | IN_FIFO                     |    0 |     0 |        16 |  0.00 |
 | IDELAYCTRL                  |    0 |     0 |         4 |  0.00 |
-| IBUFDS                      |    0 |     0 |       121 |  0.00 |
+| IBUFDS                      |   10 |     0 |       121 |  8.26 |
 | PHASER_OUT/PHASER_OUT_PHY   |    0 |     0 |        16 |  0.00 |
 | PHASER_IN/PHASER_IN_PHY     |    0 |     0 |        16 |  0.00 |
 | IDELAYE2/IDELAYE2_FINEDELAY |    0 |     0 |       200 |  0.00 |
 | ILOGIC                      |    0 |     0 |       125 |  0.00 |
-| OLOGIC                      |    3 |     0 |       125 |  2.40 |
-|   OSERDES                   |    3 |       |           |       |
+| OLOGIC                      |    0 |     0 |       125 |  0.00 |
 +-----------------------------+------+-------+-----------+-------+
 
 
@@ -114,13 +113,13 @@ Table of Contents
 +------------+------+-------+-----------+-------+
 |  Site Type | Used | Fixed | Available | Util% |
 +------------+------+-------+-----------+-------+
-| BUFGCTRL   |    3 |     0 |        32 |  9.38 |
+| BUFGCTRL   |    1 |     0 |        32 |  3.13 |
 | BUFIO      |    0 |     0 |        16 |  0.00 |
 | MMCME2_ADV |    0 |     0 |         4 |  0.00 |
 | PLLE2_ADV  |    0 |     0 |         4 |  0.00 |
 | BUFMRCE    |    0 |     0 |         8 |  0.00 |
 | BUFHCE     |    0 |     0 |        72 |  0.00 |
-| BUFR       |    3 |     0 |        16 | 18.75 |
+| BUFR       |    0 |     0 |        16 |  0.00 |
 +------------+------+-------+-----------+-------+
 
 
@@ -144,26 +143,22 @@ Table of Contents
 7. Primitives
 -------------
 
-+-----------+------+---------------------+
-|  Ref Name | Used | Functional Category |
-+-----------+------+---------------------+
-| FDRE      |  312 |        Flop & Latch |
-| LUT1      |   85 |                 LUT |
-| LUT4      |   71 |                 LUT |
-| LUT6      |   58 |                 LUT |
-| CARRY4    |   44 |          CarryLogic |
-| LUT5      |   37 |                 LUT |
-| LUT2      |   22 |                 LUT |
-| LUT3      |   18 |                 LUT |
-| OBUFTDS   |    6 |                  IO |
-| OBUFT     |    6 |                  IO |
-| OSERDESE2 |    3 |                  IO |
-| INV       |    3 |                 LUT |
-| BUFR      |    3 |               Clock |
-| BUFGCTRL  |    3 |               Clock |
-| OBUF      |    2 |                  IO |
-| FDSE      |    1 |        Flop & Latch |
-+-----------+------+---------------------+
++----------+------+---------------------+
+| Ref Name | Used | Functional Category |
++----------+------+---------------------+
+| FDRE     |   62 |        Flop & Latch |
+| CARRY4   |   14 |          CarryLogic |
+| OBUFT    |   12 |                  IO |
+| IBUFDS   |   10 |                  IO |
+| LUT6     |    9 |                 LUT |
+| LUT5     |    5 |                 LUT |
+| LUT4     |    5 |                 LUT |
+| OBUF     |    2 |                  IO |
+| LUT1     |    2 |                 LUT |
+| LUT3     |    1 |                 LUT |
+| LUT2     |    1 |                 LUT |
+| BUFG     |    1 |               Clock |
++----------+------+---------------------+
 
 
 8. Black Boxes
@@ -172,6 +167,7 @@ Table of Contents
 +---------------------------------+------+
 |             Ref Name            | Used |
 +---------------------------------+------+
+| design_1_system_ila_0_0         |    1 |
 | design_1_rst_ps7_0_50M_2        |    1 |
 | design_1_processing_system7_0_0 |    1 |
 | design_1_axis_data_fifo_0_0     |    1 |
@@ -180,7 +176,6 @@ Table of Contents
 | design_1_auto_pc_1              |    1 |
 | design_1_auto_pc_0              |    1 |
 | clk_wiz_0                       |    1 |
-| blk_mem_gen_0                   |    1 |
 +---------------------------------+------+
 
 

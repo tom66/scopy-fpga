@@ -68,7 +68,7 @@
 <definedSymbol symbol="__INTMAX_TYPE__=long long int"/>
 <definedSymbol symbol="__UINTMAX_TYPE__=long long unsigned int"/>
 <definedSymbol symbol="__CHAR16_TYPE__=short unsigned int"/>
-<definedSymbol symbol="__CHAR32_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
 <definedSymbol symbol="__SIG_ATOMIC_TYPE__=int"/>
 <definedSymbol symbol="__INT8_TYPE__=signed char"/>
 <definedSymbol symbol="__INT16_TYPE__=short int"/>
@@ -186,6 +186,7 @@
 <definedSymbol symbol="__FLT_MAX__=3.4028234663852886e+38F"/>
 <definedSymbol symbol="__FLT_MIN__=1.1754943508222875e-38F"/>
 <definedSymbol symbol="__FLT_EPSILON__=1.1920928955078125e-7F"/>
+<definedSymbol symbol="__FLT_DENORM_MIN__=1.4012984643148171e-45F"/>
 <definedSymbol symbol="__FLT_DENORM_MIN__=1.4012984643248171e-45F"/>
 <definedSymbol symbol="__FLT_HAS_DENORM__=1"/>
 <definedSymbol symbol="__FLT_HAS_INFINITY__=1"/>
@@ -225,7 +226,7 @@
 <definedSymbol symbol="__FLT32_MIN_10_EXP__=(-37)"/>
 <definedSymbol symbol="__FLT32_MAX_EXP__=128"/>
 <definedSymbol symbol="__FLT32_MAX_10_EXP__=38"/>
-<definedSymbol symbol="__FLT32_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
 <definedSymbol symbol="__FLT32_MAX__=3.4028234663852886e+38F32"/>
 <definedSymbol symbol="__FLT32_MIN__=1.1754943508222875e-38F32"/>
 <definedSymbol symbol="__FLT32_EPSILON__=1.1920928955078125e-7F32"/>
@@ -259,7 +260,7 @@
 <definedSymbol symbol="__FLT32X_EPSILON__=2.2204460492503131e-16F32x"/>
 <definedSymbol symbol="__FLT32X_DENORM_MIN__=4.9406564584124654e-324F32x"/>
 <definedSymbol symbol="__FLT32X_HAS_DENORM__=1"/>
-<definedSymbol symbol="__FLT32X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
 <definedSymbol symbol="__FLT32X_HAS_QUIET_NAN__=1"/>
 <definedSymbol symbol="__DEC32_MANT_DIG__=7"/>
 <definedSymbol symbol="__DEC32_MIN_EXP__=(-94)"/>
@@ -424,7 +425,7 @@
 <definedSymbol symbol="__arm__=1"/>
 <definedSymbol symbol="__ARM_ARCH=4"/>
 <definedSymbol symbol="__ARM_ARCH_ISA_ARM=1"/>
-<definedSymbol symbol="__APCS_32__=1"/>
+<definedSymbol symbol="__APCS_31__=1"/>
 <definedSymbol symbol="__ARM_ARCH_ISA_THUMB=1"/>
 <definedSymbol symbol="__ARMEL__=1"/>
 <definedSymbol symbol="__SOFTFP__=1"/>
@@ -436,6 +437,10 @@
 <definedSymbol symbol="__GXX_TYPEINFO_EQUALITY_INLINE=0"/>
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__USES_INITFINI__=1"/>
+<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__APCS_31__=1"/>
 </collector>
 </instance>
 <instance id="xilinx.gnu.armv7.exe.release.1198570486;xilinx.gnu.armv7.exe.release.1198570486.">
@@ -930,7 +935,7 @@
 <definedSymbol symbol="__INTMAX_TYPE__=long long int"/>
 <definedSymbol symbol="__UINTMAX_TYPE__=long long unsigned int"/>
 <definedSymbol symbol="__CHAR16_TYPE__=short unsigned int"/>
-<definedSymbol symbol="__CHAR32_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
 <definedSymbol symbol="__SIG_ATOMIC_TYPE__=int"/>
 <definedSymbol symbol="__INT8_TYPE__=signed char"/>
 <definedSymbol symbol="__INT16_TYPE__=short int"/>
@@ -1048,6 +1053,7 @@
 <definedSymbol symbol="__FLT_MAX__=3.4028234663852886e+38F"/>
 <definedSymbol symbol="__FLT_MIN__=1.1754943508222875e-38F"/>
 <definedSymbol symbol="__FLT_EPSILON__=1.1920928955078125e-7F"/>
+<definedSymbol symbol="__FLT_DENORM_MIN__=1.4012984643148171e-45F"/>
 <definedSymbol symbol="__FLT_DENORM_MIN__=1.4012984643248171e-45F"/>
 <definedSymbol symbol="__FLT_HAS_DENORM__=1"/>
 <definedSymbol symbol="__FLT_HAS_INFINITY__=1"/>
@@ -1087,7 +1093,7 @@
 <definedSymbol symbol="__FLT32_MIN_10_EXP__=(-37)"/>
 <definedSymbol symbol="__FLT32_MAX_EXP__=128"/>
 <definedSymbol symbol="__FLT32_MAX_10_EXP__=38"/>
-<definedSymbol symbol="__FLT32_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
 <definedSymbol symbol="__FLT32_MAX__=3.4028234663852886e+38F32"/>
 <definedSymbol symbol="__FLT32_MIN__=1.1754943508222875e-38F32"/>
 <definedSymbol symbol="__FLT32_EPSILON__=1.1920928955078125e-7F32"/>
@@ -1121,7 +1127,7 @@
 <definedSymbol symbol="__FLT32X_EPSILON__=2.2204460492503131e-16F32x"/>
 <definedSymbol symbol="__FLT32X_DENORM_MIN__=4.9406564584124654e-324F32x"/>
 <definedSymbol symbol="__FLT32X_HAS_DENORM__=1"/>
-<definedSymbol symbol="__FLT32X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
 <definedSymbol symbol="__FLT32X_HAS_QUIET_NAN__=1"/>
 <definedSymbol symbol="__DEC32_MANT_DIG__=7"/>
 <definedSymbol symbol="__DEC32_MIN_EXP__=(-94)"/>
@@ -1286,7 +1292,7 @@
 <definedSymbol symbol="__arm__=1"/>
 <definedSymbol symbol="__ARM_ARCH=4"/>
 <definedSymbol symbol="__ARM_ARCH_ISA_ARM=1"/>
-<definedSymbol symbol="__APCS_32__=1"/>
+<definedSymbol symbol="__APCS_31__=1"/>
 <definedSymbol symbol="__ARM_ARCH_ISA_THUMB=1"/>
 <definedSymbol symbol="__ARMEL__=1"/>
 <definedSymbol symbol="__SOFTFP__=1"/>
@@ -1298,6 +1304,10 @@
 <definedSymbol symbol="__GXX_TYPEINFO_EQUALITY_INLINE=0"/>
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__USES_INITFINI__=1"/>
+<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__APCS_31__=1"/>
 </collector>
 </instance>
 </scannerInfo>

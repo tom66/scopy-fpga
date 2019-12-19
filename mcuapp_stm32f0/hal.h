@@ -32,6 +32,9 @@
 
 #include <stdint.h>
 
+#define GPIO_FAST_SET_PIN(port, pin)    ((port)->BSRR = ((1 << pin) & 0xffff));
+#define GPIO_FAST_CLR_PIN(port, pin)    ((port)->BRR = ((1 << pin) & 0xffff));
+
 #define UART_DEBUG_PORT                 GPIOC
 #define UART_DEBUG_TX_PIN               GPIO_PIN_10
 #define UART_DEBUG_RX_PIN               GPIO_PIN_11
@@ -86,18 +89,22 @@
 #define PWR_FPGA_PL_1V8_IO_GO_PORT      GPIOE
 #define PWR_FPGA_PS_PL_IO_GO_PORT       GPIOE
 
+#define PWR_PLL_GO_PIN                  GPIO_PIN_9
+#define PWR_ADC_GO_PIN                  GPIO_PIN_10
+
+#define PWR_PLL_GO_PORT                 GPIOD
+#define PWR_ADC_GO_PORT                 GPIOD
+
 #define CM3_RUN_PORT                    GPIOE
 #define CM3_RUN_PIN                     GPIO_PIN_1
 
 #define GPIO_ADC_DC_IN_MEAS_PORT        GPIOC
 #define GPIO_ADC_DC_IN_MEAS_PIN         GPIO_PIN_1
 
-#define GPIO_FAST_SET_PIN(port, pin)    ((port)->BSRRL = (1 << pin)) ;
-#define GPIO_FAST_CLR_PIN(port, pin)    ((port)->BSRRH = (1 << pin)) ;
-
 #define DC_INPUT_LOW_THRESHOLD          9500            // Input below 9.5V triggers shutdown
 #define DC_INPUT_HIGH_THRESHOLD         11000           // Input above 11V allows restart
 
+// MCU onboard ADC
 #define ADC_DC_INPUT_SCALE              15766
 #define ADC_DC_INPUT_SHIFT              12
 
@@ -107,10 +114,12 @@
 
 #define TEMP_COOL_THRESHOLD             4500            // Any given component must fall to this temperature to allow restart
 
+// For future expansion:-
 #define LED_ERROR_PSU_INPUT             2               // 2 blinks: PSU input error
 #define LED_ERROR_PSU_PROTECT           3               // 3 blinks: PSU protect error
 #define LED_ERROR_TEMPERATURE           4               // 4 blinks: Temperature
 #define LED_ERROR_BOOT_FAIL             5               // 5 blinks: Bootup problem - Pi or Zynq (timed out trying to boot)
+#define LED_ERROR_BIST_FAIL             6               // 6 blinks: Built-in self-test failure
 
 #define FLAG_ZYNQ_ON                    0x00000001
 #define FLAG_RASPI_ON                   0x00000002
@@ -173,5 +182,9 @@ void raspi_rapid_power_off();
 void zynq_power_on();
 void zynq_power_off();
 void zynq_rapid_power_off();
+void pll_power_on();
+void pll_power_off();
+void adc_power_on();
+void adc_power_off();
 
 #endif // ___HAL_H___

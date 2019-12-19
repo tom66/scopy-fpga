@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Sun Dec 15 17:00:47 2019
+//Date        : Wed Dec 18 23:57:59 2019
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -36,6 +36,7 @@ module design_1_wrapper
     STRAXI_DATA_CLK,
     STRAXI_DATA_PORT,
     STRAXI_DATA_READY,
+    STRAXI_DATA_TLAST,
     STRAXI_DATA_VALID,
     STRAXI_DATA_WRTCNT);
   inout [14:0]DDR_addr;
@@ -64,6 +65,7 @@ module design_1_wrapper
   input STRAXI_DATA_CLK;
   input STRAXI_DATA_PORT;
   output STRAXI_DATA_READY;
+  input STRAXI_DATA_TLAST;
   input STRAXI_DATA_VALID;
   output [31:0]STRAXI_DATA_WRTCNT;
 
@@ -93,6 +95,7 @@ module design_1_wrapper
   wire STRAXI_DATA_CLK;
   wire STRAXI_DATA_PORT;
   wire STRAXI_DATA_READY;
+  wire STRAXI_DATA_TLAST;
   wire STRAXI_DATA_VALID;
   wire [31:0]STRAXI_DATA_WRTCNT;
 
@@ -123,6 +126,7 @@ module design_1_wrapper
         .STRAXI_DATA_CLK(STRAXI_DATA_CLK),
         .STRAXI_DATA_PORT(STRAXI_DATA_PORT),
         .STRAXI_DATA_READY(STRAXI_DATA_READY),
+        .STRAXI_DATA_TLAST(STRAXI_DATA_TLAST),
         .STRAXI_DATA_VALID(STRAXI_DATA_VALID),
         .STRAXI_DATA_WRTCNT(STRAXI_DATA_WRTCNT));
 endmodule

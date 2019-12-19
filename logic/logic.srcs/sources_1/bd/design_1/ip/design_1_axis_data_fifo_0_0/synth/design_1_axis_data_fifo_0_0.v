@@ -52,8 +52,8 @@
 
 (* X_CORE_INFO = "axis_data_fifo_v2_0_0_top,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "design_1_axis_data_fifo_0_0,axis_data_fifo_v2_0_0_top,{}" *)
-(* CORE_GENERATION_INFO = "design_1_axis_data_fifo_0_0,axis_data_fifo_v2_0_0_top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axis_data_fifo,x_ipVersion=2.0,x_ipCoreRevision=0,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_AXIS_TDATA_WIDTH=32,C_AXIS_TID_WIDTH=1,C_AXIS_TDEST_WIDTH=1,C_AXIS_TUSER_WIDTH=1,C_AXIS_SIGNAL_SET=0b00000000000000000000000000010011,C_FIFO_DEPTH=128,C_FIFO_MODE=1,C_IS_ACLK_ASYNC=1,C_SYNCHRONIZER_STAGE=3,C_ACLKEN_CONV_MODE=0,C_ECC_MODE=0,C_FIFO_MEMORY_TYPE=auto,\
-C_USE_ADV_FEATURES=825241652,C_PROG_EMPTY_THRESH=5,C_PROG_FULL_THRESH=11}" *)
+(* CORE_GENERATION_INFO = "design_1_axis_data_fifo_0_0,axis_data_fifo_v2_0_0_top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axis_data_fifo,x_ipVersion=2.0,x_ipCoreRevision=0,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_AXIS_TDATA_WIDTH=32,C_AXIS_TID_WIDTH=1,C_AXIS_TDEST_WIDTH=1,C_AXIS_TUSER_WIDTH=1,C_AXIS_SIGNAL_SET=0b00000000000000000000000000010011,C_FIFO_DEPTH=32,C_FIFO_MODE=1,C_IS_ACLK_ASYNC=1,C_SYNCHRONIZER_STAGE=3,C_ACLKEN_CONV_MODE=0,C_ECC_MODE=0,C_FIFO_MEMORY_TYPE=auto,C\
+_USE_ADV_FEATURES=825241652,C_PROG_EMPTY_THRESH=5,C_PROG_FULL_THRESH=11}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_axis_data_fifo_0_0 (
   s_axis_aresetn,
@@ -106,7 +106,7 @@ output wire [31 : 0] axis_wr_data_count;
     .C_AXIS_TDEST_WIDTH(1),
     .C_AXIS_TUSER_WIDTH(1),
     .C_AXIS_SIGNAL_SET('B00000000000000000000000000010011),
-    .C_FIFO_DEPTH(128),
+    .C_FIFO_DEPTH(32),
     .C_FIFO_MODE(1),
     .C_IS_ACLK_ASYNC(1),
     .C_SYNCHRONIZER_STAGE(3),

@@ -22,6 +22,7 @@
  */
 
 #include "hal.h"
+#include "hmcad151x.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -77,9 +78,18 @@ void SysTick_Handler(void)
         // Woah.  DC voltage low.  Kill the Zynq safely.
         sys_state.flags |= FLAG_DC_INPUT_LOW;
         if(sys_state.flags & FLAG_ZYNQ_ON) {
+            pll_power_off();
+            adc_power_off();
             raspi_rapid_power_off();
             zynq_rapid_power_off();
         }
+    }
+    
+    // Set an LED if DC power low
+    if(sys_state.flags & FLAG_DC_INPUT_LOW) {
+        HAL_GPIO_WritePin(LED_2_PORT, LED_2_PIN, GPIO_PIN_SET);
+    } else {
+        HAL_GPIO_WritePin(LED_2_PORT, LED_2_PIN, GPIO_PIN_RESET);
     }
     
     HAL_ADC_Start(&g_ADCHandle);
@@ -169,6 +179,9 @@ void hal_init()
     
     gpio_set_output(CM3_RUN_PORT, CM3_RUN_PIN);
     
+    gpio_set_output(PWR_PLL_GO_PORT, PWR_PLL_GO_PIN);
+    gpio_set_output(PWR_ADC_GO_PORT, PWR_ADC_GO_PIN);
+    
     // Keep LEDs off (for now)
     HAL_GPIO_WritePin(LED_1_PORT, LED_1_PIN, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(LED_2_PORT, LED_2_PIN, GPIO_PIN_RESET);
@@ -244,20 +257,14 @@ void hal_init()
     
     HAL_ADC_ConfigChannel(&g_ADCHandle, &ADC_ChannelDef);
     
-    uart_putsraw("hal: ADC initialised\r\n");
+    uart_putsraw("hal: MCU ADC initialised\r\n");
     
-    main_psu_power_on();
-    raspi_power_on();
-    zynq_power_on();
-
-    sys_state.flags |= FLAG_ZYNQ_ON;
-
-    while(1) {
-        HAL_GPIO_WritePin(LED_P_RED_PORT, LED_P_RED_PIN, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(LED_P_RED_PORT, LED_P_RED_PIN, GPIO_PIN_SET);
-        
-        uart_printf("%d\r\n", sys_state.dc_input_mv);
-    }
+    // Default power state
+    adc_power_off();
+    pll_power_off();
+    raspi_power_off();
+    zynq_power_off();
+    main_psu_power_off();
 }
 
 /**
@@ -609,11 +616,11 @@ void zynq_rapid_power_off()
 {
     // SRST goes low.
     HAL_GPIO_WritePin(FPGA_PS_SRST_B_PORT, FPGA_PS_SRST_B_PIN, GPIO_PIN_RESET);
-    arb_delay(10000); // wait a bit - IRQ safe
+    arb_delay(5000); // wait a bit - IRQ safe
     
     // POR_B goes low.  At this point the Zynq should be off.
     HAL_GPIO_WritePin(FPGA_PS_POR_B_PORT, FPGA_PS_POR_B_PIN, GPIO_PIN_RESET);
-    arb_delay(40000); // wait a bit - IRQ safe
+    arb_delay(20000); // wait a bit - IRQ safe
     
     // Kill all IO voltages quickly.  Some device currents may flow between domains
     // because these don't all shut down at the same time.
@@ -621,11 +628,47 @@ void zynq_rapid_power_off()
     gpio_prot_power_rail_disable(&prot_rail_fpga_ps_pl_io, 0);
     gpio_prot_power_rail_disable(&prot_rail_1v5_ddr, 0);
     gpio_prot_power_rail_disable(&prot_rail_vtt_ddr, 0);
-    arb_delay(30000);
+    arb_delay(10000);
     
     // Kill core voltages.
     gpio_prot_power_rail_disable(&prot_rail_1v05_zynq, 0);
     gpio_prot_power_rail_disable(&prot_rail_fpga_aux_pll_adc, 0);
     
     sys_state.flags &= ~FLAG_ZYNQ_ON;
+}
+
+/**
+ * pll_power_on: Enable power to the PLL.
+ */
+void pll_power_on()
+{
+    HAL_GPIO_WritePin(PWR_PLL_GO_PORT, PWR_PLL_GO_PIN, GPIO_PIN_SET);
+    sys_state.flags |= FLAG_PLL_ON;
+}
+
+/**
+ * pll_power_off: Disable power to the PLL.
+ */
+void pll_power_off()
+{
+    HAL_GPIO_WritePin(PWR_PLL_GO_PORT, PWR_PLL_GO_PIN, GPIO_PIN_RESET);
+    sys_state.flags &= ~FLAG_PLL_ON;
+}
+
+/**
+ * adc_power_on: Enable power to the HMCAD ADC.
+ */
+void adc_power_on()
+{
+    HAL_GPIO_WritePin(PWR_ADC_GO_PORT, PWR_ADC_GO_PIN, GPIO_PIN_SET);
+    sys_state.flags |= FLAG_ADC_ON;
+}
+
+/**
+ * adc_power_off: Disable power to the HMCAD ADC.
+ */
+void adc_power_off()
+{
+    HAL_GPIO_WritePin(PWR_ADC_GO_PORT, PWR_ADC_GO_PIN, GPIO_PIN_RESET);
+    sys_state.flags &= ~FLAG_ADC_ON;
 }

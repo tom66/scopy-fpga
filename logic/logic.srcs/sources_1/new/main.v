@@ -7,6 +7,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module main(
+    // ### CSI interface ###
     csi_clk_p,      // clock lane positive
     csi_clk_n,      // clock lane negative
     csi_d0_p,       // data lane positive 0
@@ -21,11 +22,37 @@ module main(
     csi_lpclk_n,    // low power state driver clk neg
     csi_lpclk_p,    // low power state driver clk pos
     
+    // ### ADC interface ###
+    adc_l1a_p,
+    adc_l1a_n,
+    adc_l1b_p,
+    adc_l1b_n,
+    adc_l2a_p,
+    adc_l2a_n,
+    adc_l2b_p,
+    adc_l2b_n,
+    adc_l3a_p,
+    adc_l3a_n,
+    adc_l3b_p,
+    adc_l3b_n,
+    adc_l4a_p,
+    adc_l4a_n,
+    adc_l4b_p,
+    adc_l4b_n,
+    adc_lclk_p,
+    adc_lclk_n,
+    adc_fclk_p,
+    adc_fclk_n,
+     
+    // ### GP Interface ###
     led_PL0,        // diagnostic LED PL0
     led_PL1         // diagnostic LED PL1
  );
 
 output csi_clk_p, csi_clk_n, csi_d0_p, csi_d0_n, csi_d1_p, csi_d1_n, csi_lpd0_n, csi_lpd0_p, csi_lpd1_n, csi_lpd1_p, csi_lpclk_n, csi_lpclk_p;
+input adc_l1a_p, adc_l1a_n, adc_l1b_p, adc_l1b_n, adc_l2a_p, adc_l2a_n, adc_l2b_p, adc_l2b_n, adc_l3a_p, adc_l3a_n;
+input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk_p, adc_lclk_n, adc_fclk_p, adc_fclk_n;
+    
 output led_PL0, led_PL1;
 
 // 50MHz clock from PS clock source
@@ -41,24 +68,113 @@ wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_loc
 reg [31:0] straxi_data_in = 8'h00000000;
 reg [31:0] axi_internal_timer = 0;
 reg straxi_valid = 0, straxi_rstn = 0; 
-reg straxi_clk = 0;
+wire straxi_clk;
 wire straxi_ready;
 wire [31:0] straxi_wrtcnt_dbg;
+reg [31:0] lvds_test_data_reg;
+reg straxi_tlast = 0;
 
 //assign led_PL1 = (straxi_wrtcnt_dbg & 8'h00000001) != 0;
 
-assign led_PL0 = straxi_valid;
-assign led_PL1 = straxi_ready;
+//assign led_PL0 = straxi_valid;
+//assign led_PL1 = straxi_ready;
+
+reg led_reg0;
+reg led_reg1;
+
+/*
+wire adc_l1a, adc_l1b, adc_l2a, adc_l2b, adc_l3a, adc_l3b, adc_l4a, adc_l4b, adc_fclk, adc_lclk;
+
+IBUFDS (
+    .I(adc_l1a_p),
+    .IB(adc_l1a_n),
+    .O(adc_l1a)
+);
+
+IBUFDS (
+    .I(adc_l1b_p),
+    .IB(adc_l1b_n),
+    .O(adc_l1b)
+);
+
+IBUFDS (
+    .I(adc_l2a_p),
+    .IB(adc_l2a_n),
+    .O(adc_l2a)
+);
+
+IBUFDS (
+    .I(adc_l2b_p),
+    .IB(adc_l2b_n),
+    .O(adc_l2b)
+);
+
+IBUFDS (
+    .I(adc_l3a_p),
+    .IB(adc_l3a_n),
+    .O(adc_l3a)
+);
+
+IBUFDS (
+    .I(adc_l3b_p),
+    .IB(adc_l3b_n),
+    .O(adc_l3b)
+);
+
+IBUFDS (
+    .I(adc_l4a_p),
+    .IB(adc_l4a_n),
+    .O(adc_l4a)
+);
+
+IBUFDS (
+    .I(adc_l4b_p),
+    .IB(adc_l4b_n),
+    .O(adc_l4b)
+);
+
+IBUFDS (
+    .I(adc_fclk_p),
+    .IB(adc_fclk_n),
+    .O(adc_fclk)
+);
+
+IBUFGDS (
+    .I(adc_lclk_p),
+    .IB(adc_lclk_n),
+    .O(adc_lclk)
+);
+
+reg [23:0] clk_ctr;
+
+always @(posedge adc_lclk) begin
+    lvds_test_data_reg <= adc_l1a ^ adc_l1b ^ adc_l2a ^ adc_l2b ^ adc_l3a ^ adc_l3b ^ adc_l4a ^ adc_l4b ^ adc_fclk;
+    
+    if (clk_ctr == 0) begin
+        led_reg1 <= ~led_reg1;
+    end
+    
+    clk_ctr <= clk_ctr + 1;
+end
+*/
+
+/*
+assign led_PL0 = adc_l1a_p ^ adc_l1b_p ^ adc_l2a_p ^ adc_l2b_p ^ adc_l3a_p ^ adc_l3b_p ^ adc_l4a_p ^ adc_l4b_p ^ adc_fclk_p ^ adc_fclk_p ^ adc_lclk_p ^ adc_lclk_p;
+assign led_PL1 = adc_l1a_n ^ adc_l1b_n ^ adc_l2a_n ^ adc_l2b_n ^ adc_l3a_n ^ adc_l3b_n ^ adc_l4a_n ^ adc_l4b_n ^ adc_fclk_n ^ adc_fclk_n ^ adc_lclk_n ^ adc_lclk_n;
+*/
 
 design_1 (
     .FCLK_CLK0(clk_master_50),
-    .STRAXI_DATA_PORT(8'h55cc55cc),
-    .STRAXI_DATA_VALID(straxi_valid),   // data ~always valid
-    .STRAXI_DATA_ARSTN(straxi_rstn),    // reset not asserted
+    .STRAXI_DATA_PORT(straxi_data_in),
+    .STRAXI_DATA_TLAST(straxi_tlast),
+    .STRAXI_DATA_VALID(straxi_valid), 
+    .STRAXI_DATA_ARSTN(straxi_rstn), 
     .STRAXI_DATA_CLK(straxi_clk),
     .STRAXI_DATA_READY(straxi_ready),
     .STRAXI_DATA_WRTCNT(straxi_wrtcnt_dbg)
 );
+
+assign straxi_clk = clk_master_50;
 
 always @(posedge clk_master_50) begin
     // DMA xfer test: data port with continuous counter used
@@ -70,20 +186,30 @@ always @(posedge clk_master_50) begin
     end
     
     if (axi_internal_timer > 200) begin
-        straxi_data_in <= 8'h55555555 + axi_internal_timer;
-        straxi_clk <= ~straxi_clk;
+        straxi_valid <= 1;
         
-        // toggle VALID on every frame for 2 cycles
-        if ((axi_internal_timer & 31) < 2) begin
-            straxi_valid <= 0;
+        if (straxi_ready) begin
+            straxi_data_in <= axi_internal_timer; // lvds_test_data_reg;
+        
+            // toggle LAST on every frame for 2 cycles
+            if ((axi_internal_timer & 31) < 2) begin
+                straxi_tlast <= 1;
+            end else begin
+                straxi_tlast <= 0;
+            end
+            
+            led_reg0 <= ~led_reg0;
         end else begin
-            straxi_valid <= 1;
+            straxi_data_in <= 8'h5500ffcc; // invalid data flag
         end
     end else begin
         straxi_valid <= 0;
         straxi_data_in <= 0;
     end
 end
+
+assign led_PL0 = led_reg0;
+assign led_PL1 = led_reg1;
 
 clk_wiz_0 (
     .clk_out1_0(clk_mipi_0),

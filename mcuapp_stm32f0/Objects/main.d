@@ -55,3 +55,6 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart_ex.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_wwdg.h
+.\objects\main.o: hmcad151x.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\main.o: adf435x.h

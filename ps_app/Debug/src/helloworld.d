@@ -12,6 +12,7 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xreg_cortexa9.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h \
@@ -50,6 +51,8 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
 ../../ps_app_bsp/ps7_cortexa9_0/include/xreg_cortexa9.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:
 

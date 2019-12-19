@@ -9,207 +9,172 @@
     ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 
 source main.tcl -notrace
+add_files: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 364.926 ; gain = 77.355
 Command: synth_design -top main -part xc7z014sclg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 9648 
-WARNING: [Synth 8-2611] redeclaration of ansi port csi_clkn_lp_lat is not allowed [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:131]
-WARNING: [Synth 8-2611] redeclaration of ansi port csi_clkp_lp_lat is not allowed [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:131]
-WARNING: [Synth 8-976] csi_clkn_lp_lat has already been declared [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:131]
-WARNING: [Synth 8-2654] second declaration of csi_clkn_lp_lat ignored [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:131]
-INFO: [Synth 8-994] csi_clkn_lp_lat is declared here [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:120]
-INFO: [Synth 8-994] csi_clkp_lp_lat is declared here [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:121]
-WARNING: [Synth 8-2292] literal value truncated to fit in 1 bits [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:491]
-WARNING: [Synth 8-2292] literal value truncated to fit in 1 bits [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:605]
-WARNING: [Synth 8-2292] literal value truncated to fit in 8 bits [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:55]
-WARNING: [Synth 8-2292] literal value truncated to fit in 8 bits [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:73]
+INFO: Helper process launched with PID 15948 
+WARNING: [Synth 8-2292] literal value truncated to fit in 8 bits [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:201]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 421.309 ; gain = 119.355
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 473.195 ; gain = 108.270
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
-	Parameter STATE_INIT_TX bound to: 1 - type: integer 
-	Parameter STATE_FRAME_START bound to: 10 - type: integer 
-	Parameter STATE_FRAME_START_BUSY_WAIT bound to: 20 - type: integer 
-	Parameter STATE_FRAME_START_IDLE bound to: 30 - type: integer 
-	Parameter STATE_FRAME_DATA_LINE_PREP bound to: 35 - type: integer 
-	Parameter STATE_FRAME_DATA_LINE bound to: 40 - type: integer 
-	Parameter STATE_FRAME_DATA_LINE_BUSY_WAIT bound to: 50 - type: integer 
-	Parameter STATE_FRAME_END bound to: 60 - type: integer 
-	Parameter STATE_FRAME_END_BUSY_WAIT bound to: 70 - type: integer 
-	Parameter STATE_FRAME_END_IDLE_PREP bound to: 75 - type: integer 
-	Parameter STATE_FRAME_END_IDLE bound to: 80 - type: integer 
-	Parameter NOISE_HEIGHT bound to: 16 - type: integer 
-	Parameter STATE_IDLE bound to: 1 - type: integer 
-	Parameter STATE_INIT_MIPI bound to: 2 - type: integer 
-	Parameter STATE_SEND_PACKET bound to: 3 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'design_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:13]
-INFO: [Synth 8-6157] synthesizing module 'design_1_axi_dma_0_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_axi_dma_0_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_dma_0_1' (1#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_axi_dma_0_1_stub.v:6]
-WARNING: [Synth 8-350] instance 'axi_dma_0' of module 'design_1_axi_dma_0_1' requires 43 connections, but only 40 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:201]
-INFO: [Synth 8-6157] synthesizing module 'design_1_axi_interconnect_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:465]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_O7FAN0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:965]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_pc_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_1' (2#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_pc_1_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_us_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_us_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_us_0' (3#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_us_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_O7FAN0' (4#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:965]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_interconnect_0_0' (5#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:465]
-INFO: [Synth 8-6157] synthesizing module 'design_1_axis_data_fifo_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_axis_data_fifo_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_axis_data_fifo_0_0' (6#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_axis_data_fifo_0_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_processing_system7_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_processing_system7_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_processing_system7_0_0' (7#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_processing_system7_0_0_stub.v:6]
-WARNING: [Synth 8-350] instance 'processing_system7_0' of module 'design_1_processing_system7_0_0' requires 107 connections, but only 96 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:298]
-INFO: [Synth 8-6157] synthesizing module 'design_1_ps7_0_axi_periph_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:665]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_UYSKKA' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1215]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_pc_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (8#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_auto_pc_0_stub.v:6]
-WARNING: [Synth 8-350] instance 'auto_pc' of module 'design_1_auto_pc_0' requires 59 connections, but only 56 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1446]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_UYSKKA' (9#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1215]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_ps7_0_axi_periph_1' (10#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:665]
-INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps7_0_50M_2' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_rst_ps7_0_50M_2_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps7_0_50M_2' (11#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/design_1_rst_ps7_0_50M_2_stub.v:6]
-WARNING: [Synth 8-350] instance 'rst_ps7_0_50M' of module 'design_1_rst_ps7_0_50M_2' requires 10 connections, but only 6 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:456]
-INFO: [Synth 8-6155] done synthesizing module 'design_1' (12#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:13]
-WARNING: [Synth 8-350] instance 'nolabel_line53' of module 'design_1' requires 28 connections, but only 7 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:53]
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/clk_wiz_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (13#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/clk_wiz_0_stub.v:5]
-INFO: [Synth 8-6157] synthesizing module 'mipi_csi' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:9]
-	Parameter LP_STATE_BUS_IDLE_11 bound to: 2'b00 
-	Parameter LP_STATE_PREP_HS_01 bound to: 2'b01 
-	Parameter LP_STATE_HS_INIT_00 bound to: 2'b10 
-	Parameter LP_STATE_HS_DATA_ZZ bound to: 2'b11 
-	Parameter LPCLK_STATE_IDLE_11 bound to: 3'b000 
-	Parameter LPCLK_STATE_PREP_CLK_01 bound to: 3'b001 
-	Parameter LPCLK_STATE_CLK_INIT_00 bound to: 3'b010 
-	Parameter LPCLK_STATE_CLK_ZERO bound to: 3'b100 
-	Parameter LPCLK_STATE_CLK_RUN bound to: 3'b101 
-	Parameter STATE_LP_IDLE bound to: 0 - type: integer 
-	Parameter STATE_LP_INIT bound to: 1 - type: integer 
-	Parameter STATE_LP_SETTLE bound to: 2 - type: integer 
-	Parameter STATE_LP_SETTLE_POST bound to: 3 - type: integer 
-	Parameter STATE_HS_ZERO bound to: 4 - type: integer 
-	Parameter STATE_HS_SYNC bound to: 5 - type: integer 
-	Parameter STATE_HS_PACKET_HEADER bound to: 6 - type: integer 
-	Parameter STATE_HS_PACKET_DATA_TX bound to: 7 - type: integer 
-	Parameter STATE_HS_PACKET_CRC bound to: 8 - type: integer 
-	Parameter STATE_HS_TRAIL bound to: 10 - type: integer 
-	Parameter STATE_LP_RETURN_PRE bound to: 11 - type: integer 
-	Parameter STATE_LP_RETURN bound to: 12 - type: integer 
-	Parameter STATE_TX_INACTIVE bound to: 13 - type: integer 
-	Parameter STATE_TX_WAITING_FOR_CLOCK bound to: 15 - type: integer 
-	Parameter STATE_TX_CLK_SHUTDOWN bound to: 16 - type: integer 
-	Parameter STATE_CLK_SLEEP bound to: 1 - type: integer 
-	Parameter STATE_CLK_OFF_STATE bound to: 2 - type: integer 
-	Parameter STATE_CLK_PREP_STATE bound to: 3 - type: integer 
-	Parameter STATE_CLK_LOW_STATE bound to: 4 - type: integer 
-	Parameter STATE_CLK_ZERO_STATE bound to: 5 - type: integer 
-	Parameter STATE_CLK_ACTIVE_STATE bound to: 6 - type: integer 
-	Parameter STATE_CLK_WAIT_STATE bound to: 7 - type: integer 
-	Parameter STATE_CLK_SHUTDOWN_HS00_STATE bound to: 8 - type: integer 
-	Parameter STATE_CLK_SHUTDOWN_LP00_STATE bound to: 9 - type: integer 
-	Parameter STATE_CLK_SHUTDOWN_LP11_STATE bound to: 10 - type: integer 
-	Parameter PACKET_TYPE_SHORT bound to: 0 - type: integer 
-	Parameter PACKET_TYPE_LONG bound to: 1 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'BUFR' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:891]
-	Parameter BUFR_DIVIDE bound to: BYPASS - type: string 
-	Parameter SIM_DEVICE bound to: 7SERIES - type: string 
-INFO: [Synth 8-6155] done synthesizing module 'BUFR' (14#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:891]
-INFO: [Synth 8-6157] synthesizing module 'BUFGCE' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:619]
-	Parameter CE_TYPE bound to: SYNC - type: string 
-	Parameter IS_CE_INVERTED bound to: 1'b0 
-	Parameter IS_I_INVERTED bound to: 1'b0 
-INFO: [Synth 8-6155] done synthesizing module 'BUFGCE' (15#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:619]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:439]
-INFO: [Synth 8-6157] synthesizing module 'OSERDESE2' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:32215]
-	Parameter DATA_RATE_OQ bound to: DDR - type: string 
-	Parameter DATA_RATE_TQ bound to: SDR - type: string 
-	Parameter DATA_WIDTH bound to: 8 - type: integer 
-	Parameter INIT_OQ bound to: 1'b0 
-	Parameter INIT_TQ bound to: 1'b1 
-	Parameter IS_CLKDIV_INVERTED bound to: 1'b0 
-	Parameter IS_CLK_INVERTED bound to: 1'b0 
-	Parameter IS_D1_INVERTED bound to: 1'b0 
-	Parameter IS_D2_INVERTED bound to: 1'b0 
-	Parameter IS_D3_INVERTED bound to: 1'b0 
-	Parameter IS_D4_INVERTED bound to: 1'b0 
-	Parameter IS_D5_INVERTED bound to: 1'b0 
-	Parameter IS_D6_INVERTED bound to: 1'b0 
-	Parameter IS_D7_INVERTED bound to: 1'b0 
-	Parameter IS_D8_INVERTED bound to: 1'b0 
-	Parameter IS_T1_INVERTED bound to: 1'b0 
-	Parameter IS_T2_INVERTED bound to: 1'b0 
-	Parameter IS_T3_INVERTED bound to: 1'b0 
-	Parameter IS_T4_INVERTED bound to: 1'b0 
-	Parameter SERDES_MODE bound to: MASTER - type: string 
-	Parameter SRVAL_OQ bound to: 1'b0 
-	Parameter SRVAL_TQ bound to: 1'b1 
-	Parameter TBYTE_CTL bound to: FALSE - type: string 
-	Parameter TBYTE_SRC bound to: FALSE - type: string 
-	Parameter TRISTATE_WIDTH bound to: 1 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'OSERDESE2' (16#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:32215]
-WARNING: [Synth 8-350] instance 'OSERDESE2_lane_d0_inst' of module 'OSERDESE2' requires 27 connections, but only 16 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:509]
-WARNING: [Synth 8-350] instance 'OSERDESE2_lane_d1_inst' of module 'OSERDESE2' requires 27 connections, but only 16 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:544]
-INFO: [Synth 8-6157] synthesizing module 'OBUFTDS' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:28494]
+INFO: [Synth 8-6157] synthesizing module 'IBUFDS' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20423]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
-	Parameter IOSTANDARD bound to: DIFF_HSTL_I_18 - type: string 
-	Parameter SLEW bound to: SLOW - type: string 
-INFO: [Synth 8-6155] done synthesizing module 'OBUFTDS' (17#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:28494]
-WARNING: [Synth 8-350] instance 'OSERDESE2_lane_clk_inst' of module 'OSERDESE2' requires 27 connections, but only 16 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:620]
-INFO: [Synth 8-6157] synthesizing module 'ecc24_fast' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/ecc24_fast.v:10]
-INFO: [Synth 8-6155] done synthesizing module 'ecc24_fast' (18#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/ecc24_fast.v:10]
-WARNING: [Synth 8-6014] Unused sequential element oddr_clk_en_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:869]
-WARNING: [Synth 8-6014] Unused sequential element ready_state_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:919]
-WARNING: [Synth 8-6014] Unused sequential element mem_read_clk_en_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:933]
-WARNING: [Synth 8-6014] Unused sequential element oddr_ctr_reset_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:958]
-WARNING: [Synth 8-6014] Unused sequential element test_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:959]
-WARNING: [Synth 8-6014] Unused sequential element oddr_trail_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:1003]
-WARNING: [Synth 8-6014] Unused sequential element tx_counter_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:1164]
-WARNING: [Synth 8-3848] Net debug in module/entity mipi_csi does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:67]
-INFO: [Synth 8-6155] done synthesizing module 'mipi_csi' (19#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:9]
-WARNING: [Synth 8-350] instance 'nolabel_line157' of module 'mipi_csi' requires 41 connections, but only 37 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:157]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (20#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-16936-TomsDesktop/realtime/blk_mem_gen_0_stub.v:6]
-WARNING: [Synth 8-689] width (12) of port connection 'addra' does not match port width (11) of module 'blk_mem_gen_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:235]
-WARNING: [Synth 8-350] instance 'blk_mem_gen_0_x' of module 'blk_mem_gen_0' requires 6 connections, but only 4 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:232]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:280]
-WARNING: [Synth 8-6014] Unused sequential element straxi_data_in_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:73]
-WARNING: [Synth 8-6014] Unused sequential element blinky_led_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:275]
-WARNING: [Synth 8-6014] Unused sequential element blinky_ctr_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:274]
-WARNING: [Synth 8-6014] Unused sequential element sent_lines_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:387]
-WARNING: [Synth 8-6014] Unused sequential element counter_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:448]
-WARNING: [Synth 8-6014] Unused sequential element xcoord_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:449]
-WARNING: [Synth 8-6014] Unused sequential element xor_lfsr_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:470]
-WARNING: [Synth 8-6014] Unused sequential element reg_lfsr_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:470]
-WARNING: [Synth 8-6014] Unused sequential element val_lfsr_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:472]
-WARNING: [Synth 8-3848] Net mipi_test_word in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:128]
-WARNING: [Synth 8-3848] Net sine_addr in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:148]
-INFO: [Synth 8-6155] done synthesizing module 'main' (21#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port debug[3]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port debug[2]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port debug[1]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port debug[0]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port rst_in
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port state_go
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[7]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[6]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[5]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[4]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[3]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[2]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[1]
-WARNING: [Synth 8-3331] design mipi_csi has unconnected port test_word[0]
+	Parameter DIFF_TERM bound to: FALSE - type: string 
+	Parameter DQS_BIAS bound to: FALSE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUFDS' (1#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20423]
+INFO: [Synth 8-6157] synthesizing module 'IBUFGDS' [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20866]
+	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
+	Parameter DIFF_TERM bound to: FALSE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUFGDS' (2#1) [G:/Xilinx/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20866]
+INFO: [Synth 8-6157] synthesizing module 'design_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:13]
+INFO: [Synth 8-6157] synthesizing module 'design_1_axi_dma_0_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_axi_dma_0_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_dma_0_1' (3#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_axi_dma_0_1_stub.v:6]
+WARNING: [Synth 8-350] instance 'axi_dma_0' of module 'design_1_axi_dma_0_1' requires 43 connections, but only 40 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:209]
+INFO: [Synth 8-6157] synthesizing module 'design_1_axi_interconnect_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:548]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_O7FAN0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1068]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_pc_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_1' (4#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_pc_1_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_us_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_us_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_us_0' (5#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_us_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_O7FAN0' (6#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1068]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_interconnect_0_0' (7#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:548]
+INFO: [Synth 8-6157] synthesizing module 'design_1_axis_data_fifo_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_axis_data_fifo_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_axis_data_fifo_0_0' (8#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_axis_data_fifo_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_processing_system7_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_processing_system7_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_processing_system7_0_0' (9#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_processing_system7_0_0_stub.v:6]
+WARNING: [Synth 8-350] instance 'processing_system7_0' of module 'design_1_processing_system7_0_0' requires 107 connections, but only 100 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:310]
+INFO: [Synth 8-6157] synthesizing module 'design_1_ps7_0_axi_periph_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:768]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_UYSKKA' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1326]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_pc_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (10#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_auto_pc_0_stub.v:6]
+WARNING: [Synth 8-350] instance 'auto_pc' of module 'design_1_auto_pc_0' requires 59 connections, but only 56 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1557]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_UYSKKA' (11#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:1326]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_ps7_0_axi_periph_1' (12#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:768]
+INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps7_0_50M_2' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_rst_ps7_0_50M_2_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps7_0_50M_2' (13#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_rst_ps7_0_50M_2_stub.v:6]
+WARNING: [Synth 8-350] instance 'rst_ps7_0_50M' of module 'design_1_rst_ps7_0_50M_2' requires 10 connections, but only 6 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:472]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:479]
+INFO: [Synth 8-6157] synthesizing module 'design_1_system_ila_0_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_system_ila_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_system_ila_0_0' (14#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/design_1_system_ila_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1' (15#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/synth/design_1.v:13]
+WARNING: [Synth 8-689] width (32) of port connection 'STRAXI_DATA_PORT' does not match port width (1) of module 'design_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:166]
+WARNING: [Synth 8-350] instance 'nolabel_line164' of module 'design_1' requires 29 connections, but only 8 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:164]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (16#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/.Xil/Vivado-13088-TomsDesktop/realtime/clk_wiz_0_stub.v:5]
+WARNING: [Synth 8-6014] Unused sequential element lvds_test_data_reg_reg was removed.  [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:150]
+WARNING: [Synth 8-3848] Net csi_clk_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_clk_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_d0_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_d0_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_d1_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_d1_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpd0_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpd0_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpd1_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpd1_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpclk_n in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+WARNING: [Synth 8-3848] Net csi_lpclk_p in module/entity main does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:52]
+INFO: [Synth 8-6155] done synthesizing module 'main' (17#1) [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 WARNING: [Synth 8-3331] design s00_couplers_imp_UYSKKA has unconnected port M_ACLK
 WARNING: [Synth 8-3331] design s00_couplers_imp_UYSKKA has unconnected port M_ARESETN
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_1 has unconnected port ACLK
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_1 has unconnected port ARESETN
 WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_ACLK
 WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_ARESETN
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_arready
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[63]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[62]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[61]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[60]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[59]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[58]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[57]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[56]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[55]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[54]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[53]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[52]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[51]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[50]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[49]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[48]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[47]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[46]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[45]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[44]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[43]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[42]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[41]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[40]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[39]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[38]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[37]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[36]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[35]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[34]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[33]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[32]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[31]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[30]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[29]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[28]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[27]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[26]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[25]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[24]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[23]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[22]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[21]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[20]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[19]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[18]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[17]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[16]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[15]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[14]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[13]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[12]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[11]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[10]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[9]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[8]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[7]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[6]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[5]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[4]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[3]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[2]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[1]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rdata[0]
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rlast
+WARNING: [Synth 8-3331] design s00_couplers_imp_O7FAN0 has unconnected port M_AXI_rvalid
 WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port ACLK
 WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port ARESETN
+WARNING: [Synth 8-3331] design main has unconnected port csi_clk_p
+WARNING: [Synth 8-3331] design main has unconnected port csi_clk_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_d0_p
+WARNING: [Synth 8-3331] design main has unconnected port csi_d0_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_d1_p
+WARNING: [Synth 8-3331] design main has unconnected port csi_d1_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpd0_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpd0_p
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpd1_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpd1_p
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpclk_n
+WARNING: [Synth 8-3331] design main has unconnected port csi_lpclk_p
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 466.285 ; gain = 164.332
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 510.980 ; gain = 146.055
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -222,184 +187,82 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 466.285 ; gain = 164.332
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 510.980 ; gain = 146.055
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 466.285 ; gain = 164.332
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 510.980 ; gain = 146.055
 ---------------------------------------------------------------------------------
-INFO: [Netlist 29-17] Analyzing 9 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 10 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'nolabel_line88'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'nolabel_line88'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0/design_1_processing_system7_0_0_in_context.xdc] for cell 'nolabel_line53/processing_system7_0'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0/design_1_processing_system7_0_0_in_context.xdc] for cell 'nolabel_line53/processing_system7_0'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0_1/design_1_axi_dma_0_1/design_1_axi_dma_0_1_in_context.xdc] for cell 'nolabel_line53/axi_dma_0'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0_1/design_1_axi_dma_0_1/design_1_axi_dma_0_1_in_context.xdc] for cell 'nolabel_line53/axi_dma_0'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_in_context.xdc] for cell 'nolabel_line53/axis_data_fifo_0'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_in_context.xdc] for cell 'nolabel_line53/axis_data_fifo_0'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_0_in_context.xdc] for cell 'nolabel_line53/rst_ps7_0_50M'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_0_in_context.xdc] for cell 'nolabel_line53/rst_ps7_0_50M'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0/design_1_auto_pc_1_in_context.xdc] for cell 'nolabel_line53/ps7_0_axi_periph/s00_couplers/auto_pc'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0/design_1_auto_pc_1_in_context.xdc] for cell 'nolabel_line53/ps7_0_axi_periph/s00_couplers/auto_pc'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1/design_1_auto_pc_0_in_context.xdc] for cell 'nolabel_line53/axi_interconnect_0/s00_couplers/auto_pc'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1/design_1_auto_pc_0_in_context.xdc] for cell 'nolabel_line53/axi_interconnect_0/s00_couplers/auto_pc'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_us_0/design_1_auto_us_0/design_1_auto_us_0_in_context.xdc] for cell 'nolabel_line53/axi_interconnect_0/s00_couplers/auto_us'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_us_0/design_1_auto_us_0/design_1_auto_us_0_in_context.xdc] for cell 'nolabel_line53/axi_interconnect_0/s00_couplers/auto_us'
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'blk_mem_gen_0_x'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'blk_mem_gen_0_x'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'nolabel_line212'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'nolabel_line212'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0/design_1_processing_system7_0_0_in_context.xdc] for cell 'nolabel_line164/processing_system7_0'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/design_1_processing_system7_0_0/design_1_processing_system7_0_0_in_context.xdc] for cell 'nolabel_line164/processing_system7_0'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0_1/design_1_axi_dma_0_1/design_1_axi_dma_0_1_in_context.xdc] for cell 'nolabel_line164/axi_dma_0'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0_1/design_1_axi_dma_0_1/design_1_axi_dma_0_1_in_context.xdc] for cell 'nolabel_line164/axi_dma_0'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_in_context.xdc] for cell 'nolabel_line164/axis_data_fifo_0'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_in_context.xdc] for cell 'nolabel_line164/axis_data_fifo_0'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_0_in_context.xdc] for cell 'nolabel_line164/rst_ps7_0_50M'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_2/design_1_rst_ps7_0_50M_0_in_context.xdc] for cell 'nolabel_line164/rst_ps7_0_50M'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0/design_1_system_ila_0_0_in_context.xdc] for cell 'nolabel_line164/system_ila_0'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0/design_1_system_ila_0_0_in_context.xdc] for cell 'nolabel_line164/system_ila_0'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0/design_1_auto_pc_1_in_context.xdc] for cell 'nolabel_line164/ps7_0_axi_periph/s00_couplers/auto_pc'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0/design_1_auto_pc_1_in_context.xdc] for cell 'nolabel_line164/ps7_0_axi_periph/s00_couplers/auto_pc'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1/design_1_auto_pc_0_in_context.xdc] for cell 'nolabel_line164/axi_interconnect_0/s00_couplers/auto_pc'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1/design_1_auto_pc_0_in_context.xdc] for cell 'nolabel_line164/axi_interconnect_0/s00_couplers/auto_pc'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_us_0/design_1_auto_us_0/design_1_auto_us_0_in_context.xdc] for cell 'nolabel_line164/axi_interconnect_0/s00_couplers/auto_us'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_us_0/design_1_auto_us_0/design_1_auto_us_0_in_context.xdc] for cell 'nolabel_line164/axi_interconnect_0/s00_couplers/auto_us'
 Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc]
 Finished Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/main_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/dont_touch.xdc]
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 840.289 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 857.215 ; gain = 0.000
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 840.289 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 857.215 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 6 instances were transformed.
-  BUFGCE => BUFGCTRL: 3 instances
-  OBUFTDS => OBUFTDS_DUAL_BUF (INV, OBUFTDS, OBUFTDS): 3 instances
+  A total of 1 instances were transformed.
+  IBUFGDS => IBUFDS: 1 instances
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 840.289 ; gain = 0.000
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 840.289 ; gain = 0.000
-WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'blk_mem_gen_0_x' at clock pin 'clka' is different from the actual clock period '3.333', this can lead to different synthesis results.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 857.215 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 857.215 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 857.215 ; gain = 492.289
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 857.215 ; gain = 492.289
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
-Applied set_property DONT_TOUCH = true for nolabel_line88. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/processing_system7_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/axi_dma_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/axis_data_fifo_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/axi_interconnect_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/rst_ps7_0_50M. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/ps7_0_axi_periph. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/ps7_0_axi_periph/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/axi_interconnect_0/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line53/axi_interconnect_0/s00_couplers/auto_us. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for blk_mem_gen_0_x. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line212. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/processing_system7_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/axi_dma_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/axis_data_fifo_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/axi_interconnect_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/rst_ps7_0_50M. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/ps7_0_axi_periph. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/system_ila_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/ps7_0_axi_periph/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/axi_interconnect_0/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line164/axi_interconnect_0/s00_couplers/auto_us. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 857.215 ; gain = 492.289
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-4471] merging register 'csi_dn1_lp_lat_reg' into 'csi_dn0_lp_lat_reg' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:407]
-INFO: [Synth 8-4471] merging register 'csi_dp1_lp_lat_reg' into 'csi_dp0_lp_lat_reg' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/mipi_csi.v:408]
-INFO: [Synth 8-802] inferred FSM for state register 'clk_current_state_reg' in module 'mipi_csi'
-INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'mipi_csi'
-INFO: [Synth 8-5546] ROM "state_timer_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "state_timer_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mem_read_en" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "crc16" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "csi_lpclk_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "clk_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "clk_is_idle" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "clk_is_ready" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "clk_state_timer_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "clk_current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5546] ROM "oddr_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "oddr_oclk_en" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "oddr_tclk_en" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "oddr_hiz" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "done0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mem_read_en" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mem_read_en0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5546] ROM "current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-802] inferred FSM for state register 'cam_state_reg' in module 'main'
-INFO: [Synth 8-5546] ROM "cam_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_start_idle_counter" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "data_lines" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_end_idle_counter" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mipi_vc_id" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mipi_tx_size" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mipi_idle_packet" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mipi_wct_short" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "mipi_wct_short0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_state" won't be mapped to RAM because it is too sparse
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-         STATE_CLK_SLEEP |                       0000000001 |                         00000001
-     STATE_CLK_OFF_STATE |                       0000000010 |                         00000010
-    STATE_CLK_PREP_STATE |                       0000000100 |                         00000011
-     STATE_CLK_LOW_STATE |                       0000001000 |                         00000100
-    STATE_CLK_ZERO_STATE |                       0000010000 |                         00000101
-  STATE_CLK_ACTIVE_STATE |                       0000100000 |                         00000110
-    STATE_CLK_WAIT_STATE |                       0001000000 |                         00000111
-STATE_CLK_SHUTDOWN_HS00_STATE |                       0010000000 |                         00001000
-STATE_CLK_SHUTDOWN_LP00_STATE |                       0100000000 |                         00001001
-STATE_CLK_SHUTDOWN_LP11_STATE |                       1000000000 |                         00001010
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'clk_current_state_reg' using encoding 'one-hot' in module 'mipi_csi'
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-       STATE_TX_INACTIVE |                   00000000000001 |                         00001101
-STATE_TX_WAITING_FOR_CLOCK |                   00000000000010 |                         00001111
-           STATE_LP_IDLE |                   00000000000100 |                         00000000
-           STATE_LP_INIT |                   00000000001000 |                         00000001
-         STATE_LP_SETTLE |                   00000000010000 |                         00000010
-    STATE_LP_SETTLE_POST |                   00000000100000 |                         00000011
-           STATE_HS_ZERO |                   00000001000000 |                         00000100
-           STATE_HS_SYNC |                   00000010000000 |                         00000101
-  STATE_HS_PACKET_HEADER |                   00000100000000 |                         00000110
- STATE_HS_PACKET_DATA_TX |                   00001000000000 |                         00000111
-          STATE_HS_TRAIL |                   00010000000000 |                         00001010
-     STATE_LP_RETURN_PRE |                   00100000000000 |                         00001011
-         STATE_LP_RETURN |                   01000000000000 |                         00001100
-   STATE_TX_CLK_SHUTDOWN |                   10000000000000 |                         00010000
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'mipi_csi'
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-       STATE_FRAME_START |                             0000 |                         00001010
-STATE_FRAME_START_BUSY_WAIT |                             0001 |                         00010100
-  STATE_FRAME_START_IDLE |                             0010 |                         00011110
-STATE_FRAME_DATA_LINE_PREP |                             0011 |                         00100011
-   STATE_FRAME_DATA_LINE |                             0100 |                         00101000
-STATE_FRAME_DATA_LINE_BUSY_WAIT |                             0101 |                         00110010
-         STATE_FRAME_END |                             0110 |                         00111100
-STATE_FRAME_END_BUSY_WAIT |                             0111 |                         01000110
-STATE_FRAME_END_IDLE_PREP |                             1000 |                         01001011
-    STATE_FRAME_END_IDLE |                             1001 |                         01010000
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'cam_state_reg' using encoding 'sequential' in module 'main'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 857.215 ; gain = 492.289
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -411,48 +274,12 @@ Report RTL Partitions:
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
-+---Adders : 
-	   2 Input     24 Bit       Adders := 2     
-	   2 Input     16 Bit       Adders := 3     
-	   2 Input      2 Bit       Adders := 1     
-+---XORs : 
-	   2 Input      1 Bit         XORs := 19    
-	   6 Input      1 Bit         XORs := 1     
-	  11 Input      1 Bit         XORs := 2     
-	  13 Input      1 Bit         XORs := 2     
-	   8 Input      1 Bit         XORs := 1     
-	   7 Input      1 Bit         XORs := 1     
 +---Registers : 
-	               24 Bit    Registers := 2     
-	               16 Bit    Registers := 7     
-	                8 Bit    Registers := 4     
-	                6 Bit    Registers := 2     
-	                3 Bit    Registers := 1     
-	                2 Bit    Registers := 5     
-	                1 Bit    Registers := 32    
+	               32 Bit    Registers := 1     
+	                1 Bit    Registers := 5     
 +---Muxes : 
-	   2 Input     24 Bit        Muxes := 1     
-	  10 Input     24 Bit        Muxes := 2     
-	   2 Input     16 Bit        Muxes := 1     
-	  14 Input     16 Bit        Muxes := 2     
-	  10 Input     16 Bit        Muxes := 2     
-	  14 Input     14 Bit        Muxes := 1     
-	   2 Input     14 Bit        Muxes := 13    
-	   3 Input     14 Bit        Muxes := 1     
-	  10 Input     10 Bit        Muxes := 1     
-	   2 Input     10 Bit        Muxes := 10    
-	   2 Input      8 Bit        Muxes := 6     
-	  14 Input      8 Bit        Muxes := 2     
-	  10 Input      6 Bit        Muxes := 1     
-	  10 Input      4 Bit        Muxes := 1     
-	   2 Input      4 Bit        Muxes := 2     
-	  10 Input      3 Bit        Muxes := 1     
-	  14 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 30    
-	  10 Input      1 Bit        Muxes := 20    
-	  14 Input      1 Bit        Muxes := 24    
-	   4 Input      1 Bit        Muxes := 3     
-	   6 Input      1 Bit        Muxes := 5     
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -462,64 +289,12 @@ Start RTL Hierarchical Component Statistics
 Hierarchical RTL Component report 
 Module main 
 Detailed RTL Component Info : 
-+---Adders : 
-	   2 Input     24 Bit       Adders := 2     
-	   2 Input     16 Bit       Adders := 1     
 +---Registers : 
-	               24 Bit    Registers := 2     
-	               16 Bit    Registers := 3     
-	                6 Bit    Registers := 1     
-	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 6     
+	               32 Bit    Registers := 1     
+	                1 Bit    Registers := 5     
 +---Muxes : 
-	   2 Input     24 Bit        Muxes := 1     
-	  10 Input     24 Bit        Muxes := 2     
-	  10 Input     16 Bit        Muxes := 2     
-	  10 Input      6 Bit        Muxes := 1     
-	  10 Input      4 Bit        Muxes := 1     
-	   2 Input      4 Bit        Muxes := 2     
-	   2 Input      1 Bit        Muxes := 5     
-	  10 Input      1 Bit        Muxes := 14    
-Module ecc24_fast 
-Detailed RTL Component Info : 
-+---XORs : 
-	   2 Input      1 Bit         XORs := 3     
-	   6 Input      1 Bit         XORs := 1     
-	  11 Input      1 Bit         XORs := 2     
-	  13 Input      1 Bit         XORs := 2     
-	   8 Input      1 Bit         XORs := 1     
-	   7 Input      1 Bit         XORs := 1     
-Module mipi_csi 
-Detailed RTL Component Info : 
-+---Adders : 
-	   2 Input     16 Bit       Adders := 2     
-	   2 Input      2 Bit       Adders := 1     
-+---XORs : 
-	   2 Input      1 Bit         XORs := 16    
-+---Registers : 
-	               16 Bit    Registers := 4     
-	                8 Bit    Registers := 4     
-	                6 Bit    Registers := 1     
-	                3 Bit    Registers := 1     
-	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 26    
-+---Muxes : 
-	   2 Input     16 Bit        Muxes := 1     
-	  14 Input     16 Bit        Muxes := 2     
-	  14 Input     14 Bit        Muxes := 1     
-	   2 Input     14 Bit        Muxes := 13    
-	   3 Input     14 Bit        Muxes := 1     
-	  10 Input     10 Bit        Muxes := 1     
-	   2 Input     10 Bit        Muxes := 10    
-	   2 Input      8 Bit        Muxes := 6     
-	  14 Input      8 Bit        Muxes := 2     
-	  10 Input      3 Bit        Muxes := 1     
-	  14 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 25    
-	  10 Input      1 Bit        Muxes := 6     
-	  14 Input      1 Bit        Muxes := 24    
-	   4 Input      1 Bit        Muxes := 3     
-	   6 Input      1 Bit        Muxes := 5     
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
 ---------------------------------------------------------------------------------
@@ -536,19 +311,6 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
-INFO: [Synth 8-5544] ROM "nolabel_line157/" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-INFO: [Synth 8-5546] ROM "nolabel_line157/current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/current_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/state_timer_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/state_timer_rst" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/crc16" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "nolabel_line157/mem_read_en" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_start_idle_counter" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_state" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "data_lines" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "cam_end_idle_counter" won't be mapped to RAM because it is too sparse
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_1 has unconnected port ACLK
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_1 has unconnected port ARESETN
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_1 has unconnected port M00_ACLK
@@ -557,52 +319,14 @@ WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected por
 WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port ARESETN
 WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_ACLK
 WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_ARESETN
-INFO: [Synth 8-3886] merging instance 'mipi_dt_id_reg[5]' (FDE) to 'mipi_dt_id_reg[1]'
-INFO: [Synth 8-3886] merging instance 'mipi_dt_id_reg[4]' (FDE) to 'mipi_dt_id_reg[2]'
-INFO: [Synth 8-3886] merging instance 'mipi_dt_id_reg[3]' (FDE) to 'mipi_dt_id_reg[1]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\mipi_dt_id_reg[2] )
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[0]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[1]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[2]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[3]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[4]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[5]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[6]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[7]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[8]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[9]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[10]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[12]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[13]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3886] merging instance 'mipi_tx_size_reg[14]' (FDE) to 'mipi_tx_size_reg[15]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\mipi_tx_size_reg[15] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nolabel_line157/FSM_onehot_current_state_reg[13] )
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[7]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[6]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[5]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[4]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[3]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[2]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[1]' (FDE) to 'nolabel_line157/crc16_reg[0]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[0]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[15]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[14]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[13]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/dt_id_latch_reg[5]' (FDE) to 'nolabel_line157/dt_id_latch_reg[1]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[12]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/dt_id_latch_reg[4]' (FDE) to 'nolabel_line157/dt_id_latch_reg[2]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[11]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/dt_id_latch_reg[3]' (FDE) to 'nolabel_line157/dt_id_latch_reg[1]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[10]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/crc16_reg[9]' (FDE) to 'nolabel_line157/crc16_reg[8]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\nolabel_line157/crc16_reg[8] )
-INFO: [Synth 8-3886] merging instance 'nolabel_line157/clkout_hiz_reg' (FDE) to 'i_19'
-INFO: [Synth 8-3886] merging instance 'i_19' (FDE) to 'i_6'
-INFO: [Synth 8-3886] merging instance 'i_4' (FD) to 'i_2'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nolabel_line157/dt_id_latch_reg[2] )
-WARNING: [Synth 8-3332] Sequential element (nolabel_line157/FSM_onehot_current_state_reg[13]) is unused and will be removed from module main.
+WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_AXI_arready
+WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_AXI_rdata[63]
+WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_AXI_rdata[62]
+WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_AXI_rdata[61]
+WARNING: [Synth 8-3331] design design_1_axi_interconnect_0_0 has unconnected port M00_AXI_rdata[60]
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 857.215 ; gain = 492.289
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -613,25 +337,25 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line88/clk_in1' to pin 'nolabel_line53/processing_system7_0/bbstub_FCLK_CLK0/O'
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line88/clk_out1_0' to pin 'nolabel_line88/bbstub_clk_out1_0/O'
-INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line88/clk_in1' to 'i_27/axi_internal_timer_reg[31]/C'
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line88/clk_out1_180' to pin 'nolabel_line88/bbstub_clk_out1_180/O'
-INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line88/clk_in1' to 'i_27/axi_internal_timer_reg[31]/C'
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line88/clk_out1_270' to pin 'nolabel_line88/bbstub_clk_out1_270/O'
-INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line88/clk_in1' to 'i_27/axi_internal_timer_reg[31]/C'
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line88/clk_out1_90' to pin 'nolabel_line88/bbstub_clk_out1_90/O'
-INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line88/clk_in1' to 'i_27/axi_internal_timer_reg[31]/C'
-INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line53/processing_system7_0/FCLK_CLK0' to pin 'nolabel_line53/processing_system7_0/bbstub_FCLK_CLK0/O'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line212/clk_in1' to pin 'nolabel_line164/processing_system7_0/bbstub_FCLK_CLK0/O'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line212/clk_out1_0' to pin 'nolabel_line212/bbstub_clk_out1_0/O'
+INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line212/clk_in1' to 'i_0/axi_internal_timer_reg[31]/C'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line212/clk_out1_180' to pin 'nolabel_line212/bbstub_clk_out1_180/O'
+INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line212/clk_in1' to 'i_0/axi_internal_timer_reg[31]/C'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line212/clk_out1_270' to pin 'nolabel_line212/bbstub_clk_out1_270/O'
+INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line212/clk_in1' to 'i_0/axi_internal_timer_reg[31]/C'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line212/clk_out1_90' to pin 'nolabel_line212/bbstub_clk_out1_90/O'
+INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line212/clk_in1' to 'i_0/axi_internal_timer_reg[31]/C'
+INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line164/processing_system7_0/FCLK_CLK0' to pin 'nolabel_line164/processing_system7_0/bbstub_FCLK_CLK0/O'
 INFO: [Synth 8-5819] Moved 6 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 868.371 ; gain = 503.445
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 840.289 ; gain = 538.336
+Finished Timing Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 878.203 ; gain = 513.277
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -643,7 +367,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Technology Mapping : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -666,36 +390,8 @@ Start Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin wea[0]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[10]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[9]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[8]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[7]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[6]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[5]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[4]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[3]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[2]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[1]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin addra[0]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[15]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[14]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[13]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[12]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[11]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[10]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[9]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[8]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[7]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[6]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[5]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[4]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[3]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[2]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[1]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module blk_mem_gen_0_x has unconnected pin dina[0]
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished IO Insertion : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -708,7 +404,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -720,25 +416,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -755,77 +451,74 @@ Report BlackBoxes:
 |5     |design_1_axis_data_fifo_0_0     |         1|
 |6     |design_1_processing_system7_0_0 |         1|
 |7     |design_1_rst_ps7_0_50M_2        |         1|
-|8     |clk_wiz_0                       |         1|
-|9     |blk_mem_gen_0                   |         1|
+|8     |design_1_system_ila_0_0         |         1|
+|9     |clk_wiz_0                       |         1|
 +------+--------------------------------+----------+
 
 Report Cell Usage: 
 +------+--------------------------------+------+
 |      |Cell                            |Count |
 +------+--------------------------------+------+
-|1     |blk_mem_gen_0                   |     1|
-|2     |clk_wiz_0                       |     1|
-|3     |design_1_auto_pc_0              |     1|
-|4     |design_1_auto_pc_1              |     1|
-|5     |design_1_auto_us_0              |     1|
-|6     |design_1_axi_dma_0_1            |     1|
-|7     |design_1_axis_data_fifo_0_0     |     1|
-|8     |design_1_processing_system7_0_0 |     1|
-|9     |design_1_rst_ps7_0_50M_2        |     1|
-|10    |BUFGCE                          |     3|
-|11    |BUFR                            |     3|
-|12    |CARRY4                          |    44|
-|13    |LUT1                            |   102|
-|14    |LUT2                            |    22|
-|15    |LUT3                            |    18|
-|16    |LUT4                            |    71|
-|17    |LUT5                            |    37|
-|18    |LUT6                            |    58|
-|19    |OSERDESE2                       |     3|
-|20    |FDRE                            |   312|
-|21    |FDSE                            |     1|
-|22    |OBUF                            |     2|
-|23    |OBUFT                           |     6|
-|24    |OBUFTDS                         |     3|
+|1     |clk_wiz_0                       |     1|
+|2     |design_1_auto_pc_0              |     1|
+|3     |design_1_auto_pc_1              |     1|
+|4     |design_1_auto_us_0              |     1|
+|5     |design_1_axi_dma_0_1            |     1|
+|6     |design_1_axis_data_fifo_0_0     |     1|
+|7     |design_1_processing_system7_0_0 |     1|
+|8     |design_1_rst_ps7_0_50M_2        |     1|
+|9     |design_1_system_ila_0_0         |     1|
+|10    |BUFG                            |     1|
+|11    |CARRY4                          |    14|
+|12    |LUT1                            |     2|
+|13    |LUT2                            |     1|
+|14    |LUT3                            |     1|
+|15    |LUT4                            |     5|
+|16    |LUT5                            |     5|
+|17    |LUT6                            |     9|
+|18    |FDRE                            |    62|
+|19    |IBUFDS                          |     9|
+|20    |IBUFGDS                         |     1|
+|21    |OBUF                            |     2|
+|22    |OBUFT                           |    12|
 +------+--------------------------------+------+
 
 Report Instance Areas: 
 +------+-----------------------+------------------------------+------+
 |      |Instance               |Module                        |Cells |
 +------+-----------------------+------------------------------+------+
-|1     |top                    |                              |  1656|
-|2     |  nolabel_line53       |design_1                      |   950|
+|1     |top                    |                              |  1079|
+|2     |  nolabel_line164      |design_1                      |   950|
 |3     |    axi_interconnect_0 |design_1_axi_interconnect_0_0 |   234|
 |4     |      s00_couplers     |s00_couplers_imp_O7FAN0       |   234|
 |5     |    ps7_0_axi_periph   |design_1_ps7_0_axi_periph_1   |   177|
 |6     |      s00_couplers     |s00_couplers_imp_UYSKKA       |   177|
-|7     |  nolabel_line157      |mipi_csi                      |   396|
-|8     |    ecc24_fast_x       |ecc24_fast                    |    13|
 +------+-----------------------+------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 28 critical warnings and 9 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:19 ; elapsed = 00:00:24 . Memory (MB): peak = 847.539 ; gain = 171.582
-Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 847.539 ; gain = 545.586
+Synthesis finished with 0 errors, 0 critical warnings and 87 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:16 ; elapsed = 00:00:21 . Memory (MB): peak = 879.316 ; gain = 168.156
+Synthesis Optimization Complete : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 879.316 ; gain = 514.391
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 53 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 24 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-INFO: [Opt 31-138] Pushed 17 inverter(s) to 17 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 849.574 ; gain = 0.000
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 896.094 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 6 instances were transformed.
-  BUFGCE => BUFGCTRL: 3 instances
-  OBUFTDS => OBUFTDS_DUAL_BUF (INV, OBUFTDS, OBUFTDS): 3 instances
+  A total of 1 instances were transformed.
+  IBUFGDS => IBUFDS: 1 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-181 Infos, 70 Warnings, 28 Critical Warnings and 0 Errors encountered.
+60 Infos, 121 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:35 . Memory (MB): peak = 849.582 ; gain = 556.348
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 849.582 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 896.094 ; gain = 531.168
+INFO: [Common 17-600] The following parameters have non-default value.
+tcl.collectionResultDisplayLimit
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 896.094 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/main.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Dec 15 17:01:38 2019...
+INFO: [Common 17-206] Exiting Vivado at Thu Dec 19 00:18:19 2019...

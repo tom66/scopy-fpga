@@ -53,13 +53,18 @@
 #include "xil_types.h"
 #include "xil_cache.h"
 #include "xil_io.h"
+#include "xil_testmem.h"
 #include "xaxidma.h"
 #include "xdebug.h"
 
 uint32_t *mem_addr;
 uint32_t *base;
 
-uint32_t buffer[16384] __attribute__((aligned (4096)));
+uint32_t buffer[65536] __attribute__((aligned (4096))) __attribute__((section("ddr3")));
+
+//#define MEM_TEST
+
+#define MARK_UNCACHEABLE	0x701
 
 void debug_printf(char *fmt, ...)
 {
@@ -90,26 +95,53 @@ int main()
 	int32_t error;
 	uint32_t addr;
 	uint32_t *ptr;
+	int32_t result;
+	uint32_t n;
 
 	XAxiDma dma0_pointer;
 	XAxiDma_Config *dma0_config;
 
     init_platform();
 
-	debug_printf("DemoApp v1.0 - DMA controlled transfers\r\n");
+#if 0
+	debug_printf("\r\n\r\nDemoApp v1.0 - starting memory test...\r\n");
+
+	while(1) {
+		result = Xil_TestMem32(0x01100000, 0x03a00000, 0, XIL_TESTMEM_ALLMEMTESTS);
+		debug_printf("\r\n\r\nResult=%d\r\n", result);
+	}
+
+	while(1);
+#endif
+
+#if 1
+	debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
 
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
 	error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
 	debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
 
+	debug_printf("Flush and disable data cache...\r\n");
+
+	Xil_DCacheFlush();
+	Xil_DCacheDisable();
+
+	debug_printf("OK, done.\r\n");
+
 	while(1) {
 		addr = &buffer;
-		//addr = (((uint32_t)(&buffer) & ~0xfff) + 0x1000);
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 30, XAXIDMA_DEVICE_TO_DMA);
+		//debug_printf("Sending uncache flag to addr 0x%08x\r\n", addr);
+		//Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
+		//debug_printf("Sending Dinvalidate flag to addr 0x%08x\r\n", addr);
+		//Xil_DCacheInvalidateRange(addr, 1);
 
-		debug_printf("Initialise Xfer error=%d addr 0x%08x buffer_at 0x%08x\r\n", error, addr, &buffer);
+		//debug_printf("Start SimpleTransfer\r\n");
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 32, XAXIDMA_DEVICE_TO_DMA);
 
+		//debug_printf("Initialise Xfer error=%d addr 0x%08x buffer_at 0x%08x\r\n", error, addr, &buffer);
+
+		/*
 		ptr = addr;
 		for(k = 0; k < 128; k++) {
 			debug_printf("0x%08x ", *ptr++);
@@ -119,16 +151,25 @@ int main()
 		}
 
 		debug_printf("\r\n");
+		*/
 
 		/*
 		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
 			debug_printf(".");
 		}
 		*/
+
+		n++;
+
+		if(n == 10000) {
+			debug_printf(".");
+			n = 0;
+		}
 	}
+#endif
 
 #if 0
-	base = 0x40000000;
+	base = 0x01000000;
 
     while(1) {
 		debug_printf("Running %d\r\n", loops++);
@@ -173,18 +214,21 @@ int main()
     }
 #endif
 
-#if 0
+#ifdef MEM_TEST
     while(1) {
+    	debug_printf("\r\n\r\nAddress of main: 0x%08x\r\n", &main);
+
 		debug_printf("\r\n\r\nSequential Write with Random Data...\r\n\r\n");
 
-		base = 0x00100000;
+		// start at a high offset, test most of the memory (232MB)
+		base = 0x01400000;
 		mem_addr = base;
 		srand(loops);
 
-		for(i = 0; i < ((1024 * 1024 * 63)); i++) {
+		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
 			data = rand() * rand();
 			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
-				debug_printf("Write: 0x%08x to 0x%08x (%3.3f KiB)\r\n", data, mem_addr, (mem_addr - base) / 256.0f);
+				debug_printf("Write: 0x%08x to 0x%08x (%3.3f KiB) (%d)\r\n", data, mem_addr, (mem_addr - base) / 256.0f, i);
 			}
 			*mem_addr = data;
 			mem_addr++;
@@ -195,7 +239,7 @@ int main()
 
 		debug_printf("\r\n\r\nSequential Read of Same Random Data...\r\n\r\n");
 
-		for(i = 0; i < ((1024 * 1024 * 63)); i++) {
+		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
 			data = rand() * rand();
 			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
 				debug_printf("Read: 0x%08x from 0x%08x expect 0x%08x (%3.3f KiB) (%d loop passes)\r\n", *mem_addr, mem_addr, data, (mem_addr - base) / 256.0f, loops);
@@ -210,11 +254,10 @@ int main()
 
 		debug_printf("\r\n\r\nRandom Write with Random Data...\r\n\r\n");
 
-		base = 0x00100000;
 		srand(loops);
 
-		for(i = 0; i < ((1024 * 1024 * 255)); i++) {
-			mem_addr = base + (rand() % ((1024 * 1024 * 63)));
+		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
+			mem_addr = base + (rand() % ((1024 * 1024 * 58)));
 			k = (uint32_t)mem_addr;
 			data = (k * k) + 0x12345679;
 
@@ -227,11 +270,10 @@ int main()
 
 		debug_printf("\r\n\r\nRandom Read of Same Data...\r\n\r\n");
 
-		base = 0x00100000;
 		srand(loops);
 
-		for(i = 0; i < ((1024 * 1024 * 255)); i++) {
-			mem_addr = base + (rand() % ((1024 * 1024 * 63)));
+		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
+			mem_addr = base + (rand() % ((1024 * 1024 * 58)));
 			k = (uint32_t)mem_addr;
 			data = (k * k) + 0x12345679;
 

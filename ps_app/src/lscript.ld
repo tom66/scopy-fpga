@@ -23,8 +23,9 @@ _UNDEF_STACK_SIZE = DEFINED(_UNDEF_STACK_SIZE) ? _UNDEF_STACK_SIZE : 1024;
 
 MEMORY
 {
-   ps7_ram_0 : ORIGIN = 0x0, LENGTH = 0x30000
-   ps7_ram_1 : ORIGIN = 0xFFFF0000, LENGTH = 0xFE00
+   ps7_ram_0 : ORIGIN = 0x01000000, LENGTH = 0x0fffffff
+   ocm2 : ORIGIN = 0xFFFF0000, LENGTH = 0xFE00
+   ocm1  : ORIGIN = 0x0, LENGTH = 0x30000
 }
 
 /* Specify the default entry point to the program */
