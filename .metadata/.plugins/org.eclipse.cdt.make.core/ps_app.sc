@@ -437,10 +437,10 @@
 <definedSymbol symbol="__GXX_TYPEINFO_EQUALITY_INLINE=0"/>
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__USES_INITFINI__=1"/>
-<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
-<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
-<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
-<definedSymbol symbol="__APCS_31__=1"/>
+<definedSymbol symbol="__CHAR32_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__FLT32_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT32X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__APCS_32__=1"/>
 </collector>
 </instance>
 <instance id="xilinx.gnu.armv7.exe.release.1198570486;xilinx.gnu.armv7.exe.release.1198570486.">
@@ -1304,10 +1304,10 @@
 <definedSymbol symbol="__GXX_TYPEINFO_EQUALITY_INLINE=0"/>
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__USES_INITFINI__=1"/>
-<definedSymbol symbol="__CHAR31_TYPE__=long unsigned int"/>
-<definedSymbol symbol="__FLT31_DECIMAL_DIG__=9"/>
-<definedSymbol symbol="__FLT31X_HAS_INFINITY__=1"/>
-<definedSymbol symbol="__APCS_31__=1"/>
+<definedSymbol symbol="__CHAR32_TYPE__=long unsigned int"/>
+<definedSymbol symbol="__FLT32_DECIMAL_DIG__=9"/>
+<definedSymbol symbol="__FLT32X_HAS_INFINITY__=1"/>
+<definedSymbol symbol="__APCS_32__=1"/>
 </collector>
 </instance>
 </scannerInfo>

@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Thu Dec 19 01:36:00 2019
+//Date        : Fri Dec 20 00:20:24 2019
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -31,14 +31,7 @@ module design_1_wrapper
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
-    FIXED_IO_ps_srstb,
-    STRAXI_DATA_ARSTN,
-    STRAXI_DATA_CLK,
-    STRAXI_DATA_PORT,
-    STRAXI_DATA_READY,
-    STRAXI_DATA_TLAST,
-    STRAXI_DATA_VALID,
-    STRAXI_DATA_WRTCNT);
+    FIXED_IO_ps_srstb);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -61,13 +54,6 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  input STRAXI_DATA_ARSTN;
-  input STRAXI_DATA_CLK;
-  input STRAXI_DATA_PORT;
-  output STRAXI_DATA_READY;
-  input STRAXI_DATA_TLAST;
-  input STRAXI_DATA_VALID;
-  output [31:0]STRAXI_DATA_WRTCNT;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -91,13 +77,6 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
-  wire STRAXI_DATA_ARSTN;
-  wire STRAXI_DATA_CLK;
-  wire STRAXI_DATA_PORT;
-  wire STRAXI_DATA_READY;
-  wire STRAXI_DATA_TLAST;
-  wire STRAXI_DATA_VALID;
-  wire [31:0]STRAXI_DATA_WRTCNT;
 
   design_1 design_1_i
        (.DDR_addr(DDR_addr),
@@ -121,12 +100,5 @@ module design_1_wrapper
         .FIXED_IO_mio(FIXED_IO_mio),
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
-        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .STRAXI_DATA_ARSTN(STRAXI_DATA_ARSTN),
-        .STRAXI_DATA_CLK(STRAXI_DATA_CLK),
-        .STRAXI_DATA_PORT(STRAXI_DATA_PORT),
-        .STRAXI_DATA_READY(STRAXI_DATA_READY),
-        .STRAXI_DATA_TLAST(STRAXI_DATA_TLAST),
-        .STRAXI_DATA_VALID(STRAXI_DATA_VALID),
-        .STRAXI_DATA_WRTCNT(STRAXI_DATA_WRTCNT));
+        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb));
 endmodule

@@ -158,12 +158,11 @@ proc create_root_design { parentCell } {
   set SLOT_0_AXI [ create_bd_intf_port -mode Monitor -vlnv xilinx.com:interface:aximm_rtl:1.0 SLOT_0_AXI ]
   set SLOT_1_AXI [ create_bd_intf_port -mode Monitor -vlnv xilinx.com:interface:aximm_rtl:1.0 SLOT_1_AXI ]
   set SLOT_2_AXIS [ create_bd_intf_port -mode Monitor -vlnv xilinx.com:interface:axis_rtl:1.0 SLOT_2_AXIS ]
-  set SLOT_3_AXIS [ create_bd_intf_port -mode Monitor -vlnv xilinx.com:interface:axis_rtl:1.0 SLOT_3_AXIS ]
 
   # Create ports
   set clk [ create_bd_port -dir I -type clk clk ]
   set_property -dict [ list \
-   CONFIG.ASSOCIATED_BUSIF {SLOT_0_AXI:SLOT_1_AXI:SLOT_2_AXIS:SLOT_3_AXIS} \
+   CONFIG.ASSOCIATED_BUSIF {SLOT_0_AXI:SLOT_1_AXI:SLOT_2_AXIS} \
    CONFIG.ASSOCIATED_RESET {resetn} \
  ] $clk
   set resetn [ create_bd_port -dir I -type rst resetn ]
@@ -172,7 +171,7 @@ proc create_root_design { parentCell } {
   set g_inst [ create_bd_cell -type ip -vlnv xilinx.com:ip:gigantic_mux:1.0 g_inst ]
   set_property -dict [ list \
    CONFIG.C_EN_GIGAMUX {false} \
-   CONFIG.C_NUM_MONITOR_SLOTS {4} \
+   CONFIG.C_NUM_MONITOR_SLOTS {3} \
    CONFIG.C_NUM_OF_PROBES {0} \
    CONFIG.C_SLOT_0_AXI_ADDR_WIDTH {32} \
    CONFIG.C_SLOT_0_AXI_ARUSER_WIDTH {0} \
@@ -239,17 +238,8 @@ proc create_root_design { parentCell } {
    CONFIG.C_SLOT_2_AXI_PROTOCOL {AXI4S} \
    CONFIG.C_SLOT_2_HAS_TKEEP {0} \
    CONFIG.C_SLOT_2_HAS_TREADY {1} \
-   CONFIG.C_SLOT_2_HAS_TSTRB {0} \
+   CONFIG.C_SLOT_2_HAS_TSTRB {1} \
    CONFIG.C_SLOT_2_MON_MODE {FT} \
-   CONFIG.C_SLOT_3_AXIS_TDATA_WIDTH {8} \
-   CONFIG.C_SLOT_3_AXIS_TDEST_WIDTH {0} \
-   CONFIG.C_SLOT_3_AXIS_TID_WIDTH {0} \
-   CONFIG.C_SLOT_3_AXIS_TUSER_WIDTH {0} \
-   CONFIG.C_SLOT_3_AXI_PROTOCOL {AXI4S} \
-   CONFIG.C_SLOT_3_HAS_TKEEP {0} \
-   CONFIG.C_SLOT_3_HAS_TREADY {1} \
-   CONFIG.C_SLOT_3_HAS_TSTRB {0} \
-   CONFIG.C_SLOT_3_MON_MODE {FT} \
  ] $g_inst
 
   # Create instance: ila_lib, and set properties
@@ -264,7 +254,7 @@ proc create_root_design { parentCell } {
    CONFIG.C_ILA_CLK_FREQ {50000000} \
    CONFIG.C_INPUT_PIPE_STAGES {0} \
    CONFIG.C_MONITOR_TYPE {Native} \
-   CONFIG.C_NUM_OF_PROBES {64} \
+   CONFIG.C_NUM_OF_PROBES {60} \
    CONFIG.C_PROBE0_TYPE {0} \
    CONFIG.C_PROBE0_WIDTH {2} \
    CONFIG.C_PROBE10_TYPE {0} \
@@ -366,7 +356,7 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE54_TYPE {0} \
    CONFIG.C_PROBE54_WIDTH {32} \
    CONFIG.C_PROBE55_TYPE {0} \
-   CONFIG.C_PROBE55_WIDTH {1} \
+   CONFIG.C_PROBE55_WIDTH {4} \
    CONFIG.C_PROBE56_TYPE {0} \
    CONFIG.C_PROBE56_WIDTH {1} \
    CONFIG.C_PROBE57_TYPE {0} \
@@ -374,17 +364,9 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE58_TYPE {0} \
    CONFIG.C_PROBE58_WIDTH {1} \
    CONFIG.C_PROBE59_TYPE {0} \
-   CONFIG.C_PROBE59_WIDTH {32} \
+   CONFIG.C_PROBE59_WIDTH {1} \
    CONFIG.C_PROBE5_TYPE {0} \
    CONFIG.C_PROBE5_WIDTH {32} \
-   CONFIG.C_PROBE60_TYPE {0} \
-   CONFIG.C_PROBE60_WIDTH {1} \
-   CONFIG.C_PROBE61_TYPE {0} \
-   CONFIG.C_PROBE61_WIDTH {1} \
-   CONFIG.C_PROBE62_TYPE {0} \
-   CONFIG.C_PROBE62_WIDTH {1} \
-   CONFIG.C_PROBE63_TYPE {0} \
-   CONFIG.C_PROBE63_WIDTH {1} \
    CONFIG.C_PROBE6_TYPE {0} \
    CONFIG.C_PROBE6_WIDTH {4} \
    CONFIG.C_PROBE7_TYPE {0} \
@@ -447,36 +429,21 @@ proc create_root_design { parentCell } {
    CONFIG.HAS_TKEEP {0} \
    CONFIG.HAS_TLAST {1} \
    CONFIG.HAS_TREADY {1} \
-   CONFIG.HAS_TSTRB {0} \
+   CONFIG.HAS_TSTRB {1} \
    CONFIG.TDATA_NUM_BYTES {4} \
    CONFIG.TDEST_WIDTH {0} \
    CONFIG.TID_WIDTH {0} \
    CONFIG.TUSER_WIDTH {0} \
  ] $slot_2_apcs
 
-  # Create instance: slot_3_apcs, and set properties
-  set slot_3_apcs [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_protocol_checker:2.0 slot_3_apcs ]
-  set_property -dict [ list \
-   CONFIG.HAS_TKEEP {0} \
-   CONFIG.HAS_TLAST {0} \
-   CONFIG.HAS_TREADY {1} \
-   CONFIG.HAS_TSTRB {0} \
-   CONFIG.TDATA_NUM_BYTES {1} \
-   CONFIG.TDEST_WIDTH {0} \
-   CONFIG.TID_WIDTH {0} \
-   CONFIG.TUSER_WIDTH {0} \
- ] $slot_3_apcs
-
   # Create interface connections
 connect_bd_intf_net -intf_net Conn [get_bd_intf_ports SLOT_0_AXI] [get_bd_intf_pins g_inst/slot_0_axi]
 connect_bd_intf_net -intf_net Conn1 [get_bd_intf_ports SLOT_1_AXI] [get_bd_intf_pins g_inst/slot_1_axi]
 connect_bd_intf_net -intf_net Conn2 [get_bd_intf_ports SLOT_2_AXIS] [get_bd_intf_pins g_inst/slot_2_axis]
 connect_bd_intf_net -intf_net [get_bd_intf_nets Conn2] [get_bd_intf_ports SLOT_2_AXIS] [get_bd_intf_pins slot_2_apcs/PC_AXIS]
-connect_bd_intf_net -intf_net Conn3 [get_bd_intf_ports SLOT_3_AXIS] [get_bd_intf_pins g_inst/slot_3_axis]
-connect_bd_intf_net -intf_net [get_bd_intf_nets Conn3] [get_bd_intf_ports SLOT_3_AXIS] [get_bd_intf_pins slot_3_apcs/PC_AXIS]
 
   # Create port connections
-  connect_bd_net -net clk_1 [get_bd_ports clk] [get_bd_pins g_inst/aclk] [get_bd_pins ila_lib/clk] [get_bd_pins slot_2_apcs/aclk] [get_bd_pins slot_3_apcs/aclk]
+  connect_bd_net -net clk_1 [get_bd_ports clk] [get_bd_pins g_inst/aclk] [get_bd_pins ila_lib/clk] [get_bd_pins slot_2_apcs/aclk]
   connect_bd_net -net net_slot_0_axi_ar_cnt [get_bd_pins g_inst/m_slot_0_axi_ar_cnt] [get_bd_pins ila_lib/probe0]
   connect_bd_net -net net_slot_0_axi_ar_ctrl [get_bd_pins ila_lib/probe17] [get_bd_pins slot_0_ar/dout]
   connect_bd_net -net net_slot_0_axi_araddr [get_bd_pins g_inst/m_slot_0_axi_araddr] [get_bd_pins ila_lib/probe1]
@@ -555,17 +522,13 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets Conn3] [get_bd_intf_ports SLOT_3
   connect_bd_net -net net_slot_1_axi_wready [get_bd_pins g_inst/m_slot_1_axi_wready] [get_bd_pins slot_1_w/In1]
   connect_bd_net -net net_slot_1_axi_wstrb [get_bd_pins g_inst/m_slot_1_axi_wstrb] [get_bd_pins ila_lib/probe48]
   connect_bd_net -net net_slot_1_axi_wvalid [get_bd_pins g_inst/m_slot_1_axi_wvalid] [get_bd_pins slot_1_w/In0]
-  connect_bd_net -net net_slot_2_apc_pc_asserted [get_bd_pins ila_lib/probe58] [get_bd_pins slot_2_apcs/pc_asserted]
+  connect_bd_net -net net_slot_2_apc_pc_asserted [get_bd_pins ila_lib/probe59] [get_bd_pins slot_2_apcs/pc_asserted]
   connect_bd_net -net net_slot_2_axis_tdata [get_bd_pins g_inst/m_slot_2_axis_tdata] [get_bd_pins ila_lib/probe54]
-  connect_bd_net -net net_slot_2_axis_tlast [get_bd_pins g_inst/m_slot_2_axis_tlast] [get_bd_pins ila_lib/probe57]
-  connect_bd_net -net net_slot_2_axis_tready [get_bd_pins g_inst/m_slot_2_axis_tready] [get_bd_pins ila_lib/probe56]
-  connect_bd_net -net net_slot_2_axis_tvalid [get_bd_pins g_inst/m_slot_2_axis_tvalid] [get_bd_pins ila_lib/probe55]
-  connect_bd_net -net net_slot_3_apc_pc_asserted [get_bd_pins ila_lib/probe63] [get_bd_pins slot_3_apcs/pc_asserted]
-  connect_bd_net -net net_slot_3_axis_tdata [get_bd_pins g_inst/m_slot_3_axis_tdata] [get_bd_pins ila_lib/probe59]
-  connect_bd_net -net net_slot_3_axis_tlast [get_bd_pins g_inst/m_slot_3_axis_tlast] [get_bd_pins ila_lib/probe62]
-  connect_bd_net -net net_slot_3_axis_tready [get_bd_pins g_inst/m_slot_3_axis_tready] [get_bd_pins ila_lib/probe61]
-  connect_bd_net -net net_slot_3_axis_tvalid [get_bd_pins g_inst/m_slot_3_axis_tvalid] [get_bd_pins ila_lib/probe60]
-  connect_bd_net -net resetn_1 [get_bd_ports resetn] [get_bd_pins g_inst/aresetn] [get_bd_pins slot_2_apcs/aresetn] [get_bd_pins slot_3_apcs/aresetn]
+  connect_bd_net -net net_slot_2_axis_tlast [get_bd_pins g_inst/m_slot_2_axis_tlast] [get_bd_pins ila_lib/probe58]
+  connect_bd_net -net net_slot_2_axis_tready [get_bd_pins g_inst/m_slot_2_axis_tready] [get_bd_pins ila_lib/probe57]
+  connect_bd_net -net net_slot_2_axis_tstrb [get_bd_pins g_inst/m_slot_2_axis_tstrb] [get_bd_pins ila_lib/probe55]
+  connect_bd_net -net net_slot_2_axis_tvalid [get_bd_pins g_inst/m_slot_2_axis_tvalid] [get_bd_pins ila_lib/probe56]
+  connect_bd_net -net resetn_1 [get_bd_ports resetn] [get_bd_pins g_inst/aresetn] [get_bd_pins slot_2_apcs/aresetn]
 
   # Create address segments
 

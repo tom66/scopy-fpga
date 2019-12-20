@@ -52,7 +52,7 @@
 
 (* X_CORE_INFO = "axis_protocol_checker_v2_0_2_top,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "bd_f60c_slot_2_apcs_0,axis_protocol_checker_v2_0_2_top,{}" *)
-(* CORE_GENERATION_INFO = "bd_f60c_slot_2_apcs_0,axis_protocol_checker_v2_0_2_top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axis_protocol_checker,x_ipVersion=2.0,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_AXIS_TDATA_WIDTH=32,C_AXIS_TID_WIDTH=1,C_AXIS_TDEST_WIDTH=1,C_AXIS_TUSER_WIDTH=1,C_AXIS_SIGNAL_SET=0b00000000000000000000000000010011,C_PC_MAXWAITS=0,C_PC_MESSAGE_LEVEL=2,C_PC_HAS_SYSTEM_RESET=0,C_ENABLE_CONTROL=0,C_PC_STATUS_WIDTH=32,C_ENABLE_MARK_DEBUG=1}" *)
+(* CORE_GENERATION_INFO = "bd_f60c_slot_2_apcs_0,axis_protocol_checker_v2_0_2_top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axis_protocol_checker,x_ipVersion=2.0,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_AXIS_TDATA_WIDTH=32,C_AXIS_TID_WIDTH=1,C_AXIS_TDEST_WIDTH=1,C_AXIS_TUSER_WIDTH=1,C_AXIS_SIGNAL_SET=0b00000000000000000000000000010111,C_PC_MAXWAITS=0,C_PC_MESSAGE_LEVEL=2,C_PC_HAS_SYSTEM_RESET=0,C_ENABLE_CONTROL=0,C_PC_STATUS_WIDTH=32,C_ENABLE_MARK_DEBUG=1}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module bd_f60c_slot_2_apcs_0 (
   aclk,
@@ -60,6 +60,7 @@ module bd_f60c_slot_2_apcs_0 (
   pc_axis_tvalid,
   pc_axis_tready,
   pc_axis_tdata,
+  pc_axis_tstrb,
   pc_axis_tlast,
   pc_asserted,
   pc_status
@@ -77,7 +78,9 @@ input wire pc_axis_tvalid;
 input wire pc_axis_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TDATA" *)
 input wire [31 : 0] pc_axis_tdata;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME PC_AXIS, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 5e+07, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TSTRB" *)
+input wire [3 : 0] pc_axis_tstrb;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME PC_AXIS, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 5e+07, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TLAST" *)
 input wire pc_axis_tlast;
 output wire pc_asserted;
@@ -88,7 +91,7 @@ output wire [31 : 0] pc_status;
     .C_AXIS_TID_WIDTH(1),
     .C_AXIS_TDEST_WIDTH(1),
     .C_AXIS_TUSER_WIDTH(1),
-    .C_AXIS_SIGNAL_SET('B00000000000000000000000000010011),
+    .C_AXIS_SIGNAL_SET('B00000000000000000000000000010111),
     .C_PC_MAXWAITS(0),
     .C_PC_MESSAGE_LEVEL(2),
     .C_PC_HAS_SYSTEM_RESET(0),
@@ -103,7 +106,7 @@ output wire [31 : 0] pc_status;
     .pc_axis_tvalid(pc_axis_tvalid),
     .pc_axis_tready(pc_axis_tready),
     .pc_axis_tdata(pc_axis_tdata),
-    .pc_axis_tstrb(4'HF),
+    .pc_axis_tstrb(pc_axis_tstrb),
     .pc_axis_tkeep(4'HF),
     .pc_axis_tlast(pc_axis_tlast),
     .pc_axis_tid(1'D0),

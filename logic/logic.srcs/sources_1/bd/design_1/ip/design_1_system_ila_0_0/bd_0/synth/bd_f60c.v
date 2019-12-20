@@ -6,7 +6,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=14,numReposBlks=14,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
+(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=13,numReposBlks=13,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=Global}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
 module bd_f60c
    (SLOT_0_AXI_araddr,
     SLOT_0_AXI_arlen,
@@ -71,14 +71,11 @@ module bd_f60c
     SLOT_2_AXIS_tdata,
     SLOT_2_AXIS_tlast,
     SLOT_2_AXIS_tready,
+    SLOT_2_AXIS_tstrb,
     SLOT_2_AXIS_tvalid,
-    SLOT_3_AXIS_tdata,
-    SLOT_3_AXIS_tlast,
-    SLOT_3_AXIS_tready,
-    SLOT_3_AXIS_tvalid,
     clk,
     resetn);
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, ADDR_WIDTH 32, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, DATA_WIDTH 64, FREQ_HZ 5e+07, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 0, HAS_LOCK 0, HAS_PROT 0, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 0, HAS_WSTRB 1, ID_WIDTH 0, INSERT_VIP 0, MAX_BURST_LENGTH 8, NUM_READ_OUTSTANDING 8, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 8, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI3, READ_WRITE_MODE WRITE_ONLY, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) input [31:0]SLOT_0_AXI_araddr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, ADDR_WIDTH 32, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, DATA_WIDTH 64, FREQ_HZ 5e+07, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 0, HAS_LOCK 0, HAS_PROT 0, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 0, HAS_WSTRB 1, ID_WIDTH 0, INSERT_VIP 0, MAX_BURST_LENGTH 16, NUM_READ_OUTSTANDING 2, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 16, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI3, READ_WRITE_MODE WRITE_ONLY, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) input [31:0]SLOT_0_AXI_araddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARLEN" *) input [3:0]SLOT_0_AXI_arlen;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARREADY" *) input SLOT_0_AXI_arready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARSIZE" *) input [2:0]SLOT_0_AXI_arsize;
@@ -138,15 +135,12 @@ module bd_f60c
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WREADY" *) input SLOT_1_AXI_wready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WSTRB" *) input [3:0]SLOT_1_AXI_wstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WVALID" *) input SLOT_1_AXI_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_2_AXIS, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 5e+07, HAS_TKEEP 0, HAS_TLAST 1, HAS_TREADY 1, HAS_TSTRB 0, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [31:0]SLOT_2_AXIS_tdata;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_2_AXIS, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 5e+07, HAS_TKEEP 0, HAS_TLAST 1, HAS_TREADY 1, HAS_TSTRB 1, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [31:0]SLOT_2_AXIS_tdata;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TLAST" *) input SLOT_2_AXIS_tlast;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TREADY" *) input SLOT_2_AXIS_tready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TSTRB" *) input [3:0]SLOT_2_AXIS_tstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TVALID" *) input SLOT_2_AXIS_tvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_3_AXIS TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_3_AXIS, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 5e+07, HAS_TKEEP 0, HAS_TLAST 0, HAS_TREADY 1, HAS_TSTRB 0, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [7:0]SLOT_3_AXIS_tdata;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_3_AXIS TLAST" *) input SLOT_3_AXIS_tlast;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_3_AXIS TREADY" *) input SLOT_3_AXIS_tready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_3_AXIS TVALID" *) input SLOT_3_AXIS_tvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLOT_0_AXI:SLOT_1_AXI:SLOT_2_AXIS:SLOT_3_AXIS, ASSOCIATED_CLKEN aclken, ASSOCIATED_RESET resetn, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 5e+07, INSERT_VIP 0, PHASE 0.000" *) input clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLOT_0_AXI:SLOT_1_AXI:SLOT_2_AXIS, ASSOCIATED_CLKEN aclken, ASSOCIATED_RESET resetn, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 5e+07, INSERT_VIP 0, PHASE 0.000" *) input clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.RESETN RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.RESETN, INSERT_VIP 0, POLARITY ACTIVE_LOW, TYPE INTERCONNECT" *) input resetn;
 
   wire [31:0]Conn1_ARADDR;
@@ -190,11 +184,8 @@ module bd_f60c
   wire [31:0]Conn2_TDATA;
   wire Conn2_TLAST;
   wire Conn2_TREADY;
+  wire [3:0]Conn2_TSTRB;
   wire Conn2_TVALID;
-  wire [7:0]Conn3_TDATA;
-  wire Conn3_TLAST;
-  wire Conn3_TREADY;
-  wire Conn3_TVALID;
   wire [31:0]Conn_ARADDR;
   wire [3:0]Conn_ARLEN;
   wire Conn_ARREADY;
@@ -300,12 +291,8 @@ module bd_f60c
   wire [31:0]net_slot_2_axis_tdata;
   wire net_slot_2_axis_tlast;
   wire net_slot_2_axis_tready;
+  wire [3:0]net_slot_2_axis_tstrb;
   wire net_slot_2_axis_tvalid;
-  wire net_slot_3_apc_pc_asserted;
-  wire [31:0]net_slot_3_axis_tdata;
-  wire net_slot_3_axis_tlast;
-  wire net_slot_3_axis_tready;
-  wire net_slot_3_axis_tvalid;
   wire resetn_1;
 
   assign Conn1_ARADDR = SLOT_1_AXI_araddr[31:0];
@@ -349,11 +336,8 @@ module bd_f60c
   assign Conn2_TDATA = SLOT_2_AXIS_tdata[31:0];
   assign Conn2_TLAST = SLOT_2_AXIS_tlast;
   assign Conn2_TREADY = SLOT_2_AXIS_tready;
+  assign Conn2_TSTRB = SLOT_2_AXIS_tstrb[3:0];
   assign Conn2_TVALID = SLOT_2_AXIS_tvalid;
-  assign Conn3_TDATA = SLOT_3_AXIS_tdata[7:0];
-  assign Conn3_TLAST = SLOT_3_AXIS_tlast;
-  assign Conn3_TREADY = SLOT_3_AXIS_tready;
-  assign Conn3_TVALID = SLOT_3_AXIS_tvalid;
   assign Conn_ARADDR = SLOT_0_AXI_araddr[31:0];
   assign Conn_ARLEN = SLOT_0_AXI_arlen[3:0];
   assign Conn_ARREADY = SLOT_0_AXI_arready;
@@ -452,11 +436,8 @@ module bd_f60c
         .m_slot_2_axis_tdata(net_slot_2_axis_tdata),
         .m_slot_2_axis_tlast(net_slot_2_axis_tlast),
         .m_slot_2_axis_tready(net_slot_2_axis_tready),
+        .m_slot_2_axis_tstrb(net_slot_2_axis_tstrb),
         .m_slot_2_axis_tvalid(net_slot_2_axis_tvalid),
-        .m_slot_3_axis_tdata(net_slot_3_axis_tdata),
-        .m_slot_3_axis_tlast(net_slot_3_axis_tlast),
-        .m_slot_3_axis_tready(net_slot_3_axis_tready),
-        .m_slot_3_axis_tvalid(net_slot_3_axis_tvalid),
         .slot_0_axi_araddr(Conn_ARADDR),
         .slot_0_axi_arlen(Conn_ARLEN),
         .slot_0_axi_arready(Conn_ARREADY),
@@ -520,11 +501,8 @@ module bd_f60c
         .slot_2_axis_tdata(Conn2_TDATA),
         .slot_2_axis_tlast(Conn2_TLAST),
         .slot_2_axis_tready(Conn2_TREADY),
-        .slot_2_axis_tvalid(Conn2_TVALID),
-        .slot_3_axis_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .slot_3_axis_tlast(Conn3_TLAST),
-        .slot_3_axis_tready(Conn3_TREADY),
-        .slot_3_axis_tvalid(Conn3_TVALID));
+        .slot_2_axis_tstrb(Conn2_TSTRB),
+        .slot_2_axis_tvalid(Conn2_TVALID));
   bd_f60c_ila_lib_0 ila_lib
        (.clk(clk_1),
         .probe0(net_slot_0_axi_ar_cnt),
@@ -578,16 +556,12 @@ module bd_f60c
         .probe52(net_slot_1_axi_ar_ctrl),
         .probe53(net_slot_1_axi_r_ctrl),
         .probe54(net_slot_2_axis_tdata),
-        .probe55(net_slot_2_axis_tvalid),
-        .probe56(net_slot_2_axis_tready),
-        .probe57(net_slot_2_axis_tlast),
-        .probe58(net_slot_2_apc_pc_asserted),
-        .probe59(net_slot_3_axis_tdata),
+        .probe55(net_slot_2_axis_tstrb),
+        .probe56(net_slot_2_axis_tvalid),
+        .probe57(net_slot_2_axis_tready),
+        .probe58(net_slot_2_axis_tlast),
+        .probe59(net_slot_2_apc_pc_asserted),
         .probe6(net_slot_0_axi_awlen),
-        .probe60(net_slot_3_axis_tvalid),
-        .probe61(net_slot_3_axis_tready),
-        .probe62(net_slot_3_axis_tlast),
-        .probe63(net_slot_3_apc_pc_asserted),
         .probe7(net_slot_0_axi_awsize),
         .probe8(net_slot_0_axi_b_cnt),
         .probe9(net_slot_0_axi_bresp));
@@ -642,12 +616,6 @@ module bd_f60c
         .pc_axis_tdata(Conn2_TDATA),
         .pc_axis_tlast(Conn2_TLAST),
         .pc_axis_tready(Conn2_TREADY),
+        .pc_axis_tstrb(Conn2_TSTRB),
         .pc_axis_tvalid(Conn2_TVALID));
-  bd_f60c_slot_3_apcs_0 slot_3_apcs
-       (.aclk(clk_1),
-        .aresetn(resetn_1),
-        .pc_asserted(net_slot_3_apc_pc_asserted),
-        .pc_axis_tdata(Conn3_TDATA),
-        .pc_axis_tready(Conn3_TREADY),
-        .pc_axis_tvalid(Conn3_TVALID));
 endmodule

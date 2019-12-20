@@ -6,6 +6,5 @@
 # This constraints file is not used in normal top-down synthesis (default flow
 # of Vivado)
 ################################################################################
-create_clock -name STRAXI_DATA_CLK -period 20 [get_ports STRAXI_DATA_CLK]
 
 ################################################################################

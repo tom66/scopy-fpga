@@ -67,62 +67,12 @@ output led_PL0, led_PL1;
 
 wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
-reg [31:0] straxi_data_in = 8'h00000000;
-reg [31:0] axi_internal_timer = 0;
-reg straxi_valid = 0, straxi_rstn = 0; 
-wire straxi_clk;
-wire straxi_ready;
-wire [31:0] straxi_wrtcnt_dbg;
-reg [31:0] lvds_test_data_reg;
-reg straxi_tlast = 0;
-
-reg led_reg0;
-reg led_reg1;
+reg led_reg0 = 1;
+reg led_reg1 = 1;
 
 design_1 (
-    .FCLK_CLK0(clk_master_50),
-    .STRAXI_DATA_PORT(straxi_data_in),
-    .STRAXI_DATA_TLAST(straxi_tlast),
-    .STRAXI_DATA_VALID(straxi_valid), 
-    .STRAXI_DATA_ARSTN(straxi_rstn), 
-    .STRAXI_DATA_CLK(straxi_clk),
-    .STRAXI_DATA_READY(straxi_ready),
-    .STRAXI_DATA_WRTCNT(straxi_wrtcnt_dbg)
+    .FCLK_CLK0(clk_master_50)
 );
-
-assign straxi_clk = clk_master_50;
-
-always @(posedge clk_master_50) begin
-    // DMA xfer test: data port with continuous counter used
-    // PS will DMA this into buffers as required
-    axi_internal_timer <= axi_internal_timer + 1;
-    
-    if (axi_internal_timer > 100) begin
-        straxi_rstn <= 1;
-    end
-    
-    if (axi_internal_timer > 200) begin
-        straxi_valid <= 1;
-        
-        if (straxi_ready) begin
-            straxi_data_in <= axi_internal_timer; // lvds_test_data_reg;
-        
-            // toggle LAST on every frame for 2 cycles
-            if ((axi_internal_timer & 31) < 2) begin
-                straxi_tlast <= 1;
-            end else begin
-                straxi_tlast <= 0;
-            end
-            
-            led_reg0 <= ~led_reg0;
-        end else begin
-            straxi_data_in <= 8'h5500ffcc; // invalid data flag
-        end
-    end else begin
-        straxi_valid <= 0;
-        straxi_data_in <= 0;
-    end
-end
 
 assign led_PL0 = led_reg0;
 assign led_PL1 = led_reg1;

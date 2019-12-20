@@ -142,29 +142,29 @@ int main()
 		//debug_printf("Initialise Xfer error=%d addr 0x%08x buffer_at 0x%08x\r\n", error, addr, &buffer);
 
 		/*
-		ptr = addr;
-		for(k = 0; k < 128; k++) {
-			debug_printf("0x%08x ", *ptr++);
-			if(((k + 1) & 7) == 0) {
-				debug_printf("\r\n");
-			}
+		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
+			debug_printf("w");
 		}
-
-		debug_printf("\r\n");
 		*/
 
 		/*
-		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
-			debug_printf(".");
-		}
-		*/
-
 		n++;
 
-		if(n == 10000) {
-			debug_printf(".");
+		if(n > 0) {
+			debug_printf("Data: \r\n");
+
+			ptr = addr;
+			for(k = 0; k < 32; k++) {
+				debug_printf("0x%08x ", *ptr++);
+				if(((k + 1) & 7) == 0) {
+					debug_printf("\r\n");
+				}
+			}
+
+			debug_printf("\r\n");
 			n = 0;
 		}
+		*/
 	}
 #endif
 
