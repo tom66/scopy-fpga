@@ -150,10 +150,10 @@ module bd_f60c_wrapper
   input SLOT_1_AXI_wready;
   input [3:0]SLOT_1_AXI_wstrb;
   input SLOT_1_AXI_wvalid;
-  input [31:0]SLOT_2_AXIS_tdata;
+  input [63:0]SLOT_2_AXIS_tdata;
   input SLOT_2_AXIS_tlast;
   input SLOT_2_AXIS_tready;
-  input [3:0]SLOT_2_AXIS_tstrb;
+  input [7:0]SLOT_2_AXIS_tstrb;
   input SLOT_2_AXIS_tvalid;
   input clk;
   input resetn;
@@ -226,10 +226,10 @@ module bd_f60c_wrapper
   wire SLOT_1_AXI_wready;
   wire [3:0]SLOT_1_AXI_wstrb;
   wire SLOT_1_AXI_wvalid;
-  wire [31:0]SLOT_2_AXIS_tdata;
+  wire [63:0]SLOT_2_AXIS_tdata;
   wire SLOT_2_AXIS_tlast;
   wire SLOT_2_AXIS_tready;
-  wire [3:0]SLOT_2_AXIS_tstrb;
+  wire [7:0]SLOT_2_AXIS_tstrb;
   wire SLOT_2_AXIS_tvalid;
   wire clk;
   wire resetn;

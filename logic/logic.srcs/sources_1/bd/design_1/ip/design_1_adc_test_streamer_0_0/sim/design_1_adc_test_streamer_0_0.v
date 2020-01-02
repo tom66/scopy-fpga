@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_test_streamer:2.0
-// IP Revision: 7
+// IP Revision: 10
 
 `timescale 1ns/1ps
 
@@ -59,21 +59,23 @@ module design_1_adc_test_streamer_0_0 (
   m00_axis_tlast,
   m00_axis_tvalid,
   m00_axis_tready,
+  adc_bus,
   m00_axis_aclk,
   m00_axis_aresetn
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TDATA" *)
-output wire [31 : 0] m00_axis_tdata;
+output wire [63 : 0] m00_axis_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TSTRB" *)
-output wire [3 : 0] m00_axis_tstrb;
+output wire [7 : 0] m00_axis_tstrb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TLAST" *)
 output wire m00_axis_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TVALID" *)
 output wire m00_axis_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TREADY" *)
 input wire m00_axis_tready;
+input wire [63 : 0] adc_bus;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 M00_AXIS_CLK CLK" *)
 input wire m00_axis_aclk;
@@ -82,7 +84,7 @@ input wire m00_axis_aclk;
 input wire m00_axis_aresetn;
 
   adc_test_streamer_v2_0 #(
-    .C_M00_AXIS_TDATA_WIDTH(32),  // Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
+    .C_M00_AXIS_TDATA_WIDTH(64),  // Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
     .C_M00_AXIS_START_COUNT(32)  // Start count is the number of clock cycles the master will wait before initiating/issuing any transaction.
   ) inst (
     .m00_axis_tdata(m00_axis_tdata),
@@ -90,6 +92,7 @@ input wire m00_axis_aresetn;
     .m00_axis_tlast(m00_axis_tlast),
     .m00_axis_tvalid(m00_axis_tvalid),
     .m00_axis_tready(m00_axis_tready),
+    .adc_bus(adc_bus),
     .m00_axis_aclk(m00_axis_aclk),
     .m00_axis_aresetn(m00_axis_aresetn)
   );

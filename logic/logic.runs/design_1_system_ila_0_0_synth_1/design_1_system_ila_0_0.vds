@@ -2,8 +2,8 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Thu Jan  2 16:36:22 2020
-# Process ID: 14372
+# Start of session at: Thu Jan  2 23:11:25 2020
+# Process ID: 19608
 # Current directory: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1
 # Command line: vivado.exe -log design_1_system_ila_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_system_ila_0_0.tcl
 # Log file: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/design_1_system_ila_0_0.vds
@@ -21,9 +21,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 13120 
+INFO: Helper process launched with PID 6568 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 484.422 ; gain = 130.723
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:13 . Memory (MB): peak = 484.809 ; gain = 131.457
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'design_1_system_ila_0_0' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/synth/design_1_system_ila_0_0.v:216]
 WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/synth/design_1_system_ila_0_0.v:452]
@@ -977,7 +977,7 @@ INFO: [Synth 8-6157] synthesizing module 'bd_f60c_g_inst_0_gigantic_mux' [c:/Use
 	Parameter C_SLOT_2_HAS_TKEEP bound to: 0 - type: integer 
 	Parameter C_SLOT_2_HAS_TSTRB bound to: 1 - type: integer 
 	Parameter C_SLOT_2_HAS_TREADY bound to: 1 - type: integer 
-	Parameter C_SLOT_2_AXIS_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_SLOT_2_AXIS_TDATA_WIDTH bound to: 64 - type: integer 
 	Parameter C_SLOT_2_AXIS_TID_WIDTH bound to: 0 - type: integer 
 	Parameter C_SLOT_2_AXIS_TDEST_WIDTH bound to: 0 - type: integer 
 	Parameter C_SLOT_2_AXIS_TUSER_WIDTH bound to: 0 - type: integer 
@@ -1585,7 +1585,7 @@ INFO: [Synth 8-6157] synthesizing module 'bd_f60c_slot_1_w_0' [c:/Users/Tom/Docu
 INFO: [Synth 8-6155] done synthesizing module 'bd_f60c_slot_1_w_0' (60#1) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_9/synth/bd_f60c_slot_1_w_0.v:58]
 INFO: [Synth 8-6157] synthesizing module 'bd_f60c_slot_2_apcs_0' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/synth/bd_f60c_slot_2_apcs_0.v:57]
 INFO: [Synth 8-6157] synthesizing module 'axis_protocol_checker_v2_0_2_top' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/2566/hdl/axis_protocol_checker_v2_0_vl_rfs.v:661]
-	Parameter C_AXIS_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_AXIS_TDATA_WIDTH bound to: 64 - type: integer 
 	Parameter C_AXIS_TID_WIDTH bound to: 1 - type: integer 
 	Parameter C_AXIS_TDEST_WIDTH bound to: 1 - type: integer 
 	Parameter C_AXIS_TUSER_WIDTH bound to: 1 - type: integer 
@@ -1600,20 +1600,20 @@ INFO: [Synth 8-6157] synthesizing module 'axis_protocol_checker_v2_0_2_top' [c:/
 INFO: [Synth 8-5534] Detected attribute (* shreg_extract = "no" *) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/2566/hdl/axis_protocol_checker_v2_0_vl_rfs.v:771]
 INFO: [Synth 8-5534] Detected attribute (* iob = "false" *) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/2566/hdl/axis_protocol_checker_v2_0_vl_rfs.v:771]
 INFO: [Synth 8-6157] synthesizing module 'axis_protocol_checker_v2_0_2_asr_inline' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/2566/hdl/axis_protocol_checker_v2_0_vl_rfs.v:55]
-	Parameter DATA_WIDTH_BYTES bound to: 4 - type: integer 
+	Parameter DATA_WIDTH_BYTES bound to: 8 - type: integer 
 	Parameter DEST_WIDTH bound to: 0 - type: integer 
 	Parameter ID_WIDTH bound to: 0 - type: integer 
 	Parameter USER_WIDTH bound to: 1 - type: integer 
-	Parameter DATA_MAX bound to: 31 - type: integer 
+	Parameter DATA_MAX bound to: 63 - type: integer 
 	Parameter DEST_MAX bound to: 0 - type: integer 
-	Parameter STRB_WIDTH bound to: 4 - type: integer 
-	Parameter STRB_MAX bound to: 3 - type: integer 
-	Parameter KEEP_MAX bound to: 3 - type: integer 
+	Parameter STRB_WIDTH bound to: 8 - type: integer 
+	Parameter STRB_MAX bound to: 7 - type: integer 
+	Parameter KEEP_MAX bound to: 7 - type: integer 
 	Parameter ID_MAX bound to: 0 - type: integer 
 	Parameter TUSER_MAX bound to: 0 - type: integer 
 	Parameter MAXWAITS bound to: 0 - type: integer 
 	Parameter L_WAIT_WIDTH bound to: 1 - type: integer 
-	Parameter L_NUM_DATA_BYTES bound to: 4 - type: integer 
+	Parameter L_NUM_DATA_BYTES bound to: 8 - type: integer 
 	Parameter L_NUM_DEQ_LANES bound to: 1 - type: integer 
 	Parameter L_NUM_DAND1_LANES bound to: 1 - type: integer 
 	Parameter L_NUM_DAND2_LANES bound to: 1 - type: integer 
@@ -1725,6 +1725,10 @@ WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected 
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port s_axi_rdata[1]
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port s_axi_rdata[0]
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port system_resetn
+WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[7]
+WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[6]
+WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[5]
+WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[4]
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[3]
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[2]
 WARNING: [Synth 8-3331] design axis_protocol_checker_v2_0_2_top has unconnected port pc_axis_tkeep[1]
@@ -1754,13 +1758,9 @@ WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unco
 WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In10[0]
 WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In11[0]
 WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In12[0]
-WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In13[0]
-WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In14[0]
-WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In15[0]
-WARNING: [Synth 8-3331] design xlconcat_v2_1_1_xlconcat__parameterized0 has unconnected port In16[0]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:03:20 ; elapsed = 00:03:34 . Memory (MB): peak = 933.301 ; gain = 579.602
+Finished RTL Elaboration : Time (s): cpu = 00:03:26 ; elapsed = 00:03:48 . Memory (MB): peak = 934.387 ; gain = 581.035
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1812,12 +1812,12 @@ INFO: [Synth 8-3295] tying undriven pin inst:trig_out_ack to constant 0 [c:/User
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:03:22 ; elapsed = 00:03:36 . Memory (MB): peak = 933.301 ; gain = 579.602
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 934.387 ; gain = 581.035
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:03:22 ; elapsed = 00:03:36 . Memory (MB): peak = 933.301 ; gain = 579.602
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 934.387 ; gain = 581.035
 ---------------------------------------------------------------------------------
-INFO: [Netlist 29-17] Analyzing 791 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 813 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -1834,28 +1834,28 @@ Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/
 Finished Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/design_1_system_ila_0_0_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/design_1_system_ila_0_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1079.711 ; gain = 0.063
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1085.109 ; gain = 0.066
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1082.355 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1087.758 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 564 instances were transformed.
-  CFGLUT5 => CFGLUT5 (SRLC32E, SRL16E): 492 instances
+  A total of 580 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRLC32E, SRL16E): 508 instances
   CFGLUT5 => SRLC32E: 72 instances
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1082.355 ; gain = 0.000
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.385 . Memory (MB): peak = 1085.387 ; gain = 3.031
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1087.758 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.389 . Memory (MB): peak = 1090.793 ; gain = 3.035
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:03:47 ; elapsed = 00:04:04 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Constraint Validation : Time (s): cpu = 00:03:53 ; elapsed = 00:04:17 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:03:47 ; elapsed = 00:04:04 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Loading Part and Timing Information : Time (s): cpu = 00:03:53 ; elapsed = 00:04:17 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -1863,8 +1863,8 @@ Start Applying 'set_property' XDC Constraints
 Applied set_property mark_debug = true for inst/slot_2_apcs/inst/pc_status[31]. (constraint file  c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/bd_f60c_slot_2_apcs_0.xdc, line 2).
 Applied set_property mark_debug = true for inst/slot_2_apcs/inst/pc_status_i. (constraint file  c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/bd_f60c_slot_2_apcs_0.xdc, line 2).
 Applied set_property mark_debug = true for inst/slot_2_apcs/inst/pc_status0[31]. (constraint file  c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/bd_f60c_slot_2_apcs_0.xdc, line 2).
-Applied set_property DONT_TOUCH = true for inst/ila_lib/inst. (constraint file  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc, line 50).
-Applied set_property DONT_TOUCH = true for inst/slot_2_apcs/inst. (constraint file  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc, line 58).
+Applied set_property DONT_TOUCH = true for inst/ila_lib/inst. (constraint file  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc, line 54).
+Applied set_property DONT_TOUCH = true for inst/slot_2_apcs/inst. (constraint file  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/dont_touch.xdc, line 62).
 Applied set_property DONT_TOUCH = true for inst. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for inst/ila_lib. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for inst/g_inst. (constraint file  auto generated constraint, line ).
@@ -1880,7 +1880,7 @@ Applied set_property DONT_TOUCH = true for inst/slot_1_b. (constraint file  auto
 Applied set_property DONT_TOUCH = true for inst/slot_1_ar. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for inst/slot_1_r. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:03:48 ; elapsed = 00:04:05 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:03:53 ; elapsed = 00:04:18 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'xsdbs_v1_0_2_reg_p2s__parameterized68'
 INFO: [Synth 8-5544] ROM "data_out_sel" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
@@ -2817,7 +2817,7 @@ INFO: [Synth 8-3898] No Re-encoding of one hot register 'current_state_reg' in m
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3898] No Re-encoding of one hot register 'current_state_reg' in module 'xsdbs_v1_0_2_reg_p2s__parameterized67'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:03:58 ; elapsed = 00:04:18 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:04:04 ; elapsed = 00:04:31 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -2841,28 +2841,28 @@ Detailed RTL Component Info :
 	   2 Input      1 Bit         XORs := 4     
 +---Registers : 
 	             1024 Bit    Registers := 2     
-	              560 Bit    Registers := 1     
-	              549 Bit    Registers := 9     
+	              592 Bit    Registers := 1     
+	              585 Bit    Registers := 9     
 	              128 Bit    Registers := 1     
 	               68 Bit    Registers := 1     
-	               64 Bit    Registers := 8     
+	               64 Bit    Registers := 12    
 	               33 Bit    Registers := 2     
-	               32 Bit    Registers := 17    
+	               32 Bit    Registers := 13    
 	               17 Bit    Registers := 2     
 	               16 Bit    Registers := 341   
 	               12 Bit    Registers := 14    
 	               11 Bit    Registers := 9     
 	                9 Bit    Registers := 1     
-	                8 Bit    Registers := 2     
+	                8 Bit    Registers := 8     
 	                7 Bit    Registers := 3     
 	                6 Bit    Registers := 7     
 	                5 Bit    Registers := 4     
-	                4 Bit    Registers := 96    
+	                4 Bit    Registers := 90    
 	                3 Bit    Registers := 29    
 	                2 Bit    Registers := 57    
 	                1 Bit    Registers := 491   
 +---Muxes : 
-	   2 Input    549 Bit        Muxes := 1     
+	   2 Input    585 Bit        Muxes := 1     
 	   2 Input     16 Bit        Muxes := 79    
 	   4 Input     16 Bit        Muxes := 1     
 	   3 Input     16 Bit        Muxes := 1     
@@ -4451,7 +4451,7 @@ Detailed RTL Component Info :
 	   2 Input     11 Bit       Adders := 1     
 	   2 Input      6 Bit       Adders := 1     
 +---Registers : 
-	              560 Bit    Registers := 1     
+	              592 Bit    Registers := 1     
 	               11 Bit    Registers := 1     
 	                7 Bit    Registers := 1     
 	                6 Bit    Registers := 1     
@@ -4468,12 +4468,12 @@ Detailed RTL Component Info :
 Module ila_v6_2_8_ila_core 
 Detailed RTL Component Info : 
 +---Registers : 
-	              549 Bit    Registers := 9     
+	              585 Bit    Registers := 9     
 	               16 Bit    Registers := 2     
 	                2 Bit    Registers := 3     
 	                1 Bit    Registers := 5     
 +---Muxes : 
-	   2 Input    549 Bit        Muxes := 1     
+	   2 Input    585 Bit        Muxes := 1     
 Module ila_v6_2_8_ila 
 Detailed RTL Component Info : 
 +---Registers : 
@@ -4481,10 +4481,9 @@ Detailed RTL Component Info :
 Module axis_protocol_checker_v2_0_2_asr_inline 
 Detailed RTL Component Info : 
 +---Registers : 
-	               64 Bit    Registers := 4     
-	               32 Bit    Registers := 1     
+	               64 Bit    Registers := 5     
+	                8 Bit    Registers := 2     
 	                5 Bit    Registers := 4     
-	                4 Bit    Registers := 2     
 	                3 Bit    Registers := 5     
 	                1 Bit    Registers := 24    
 +---Muxes : 
@@ -4492,8 +4491,9 @@ Detailed RTL Component Info :
 Module axis_protocol_checker_v2_0_2_top 
 Detailed RTL Component Info : 
 +---Registers : 
-	               32 Bit    Registers := 2     
-	                4 Bit    Registers := 2     
+	               64 Bit    Registers := 1     
+	               32 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
 	                1 Bit    Registers := 8     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
@@ -4635,18 +4635,6 @@ INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s10sq_reg[4]' (F
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s11sq_reg[4]' (FDR) to 'inst/slot_2_apcs/inst/PC/s18sq_reg[1]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s17sq_reg[4]' (FDR) to 'inst/slot_2_apcs/inst/PC/s18sq_reg[1]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s20sq_reg[4]' (FDR) to 'inst/slot_2_apcs/inst/PC/s18sq_reg[1]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[4]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[5]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[6]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[7]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/data_eq_reg[4]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/data_eq_reg[5]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/data_eq_reg[6]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/data_eq_reg[7]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/strb_eq_reg[4]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/strb_eq_reg[5]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/strb_eq_reg[6]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/strb_eq_reg[7]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/user_eq_reg[1]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/user_eq_reg[2]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/user_eq_reg[3]' (FDS) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[7]'
@@ -4659,16 +4647,28 @@ INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s14sq_reg[1]' (F
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[0]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[1]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[1]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[2]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[2]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[3]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[3]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[3]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[3]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[1]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[3]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[2]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[3]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[3]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[4]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[4]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[5]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[5]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[6]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[6]' (FD) to 'inst/slot_2_apcs/inst/TKEEP_q_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TKEEP_q_reg[7]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[1]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[2]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[3]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[4]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[5]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/s8_reg[6]' (FD) to 'inst/slot_2_apcs/inst/PC/s8_reg[7]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[1]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/US1[1].tuser_stage_1_eq_reg[1]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[1]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[1]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[2]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[2]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[3]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[3]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[4]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[4]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[5]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[5]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[6]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[6]' (FD) to 'inst/slot_2_apcs/inst/PC/keep_eq_reg[7]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/TID_q_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/s2_reg[0]'
-INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[3]' (FD) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[0]'
+INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/keep_eq_reg[7]' (FD) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[0]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/DS1[0].tkeep_stage_1_eq_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[0]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/US1[0].tuser_stage_1_eq_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/user_eq_reg[0]'
 INFO: [Synth 8-3886] merging instance 'inst/slot_2_apcs/inst/PC/DS2[0].tkeep_stage_2_eq_reg[0]' (FD) to 'inst/slot_2_apcs/inst/PC/US2[0].tuser_stage_2_eq_reg[0]'
@@ -4721,7 +4721,7 @@ INFO: [Synth 8-3886] merging instance 'inst/ila_lib/inst/ila_core_inst/u_ila_reg
 INFO: [Synth 8-3886] merging instance 'inst/ila_lib/inst/ila_core_inst/u_ila_regs/shift_reg0_reg[35]' (FDSE) to 'inst/ila_lib/inst/ila_core_inst/u_ila_regs/shift_reg0_reg[20]'
 INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:04:44 ; elapsed = 00:05:09 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:04:47 ; elapsed = 00:05:17 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4733,13 +4733,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:04:58 ; elapsed = 00:05:24 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:05:01 ; elapsed = 00:05:31 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:05:01 ; elapsed = 00:05:27 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Timing Optimization : Time (s): cpu = 00:05:04 ; elapsed = 00:05:34 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4751,7 +4751,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:05:07 ; elapsed = 00:05:34 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Technology Mapping : Time (s): cpu = 00:05:11 ; elapsed = 00:05:42 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4815,7 +4815,7 @@ INFO: [Synth 8-3295] tying undriven pin inst:sl_iport0[0] to constant 0
 INFO: [Synth 8-3295] tying undriven pin inst:trig_in to constant 0
 INFO: [Synth 8-3295] tying undriven pin inst:trig_out_ack to constant 0
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:05:09 ; elapsed = 00:05:36 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished IO Insertion : Time (s): cpu = 00:05:13 ; elapsed = 00:05:44 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -4828,7 +4828,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:05:09 ; elapsed = 00:05:36 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Renaming Generated Instances : Time (s): cpu = 00:05:13 ; elapsed = 00:05:44 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4840,25 +4840,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:05:11 ; elapsed = 00:05:38 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:05:15 ; elapsed = 00:05:46 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:05:11 ; elapsed = 00:05:38 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Renaming Generated Ports : Time (s): cpu = 00:05:15 ; elapsed = 00:05:46 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:05:12 ; elapsed = 00:05:39 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Handling Custom Attributes : Time (s): cpu = 00:05:15 ; elapsed = 00:05:46 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:05:12 ; elapsed = 00:05:39 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Renaming Generated Nets : Time (s): cpu = 00:05:15 ; elapsed = 00:05:46 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -4869,9 +4869,9 @@ Static Shift Register Report:
 |Module Name    | RTL Name                                                                         | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
 +---------------+----------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
 |ila_v6_2_8_ila | ila_core_inst/u_ila_regs/adv_rb_drdy4_reg                                        | 5      | 1     | NO           | NO                 | YES               | 1      | 0       | 
-|ila_v6_2_8_ila | ila_core_inst/shifted_data_in_reg[8][548]                                        | 9      | 549   | NO           | NO                 | YES               | 549    | 0       | 
-|ila_v6_2_8_ila | ila_core_inst/xsdb_memory_read_inst/multiple_read_latency.read_enable_out_reg[3] | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
-|ila_v6_2_8_ila | ila_core_inst/xsdb_memory_read_inst/multiple_enable_latency.enable_out_reg[3]    | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ila_v6_2_8_ila | ila_core_inst/shifted_data_in_reg[8][584]                                        | 9      | 585   | NO           | NO                 | YES               | 585    | 0       | 
+|ila_v6_2_8_ila | ila_core_inst/xsdb_memory_read_inst/multiple_read_latency.read_enable_out_reg[3] | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ila_v6_2_8_ila | ila_core_inst/xsdb_memory_read_inst/multiple_enable_latency.enable_out_reg[3]    | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
 +---------------+----------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
 
 ---------------------------------------------------------------------------------
@@ -4891,22 +4891,22 @@ Report Cell Usage:
 +------+---------+------+
 |      |Cell     |Count |
 +------+---------+------+
-|1     |CARRY4   |   203|
-|2     |CFGLUT5  |   564|
+|1     |CARRY4   |   207|
+|2     |CFGLUT5  |   580|
 |3     |LUT1     |   128|
-|4     |LUT2     |   158|
+|4     |LUT2     |   163|
 |5     |LUT3     |   241|
-|6     |LUT4     |   628|
-|7     |LUT5     |   210|
-|8     |LUT6     |  2058|
-|9     |MUXF7    |   230|
-|10    |MUXF8    |    73|
+|6     |LUT4     |   635|
+|7     |LUT5     |   201|
+|8     |LUT6     |  2086|
+|9     |MUXF7    |   245|
+|10    |MUXF8    |    96|
 |11    |RAMB18E1 |     2|
-|12    |RAMB36E1 |    30|
-|13    |SRL16E   |   553|
+|12    |RAMB36E1 |    32|
+|13    |SRL16E   |   589|
 |14    |SRLC16E  |     2|
 |15    |SRLC32E  |    17|
-|16    |FDRE     |  6553|
+|16    |FDRE     |  6790|
 |17    |FDSE     |    19|
 +------+---------+------+
 
@@ -4914,16 +4914,16 @@ Report Instance Areas:
 +------+----------------------------------------------------------------------------+-------------------------------------------------+------+
 |      |Instance                                                                    |Module                                           |Cells |
 +------+----------------------------------------------------------------------------+-------------------------------------------------+------+
-|1     |top                                                                         |                                                 | 11669|
-|2     |  inst                                                                      |bd_f60c                                          | 11669|
+|1     |top                                                                         |                                                 | 12033|
+|2     |  inst                                                                      |bd_f60c                                          | 12033|
 |3     |    g_inst                                                                  |bd_f60c_g_inst_0                                 |   183|
 |4     |      inst                                                                  |bd_f60c_g_inst_0_gigantic_mux                    |   183|
 |5     |        \SLOT_0.inst_slot0                                                  |gigantic_mux_v1_0_1_cntr                         |    55|
 |6     |        \SLOT_1.inst_slot0                                                  |gigantic_mux_v1_0_1_cntr__parameterized0         |   128|
-|7     |    ila_lib                                                                 |bd_f60c_ila_lib_0                                | 11288|
-|8     |      inst                                                                  |ila_v6_2_8_ila                                   | 11288|
-|9     |        ila_core_inst                                                       |ila_v6_2_8_ila_core                              | 11281|
-|10    |          ila_trace_memory_inst                                             |ila_v6_2_8_ila_trace_memory                      |    32|
+|7     |    ila_lib                                                                 |bd_f60c_ila_lib_0                                | 11554|
+|8     |      inst                                                                  |ila_v6_2_8_ila                                   | 11554|
+|9     |        ila_core_inst                                                       |ila_v6_2_8_ila_core                              | 11547|
+|10    |          ila_trace_memory_inst                                             |ila_v6_2_8_ila_trace_memory                      |    34|
 |11    |            \SUBCORE_RAM.BLK_MEM_GEN[0].trace_block_memory                  |blk_mem_gen_v8_3_6                               |    29|
 |12    |              inst_blk_mem_gen                                              |blk_mem_gen_v8_3_6_synth                         |    29|
 |13    |                \gnbram.gnativebmg.native_blk_mem_gen                       |blk_mem_gen_top                                  |    29|
@@ -4986,539 +4986,547 @@ Report Instance Areas:
 |70    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized7         |     1|
 |71    |                    \ramloop[9].ram.r                                       |blk_mem_gen_prim_width__parameterized8           |     1|
 |72    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized8         |     1|
-|73    |            \SUBCORE_RAM.trace_block_memory                                 |blk_mem_gen_v8_3_6__parameterized0               |     3|
-|74    |              inst_blk_mem_gen                                              |blk_mem_gen_v8_3_6_synth__parameterized0         |     3|
-|75    |                \gnbram.gnativebmg.native_blk_mem_gen                       |blk_mem_gen_top__parameterized0                  |     3|
-|76    |                  \valid.cstr                                               |blk_mem_gen_generic_cstr__parameterized0         |     3|
+|73    |            \SUBCORE_RAM.trace_block_memory                                 |blk_mem_gen_v8_3_6__parameterized0               |     5|
+|74    |              inst_blk_mem_gen                                              |blk_mem_gen_v8_3_6_synth__parameterized0         |     5|
+|75    |                \gnbram.gnativebmg.native_blk_mem_gen                       |blk_mem_gen_top__parameterized0                  |     5|
+|76    |                  \valid.cstr                                               |blk_mem_gen_generic_cstr__parameterized0         |     5|
 |77    |                    \ramloop[0].ram.r                                       |blk_mem_gen_prim_width__parameterized28          |     1|
 |78    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized28        |     1|
 |79    |                    \ramloop[1].ram.r                                       |blk_mem_gen_prim_width__parameterized29          |     1|
 |80    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized29        |     1|
 |81    |                    \ramloop[2].ram.r                                       |blk_mem_gen_prim_width__parameterized30          |     1|
 |82    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized30        |     1|
-|83    |          u_ila_cap_ctrl                                                    |ila_v6_2_8_ila_cap_ctrl_legacy                   |   287|
-|84    |            U_CDONE                                                         |ltlib_v1_0_0_cfglut6__parameterized0             |     5|
-|85    |            U_NS0                                                           |ltlib_v1_0_0_cfglut7                             |     6|
-|86    |            U_NS1                                                           |ltlib_v1_0_0_cfglut7_320                         |     6|
-|87    |            u_cap_addrgen                                                   |ila_v6_2_8_ila_cap_addrgen                       |   265|
-|88    |              U_CMPRESET                                                    |ltlib_v1_0_0_cfglut6                             |     3|
-|89    |              u_cap_sample_counter                                          |ila_v6_2_8_ila_cap_sample_counter                |    65|
-|90    |                U_SCE                                                       |ltlib_v1_0_0_cfglut4_327                         |     1|
-|91    |                U_SCMPCE                                                    |ltlib_v1_0_0_cfglut5_328                         |     1|
-|92    |                U_SCRST                                                     |ltlib_v1_0_0_cfglut6_329                         |     5|
-|93    |                u_scnt_cmp                                                  |ltlib_v1_0_0_match_nodelay_330                   |    23|
-|94    |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay_331              |    23|
-|95    |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4_332       |    12|
-|96    |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1_333 |     5|
-|97    |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2_334 |     5|
-|98    |              u_cap_window_counter                                          |ila_v6_2_8_ila_cap_window_counter                |    63|
-|99    |                U_WCE                                                       |ltlib_v1_0_0_cfglut4                             |     1|
-|100   |                U_WHCMPCE                                                   |ltlib_v1_0_0_cfglut5                             |     1|
-|101   |                U_WLCMPCE                                                   |ltlib_v1_0_0_cfglut5_321                         |     1|
-|102   |                u_wcnt_hcmp                                                 |ltlib_v1_0_0_match_nodelay                       |    12|
-|103   |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay_323              |    12|
-|104   |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4_324       |    12|
-|105   |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1_325 |     5|
-|106   |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2_326 |     5|
-|107   |                u_wcnt_lcmp                                                 |ltlib_v1_0_0_match_nodelay_322                   |    23|
-|108   |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay                  |    23|
-|109   |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4           |    12|
-|110   |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1     |     5|
-|111   |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2     |     5|
-|112   |          u_ila_regs                                                        |ila_v6_2_8_ila_register                          |  6842|
-|113   |            U_XSDB_SLAVE                                                    |xsdbs_v1_0_2_xsdbs                               |   302|
-|114   |            reg_890                                                         |xsdbs_v1_0_2_reg__parameterized178               |    16|
-|115   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_319                        |    16|
-|116   |            \MU_SRL[0].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s                             |    74|
-|117   |            \MU_SRL[10].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized9             |    74|
-|118   |            \MU_SRL[11].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized10            |   106|
-|119   |            \MU_SRL[12].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized11            |    74|
-|120   |            \MU_SRL[13].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized12            |    74|
-|121   |            \MU_SRL[14].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized13            |    74|
-|122   |            \MU_SRL[15].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized14            |    90|
-|123   |            \MU_SRL[16].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized15            |    74|
-|124   |            \MU_SRL[17].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized16            |    74|
-|125   |            \MU_SRL[18].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized17            |    74|
-|126   |            \MU_SRL[19].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized18            |   122|
-|127   |            \MU_SRL[1].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized0             |    74|
-|128   |            \MU_SRL[20].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized19            |    74|
-|129   |            \MU_SRL[21].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized20            |    74|
-|130   |            \MU_SRL[22].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized21            |    74|
-|131   |            \MU_SRL[23].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized22            |    90|
-|132   |            \MU_SRL[24].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized23            |    74|
-|133   |            \MU_SRL[25].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized24            |    74|
-|134   |            \MU_SRL[26].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized25            |    74|
-|135   |            \MU_SRL[27].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized26            |   106|
-|136   |            \MU_SRL[28].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized27            |    74|
-|137   |            \MU_SRL[29].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized28            |    74|
-|138   |            \MU_SRL[2].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized1             |    74|
-|139   |            \MU_SRL[30].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized29            |    74|
-|140   |            \MU_SRL[31].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized30            |    90|
-|141   |            \MU_SRL[32].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized31            |    74|
-|142   |            \MU_SRL[33].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized32            |    74|
-|143   |            \MU_SRL[34].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized33            |    74|
-|144   |            \MU_SRL[35].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized34            |   122|
-|145   |            \MU_SRL[36].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized35            |    74|
-|146   |            \MU_SRL[37].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized36            |    74|
-|147   |            \MU_SRL[38].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized37            |    74|
-|148   |            \MU_SRL[39].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized38            |    90|
-|149   |            \MU_SRL[3].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized2             |   122|
-|150   |            \MU_SRL[40].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized39            |    74|
-|151   |            \MU_SRL[41].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized40            |    74|
-|152   |            \MU_SRL[42].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized41            |    74|
-|153   |            \MU_SRL[43].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized42            |   106|
-|154   |            \MU_SRL[44].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized43            |    74|
-|155   |            \MU_SRL[45].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized44            |    74|
-|156   |            \MU_SRL[46].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized45            |    74|
-|157   |            \MU_SRL[47].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized46            |    90|
-|158   |            \MU_SRL[48].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized47            |    74|
-|159   |            \MU_SRL[49].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized48            |    74|
-|160   |            \MU_SRL[4].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized3             |    74|
-|161   |            \MU_SRL[50].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized49            |    74|
-|162   |            \MU_SRL[51].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized50            |   154|
-|163   |            \MU_SRL[52].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized51            |    74|
-|164   |            \MU_SRL[53].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized52            |    74|
-|165   |            \MU_SRL[54].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized53            |    74|
-|166   |            \MU_SRL[55].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized54            |    90|
-|167   |            \MU_SRL[56].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized55            |    74|
-|168   |            \MU_SRL[57].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized56            |    74|
-|169   |            \MU_SRL[58].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized57            |    74|
-|170   |            \MU_SRL[59].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized58            |   106|
-|171   |            \MU_SRL[5].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized4             |    74|
-|172   |            \MU_SRL[60].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized59            |    74|
-|173   |            \MU_SRL[61].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized60            |    74|
-|174   |            \MU_SRL[62].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized61            |    74|
-|175   |            \MU_SRL[63].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized62            |    90|
-|176   |            \MU_SRL[64].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized63            |    74|
-|177   |            \MU_SRL[65].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized64            |    74|
-|178   |            \MU_SRL[66].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized65            |    74|
-|179   |            \MU_SRL[67].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized66            |    90|
-|180   |            \MU_SRL[6].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized5             |    74|
-|181   |            \MU_SRL[7].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized6             |    90|
-|182   |            \MU_SRL[8].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized7             |    74|
-|183   |            \MU_SRL[9].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized8             |    74|
-|184   |            \TC_SRL[0].tc_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized67            |    76|
-|185   |            reg_15                                                          |xsdbs_v1_0_2_reg__parameterized160               |    50|
-|186   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_318                         |    50|
-|187   |            reg_16                                                          |xsdbs_v1_0_2_reg__parameterized161               |    17|
-|188   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_317                         |    17|
-|189   |            reg_17                                                          |xsdbs_v1_0_2_reg__parameterized162               |    20|
-|190   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_316                         |    20|
-|191   |            reg_18                                                          |xsdbs_v1_0_2_reg__parameterized163               |    34|
-|192   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_315                         |    34|
-|193   |            reg_19                                                          |xsdbs_v1_0_2_reg__parameterized164               |    18|
-|194   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_314                         |    18|
-|195   |            reg_1a                                                          |xsdbs_v1_0_2_reg__parameterized165               |    18|
-|196   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1_313         |    18|
-|197   |            reg_6                                                           |xsdbs_v1_0_2_reg__parameterized145               |    27|
-|198   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_312                         |    27|
-|199   |            reg_7                                                           |xsdbs_v1_0_2_reg__parameterized146               |    32|
-|200   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized0             |    32|
-|201   |            reg_8                                                           |xsdbs_v1_0_2_reg__parameterized147               |     5|
-|202   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_311                        |     5|
-|203   |            reg_80                                                          |xsdbs_v1_0_2_reg__parameterized166               |    17|
-|204   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1_310         |    17|
-|205   |            reg_81                                                          |xsdbs_v1_0_2_reg__parameterized167               |    17|
-|206   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_309                         |    17|
-|207   |            reg_82                                                          |xsdbs_v1_0_2_reg__parameterized168               |    17|
-|208   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1             |    17|
-|209   |            reg_83                                                          |xsdbs_v1_0_2_reg__parameterized169               |    34|
-|210   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_308                         |    34|
-|211   |            reg_84                                                          |xsdbs_v1_0_2_reg__parameterized170               |    65|
-|212   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_307                         |    65|
-|213   |            reg_85                                                          |xsdbs_v1_0_2_reg__parameterized171               |    20|
-|214   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_306                         |    20|
-|215   |            reg_887                                                         |xsdbs_v1_0_2_reg__parameterized173               |     4|
-|216   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_305                        |     4|
-|217   |            reg_88d                                                         |xsdbs_v1_0_2_reg__parameterized175               |     8|
-|218   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_304                        |     8|
-|219   |            reg_9                                                           |xsdbs_v1_0_2_reg__parameterized148               |    22|
-|220   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_303                        |    22|
-|221   |            reg_srl_fff                                                     |xsdbs_v1_0_2_reg_p2s__parameterized68            |    95|
-|222   |            reg_stream_ffd                                                  |xsdbs_v1_0_2_reg_stream                          |    20|
-|223   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl                             |    20|
-|224   |            reg_stream_ffe                                                  |xsdbs_v1_0_2_reg_stream__parameterized0          |    38|
-|225   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat                            |    38|
-|226   |          u_ila_reset_ctrl                                                  |ila_v6_2_8_ila_reset_ctrl                        |    46|
-|227   |            arm_detection_inst                                              |ltlib_v1_0_0_rising_edge_detection               |     5|
-|228   |            \asyncrounous_transfer.arm_in_transfer_inst                     |ltlib_v1_0_0_async_edge_xfer                     |     7|
-|229   |            \asyncrounous_transfer.arm_out_transfer_inst                    |ltlib_v1_0_0_async_edge_xfer_299                 |     6|
-|230   |            \asyncrounous_transfer.halt_in_transfer_inst                    |ltlib_v1_0_0_async_edge_xfer_300                 |     7|
-|231   |            \asyncrounous_transfer.halt_out_transfer_inst                   |ltlib_v1_0_0_async_edge_xfer_301                 |     6|
-|232   |            halt_detection_inst                                             |ltlib_v1_0_0_rising_edge_detection_302           |     6|
-|233   |          u_trig                                                            |ila_v6_2_8_ila_trigger                           |  2029|
-|234   |            \N_DDR_TC.N_DDR_TC_INST[0].U_TC                                 |ltlib_v1_0_0_match                               |   118|
-|235   |              \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst      |ltlib_v1_0_0_allx_typeA                          |   116|
-|236   |                DUT                                                         |ltlib_v1_0_0_all_typeA                           |    48|
-|237   |                  \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_290                 |     5|
-|238   |                  \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_291                 |     5|
-|239   |                  \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_292                 |     5|
-|240   |                  \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_293                 |     5|
-|241   |                  \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_294                 |     5|
-|242   |                  \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_295                 |     5|
-|243   |                  \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_296                 |     5|
-|244   |                  \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_297                 |     5|
-|245   |                  \I_WHOLE_SLICE.G_SLICE_IDX[8].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice__parameterized0_298 |     6|
-|246   |            U_TM                                                            |ila_v6_2_8_ila_trig_match                        |  1910|
-|247   |              \N_DDR_MODE.G_NMU[0].U_M                                      |ltlib_v1_0_0_match__parameterized0               |    13|
-|248   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_287      |    12|
-|249   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_288       |     8|
-|250   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_289 |     6|
-|251   |              \N_DDR_MODE.G_NMU[10].U_M                                     |ltlib_v1_0_0_match__parameterized4               |    15|
-|252   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_284      |    14|
-|253   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_285       |     8|
-|254   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_286 |     6|
-|255   |              \N_DDR_MODE.G_NMU[11].U_M                                     |ltlib_v1_0_0_match__parameterized4_0             |    15|
-|256   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_281      |    14|
-|257   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_282       |     8|
-|258   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_283 |     6|
-|259   |              \N_DDR_MODE.G_NMU[12].U_M                                     |ltlib_v1_0_0_match__parameterized0_1             |    13|
-|260   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_278      |    12|
-|261   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_279       |     8|
-|262   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_280 |     6|
-|263   |              \N_DDR_MODE.G_NMU[13].U_M                                     |ltlib_v1_0_0_match__parameterized2               |    11|
-|264   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_275      |    10|
-|265   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_276       |     8|
-|266   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_277 |     6|
-|267   |              \N_DDR_MODE.G_NMU[14].U_M                                     |ltlib_v1_0_0_match__parameterized0_2             |    13|
-|268   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_272      |    12|
-|269   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_273       |     8|
-|270   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_274 |     6|
-|271   |              \N_DDR_MODE.G_NMU[15].U_M                                     |ltlib_v1_0_0_match__parameterized0_3             |    13|
-|272   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_269      |    12|
-|273   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_270       |     8|
-|274   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_271 |     6|
-|275   |              \N_DDR_MODE.G_NMU[16].U_M                                     |ltlib_v1_0_0_match__parameterized5               |   172|
-|276   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized5_259      |   171|
-|277   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized2_260       |    43|
-|278   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_261                 |     5|
-|279   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_262                 |     5|
-|280   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_263                 |     5|
-|281   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_264                 |     5|
-|282   |                    \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_265                 |     5|
-|283   |                    \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_266                 |     5|
-|284   |                    \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_267                 |     5|
-|285   |                    \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_268 |     6|
-|286   |              \N_DDR_MODE.G_NMU[17].U_M                                     |ltlib_v1_0_0_match__parameterized2_4             |    11|
-|287   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_256      |    10|
-|288   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_257       |     8|
-|289   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_258 |     6|
-|290   |              \N_DDR_MODE.G_NMU[18].U_M                                     |ltlib_v1_0_0_match__parameterized0_5             |    13|
-|291   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_253      |    12|
-|292   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_254       |     8|
-|293   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_255 |     6|
-|294   |              \N_DDR_MODE.G_NMU[19].U_M                                     |ltlib_v1_0_0_match__parameterized5_6             |   172|
-|295   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized5          |   171|
-|296   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized2           |    43|
-|297   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_245                 |     5|
-|298   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_246                 |     5|
-|299   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_247                 |     5|
-|300   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_248                 |     5|
-|301   |                    \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_249                 |     5|
-|302   |                    \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_250                 |     5|
-|303   |                    \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_251                 |     5|
-|304   |                    \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_252 |     6|
-|305   |              \N_DDR_MODE.G_NMU[1].U_M                                      |ltlib_v1_0_0_match__parameterized1               |    88|
-|306   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_239      |    87|
-|307   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_240       |    23|
-|308   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_241                 |     5|
-|309   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_242                 |     5|
-|310   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_243                 |     5|
-|311   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_244 |     6|
-|312   |              \N_DDR_MODE.G_NMU[20].U_M                                     |ltlib_v1_0_0_match__parameterized2_7             |    11|
-|313   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_236      |    10|
-|314   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_237       |     8|
-|315   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_238 |     6|
-|316   |              \N_DDR_MODE.G_NMU[21].U_M                                     |ltlib_v1_0_0_match__parameterized6               |    25|
-|317   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized6          |    24|
-|318   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_234       |     8|
-|319   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_235 |     6|
-|320   |              \N_DDR_MODE.G_NMU[22].U_M                                     |ltlib_v1_0_0_match__parameterized0_8             |    13|
-|321   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_231      |    12|
-|322   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_232       |     8|
-|323   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_233 |     6|
-|324   |              \N_DDR_MODE.G_NMU[23].U_M                                     |ltlib_v1_0_0_match__parameterized4_9             |    15|
-|325   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_228      |    14|
-|326   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_229       |     8|
-|327   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_230 |     6|
-|328   |              \N_DDR_MODE.G_NMU[24].U_M                                     |ltlib_v1_0_0_match__parameterized0_10            |    13|
-|329   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_225      |    12|
-|330   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_226       |     8|
-|331   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_227 |     6|
-|332   |              \N_DDR_MODE.G_NMU[25].U_M                                     |ltlib_v1_0_0_match__parameterized0_11            |    13|
-|333   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_222      |    12|
-|334   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_223       |     8|
-|335   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_224 |     6|
-|336   |              \N_DDR_MODE.G_NMU[26].U_M                                     |ltlib_v1_0_0_match__parameterized4_12            |    15|
-|337   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_219      |    14|
-|338   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_220       |     8|
-|339   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_221 |     6|
-|340   |              \N_DDR_MODE.G_NMU[27].U_M                                     |ltlib_v1_0_0_match__parameterized0_13            |    13|
-|341   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_216      |    12|
-|342   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_217       |     8|
-|343   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_218 |     6|
-|344   |              \N_DDR_MODE.G_NMU[28].U_M                                     |ltlib_v1_0_0_match__parameterized1_14            |    88|
-|345   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_210      |    87|
-|346   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_211       |    23|
-|347   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_212                 |     5|
-|348   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_213                 |     5|
-|349   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_214                 |     5|
-|350   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_215 |     6|
-|351   |              \N_DDR_MODE.G_NMU[29].U_M                                     |ltlib_v1_0_0_match__parameterized0_15            |    13|
-|352   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_207      |    12|
-|353   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_208       |     8|
-|354   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_209 |     6|
-|355   |              \N_DDR_MODE.G_NMU[2].U_M                                      |ltlib_v1_0_0_match__parameterized2_16            |    11|
-|356   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_204      |    10|
-|357   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_205       |     8|
-|358   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_206 |     6|
-|359   |              \N_DDR_MODE.G_NMU[30].U_M                                     |ltlib_v1_0_0_match__parameterized3               |    17|
-|360   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_201      |    16|
-|361   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_202       |     8|
-|362   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_203 |     6|
-|363   |              \N_DDR_MODE.G_NMU[31].U_M                                     |ltlib_v1_0_0_match__parameterized7               |    38|
-|364   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_197      |    37|
-|365   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_198       |    13|
-|366   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_199                 |     5|
-|367   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_200 |     6|
-|368   |              \N_DDR_MODE.G_NMU[32].U_M                                     |ltlib_v1_0_0_match__parameterized3_17            |    17|
-|369   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_194      |    16|
-|370   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_195       |     8|
-|371   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_196 |     6|
-|372   |              \N_DDR_MODE.G_NMU[33].U_M                                     |ltlib_v1_0_0_match__parameterized0_18            |    13|
-|373   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_191      |    12|
-|374   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_192       |     8|
-|375   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_193 |     6|
-|376   |              \N_DDR_MODE.G_NMU[34].U_M                                     |ltlib_v1_0_0_match__parameterized4_19            |    15|
-|377   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_188      |    14|
-|378   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_189       |     8|
-|379   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_190 |     6|
-|380   |              \N_DDR_MODE.G_NMU[35].U_M                                     |ltlib_v1_0_0_match__parameterized3_20            |    17|
-|381   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_185      |    16|
-|382   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_186       |     8|
-|383   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_187 |     6|
-|384   |              \N_DDR_MODE.G_NMU[36].U_M                                     |ltlib_v1_0_0_match__parameterized4_21            |    15|
-|385   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_182      |    14|
-|386   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_183       |     8|
-|387   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_184 |     6|
-|388   |              \N_DDR_MODE.G_NMU[37].U_M                                     |ltlib_v1_0_0_match__parameterized0_22            |    13|
-|389   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_179      |    12|
-|390   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_180       |     8|
-|391   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_181 |     6|
-|392   |              \N_DDR_MODE.G_NMU[38].U_M                                     |ltlib_v1_0_0_match__parameterized1_23            |    88|
-|393   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_173      |    87|
-|394   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_174       |    23|
-|395   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_175                 |     5|
-|396   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_176                 |     5|
-|397   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_177                 |     5|
-|398   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_178 |     6|
-|399   |              \N_DDR_MODE.G_NMU[39].U_M                                     |ltlib_v1_0_0_match__parameterized0_24            |    13|
-|400   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_170      |    12|
-|401   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_171       |     8|
-|402   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_172 |     6|
-|403   |              \N_DDR_MODE.G_NMU[3].U_M                                      |ltlib_v1_0_0_match__parameterized3_25            |    17|
-|404   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_167      |    16|
-|405   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_168       |     8|
-|406   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_169 |     6|
-|407   |              \N_DDR_MODE.G_NMU[40].U_M                                     |ltlib_v1_0_0_match__parameterized3_26            |    17|
-|408   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_164      |    16|
-|409   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_165       |     8|
-|410   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_166 |     6|
-|411   |              \N_DDR_MODE.G_NMU[41].U_M                                     |ltlib_v1_0_0_match__parameterized7_27            |    38|
-|412   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_160      |    37|
-|413   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_161       |    13|
-|414   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_162                 |     5|
-|415   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_163 |     6|
-|416   |              \N_DDR_MODE.G_NMU[42].U_M                                     |ltlib_v1_0_0_match__parameterized3_28            |    17|
-|417   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_157      |    16|
-|418   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_158       |     8|
-|419   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_159 |     6|
-|420   |              \N_DDR_MODE.G_NMU[43].U_M                                     |ltlib_v1_0_0_match__parameterized0_29            |    13|
-|421   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_154      |    12|
-|422   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_155       |     8|
-|423   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_156 |     6|
-|424   |              \N_DDR_MODE.G_NMU[44].U_M                                     |ltlib_v1_0_0_match__parameterized4_30            |    15|
-|425   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_151      |    14|
-|426   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_152       |     8|
-|427   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_153 |     6|
-|428   |              \N_DDR_MODE.G_NMU[45].U_M                                     |ltlib_v1_0_0_match__parameterized3_31            |    17|
-|429   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_148      |    16|
-|430   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_149       |     8|
-|431   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_150 |     6|
-|432   |              \N_DDR_MODE.G_NMU[46].U_M                                     |ltlib_v1_0_0_match__parameterized4_32            |    15|
-|433   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_145      |    14|
-|434   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_146       |     8|
-|435   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_147 |     6|
-|436   |              \N_DDR_MODE.G_NMU[47].U_M                                     |ltlib_v1_0_0_match__parameterized0_33            |    13|
-|437   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_142      |    12|
-|438   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_143       |     8|
-|439   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_144 |     6|
-|440   |              \N_DDR_MODE.G_NMU[48].U_M                                     |ltlib_v1_0_0_match__parameterized7_34            |    38|
-|441   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_138      |    37|
-|442   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_139       |    13|
-|443   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_140                 |     5|
-|444   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_141 |     6|
-|445   |              \N_DDR_MODE.G_NMU[49].U_M                                     |ltlib_v1_0_0_match__parameterized0_35            |    13|
-|446   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_135      |    12|
-|447   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_136       |     8|
-|448   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_137 |     6|
-|449   |              \N_DDR_MODE.G_NMU[4].U_M                                      |ltlib_v1_0_0_match__parameterized4_36            |    15|
-|450   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_132      |    14|
-|451   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_133       |     8|
-|452   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_134 |     6|
-|453   |              \N_DDR_MODE.G_NMU[50].U_M                                     |ltlib_v1_0_0_match__parameterized0_37            |    13|
-|454   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_129      |    12|
-|455   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_130       |     8|
-|456   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_131 |     6|
-|457   |              \N_DDR_MODE.G_NMU[51].U_M                                     |ltlib_v1_0_0_match__parameterized1_38            |    88|
-|458   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_123      |    87|
-|459   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_124       |    23|
-|460   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_125                 |     5|
-|461   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_126                 |     5|
-|462   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_127                 |     5|
-|463   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_128 |     6|
-|464   |              \N_DDR_MODE.G_NMU[52].U_M                                     |ltlib_v1_0_0_match__parameterized7_39            |    38|
-|465   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_119      |    37|
-|466   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_120       |    13|
-|467   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_121                 |     5|
-|468   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_122 |     6|
-|469   |              \N_DDR_MODE.G_NMU[53].U_M                                     |ltlib_v1_0_0_match__parameterized0_40            |    13|
-|470   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_116      |    12|
-|471   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_117       |     8|
-|472   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_118 |     6|
-|473   |              \N_DDR_MODE.G_NMU[54].U_M                                     |ltlib_v1_0_0_match__parameterized1_41            |    88|
-|474   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_110      |    87|
-|475   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_111       |    23|
-|476   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_112                 |     5|
-|477   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_113                 |     5|
-|478   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_114                 |     5|
-|479   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_115 |     6|
-|480   |              \N_DDR_MODE.G_NMU[55].U_M                                     |ltlib_v1_0_0_match__parameterized7_42            |    38|
-|481   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7          |    37|
-|482   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3           |    13|
-|483   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_108                 |     5|
-|484   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_109 |     6|
-|485   |              \N_DDR_MODE.G_NMU[56].U_M                                     |ltlib_v1_0_0_match__parameterized3_43            |    17|
-|486   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_105      |    16|
-|487   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_106       |     8|
-|488   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_107 |     6|
-|489   |              \N_DDR_MODE.G_NMU[57].U_M                                     |ltlib_v1_0_0_match__parameterized0_44            |    13|
-|490   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_102      |    12|
-|491   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_103       |     8|
-|492   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_104 |     6|
-|493   |              \N_DDR_MODE.G_NMU[58].U_M                                     |ltlib_v1_0_0_match__parameterized4_45            |    15|
-|494   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_99       |    14|
-|495   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_100       |     8|
-|496   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_101 |     6|
-|497   |              \N_DDR_MODE.G_NMU[59].U_M                                     |ltlib_v1_0_0_match__parameterized0_46            |    13|
-|498   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_96       |    12|
-|499   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_97        |     8|
-|500   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_98  |     6|
-|501   |              \N_DDR_MODE.G_NMU[5].U_M                                      |ltlib_v1_0_0_match__parameterized4_47            |    15|
-|502   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_93       |    14|
-|503   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_94        |     8|
-|504   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_95  |     6|
-|505   |              \N_DDR_MODE.G_NMU[60].U_M                                     |ltlib_v1_0_0_match__parameterized0_48            |    13|
-|506   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_90       |    12|
-|507   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_91        |     8|
-|508   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_92  |     6|
-|509   |              \N_DDR_MODE.G_NMU[61].U_M                                     |ltlib_v1_0_0_match__parameterized4_49            |    15|
-|510   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4          |    14|
-|511   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_88        |     8|
-|512   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_89  |     6|
-|513   |              \N_DDR_MODE.G_NMU[62].U_M                                     |ltlib_v1_0_0_match__parameterized1_50            |    88|
-|514   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_82       |    87|
-|515   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_83        |    23|
-|516   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_84                  |     5|
-|517   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_85                  |     5|
-|518   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_86                  |     5|
-|519   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_87  |     6|
-|520   |              \N_DDR_MODE.G_NMU[63].U_M                                     |ltlib_v1_0_0_match__parameterized3_51            |    17|
-|521   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_79       |    16|
-|522   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_80        |     8|
-|523   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_81  |     6|
-|524   |              \N_DDR_MODE.G_NMU[64].U_M                                     |ltlib_v1_0_0_match__parameterized2_52            |    11|
-|525   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_76       |    10|
-|526   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_77        |     8|
-|527   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_78  |     6|
-|528   |              \N_DDR_MODE.G_NMU[65].U_M                                     |ltlib_v1_0_0_match__parameterized2_53            |    11|
-|529   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_73       |    10|
-|530   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_74        |     8|
-|531   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_75  |     6|
-|532   |              \N_DDR_MODE.G_NMU[66].U_M                                     |ltlib_v1_0_0_match__parameterized2_54            |    11|
-|533   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_70       |    10|
-|534   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_71        |     8|
-|535   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_72  |     6|
-|536   |              \N_DDR_MODE.G_NMU[67].U_M                                     |ltlib_v1_0_0_match__parameterized2_55            |    11|
-|537   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_67       |    10|
-|538   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_68        |     8|
-|539   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_69  |     6|
-|540   |              \N_DDR_MODE.G_NMU[6].U_M                                      |ltlib_v1_0_0_match__parameterized0_56            |    13|
-|541   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0          |    12|
-|542   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_65        |     8|
-|543   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_66  |     6|
-|544   |              \N_DDR_MODE.G_NMU[7].U_M                                      |ltlib_v1_0_0_match__parameterized1_57            |    88|
-|545   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1          |    87|
-|546   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1           |    23|
-|547   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice                     |     5|
-|548   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_62                  |     5|
-|549   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_63                  |     5|
-|550   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_64  |     6|
-|551   |              \N_DDR_MODE.G_NMU[8].U_M                                      |ltlib_v1_0_0_match__parameterized2_58            |    11|
-|552   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2          |    10|
-|553   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_60        |     8|
-|554   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_61  |     6|
-|555   |              \N_DDR_MODE.G_NMU[9].U_M                                      |ltlib_v1_0_0_match__parameterized3_59            |    17|
-|556   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3          |    16|
-|557   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0           |     8|
-|558   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0     |     6|
-|559   |          xsdb_memory_read_inst                                             |ltlib_v1_0_0_generic_memrd                       |   852|
-|560   |    slot_0_ar                                                               |bd_f60c_slot_0_ar_0                              |     0|
-|561   |    slot_0_aw                                                               |bd_f60c_slot_0_aw_0                              |     0|
-|562   |    slot_0_b                                                                |bd_f60c_slot_0_b_0                               |     0|
-|563   |    slot_0_r                                                                |bd_f60c_slot_0_r_0                               |     0|
-|564   |    slot_0_w                                                                |bd_f60c_slot_0_w_0                               |     0|
-|565   |    slot_1_ar                                                               |bd_f60c_slot_1_ar_0                              |     0|
-|566   |    slot_1_aw                                                               |bd_f60c_slot_1_aw_0                              |     0|
-|567   |    slot_1_b                                                                |bd_f60c_slot_1_b_0                               |     0|
-|568   |    slot_1_r                                                                |bd_f60c_slot_1_r_0                               |     0|
-|569   |    slot_1_w                                                                |bd_f60c_slot_1_w_0                               |     0|
-|570   |    slot_2_apcs                                                             |bd_f60c_slot_2_apcs_0                            |   198|
-|571   |      inst                                                                  |axis_protocol_checker_v2_0_2_top                 |   198|
-|572   |        PC                                                                  |axis_protocol_checker_v2_0_2_asr_inline          |    91|
+|83    |                    \ramloop[3].ram.r                                       |blk_mem_gen_prim_width__parameterized31          |     1|
+|84    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized31        |     1|
+|85    |                    \ramloop[4].ram.r                                       |blk_mem_gen_prim_width__parameterized32          |     1|
+|86    |                      \prim_noinit.ram                                      |blk_mem_gen_prim_wrapper__parameterized32        |     1|
+|87    |          u_ila_cap_ctrl                                                    |ila_v6_2_8_ila_cap_ctrl_legacy                   |   287|
+|88    |            U_CDONE                                                         |ltlib_v1_0_0_cfglut6__parameterized0             |     5|
+|89    |            U_NS0                                                           |ltlib_v1_0_0_cfglut7                             |     6|
+|90    |            U_NS1                                                           |ltlib_v1_0_0_cfglut7_324                         |     6|
+|91    |            u_cap_addrgen                                                   |ila_v6_2_8_ila_cap_addrgen                       |   265|
+|92    |              U_CMPRESET                                                    |ltlib_v1_0_0_cfglut6                             |     3|
+|93    |              u_cap_sample_counter                                          |ila_v6_2_8_ila_cap_sample_counter                |    65|
+|94    |                U_SCE                                                       |ltlib_v1_0_0_cfglut4_331                         |     1|
+|95    |                U_SCMPCE                                                    |ltlib_v1_0_0_cfglut5_332                         |     1|
+|96    |                U_SCRST                                                     |ltlib_v1_0_0_cfglut6_333                         |     5|
+|97    |                u_scnt_cmp                                                  |ltlib_v1_0_0_match_nodelay_334                   |    23|
+|98    |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay_335              |    23|
+|99    |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4_336       |    12|
+|100   |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1_337 |     5|
+|101   |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2_338 |     5|
+|102   |              u_cap_window_counter                                          |ila_v6_2_8_ila_cap_window_counter                |    63|
+|103   |                U_WCE                                                       |ltlib_v1_0_0_cfglut4                             |     1|
+|104   |                U_WHCMPCE                                                   |ltlib_v1_0_0_cfglut5                             |     1|
+|105   |                U_WLCMPCE                                                   |ltlib_v1_0_0_cfglut5_325                         |     1|
+|106   |                u_wcnt_hcmp                                                 |ltlib_v1_0_0_match_nodelay                       |    12|
+|107   |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay_327              |    12|
+|108   |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4_328       |    12|
+|109   |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1_329 |     5|
+|110   |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2_330 |     5|
+|111   |                u_wcnt_lcmp                                                 |ltlib_v1_0_0_match_nodelay_326                   |    23|
+|112   |                  \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst  |ltlib_v1_0_0_allx_typeA_nodelay                  |    23|
+|113   |                    DUT                                                     |ltlib_v1_0_0_all_typeA__parameterized4           |    12|
+|114   |                      \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized1     |     5|
+|115   |                      \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE         |ltlib_v1_0_0_all_typeA_slice__parameterized2     |     5|
+|116   |          u_ila_regs                                                        |ila_v6_2_8_ila_register                          |  6841|
+|117   |            U_XSDB_SLAVE                                                    |xsdbs_v1_0_2_xsdbs                               |   302|
+|118   |            reg_890                                                         |xsdbs_v1_0_2_reg__parameterized178               |    16|
+|119   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_323                        |    16|
+|120   |            \MU_SRL[0].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s                             |    74|
+|121   |            \MU_SRL[10].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized9             |    74|
+|122   |            \MU_SRL[11].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized10            |   106|
+|123   |            \MU_SRL[12].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized11            |    74|
+|124   |            \MU_SRL[13].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized12            |    74|
+|125   |            \MU_SRL[14].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized13            |    74|
+|126   |            \MU_SRL[15].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized14            |    90|
+|127   |            \MU_SRL[16].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized15            |    74|
+|128   |            \MU_SRL[17].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized16            |    74|
+|129   |            \MU_SRL[18].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized17            |    74|
+|130   |            \MU_SRL[19].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized18            |   122|
+|131   |            \MU_SRL[1].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized0             |    74|
+|132   |            \MU_SRL[20].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized19            |    74|
+|133   |            \MU_SRL[21].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized20            |    74|
+|134   |            \MU_SRL[22].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized21            |    74|
+|135   |            \MU_SRL[23].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized22            |    90|
+|136   |            \MU_SRL[24].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized23            |    74|
+|137   |            \MU_SRL[25].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized24            |    74|
+|138   |            \MU_SRL[26].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized25            |    74|
+|139   |            \MU_SRL[27].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized26            |   106|
+|140   |            \MU_SRL[28].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized27            |    74|
+|141   |            \MU_SRL[29].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized28            |    74|
+|142   |            \MU_SRL[2].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized1             |    74|
+|143   |            \MU_SRL[30].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized29            |    74|
+|144   |            \MU_SRL[31].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized30            |    90|
+|145   |            \MU_SRL[32].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized31            |    74|
+|146   |            \MU_SRL[33].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized32            |    74|
+|147   |            \MU_SRL[34].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized33            |    74|
+|148   |            \MU_SRL[35].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized34            |   122|
+|149   |            \MU_SRL[36].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized35            |    74|
+|150   |            \MU_SRL[37].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized36            |    74|
+|151   |            \MU_SRL[38].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized37            |    74|
+|152   |            \MU_SRL[39].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized38            |    90|
+|153   |            \MU_SRL[3].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized2             |   122|
+|154   |            \MU_SRL[40].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized39            |    74|
+|155   |            \MU_SRL[41].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized40            |    74|
+|156   |            \MU_SRL[42].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized41            |    74|
+|157   |            \MU_SRL[43].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized42            |   106|
+|158   |            \MU_SRL[44].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized43            |    74|
+|159   |            \MU_SRL[45].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized44            |    74|
+|160   |            \MU_SRL[46].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized45            |    74|
+|161   |            \MU_SRL[47].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized46            |    90|
+|162   |            \MU_SRL[48].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized47            |    74|
+|163   |            \MU_SRL[49].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized48            |    74|
+|164   |            \MU_SRL[4].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized3             |    74|
+|165   |            \MU_SRL[50].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized49            |    74|
+|166   |            \MU_SRL[51].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized50            |   154|
+|167   |            \MU_SRL[52].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized51            |    74|
+|168   |            \MU_SRL[53].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized52            |    74|
+|169   |            \MU_SRL[54].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized53            |    74|
+|170   |            \MU_SRL[55].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized54            |    90|
+|171   |            \MU_SRL[56].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized55            |    74|
+|172   |            \MU_SRL[57].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized56            |    74|
+|173   |            \MU_SRL[58].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized57            |    74|
+|174   |            \MU_SRL[59].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized58            |   106|
+|175   |            \MU_SRL[5].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized4             |    74|
+|176   |            \MU_SRL[60].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized59            |    74|
+|177   |            \MU_SRL[61].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized60            |    74|
+|178   |            \MU_SRL[62].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized61            |    74|
+|179   |            \MU_SRL[63].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized62            |    90|
+|180   |            \MU_SRL[64].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized63            |    74|
+|181   |            \MU_SRL[65].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized64            |    74|
+|182   |            \MU_SRL[66].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized65            |    74|
+|183   |            \MU_SRL[67].mu_srl_reg                                          |xsdbs_v1_0_2_reg_p2s__parameterized66            |    90|
+|184   |            \MU_SRL[6].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized5             |    74|
+|185   |            \MU_SRL[7].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized6             |    90|
+|186   |            \MU_SRL[8].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized7             |    74|
+|187   |            \MU_SRL[9].mu_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized8             |    74|
+|188   |            \TC_SRL[0].tc_srl_reg                                           |xsdbs_v1_0_2_reg_p2s__parameterized67            |    76|
+|189   |            reg_15                                                          |xsdbs_v1_0_2_reg__parameterized160               |    50|
+|190   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_322                         |    50|
+|191   |            reg_16                                                          |xsdbs_v1_0_2_reg__parameterized161               |    17|
+|192   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_321                         |    17|
+|193   |            reg_17                                                          |xsdbs_v1_0_2_reg__parameterized162               |    20|
+|194   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_320                         |    20|
+|195   |            reg_18                                                          |xsdbs_v1_0_2_reg__parameterized163               |    34|
+|196   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_319                         |    34|
+|197   |            reg_19                                                          |xsdbs_v1_0_2_reg__parameterized164               |    18|
+|198   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_318                         |    18|
+|199   |            reg_1a                                                          |xsdbs_v1_0_2_reg__parameterized165               |    18|
+|200   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1_317         |    18|
+|201   |            reg_6                                                           |xsdbs_v1_0_2_reg__parameterized145               |    28|
+|202   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_316                         |    28|
+|203   |            reg_7                                                           |xsdbs_v1_0_2_reg__parameterized146               |    31|
+|204   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized0             |    31|
+|205   |            reg_8                                                           |xsdbs_v1_0_2_reg__parameterized147               |     5|
+|206   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_315                        |     5|
+|207   |            reg_80                                                          |xsdbs_v1_0_2_reg__parameterized166               |    17|
+|208   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1_314         |    17|
+|209   |            reg_81                                                          |xsdbs_v1_0_2_reg__parameterized167               |    17|
+|210   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_313                         |    17|
+|211   |            reg_82                                                          |xsdbs_v1_0_2_reg__parameterized168               |    17|
+|212   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl__parameterized1             |    17|
+|213   |            reg_83                                                          |xsdbs_v1_0_2_reg__parameterized169               |    34|
+|214   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_312                         |    34|
+|215   |            reg_84                                                          |xsdbs_v1_0_2_reg__parameterized170               |    65|
+|216   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_311                         |    65|
+|217   |            reg_85                                                          |xsdbs_v1_0_2_reg__parameterized171               |    20|
+|218   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl_310                         |    20|
+|219   |            reg_887                                                         |xsdbs_v1_0_2_reg__parameterized173               |     4|
+|220   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_309                        |     4|
+|221   |            reg_88d                                                         |xsdbs_v1_0_2_reg__parameterized175               |     8|
+|222   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_308                        |     8|
+|223   |            reg_9                                                           |xsdbs_v1_0_2_reg__parameterized148               |    22|
+|224   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat_307                        |    22|
+|225   |            reg_srl_fff                                                     |xsdbs_v1_0_2_reg_p2s__parameterized68            |    95|
+|226   |            reg_stream_ffd                                                  |xsdbs_v1_0_2_reg_stream                          |    19|
+|227   |              \I_EN_CTL_EQ1.U_CTL                                           |xsdbs_v1_0_2_reg_ctl                             |    19|
+|228   |            reg_stream_ffe                                                  |xsdbs_v1_0_2_reg_stream__parameterized0          |    38|
+|229   |              \I_EN_STAT_EQ1.U_STAT                                         |xsdbs_v1_0_2_reg_stat                            |    38|
+|230   |          u_ila_reset_ctrl                                                  |ila_v6_2_8_ila_reset_ctrl                        |    46|
+|231   |            arm_detection_inst                                              |ltlib_v1_0_0_rising_edge_detection               |     5|
+|232   |            \asyncrounous_transfer.arm_in_transfer_inst                     |ltlib_v1_0_0_async_edge_xfer                     |     7|
+|233   |            \asyncrounous_transfer.arm_out_transfer_inst                    |ltlib_v1_0_0_async_edge_xfer_303                 |     6|
+|234   |            \asyncrounous_transfer.halt_in_transfer_inst                    |ltlib_v1_0_0_async_edge_xfer_304                 |     7|
+|235   |            \asyncrounous_transfer.halt_out_transfer_inst                   |ltlib_v1_0_0_async_edge_xfer_305                 |     6|
+|236   |            halt_detection_inst                                             |ltlib_v1_0_0_rising_edge_detection_306           |     6|
+|237   |          u_trig                                                            |ila_v6_2_8_ila_trigger                           |  2121|
+|238   |            \N_DDR_TC.N_DDR_TC_INST[0].U_TC                                 |ltlib_v1_0_0_match                               |   118|
+|239   |              \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst      |ltlib_v1_0_0_allx_typeA                          |   116|
+|240   |                DUT                                                         |ltlib_v1_0_0_all_typeA                           |    48|
+|241   |                  \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_294                 |     5|
+|242   |                  \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_295                 |     5|
+|243   |                  \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_296                 |     5|
+|244   |                  \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_297                 |     5|
+|245   |                  \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_298                 |     5|
+|246   |                  \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_299                 |     5|
+|247   |                  \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_300                 |     5|
+|248   |                  \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice_301                 |     5|
+|249   |                  \I_WHOLE_SLICE.G_SLICE_IDX[8].U_ALL_SRL_SLICE             |ltlib_v1_0_0_all_typeA_slice__parameterized0_302 |     6|
+|250   |            U_TM                                                            |ila_v6_2_8_ila_trig_match                        |  2002|
+|251   |              \N_DDR_MODE.G_NMU[0].U_M                                      |ltlib_v1_0_0_match__parameterized0               |    13|
+|252   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_291      |    12|
+|253   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_292       |     8|
+|254   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_293 |     6|
+|255   |              \N_DDR_MODE.G_NMU[10].U_M                                     |ltlib_v1_0_0_match__parameterized4               |    15|
+|256   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_288      |    14|
+|257   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_289       |     8|
+|258   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_290 |     6|
+|259   |              \N_DDR_MODE.G_NMU[11].U_M                                     |ltlib_v1_0_0_match__parameterized4_0             |    15|
+|260   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_285      |    14|
+|261   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_286       |     8|
+|262   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_287 |     6|
+|263   |              \N_DDR_MODE.G_NMU[12].U_M                                     |ltlib_v1_0_0_match__parameterized0_1             |    13|
+|264   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_282      |    12|
+|265   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_283       |     8|
+|266   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_284 |     6|
+|267   |              \N_DDR_MODE.G_NMU[13].U_M                                     |ltlib_v1_0_0_match__parameterized2               |    11|
+|268   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_279      |    10|
+|269   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_280       |     8|
+|270   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_281 |     6|
+|271   |              \N_DDR_MODE.G_NMU[14].U_M                                     |ltlib_v1_0_0_match__parameterized0_2             |    13|
+|272   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_276      |    12|
+|273   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_277       |     8|
+|274   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_278 |     6|
+|275   |              \N_DDR_MODE.G_NMU[15].U_M                                     |ltlib_v1_0_0_match__parameterized0_3             |    13|
+|276   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_273      |    12|
+|277   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_274       |     8|
+|278   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_275 |     6|
+|279   |              \N_DDR_MODE.G_NMU[16].U_M                                     |ltlib_v1_0_0_match__parameterized5               |   172|
+|280   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized5_263      |   171|
+|281   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized2_264       |    43|
+|282   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_265                 |     5|
+|283   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_266                 |     5|
+|284   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_267                 |     5|
+|285   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_268                 |     5|
+|286   |                    \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_269                 |     5|
+|287   |                    \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_270                 |     5|
+|288   |                    \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_271                 |     5|
+|289   |                    \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_272 |     6|
+|290   |              \N_DDR_MODE.G_NMU[17].U_M                                     |ltlib_v1_0_0_match__parameterized2_4             |    11|
+|291   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_260      |    10|
+|292   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_261       |     8|
+|293   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_262 |     6|
+|294   |              \N_DDR_MODE.G_NMU[18].U_M                                     |ltlib_v1_0_0_match__parameterized0_5             |    13|
+|295   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_257      |    12|
+|296   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_258       |     8|
+|297   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_259 |     6|
+|298   |              \N_DDR_MODE.G_NMU[19].U_M                                     |ltlib_v1_0_0_match__parameterized5_6             |   172|
+|299   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized5_247      |   171|
+|300   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized2_248       |    43|
+|301   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_249                 |     5|
+|302   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_250                 |     5|
+|303   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_251                 |     5|
+|304   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_252                 |     5|
+|305   |                    \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_253                 |     5|
+|306   |                    \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_254                 |     5|
+|307   |                    \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_255                 |     5|
+|308   |                    \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_256 |     6|
+|309   |              \N_DDR_MODE.G_NMU[1].U_M                                      |ltlib_v1_0_0_match__parameterized1               |    88|
+|310   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_241      |    87|
+|311   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_242       |    23|
+|312   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_243                 |     5|
+|313   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_244                 |     5|
+|314   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_245                 |     5|
+|315   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_246 |     6|
+|316   |              \N_DDR_MODE.G_NMU[20].U_M                                     |ltlib_v1_0_0_match__parameterized2_7             |    11|
+|317   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_238      |    10|
+|318   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_239       |     8|
+|319   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_240 |     6|
+|320   |              \N_DDR_MODE.G_NMU[21].U_M                                     |ltlib_v1_0_0_match__parameterized6               |    25|
+|321   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized6_235      |    24|
+|322   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_236       |     8|
+|323   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_237 |     6|
+|324   |              \N_DDR_MODE.G_NMU[22].U_M                                     |ltlib_v1_0_0_match__parameterized0_8             |    13|
+|325   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_232      |    12|
+|326   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_233       |     8|
+|327   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_234 |     6|
+|328   |              \N_DDR_MODE.G_NMU[23].U_M                                     |ltlib_v1_0_0_match__parameterized4_9             |    15|
+|329   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_229      |    14|
+|330   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_230       |     8|
+|331   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_231 |     6|
+|332   |              \N_DDR_MODE.G_NMU[24].U_M                                     |ltlib_v1_0_0_match__parameterized0_10            |    13|
+|333   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_226      |    12|
+|334   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_227       |     8|
+|335   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_228 |     6|
+|336   |              \N_DDR_MODE.G_NMU[25].U_M                                     |ltlib_v1_0_0_match__parameterized0_11            |    13|
+|337   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_223      |    12|
+|338   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_224       |     8|
+|339   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_225 |     6|
+|340   |              \N_DDR_MODE.G_NMU[26].U_M                                     |ltlib_v1_0_0_match__parameterized4_12            |    15|
+|341   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_220      |    14|
+|342   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_221       |     8|
+|343   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_222 |     6|
+|344   |              \N_DDR_MODE.G_NMU[27].U_M                                     |ltlib_v1_0_0_match__parameterized0_13            |    13|
+|345   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_217      |    12|
+|346   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_218       |     8|
+|347   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_219 |     6|
+|348   |              \N_DDR_MODE.G_NMU[28].U_M                                     |ltlib_v1_0_0_match__parameterized1_14            |    88|
+|349   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_211      |    87|
+|350   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_212       |    23|
+|351   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_213                 |     5|
+|352   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_214                 |     5|
+|353   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_215                 |     5|
+|354   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_216 |     6|
+|355   |              \N_DDR_MODE.G_NMU[29].U_M                                     |ltlib_v1_0_0_match__parameterized0_15            |    13|
+|356   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_208      |    12|
+|357   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_209       |     8|
+|358   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_210 |     6|
+|359   |              \N_DDR_MODE.G_NMU[2].U_M                                      |ltlib_v1_0_0_match__parameterized2_16            |    11|
+|360   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_205      |    10|
+|361   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_206       |     8|
+|362   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_207 |     6|
+|363   |              \N_DDR_MODE.G_NMU[30].U_M                                     |ltlib_v1_0_0_match__parameterized3               |    17|
+|364   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_202      |    16|
+|365   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_203       |     8|
+|366   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_204 |     6|
+|367   |              \N_DDR_MODE.G_NMU[31].U_M                                     |ltlib_v1_0_0_match__parameterized7               |    38|
+|368   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_198      |    37|
+|369   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_199       |    13|
+|370   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_200                 |     5|
+|371   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_201 |     6|
+|372   |              \N_DDR_MODE.G_NMU[32].U_M                                     |ltlib_v1_0_0_match__parameterized3_17            |    17|
+|373   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_195      |    16|
+|374   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_196       |     8|
+|375   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_197 |     6|
+|376   |              \N_DDR_MODE.G_NMU[33].U_M                                     |ltlib_v1_0_0_match__parameterized0_18            |    13|
+|377   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_192      |    12|
+|378   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_193       |     8|
+|379   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_194 |     6|
+|380   |              \N_DDR_MODE.G_NMU[34].U_M                                     |ltlib_v1_0_0_match__parameterized4_19            |    15|
+|381   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_189      |    14|
+|382   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_190       |     8|
+|383   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_191 |     6|
+|384   |              \N_DDR_MODE.G_NMU[35].U_M                                     |ltlib_v1_0_0_match__parameterized3_20            |    17|
+|385   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_186      |    16|
+|386   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_187       |     8|
+|387   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_188 |     6|
+|388   |              \N_DDR_MODE.G_NMU[36].U_M                                     |ltlib_v1_0_0_match__parameterized4_21            |    15|
+|389   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_183      |    14|
+|390   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_184       |     8|
+|391   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_185 |     6|
+|392   |              \N_DDR_MODE.G_NMU[37].U_M                                     |ltlib_v1_0_0_match__parameterized0_22            |    13|
+|393   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_180      |    12|
+|394   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_181       |     8|
+|395   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_182 |     6|
+|396   |              \N_DDR_MODE.G_NMU[38].U_M                                     |ltlib_v1_0_0_match__parameterized1_23            |    88|
+|397   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_174      |    87|
+|398   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_175       |    23|
+|399   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_176                 |     5|
+|400   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_177                 |     5|
+|401   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_178                 |     5|
+|402   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_179 |     6|
+|403   |              \N_DDR_MODE.G_NMU[39].U_M                                     |ltlib_v1_0_0_match__parameterized0_24            |    13|
+|404   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_171      |    12|
+|405   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_172       |     8|
+|406   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_173 |     6|
+|407   |              \N_DDR_MODE.G_NMU[3].U_M                                      |ltlib_v1_0_0_match__parameterized3_25            |    17|
+|408   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_168      |    16|
+|409   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_169       |     8|
+|410   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_170 |     6|
+|411   |              \N_DDR_MODE.G_NMU[40].U_M                                     |ltlib_v1_0_0_match__parameterized3_26            |    17|
+|412   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_165      |    16|
+|413   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_166       |     8|
+|414   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_167 |     6|
+|415   |              \N_DDR_MODE.G_NMU[41].U_M                                     |ltlib_v1_0_0_match__parameterized7_27            |    38|
+|416   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_161      |    37|
+|417   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_162       |    13|
+|418   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_163                 |     5|
+|419   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_164 |     6|
+|420   |              \N_DDR_MODE.G_NMU[42].U_M                                     |ltlib_v1_0_0_match__parameterized3_28            |    17|
+|421   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_158      |    16|
+|422   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_159       |     8|
+|423   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_160 |     6|
+|424   |              \N_DDR_MODE.G_NMU[43].U_M                                     |ltlib_v1_0_0_match__parameterized0_29            |    13|
+|425   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_155      |    12|
+|426   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_156       |     8|
+|427   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_157 |     6|
+|428   |              \N_DDR_MODE.G_NMU[44].U_M                                     |ltlib_v1_0_0_match__parameterized4_30            |    15|
+|429   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_152      |    14|
+|430   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_153       |     8|
+|431   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_154 |     6|
+|432   |              \N_DDR_MODE.G_NMU[45].U_M                                     |ltlib_v1_0_0_match__parameterized3_31            |    17|
+|433   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_149      |    16|
+|434   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_150       |     8|
+|435   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_151 |     6|
+|436   |              \N_DDR_MODE.G_NMU[46].U_M                                     |ltlib_v1_0_0_match__parameterized4_32            |    15|
+|437   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_146      |    14|
+|438   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_147       |     8|
+|439   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_148 |     6|
+|440   |              \N_DDR_MODE.G_NMU[47].U_M                                     |ltlib_v1_0_0_match__parameterized0_33            |    13|
+|441   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_143      |    12|
+|442   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_144       |     8|
+|443   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_145 |     6|
+|444   |              \N_DDR_MODE.G_NMU[48].U_M                                     |ltlib_v1_0_0_match__parameterized7_34            |    38|
+|445   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_139      |    37|
+|446   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_140       |    13|
+|447   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_141                 |     5|
+|448   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_142 |     6|
+|449   |              \N_DDR_MODE.G_NMU[49].U_M                                     |ltlib_v1_0_0_match__parameterized0_35            |    13|
+|450   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_136      |    12|
+|451   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_137       |     8|
+|452   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_138 |     6|
+|453   |              \N_DDR_MODE.G_NMU[4].U_M                                      |ltlib_v1_0_0_match__parameterized4_36            |    15|
+|454   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_133      |    14|
+|455   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_134       |     8|
+|456   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_135 |     6|
+|457   |              \N_DDR_MODE.G_NMU[50].U_M                                     |ltlib_v1_0_0_match__parameterized0_37            |    13|
+|458   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_130      |    12|
+|459   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_131       |     8|
+|460   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_132 |     6|
+|461   |              \N_DDR_MODE.G_NMU[51].U_M                                     |ltlib_v1_0_0_match__parameterized1_38            |    88|
+|462   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_124      |    87|
+|463   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_125       |    23|
+|464   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_126                 |     5|
+|465   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_127                 |     5|
+|466   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_128                 |     5|
+|467   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_129 |     6|
+|468   |              \N_DDR_MODE.G_NMU[52].U_M                                     |ltlib_v1_0_0_match__parameterized7_39            |    38|
+|469   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7_120      |    37|
+|470   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3_121       |    13|
+|471   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_122                 |     5|
+|472   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_123 |     6|
+|473   |              \N_DDR_MODE.G_NMU[53].U_M                                     |ltlib_v1_0_0_match__parameterized0_40            |    13|
+|474   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_117      |    12|
+|475   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_118       |     8|
+|476   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_119 |     6|
+|477   |              \N_DDR_MODE.G_NMU[54].U_M                                     |ltlib_v1_0_0_match__parameterized1_41            |    88|
+|478   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1_111      |    87|
+|479   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1_112       |    23|
+|480   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_113                 |     5|
+|481   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_114                 |     5|
+|482   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_115                 |     5|
+|483   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_116 |     6|
+|484   |              \N_DDR_MODE.G_NMU[55].U_M                                     |ltlib_v1_0_0_match__parameterized7_42            |    38|
+|485   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized7          |    37|
+|486   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized3           |    13|
+|487   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_109                 |     5|
+|488   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_110 |     6|
+|489   |              \N_DDR_MODE.G_NMU[56].U_M                                     |ltlib_v1_0_0_match__parameterized3_43            |    17|
+|490   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3_106      |    16|
+|491   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_107       |     8|
+|492   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_108 |     6|
+|493   |              \N_DDR_MODE.G_NMU[57].U_M                                     |ltlib_v1_0_0_match__parameterized0_44            |    13|
+|494   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_103      |    12|
+|495   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_104       |     8|
+|496   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_105 |     6|
+|497   |              \N_DDR_MODE.G_NMU[58].U_M                                     |ltlib_v1_0_0_match__parameterized4_45            |    15|
+|498   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_100      |    14|
+|499   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_101       |     8|
+|500   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_102 |     6|
+|501   |              \N_DDR_MODE.G_NMU[59].U_M                                     |ltlib_v1_0_0_match__parameterized0_46            |    13|
+|502   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_97       |    12|
+|503   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_98        |     8|
+|504   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_99  |     6|
+|505   |              \N_DDR_MODE.G_NMU[5].U_M                                      |ltlib_v1_0_0_match__parameterized4_47            |    15|
+|506   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4_94       |    14|
+|507   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_95        |     8|
+|508   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_96  |     6|
+|509   |              \N_DDR_MODE.G_NMU[60].U_M                                     |ltlib_v1_0_0_match__parameterized0_48            |    13|
+|510   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0_91       |    12|
+|511   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_92        |     8|
+|512   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_93  |     6|
+|513   |              \N_DDR_MODE.G_NMU[61].U_M                                     |ltlib_v1_0_0_match__parameterized4_49            |    15|
+|514   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized4          |    14|
+|515   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_89        |     8|
+|516   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_90  |     6|
+|517   |              \N_DDR_MODE.G_NMU[62].U_M                                     |ltlib_v1_0_0_match__parameterized5_50            |   172|
+|518   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized5          |   171|
+|519   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized2           |    43|
+|520   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_81                  |     5|
+|521   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_82                  |     5|
+|522   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_83                  |     5|
+|523   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_84                  |     5|
+|524   |                    \I_WHOLE_SLICE.G_SLICE_IDX[4].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_85                  |     5|
+|525   |                    \I_WHOLE_SLICE.G_SLICE_IDX[5].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_86                  |     5|
+|526   |                    \I_WHOLE_SLICE.G_SLICE_IDX[6].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_87                  |     5|
+|527   |                    \I_WHOLE_SLICE.G_SLICE_IDX[7].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_88  |     6|
+|528   |              \N_DDR_MODE.G_NMU[63].U_M                                     |ltlib_v1_0_0_match__parameterized6_51            |    25|
+|529   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized6          |    24|
+|530   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_79        |     8|
+|531   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_80  |     6|
+|532   |              \N_DDR_MODE.G_NMU[64].U_M                                     |ltlib_v1_0_0_match__parameterized2_52            |    11|
+|533   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_76       |    10|
+|534   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_77        |     8|
+|535   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_78  |     6|
+|536   |              \N_DDR_MODE.G_NMU[65].U_M                                     |ltlib_v1_0_0_match__parameterized2_53            |    11|
+|537   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_73       |    10|
+|538   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_74        |     8|
+|539   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_75  |     6|
+|540   |              \N_DDR_MODE.G_NMU[66].U_M                                     |ltlib_v1_0_0_match__parameterized2_54            |    11|
+|541   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_70       |    10|
+|542   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_71        |     8|
+|543   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_72  |     6|
+|544   |              \N_DDR_MODE.G_NMU[67].U_M                                     |ltlib_v1_0_0_match__parameterized2_55            |    11|
+|545   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2_67       |    10|
+|546   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_68        |     8|
+|547   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_69  |     6|
+|548   |              \N_DDR_MODE.G_NMU[6].U_M                                      |ltlib_v1_0_0_match__parameterized0_56            |    13|
+|549   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized0          |    12|
+|550   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_65        |     8|
+|551   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_66  |     6|
+|552   |              \N_DDR_MODE.G_NMU[7].U_M                                      |ltlib_v1_0_0_match__parameterized1_57            |    88|
+|553   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized1          |    87|
+|554   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized1           |    23|
+|555   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice                     |     5|
+|556   |                    \I_WHOLE_SLICE.G_SLICE_IDX[1].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_62                  |     5|
+|557   |                    \I_WHOLE_SLICE.G_SLICE_IDX[2].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice_63                  |     5|
+|558   |                    \I_WHOLE_SLICE.G_SLICE_IDX[3].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_64  |     6|
+|559   |              \N_DDR_MODE.G_NMU[8].U_M                                      |ltlib_v1_0_0_match__parameterized2_58            |    11|
+|560   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized2          |    10|
+|561   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0_60        |     8|
+|562   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0_61  |     6|
+|563   |              \N_DDR_MODE.G_NMU[9].U_M                                      |ltlib_v1_0_0_match__parameterized3_59            |    17|
+|564   |                \allx_typeA_match_detection.ltlib_v1_0_0_allx_typeA_inst    |ltlib_v1_0_0_allx_typeA__parameterized3          |    16|
+|565   |                  DUT                                                       |ltlib_v1_0_0_all_typeA__parameterized0           |     8|
+|566   |                    \I_WHOLE_SLICE.G_SLICE_IDX[0].U_ALL_SRL_SLICE           |ltlib_v1_0_0_all_typeA_slice__parameterized0     |     6|
+|567   |          xsdb_memory_read_inst                                             |ltlib_v1_0_0_generic_memrd                       |   953|
+|568   |    slot_0_ar                                                               |bd_f60c_slot_0_ar_0                              |     0|
+|569   |    slot_0_aw                                                               |bd_f60c_slot_0_aw_0                              |     0|
+|570   |    slot_0_b                                                                |bd_f60c_slot_0_b_0                               |     0|
+|571   |    slot_0_r                                                                |bd_f60c_slot_0_r_0                               |     0|
+|572   |    slot_0_w                                                                |bd_f60c_slot_0_w_0                               |     0|
+|573   |    slot_1_ar                                                               |bd_f60c_slot_1_ar_0                              |     0|
+|574   |    slot_1_aw                                                               |bd_f60c_slot_1_aw_0                              |     0|
+|575   |    slot_1_b                                                                |bd_f60c_slot_1_b_0                               |     0|
+|576   |    slot_1_r                                                                |bd_f60c_slot_1_r_0                               |     0|
+|577   |    slot_1_w                                                                |bd_f60c_slot_1_w_0                               |     0|
+|578   |    slot_2_apcs                                                             |bd_f60c_slot_2_apcs_0                            |   296|
+|579   |      inst                                                                  |axis_protocol_checker_v2_0_2_top                 |   296|
+|580   |        PC                                                                  |axis_protocol_checker_v2_0_2_asr_inline          |   153|
 +------+----------------------------------------------------------------------------+-------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:05:12 ; elapsed = 00:05:39 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Finished Writing Synthesis Report : Time (s): cpu = 00:05:15 ; elapsed = 00:05:46 . Memory (MB): peak = 1090.793 ; gain = 737.441
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 1158 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:28 ; elapsed = 00:05:15 . Memory (MB): peak = 1085.387 ; gain = 579.602
-Synthesis Optimization Complete : Time (s): cpu = 00:05:12 ; elapsed = 00:05:39 . Memory (MB): peak = 1085.387 ; gain = 731.688
+Synthesis finished with 0 errors, 0 critical warnings and 1162 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:27 ; elapsed = 00:05:23 . Memory (MB): peak = 1090.793 ; gain = 581.035
+Synthesis Optimization Complete : Time (s): cpu = 00:05:16 ; elapsed = 00:05:47 . Memory (MB): peak = 1090.793 ; gain = 737.441
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 1102 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 1162 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1085.387 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1090.793 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 564 instances were transformed.
-  CFGLUT5 => CFGLUT5 (SRLC32E, SRL16E): 492 instances
+  A total of 580 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRLC32E, SRL16E): 508 instances
   CFGLUT5 => SRLC32E: 72 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
 685 Infos, 215 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:05:21 ; elapsed = 00:05:48 . Memory (MB): peak = 1085.387 ; gain = 731.688
+synth_design: Time (s): cpu = 00:05:25 ; elapsed = 00:05:57 . Memory (MB): peak = 1090.793 ; gain = 737.441
 INFO: [Common 17-600] The following parameters have non-default value.
 tcl.collectionResultDisplayLimit
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 1085.387 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 1090.793 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/design_1_system_ila_0_0.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_system_ila_0_0, cache-ID = c25d84566c6d09d5
-INFO: [Coretcl 2-1174] Renamed 571 cell refs.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1085.387 ; gain = 0.000
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_system_ila_0_0, cache-ID = cf27783f5495a002
+INFO: [Coretcl 2-1174] Renamed 579 cell refs.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1090.793 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_system_ila_0_0_synth_1/design_1_system_ila_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_system_ila_0_0_utilization_synth.rpt -pb design_1_system_ila_0_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Jan  2 16:42:35 2020...
+INFO: [Common 17-206] Exiting Vivado at Thu Jan  2 23:17:53 2020...

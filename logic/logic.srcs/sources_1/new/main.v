@@ -70,7 +70,10 @@ wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_loc
 reg led_reg0 = 1;
 reg led_reg1 = 1;
 
+reg [63:0] adc_bus;
+
 design_1 (
+    .ADC_BUS(adc_bus),
     .FCLK_CLK0(clk_master_50)
 );
 
@@ -87,5 +90,11 @@ clk_wiz_0 (
     .locked(pll_locked),
     .clk_in1(clk_master_50)
 );
+
+always @(posedge clk_master_50) begin
+
+    adc_bus <= adc_bus + 1;
+
+end
 
 endmodule

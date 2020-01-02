@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date             : Thu Jan  2 16:47:35 2020
+| Date             : Thu Jan  2 23:23:00 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.459        |
+| Total On-Chip Power (W)  | 1.452        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.323        |
+| Dynamic (W)              | 1.316        |
 | Device Static (W)        | 0.136        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 68.2         |
@@ -52,21 +52,21 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.022 |        5 |       --- |             --- |
-| Slice Logic              |     0.003 |    21813 |       --- |             --- |
-|   LUT as Logic           |     0.002 |     6056 |     40600 |           14.92 |
-|   LUT as Shift Register  |    <0.001 |     1068 |     17400 |            6.14 |
-|   Register               |    <0.001 |    10720 |     81200 |           13.20 |
-|   CARRY4                 |    <0.001 |      354 |     13300 |            2.66 |
+| Clocks                   |     0.023 |        5 |       --- |             --- |
+| Slice Logic              |     0.002 |    22668 |       --- |             --- |
+|   LUT as Logic           |     0.001 |     6228 |     40600 |           15.34 |
+|   LUT as Shift Register  |    <0.001 |     1061 |     17400 |            6.10 |
+|   Register               |    <0.001 |    11247 |     81200 |           13.85 |
+|   CARRY4                 |    <0.001 |      337 |     13300 |            2.53 |
 |   LUT as Distributed RAM |    <0.001 |       46 |     17400 |            0.26 |
-|   F7/F8 Muxes            |    <0.001 |      303 |     53200 |            0.57 |
-|   Others                 |     0.000 |     1520 |       --- |             --- |
-| Signals                  |     0.005 |    15355 |       --- |             --- |
-| Block RAM                |     0.019 |     35.5 |       107 |           33.18 |
+|   F7/F8 Muxes            |    <0.001 |      377 |     53200 |            0.71 |
+|   Others                 |     0.000 |     1518 |       --- |             --- |
+| Signals                  |     0.005 |    16006 |       --- |             --- |
+| Block RAM                |     0.011 |     41.5 |       107 |           38.79 |
 | I/O                      |     0.000 |        2 |       125 |            1.60 |
 | PS7                      |     1.275 |        1 |       --- |             --- |
 | Static Power             |     0.136 |          |           |                 |
-| Total                    |     1.459 |          |           |                 |
+| Total                    |     1.452 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -76,7 +76,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.062 |       0.047 |      0.015 |
+| Vccint    |       1.000 |     0.056 |       0.041 |      0.015 |
 | Vccaux    |       1.800 |     0.014 |       0.000 |      0.014 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -139,7 +139,7 @@ Table of Contents
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
 | Clock                                                                                      | Domain                                                               | Constraint (ns) |
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
-| clk_fpga_0                                                                                 | nolabel_line73/processing_system7_0/inst/FCLK_CLK_unbuffered[0]      |            20.0 |
+| clk_fpga_0                                                                                 | nolabel_line75/processing_system7_0/inst/FCLK_CLK_unbuffered[0]      |            20.0 |
 | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/tck_bs |            33.0 |
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
 
@@ -153,20 +153,20 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| main                     |     1.323 |
+| main                     |     1.316 |
 |   dbg_hub                |     0.002 |
 |     inst                 |     0.002 |
 |       BSCANID.u_xsdbm_id |     0.002 |
-|   nolabel_line73         |     1.321 |
+|   nolabel_line75         |     1.314 |
 |     axi_dma              |     0.005 |
 |       U0                 |     0.005 |
 |     axi_interconnect_0   |     0.002 |
 |       s00_couplers       |     0.002 |
-|     axi_interconnect_1   |     0.002 |
+|     axi_interconnect_1   |     0.001 |
 |     processing_system7_0 |     1.276 |
 |       inst               |     1.276 |
-|     system_ila_0         |     0.036 |
-|       inst               |     0.036 |
+|     system_ila_0         |     0.029 |
+|       inst               |     0.029 |
 +--------------------------+-----------+
 
 

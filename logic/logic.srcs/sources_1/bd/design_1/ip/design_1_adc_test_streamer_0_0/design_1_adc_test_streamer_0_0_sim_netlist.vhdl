@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Thu Jan  2 16:35:33 2020
+-- Date        : Thu Jan  2 23:12:10 2020
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/design_1_adc_test_streamer_0_0_sim_netlist.vhdl
+--               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/design_1_adc_test_streamer_0_0_sim_netlist.vhdl
 -- Design      : design_1_adc_test_streamer_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -16,10 +16,11 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS is
   port (
-    m00_axis_tdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axis_tdata : out STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tvalid : out STD_LOGIC;
     m00_axis_aresetn : in STD_LOGIC;
     m00_axis_aclk : in STD_LOGIC;
+    adc_bus : in STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tready : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -34,77 +35,10 @@ architecture STRUCTURE of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_
   signal count : STD_LOGIC;
   signal \count[2]_i_1_n_0\ : STD_LOGIC;
   signal \count_reg__0\ : STD_LOGIC_VECTOR ( 4 downto 0 );
-  signal endless : STD_LOGIC;
-  signal \endless[0]_i_3_n_0\ : STD_LOGIC;
-  signal endless_reg : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal \endless_reg[0]_i_2_n_0\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_1\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_2\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_3\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_4\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_5\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_6\ : STD_LOGIC;
-  signal \endless_reg[0]_i_2_n_7\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[12]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[16]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[20]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[24]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[28]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[4]_i_1_n_7\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_0\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_1\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_2\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_3\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_4\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_5\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_6\ : STD_LOGIC;
-  signal \endless_reg[8]_i_1_n_7\ : STD_LOGIC;
   signal mst_exec_state : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal p_0_in : STD_LOGIC_VECTOR ( 4 downto 0 );
-  signal \stream_data_out[31]_i_1_n_0\ : STD_LOGIC;
+  signal \stream_data_out[63]_i_1_n_0\ : STD_LOGIC;
   signal tx_en : STD_LOGIC;
-  signal \NLW_endless_reg[28]_i_1_CO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 to 3 );
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \FSM_sequential_mst_exec_state[0]_i_1\ : label is "soft_lutpair1";
   attribute SOFT_HLUTNM of \FSM_sequential_mst_exec_state[1]_i_1\ : label is "soft_lutpair1";
@@ -252,7 +186,7 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
       CE => count,
       D => p_0_in(0),
       Q => \count_reg__0\(0),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \count_reg[1]\: unisim.vcomponents.FDRE
      port map (
@@ -260,7 +194,7 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
       CE => count,
       D => p_0_in(1),
       Q => \count_reg__0\(1),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \count_reg[2]\: unisim.vcomponents.FDRE
      port map (
@@ -268,7 +202,7 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
       CE => count,
       D => \count[2]_i_1_n_0\,
       Q => \count_reg__0\(2),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \count_reg[3]\: unisim.vcomponents.FDRE
      port map (
@@ -276,7 +210,7 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
       CE => count,
       D => p_0_in(3),
       Q => \count_reg__0\(3),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \count_reg[4]\: unisim.vcomponents.FDRE
      port map (
@@ -284,509 +218,17 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
       CE => count,
       D => p_0_in(4),
       Q => \count_reg__0\(4),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
-\endless[0]_i_1\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"0800"
-    )
-        port map (
-      I0 => m00_axis_aresetn,
-      I1 => mst_exec_state(1),
-      I2 => mst_exec_state(0),
-      I3 => m00_axis_tready,
-      O => endless
-    );
-\endless[0]_i_3\: unisim.vcomponents.LUT1
-    generic map(
-      INIT => X"1"
-    )
-        port map (
-      I0 => endless_reg(0),
-      O => \endless[0]_i_3_n_0\
-    );
-\endless_reg[0]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[0]_i_2_n_7\,
-      Q => endless_reg(0),
-      R => '0'
-    );
-\endless_reg[0]_i_2\: unisim.vcomponents.CARRY4
-     port map (
-      CI => '0',
-      CO(3) => \endless_reg[0]_i_2_n_0\,
-      CO(2) => \endless_reg[0]_i_2_n_1\,
-      CO(1) => \endless_reg[0]_i_2_n_2\,
-      CO(0) => \endless_reg[0]_i_2_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0001",
-      O(3) => \endless_reg[0]_i_2_n_4\,
-      O(2) => \endless_reg[0]_i_2_n_5\,
-      O(1) => \endless_reg[0]_i_2_n_6\,
-      O(0) => \endless_reg[0]_i_2_n_7\,
-      S(3 downto 1) => endless_reg(3 downto 1),
-      S(0) => \endless[0]_i_3_n_0\
-    );
-\endless_reg[10]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[8]_i_1_n_5\,
-      Q => endless_reg(10),
-      R => '0'
-    );
-\endless_reg[11]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[8]_i_1_n_4\,
-      Q => endless_reg(11),
-      R => '0'
-    );
-\endless_reg[12]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[12]_i_1_n_7\,
-      Q => endless_reg(12),
-      R => '0'
-    );
-\endless_reg[12]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[8]_i_1_n_0\,
-      CO(3) => \endless_reg[12]_i_1_n_0\,
-      CO(2) => \endless_reg[12]_i_1_n_1\,
-      CO(1) => \endless_reg[12]_i_1_n_2\,
-      CO(0) => \endless_reg[12]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[12]_i_1_n_4\,
-      O(2) => \endless_reg[12]_i_1_n_5\,
-      O(1) => \endless_reg[12]_i_1_n_6\,
-      O(0) => \endless_reg[12]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(15 downto 12)
-    );
-\endless_reg[13]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[12]_i_1_n_6\,
-      Q => endless_reg(13),
-      R => '0'
-    );
-\endless_reg[14]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[12]_i_1_n_5\,
-      Q => endless_reg(14),
-      R => '0'
-    );
-\endless_reg[15]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[12]_i_1_n_4\,
-      Q => endless_reg(15),
-      R => '0'
-    );
-\endless_reg[16]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[16]_i_1_n_7\,
-      Q => endless_reg(16),
-      R => '0'
-    );
-\endless_reg[16]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[12]_i_1_n_0\,
-      CO(3) => \endless_reg[16]_i_1_n_0\,
-      CO(2) => \endless_reg[16]_i_1_n_1\,
-      CO(1) => \endless_reg[16]_i_1_n_2\,
-      CO(0) => \endless_reg[16]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[16]_i_1_n_4\,
-      O(2) => \endless_reg[16]_i_1_n_5\,
-      O(1) => \endless_reg[16]_i_1_n_6\,
-      O(0) => \endless_reg[16]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(19 downto 16)
-    );
-\endless_reg[17]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[16]_i_1_n_6\,
-      Q => endless_reg(17),
-      R => '0'
-    );
-\endless_reg[18]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[16]_i_1_n_5\,
-      Q => endless_reg(18),
-      R => '0'
-    );
-\endless_reg[19]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[16]_i_1_n_4\,
-      Q => endless_reg(19),
-      R => '0'
-    );
-\endless_reg[1]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[0]_i_2_n_6\,
-      Q => endless_reg(1),
-      R => '0'
-    );
-\endless_reg[20]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[20]_i_1_n_7\,
-      Q => endless_reg(20),
-      R => '0'
-    );
-\endless_reg[20]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[16]_i_1_n_0\,
-      CO(3) => \endless_reg[20]_i_1_n_0\,
-      CO(2) => \endless_reg[20]_i_1_n_1\,
-      CO(1) => \endless_reg[20]_i_1_n_2\,
-      CO(0) => \endless_reg[20]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[20]_i_1_n_4\,
-      O(2) => \endless_reg[20]_i_1_n_5\,
-      O(1) => \endless_reg[20]_i_1_n_6\,
-      O(0) => \endless_reg[20]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(23 downto 20)
-    );
-\endless_reg[21]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[20]_i_1_n_6\,
-      Q => endless_reg(21),
-      R => '0'
-    );
-\endless_reg[22]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[20]_i_1_n_5\,
-      Q => endless_reg(22),
-      R => '0'
-    );
-\endless_reg[23]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[20]_i_1_n_4\,
-      Q => endless_reg(23),
-      R => '0'
-    );
-\endless_reg[24]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[24]_i_1_n_7\,
-      Q => endless_reg(24),
-      R => '0'
-    );
-\endless_reg[24]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[20]_i_1_n_0\,
-      CO(3) => \endless_reg[24]_i_1_n_0\,
-      CO(2) => \endless_reg[24]_i_1_n_1\,
-      CO(1) => \endless_reg[24]_i_1_n_2\,
-      CO(0) => \endless_reg[24]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[24]_i_1_n_4\,
-      O(2) => \endless_reg[24]_i_1_n_5\,
-      O(1) => \endless_reg[24]_i_1_n_6\,
-      O(0) => \endless_reg[24]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(27 downto 24)
-    );
-\endless_reg[25]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[24]_i_1_n_6\,
-      Q => endless_reg(25),
-      R => '0'
-    );
-\endless_reg[26]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[24]_i_1_n_5\,
-      Q => endless_reg(26),
-      R => '0'
-    );
-\endless_reg[27]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[24]_i_1_n_4\,
-      Q => endless_reg(27),
-      R => '0'
-    );
-\endless_reg[28]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[28]_i_1_n_7\,
-      Q => endless_reg(28),
-      R => '0'
-    );
-\endless_reg[28]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[24]_i_1_n_0\,
-      CO(3) => \NLW_endless_reg[28]_i_1_CO_UNCONNECTED\(3),
-      CO(2) => \endless_reg[28]_i_1_n_1\,
-      CO(1) => \endless_reg[28]_i_1_n_2\,
-      CO(0) => \endless_reg[28]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[28]_i_1_n_4\,
-      O(2) => \endless_reg[28]_i_1_n_5\,
-      O(1) => \endless_reg[28]_i_1_n_6\,
-      O(0) => \endless_reg[28]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(31 downto 28)
-    );
-\endless_reg[29]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[28]_i_1_n_6\,
-      Q => endless_reg(29),
-      R => '0'
-    );
-\endless_reg[2]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[0]_i_2_n_5\,
-      Q => endless_reg(2),
-      R => '0'
-    );
-\endless_reg[30]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[28]_i_1_n_5\,
-      Q => endless_reg(30),
-      R => '0'
-    );
-\endless_reg[31]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[28]_i_1_n_4\,
-      Q => endless_reg(31),
-      R => '0'
-    );
-\endless_reg[3]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[0]_i_2_n_4\,
-      Q => endless_reg(3),
-      R => '0'
-    );
-\endless_reg[4]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[4]_i_1_n_7\,
-      Q => endless_reg(4),
-      R => '0'
-    );
-\endless_reg[4]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[0]_i_2_n_0\,
-      CO(3) => \endless_reg[4]_i_1_n_0\,
-      CO(2) => \endless_reg[4]_i_1_n_1\,
-      CO(1) => \endless_reg[4]_i_1_n_2\,
-      CO(0) => \endless_reg[4]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[4]_i_1_n_4\,
-      O(2) => \endless_reg[4]_i_1_n_5\,
-      O(1) => \endless_reg[4]_i_1_n_6\,
-      O(0) => \endless_reg[4]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(7 downto 4)
-    );
-\endless_reg[5]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[4]_i_1_n_6\,
-      Q => endless_reg(5),
-      R => '0'
-    );
-\endless_reg[6]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[4]_i_1_n_5\,
-      Q => endless_reg(6),
-      R => '0'
-    );
-\endless_reg[7]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[4]_i_1_n_4\,
-      Q => endless_reg(7),
-      R => '0'
-    );
-\endless_reg[8]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[8]_i_1_n_7\,
-      Q => endless_reg(8),
-      R => '0'
-    );
-\endless_reg[8]_i_1\: unisim.vcomponents.CARRY4
-     port map (
-      CI => \endless_reg[4]_i_1_n_0\,
-      CO(3) => \endless_reg[8]_i_1_n_0\,
-      CO(2) => \endless_reg[8]_i_1_n_1\,
-      CO(1) => \endless_reg[8]_i_1_n_2\,
-      CO(0) => \endless_reg[8]_i_1_n_3\,
-      CYINIT => '0',
-      DI(3 downto 0) => B"0000",
-      O(3) => \endless_reg[8]_i_1_n_4\,
-      O(2) => \endless_reg[8]_i_1_n_5\,
-      O(1) => \endless_reg[8]_i_1_n_6\,
-      O(0) => \endless_reg[8]_i_1_n_7\,
-      S(3 downto 0) => endless_reg(11 downto 8)
-    );
-\endless_reg[9]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '1'
-    )
-        port map (
-      C => m00_axis_aclk,
-      CE => endless,
-      D => \endless_reg[8]_i_1_n_6\,
-      Q => endless_reg(9),
-      R => '0'
-    );
-\stream_data_out[31]_i_1\: unisim.vcomponents.LUT1
+\stream_data_out[63]_i_1\: unisim.vcomponents.LUT1
     generic map(
       INIT => X"1"
     )
         port map (
       I0 => m00_axis_aresetn,
-      O => \stream_data_out[31]_i_1_n_0\
+      O => \stream_data_out[63]_i_1_n_0\
     );
-\stream_data_out[31]_i_2\: unisim.vcomponents.LUT3
+\stream_data_out[63]_i_2\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"20"
     )
@@ -800,257 +242,513 @@ axis_tvalid_delay_reg: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(0),
+      D => adc_bus(0),
       Q => m00_axis_tdata(0),
-      S => \stream_data_out[31]_i_1_n_0\
+      S => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[10]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(10),
+      D => adc_bus(10),
       Q => m00_axis_tdata(10),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[11]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(11),
+      D => adc_bus(11),
       Q => m00_axis_tdata(11),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[12]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(12),
+      D => adc_bus(12),
       Q => m00_axis_tdata(12),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[13]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(13),
+      D => adc_bus(13),
       Q => m00_axis_tdata(13),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[14]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(14),
+      D => adc_bus(14),
       Q => m00_axis_tdata(14),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[15]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(15),
+      D => adc_bus(15),
       Q => m00_axis_tdata(15),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[16]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(16),
+      D => adc_bus(16),
       Q => m00_axis_tdata(16),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[17]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(17),
+      D => adc_bus(17),
       Q => m00_axis_tdata(17),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[18]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(18),
+      D => adc_bus(18),
       Q => m00_axis_tdata(18),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[19]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(19),
+      D => adc_bus(19),
       Q => m00_axis_tdata(19),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(1),
+      D => adc_bus(1),
       Q => m00_axis_tdata(1),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[20]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(20),
+      D => adc_bus(20),
       Q => m00_axis_tdata(20),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[21]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(21),
+      D => adc_bus(21),
       Q => m00_axis_tdata(21),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[22]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(22),
+      D => adc_bus(22),
       Q => m00_axis_tdata(22),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[23]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(23),
+      D => adc_bus(23),
       Q => m00_axis_tdata(23),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[24]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(24),
+      D => adc_bus(24),
       Q => m00_axis_tdata(24),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[25]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(25),
+      D => adc_bus(25),
       Q => m00_axis_tdata(25),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[26]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(26),
+      D => adc_bus(26),
       Q => m00_axis_tdata(26),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[27]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(27),
+      D => adc_bus(27),
       Q => m00_axis_tdata(27),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[28]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(28),
+      D => adc_bus(28),
       Q => m00_axis_tdata(28),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[29]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(29),
+      D => adc_bus(29),
       Q => m00_axis_tdata(29),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(2),
+      D => adc_bus(2),
       Q => m00_axis_tdata(2),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[30]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(30),
+      D => adc_bus(30),
       Q => m00_axis_tdata(30),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[31]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(31),
+      D => adc_bus(31),
       Q => m00_axis_tdata(31),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[32]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(32),
+      Q => m00_axis_tdata(32),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[33]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(33),
+      Q => m00_axis_tdata(33),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[34]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(34),
+      Q => m00_axis_tdata(34),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[35]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(35),
+      Q => m00_axis_tdata(35),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[36]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(36),
+      Q => m00_axis_tdata(36),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[37]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(37),
+      Q => m00_axis_tdata(37),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[38]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(38),
+      Q => m00_axis_tdata(38),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[39]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(39),
+      Q => m00_axis_tdata(39),
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[3]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(3),
+      D => adc_bus(3),
       Q => m00_axis_tdata(3),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[40]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(40),
+      Q => m00_axis_tdata(40),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[41]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(41),
+      Q => m00_axis_tdata(41),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[42]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(42),
+      Q => m00_axis_tdata(42),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[43]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(43),
+      Q => m00_axis_tdata(43),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[44]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(44),
+      Q => m00_axis_tdata(44),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[45]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(45),
+      Q => m00_axis_tdata(45),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[46]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(46),
+      Q => m00_axis_tdata(46),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[47]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(47),
+      Q => m00_axis_tdata(47),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[48]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(48),
+      Q => m00_axis_tdata(48),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[49]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(49),
+      Q => m00_axis_tdata(49),
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[4]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(4),
+      D => adc_bus(4),
       Q => m00_axis_tdata(4),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[50]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(50),
+      Q => m00_axis_tdata(50),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[51]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(51),
+      Q => m00_axis_tdata(51),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[52]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(52),
+      Q => m00_axis_tdata(52),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[53]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(53),
+      Q => m00_axis_tdata(53),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[54]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(54),
+      Q => m00_axis_tdata(54),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[55]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(55),
+      Q => m00_axis_tdata(55),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[56]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(56),
+      Q => m00_axis_tdata(56),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[57]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(57),
+      Q => m00_axis_tdata(57),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[58]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(58),
+      Q => m00_axis_tdata(58),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[59]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(59),
+      Q => m00_axis_tdata(59),
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[5]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(5),
+      D => adc_bus(5),
       Q => m00_axis_tdata(5),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[60]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(60),
+      Q => m00_axis_tdata(60),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[61]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(61),
+      Q => m00_axis_tdata(61),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[62]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(62),
+      Q => m00_axis_tdata(62),
+      R => \stream_data_out[63]_i_1_n_0\
+    );
+\stream_data_out_reg[63]\: unisim.vcomponents.FDRE
+     port map (
+      C => m00_axis_aclk,
+      CE => tx_en,
+      D => adc_bus(63),
+      Q => m00_axis_tdata(63),
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[6]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(6),
+      D => adc_bus(6),
       Q => m00_axis_tdata(6),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[7]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(7),
+      D => adc_bus(7),
       Q => m00_axis_tdata(7),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[8]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(8),
+      D => adc_bus(8),
       Q => m00_axis_tdata(8),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 \stream_data_out_reg[9]\: unisim.vcomponents.FDRE
      port map (
       C => m00_axis_aclk,
       CE => tx_en,
-      D => endless_reg(9),
+      D => adc_bus(9),
       Q => m00_axis_tdata(9),
-      R => \stream_data_out[31]_i_1_n_0\
+      R => \stream_data_out[63]_i_1_n_0\
     );
 end STRUCTURE;
 library IEEE;
@@ -1059,10 +757,11 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 is
   port (
-    m00_axis_tdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axis_tdata : out STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tvalid : out STD_LOGIC;
     m00_axis_aresetn : in STD_LOGIC;
     m00_axis_aclk : in STD_LOGIC;
+    adc_bus : in STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tready : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -1073,9 +772,10 @@ architecture STRUCTURE of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 
 begin
 adc_test_streamer_v2_0_M00_AXIS_inst: entity work.design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS
      port map (
+      adc_bus(63 downto 0) => adc_bus(63 downto 0),
       m00_axis_aclk => m00_axis_aclk,
       m00_axis_aresetn => m00_axis_aresetn,
-      m00_axis_tdata(31 downto 0) => m00_axis_tdata(31 downto 0),
+      m00_axis_tdata(63 downto 0) => m00_axis_tdata(63 downto 0),
       m00_axis_tready => m00_axis_tready,
       m00_axis_tvalid => m00_axis_tvalid
     );
@@ -1086,11 +786,12 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_adc_test_streamer_0_0 is
   port (
-    m00_axis_tdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m00_axis_tstrb : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    m00_axis_tdata : out STD_LOGIC_VECTOR ( 63 downto 0 );
+    m00_axis_tstrb : out STD_LOGIC_VECTOR ( 7 downto 0 );
     m00_axis_tlast : out STD_LOGIC;
     m00_axis_tvalid : out STD_LOGIC;
     m00_axis_tready : in STD_LOGIC;
+    adc_bus : in STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_aclk : in STD_LOGIC;
     m00_axis_aresetn : in STD_LOGIC
   );
@@ -1115,12 +816,16 @@ architecture STRUCTURE of design_1_adc_test_streamer_0_0 is
   attribute X_INTERFACE_PARAMETER of m00_axis_aresetn : signal is "XIL_INTERFACENAME M00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m00_axis_tlast : signal is "xilinx.com:interface:axis:1.0 M00_AXIS TLAST";
   attribute X_INTERFACE_INFO of m00_axis_tready : signal is "xilinx.com:interface:axis:1.0 M00_AXIS TREADY";
-  attribute X_INTERFACE_PARAMETER of m00_axis_tready : signal is "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of m00_axis_tready : signal is "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m00_axis_tvalid : signal is "xilinx.com:interface:axis:1.0 M00_AXIS TVALID";
   attribute X_INTERFACE_INFO of m00_axis_tdata : signal is "xilinx.com:interface:axis:1.0 M00_AXIS TDATA";
   attribute X_INTERFACE_INFO of m00_axis_tstrb : signal is "xilinx.com:interface:axis:1.0 M00_AXIS TSTRB";
 begin
   m00_axis_tlast <= \<const0>\;
+  m00_axis_tstrb(7) <= \<const1>\;
+  m00_axis_tstrb(6) <= \<const1>\;
+  m00_axis_tstrb(5) <= \<const1>\;
+  m00_axis_tstrb(4) <= \<const1>\;
   m00_axis_tstrb(3) <= \<const1>\;
   m00_axis_tstrb(2) <= \<const1>\;
   m00_axis_tstrb(1) <= \<const1>\;
@@ -1135,9 +840,10 @@ VCC: unisim.vcomponents.VCC
     );
 inst: entity work.design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0
      port map (
+      adc_bus(63 downto 0) => adc_bus(63 downto 0),
       m00_axis_aclk => m00_axis_aclk,
       m00_axis_aresetn => m00_axis_aresetn,
-      m00_axis_tdata(31 downto 0) => m00_axis_tdata(31 downto 0),
+      m00_axis_tdata(63 downto 0) => m00_axis_tdata(63 downto 0),
       m00_axis_tready => m00_axis_tready,
       m00_axis_tvalid => m00_axis_tvalid
     );

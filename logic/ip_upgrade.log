@@ -1,6 +1,158 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date         : Thu Jan  2 23:02:35 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_test_streamer:2.0 (Rev. 10)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date         : Thu Jan  2 22:59:30 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_test_streamer:2.0) from (Rev. 9) to (Rev. 10)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_adc_test_streamer_0_0'. These changes may impact your design.
+
+
+-Upgraded port 'm00_axis_tdata' width 64 differs from original width 32
+
+-Upgraded port 'm00_axis_tstrb' width 8 differs from original width 4
+
+
+3. Customization warnings
+-------------------------
+
+An attempt to modify the value of disabled parameter 'C_M00_AXIS_TDATA_WIDTH' from '64' to '32' has been ignored for IP 'design_1_adc_test_streamer_0_0'
+
+
+4. Debug Commands
+-----------------
+
+  The following debug information can be passed to Vivado as Tcl commands,
+in order to validate or debug the output of the upgrade flow.
+  You may consult any warnings from within this upgrade, and alter or remove
+the configuration parameter(s) which caused the warning; then execute the Tcl
+commands, and use the IP Customization GUI to verify the IP configuration.
+
+create_ip -vlnv xilinx.com:user:adc_test_streamer:2.0 -user_name design_1_adc_test_streamer_0_0
+set_property -dict "\
+  CONFIG.C_M00_AXIS_START_COUNT {32} \
+  CONFIG.C_M00_AXIS_TDATA_WIDTH {32} \
+  CONFIG.Component_Name {design_1_adc_test_streamer_0_0} \
+  CONFIG.M00_AXIS.CLK_DOMAIN {} \
+  CONFIG.M00_AXIS.FREQ_HZ {100000000} \
+  CONFIG.M00_AXIS.HAS_TKEEP {0} \
+  CONFIG.M00_AXIS.HAS_TLAST {1} \
+  CONFIG.M00_AXIS.HAS_TREADY {1} \
+  CONFIG.M00_AXIS.HAS_TSTRB {1} \
+  CONFIG.M00_AXIS.INSERT_VIP {0} \
+  CONFIG.M00_AXIS.LAYERED_METADATA {undef} \
+  CONFIG.M00_AXIS.PHASE {0.000} \
+  CONFIG.M00_AXIS.TDATA_NUM_BYTES {4} \
+  CONFIG.M00_AXIS.TDEST_WIDTH {0} \
+  CONFIG.M00_AXIS.TID_WIDTH {0} \
+  CONFIG.M00_AXIS.TUSER_WIDTH {0} \
+  CONFIG.M00_AXIS.WIZ_DATA_WIDTH {32} \
+  CONFIG.M00_AXIS_CLK.ASSOCIATED_BUSIF {M00_AXIS} \
+  CONFIG.M00_AXIS_CLK.ASSOCIATED_RESET {m00_axis_aresetn} \
+  CONFIG.M00_AXIS_CLK.CLK_DOMAIN {} \
+  CONFIG.M00_AXIS_CLK.FREQ_HZ {100000000} \
+  CONFIG.M00_AXIS_CLK.INSERT_VIP {0} \
+  CONFIG.M00_AXIS_CLK.PHASE {0.000} \
+  CONFIG.M00_AXIS_RST.INSERT_VIP {0} \
+  CONFIG.M00_AXIS_RST.POLARITY {ACTIVE_LOW} " [get_ips design_1_adc_test_streamer_0_0]
+
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date         : Thu Jan  2 22:54:09 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_test_streamer:2.0) from (Rev. 8) to (Rev. 9)
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date         : Thu Jan  2 22:50:33 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_test_streamer:2.0) from (Rev. 7) to (Rev. 8)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_adc_test_streamer_0_0'. These changes may impact your design.
+
+
+-Upgrade has added port 'adc_bus'
+
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
 | Date         : Thu Jan  2 16:33:57 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : upgrade_ip

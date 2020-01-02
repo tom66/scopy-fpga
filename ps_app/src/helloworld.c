@@ -60,7 +60,7 @@
 uint32_t *mem_addr;
 uint32_t *base;
 
-#define PACKET_MAXSIZE		2047
+#define PACKET_MAXSIZE		16383
 
 // These MUST be on 1MB boundaries to allow the cache to be invalidated safely
 // and they MUST be integer MB in size
@@ -183,13 +183,15 @@ int main()
 
 		arb_delay(100000);
 
+		/*
 		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
 			debug_printf("w");
 		}
+		*/
 
 		Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
 
-		if(iter2 > 0) {
+		if(1 /*iter2 > 0*/) {
 			debug_printf("Data: \r\n %08d  ", 0);
 
 			ptr = rx_buffer;

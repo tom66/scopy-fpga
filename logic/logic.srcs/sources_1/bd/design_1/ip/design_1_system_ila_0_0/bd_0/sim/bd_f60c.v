@@ -6,7 +6,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=13,numReposBlks=13,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=Global}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
+(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=13,numReposBlks=13,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
 module bd_f60c
    (SLOT_0_AXI_araddr,
     SLOT_0_AXI_arid,
@@ -151,10 +151,10 @@ module bd_f60c
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WREADY" *) input SLOT_1_AXI_wready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WSTRB" *) input [3:0]SLOT_1_AXI_wstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_1_AXI WVALID" *) input SLOT_1_AXI_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_2_AXIS, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 50000000, HAS_TKEEP 0, HAS_TLAST 1, HAS_TREADY 1, HAS_TSTRB 1, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [31:0]SLOT_2_AXIS_tdata;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_2_AXIS, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 50000000, HAS_TKEEP 0, HAS_TLAST 1, HAS_TREADY 1, HAS_TSTRB 1, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [63:0]SLOT_2_AXIS_tdata;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TLAST" *) input SLOT_2_AXIS_tlast;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TREADY" *) input SLOT_2_AXIS_tready;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TSTRB" *) input [3:0]SLOT_2_AXIS_tstrb;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TSTRB" *) input [7:0]SLOT_2_AXIS_tstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_2_AXIS TVALID" *) input SLOT_2_AXIS_tvalid;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLOT_0_AXI:SLOT_1_AXI:SLOT_2_AXIS, ASSOCIATED_CLKEN aclken, ASSOCIATED_RESET resetn, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) input clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.RESETN RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.RESETN, INSERT_VIP 0, POLARITY ACTIVE_LOW, TYPE INTERCONNECT" *) input resetn;
@@ -197,10 +197,10 @@ module bd_f60c
   wire Conn1_WREADY;
   wire [3:0]Conn1_WSTRB;
   wire Conn1_WVALID;
-  wire [31:0]Conn2_TDATA;
+  wire [63:0]Conn2_TDATA;
   wire Conn2_TLAST;
   wire Conn2_TREADY;
-  wire [3:0]Conn2_TSTRB;
+  wire [7:0]Conn2_TSTRB;
   wire Conn2_TVALID;
   wire [31:0]Conn_ARADDR;
   wire [0:0]Conn_ARID;
@@ -320,10 +320,10 @@ module bd_f60c
   wire [3:0]net_slot_1_axi_wstrb;
   wire net_slot_1_axi_wvalid;
   wire net_slot_2_apc_pc_asserted;
-  wire [31:0]net_slot_2_axis_tdata;
+  wire [63:0]net_slot_2_axis_tdata;
   wire net_slot_2_axis_tlast;
   wire net_slot_2_axis_tready;
-  wire [3:0]net_slot_2_axis_tstrb;
+  wire [7:0]net_slot_2_axis_tstrb;
   wire net_slot_2_axis_tvalid;
   wire resetn_1;
 
@@ -365,10 +365,10 @@ module bd_f60c
   assign Conn1_WREADY = SLOT_1_AXI_wready;
   assign Conn1_WSTRB = SLOT_1_AXI_wstrb[3:0];
   assign Conn1_WVALID = SLOT_1_AXI_wvalid;
-  assign Conn2_TDATA = SLOT_2_AXIS_tdata[31:0];
+  assign Conn2_TDATA = SLOT_2_AXIS_tdata[63:0];
   assign Conn2_TLAST = SLOT_2_AXIS_tlast;
   assign Conn2_TREADY = SLOT_2_AXIS_tready;
-  assign Conn2_TSTRB = SLOT_2_AXIS_tstrb[3:0];
+  assign Conn2_TSTRB = SLOT_2_AXIS_tstrb[7:0];
   assign Conn2_TVALID = SLOT_2_AXIS_tvalid;
   assign Conn_ARADDR = SLOT_0_AXI_araddr[31:0];
   assign Conn_ARID = SLOT_0_AXI_arid[0];

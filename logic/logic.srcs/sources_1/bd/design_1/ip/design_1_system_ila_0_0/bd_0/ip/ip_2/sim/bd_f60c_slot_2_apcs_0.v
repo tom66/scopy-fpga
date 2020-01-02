@@ -76,17 +76,17 @@ input wire pc_axis_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TREADY" *)
 input wire pc_axis_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TDATA" *)
-input wire [31 : 0] pc_axis_tdata;
+input wire [63 : 0] pc_axis_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TSTRB" *)
-input wire [3 : 0] pc_axis_tstrb;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME PC_AXIS, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+input wire [7 : 0] pc_axis_tstrb;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME PC_AXIS, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 PC_AXIS TLAST" *)
 input wire pc_axis_tlast;
 output wire pc_asserted;
 output wire [31 : 0] pc_status;
 
   axis_protocol_checker_v2_0_2_top #(
-    .C_AXIS_TDATA_WIDTH(32),
+    .C_AXIS_TDATA_WIDTH(64),
     .C_AXIS_TID_WIDTH(1),
     .C_AXIS_TDEST_WIDTH(1),
     .C_AXIS_TUSER_WIDTH(1),
@@ -106,7 +106,7 @@ output wire [31 : 0] pc_status;
     .pc_axis_tready(pc_axis_tready),
     .pc_axis_tdata(pc_axis_tdata),
     .pc_axis_tstrb(pc_axis_tstrb),
-    .pc_axis_tkeep(4'HF),
+    .pc_axis_tkeep(8'HFF),
     .pc_axis_tlast(pc_axis_tlast),
     .pc_axis_tid(1'D0),
     .pc_axis_tdest(1'D0),

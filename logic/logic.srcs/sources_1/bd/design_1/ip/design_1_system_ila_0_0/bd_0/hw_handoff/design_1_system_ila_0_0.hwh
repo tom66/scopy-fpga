@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jan  2 16:34:38 2020" VIVADOVERSION="2018.3">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jan  2 23:11:12 2020" VIVADOVERSION="2018.3">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="bd_f60c" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -357,10 +357,10 @@
         <CONNECTION INSTANCE="g_inst" PORT="slot_1_axi_wvalid"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" LEFT="31" NAME="SLOT_2_AXIS_tdata" RIGHT="0" SIGIS="undef"/>
+    <PORT DIR="I" LEFT="63" NAME="SLOT_2_AXIS_tdata" RIGHT="0" SIGIS="undef"/>
     <PORT DIR="I" NAME="SLOT_2_AXIS_tlast" SIGIS="undef"/>
     <PORT DIR="I" NAME="SLOT_2_AXIS_tready" SIGIS="undef"/>
-    <PORT DIR="I" LEFT="3" NAME="SLOT_2_AXIS_tstrb" RIGHT="0" SIGIS="undef"/>
+    <PORT DIR="I" LEFT="7" NAME="SLOT_2_AXIS_tstrb" RIGHT="0" SIGIS="undef"/>
     <PORT DIR="I" NAME="SLOT_2_AXIS_tvalid" SIGIS="undef"/>
   </EXTERNALPORTS>
 
@@ -504,7 +504,7 @@
       </PORTMAPS>
     </BUSINTERFACE>
     <BUSINTERFACE BUSNAME="g_inst_slot_2_axis" NAME="SLOT_2_AXIS" TYPE="MONITOR">
-      <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+      <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
       <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
       <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
       <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
@@ -1765,7 +1765,7 @@
         <PARAMETER NAME="C_SLOT_2_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_SLOT_2_AXI_ID_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_SLOT_2_AXI_PROTOCOL" VALUE="AXI4S"/>
-        <PARAMETER NAME="C_SLOT_2_AXIS_TDATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_SLOT_2_AXIS_TDATA_WIDTH" VALUE="64"/>
         <PARAMETER NAME="C_SLOT_2_AXIS_TID_WIDTH" VALUE="0"/>
         <PARAMETER NAME="C_SLOT_2_AXIS_TDEST_WIDTH" VALUE="0"/>
         <PARAMETER NAME="C_SLOT_2_AXIS_TUSER_WIDTH" VALUE="0"/>
@@ -2258,12 +2258,12 @@
             <CONNECTION INSTANCE="slot_2_apcs" PORT="pc_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="slot_2_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tdata">
+        <PORT DIR="I" LEFT="63" NAME="slot_2_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="slot_2_apcs" PORT="pc_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="slot_2_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tstrb">
+        <PORT DIR="I" LEFT="7" NAME="slot_2_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tstrb">
           <CONNECTIONS>
             <CONNECTION INSTANCE="slot_2_apcs" PORT="pc_axis_tstrb"/>
           </CONNECTIONS>
@@ -2603,12 +2603,12 @@
             <CONNECTION INSTANCE="ila_lib" PORT="probe65"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="31" NAME="m_slot_2_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tdata">
+        <PORT DIR="O" LEFT="63" NAME="m_slot_2_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ila_lib" PORT="probe62"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="3" NAME="m_slot_2_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tstrb">
+        <PORT DIR="O" LEFT="7" NAME="m_slot_2_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tstrb">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ila_lib" PORT="probe63"/>
           </CONNECTIONS>
@@ -2799,7 +2799,7 @@
           </PORTMAPS>
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="g_inst_slot_2_axis" NAME="slot_2_axis" TYPE="MONITOR" VLNV="xilinx.com:interface:axis:1.0">
-          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
@@ -2959,7 +2959,7 @@
           </PORTMAPS>
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="__NOC__" NAME="m_slot_2_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
-          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
@@ -3088,8 +3088,8 @@
         <PARAMETER NAME="C_PROBE59_WIDTH" VALUE="2"/>
         <PARAMETER NAME="C_PROBE60_WIDTH" VALUE="2"/>
         <PARAMETER NAME="C_PROBE61_WIDTH" VALUE="3"/>
-        <PARAMETER NAME="C_PROBE62_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="C_PROBE63_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="C_PROBE62_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="C_PROBE63_WIDTH" VALUE="8"/>
         <PARAMETER NAME="C_PROBE64_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE65_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE66_WIDTH" VALUE="1"/>
@@ -6437,12 +6437,12 @@
             <CONNECTION INSTANCE="slot_1_r" PORT="dout"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="probe62" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tdata">
+        <PORT DIR="I" LEFT="63" NAME="probe62" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="g_inst" PORT="m_slot_2_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="probe63" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tstrb">
+        <PORT DIR="I" LEFT="7" NAME="probe63" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_m_slot_2_axis_tstrb">
           <CONNECTIONS>
             <CONNECTION INSTANCE="g_inst" PORT="m_slot_2_axis_tstrb"/>
           </CONNECTIONS>
@@ -7085,7 +7085,7 @@
         <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axis_protocol_checker;v=v2_0;d=pg145-axis-protocol-checker.pdf"/>
       </DOCUMENTS>
       <PARAMETERS>
-        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="64"/>
         <PARAMETER NAME="C_AXIS_TID_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_AXIS_TDEST_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_AXIS_TUSER_WIDTH" VALUE="1"/>
@@ -7096,7 +7096,7 @@
         <PARAMETER NAME="C_ENABLE_CONTROL" VALUE="0"/>
         <PARAMETER NAME="C_PC_STATUS_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_ENABLE_MARK_DEBUG" VALUE="1"/>
-        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
         <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
         <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
         <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
@@ -7135,12 +7135,12 @@
             <CONNECTION INSTANCE="g_inst" PORT="slot_2_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="pc_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tdata">
+        <PORT DIR="I" LEFT="63" NAME="pc_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="g_inst" PORT="slot_2_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="pc_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tstrb">
+        <PORT DIR="I" LEFT="7" NAME="pc_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="g_inst_slot_2_axis_tstrb">
           <CONNECTIONS>
             <CONNECTION INSTANCE="g_inst" PORT="slot_2_axis_tstrb"/>
           </CONNECTIONS>
@@ -7159,7 +7159,7 @@
       </PORTS>
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="g_inst_slot_2_axis" NAME="PC_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
-          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>

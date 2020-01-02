@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xA607F8FAE479BEAB",
+      "boundary_crc": "0xFB1E997FE54F1672",
       "design_src": "SBD",
       "device": "xc7z014sclg400-1",
       "name": "bd_f60c",
@@ -327,7 +327,7 @@
             "value_src": "default"
           },
           "TDATA_NUM_BYTES": {
-            "value": "4",
+            "value": "8",
             "value_src": "default"
           },
           "TDEST_WIDTH": {
@@ -784,13 +784,13 @@
             "value": "0"
           },
           "C_PROBE62_WIDTH": {
-            "value": "32"
+            "value": "64"
           },
           "C_PROBE63_TYPE": {
             "value": "0"
           },
           "C_PROBE63_WIDTH": {
-            "value": "4"
+            "value": "8"
           },
           "C_PROBE64_TYPE": {
             "value": "0"
@@ -1042,7 +1042,7 @@
             "value": "1"
           },
           "C_SLOT_2_AXIS_TDATA_WIDTH": {
-            "value": "32"
+            "value": "64"
           },
           "C_SLOT_2_AXIS_TDEST_WIDTH": {
             "value": "0"
@@ -1087,7 +1087,7 @@
             "value": "1"
           },
           "TDATA_NUM_BYTES": {
-            "value": "4"
+            "value": "8"
           },
           "TDEST_WIDTH": {
             "value": "0"
@@ -1168,17 +1168,17 @@
           "g_inst/slot_0_axi"
         ]
       },
+      "Conn1": {
+        "interface_ports": [
+          "SLOT_1_AXI",
+          "g_inst/slot_1_axi"
+        ]
+      },
       "Conn2": {
         "interface_ports": [
           "SLOT_2_AXIS",
           "g_inst/slot_2_axis",
           "slot_2_apcs/PC_AXIS"
-        ]
-      },
-      "Conn1": {
-        "interface_ports": [
-          "SLOT_1_AXI",
-          "g_inst/slot_1_axi"
         ]
       }
     },
