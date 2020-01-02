@@ -60,7 +60,12 @@
 uint32_t *mem_addr;
 uint32_t *base;
 
-uint32_t buffer[65536] __attribute__((aligned (4096))) __attribute__((section("ddr3")));
+#define PACKET_MAXSIZE		2047
+
+// These MUST be on 1MB boundaries to allow the cache to be invalidated safely
+// and they MUST be integer MB in size
+uint8_t rx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
+uint8_t tx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
 
 //#define MEM_TEST
 
@@ -97,6 +102,7 @@ int main()
 	uint32_t *ptr;
 	int32_t result;
 	uint32_t n;
+	uint32_t iter = 0, iter2 = 0;
 
 	XAxiDma dma0_pointer;
 	XAxiDma_Config *dma0_config;
@@ -118,53 +124,89 @@ int main()
 	debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
 
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
-	error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
+		error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
 	debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
 
-	debug_printf("Flush and disable data cache...\r\n");
+	debug_printf("TXBuff Addr=0x%08x\r\n", &tx_buffer);
+	debug_printf("RXBuff Addr=0x%08x\r\n", &rx_buffer);
 
-	Xil_DCacheFlush();
-	Xil_DCacheDisable();
+	//debug_printf("Flush and disable data cache...\r\n");
+
+	//Xil_DCacheFlush();
+	//Xil_DCacheDisable();
+
+	/*
+	if(XAxiDma_HasSg(&dma0_pointer)){
+		xil_printf("Device configured as SG mode \r\n");
+		return XST_FAILURE;
+	}
+	*/
+
+	// Disable interrupts, we use polling mode
+	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK,
+						XAXIDMA_DEVICE_TO_DMA);
+	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK,
+						XAXIDMA_DMA_TO_DEVICE);
 
 	debug_printf("OK, done.\r\n");
 
 	while(1) {
-		addr = &buffer;
 		//debug_printf("Sending uncache flag to addr 0x%08x\r\n", addr);
 		//Xil_SetTlbAttributes(addr, MARK_UNCACHEABLE);
 		//debug_printf("Sending Dinvalidate flag to addr 0x%08x\r\n", addr);
 		//Xil_DCacheInvalidateRange(addr, 1);
 
 		//debug_printf("Start SimpleTransfer\r\n");
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint32_t *)addr, 32, XAXIDMA_DEVICE_TO_DMA);
 
-		//debug_printf("Initialise Xfer error=%d addr 0x%08x buffer_at 0x%08x\r\n", error, addr, &buffer);
+		// prep DMAblock
+		dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
+		error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
-		/*
+		for(n = 0; n < PACKET_MAXSIZE; n++) {
+			tx_buffer[n] = n + iter;
+		}
+
+		Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+
+		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1, XAXIDMA_DEVICE_TO_DMA);
+		//debug_printf("Short Xfer error=%d\r\n", error);
+
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, PACKET_MAXSIZE, XAXIDMA_DEVICE_TO_DMA);
+		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) tx_buffer, PACKET_MAXSIZE, XAXIDMA_DMA_TO_DEVICE);
+
+		debug_printf("Initialise Xfer error=%d\r\n", error);
+
+		//while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA) /* || XAxiDma_Busy(&dma0_pointer, XAXIDMA_DMA_TO_DEVICE) */) {
+		//	debug_printf("w");
+		//}
+
+		arb_delay(100000);
+
 		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
 			debug_printf("w");
 		}
-		*/
 
-		/*
-		n++;
+		Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
 
-		if(n > 0) {
-			debug_printf("Data: \r\n");
+		if(iter2 > 0) {
+			debug_printf("Data: \r\n %08d  ", 0);
 
-			ptr = addr;
-			for(k = 0; k < 32; k++) {
+			ptr = rx_buffer;
+			for(k = 0; k < (PACKET_MAXSIZE / 4); k++) {
 				debug_printf("0x%08x ", *ptr++);
 				if(((k + 1) & 7) == 0) {
-					debug_printf("\r\n");
+					debug_printf("\r\n %08d  ", k * 4);
 				}
 			}
 
-			debug_printf("\r\n");
-			n = 0;
+			debug_printf("\r\n\r\n");
+			//debug_printf("X");
+			iter2 = 0;
 		}
-		*/
+
+		iter++;
+		iter2++;
 	}
 #endif
 

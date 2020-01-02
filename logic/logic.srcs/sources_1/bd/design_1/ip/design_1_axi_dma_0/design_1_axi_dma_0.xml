@@ -161,7 +161,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_LITE.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_LITE.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1637,7 +1637,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.FREQ_HZ">100000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1808,7 +1808,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>MAX_BURST_LENGTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.MAX_BURST_LENGTH">16</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.MAX_BURST_LENGTH">256</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1826,7 +1826,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>CLK_DOMAIN</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.CLK_DOMAIN"/>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S.CLK_DOMAIN">design_1_processing_system7_0_0_FCLK_CLK0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1882,7 +1882,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.M_AXI_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1 and (spirit:decode(id(&apos;PARAM_VALUE.C_SINGLE_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.M_AXI_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1 and (spirit:decode(id(&apos;PARAM_VALUE.C_SINGLE_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -2062,7 +2062,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_S2MM.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_S2MM.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -2459,7 +2459,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXIS_MM2S.FREQ_HZ">100000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXIS_MM2S.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -2477,7 +2477,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>CLK_DOMAIN</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXIS_MM2S.CLK_DOMAIN"/>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXIS_MM2S.CLK_DOMAIN">design_1_processing_system7_0_0_FCLK_CLK0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -2515,7 +2515,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.M_AXIS_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.M_AXIS_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -2667,7 +2667,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXIS_S2MM.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXIS_S2MM.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -3267,7 +3267,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.FREQ_HZ">100000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -3285,7 +3285,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>CLK_DOMAIN</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.CLK_DOMAIN"/>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.CLK_DOMAIN">design_1_processing_system7_0_0_FCLK_CLK0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -3331,7 +3331,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_S2MM_CLK.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI_S2MM_CLK.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -3393,7 +3393,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_LITE_ACLK.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_LITE_ACLK.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -3616,7 +3616,7 @@
       <spirit:vendorExtensions>
         <xilinx:addressSpaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="ADDRSPACE_ENABLEMENT.Data_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1 and spirit:decode(id(&apos;PARAM_VALUE.C_SINGLE_INTERFACE&apos;)) = 0)">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="ADDRSPACE_ENABLEMENT.Data_MM2S" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1 and spirit:decode(id(&apos;PARAM_VALUE.C_SINGLE_INTERFACE&apos;)) = 0)">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:addressSpaceInfo>
       </spirit:vendorExtensions>
@@ -5044,7 +5044,7 @@ Note: This value must be greater than or equal to the largest expected packet to
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aab06dfb</spirit:value>
+            <spirit:value>9:50f34858</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -5060,11 +5060,11 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Dec 19 12:34:09 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 14:15:00 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aab06dfb</spirit:value>
+            <spirit:value>9:50f34858</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -5105,7 +5105,7 @@ Note: This value must be greater than or equal to the largest expected packet to
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:1034807b</spirit:value>
+            <spirit:value>9:02ba1a4a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -5121,11 +5121,11 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Dec 19 12:34:09 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 14:15:01 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:1034807b</spirit:value>
+            <spirit:value>9:02ba1a4a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -5139,11 +5139,11 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Dec 19 23:29:58 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 14:20:15 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aab06dfb</spirit:value>
+            <spirit:value>9:50f34858</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -5206,7 +5206,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_aclk" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_aclk" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6248,7 +6248,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_araddr" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_araddr" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6272,7 +6272,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arlen" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arlen" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6296,7 +6296,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arsize" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arsize" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6320,7 +6320,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arburst" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arburst" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6344,7 +6344,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arprot" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arprot" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6368,7 +6368,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arcache" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arcache" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6412,7 +6412,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6435,7 +6435,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_arready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6462,7 +6462,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rdata" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rdata" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6489,7 +6489,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rresp" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rresp" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6512,7 +6512,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rlast" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rlast" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6535,7 +6535,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6555,7 +6555,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_mm2s_rready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6575,7 +6575,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.mm2s_prmry_reset_out_n" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.mm2s_prmry_reset_out_n" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6599,7 +6599,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tdata" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tdata" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6623,7 +6623,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tkeep" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tkeep" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6643,7 +6643,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tvalid" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6666,7 +6666,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tready" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6686,7 +6686,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tlast" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axis_mm2s_tlast" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -7659,7 +7659,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.mm2s_introut" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.mm2s_introut" xilinx:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;))=1">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -7752,7 +7752,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="INTEGER">
         <spirit:name>C_SG_LENGTH_WIDTH</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_SG_LENGTH_WIDTH" spirit:minimum="8" spirit:maximum="26" spirit:rangeType="long">14</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_SG_LENGTH_WIDTH" spirit:minimum="8" spirit:maximum="26" spirit:rangeType="long">18</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="INTEGER">
         <spirit:name>C_M_AXI_SG_ADDR_WIDTH</spirit:name>
@@ -7790,7 +7790,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="INTEGER">
         <spirit:name>C_INCLUDE_MM2S</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_INCLUDE_MM2S" spirit:choiceRef="choice_list_8af5a703">0</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_INCLUDE_MM2S" spirit:choiceRef="choice_list_8af5a703">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="INTEGER">
         <spirit:name>C_INCLUDE_MM2S_SF</spirit:name>
@@ -7798,18 +7798,18 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_INCLUDE_MM2S_SF" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_INCLUDE_MM2S_SF" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="INTEGER">
         <spirit:name>C_MM2S_BURST_SIZE</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_MM2S_BURST_SIZE" spirit:choiceRef="choice_list_884121e1">16</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_MM2S_BURST_SIZE" spirit:choiceRef="choice_list_884121e1">256</spirit:value>
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_MM2S_BURST_SIZE" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_MM2S_BURST_SIZE" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
@@ -7820,7 +7820,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXI_MM2S_ADDR_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXI_MM2S_ADDR_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
@@ -7831,7 +7831,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXI_MM2S_DATA_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXI_MM2S_DATA_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
@@ -7842,7 +7842,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXIS_MM2S_TDATA_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_M_AXIS_MM2S_TDATA_WIDTH" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
@@ -7853,7 +7853,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:vendorExtensions>
           <xilinx:parameterInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_INCLUDE_MM2S_DRE" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_MM2S_TDATA_WIDTH&apos;)) &lt; 128))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="MODELPARAM_ENABLEMENT.C_INCLUDE_MM2S_DRE" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_INCLUDE_MM2S&apos;)) = 1) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_MM2S_TDATA_WIDTH&apos;)) &lt; 128))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:parameterInfo>
         </spirit:vendorExtensions>
@@ -8308,6 +8308,18 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
       <spirit:file>
+        <spirit:name>design_1_axi_dma_0_stub.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>design_1_axi_dma_0_stub.vhdl</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>design_1_axi_dma_0_sim_netlist.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
@@ -8319,18 +8331,6 @@ Note: This value must be greater than or equal to the largest expected packet to
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
         <spirit:userFileType>USED_IN_single_language</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_axi_dma_0_stub.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_axi_dma_0_stub.vhdl</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
@@ -8404,7 +8404,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:name>c_sg_length_width</spirit:name>
       <spirit:displayName>Length Width</spirit:displayName>
       <spirit:description>This is the number of valid bits in the buffer-length field of the Buffer Descriptor or the BTT register.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_sg_length_width" spirit:order="1100" spirit:configGroups="1 NoDisplay" spirit:minimum="8" spirit:maximum="26" spirit:rangeType="long">14</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_sg_length_width" spirit:order="1100" spirit:configGroups="1 NoDisplay" spirit:minimum="8" spirit:maximum="26" spirit:rangeType="long">18</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -8468,7 +8468,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:name>c_include_mm2s</spirit:name>
       <spirit:displayName>Enable Read Channel</spirit:displayName>
       <spirit:description>Enable the trasmit path i.e. Memory to Stream.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_include_mm2s" spirit:choiceRef="choice_pairs_ce1226b1" spirit:order="1800" spirit:configGroups="1 NoDisplay">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_include_mm2s" spirit:choiceRef="choice_pairs_ce1226b1" spirit:order="1800" spirit:configGroups="1 NoDisplay">1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -8485,7 +8485,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_m_axi_mm2s_data_width">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_m_axi_mm2s_data_width">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
@@ -8494,11 +8494,11 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:name>c_m_axis_mm2s_tdata_width</spirit:name>
       <spirit:displayName>Stream Data Width</spirit:displayName>
       <spirit:description>Width of the data bus on Streaming Side. This can never be more than the Memory Mapped Data Width</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_m_axis_mm2s_tdata_width" spirit:choiceRef="choice_list_6fc15197" spirit:order="2100">32</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_m_axis_mm2s_tdata_width" spirit:choiceRef="choice_list_8e01990c" spirit:order="2100">32</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_m_axis_mm2s_tdata_width">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_m_axis_mm2s_tdata_width">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
@@ -8511,7 +8511,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_include_mm2s_dre">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_include_mm2s_dre">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
@@ -8532,11 +8532,11 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:name>c_mm2s_burst_size</spirit:name>
       <spirit:displayName>Max Burst Size</spirit:displayName>
       <spirit:description>This sets the Max Burst Length for the AXI4 Memory Mapped transaction.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_mm2s_burst_size" spirit:choiceRef="choice_list_8dd5e905" spirit:order="2300" spirit:configGroups="1 NoDisplay">16</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_mm2s_burst_size" spirit:choiceRef="choice_list_8dd5e905" spirit:order="2300" spirit:configGroups="1 NoDisplay">256</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_mm2s_burst_size">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_mm2s_burst_size">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
@@ -8621,7 +8621,7 @@ Note: This value must be greater than or equal to the largest expected packet to
     <spirit:parameter>
       <spirit:name>c_s2mm_burst_size</spirit:name>
       <spirit:displayName>Max Burst Size</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_s2mm_burst_size" spirit:choiceRef="choice_list_884121e1" spirit:order="3000" spirit:configGroups="1 NoDisplay">256</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.c_s2mm_burst_size" spirit:choiceRef="choice_list_8dd5e905" spirit:order="3000" spirit:configGroups="1 NoDisplay">256</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -8651,7 +8651,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_single_interface">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PARAM_ENABLEMENT.c_single_interface">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:parameterInfo>
       </spirit:vendorExtensions>
@@ -8680,6 +8680,7 @@ Note: This value must be greater than or equal to the largest expected packet to
       </xilinx:xpmLibraries>
       <xilinx:coreRevision>19</xilinx:coreRevision>
       <xilinx:configElementInfos>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.MM2S_INTROUT.PortWidth" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.HAS_BURST" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.HAS_TKEEP" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.HAS_TLAST" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -8689,6 +8690,8 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.TDEST_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.TID_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_CNTRL.TUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_MM2S.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_MM2S.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_MM2S.HAS_BURST" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_MM2S.HAS_TKEEP" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXIS_MM2S.HAS_TLAST" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -8702,9 +8705,9 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.ARUSER_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.AWUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.BUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.CLK_DOMAIN" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.DATA_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.FREQ_HZ" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.HAS_BRESP" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.HAS_BURST" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.HAS_CACHE" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -8728,6 +8731,8 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.SUPPORTS_NARROW_BURST" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.WUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S.WUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_MM2S_CLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.ADDR_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.ARUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.AWUSER_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -8746,7 +8751,7 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.HAS_WSTRB" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.ID_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.MAX_BURST_LENGTH" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.NUM_READ_OUTSTANDING" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.NUM_READ_OUTSTANDING" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.NUM_READ_THREADS" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.NUM_WRITE_OUTSTANDING" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_S2MM.NUM_WRITE_THREADS" xilinx:valuePermission="bd"/>
@@ -8790,16 +8795,17 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_SG.SUPPORTS_NARROW_BURST" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_SG.WUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_SG.WUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S2MM_INTROUT.PortWidth" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TKEEP" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TLAST" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TREADY" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TLAST" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TREADY" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.HAS_TSTRB" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TDATA_NUM_BYTES" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TDEST_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TID_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TDEST_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TID_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_S2MM.TUSER_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_STS.HAS_TKEEP" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_STS.HAS_TLAST" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXIS_STS.HAS_TREADY" xilinx:valuePermission="bd"/>
@@ -8842,10 +8848,12 @@ Note: This value must be greater than or equal to the largest expected packet to
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_include_s2mm_dre" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_include_sg" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_m_axi_s2mm_data_width" xilinx:valueSource="propagated" xilinx:valuePermission="bd_and_user"/>
+        <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_mm2s_burst_size" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_prmry_is_aclk_async" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_s2mm_burst_size" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_s_axis_s2mm_tdata_width" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_sg_include_stscntrl_strm" xilinx:valueSource="user"/>
+        <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.c_sg_length_width" xilinx:valueSource="user"/>
       </xilinx:configElementInfos>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

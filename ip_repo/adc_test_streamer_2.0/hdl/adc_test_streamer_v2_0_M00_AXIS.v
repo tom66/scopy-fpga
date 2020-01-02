@@ -6,15 +6,14 @@
 		// Users to add parameters here
 
 		// User parameters ends
-		// Do not modify the parameters beyond this line
 
-		// Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
-		parameter integer C_M_AXIS_TDATA_WIDTH	= 32,
+		parameter integer C_M_AXIS_TDATA_WIDTH	= 64,
 		// Start count is the number of clock cycles the master will wait before initiating/issuing any transaction.
 		parameter integer C_M_START_COUNT	= 32
 	)
 	(
 		// Users to add ports here
+		input wire [63:0] ADC_BUS,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -65,8 +64,8 @@
 	// State variable                                                                    
 	reg [1:0] mst_exec_state;                                                            
 	// Example design FIFO read pointer                                                  
-	reg [bit_num-1:0] read_pointer;                                                      
-
+	reg [bit_num-1:0] read_pointer;      
+	
 	// AXI Stream internal signals
 	//wait counter. The master waits for the user defined number of clock cycles before initiating a transfer.
 	reg [WAIT_COUNT_BITS-1 : 0] 	count;
@@ -83,8 +82,7 @@
 	wire  	tx_en;
 	//The master has issued all the streaming data stored in FIFO
 	reg  	tx_done;
-
-
+	
 	// I/O Connections assignments
 
 	assign M_AXIS_TVALID	= axis_tvalid_delay;
@@ -184,7 +182,10 @@
 	      read_pointer <= 0;                                                         
 	      tx_done <= 1'b0;                                                           
 	    end                                                                          
-	  else                                                                           
+	  else    
+	    read_pointer <= 1; // read_pointer + 1; 
+	    tx_done <= 1'b0; 
+	    /*                                                                     
 	    if (read_pointer <= NUMBER_OF_OUTPUT_WORDS-1)                                
 	      begin                                                                      
 	        if (tx_en)                                                               
@@ -200,7 +201,8 @@
 	        // tx_done is asserted when NUMBER_OF_OUTPUT_WORDS numbers of streaming data
 	        // has been out.                                                         
 	        tx_done <= 1'b1;                                                         
-	      end                                                                        
+	      end   
+	    */                                                                     
 	end                                                                              
 
 
@@ -217,7 +219,8 @@
 	        end                                          
 	      else if (tx_en)// && M_AXIS_TSTRB[byte_index]  
 	        begin                                        
-	          stream_data_out <= 32'hdeadbeef + read_pointer; //;read_pointer + 32'b1;   
+	          stream_data_out <= endless; //;read_pointer + 32'b1;   
+	          endless <= endless + 1;
 	        end                                          
 	    end                                              
 

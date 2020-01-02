@@ -3,33 +3,40 @@
    "commentid":"",
    "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -y 390 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -y 410 -defaultsOSRD
-preplace port FCLK_CLK0 -pg 1 -y 430 -defaultsOSRD
-preplace inst rst_ps7_0_50M -pg 1 -lvl 1 -y 440 -defaultsOSRD
-preplace inst axi_dma -pg 1 -lvl 3 -y 250 -defaultsOSRD
-preplace inst adc_test_streamer_0 -pg 1 -lvl 2 -y 220 -defaultsOSRD
-preplace inst axi_smc -pg 1 -lvl 4 -y 200 -defaultsOSRD
-preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 530 -defaultsOSRD
-preplace inst system_ila_0 -pg 1 -lvl 5 -y 100 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 5 -y 430 -defaultsOSRD
-preplace netloc processing_system7_0_DDR 1 5 1 NJ
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 340 70 NJ 70 NJ 70 1470 200 1940
-preplace netloc axi_smc_M00_AXI 1 4 1 1460
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 6 -30 340 320J 410 NJ 410 NJ 410 1440J 530 1940
-preplace netloc fifo_generator_0_M_AXIS 1 2 3 700 90 NJ 90 1480
-preplace netloc axi_dma_M_AXI_S2MM 1 3 1 1140
-preplace netloc processing_system7_0_FIXED_IO 1 5 1 NJ
-preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 1 4 310 100 680 80 1130 120 1440J
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 -40 330 330 110 710 100 1120 110 1450 330 1950
-preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 690
-levelinfo -pg 1 -60 140 510 920 1300 1710 1970 -top 0 -bot 650
+preplace port DDR -pg 1 -y 480 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 500 -defaultsOSRD
+preplace port FCLK_CLK0 -pg 1 -y 600 -defaultsOSRD
+preplace inst rst_ps7_0_50M -pg 1 -lvl 1 -y 420 -defaultsOSRD
+preplace inst axi_dma -pg 1 -lvl 4 -y 120 -defaultsOSRD
+preplace inst adc_test_streamer_0 -pg 1 -lvl 2 -y 390 -defaultsOSRD
+preplace inst xlconcat_0 -pg 1 -lvl 5 -y 390 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 3 -y 610 -defaultsOSRD
+preplace inst system_ila_0 -pg 1 -lvl 6 -y 320 -defaultsOSRD
+preplace inst axi_interconnect_1 -pg 1 -lvl 5 -y 150 -defaultsOSRD
+preplace inst axis_data_fifo_0 -pg 1 -lvl 3 -y 410 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 6 -y 550 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 6 1 NJ
+preplace netloc axi_smc_M00_AXI 1 5 1 1720
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 7 20 730 NJ 730 NJ 730 NJ 730 NJ 730 NJ 730 2180
+preplace netloc adc_test_streamer_0_M00_AXIS 1 2 4 660 490 NJ 490 NJ 490 1710
+preplace netloc axi_dma_mm2s_introut 1 4 1 1360
+preplace netloc xlconcat_0_dout 1 5 1 1680
+preplace netloc S00_AXI_1 1 2 5 680 300 NJ 300 NJ 300 1690 220 2190
+preplace netloc processing_system7_0_FIXED_IO 1 6 1 NJ
+preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 1 5 370 460 650 240 1010 240 1380 320 1700J
+preplace netloc S01_AXI_1 1 4 1 N
+preplace netloc S00_AXI_2 1 4 1 N
+preplace netloc axi_interconnect_0_M00_AXI 1 3 1 980
+preplace netloc axis_data_fifo_0_M_AXIS 1 3 1 990
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 7 10 520 360 470 670 250 1000 250 1370 310 1690 680 2190
+preplace netloc axi_dma_s2mm_introut 1 4 1 1350
+levelinfo -pg 1 -10 190 510 830 1180 1530 1950 2210 -top 0 -bot 740
 "
 }
 {
-   "da_axi4_cnt":"11",
+   "da_axi4_cnt":"14",
    "da_axi4_s2mm_cnt":"1",
    "da_bram_cntlr_cnt":"2",
-   "da_clkrst_cnt":"15",
+   "da_clkrst_cnt":"25",
    "da_ps7_cnt":"1"
 }

@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Thu Dec 19 23:37:40 2019
+-- Date        : Thu Jan  2 16:42:31 2020
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
 --               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0_stub.vhdl
@@ -80,6 +80,14 @@ entity design_1_system_ila_0_0 is
     SLOT_2_AXIS_tvalid : in STD_LOGIC;
     SLOT_2_AXIS_tready : in STD_LOGIC;
     resetn : in STD_LOGIC;
+    SLOT_0_AXI_arid : in STD_LOGIC_VECTOR ( 0 to 0 );
+    SLOT_0_AXI_arprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    SLOT_0_AXI_awid : in STD_LOGIC_VECTOR ( 0 to 0 );
+    SLOT_0_AXI_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    SLOT_0_AXI_bid : in STD_LOGIC_VECTOR ( 0 to 0 );
+    SLOT_0_AXI_rid : in STD_LOGIC_VECTOR ( 0 to 0 );
+    SLOT_0_AXI_rresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    SLOT_0_AXI_wid : in STD_LOGIC_VECTOR ( 0 to 0 );
     SLOT_2_AXIS_tstrb : in STD_LOGIC_VECTOR ( 3 downto 0 )
   );
 
@@ -89,7 +97,7 @@ architecture stub of design_1_system_ila_0_0 is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "clk,SLOT_0_AXI_awaddr[31:0],SLOT_0_AXI_awlen[3:0],SLOT_0_AXI_awsize[2:0],SLOT_0_AXI_awvalid,SLOT_0_AXI_awready,SLOT_0_AXI_wdata[63:0],SLOT_0_AXI_wstrb[7:0],SLOT_0_AXI_wlast,SLOT_0_AXI_wvalid,SLOT_0_AXI_wready,SLOT_0_AXI_bresp[1:0],SLOT_0_AXI_bvalid,SLOT_0_AXI_bready,SLOT_0_AXI_araddr[31:0],SLOT_0_AXI_arlen[3:0],SLOT_0_AXI_arsize[2:0],SLOT_0_AXI_arvalid,SLOT_0_AXI_arready,SLOT_0_AXI_rdata[63:0],SLOT_0_AXI_rlast,SLOT_0_AXI_rvalid,SLOT_0_AXI_rready,SLOT_1_AXI_awid[11:0],SLOT_1_AXI_awaddr[31:0],SLOT_1_AXI_awlen[3:0],SLOT_1_AXI_awsize[2:0],SLOT_1_AXI_awburst[1:0],SLOT_1_AXI_awlock[1:0],SLOT_1_AXI_awcache[3:0],SLOT_1_AXI_awprot[2:0],SLOT_1_AXI_awqos[3:0],SLOT_1_AXI_awvalid,SLOT_1_AXI_awready,SLOT_1_AXI_wid[11:0],SLOT_1_AXI_wdata[31:0],SLOT_1_AXI_wstrb[3:0],SLOT_1_AXI_wlast,SLOT_1_AXI_wvalid,SLOT_1_AXI_wready,SLOT_1_AXI_bid[11:0],SLOT_1_AXI_bresp[1:0],SLOT_1_AXI_bvalid,SLOT_1_AXI_bready,SLOT_1_AXI_arid[11:0],SLOT_1_AXI_araddr[31:0],SLOT_1_AXI_arlen[3:0],SLOT_1_AXI_arsize[2:0],SLOT_1_AXI_arburst[1:0],SLOT_1_AXI_arlock[1:0],SLOT_1_AXI_arcache[3:0],SLOT_1_AXI_arprot[2:0],SLOT_1_AXI_arqos[3:0],SLOT_1_AXI_arvalid,SLOT_1_AXI_arready,SLOT_1_AXI_rid[11:0],SLOT_1_AXI_rdata[31:0],SLOT_1_AXI_rresp[1:0],SLOT_1_AXI_rlast,SLOT_1_AXI_rvalid,SLOT_1_AXI_rready,SLOT_2_AXIS_tdata[31:0],SLOT_2_AXIS_tlast,SLOT_2_AXIS_tvalid,SLOT_2_AXIS_tready,resetn,SLOT_2_AXIS_tstrb[3:0]";
+attribute black_box_pad_pin of stub : architecture is "clk,SLOT_0_AXI_awaddr[31:0],SLOT_0_AXI_awlen[3:0],SLOT_0_AXI_awsize[2:0],SLOT_0_AXI_awvalid,SLOT_0_AXI_awready,SLOT_0_AXI_wdata[63:0],SLOT_0_AXI_wstrb[7:0],SLOT_0_AXI_wlast,SLOT_0_AXI_wvalid,SLOT_0_AXI_wready,SLOT_0_AXI_bresp[1:0],SLOT_0_AXI_bvalid,SLOT_0_AXI_bready,SLOT_0_AXI_araddr[31:0],SLOT_0_AXI_arlen[3:0],SLOT_0_AXI_arsize[2:0],SLOT_0_AXI_arvalid,SLOT_0_AXI_arready,SLOT_0_AXI_rdata[63:0],SLOT_0_AXI_rlast,SLOT_0_AXI_rvalid,SLOT_0_AXI_rready,SLOT_1_AXI_awid[11:0],SLOT_1_AXI_awaddr[31:0],SLOT_1_AXI_awlen[3:0],SLOT_1_AXI_awsize[2:0],SLOT_1_AXI_awburst[1:0],SLOT_1_AXI_awlock[1:0],SLOT_1_AXI_awcache[3:0],SLOT_1_AXI_awprot[2:0],SLOT_1_AXI_awqos[3:0],SLOT_1_AXI_awvalid,SLOT_1_AXI_awready,SLOT_1_AXI_wid[11:0],SLOT_1_AXI_wdata[31:0],SLOT_1_AXI_wstrb[3:0],SLOT_1_AXI_wlast,SLOT_1_AXI_wvalid,SLOT_1_AXI_wready,SLOT_1_AXI_bid[11:0],SLOT_1_AXI_bresp[1:0],SLOT_1_AXI_bvalid,SLOT_1_AXI_bready,SLOT_1_AXI_arid[11:0],SLOT_1_AXI_araddr[31:0],SLOT_1_AXI_arlen[3:0],SLOT_1_AXI_arsize[2:0],SLOT_1_AXI_arburst[1:0],SLOT_1_AXI_arlock[1:0],SLOT_1_AXI_arcache[3:0],SLOT_1_AXI_arprot[2:0],SLOT_1_AXI_arqos[3:0],SLOT_1_AXI_arvalid,SLOT_1_AXI_arready,SLOT_1_AXI_rid[11:0],SLOT_1_AXI_rdata[31:0],SLOT_1_AXI_rresp[1:0],SLOT_1_AXI_rlast,SLOT_1_AXI_rvalid,SLOT_1_AXI_rready,SLOT_2_AXIS_tdata[31:0],SLOT_2_AXIS_tlast,SLOT_2_AXIS_tvalid,SLOT_2_AXIS_tready,resetn,SLOT_0_AXI_arid[0:0],SLOT_0_AXI_arprot[2:0],SLOT_0_AXI_awid[0:0],SLOT_0_AXI_awprot[2:0],SLOT_0_AXI_bid[0:0],SLOT_0_AXI_rid[0:0],SLOT_0_AXI_rresp[1:0],SLOT_0_AXI_wid[0:0],SLOT_2_AXIS_tstrb[3:0]";
 attribute X_CORE_INFO : string;
 attribute X_CORE_INFO of stub : architecture is "bd_f60c,Vivado 2018.3";
 begin

@@ -394,7 +394,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1044,7 +1044,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI.FREQ_HZ">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M_AXI.FREQ_HZ">50000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1326,7 +1326,7 @@
           <spirit:name>FREQ_HZ</spirit:name>
           <spirit:displayName>aclk frequency</spirit:displayName>
           <spirit:description>aclk frequency</spirit:description>
-          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.CLK.FREQ_HZ" spirit:minimum="1" spirit:maximum="1000000000" spirit:rangeType="long">5e+07</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.CLK.FREQ_HZ" spirit:minimum="1" spirit:maximum="1000000000" spirit:rangeType="long">50000000</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PHASE</spirit:name>
@@ -1454,11 +1454,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 00:20:35 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 16:34:39 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aca38648</spirit:value>
+            <spirit:value>9:4c385355</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1466,10 +1466,17 @@
         <spirit:name>xilinx_synthesisconstraints</spirit:name>
         <spirit:displayName>Synthesis Constraints</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:synthesis.constraints</spirit:envIdentifier>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_synthesisconstraints_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
+            <spirit:name>GENtimestamp</spirit:name>
+            <spirit:value>Thu Jan 02 16:34:39 UTC 2020</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aca38648</spirit:value>
+            <spirit:value>9:4c385355</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1485,11 +1492,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 00:20:35 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 16:34:39 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aca38648</spirit:value>
+            <spirit:value>9:4c385355</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1520,11 +1527,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 00:20:35 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 16:34:39 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c5b36c0d</spirit:value>
+            <spirit:value>9:b4220912</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1540,11 +1547,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 00:20:35 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 16:34:39 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c5b36c0d</spirit:value>
+            <spirit:value>9:b4220912</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1558,11 +1565,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 00:20:36 UTC 2019</spirit:value>
+            <spirit:value>Thu Jan 02 16:34:42 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aca38648</spirit:value>
+            <spirit:value>9:4c385355</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -3994,6 +4001,16 @@
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:logicalName>axi_protocol_converter_v2_1_18</spirit:logicalName>
       </spirit:file>
+      <spirit:file>
+        <spirit:name>design_1_auto_pc_0_ooc.xdc</spirit:name>
+        <spirit:userFileType>xdc</spirit:userFileType>
+        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
+        <spirit:userFileType>USED_IN_out_of_context</spirit:userFileType>
+        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_synthesisconstraints_view_fileset</spirit:name>
       <spirit:file>
         <spirit:name>design_1_auto_pc_0_ooc.xdc</spirit:name>
         <spirit:userFileType>xdc</spirit:userFileType>

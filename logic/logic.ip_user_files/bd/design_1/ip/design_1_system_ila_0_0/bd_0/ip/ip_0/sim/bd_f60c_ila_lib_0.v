@@ -109,7 +109,15 @@ probe55,
 probe56,
 probe57,
 probe58,
-probe59
+probe59,
+probe60,
+probe61,
+probe62,
+probe63,
+probe64,
+probe65,
+probe66,
+probe67
 );
 
 input clk;
@@ -117,64 +125,72 @@ input clk;
 
 input [1 : 0] probe0;
 input [31 : 0] probe1;
-input [3 : 0] probe2;
-input [2 : 0] probe3;
-input [1 : 0] probe4;
-input [31 : 0] probe5;
-input [3 : 0] probe6;
-input [2 : 0] probe7;
-input [1 : 0] probe8;
-input [1 : 0] probe9;
-input [1 : 0] probe10;
-input [63 : 0] probe11;
-input [63 : 0] probe12;
-input [7 : 0] probe13;
+input [0 : 0] probe2;
+input [3 : 0] probe3;
+input [2 : 0] probe4;
+input [2 : 0] probe5;
+input [1 : 0] probe6;
+input [31 : 0] probe7;
+input [0 : 0] probe8;
+input [3 : 0] probe9;
+input [2 : 0] probe10;
+input [2 : 0] probe11;
+input [1 : 0] probe12;
+input [0 : 0] probe13;
 input [1 : 0] probe14;
-input [2 : 0] probe15;
-input [1 : 0] probe16;
-input [1 : 0] probe17;
-input [2 : 0] probe18;
-input [1 : 0] probe19;
-input [31 : 0] probe20;
-input [1 : 0] probe21;
-input [3 : 0] probe22;
-input [11 : 0] probe23;
-input [3 : 0] probe24;
+input [1 : 0] probe15;
+input [63 : 0] probe16;
+input [0 : 0] probe17;
+input [1 : 0] probe18;
+input [63 : 0] probe19;
+input [0 : 0] probe20;
+input [7 : 0] probe21;
+input [1 : 0] probe22;
+input [2 : 0] probe23;
+input [1 : 0] probe24;
 input [1 : 0] probe25;
 input [2 : 0] probe26;
-input [3 : 0] probe27;
-input [2 : 0] probe28;
+input [1 : 0] probe27;
+input [31 : 0] probe28;
 input [1 : 0] probe29;
-input [31 : 0] probe30;
-input [1 : 0] probe31;
+input [3 : 0] probe30;
+input [11 : 0] probe31;
 input [3 : 0] probe32;
-input [11 : 0] probe33;
-input [3 : 0] probe34;
-input [1 : 0] probe35;
+input [1 : 0] probe33;
+input [2 : 0] probe34;
+input [3 : 0] probe35;
 input [2 : 0] probe36;
-input [3 : 0] probe37;
-input [2 : 0] probe38;
+input [1 : 0] probe37;
+input [31 : 0] probe38;
 input [1 : 0] probe39;
-input [11 : 0] probe40;
-input [1 : 0] probe41;
-input [1 : 0] probe42;
-input [31 : 0] probe43;
-input [11 : 0] probe44;
-input [1 : 0] probe45;
-input [31 : 0] probe46;
-input [11 : 0] probe47;
-input [3 : 0] probe48;
+input [3 : 0] probe40;
+input [11 : 0] probe41;
+input [3 : 0] probe42;
+input [1 : 0] probe43;
+input [2 : 0] probe44;
+input [3 : 0] probe45;
+input [2 : 0] probe46;
+input [1 : 0] probe47;
+input [11 : 0] probe48;
 input [1 : 0] probe49;
-input [2 : 0] probe50;
-input [1 : 0] probe51;
-input [1 : 0] probe52;
-input [2 : 0] probe53;
+input [1 : 0] probe50;
+input [31 : 0] probe51;
+input [11 : 0] probe52;
+input [1 : 0] probe53;
 input [31 : 0] probe54;
-input [3 : 0] probe55;
-input [0 : 0] probe56;
-input [0 : 0] probe57;
-input [0 : 0] probe58;
-input [0 : 0] probe59;
+input [11 : 0] probe55;
+input [3 : 0] probe56;
+input [1 : 0] probe57;
+input [2 : 0] probe58;
+input [1 : 0] probe59;
+input [1 : 0] probe60;
+input [2 : 0] probe61;
+input [31 : 0] probe62;
+input [3 : 0] probe63;
+input [0 : 0] probe64;
+input [0 : 0] probe65;
+input [0 : 0] probe66;
+input [0 : 0] probe67;
 
 
 endmodule

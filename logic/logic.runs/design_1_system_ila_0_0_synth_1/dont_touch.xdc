@@ -59,6 +59,10 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 
 # XDC: c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/bd_f60c_ooc.xdc
 
+# XDC: c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0_ooc.xdc
+# XDC: The top module name and the constraint reference have the same name: 'design_1_system_ila_0_0'. Do not add the DONT_TOUCH constraint.
+set_property DONT_TOUCH TRUE [get_cells inst -quiet] -quiet
+
 # IP: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0.xci
 # IP: The module: 'design_1_system_ila_0_0' is the root of the design. Do not add the DONT_TOUCH constraint.
 
@@ -116,3 +120,7 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 #dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==bd_f60c_slot_2_apcs_0 || ORIG_REF_NAME==bd_f60c_slot_2_apcs_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
 
 # XDC: c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/bd_f60c_ooc.xdc
+
+# XDC: c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0_ooc.xdc
+# XDC: The top module name and the constraint reference have the same name: 'design_1_system_ila_0_0'. Do not add the DONT_TOUCH constraint.
+#dup# set_property DONT_TOUCH TRUE [get_cells inst -quiet] -quiet
