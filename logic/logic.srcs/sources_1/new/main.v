@@ -65,21 +65,41 @@ output led_PL0, led_PL1;
 //  - 800MHz QDR clocks (x3) for CSI output (in testing these are set to low-MHz)  [clk_mipi, clk_mipi_0,90,180,270]
 //
 
-wire clk_master_50, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
-
-reg led_reg0 = 1;
-reg led_reg1 = 1;
+wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
 reg [63:0] adc_bus;
 
 design_1 (
     .ADC_BUS(adc_bus),
-    .FCLK_CLK0(clk_master_50)
+    .FCLK_CLK0(clk_master)
 );
 
-assign led_PL0 = led_reg0;
-assign led_PL1 = led_reg1;
+reg g_rst_gen = 0;
+reg g_rst_state = 0;
+reg [7:0] g_rst_counter = 0;
 
+// Reset pulse generator. Generates a one time reset pulse for the following blocks.
+// TODO:  I think this should become a global block.
+always @(posedge clk_master) begin
+
+    if (g_rst_state == 0) begin
+    
+        g_rst_counter <= g_rst_counter + 1;
+        
+        if (g_rst_counter == 3) begin
+            g_rst_gen <= 1;   
+        end
+        
+        if (g_rst_counter == 15) begin
+            g_rst_gen <= 0;
+            g_rst_state <= 1;   
+        end
+    
+    end
+    
+end
+
+/*
 clk_wiz_0 (
     .clk_out1_0(clk_mipi_0),
     .clk_out1_90(clk_mipi_90), // unused
@@ -88,12 +108,87 @@ clk_wiz_0 (
     //.reset(0),
     .power_down(0),
     .locked(pll_locked),
-    .clk_in1(clk_master_50)
+    .clk_in1(clk_master)
+);
+*/
+
+wire [13:0] adc_data_latched_0;
+wire [13:0] adc_data_latched_1;
+wire [13:0] adc_data_latched_2;
+wire [13:0] adc_data_latched_3;
+wire [13:0] adc_data_latched_4;
+wire [13:0] adc_data_latched_5;
+wire [13:0] adc_data_latched_6;
+wire [13:0] adc_data_latched_7;
+
+wire [1:0] debug_adc;
+
+assign led_PL0 = debug_adc[0];
+assign led_PL1 = debug_adc[1];
+
+adc_receiver (
+    // ADC interface
+    .adc_l1a_p(adc_l1a_p),
+    .adc_l1a_n(adc_l1a_n),
+    .adc_l1b_p(adc_l1b_p),
+    .adc_l1b_n(adc_l1b_n),
+    .adc_l2a_p(adc_l2a_p),
+    .adc_l2a_n(adc_l2a_n),
+    .adc_l2b_p(adc_l2b_p),
+    .adc_l2b_n(adc_l2b_n),
+    .adc_l3a_p(adc_l3a_p),
+    .adc_l3a_n(adc_l3a_n),
+    .adc_l3b_p(adc_l3b_p),
+    .adc_l3b_n(adc_l3b_n),
+    .adc_l4a_p(adc_l4a_p),
+    .adc_l4a_n(adc_l4a_n),
+    .adc_l4b_p(adc_l4b_p),
+    .adc_l4b_n(adc_l4b_n),
+    .adc_lclk_p(adc_lclk_p),
+    .adc_lclk_n(adc_lclk_n),
+    .adc_fclk_p(adc_fclk_p),
+    .adc_fclk_n(adc_fclk_n),
+    
+    // Mode: fixed to 8-bit for now
+    .adc_mode(2'b01),
+    
+    // 8 x 14-bit output registers
+    .adc_data_latched_0(adc_data_latched_0),
+    .adc_data_latched_1(adc_data_latched_1),
+    .adc_data_latched_2(adc_data_latched_2),
+    .adc_data_latched_3(adc_data_latched_3),
+    .adc_data_latched_4(adc_data_latched_4),
+    .adc_data_latched_5(adc_data_latched_5),
+    .adc_data_latched_6(adc_data_latched_6),
+    .adc_data_latched_7(adc_data_latched_7),
+    
+    // adc_data_rdy (ignored)
+    
+    // Debug output
+    .debug(debug_adc),
+    
+    // Global reset signal: not asserted for now
+    .g_rst(g_rst_gen),
+    
+    // Global clock enable: always enabled
+    .g_rx_ce(1),
+    
+    // Reference clock input
+    .clk_ref(clk_master)
 );
 
-always @(posedge clk_master_50) begin
+always @(posedge clk_master) begin
 
-    adc_bus <= adc_bus + 1;
+    adc_bus[ 7: 0] <= adc_data_latched_0[7:0];
+    adc_bus[15: 8] <= adc_data_latched_1[7:0];
+    adc_bus[23:16] <= adc_data_latched_2[7:0];
+    adc_bus[31:24] <= adc_data_latched_3[7:0];
+    adc_bus[39:32] <= adc_data_latched_4[7:0];
+    adc_bus[47:40] <= adc_data_latched_5[7:0];
+    adc_bus[55:48] <= adc_data_latched_6[7:0];
+    adc_bus[63:56] <= adc_data_latched_7[7:0];
+    
+    //adc_bus <= adc_bus + 1;
 
 end
 

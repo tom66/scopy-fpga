@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Thu Jan  2 23:18:41 2020
+| Date         : Fri Jan  3 16:16:33 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |    1 |     0 |     40600 | <0.01 |
-|   LUT as Logic          |    1 |     0 |     40600 | <0.01 |
+| Slice LUTs*             |   69 |     0 |     40600 |  0.17 |
+|   LUT as Logic          |   69 |     0 |     40600 |  0.17 |
 |   LUT as Memory         |    0 |     0 |     17400 |  0.00 |
-| Slice Registers         |   64 |     0 |     81200 |  0.08 |
-|   Register as Flip Flop |   64 |     0 |     81200 |  0.08 |
+| Slice Registers         |  231 |     0 |     81200 |  0.28 |
+|   Register as Flip Flop |  231 |     0 |     81200 |  0.28 |
 |   Register as Latch     |    0 |     0 |     81200 |  0.00 |
 | F7 Muxes                |    0 |     0 |     26600 |  0.00 |
 | F8 Muxes                |    0 |     0 |     13300 |  0.00 |
@@ -56,8 +56,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 0     |          Yes |         Set |            - |
-| 64    |          Yes |       Reset |            - |
+| 1     |          Yes |         Set |            - |
+| 230   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -90,7 +90,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |    2 |     0 |       125 |  1.60 |
+| Bonded IOB                  |   22 |     0 |       125 | 17.60 |
 | Bonded IPADs                |    0 |     0 |         2 |  0.00 |
 | Bonded IOPADs               |    0 |     0 |       130 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         4 |  0.00 |
@@ -98,11 +98,12 @@ Table of Contents
 | OUT_FIFO                    |    0 |     0 |        16 |  0.00 |
 | IN_FIFO                     |    0 |     0 |        16 |  0.00 |
 | IDELAYCTRL                  |    0 |     0 |         4 |  0.00 |
-| IBUFDS                      |    0 |     0 |       121 |  0.00 |
+| IBUFDS                      |   10 |     0 |       121 |  8.26 |
 | PHASER_OUT/PHASER_OUT_PHY   |    0 |     0 |        16 |  0.00 |
 | PHASER_IN/PHASER_IN_PHY     |    0 |     0 |        16 |  0.00 |
 | IDELAYE2/IDELAYE2_FINEDELAY |    0 |     0 |       200 |  0.00 |
-| ILOGIC                      |    0 |     0 |       125 |  0.00 |
+| ILOGIC                      |    9 |     0 |       125 |  7.20 |
+|   ISERDES                   |    9 |       |           |       |
 | OLOGIC                      |    0 |     0 |       125 |  0.00 |
 +-----------------------------+------+-------+-----------+-------+
 
@@ -119,7 +120,7 @@ Table of Contents
 | PLLE2_ADV  |    0 |     0 |         4 |  0.00 |
 | BUFMRCE    |    0 |     0 |         8 |  0.00 |
 | BUFHCE     |    0 |     0 |        72 |  0.00 |
-| BUFR       |    0 |     0 |        16 |  0.00 |
+| BUFR       |    1 |     0 |        16 |  6.25 |
 +------------+------+-------+-----------+-------+
 
 
@@ -143,14 +144,22 @@ Table of Contents
 7. Primitives
 -------------
 
-+----------+------+---------------------+
-| Ref Name | Used | Functional Category |
-+----------+------+---------------------+
-| FDRE     |   64 |        Flop & Latch |
-| CARRY4   |   16 |          CarryLogic |
-| OBUF     |    2 |                  IO |
-| LUT1     |    1 |                 LUT |
-+----------+------+---------------------+
++-----------+------+---------------------+
+|  Ref Name | Used | Functional Category |
++-----------+------+---------------------+
+| FDRE      |  230 |        Flop & Latch |
+| LUT1      |   36 |                 LUT |
+| LUT5      |   16 |                 LUT |
+| LUT6      |   11 |                 LUT |
+| IBUFDS    |   10 |                  IO |
+| ISERDESE2 |    9 |                  IO |
+| LUT4      |    8 |                 LUT |
+| LUT2      |    6 |                 LUT |
+| LUT3      |    5 |                 LUT |
+| OBUF      |    2 |                  IO |
+| FDSE      |    1 |        Flop & Latch |
+| BUFR      |    1 |               Clock |
++-----------+------+---------------------+
 
 
 8. Black Boxes
@@ -160,7 +169,6 @@ Table of Contents
 |             Ref Name            | Used |
 +---------------------------------+------+
 | design_1_xbar_0                 |    1 |
-| design_1_system_ila_0_0         |    1 |
 | design_1_rst_ps7_0_50M_0        |    1 |
 | design_1_processing_system7_0_0 |    1 |
 | design_1_axis_data_fifo_0_0     |    1 |
@@ -168,7 +176,6 @@ Table of Contents
 | design_1_auto_pc_1              |    1 |
 | design_1_auto_pc_0              |    1 |
 | design_1_adc_test_streamer_0_0  |    1 |
-| clk_wiz_0                       |    1 |
 +---------------------------------+------+
 
 

@@ -167,6 +167,7 @@ void hal_init();
 void arb_delay(volatile uint32_t n);
 void systick_wait(uint32_t ms);
 void uart_putsraw(char *str);
+void uart_snprintf(char *fmt, uint32_t len, ...);
 void uart_printf(char *fmt, ...);
 void gpio_set_output(GPIO_TypeDef *gpio_port, uint32_t gpio_pin);
 void gpio_set_input(GPIO_TypeDef *gpio_port, uint32_t gpio_pin);

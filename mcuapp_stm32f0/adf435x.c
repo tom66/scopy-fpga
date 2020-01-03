@@ -103,6 +103,17 @@ void adf435x_init()
     
     adf435x_state.r4 = 0xEC83FC;
     
+    /*
+    // 50MHz output
+    adf435x_state.r0 = 0x400000;
+    adf435x_state.r1 = 0x8008011;
+    adf435x_state.r2 = 0x4e42;
+    adf435x_state.r3 = 0x4b3;
+    adf435x_state.r4 = 0xec803c;
+    adf435x_state.r5 = 0x580005;
+    adf435x_sync();
+    */
+    
     // 160MHz output
     /*
     adf435x_state.r0 = 0x330010;
@@ -114,12 +125,23 @@ void adf435x_init()
     adf435x_sync();
     */
     
+    /*
     // 1GHz output
     adf435x_state.r0 = 0x500000;
     adf435x_state.r1 = 0x8008011;
     adf435x_state.r2 = 0x4e42;
     adf435x_state.r3 = 0x4b3;
     adf435x_state.r4 = 0xac803c;
+    adf435x_state.r5 = 0x580005;
+    adf435x_sync();
+    */
+    
+    // 500MHz output
+    adf435x_state.r0 = 0x500000;
+    adf435x_state.r1 = 0x8008011;
+    adf435x_state.r2 = 0x4e42;
+    adf435x_state.r3 = 0x4b3;
+    adf435x_state.r4 = 0xbc803c;
     adf435x_state.r5 = 0x580005;
     adf435x_sync();
     

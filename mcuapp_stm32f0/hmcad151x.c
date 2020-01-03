@@ -74,7 +74,10 @@ void hmcad151x_init()
     hmcad151x_write_reg(0x53, 0);
     
     // write test patterns
-    hmcad151x_write_reg(0x25, (1 << 6));  // for counter mode
+    //hmcad151x_write_reg(0x25, (1 << 6));  // for counter mode 
+    hmcad151x_write_reg(0x25, (1 << 5));  // for alternate mode
+    hmcad151x_write_reg(0x26, 0xf000);  
+    hmcad151x_write_reg(0x27, 0xf000);
     
     // minimum clock jitter (all buffers enabled)
     hmcad151x_write_reg(0x30, 0x000f);
@@ -82,8 +85,8 @@ void hmcad151x_init()
     // LVDS drive at default 3.5mA for data, LCLK, and FCLK
     hmcad151x_write_reg(0x11, 0x0000);
     
-    // LVDS drive at 7.5mA for data, LCLK, and FCLK
-    //hmcad151x_write_reg(0x11, 0x0444);
+    // LVDS drive at 5.5mA for data, LCLK, and FCLK
+    //hmcad151x_write_reg(0x11, 0x0666);
     
     // LVDS phase: change from default configuration to ISERDESE2 supported config (data changes on clock edge)
     hmcad151x_write_reg(0x42, (0 << 5) | (0 << 6));
@@ -95,6 +98,10 @@ void hmcad151x_init()
     // bit pattern can enable each termination as required to create total required termination. 
     // these are all disabled for now
     hmcad151x_write_reg(0x12, 0x0000);
+    
+    // set up channel configuration (all ADCs on CH1)
+    //hmcad151x_write_reg(0x3a, (1 << 1) | (1 << 9));
+    //hmcad151x_write_reg(0x3b, (1 << 1) | (1 << 9));
     
     uart_printf("hmcad151x: register write complete\r\n");
 }
