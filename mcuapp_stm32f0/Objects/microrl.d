@@ -1,0 +1,9 @@
+.\objects\microrl.o: microrl\src\microrl.c
+.\objects\microrl.o: microrl\src\microrl.h
+.\objects\microrl.o: microrl\src\config.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\microrl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

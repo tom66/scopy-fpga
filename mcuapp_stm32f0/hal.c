@@ -303,27 +303,6 @@ void uart_putsraw(char *str)
 }
 
 /*
- * uart_snprintf:  Put debug string with printf formatting.
- *
- * @param   fmt         Format string
- * @param   len         Length of buffer (limited to sizeof(vsnprint_buffer) max)
- * @param   ...         Zero or more arguments for format string
- */
-void uart_snprintf(char *fmt, uint32_t len, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    
-    if(len > sizeof(vsnprint_buffer))
-        len = sizeof(vsnprint_buffer);
-    
-    vsnprintf(vsnprint_buffer, len, fmt, args);
-    uart_putsraw(vsnprint_buffer);
-    
-    va_end(args);
-}
-
-/*
  * uart_printf:  Put debug string with printf formatting.
  *
  * @note    buffer size limit enforced by vsnprintf
@@ -360,6 +339,15 @@ char uart_getchar()
 char uart_getchar_nb()
 {
     return g_UARTHandle.Instance->RDR;
+}
+
+/*
+ * uart_char_is_available:  Query if a character is available.  Return '1' if
+ * true, '0' if false.
+ */
+uint32_t uart_char_is_available()
+{
+    return !!(g_UARTHandle.Instance->ISR & UART_FLAG_RXNE);
 }
 
 /*

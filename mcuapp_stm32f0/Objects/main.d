@@ -58,3 +58,4 @@
 .\objects\main.o: hmcad151x.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\main.o: adf435x.h
+.\objects\main.o: shell.h

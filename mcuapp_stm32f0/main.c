@@ -1,6 +1,7 @@
 #include "hal.h"
 #include "hmcad151x.h"
 #include "adf435x.h"
+#include "shell.h"
 
 void main()
 {
@@ -13,7 +14,10 @@ void main()
     //raspi_power_on();
     zynq_power_on();
     hmcad151x_init();
-    adf435x_init();                                                                                                         
+    adf435x_init();
+    
+    shell_init();    
+    shell_run();
     
     while(1) ;
 }
