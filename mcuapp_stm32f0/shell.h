@@ -31,13 +31,29 @@
 #define ARG_STRING          0x02
 #define ARG_FLOAT           0x03        // not implemented right now
 #define ARG_BOOL            0x04        // maps to int, accepts 'T', 'F', 'Y', 'N', 'on', 'off', 'true', 'false', 'yes', 'no'.
+#define ARG_OPT             0x80        // flag to mark optional argument
 
 #define SHELL_MAX_ARGS      4
+#define SHELL_STR_MAX_LEN   20
+
+char arg_str_buffer[SHELL_MAX_ARGS][SHELL_STR_MAX_LEN];
 
 struct shell_command_t {
     char *command_name;
     char arg_spec[SHELL_MAX_ARGS];
     void (*callback)();
+};
+
+struct shell_arg_t {
+    uint8_t type;
+    char *arg_str;
+    int32_t arg_int;
+    float arg_float;
+};
+
+struct shell_state_t {
+    uint32_t arg_sp;
+    struct shell_arg_t arg_stack[SHELL_MAX_ARGS + 1];
 };
 
 extern struct shell_command_t shell_commands[];

@@ -22,6 +22,7 @@
  */ 
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "hal.h"
@@ -32,6 +33,8 @@
 
 microrl_t rl;
 microrl_t *prl = &rl;
+
+struct shell_state_t sh_state;
 
 /*
  * shell_init:  Initialise resources for the shell.
@@ -107,11 +110,112 @@ void shell_error(char *s)
 }
 
 /*
+ * shell_push_arg_raw:  Push an arg directly onto the stack, as a shell_arg_t struct.
+ *
+ * @return      0 = Failed to find space for argument, 1 = Argument added
+ */
+int32_t shell_push_arg_raw(struct shell_arg_t *arg)
+{
+    if(sh_state.arg_sp == (SHELL_MAX_ARGS - 1))
+        return 0;
+    
+    sh_state.arg_stack[sh_state.arg_sp++] = *arg; // Copy argument
+    return 1;
+}
+
+/*
+ * shell_push_arg_int:  Push an int argument onto the arg stack.
+ *
+ * @return      0 = Failed to find space for argument, 1 = Argument added
+ */
+int32_t shell_push_arg_int(int32_t arg)
+{
+    struct shell_arg_t as;
+    
+    as.type = ARG_INT;
+    as.arg_str = (char*)0;
+    as.arg_float = 0.0f;
+    as.arg_int = arg;
+    
+    return shell_push_arg_raw(&as);
+}
+
+/*
+ * shell_push_arg_float:  Push a float argument onto the arg stack.
+ *
+ * @return      0 = Failed to find space for argument, 1 = Argument added
+ */
+int32_t shell_push_arg_float(float arg)
+{
+    struct shell_arg_t as;
+    
+    as.type = ARG_FLOAT;
+    as.arg_str = (char*)0;
+    as.arg_float = arg;
+    as.arg_int = 0;
+    
+    return shell_push_arg_raw(&as);
+}
+
+/*
+ * shell_push_arg_string:  Push a string argument onto the arg stack.
+ *
+ * @return      0 = Failed to find space for argument, 1 = Argument added
+ */
+int32_t shell_push_arg_string(char *arg)
+{
+    struct shell_arg_t as;
+    
+    // Copy into a new buffer because the stack pointer might be invalid later
+    strncpy(arg_str_buffer[sh_state.arg_sp], arg, SHELL_STR_MAX_LEN - 1);
+    
+    as.type = ARG_STRING;
+    as.arg_str = arg_str_buffer[sh_state.arg_sp];
+    as.arg_float = 0.0f;
+    as.arg_int = 0;
+    
+    return shell_push_arg_raw(&as);
+}
+
+/*
+ * shell_unpop_arg:  Discard all arguments from the shell.
+ *
+ * @param       arg - Pointer to a struct to store the argument data in.  Not filled if no argument present.
+ *
+ * @return      The number of remaining arguments in the stack prior to this call, or 0 if no arguments are left.
+ */
+int32_t shell_unpop_arg(struct shell_arg_t *arg)
+{
+    if(sh_state.arg_sp == 0)
+        return 0;
+    
+    sh_state.arg_sp--;
+    *arg = sh_state.arg_stack[sh_state.arg_sp];
+    return sh_state.arg_sp + 1;
+}
+
+/*
+ * shell_unpop_all_args:  Discard all arguments from the shell.
+ */
+void shell_unpop_all_args()
+{
+    uint32_t a;
+    struct shell_arg_t discard;
+    
+    for(a = 0; a < SHELL_MAX_ARGS; a++) {
+        shell_unpop_arg(&discard);
+    }
+}
+
+/*
  * _shell_execute:  Callback to execute a shell command from microrl. 
  */
 int _shell_execute(void *userdata, int32_t argc, char **argv)
 {
-    uint32_t i, found = 0;
+    uint32_t i, a, found = 0, opt = 0;
+    uint8_t arg_spec;
+    int32_t arg_int;
+    float arg_float;
     
     if(argc == 0)
         return 0;
@@ -121,6 +225,43 @@ int _shell_execute(void *userdata, int32_t argc, char **argv)
     for(i = 0; shell_commands[i].command_name != 0; i++) {
         if(strcasecmp(shell_commands[i].command_name, argv[0]) == 0) {
             found = 1;
+            shell_unpop_all_args();
+            
+            for(a = 0; a < SHELL_MAX_ARGS; a++) {
+                opt = 0;
+                arg_spec = shell_commands[i].arg_spec[a] & ~ARG_OPT;
+                
+                if(arg_spec & shell_commands[i].arg_spec[a]) {
+                    opt = 1;
+                }
+                
+                if(arg_spec != ARG_NONE && a > (argc - 1)) {
+                    shell_error("Command requires more arguments");
+                }
+                
+                switch(arg_spec) {
+                    case ARG_INT:
+                        arg_int = atoi(argv[a]);
+                        shell_push_arg_int(arg_int);
+                        break;
+                    case ARG_FLOAT:
+                        arg_float = atof(argv[a]);
+                        shell_push_arg_float(arg_int);
+                        break;
+                    case ARG_BOOL:
+                        if(_shell_arg_is_true()) {
+                            shell_push_arg_int(1);
+                        } else if(_shell_arg_is_false())  {
+                            shell_push_arg_int(0);
+                        } else {
+                            shell_error("Invalid boolean argument");
+                        }
+                        break;
+                    case ARG_STRING:
+                        shell_push_arg_string(argv[a]);
+                        break;
+                }
+            }
         }
     }
     
