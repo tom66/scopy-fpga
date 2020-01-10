@@ -23,6 +23,9 @@
 <includePath path="#undef __ARM_FEATURE_QBIT" removed="true"/>
 <includePath path="g:\xilinx\sdk\2018.3\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc/usr/include"/>
 <includePath path="#undef __ARM_FEATURE_FMA" removed="true"/>
+<includePath path="#undef __ARM_NEON__" removed="true"/>
+<includePath path="#undef __ARM_NEON" removed="true"/>
+<includePath path="#undef __ARM_NEON_FP" removed="true"/>
 <includePath path="#undef __ARM_FP16_ARGS" removed="true"/>
 <includePath path="#undef __ARM_FP16_FORMAT_IEEE" removed="true"/>
 <includePath path="#undef __ARM_FEATURE_IDIV" removed="true"/>

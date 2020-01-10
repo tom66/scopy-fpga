@@ -33,10 +33,17 @@
 #define ARG_BOOL            0x04        // maps to int, accepts 'T', 'F', 'Y', 'N', 'on', 'off', 'true', 'false', 'yes', 'no'.
 #define ARG_OPT             0x80        // flag to mark optional argument
 
+#define ARG_INTOPT          (ARG_INT | ARG_OPT)
+#define ARG_STROPT          (ARG_STRING | ARG_OPT)
+#define ARG_FLTOPT          (ARG_FLOAT | ARG_OPT)
+#define ARG_BOOLOPT         (ARG_BOOL | ARG_OPT)
+
 #define SHELL_MAX_ARGS      4
 #define SHELL_STR_MAX_LEN   20
 
-char arg_str_buffer[SHELL_MAX_ARGS][SHELL_STR_MAX_LEN];
+#define HEX2DEC(x)          (((x) >= '0' && (x) <= '9') ? ((x) - '0') : ((toupper(x) >= 'A' && toupper(x) <= 'F') ? (toupper(x) - 'A' + 10) : 0))
+
+extern char shell_arg_str_buffer[SHELL_MAX_ARGS][SHELL_STR_MAX_LEN];
 
 struct shell_command_t {
     char *command_name;
@@ -60,8 +67,20 @@ extern struct shell_command_t shell_commands[];
 
 void shell_init();
 void shell_print_help();
+void shell_error(char *s);
 void _shell_print_wrapper(char *s);
 int _shell_execute(void *userdata, int32_t argc, char **argv);
+int32_t shell_push_arg_raw(struct shell_arg_t *arg);
+int32_t shell_push_arg_int(int32_t arg);
+int32_t shell_push_arg_float(float arg);
+int32_t shell_push_arg_string(char *arg);
+int32_t shell_unpop_arg(struct shell_arg_t *arg);
+int32_t shell_unpop_int();
+float shell_unpop_float();
+char* shell_unpop_string();
+void shell_unpop_all_args();
+int32_t _shell_arg_is_true(char *arg);
+int32_t _shell_arg_is_false(char *arg);
 void _shell_sigint();
 void shell_run();
 void shell_iter();

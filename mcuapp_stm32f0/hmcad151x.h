@@ -51,12 +51,46 @@
 #define HMC_SDATA_PIN           3
                                                                      
 #define HMC_SCLK_PORT           GPIOC
-#define HMC_SCLK_PIN            2    
+#define HMC_SCLK_PIN            2  
+
+#define HMC_TEST_OFF            0
+#define HMC_TEST_COUNTER        1
+#define HMC_TEST_ALTERNATE_WORD 2
+#define HMC_TEST_SINGLE_WORD    3
+#define HMC_TEST_DESKEW         4
+#define HMC_TEST_SYNC           5  
+
+#define HMC_AD_INPUT1           0x01
+#define HMC_AD_INPUT2           0x02
+#define HMC_AD_INPUT3           0x04
+#define HMC_AD_INPUT4           0x08
+
+struct hmcad151x_state_t {
+    // LVDS current for clock, frame and data pairs in mA.  Range 0-7 with a 0.5mA offset.
+    uint8_t clock_curr_lvds, frame_curr_lvds, data_curr_lvds;
+    
+    // Termination settings for clock, frame and data pairs as an index.
+    uint8_t clock_term_lvds, frame_term_lvds, data_term_lvds;
+    
+    // LVDS advance/delay and phase settings
+    int8_t lvds_advance_delay;      // -1 = delay, 0 = neutral, 1 = advance
+    uint8_t lvds_phase;             // phases as specified in HMCAD151x datasheet 
+    
+    // Channel input settings for each ADC
+    uint8_t adc_input[4];
+};
+
+extern struct hmcad151x_state_t hmcad151x_state;
+extern const uint16_t hmcad_lvds_term_lut[];
+extern const float hmcad_lvds_current_lut[];
 
 /*
  * Function prototypes
  */
 void hmcad151x_init();
 void hmcad151x_write_reg(uint8_t reg, uint16_t data);
+void hmcad151x_test_mode(uint32_t mode, uint16_t word);
+void hmcad151x_sync_lvds_settings();
+void hmcad151x_sync_channel_settings();
 
 #endif // ___HMCAD151X_H___

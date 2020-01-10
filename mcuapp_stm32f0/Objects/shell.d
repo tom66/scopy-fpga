@@ -1,6 +1,8 @@
 .\objects\shell.o: shell.c
 .\objects\shell.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\shell.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\shell.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\shell.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
 .\objects\shell.o: hal.h
 .\objects\shell.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f0xx.h
 .\objects\shell.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f071xb.h

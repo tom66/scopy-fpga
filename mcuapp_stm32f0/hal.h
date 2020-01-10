@@ -103,6 +103,7 @@
 
 #define DC_INPUT_LOW_THRESHOLD          9500            // Input below 9.5V triggers shutdown
 #define DC_INPUT_HIGH_THRESHOLD         11000           // Input above 11V allows restart
+#define DC_INPUT_HIGH_FAULT_THRESHOLD   16000           // Input above 11V allows restart
 
 // MCU onboard ADC
 #define ADC_DC_INPUT_SCALE              15766
@@ -125,6 +126,7 @@
 #define FLAG_RASPI_ON                   0x00000002
 #define FLAG_PLL_ON                     0x00000004
 #define FLAG_ADC_ON                     0x00000008
+#define FLAG_MAIN_DCDC_ON               0x00000010
 #define FLAG_DC_INPUT_LOW               0x00000100      // Set if DC input is low and operation of peripherals inhibited.
 #define FLAG_TEMP_TOO_HOT               0x00000200      // Set if a temperature sensor is too hot and shutdown has occurred
 
@@ -161,7 +163,7 @@ struct prot_power_rail_t {
     uint16_t pin;
 };
 
-extern struct sys_state_t sys_state;
+extern volatile struct sys_state_t sys_state;
 
 void hal_init();
 void arb_delay(volatile uint32_t n);
@@ -178,6 +180,7 @@ void gpio_prot_power_rail_disable(struct prot_power_rail_t *rail, int32_t dly);
 void gpio_prot_power_start();
 void gpio_prot_power_end();
 void main_psu_power_on();
+void main_psu_power_on_if_off();
 void main_psu_power_off();
 void raspi_power_on();
 void raspi_power_off();

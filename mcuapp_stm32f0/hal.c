@@ -29,9 +29,9 @@
 #include <stdint.h>
 
 static UART_HandleTypeDef g_UARTHandle;
-static ADC_HandleTypeDef g_ADCHandle;
-    
-struct sys_state_t sys_state;
+
+volatile static ADC_HandleTypeDef g_ADCHandle;
+volatile struct sys_state_t sys_state;
 
 struct prot_power_rail_t prot_rail_1v05_zynq          = { RAIL_1V05_ZYNQ, PWR_1V05_ZYNQ_CORE_GO_PORT, PWR_1V05_ZYNQ_CORE_GO_PIN };
 struct prot_power_rail_t prot_rail_1v5_ddr            = { RAIL_1V5_DDR, PWR_1V5_DDR_GO_PORT, PWR_1V5_DDR_GO_PIN };
@@ -47,14 +47,17 @@ struct prot_power_rail_t prot_rail_vtt_ddr            = { RAIL_VTT_DDR, DDR_VTT_
 
 char vsnprint_buffer[1024];
 
-uint64_t ms_since_boot;
-uint32_t ms_counter;
+// must be volatile as written inside interrupts
+volatile uint64_t ms_since_boot;
+volatile uint32_t ms_counter;
 
 /*
  * SysTick_Handler: Interrupt handler for SysTick events.
  */
-void SysTick_Handler(void)  
+volatile void SysTick_Handler(void) __attribute__ ((optimize(0))) 
 { 
+    // RCC_OscInitTypeDef RCC_OscInitDef;
+    
     uint32_t ctr_masked;
     uint32_t code;
     
@@ -67,15 +70,21 @@ void SysTick_Handler(void)
     if(HAL_ADC_PollForConversion(&g_ADCHandle, 0) == HAL_OK) {
         code = HAL_ADC_GetValue(&g_ADCHandle);
         sys_state.dc_input_mv = (code * ADC_DC_INPUT_SCALE) >> ADC_DC_INPUT_SHIFT;
+        //uart_printf("code=%d, mv=%d\r\n", code, sys_state.dc_input_mv);
+        HAL_ADC_Start(&g_ADCHandle);
+    } else {
+        // No conversion? Assume 0V input - fault.
+        sys_state.dc_input_mv = 0;
     }
-    
+        
     if(sys_state.dc_input_mv > DC_INPUT_HIGH_THRESHOLD) {
         // Clear flag indicating good DC is present again.
         sys_state.flags &= ~FLAG_DC_INPUT_LOW;
     }
     
-    if(sys_state.dc_input_mv < DC_INPUT_LOW_THRESHOLD) {
-        // Woah.  DC voltage low.  Kill the Zynq safely.
+    // Woah.  DC voltage low?  Kill the Zynq safely.
+    // High DC voltage (>16V) assumed to be fault.
+    if(sys_state.dc_input_mv < DC_INPUT_LOW_THRESHOLD || sys_state.dc_input_mv > DC_INPUT_HIGH_FAULT_THRESHOLD) {
         sys_state.flags |= FLAG_DC_INPUT_LOW;
         if(sys_state.flags & FLAG_ZYNQ_ON) {
             pll_power_off();
@@ -85,14 +94,12 @@ void SysTick_Handler(void)
         }
     }
     
-    // Set an LED if DC power low
+    // Set an LED if DC power low or high
     if(sys_state.flags & FLAG_DC_INPUT_LOW) {
         HAL_GPIO_WritePin(LED_2_PORT, LED_2_PIN, GPIO_PIN_SET);
     } else {
         HAL_GPIO_WritePin(LED_2_PORT, LED_2_PIN, GPIO_PIN_RESET);
     }
-    
-    HAL_ADC_Start(&g_ADCHandle);
     
     // Toggle heartbeat LED every 0.127s & 0.511s
     ctr_masked = ms_since_boot & 1023;
@@ -109,6 +116,7 @@ void SysTick_Handler(void)
  */
 void hal_init()
 {
+    uint32_t code;
     GPIO_InitTypeDef GPIO_Def;
     RCC_ClkInitTypeDef RCC_ClkInitDef;
     RCC_OscInitTypeDef RCC_OscInitDef;
@@ -133,19 +141,19 @@ void hal_init()
     /*
      * Initialise 48MHz oscillator.
      */
-    RCC_OscInitDef.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitDef.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
     RCC_OscInitDef.HSI48State = RCC_HSI48_ON;
+    RCC_OscInitDef.HSI14State = RCC_HSI14_ON;
     HAL_RCC_OscConfig(&RCC_OscInitDef);
 
     RCC_ClkInitDef.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitDef.APB1CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitDef.SYSCLKSource = RCC_CFGR_SW_HSI48;
+    RCC_ClkInitDef.SYSCLKSource = RCC_CFGR_SW_PLL;
     RCC_ClkInitDef.ClockType = RCC_CLOCKTYPE_SYSCLK;
     HAL_RCC_ClockConfig(&RCC_ClkInitDef, FLASH_LATENCY_1);
     
-    PeriphClkDef.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_I2C1;
+    PeriphClkDef.PeriphClockSelection = RCC_PERIPHCLK_USART1;
     PeriphClkDef.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
-    PeriphClkDef.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
     HAL_RCCEx_PeriphCLKConfig(&PeriphClkDef);
 
     __HAL_RCC_SYSCFG_CLK_ENABLE();
@@ -189,11 +197,6 @@ void hal_init()
     HAL_GPIO_WritePin(LED_P_RED_PORT, LED_P_RED_PIN, GPIO_PIN_SET);
     HAL_GPIO_WritePin(LED_P_BLU_PORT, LED_P_BLU_PIN, GPIO_PIN_SET);
     
-    /* 
-     * Configure SysTick to generate 1ms interrupts
-     */
-    SysTick_Config(SystemCoreClock / 1000);
-    
     /*
      * Initialise USART peripheral and relevant GPIOs.
      */
@@ -212,7 +215,7 @@ void hal_init()
     HAL_GPIO_Init(UART_DEBUG_PORT, &GPIO_Def);
     
     g_UARTHandle.Instance = UART_DEBUG_PERIPH;
-    g_UARTHandle.Init.BaudRate = 115200;
+    g_UARTHandle.Init.BaudRate = 460800;
     g_UARTHandle.Init.Mode = USART_MODE_TX_RX;
     g_UARTHandle.Init.Parity = USART_PARITY_NONE;
     g_UARTHandle.Init.StopBits = USART_STOPBITS_1;
@@ -240,10 +243,11 @@ void hal_init()
     g_ADCHandle.Init.LowPowerAutoWait = ENABLE;
     g_ADCHandle.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
     g_ADCHandle.Init.Resolution = ADC_RESOLUTION_12B;
-    g_ADCHandle.Init.SamplingTimeCommon = ADC_SAMPLETIME_28CYCLES_5;     // Initial guess
+    g_ADCHandle.Init.SamplingTimeCommon = ADC_SAMPLETIME_239CYCLES_5;    // Initial guess
     g_ADCHandle.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;          // Ignored
 
     HAL_ADC_Init(&g_ADCHandle);
+    HAL_ADC_Start(&g_ADCHandle);
     
     // Initialise GPIO ADC input on PC1
     GPIO_Def.Pin = GPIO_ADC_DC_IN_MEAS_PIN;
@@ -253,18 +257,50 @@ void hal_init()
     
     ADC_ChannelDef.Channel = ADC_CHANNEL_11;
     ADC_ChannelDef.Rank = 1;
-    ADC_ChannelDef.SamplingTime = ADC_SAMPLETIME_28CYCLES_5;
+    ADC_ChannelDef.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
     
     HAL_ADC_ConfigChannel(&g_ADCHandle, &ADC_ChannelDef);
     
     uart_putsraw("hal: MCU ADC initialised\r\n");
     
-    // Default power state
+    /* 
+     * Configure SysTick to generate 1ms interrupts
+     */
+    SysTick_Config(SystemCoreClock / 1000);
+    
+    /*
+     * Disable all rails on boot.
+     */
     adc_power_off();
+    uart_putsraw("hal: adc pwr OFF\r\n");
+    
     pll_power_off();
+    uart_putsraw("hal: pll pwr OFF\r\n");
+    
     raspi_power_off();
+    uart_putsraw("hal: raspi pwr OFF\r\n");
+    
     zynq_power_off();
+    uart_putsraw("hal: zynq pwr OFF\r\n");
+    
     main_psu_power_off();
+    uart_putsraw("hal: main pwr OFF\r\n");
+    
+    uart_putsraw("hal: rails start OFF\r\n");
+    
+    /*
+    shell_init();
+    
+    while(1) {
+        HAL_ADC_Start(&g_ADCHandle);
+        
+        if(HAL_ADC_PollForConversion(&g_ADCHandle, 0) == HAL_OK) {
+            code = HAL_ADC_GetValue(&g_ADCHandle);
+            sys_state.dc_input_mv = (code * ADC_DC_INPUT_SCALE) >> ADC_DC_INPUT_SHIFT;
+            uart_printf("code=%d, mv=%d\r\n", code, sys_state.dc_input_mv);
+        }
+    }
+    */
 }
 
 /**
@@ -328,6 +364,9 @@ void uart_printf(char *fmt, ...)
 char uart_getchar()
 {
     while(!(g_UARTHandle.Instance->ISR & UART_FLAG_RXNE)) ;
+    
+    g_UARTHandle.Instance->ICR |= (UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE); // discard error flags
+    
     return g_UARTHandle.Instance->RDR;
 }
 
@@ -338,6 +377,7 @@ char uart_getchar()
  */
 char uart_getchar_nb()
 {
+    g_UARTHandle.Instance->ICR |= (UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE); // discard error flags
     return g_UARTHandle.Instance->RDR;
 }
 
@@ -446,6 +486,11 @@ void gpio_prot_power_end()
  */
 void main_psu_power_on()
 {
+    // Ensure Zynq is off as we power on these rails avoiding eFUSE harm
+    // Note: To avoid resetting Zynq, etc. while powering on, use main_psu_power_on_if_off()
+    // which avoids reset if the rails are already active.
+    zynq_power_off();
+    
     // Sequence start main power rails with 10ms between each rail start
     // to limit inrush current.  Lower rails start first.
     HAL_GPIO_WritePin(PWR_1V8_MAIN_GO_PORT, PWR_1V8_MAIN_GO_PIN, GPIO_PIN_SET);
@@ -456,6 +501,19 @@ void main_psu_power_on()
     
     // Wait for rails to start
     systick_wait(80);
+    
+    sys_state.flags |= FLAG_MAIN_DCDC_ON;
+}
+
+/**
+ * main_psu_power_on_if_off:   Power up the main 5V/3V3/1V8 rails if they are
+ * not already on.
+ */
+void main_psu_power_on_if_off()
+{
+    if(!(sys_state.flags & FLAG_MAIN_DCDC_ON)) {
+        main_psu_power_on();
+    }
 }
 
 /**
@@ -474,6 +532,8 @@ void main_psu_power_off()
     HAL_GPIO_WritePin(PWR_1V8_MAIN_GO_PORT, PWR_1V8_MAIN_GO_PIN, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(PWR_3V3_MAIN_GO_PORT, PWR_3V3_MAIN_GO_PIN, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(PWR_5V0_MAIN_GO_PORT, PWR_5V0_MAIN_GO_PIN, GPIO_PIN_RESET);
+    
+    sys_state.flags &= ~FLAG_MAIN_DCDC_ON;
 }
 
 /**

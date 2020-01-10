@@ -29,6 +29,29 @@
 extern struct shell_command_t shell_commands[];
 
 void scmd_help();
+void scmd_reset();
+void scmd_volts();
 void scmd_adc_pwr();
+void scmd_pll_pwr();
+void scmd_zynq_pwr();
+void scmd_raspi_pwr();
+void scmd_all_off();
+void scmd_pll_freq();
+void scmd_pll_tune();
+void scmd_pll_profile();
+void scmd_adc_reset();
+void scmd_adc_test();
+void scmd_adc_walk();
+void scmd_adc_lvds_cdrv();
+void scmd_adc_lvds_fdrv();
+void scmd_adc_lvds_ddrv();
+void scmd_adc_lvds_drv();
+void scmd_adc_lvds_cterm();
+void scmd_adc_lvds_fterm();
+void scmd_adc_lvds_dterm();
+void scmd_adc_lvds_term();
+void scmd_adc_lvds_adv();
+void scmd_adc_lvds_phas();
+void scmd_adc_lvds_def();
 
 #endif // ___SHELL_COMMANDS_H___

@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Fri Jan  3 16:19:33 2020
+| Date         : Thu Jan  9 22:46:52 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_methodology -file main_methodology_drc_routed.rpt -pb main_methodology_drc_routed.pb -rpx main_methodology_drc_routed.rpx
 | Design       : main
@@ -23,7 +23,7 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 173
+             Violations found: 160
 +-----------+----------+------------------------------------------------------------------+------------+
 | Rule      | Severity | Description                                                      | Violations |
 +-----------+----------+------------------------------------------------------------------+------------+
@@ -33,7 +33,7 @@ Table of Contents
 | TIMING-7  | Warning  | No common node between related clocks                            | 3          |
 | TIMING-8  | Warning  | No common period between related clocks                          | 3          |
 | TIMING-15 | Warning  | Large hold violation on inter-clock path                         | 9          |
-| TIMING-16 | Warning  | Large setup violation                                            | 133        |
+| TIMING-16 | Warning  | Large setup violation                                            | 120        |
 | TIMING-18 | Warning  | Missing input or output delay                                    | 18         |
 +-----------+----------+------------------------------------------------------------------+------------+
 
@@ -41,7 +41,7 @@ Table of Contents
 -----------------
 CKLD-2#1 Warning
 Clock Net has IO Driver, not a Clock Buf, and/or non-Clock loads  
-Clock net nolabel_line129/adc_clk is directly driven by an IO rather than a Clock Buffer or may be an IO driving a mix of Clock Buffer and non-Clock loads. This connectivity should be reviewed and corrected as appropriate. Driver(s): nolabel_line129/asi2_mod_inst0/adc_data_rx_reg[0][7]_0, nolabel_line129/asi2_mod_inst1/adc_data_rx_reg[1][7]_0, nolabel_line129/asi2_mod_inst3/adc_data_rx_reg[3][7]_0, nolabel_line129/asi2_mod_inst4/adc_data_rx_reg[4][7]_0, nolabel_line129/asi2_mod_inst2/adc_data_rx_reg[2][7]_0, nolabel_line129/asi2_mod_inst5/adc_data_rx_reg[5][7]_0, nolabel_line129/asi2_mod_inst7/adc_data_rx_reg[7][7]_0, nolabel_line129/bufr_adc_ref_clkdiv/I, nolabel_line129/asi2_mod_inst6/adc_data_rx_reg[6][7]_0, nolabel_line129/nolabel_line132/O, nolabel_line129/nolabel_line198/bitslip_is_locked_reg_0
+Clock net nolabel_line129/adc_clk is directly driven by an IO rather than a Clock Buffer or may be an IO driving a mix of Clock Buffer and non-Clock loads. This connectivity should be reviewed and corrected as appropriate. Driver(s): nolabel_line129/asi2_mod_inst0/adc_data_rx_reg[0][7]_0, nolabel_line129/asi2_mod_inst2/adc_data_rx_reg[2][7]_0, nolabel_line129/asi2_mod_inst1/adc_data_rx_reg[1][7]_0, nolabel_line129/asi2_mod_inst4/adc_data_rx_reg[4][7]_0, nolabel_line129/asi2_mod_inst5/adc_data_rx_reg[5][7]_0, nolabel_line129/asi2_mod_inst6/adc_data_rx_reg[6][7]_0, nolabel_line129/asi2_mod_inst3/adc_data_rx_reg[3][7]_0, nolabel_line129/bufr_adc_ref_clkdiv/I, nolabel_line129/asi2_mod_inst7/adc_data_rx_reg[7][7]_0, nolabel_line129/nolabel_line132/O, nolabel_line129/nolabel_line198/rst_gen_bitslip_ctr_reg[0]_0
 Related violations: <none>
 
 LUTAR-1#1 Warning
@@ -106,712 +106,647 @@ Related violations: <none>
 
 TIMING-15#1 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.286 ns between adc_l2a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst2/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.473 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.283 ns between adc_l2a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst2/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.471 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#2 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.302 ns between adc_fclk_p (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.616 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.289 ns between adc_fclk_p (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.603 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#3 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.428 ns between adc_l3b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst5/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.627 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.425 ns between adc_l3b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst5/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.624 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#4 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.479 ns between adc_l4b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst7/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.656 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.477 ns between adc_l4b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst7/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.654 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#5 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.582 ns between adc_l2b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst3/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.834 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.569 ns between adc_l2b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst3/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.820 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#6 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.622 ns between adc_l4a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst6/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.829 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.619 ns between adc_l4a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst6/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.827 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#7 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.725 ns between adc_l3a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst4/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -2.003 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.712 ns between adc_l3a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst4/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -1.990 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#8 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 2.930 ns between adc_l1b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst1/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -2.195 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 2.917 ns between adc_l1b_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst1/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -2.182 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-15#9 Warning
 Large hold violation on inter-clock path  
-There is a large inter-clock skew of 3.073 ns between adc_l1a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst0/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -2.359 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
+There is a large inter-clock skew of 3.060 ns between adc_l1a_p (clocked by adc_lvds_clk) and nolabel_line129/asi2_mod_inst0/ISERDESE2_adc_inst/D (clocked by adc_lvds_clk) that results in large hold timing violation(s) of -2.346 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
 Related violations: <none>
 
 TIMING-16#1 Warning
 Large setup violation  
-There is a large setup violation of -1.007 ns between nolabel_line129/adc_data_latched_5_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[41]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.011 ns between nolabel_line129/adc_data_latched_5_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[42]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#2 Warning
 Large setup violation  
-There is a large setup violation of -1.007 ns between nolabel_line129/adc_data_latched_5_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[42]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.020 ns between nolabel_line129/adc_data_latched_2_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[16]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#3 Warning
 Large setup violation  
-There is a large setup violation of -1.008 ns between nolabel_line129/adc_data_latched_4_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[37]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.032 ns between nolabel_line129/adc_data_latched_1_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[13]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#4 Warning
 Large setup violation  
-There is a large setup violation of -1.020 ns between nolabel_line129/adc_data_latched_2_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[20]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.050 ns between nolabel_line129/adc_data_latched_6_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[49]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#5 Warning
 Large setup violation  
-There is a large setup violation of -1.026 ns between nolabel_line129/adc_data_latched_5_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[47]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.053 ns between nolabel_line129/adc_data_latched_2_reg[6]/C (clocked by adc_clk_div) and adc_bus_reg[22]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#6 Warning
 Large setup violation  
-There is a large setup violation of -1.032 ns between nolabel_line129/adc_data_latched_1_reg[6]/C (clocked by adc_clk_div) and adc_bus_reg[14]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.056 ns between nolabel_line129/adc_data_latched_0_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[5]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#7 Warning
 Large setup violation  
-There is a large setup violation of -1.051 ns between nolabel_line129/adc_data_latched_1_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[9]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.058 ns between nolabel_line129/adc_data_latched_0_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[7]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#8 Warning
 Large setup violation  
-There is a large setup violation of -1.058 ns between nolabel_line129/adc_data_latched_0_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[7]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.059 ns between nolabel_line129/adc_data_latched_3_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[26]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#9 Warning
 Large setup violation  
-There is a large setup violation of -1.060 ns between nolabel_line129/adc_data_latched_1_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[13]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.076 ns between nolabel_line129/adc_data_latched_4_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[39]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#10 Warning
 Large setup violation  
-There is a large setup violation of -1.076 ns between nolabel_line129/adc_data_latched_7_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[56]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.083 ns between nolabel_line129/adc_data_latched_4_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[32]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#11 Warning
 Large setup violation  
-There is a large setup violation of -1.083 ns between nolabel_line129/adc_data_latched_4_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[36]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.086 ns between nolabel_line129/adc_data_latched_3_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[25]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#12 Warning
 Large setup violation  
-There is a large setup violation of -1.088 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[6]/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.088 ns between nolabel_line129/adc_data_latched_3_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[31]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#13 Warning
 Large setup violation  
-There is a large setup violation of -1.094 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[0]/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.103 ns between nolabel_line129/adc_data_latched_0_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[1]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#14 Warning
 Large setup violation  
-There is a large setup violation of -1.111 ns between nolabel_line129/adc_data_latched_2_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[18]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.108 ns between nolabel_line129/adc_data_latched_4_reg[3]/C (clocked by adc_clk_div) and adc_bus_reg[35]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#15 Warning
 Large setup violation  
-There is a large setup violation of -1.133 ns between nolabel_line129/adc_data_latched_4_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[33]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.130 ns between nolabel_line129/adc_data_latched_6_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[55]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#16 Warning
 Large setup violation  
-There is a large setup violation of -1.145 ns between nolabel_line129/adc_data_latched_6_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[49]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.144 ns between nolabel_line129/adc_data_latched_4_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[34]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#17 Warning
 Large setup violation  
-There is a large setup violation of -1.147 ns between nolabel_line129/adc_data_latched_7_reg[1]/C (clocked by adc_clk_div) and adc_bus_reg[57]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.148 ns between nolabel_line129/adc_data_latched_0_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[2]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#18 Warning
 Large setup violation  
-There is a large setup violation of -1.147 ns between nolabel_line129/adc_data_latched_7_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[61]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.183 ns between nolabel_line129/adc_data_latched_0_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[0]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#19 Warning
 Large setup violation  
-There is a large setup violation of -1.152 ns between nolabel_line129/adc_data_latched_7_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[60]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.183 ns between nolabel_line129/adc_data_latched_2_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[20]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#20 Warning
 Large setup violation  
-There is a large setup violation of -1.154 ns between nolabel_line129/adc_data_latched_6_reg[3]/C (clocked by adc_clk_div) and adc_bus_reg[51]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.198 ns between nolabel_line129/nolabel_line198/rst_gen_bitslip_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[6]/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#21 Warning
 Large setup violation  
-There is a large setup violation of -1.154 ns between nolabel_line129/adc_data_latched_6_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[55]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.471 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_state_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#22 Warning
 Large setup violation  
-There is a large setup violation of -1.155 ns between nolabel_line129/adc_data_latched_6_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[48]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.578 ns between nolabel_line129/nolabel_line198/rst_gen_bitslip_ctr_reg[4]/C (clocked by adc_clk_div) and nolabel_line129/nolabel_line198/rst_gen_bitslip_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#23 Warning
 Large setup violation  
-There is a large setup violation of -1.158 ns between nolabel_line129/adc_data_latched_5_reg[6]/C (clocked by adc_clk_div) and adc_bus_reg[46]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.589 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#24 Warning
 Large setup violation  
-There is a large setup violation of -1.160 ns between nolabel_line129/adc_data_latched_3_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[28]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.643 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[10]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#25 Warning
 Large setup violation  
-There is a large setup violation of -1.164 ns between nolabel_line129/adc_data_latched_7_reg[3]/C (clocked by adc_clk_div) and adc_bus_reg[59]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.643 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[11]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#26 Warning
 Large setup violation  
-There is a large setup violation of -1.167 ns between nolabel_line129/adc_data_latched_7_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[63]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.643 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[8]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#27 Warning
 Large setup violation  
-There is a large setup violation of -1.168 ns between nolabel_line129/adc_data_latched_6_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[50]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.643 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[9]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#28 Warning
 Large setup violation  
-There is a large setup violation of -1.169 ns between nolabel_line129/adc_data_latched_1_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[12]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.651 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/last_fclk_comb_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#29 Warning
 Large setup violation  
-There is a large setup violation of -1.171 ns between nolabel_line129/adc_data_latched_7_reg[6]/C (clocked by adc_clk_div) and adc_bus_reg[62]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.732 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[4]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#30 Warning
 Large setup violation  
-There is a large setup violation of -1.178 ns between nolabel_line129/adc_data_latched_3_reg[3]/C (clocked by adc_clk_div) and adc_bus_reg[27]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.732 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[5]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#31 Warning
 Large setup violation  
-There is a large setup violation of -1.201 ns between nolabel_line129/adc_data_latched_3_reg[7]/C (clocked by adc_clk_div) and adc_bus_reg[31]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.732 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[6]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#32 Warning
 Large setup violation  
-There is a large setup violation of -1.210 ns between nolabel_line129/adc_data_latched_4_reg[3]/C (clocked by adc_clk_div) and adc_bus_reg[35]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.732 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[7]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#33 Warning
 Large setup violation  
-There is a large setup violation of -1.232 ns between nolabel_line129/adc_data_latched_4_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[34]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.744 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#34 Warning
 Large setup violation  
-There is a large setup violation of -1.233 ns between nolabel_line129/adc_data_latched_5_reg[4]/C (clocked by adc_clk_div) and adc_bus_reg[44]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.744 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#35 Warning
 Large setup violation  
-There is a large setup violation of -1.233 ns between nolabel_line129/adc_data_latched_7_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[58]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.744 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_state_complete_reg/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#36 Warning
 Large setup violation  
-There is a large setup violation of -1.242 ns between nolabel_line129/adc_data_latched_3_reg[2]/C (clocked by adc_clk_div) and adc_bus_reg[26]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.792 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[0]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#37 Warning
 Large setup violation  
-There is a large setup violation of -1.242 ns between nolabel_line129/adc_data_latched_6_reg[5]/C (clocked by adc_clk_div) and adc_bus_reg[53]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.792 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[1]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#38 Warning
 Large setup violation  
-There is a large setup violation of -1.246 ns between nolabel_line129/adc_data_latched_3_reg[0]/C (clocked by adc_clk_div) and adc_bus_reg[24]/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.792 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[2]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#39 Warning
 Large setup violation  
-There is a large setup violation of -1.374 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[1]/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.792 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_clkloss_ctr_reg[3]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#40 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_ce_clkdiv_reg/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#41 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#42 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#43 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#44 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_reg/S (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#45 Warning
 Large setup violation  
-There is a large setup violation of -1.461 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_state_complete_reg/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#46 Warning
 Large setup violation  
-There is a large setup violation of -1.462 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[0]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.834 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_reg/S (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#47 Warning
 Large setup violation  
-There is a large setup violation of -1.462 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[1]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.272 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_wri_latch_reg/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#48 Warning
 Large setup violation  
-There is a large setup violation of -1.462 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[4]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.284 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#49 Warning
 Large setup violation  
-There is a large setup violation of -1.462 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[5]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.284 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#50 Warning
 Large setup violation  
-There is a large setup violation of -1.462 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[8]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.284 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#51 Warning
 Large setup violation  
-There is a large setup violation of -1.465 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_ce_clkdiv_reg/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#52 Warning
 Large setup violation  
-There is a large setup violation of -1.465 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/g_rst_clkdiv_ctr_reg[2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#53 Warning
 Large setup violation  
-There is a large setup violation of -1.550 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[6]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#54 Warning
 Large setup violation  
-There is a large setup violation of -1.550 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[7]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#55 Warning
 Large setup violation  
-There is a large setup violation of -1.645 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[2]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#56 Warning
 Large setup violation  
-There is a large setup violation of -1.645 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_ctr_reg[3]/R (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#57 Warning
 Large setup violation  
-There is a large setup violation of -1.895 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_state_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#58 Warning
 Large setup violation  
-There is a large setup violation of -2.041 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/last_fclk_comb_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.345 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#59 Warning
 Large setup violation  
-There is a large setup violation of -2.058 ns between adc_fclk_n (clocked by adc_lvds_clk) and nolabel_line129/nolabel_line198/rst_gen_reg/D (clocked by clk_fpga_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.418 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#60 Warning
 Large setup violation  
-There is a large setup violation of -2.091 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_wri_latch_reg/D (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.418 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#61 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#62 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#63 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#64 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#65 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#66 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#67 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.420 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#68 Warning
 Large setup violation  
-There is a large setup violation of -2.395 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#69 Warning
 Large setup violation  
-There is a large setup violation of -2.399 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#70 Warning
 Large setup violation  
-There is a large setup violation of -2.399 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#71 Warning
 Large setup violation  
-There is a large setup violation of -2.399 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#72 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#73 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#74 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#75 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.442 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#76 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#77 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#78 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#79 Warning
 Large setup violation  
-There is a large setup violation of -2.444 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#80 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#81 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#82 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#83 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.446 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#84 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#85 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#86 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#87 Warning
 Large setup violation  
-There is a large setup violation of -2.484 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#88 Warning
 Large setup violation  
-There is a large setup violation of -2.487 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst0/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#89 Warning
 Large setup violation  
-There is a large setup violation of -2.516 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst4/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#90 Warning
 Large setup violation  
-There is a large setup violation of -2.527 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst3/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#91 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.483 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#92 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.486 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst4/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#93 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.526 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst1/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#94 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.546 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst0/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#95 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.551 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst3/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#96 Warning
 Large setup violation  
-There is a large setup violation of -2.546 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#97 Warning
 Large setup violation  
-There is a large setup violation of -2.549 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst1/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#98 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#99 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#100 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#101 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#102 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#103 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.578 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#104 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#105 Warning
 Large setup violation  
-There is a large setup violation of -2.579 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#106 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[0][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#107 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#108 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#109 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#110 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#111 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.656 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#112 Warning
 Large setup violation  
-There is a large setup violation of -2.680 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.705 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#113 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.705 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][0]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#114 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[2][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.705 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#115 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.705 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[6][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#116 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[3][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.741 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/nolabel_line198/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#117 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][1]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.856 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst5/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#118 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.884 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst2/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#119 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.907 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst7/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#120 Warning
 Large setup violation  
-There is a large setup violation of -2.716 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#121 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][3]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#122 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][4]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#123 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][5]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#124 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#125 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[1][7]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#126 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[4][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#127 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[5][2]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#128 Warning
-Large setup violation  
-There is a large setup violation of -2.720 ns between g_rst_gen_reg/C (clocked by clk_fpga_0) and nolabel_line129/adc_data_rx_reg[7][6]/R (clocked by adc_clk_div). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#129 Warning
-Large setup violation  
-There is a large setup violation of -2.756 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/nolabel_line198/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#130 Warning
-Large setup violation  
-There is a large setup violation of -2.829 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst6/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#131 Warning
-Large setup violation  
-There is a large setup violation of -2.874 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst5/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#132 Warning
-Large setup violation  
-There is a large setup violation of -2.935 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst2/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#133 Warning
-Large setup violation  
-There is a large setup violation of -2.963 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst7/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.915 ns between nolabel_line129/g_ce_clkdiv_reg/C (clocked by adc_clk_div) and nolabel_line129/asi2_mod_inst6/ISERDESE2_adc_inst/CE1 (clocked by adc_lvds_clk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-18#1 Warning

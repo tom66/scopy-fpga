@@ -33,11 +33,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define ADF345X_DELAY_BIT_CYCLE()       { __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); \
-                                          __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); \
-                                          __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); \
-                                          __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); __asm__("nop"); }
+#define ADF345X_DELAY_BIT_CYCLE()       // { __asm__("nop"); }
 
+#define ADF435X_INPUT_REF_MHZ           25
+                                          
 /*
  * ADF435x registe definitions
  */
@@ -117,6 +116,7 @@
 #define ADF435X_R4_FBACK_FUNDAMENTAL    (1 << 23)
 
 #define _ADF435X_R4_RFDIV_SEL_SHIFT     20
+#define _ADF435X_R4_RFDIV_SEL_MASK      (0x07 << _ADF435X_R4_RFDIV_SEL_SHIFT)
 #define ADF435X_R4_RFDIV_SEL_1          (0x00 << _ADF435X_R4_RFDIV_SEL_SHIFT)
 #define ADF435X_R4_RFDIV_SEL_2          (0x01 << _ADF435X_R4_RFDIV_SEL_SHIFT)
 #define ADF435X_R4_RFDIV_SEL_4          (0x02 << _ADF435X_R4_RFDIV_SEL_SHIFT)
@@ -139,6 +139,7 @@
 #define ADF435X_R4_AUX_OUT_ENABLED      (1 << 8)
 
 #define _ADF435X_R4_AUX_POWER_SHIFT     6
+#define _ADF435X_R4_AUX_POWER_MASK      (0x03 << _ADF435X_R4_AUX_POWER_SHIFT)
 #define ADF435X_R4_AUX_POWER_NEG_4DBM   (0x00 << _ADF435X_R4_AUX_POWER_SHIFT)
 #define ADF435X_R4_AUX_POWER_NEG_1DBM   (0x01 << _ADF435X_R4_AUX_POWER_SHIFT)
 #define ADF435X_R4_AUX_POWER_POS_2DBM   (0x02 << _ADF435X_R4_AUX_POWER_SHIFT)
@@ -148,6 +149,7 @@
 #define ADF435X_R4_RF_OUT_ENABLED       (1 << 5)
 
 #define _ADF435X_R4_RF_POWER_SHIFT      3
+#define _ADF435X_R4_RF_POWER_MASK       (0x03 << _ADF435X_R4_RF_POWER_SHIFT)
 #define ADF435X_R4_RF_POWER_NEG_4DBM    (0x00 << _ADF435X_R4_RF_POWER_SHIFT)
 #define ADF435X_R4_RF_POWER_NEG_1DBM    (0x01 << _ADF435X_R4_RF_POWER_SHIFT)
 #define ADF435X_R4_RF_POWER_POS_2DBM    (0x02 << _ADF435X_R4_RF_POWER_SHIFT)
@@ -180,6 +182,26 @@
 #define ADF_STATE_VCO_ON                0x00000004
 
 /*
+ * This structure is used to represent one of several supported and tested 
+ * configurations for the PLL setup.
+ *
+ * The Raspberry Pi application software can switch to one of these configurations
+ * or alter the first configuration in the list for a custom setup.
+ */
+struct adf435x_config_t {
+    char short_name[20];
+    uint16_t _int;
+    uint16_t frac;
+    uint16_t phase;
+    uint16_t mod;
+    uint8_t rfdiv;
+    uint8_t charge_pump;
+    uint16_t r_counter;
+    uint16_t bandsel;
+    uint32_t flags;
+};
+
+/*
  * Struct that represents state of ADF435x.
  */
 struct adf435x_state_t {
@@ -188,6 +210,13 @@ struct adf435x_state_t {
     
     // Internal state flags
     uint32_t state_flags;
+    uint8_t power_level;
+    
+    // Current configuration in use
+    struct adf435x_config_t cfg_curr;
+    
+    // Current calculated output frequency
+    float calc_output_freq;
 };
 
 extern struct adf435x_state_t adf435x_state;
@@ -210,6 +239,8 @@ extern struct adf435x_state_t adf435x_state;
 #define ADF435X_LE_PIN                  1
 #define ADF435X_CE_PORT                 GPIOB
 #define ADF435X_CE_PIN                  2
+#define ADF435X_PD_PORT                 GPIOE
+#define ADF435X_PD_PIN                  8
 
 /*
  * This set of flags is used for each configuration.  It's used to condense the 
@@ -240,11 +271,6 @@ extern struct adf435x_state_t adf435x_state;
 #define ADF_FLG_CLOCK_DIV_RESYNC    0x00400000  // ^^^^
 #define ADF_FLG_FEEDBACK_DIV        0x00800000  // If set then feedback is divided
 #define ADF_FLG_MUTE                0x01000000  // If set then MUTE is on
-#define ADF_FLG_AUX_DIV             0x02000000  // If set then AUX OUT is divided
-#define ADF_FLG_AUX_FUNDAMENTAL     0x04000000  // If set then AUX OUT is fundamental
-#define ADF_FLG_LD_PIN_LOW          0x08000000  // Only one LD_PIN flag should be set
-#define ADF_FLG_LD_PIN_DIG          0x10000000  // ^^^^
-#define ADF_FLG_LD_PIN_HIGH         0x20000000  // ^^^^
 
 /*
  * Possible values for RFDIV field in adf435x_config_t.
@@ -259,26 +285,6 @@ extern struct adf435x_state_t adf435x_state;
 #define _ADF_RFDIV_MASK_OFF         0x07        // prevent write to adjacent bits if this value is wrong
 
 /*
- * This structure is used to represent one of several supported and tested 
- * configurations for the PLL setup.
- *
- * The Raspberry Pi application software can switch to one of these configurations
- * or alter the last configuration in the list for a custom setup.
- */
-struct adf435x_config_t {
-    char short_name[10];
-    uint16_t _int;
-    uint16_t frac;
-    uint16_t phase;
-    uint16_t mod;
-    uint8_t rfdiv;
-    uint8_t charge_pump;
-    uint16_t r_counter;
-    uint16_t bandsel;
-    uint32_t flags;
-};
-
-/*
  * Possible levels for power fields in adf435x_set_power_level(). 
  */
 #define ADF_POWER_NO_CHANGE         0x00
@@ -288,14 +294,14 @@ struct adf435x_config_t {
 #define ADF_POWER_POS_5DBM          0x04
 
 /*
- * This list stores ADF_NUM_CONFIGS which can be addressed by index or 
+ * This list stores ADF_MAX_CONFIGS which can be addressed by index or 
  * by pointer.
  *
- * The last config can be edited remotely.  TBI.
+ * The first config can be edited remotely.  To be implemented.
  */
-#define ADF_NUM_CONFIGS             16
+#define ADF_MAX_CONFIGS             16
 
-extern struct adf435x_config_t adf_configs[ADF_NUM_CONFIGS];
+extern struct adf435x_config_t adf_configs[];
 
 /*
  * Function prototypes.
@@ -303,11 +309,16 @@ extern struct adf435x_config_t adf_configs[ADF_NUM_CONFIGS];
 void adf435x_init(void);
 void adf435x_write_out(uint32_t data);
 void adf435x_write_reg(uint32_t data, uint32_t reg);
+void adf435x_sync(void);
+void adf435x_sync_rf_power_state(void);
+void adf435x_shutdown(void);
 void adf435x_load_config(struct adf435x_config_t *config);
 void adf435x_load_config_index(uint32_t index);
 void adf435x_rf_on(void);
-void adf435x_aux_on(void);
-void adf435x_set_power_level(uint32_t rf_power, uint32_t aux_power);
-void adf435x_sync(void);
+void adf435x_rf_off(void);
+void adf435x_set_power_level(uint32_t rf_power);
+void adf435x_change_frequency(float freq);
+float adf435x_compute_frequency(uint32_t _int, uint32_t frac, uint32_t mod, uint32_t rfdiv);
+void adf435x_dump_state(void);
 
 #endif // ___ADF435X_H___

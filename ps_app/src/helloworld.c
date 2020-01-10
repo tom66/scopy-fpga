@@ -47,6 +47,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 #include "platform.h"
 #include "xil_printf.h"
@@ -54,6 +55,7 @@
 #include "xil_cache.h"
 #include "xil_io.h"
 #include "xil_testmem.h"
+#include "xuartps_hw.h"
 #include "xaxidma.h"
 #include "xdebug.h"
 
@@ -109,18 +111,6 @@ int main()
 
     init_platform();
 
-#if 0
-	debug_printf("\r\n\r\nDemoApp v1.0 - starting memory test...\r\n");
-
-	while(1) {
-		result = Xil_TestMem32(0x01100000, 0x03a00000, 0, XIL_TESTMEM_ALLMEMTESTS);
-		debug_printf("\r\n\r\nResult=%d\r\n", result);
-	}
-
-	while(1);
-#endif
-
-#if 1
 	debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
 
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
@@ -172,16 +162,17 @@ int main()
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1, XAXIDMA_DEVICE_TO_DMA);
 		//debug_printf("Short Xfer error=%d\r\n", error);
 
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, PACKET_MAXSIZE, XAXIDMA_DEVICE_TO_DMA);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 128, XAXIDMA_DEVICE_TO_DMA);
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) tx_buffer, PACKET_MAXSIZE, XAXIDMA_DMA_TO_DEVICE);
-
-		debug_printf("Initialise Xfer error=%d\r\n", error);
 
 		//while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA) /* || XAxiDma_Busy(&dma0_pointer, XAXIDMA_DMA_TO_DEVICE) */) {
 		//	debug_printf("w");
 		//}
 
-		arb_delay(100000);
+		arb_delay(4000000);
+
+		debug_printf("\033[2J");
+		debug_printf("Initialise Xfer error=%d, iter=%d\r\n", error, iter);
 
 		/*
 		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
@@ -195,10 +186,10 @@ int main()
 			debug_printf("Data: \r\n %08d  ", 0);
 
 			ptr = rx_buffer;
-			for(k = 0; k < (PACKET_MAXSIZE / 4); k++) {
+			for(k = 0; k < (32); k++) {
 				debug_printf("0x%08x ", *ptr++);
 				if(((k + 1) & 7) == 0) {
-					debug_printf("\r\n %08d  ", k * 4);
+					debug_printf("\r\n %08d  ", (k + 1) * 4);
 				}
 			}
 
@@ -207,138 +198,20 @@ int main()
 			iter2 = 0;
 		}
 
+		debug_printf("Press 'r' to reset app processor\r\n");
+
+		if(XUartPs_IsReceiveData(STDOUT_BASEADDRESS)) {
+			if(tolower(XUartPs_RecvByte(STDOUT_BASEADDRESS)) == 'r') {
+				debug_printf("Reset in progress...\r\n");
+				main();
+			}
+		}
+
 		iter++;
 		iter2++;
+
+		arb_delay(20000000);
 	}
-#endif
-
-#if 0
-	base = 0x01000000;
-
-    while(1) {
-		debug_printf("Running %d\r\n", loops++);
-
-		/* Block 1 */
-		srand(loops);
-		mem_addr = base;
-
-		for(i = 0; i < 1024; i++) {
-			data = 0xff00ff00;
-			debug_printf("addr=0x%08x data_write=0x%08x\r\n", mem_addr, data);
-			*mem_addr = data;
-			mem_addr++;
-		}
-
-		srand(loops);
-		mem_addr = base;
-
-		for(i = 0; i < 1024; i++) {
-			debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
-			mem_addr++;
-		}
-
-		/* Block 2 */
-		srand(loops);
-		mem_addr = base;
-
-		for(i = 0; i < 1024; i++) {
-			data = rand();
-			debug_printf("addr=0x%08x data_write=0x%08x\r\n", mem_addr, data);
-			*mem_addr = data;
-			mem_addr++;
-		}
-
-		srand(loops);
-		mem_addr = base;
-
-		for(i = 0; i < 1024; i++) {
-			debug_printf("addr=0x%08x data_read=0x%08x expect=0x%08x\r\n", mem_addr, *mem_addr, rand());
-			mem_addr++;
-		}
-    }
-#endif
-
-#ifdef MEM_TEST
-    while(1) {
-    	debug_printf("\r\n\r\nAddress of main: 0x%08x\r\n", &main);
-
-		debug_printf("\r\n\r\nSequential Write with Random Data...\r\n\r\n");
-
-		// start at a high offset, test most of the memory (232MB)
-		base = 0x01400000;
-		mem_addr = base;
-		srand(loops);
-
-		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
-			data = rand() * rand();
-			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
-				debug_printf("Write: 0x%08x to 0x%08x (%3.3f KiB) (%d)\r\n", data, mem_addr, (mem_addr - base) / 256.0f, i);
-			}
-			*mem_addr = data;
-			mem_addr++;
-		}
-
-		mem_addr = base;
-		srand(loops);
-
-		debug_printf("\r\n\r\nSequential Read of Same Random Data...\r\n\r\n");
-
-		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
-			data = rand() * rand();
-			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
-				debug_printf("Read: 0x%08x from 0x%08x expect 0x%08x (%3.3f KiB) (%d loop passes)\r\n", *mem_addr, mem_addr, data, (mem_addr - base) / 256.0f, loops);
-			}
-
-			if(((*mem_addr) != data)) {
-				debug_printf("FAIL: 0x%08x from 0x%08x expect 0x%08x\r\n", *mem_addr, mem_addr, data);
-				while(1) ;
-			}
-			mem_addr++;
-		}
-
-		debug_printf("\r\n\r\nRandom Write with Random Data...\r\n\r\n");
-
-		srand(loops);
-
-		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
-			mem_addr = base + (rand() % ((1024 * 1024 * 58)));
-			k = (uint32_t)mem_addr;
-			data = (k * k) + 0x12345679;
-
-			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
-				debug_printf("Write: 0x%08x to 0x%08x\r\n", data, mem_addr);
-			}
-			*mem_addr = data;
-			mem_addr++;
-		}
-
-		debug_printf("\r\n\r\nRandom Read of Same Data...\r\n\r\n");
-
-		srand(loops);
-
-		for(i = 0; i < ((1024 * 1024 * 58)); i++) {
-			mem_addr = base + (rand() % ((1024 * 1024 * 58)));
-			k = (uint32_t)mem_addr;
-			data = (k * k) + 0x12345679;
-
-			if((i & ((1024 * 1024 * 1) - 1)) == 0) {
-				debug_printf("Read: 0x%08x from 0x%08x expect 0x%08x (%d loop passes)\r\n", *mem_addr, mem_addr, data, loops);
-			}
-
-			if(((*mem_addr) != data)) {
-				debug_printf("FAIL: 0x%08x from 0x%08x expect 0x%08x\r\n", *mem_addr, mem_addr, data);
-				while(1) ;
-			}
-			*mem_addr = data;
-			mem_addr++;
-		}
-		loops++;
-    }
-
-    while(1) {
-    	arb_delay(1000000);
-    }
-#endif
 
     cleanup_platform();
     return 0;

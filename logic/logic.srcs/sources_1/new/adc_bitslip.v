@@ -13,10 +13,16 @@
  */
 
 // number of CLK50 cycles we need to see without FCLK being toggled
-// XXX: clk50 will become clk125 and be sync to the ADC clock - what changes here?
-parameter num_clk50_before_reset = 100;
-parameter num_clk50_rst_pulse = 50;
-parameter rst_ctr_bitsize = 8;
+// XXX: clk50 will become clk125 eventually - what changes here?
+parameter num_clk50_before_reset = 1000;
+parameter rst_clkloss_ctr_bitsize = 11;
+
+// number of bitslip no lock events before sending a reset signal to all ISERDESE2
+parameter num_bitslip_no_lock_before_reset = 96;
+parameter rst_bitslip_ctr_bitsize = 11;
+
+// global width of reset pulse for ISERDESE2 blocks in clk50 pulses
+parameter num_clk50_rst_pulse = 32;
 
 module adc_bitslip(
     // High speed clock input
@@ -48,7 +54,7 @@ module adc_bitslip(
     input clk_ref,
     
     // Reset generator output
-    output reg rst_gen
+    output rst_gen
 );
 
 reg bitslip_gen;
@@ -97,6 +103,64 @@ ISERDESE2 #(
     .CLKDIVP(0)
 );
 
+
+// Reset logic.  Observes the FCLK line that feeds the ISERDESE2 and looks for edges.  
+// One edge must occur at least within num_clk50_before_reset cycles (derived from 50MHz 
+// CLK).  If this does not occur, a reset signal will be asserted for num_clk50_rst_pulse 
+// cycles.
+//
+// This logic is necessary to ensure that if the ADC restarts that we sync correctly.  
+// To ensure it works correctly the control processor must allow at least num_clk50_rst_pulse *
+// (1/50MHz) cycles, e.g. ~100us or so between ADC stop and start.
+//
+// In addition the number of Bitslip events are counted.  If this count exceeds an upper 
+// threshold (power-of-two preferred) before lock is achieved them a reset signal will be
+// emitted.
+reg last_fclk_comb;
+
+reg rst_gen_clkloss_state = 0;
+reg rst_gen_bitslip_state = 0;
+reg [rst_clkloss_ctr_bitsize:0] rst_gen_clkloss_ctr = 0;
+reg [rst_bitslip_ctr_bitsize:0] rst_gen_bitslip_ctr = 0;
+
+reg rst_gen_clkloss = 0;
+reg rst_gen_bitslip = 0;
+
+assign rst_gen = rst_gen_clkloss | rst_gen_bitslip;
+
+always @(posedge clk_ref) begin
+
+    if (last_fclk_comb != adc_frame_clock_in) begin
+        rst_gen_clkloss_ctr <= 0;
+        rst_gen_clkloss_state <= 0;
+    end else begin
+        rst_gen_clkloss_ctr <= rst_gen_clkloss_ctr + 1;
+        
+        if ((rst_gen_clkloss_state == 1) && (rst_gen_clkloss_ctr == num_clk50_rst_pulse)) begin
+            rst_gen_clkloss_ctr <= 0;
+            rst_gen_clkloss_state <= 0;
+            rst_gen_clkloss <= 0;
+        end
+        
+        if ((rst_gen_clkloss_state == 0) && (rst_gen_clkloss_ctr == num_clk50_before_reset)) begin
+            rst_gen_clkloss_ctr <= 0;
+            rst_gen_clkloss_state <= 1;
+            rst_gen_clkloss <= 1;
+        end
+    end
+    
+    if (rst_gen_bitslip_ctr > num_bitslip_no_lock_before_reset) begin
+        if (rst_gen_bitslip_ctr < (num_bitslip_no_lock_before_reset + num_clk50_rst_pulse)) begin
+            rst_gen_bitslip <= 1;
+        end else begin
+            rst_gen_bitslip <= 0;
+        end
+    end
+    
+    last_fclk_comb <= adc_frame_clock_in;
+
+end
+
 // Bitslip operation:
 //  - Bitslip cannot be asserted continuously; it can only be asserted
 //    on every other CLKDIV cycle.
@@ -135,51 +199,17 @@ always @(posedge adc_clk_div_in) begin
             // should the ADC clock change.
             bitslip_gen <= 1;
             bitslip_is_locked <= 0;
+            rst_gen_bitslip_ctr <= rst_gen_bitslip_ctr + 1;
         end else begin
             bitslip_gen <= 0;
             bitslip_is_locked <= 1;
+            rst_gen_bitslip_ctr <= 0;  // If locked reset our reset counter
         end
         
     end else begin
         bitslip_gen <= 0;
     end
         
-end
-
-// Reset logic.  Observes the FCLK line that feeds the ISERDESE2 and looks for edges.  
-// One edge must occur at least within num_clk50_before_reset cycles (derived from 50MHz 
-// CLK).  If this does not occur, a reset signal will be asserted for num_clk50_rst_pulse 
-// cycles.
-//
-// This logic is necessary to ensure that if the ADC restarts that we sync correctly.  
-// To ensure it works correctly the control processor must allow at least num_clk50_rst_pulse *
-// (1/50MHz) cycles, e.g. ~100us or so between ADC stop and start.
-reg last_fclk_comb;
-reg rst_gen_state = 0;
-reg [rst_ctr_bitsize:0] rst_ctr = 0;
-
-always @(posedge clk_ref) begin
-
-    if (last_fclk_comb != adc_frame_clock_in) begin
-        rst_ctr <= 0;
-        rst_gen_state <= 0;
-    end else begin
-        rst_ctr <= rst_ctr + 1;
-        
-        if ((rst_gen_state == 1) && (rst_ctr == num_clk50_rst_pulse)) begin
-            rst_ctr <= 0;
-            rst_gen <= 0;
-        end
-        
-        if ((rst_gen_state == 0) && (rst_ctr == num_clk50_before_reset)) begin
-            rst_gen_state <= 1;
-            rst_ctr <= 0;
-            rst_gen <= 1;
-        end
-    end
-    
-    last_fclk_comb <= adc_frame_clock_in;
-
 end
 
 endmodule

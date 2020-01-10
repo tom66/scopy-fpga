@@ -1,8 +1,10 @@
 .\objects\adf435x.o: adf435x.c
+.\objects\adf435x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\adf435x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\adf435x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f0xx.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f071xb.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm0.h
-.\objects\adf435x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h
@@ -54,6 +56,7 @@
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart_ex.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_wwdg.h
+.\objects\adf435x.o: shell.h
 .\objects\adf435x.o: adf435x.h
 .\objects\adf435x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\adf435x.o: hal.h

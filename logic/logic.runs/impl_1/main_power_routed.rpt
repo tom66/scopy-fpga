@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date             : Fri Jan  3 16:19:36 2020
+| Date             : Thu Jan  9 22:46:54 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.517        |
+| Total On-Chip Power (W)  | 1.519        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.380        |
+| Dynamic (W)              | 1.382        |
 | Device Static (W)        | 0.137        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 67.5         |
@@ -52,21 +52,21 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.027 |        5 |       --- |             --- |
-| Slice Logic              |     0.004 |     8104 |       --- |             --- |
-|   LUT as Logic           |     0.003 |     2709 |     40600 |            6.67 |
-|   CARRY4                 |    <0.001 |      102 |     13300 |            0.77 |
-|   Register               |    <0.001 |     3925 |     81200 |            4.83 |
+| Clocks                   |     0.029 |        5 |       --- |             --- |
+| Slice Logic              |     0.004 |     8128 |       --- |             --- |
+|   LUT as Logic           |     0.003 |     2717 |     40600 |            6.69 |
+|   CARRY4                 |    <0.001 |      108 |     13300 |            0.81 |
+|   Register               |    <0.001 |     3941 |     81200 |            4.85 |
 |   F7/F8 Muxes            |    <0.001 |       36 |     53200 |            0.07 |
 |   LUT as Shift Register  |    <0.001 |      165 |     17400 |            0.95 |
 |   Others                 |     0.000 |      459 |       --- |             --- |
 |   LUT as Distributed RAM |     0.000 |       22 |     17400 |            0.13 |
-| Signals                  |     0.005 |     5894 |       --- |             --- |
+| Signals                  |     0.005 |     5920 |       --- |             --- |
 | Block RAM                |     0.001 |      8.5 |       107 |            7.94 |
 | I/O                      |     0.068 |       22 |       125 |           17.60 |
 | PS7                      |     1.275 |        1 |       --- |             --- |
 | Static Power             |     0.137 |          |           |                 |
-| Total                    |     1.517 |          |           |                 |
+| Total                    |     1.519 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -76,7 +76,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.066 |       0.052 |      0.014 |
+| Vccint    |       1.000 |     0.068 |       0.054 |      0.014 |
 | Vccaux    |       1.800 |     0.025 |       0.011 |      0.015 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
 | Vcco25    |       2.500 |     0.014 |       0.013 |      0.001 |
@@ -154,11 +154,12 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| main                     |     1.380 |
-|   nolabel_line129        |     0.071 |
-|   nolabel_line72         |     1.305 |
-|     axi_dma              |     0.017 |
-|       U0                 |     0.017 |
+| main                     |     1.382 |
+|   nolabel_line129        |     0.072 |
+|     nolabel_line198      |     0.001 |
+|   nolabel_line72         |     1.307 |
+|     axi_dma              |     0.018 |
+|       U0                 |     0.018 |
 |     axi_interconnect_0   |     0.006 |
 |       s00_couplers       |     0.006 |
 |     axi_interconnect_1   |     0.004 |
