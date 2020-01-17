@@ -16,9 +16,12 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xuartps_hw.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops_hw.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xplatform_info.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h \
@@ -61,11 +64,17 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h:
 
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops_hw.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xplatform_info.h:
+
 ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:
-
-../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:
 

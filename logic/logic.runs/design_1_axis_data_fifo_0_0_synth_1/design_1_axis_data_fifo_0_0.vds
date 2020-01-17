@@ -2,8 +2,8 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Fri Jan  3 16:04:24 2020
-# Process ID: 5556
+# Start of session at: Fri Jan 17 16:21:16 2020
+# Process ID: 19916
 # Current directory: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1
 # Command line: vivado.exe -log design_1_axis_data_fifo_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_axis_data_fifo_0_0.tcl
 # Log file: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/design_1_axis_data_fifo_0_0.vds
@@ -21,9 +21,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 1048 
+INFO: Helper process launched with PID 23308 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 396.844 ; gain = 103.527
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 396.152 ; gain = 100.969
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'design_1_axis_data_fifo_0_0' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/synth/design_1_axis_data_fifo_0_0.v:58]
 INFO: [Synth 8-6157] synthesizing module 'axis_data_fifo_v2_0_0_top' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/4efd/hdl/axis_data_fifo_v2_0_vl_rfs.v:54]
@@ -35,7 +35,7 @@ INFO: [Synth 8-6157] synthesizing module 'axis_data_fifo_v2_0_0_top' [c:/Users/T
 	Parameter C_AXIS_SIGNAL_SET bound to: 32'b00000000000000000000000000010111 
 	Parameter C_FIFO_DEPTH bound to: 1024 - type: integer 
 	Parameter C_FIFO_MODE bound to: 1 - type: integer 
-	Parameter C_IS_ACLK_ASYNC bound to: 0 - type: integer 
+	Parameter C_IS_ACLK_ASYNC bound to: 1 - type: integer 
 	Parameter C_SYNCHRONIZER_STAGE bound to: 3 - type: integer 
 	Parameter C_ACLKEN_CONV_MODE bound to: 0 - type: integer 
 	Parameter C_ECC_MODE bound to: 0 - type: integer 
@@ -63,7 +63,7 @@ INFO: [Synth 8-6157] synthesizing module 'axis_data_fifo_v2_0_0_top' [c:/Users/T
 	Parameter G_TASK_SEVERITY_WARNING bound to: 1 - type: integer 
 	Parameter G_TASK_SEVERITY_INFO bound to: 0 - type: integer 
 	Parameter LP_CDC_SYNC_STAGES bound to: 3 - type: integer 
-	Parameter LP_CLOCKING_MODE bound to: common_clock - type: string 
+	Parameter LP_CLOCKING_MODE bound to: independent_clock - type: string 
 	Parameter LP_ECC_MODE bound to: no_ecc - type: string 
 	Parameter LP_FIFO_DEPTH bound to: 1024 - type: integer 
 	Parameter LP_FIFO_MEMORY_TYPE bound to: auto - type: string 
@@ -189,7 +189,7 @@ WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Viv
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:2279]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:2279]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:2279]
-	Parameter CLOCKING_MODE bound to: common_clock - type: string 
+	Parameter CLOCKING_MODE bound to: independent_clock - type: string 
 	Parameter FIFO_MEMORY_TYPE bound to: auto - type: string 
 	Parameter PACKET_FIFO bound to: false - type: string 
 	Parameter FIFO_DEPTH bound to: 1024 - type: integer 
@@ -220,14 +220,14 @@ WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Viv
 	Parameter TDEST_OFFSET bound to: 82 - type: integer 
 	Parameter TUSER_OFFSET bound to: 83 - type: integer 
 	Parameter AXIS_DATA_WIDTH bound to: 84 - type: integer 
-	Parameter P_COMMON_CLOCK bound to: 1 - type: integer 
+	Parameter P_COMMON_CLOCK bound to: 0 - type: integer 
 	Parameter P_FIFO_MEMORY_TYPE bound to: 0 - type: integer 
 	Parameter P_ECC_MODE bound to: 0 - type: integer 
 	Parameter P_PKT_MODE bound to: 0 - type: integer 
 	Parameter AXIS_FINAL_DATA_WIDTH bound to: 84 - type: integer 
 	Parameter TUSER_MAX_WIDTH bound to: 4013 - type: integer 
 INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_sync_rst' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1055]
-	Parameter DEST_SYNC_FF bound to: 4 - type: integer 
+	Parameter DEST_SYNC_FF bound to: 3 - type: integer 
 	Parameter INIT bound to: 32'sb00000000000000000000000000000000 
 	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
 	Parameter SIM_ASSERT_CHK bound to: 0 - type: integer 
@@ -299,7 +299,7 @@ WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Viv
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:126]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:126]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:126]
-	Parameter COMMON_CLOCK bound to: 1 - type: integer 
+	Parameter COMMON_CLOCK bound to: 0 - type: integer 
 	Parameter RELATED_CLOCKS bound to: 0 - type: integer 
 	Parameter FIFO_MEMORY_TYPE bound to: 0 - type: integer 
 	Parameter ECC_MODE bound to: 0 - type: integer 
@@ -337,7 +337,7 @@ WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Viv
 	Parameter WR_RD_RATIO bound to: 0 - type: integer 
 	Parameter PF_THRESH_ADJ bound to: 9 - type: integer 
 	Parameter PE_THRESH_ADJ bound to: 3 - type: integer 
-	Parameter PF_THRESH_MIN bound to: 5 - type: integer 
+	Parameter PF_THRESH_MIN bound to: 8 - type: integer 
 	Parameter PF_THRESH_MAX bound to: 1019 - type: integer 
 	Parameter PE_THRESH_MIN bound to: 5 - type: integer 
 	Parameter PE_THRESH_MAX bound to: 1019 - type: integer 
@@ -372,7 +372,7 @@ INFO: [Synth 8-6157] synthesizing module 'xpm_memory_base' [G:/Xilinx/Vivado/201
 	Parameter MEMORY_TYPE bound to: 1 - type: integer 
 	Parameter MEMORY_SIZE bound to: 86016 - type: integer 
 	Parameter MEMORY_PRIMITIVE bound to: 0 - type: integer 
-	Parameter CLOCKING_MODE bound to: 0 - type: integer 
+	Parameter CLOCKING_MODE bound to: 1 - type: integer 
 	Parameter ECC_MODE bound to: 0 - type: integer 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
 	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
@@ -434,33 +434,72 @@ INFO: [Synth 8-6059] Synth Info: [XPM_MEMORY 20-1] MEMORY_PRIMITIVE (0) instruct
 WARNING: [Synth 8-6014] Unused sequential element gen_rd_b.gen_doutb_pipe.enb_pipe_reg[0] was removed.  [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:2935]
 INFO: [Synth 8-5772] Detected attribute (* ram_ecc = "no_ecc" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_base' (5#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:57]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_gray' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
+	Parameter DEST_SYNC_FF bound to: 3 - type: integer 
+	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
+	Parameter REG_OUTPUT bound to: 0 - type: integer 
+	Parameter SIM_ASSERT_CHK bound to: 0 - type: integer 
+	Parameter SIM_LOSSLESS_GRAY_CHK bound to: 0 - type: integer 
+	Parameter VERSION bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 10 - type: integer 
+INFO: [Synth 8-5534] Detected attribute (* ASYNC_REG = "TRUE" *) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:358]
+WARNING: [Synth 8-6014] Unused sequential element dest_out_bin_ff_reg was removed.  [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:417]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_gray' (6#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
+INFO: [Synth 8-6157] synthesizing module 'xpm_fifo_reg_vec' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1759]
+	Parameter REG_WIDTH bound to: 10 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_reg_vec' (7#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1759]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_gray__parameterized0' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
+	Parameter DEST_SYNC_FF bound to: 5 - type: integer 
+	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
+	Parameter REG_OUTPUT bound to: 0 - type: integer 
+	Parameter SIM_ASSERT_CHK bound to: 0 - type: integer 
+	Parameter SIM_LOSSLESS_GRAY_CHK bound to: 0 - type: integer 
+	Parameter VERSION bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 11 - type: integer 
+WARNING: [Synth 8-6014] Unused sequential element dest_out_bin_ff_reg was removed.  [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:417]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_gray__parameterized0' (7#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
+INFO: [Synth 8-6157] synthesizing module 'xpm_fifo_reg_vec__parameterized0' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1759]
+	Parameter REG_WIDTH bound to: 11 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_reg_vec__parameterized0' (7#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1759]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_gray__parameterized1' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
+	Parameter DEST_SYNC_FF bound to: 3 - type: integer 
+	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
+	Parameter REG_OUTPUT bound to: 0 - type: integer 
+	Parameter SIM_ASSERT_CHK bound to: 0 - type: integer 
+	Parameter SIM_LOSSLESS_GRAY_CHK bound to: 0 - type: integer 
+	Parameter VERSION bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 11 - type: integer 
+WARNING: [Synth 8-6014] Unused sequential element dest_out_bin_ff_reg was removed.  [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:417]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_gray__parameterized1' (7#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:284]
 INFO: [Synth 8-6157] synthesizing module 'xpm_fifo_reg_bit' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1781]
 	Parameter RST_VALUE bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_reg_bit' (6#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1781]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_reg_bit' (8#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1781]
 INFO: [Synth 8-226] default block is never used [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1187]
 INFO: [Synth 8-226] default block is never used [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1233]
 INFO: [Synth 8-226] default block is never used [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1244]
 INFO: [Synth 8-6157] synthesizing module 'xpm_counter_updn' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 	Parameter COUNTER_WIDTH bound to: 2 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn' (7#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn' (9#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 INFO: [Synth 8-6157] synthesizing module 'xpm_fifo_rst' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1504]
-	Parameter COMMON_CLOCK bound to: 1 - type: integer 
+	Parameter COMMON_CLOCK bound to: 0 - type: integer 
 	Parameter CDC_DEST_SYNC_FF bound to: 3 - type: integer 
 	Parameter SIM_ASSERT_CHK bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_rst' (8#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1504]
+INFO: [Synth 8-226] default block is never used [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1664]
+INFO: [Synth 8-226] default block is never used [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1689]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_rst' (10#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1504]
 INFO: [Synth 8-6157] synthesizing module 'xpm_counter_updn__parameterized0' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 	Parameter COUNTER_WIDTH bound to: 11 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized0' (8#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized0' (10#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 INFO: [Synth 8-6157] synthesizing module 'xpm_counter_updn__parameterized1' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 	Parameter COUNTER_WIDTH bound to: 10 - type: integer 
 	Parameter RESET_VALUE bound to: 1 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized1' (8#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized1' (10#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 INFO: [Synth 8-6157] synthesizing module 'xpm_counter_updn__parameterized2' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 	Parameter COUNTER_WIDTH bound to: 10 - type: integer 
 	Parameter RESET_VALUE bound to: 2 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized2' (8#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_counter_updn__parameterized2' (10#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1733]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:124]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:126]
 WARNING: [Synth 8-6104] Input port 'value' has an internal driver [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:126]
@@ -481,24 +520,22 @@ WARNING: [Synth 8-6014] Unused sequential element gdvld.data_valid_std_reg was r
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-4471] merging register 'gen_fwft.empty_fwft_fb_reg' into 'gen_fwft.empty_fwft_i_reg' [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1292]
 WARNING: [Synth 8-6014] Unused sequential element gen_fwft.empty_fwft_fb_reg was removed.  [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:1292]
-INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_base' (9#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:56]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_base' (11#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:56]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_axis' (10#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:2208]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_fifo_axis' (12#1) [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:2208]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-6155] done synthesizing module 'axis_data_fifo_v2_0_0_top' (11#1) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/4efd/hdl/axis_data_fifo_v2_0_vl_rfs.v:54]
+INFO: [Synth 8-6155] done synthesizing module 'axis_data_fifo_v2_0_0_top' (13#1) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/4efd/hdl/axis_data_fifo_v2_0_vl_rfs.v:54]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-6155] done synthesizing module 'design_1_axis_data_fifo_0_0' (12#1) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/synth/design_1_axis_data_fifo_0_0.v:58]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_axis_data_fifo_0_0' (14#1) [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/synth/design_1_axis_data_fifo_0_0.v:58]
 WARNING: [Synth 8-3331] design axis_infrastructure_v1_1_0_util_aclken_converter_wrapper has unconnected port ACLK
 WARNING: [Synth 8-3331] design axis_infrastructure_v1_1_0_util_aclken_converter_wrapper has unconnected port ARESETN
 WARNING: [Synth 8-3331] design axis_infrastructure_v1_1_0_util_aclken_converter_wrapper has unconnected port S_ACLKEN
 WARNING: [Synth 8-3331] design axis_infrastructure_v1_1_0_util_aclken_converter_wrapper has unconnected port M_ACLKEN
-WARNING: [Synth 8-3331] design xpm_fifo_rst has unconnected port rd_clk
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port sleep
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rsta
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regcea
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterra
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterra
-WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port clkb
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[83]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[82]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[81]
@@ -585,10 +622,8 @@ WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[1]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
-WARNING: [Synth 8-3331] design xpm_fifo_axis has unconnected port m_aclk
-WARNING: [Synth 8-3331] design axis_data_fifo_v2_0_0_top has unconnected port m_axis_aclk
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 453.715 ; gain = 160.398
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:09 . Memory (MB): peak = 452.715 ; gain = 157.531
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -601,10 +636,10 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 453.715 ; gain = 160.398
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:10 . Memory (MB): peak = 452.715 ; gain = 157.531
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 453.715 ; gain = 160.398
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:10 . Memory (MB): peak = 452.715 ; gain = 157.531
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -615,48 +650,96 @@ Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/
 Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_ooc.xdc] for cell 'inst'
 Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/dont_touch.xdc]
 Finished Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/dont_touch.xdc]
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/design_1_axis_data_fifo_0_0_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/design_1_axis_data_fifo_0_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/gaxis_rst_sync.xpm_cdc_sync_rst_inst'
 Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/gaxis_rst_sync.xpm_cdc_sync_rst_inst'
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
 Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst_axis.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst'
 Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst_axis.tcl] for cell 'inst/gen_fifo.xpm_fifo_axis_inst'
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst_axis.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/design_1_axis_data_fifo_0_0_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/design_1_axis_data_fifo_0_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 812.594 ; gain = 0.000
-WARNING: [Constraints 18-5210] No constraints selected for write.
-Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 818.602 ; gain = 0.000
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 812.594 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 818.602 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 812.594 ; gain = 0.000
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.077 . Memory (MB): peak = 812.594 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 818.602 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.153 . Memory (MB): peak = 818.602 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:31 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:31 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for inst. (constraint file  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/dont_touch.xdc, line 9).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/\gen_cdc_pntr.rd_pntr_cdc_inst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/\gen_cdc_pntr.wr_pntr_cdc_inst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/\gen_cdc_pntr.rd_pntr_cdc_dc_inst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/\gen_cdc_pntr.wr_pntr_cdc_dc_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /\gaxis_rst_sync.xpm_cdc_sync_rst_inst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/xpm_fifo_rst_inst/\gen_rst_ic.rrst_wr_inst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst /xpm_fifo_base_inst/xpm_fifo_rst_inst/\gen_rst_ic.wrst_rd_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for inst/\gen_fifo.xpm_fifo_axis_inst . (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:31 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'gen_rst_ic.curr_wrst_state_reg' in module 'xpm_fifo_rst'
+INFO: [Synth 8-802] inferred FSM for state register 'gen_rst_ic.curr_rrst_state_reg' in module 'xpm_fifo_rst'
+INFO: [Synth 8-5544] ROM "gen_rst_ic.rst_seq_reentered" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.fifo_wr_rst_i" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.wr_rst_busy_i" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_wrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_wrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_wrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_wrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_rrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "gen_rst_ic.next_rrst_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-802] inferred FSM for state register 'gen_fwft.curr_fwft_state_reg' in module 'xpm_fifo_base'
 INFO: [Synth 8-5544] ROM "gen_fwft.leaving_empty_fwft" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "next_fwft_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "next_fwft_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "next_fwft_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "next_fwft_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+               WRST_IDLE |                            00001 |                              000
+                 WRST_IN |                            00010 |                              010
+                WRST_OUT |                            00100 |                              111
+               WRST_EXIT |                            01000 |                              110
+            WRST_GO2IDLE |                            10000 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'gen_rst_ic.curr_wrst_state_reg' using encoding 'one-hot' in module 'xpm_fifo_rst'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+               RRST_IDLE |                               00 |                               00
+                 RRST_IN |                               01 |                               10
+                RRST_OUT |                               10 |                               11
+               RRST_EXIT |                               11 |                               01
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'gen_rst_ic.curr_rrst_state_reg' using encoding 'sequential' in module 'xpm_fifo_rst'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -667,7 +750,7 @@ INFO: [Synth 8-5544] ROM "next_fwft_state" won't be mapped to Block RAM because 
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'gen_fwft.curr_fwft_state_reg' using encoding 'sequential' in module 'xpm_fifo_base'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:23 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -681,22 +764,29 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   4 Input     11 Bit       Adders := 2     
+	   2 Input     11 Bit       Adders := 2     
 	   4 Input     10 Bit       Adders := 3     
 	   4 Input      2 Bit       Adders := 1     
++---XORs : 
+	   2 Input     11 Bit         XORs := 2     
+	   2 Input     10 Bit         XORs := 2     
+	   2 Input      1 Bit         XORs := 38    
 +---Registers : 
 	               84 Bit    Registers := 2     
-	               11 Bit    Registers := 2     
-	               10 Bit    Registers := 3     
-	                4 Bit    Registers := 1     
-	                3 Bit    Registers := 1     
+	               11 Bit    Registers := 14    
+	               10 Bit    Registers := 13    
+	                3 Bit    Registers := 3     
 	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 10    
+	                1 Bit    Registers := 14    
 +---RAMs : 
 	              84K Bit         RAMs := 1     
 +---Muxes : 
-	   2 Input      2 Bit        Muxes := 31    
-	   4 Input      2 Bit        Muxes := 7     
-	   4 Input      1 Bit        Muxes := 2     
+	   5 Input      5 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 5     
+	   4 Input      2 Bit        Muxes := 8     
+	   2 Input      2 Bit        Muxes := 33    
+	   5 Input      1 Bit        Muxes := 4     
+	   4 Input      1 Bit        Muxes := 3     
 	   2 Input      1 Bit        Muxes := 4     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -708,13 +798,42 @@ Hierarchical RTL Component report
 Module xpm_cdc_sync_rst 
 Detailed RTL Component Info : 
 +---Registers : 
-	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
 Module xpm_memory_base 
 Detailed RTL Component Info : 
 +---Registers : 
 	               84 Bit    Registers := 2     
 +---RAMs : 
 	              84K Bit         RAMs := 1     
+Module xpm_cdc_gray 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input     10 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 9     
++---Registers : 
+	               10 Bit    Registers := 4     
+Module xpm_fifo_reg_vec 
+Detailed RTL Component Info : 
++---Registers : 
+	               10 Bit    Registers := 1     
+Module xpm_cdc_gray__parameterized0 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input     11 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 10    
++---Registers : 
+	               11 Bit    Registers := 6     
+Module xpm_fifo_reg_vec__parameterized0 
+Detailed RTL Component Info : 
++---Registers : 
+	               11 Bit    Registers := 1     
+Module xpm_cdc_gray__parameterized1 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input     11 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 10    
++---Registers : 
+	               11 Bit    Registers := 4     
 Module xpm_fifo_reg_bit 
 Detailed RTL Component Info : 
 +---Registers : 
@@ -728,8 +847,15 @@ Detailed RTL Component Info :
 Module xpm_fifo_rst 
 Detailed RTL Component Info : 
 +---Registers : 
-	                3 Bit    Registers := 1     
 	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 4     
++---Muxes : 
+	   5 Input      5 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 5     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   5 Input      1 Bit        Muxes := 4     
+	   4 Input      1 Bit        Muxes := 1     
 Module xpm_counter_updn__parameterized0 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -750,6 +876,8 @@ Detailed RTL Component Info :
 	               10 Bit    Registers := 1     
 Module xpm_fifo_base 
 Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     11 Bit       Adders := 2     
 +---Registers : 
 	                1 Bit    Registers := 5     
 +---Muxes : 
@@ -774,9 +902,13 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port rsta
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port regcea
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterra
+WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[83]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:36 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -786,7 +918,7 @@ Block RAM: Preliminary Mapping  Report (see note below)
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 |Module Name      | RTL Object                       | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
-|xpm_memory_base: | gen_wr_a.gen_word_narrow.mem_reg | 1 K x 84(READ_FIRST)   | W |   | 1 K x 84(WRITE_FIRST)  |   | R | Port A and B     | 1      | 2      | 
+|xpm_memory_base: | gen_wr_a.gen_word_narrow.mem_reg | 1 K x 84(NO_CHANGE)    | W |   | 1 K x 84(WRITE_FIRST)  |   | R | Port A and B     | 1      | 2      | 
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
 Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
@@ -803,13 +935,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:39 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:29 ; elapsed = 00:00:53 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:39 . Memory (MB): peak = 812.594 ; gain = 519.277
+Finished Timing Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:53 . Memory (MB): peak = 818.602 ; gain = 523.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -819,7 +951,7 @@ Block RAM: Final Mapping  Report
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 |Module Name      | RTL Object                       | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
-|xpm_memory_base: | gen_wr_a.gen_word_narrow.mem_reg | 1 K x 84(READ_FIRST)   | W |   | 1 K x 84(WRITE_FIRST)  |   | R | Port A and B     | 1      | 2      | 
+|xpm_memory_base: | gen_wr_a.gen_word_narrow.mem_reg | 1 K x 84(NO_CHANGE)    | W |   | 1 K x 84(WRITE_FIRST)  |   | R | Port A and B     | 1      | 2      | 
 +-----------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
 ---------------------------------------------------------------------------------
@@ -835,7 +967,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:27 ; elapsed = 00:00:40 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:54 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -859,7 +991,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished IO Insertion : Time (s): cpu = 00:00:31 ; elapsed = 00:00:56 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -872,7 +1004,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:31 ; elapsed = 00:00:56 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -884,25 +1016,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:31 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:31 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:31 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:31 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -918,66 +1050,74 @@ Report Cell Usage:
 +------+-----------+------+
 |      |Cell       |Count |
 +------+-----------+------+
-|1     |CARRY4     |     9|
-|2     |LUT1       |     2|
-|3     |LUT2       |     7|
-|4     |LUT3       |     4|
-|5     |LUT4       |    14|
-|6     |LUT5       |     9|
-|7     |LUT6       |    19|
+|1     |CARRY4     |    13|
+|2     |LUT1       |     3|
+|3     |LUT2       |    56|
+|4     |LUT3       |    27|
+|5     |LUT4       |    23|
+|6     |LUT5       |    26|
+|7     |LUT6       |    36|
 |8     |RAMB18E1_1 |     1|
 |9     |RAMB36E1_1 |     2|
-|10    |FDRE       |    49|
-|11    |FDSE       |     8|
+|10    |FDRE       |   288|
+|11    |FDSE       |     6|
 +------+-----------+------+
 
 Report Instance Areas: 
 +------+---------------------------------------------+-----------------------------------+------+
 |      |Instance                                     |Module                             |Cells |
 +------+---------------------------------------------+-----------------------------------+------+
-|1     |top                                          |                                   |   124|
-|2     |  inst                                       |axis_data_fifo_v2_0_0_top          |   124|
-|3     |    \gen_fifo.xpm_fifo_axis_inst             |xpm_fifo_axis                      |   124|
-|4     |      \gaxis_rst_sync.xpm_cdc_sync_rst_inst  |xpm_cdc_sync_rst                   |     4|
-|5     |      xpm_fifo_base_inst                     |xpm_fifo_base                      |   118|
+|1     |top                                          |                                   |   481|
+|2     |  inst                                       |axis_data_fifo_v2_0_0_top          |   481|
+|3     |    \gen_fifo.xpm_fifo_axis_inst             |xpm_fifo_axis                      |   481|
+|4     |      \gaxis_rst_sync.xpm_cdc_sync_rst_inst  |xpm_cdc_sync_rst__3                |     3|
+|5     |      xpm_fifo_base_inst                     |xpm_fifo_base                      |   476|
 |6     |        \gen_sdpram.xpm_memory_base_inst     |xpm_memory_base                    |     3|
-|7     |        rdp_inst                             |xpm_counter_updn__parameterized0   |    15|
-|8     |        rdpp1_inst                           |xpm_counter_updn__parameterized1   |    28|
-|9     |        rst_d1_inst                          |xpm_fifo_reg_bit                   |     3|
-|10    |        wrp_inst                             |xpm_counter_updn__parameterized0_0 |    20|
-|11    |        wrpp1_inst                           |xpm_counter_updn__parameterized1_1 |    26|
-|12    |        xpm_fifo_rst_inst                    |xpm_fifo_rst                       |    11|
+|7     |        \gen_cdc_pntr.wr_pntr_cdc_inst       |xpm_cdc_gray__2                    |    58|
+|8     |        \gen_cdc_pntr.wr_pntr_cdc_dc_inst    |xpm_cdc_gray__parameterized0       |    86|
+|9     |        \gen_cdc_pntr.rd_pntr_cdc_inst       |xpm_cdc_gray                       |    58|
+|10    |        \gen_cdc_pntr.rd_pntr_cdc_dc_inst    |xpm_cdc_gray__parameterized1       |    64|
+|11    |        \gen_cdc_pntr.rpw_gray_reg           |xpm_fifo_reg_vec                   |    20|
+|12    |        \gen_cdc_pntr.wpr_gray_reg           |xpm_fifo_reg_vec_0                 |    19|
+|13    |        \gen_fwft.rdpp1_inst                 |xpm_counter_updn                   |    15|
+|14    |        rdp_inst                             |xpm_counter_updn__parameterized0   |    21|
+|15    |        rdpp1_inst                           |xpm_counter_updn__parameterized1   |    24|
+|16    |        rst_d1_inst                          |xpm_fifo_reg_bit                   |     2|
+|17    |        wrp_inst                             |xpm_counter_updn__parameterized0_1 |    14|
+|18    |        wrpp1_inst                           |xpm_counter_updn__parameterized1_2 |    23|
+|19    |        wrpp2_inst                           |xpm_counter_updn__parameterized2   |    23|
+|20    |        xpm_fifo_rst_inst                    |xpm_fifo_rst                       |    34|
+|21    |          \gen_rst_ic.wrst_rd_inst           |xpm_cdc_sync_rst__4                |     3|
+|22    |          \gen_rst_ic.rrst_wr_inst           |xpm_cdc_sync_rst                   |     3|
 +------+---------------------------------------------+-----------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:29 ; elapsed = 00:00:41 . Memory (MB): peak = 831.324 ; gain = 538.008
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:31 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 95 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:31 . Memory (MB): peak = 831.324 ; gain = 179.129
-Synthesis Optimization Complete : Time (s): cpu = 00:00:29 ; elapsed = 00:00:42 . Memory (MB): peak = 831.324 ; gain = 538.008
+Synthesis finished with 0 errors, 0 critical warnings and 92 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:19 ; elapsed = 00:00:42 . Memory (MB): peak = 827.086 ; gain = 166.016
+Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:00:57 . Memory (MB): peak = 827.086 ; gain = 531.902
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 12 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 16 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 836.430 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 829.012 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-66 Infos, 205 Warnings, 0 Critical Warnings and 0 Errors encountered.
+93 Infos, 207 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:45 . Memory (MB): peak = 836.430 ; gain = 549.891
-INFO: [Common 17-600] The following parameters have non-default value.
-tcl.collectionResultDisplayLimit
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 836.430 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:33 ; elapsed = 00:01:01 . Memory (MB): peak = 829.012 ; gain = 543.105
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 829.012 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/design_1_axis_data_fifo_0_0.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_axis_data_fifo_0_0, cache-ID = e826ed88f35d1e78
-INFO: [Coretcl 2-1174] Renamed 11 cell refs.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 836.430 ; gain = 0.000
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_axis_data_fifo_0_0, cache-ID = 33220240ecf3a6cf
+INFO: [Coretcl 2-1174] Renamed 21 cell refs.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 829.012 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/design_1_axis_data_fifo_0_0_synth_1/design_1_axis_data_fifo_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_axis_data_fifo_0_0_utilization_synth.rpt -pb design_1_axis_data_fifo_0_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Jan  3 16:05:19 2020...
+INFO: [Common 17-206] Exiting Vivado at Fri Jan 17 16:22:27 2020...

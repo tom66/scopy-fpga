@@ -57,30 +57,56 @@ input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk
     
 output led_PL0, led_PL1;
 
-// 50MHz clock from PS clock source
+// ??MHz clock from PS clock source
 // This is derived from a 33.33MHz clock from the PS_CLK input.
 // 
 // Clock breakdown:
-//  -  50MHz logic clock for general logic                                         [clk_master_50]
-//  - 800MHz QDR clocks (x3) for CSI output (in testing these are set to low-MHz)  [clk_mipi, clk_mipi_0,90,180,270]
+//  -  ??MHz logic clock for general logic                                         [clk_master]
+//  - 800MHz QDR clocks (x3) for CSI output (in testing these are set to low-MHz)  [clk_mipi_0,90,180,270]
 //
+
+wire clk_idelay_refclk;
 
 wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
 reg [63:0] adc_bus;
+wire adc_data_clk;
+
+wire [63:0] emio_output;
+wire [63:0] emio_input;
+reg [14:0] pl_irq;
 
 design_1 (
     .ADC_BUS(adc_bus),
-    .FCLK_CLK0(clk_master)
+    .ADC_DATA_CLK(adc_data_clk),
+    .FCLK_CLK0(clk_master),
+    
+    // EMIO 64-bit low speed signalling bus between ARM and fabric
+    .EMIO_I(emio_input),    // Data into ARM
+    .EMIO_O(emio_output),   // Data from ARM
+    
+    // IRQ outputs from PL
+    .PL_IRQ(pl_irq)
 );
 
 reg g_rst_gen = 0;
 reg g_rst_state = 0;
 reg [7:0] g_rst_counter = 0;
 
+reg [15:0] emio_counter;
+wire [7:0] train_data_debug;
+
+assign emio_input[63:48] = emio_counter;
+assign emio_input[9] = emio_output[0];
+assign emio_input[15:10] = debug_adc[7:2];
+assign emio_input[31:24] = train_data_debug;
+
 // Reset pulse generator. Generates a one time reset pulse for the following blocks.
 // TODO:  I think this should become a global block.
 always @(posedge clk_master) begin
+
+    // test EMIO
+    emio_counter <= emio_counter + 1;
 
     if (g_rst_state == 0) begin
     
@@ -112,6 +138,15 @@ clk_wiz_0 (
 );
 */
 
+/*
+ * REFCLK source for IDELAYCTRL block.
+ */
+clk_wiz_1_idelay_refclk (
+    .clk_out1(clk_idelay_refclk),
+    .power_down(0),
+    .clk_in1(clk_master)
+);
+
 wire [13:0] adc_data_latched_0;
 wire [13:0] adc_data_latched_1;
 wire [13:0] adc_data_latched_2;
@@ -121,7 +156,7 @@ wire [13:0] adc_data_latched_5;
 wire [13:0] adc_data_latched_6;
 wire [13:0] adc_data_latched_7;
 
-wire [1:0] debug_adc;
+wire [7:0] debug_adc;
 
 assign led_PL0 = debug_adc[0];
 assign led_PL1 = debug_adc[1];
@@ -163,9 +198,19 @@ adc_receiver (
     .adc_data_latched_7(adc_data_latched_7),
     
     // adc_data_rdy (ignored)
+    .adc_data_clk(adc_data_clk),
     
     // Debug output
     .debug(debug_adc),
+    
+    // Training state & control
+    .train_start(emio_output[0]),
+    .train_done(emio_input[0]),
+    .train_ok(emio_input[1]),
+    .train_count(emio_input[7:2]),
+    .idelay_rdy(emio_input[8]),
+    .idelay_refclk(clk_idelay_refclk), // xxx MHz refclk for IDELAYE2
+    .train_data_debug(train_data_debug),
     
     // Global reset signal: not asserted for now
     .g_rst(g_rst_gen),

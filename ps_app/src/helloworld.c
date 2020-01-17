@@ -56,11 +56,15 @@
 #include "xil_io.h"
 #include "xil_testmem.h"
 #include "xuartps_hw.h"
+#include "xgpiops.h"
 #include "xaxidma.h"
 #include "xdebug.h"
 
 uint32_t *mem_addr;
 uint32_t *base;
+
+uint32_t gp2_test[2048];
+uint32_t gp3_test[2048];
 
 #define PACKET_MAXSIZE		16383
 
@@ -105,13 +109,70 @@ int main()
 	int32_t result;
 	uint32_t n;
 	uint32_t iter = 0, iter2 = 0;
+	uint32_t last_word0, last_word1;
+	uint32_t this_word0, this_word1;
+	uint32_t mask, mask_one;
+	uint32_t gp2, gp3;
+	int32_t byte;
 
 	XAxiDma dma0_pointer;
 	XAxiDma_Config *dma0_config;
+	XGpioPs gpio;
+	XGpioPs_Config *gpio_config;
 
     init_platform();
 
+	debug_printf("\033[2J\033[0m");
 	debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
+
+#if 0
+    // EMIO test
+    gpio_config = XGpioPs_LookupConfig(XPAR_PS7_GPIO_0_DEVICE_ID);
+    XGpioPs_CfgInitialize(&gpio, gpio_config, gpio_config->BaseAddr);
+
+    XGpioPs_SetDirection(&gpio, 2, 0xffffffff);
+
+    while(1) {
+    	// Record X entries of gpdata
+    	for(i = 0; i < 2048; i++) {
+			gp2 = XGpioPs_Read(&gpio, 2);
+			//gp3 = XGpioPs_Read(&gpio, 3);
+			gp2_test[i] = gp2;
+			//gp3_test[i] = gp3;
+
+			if(i == 1) {
+		    	// Write start command
+		    	XGpioPs_Write(&gpio, 2, 0xffffffff);
+		    	//XGpioPs_Write(&gpio, 3, 0xffffffff);
+
+		    	XGpioPs_Write(&gpio, 2, 0x00000000);
+		    	//XGpioPs_Write(&gpio, 3, 0x00000000);
+			}
+    	}
+
+    	/*
+    	debug_printf("GPIO 2:%08x 3:%08x (DONE=%d, OK=%d, COUNT=%d, RDY=%d, RUN=%d, STATE=%d)\r\n", \
+    			gp2, gp3, !!(gp2 & (1 << 0)), !!(gp2 & (1 << 2)), ((gp2 >> 2) & 31), !!(gp2 & (1 << 8)), !!(gp2 & (1 << 9)), \
+				(gp2 >> 10) & 64);
+    	*/
+
+    	for(i = 0; i < 2048; i++) {
+    		gp2 = gp2_test[i];
+    		gp3 = gp3_test[i];
+
+			debug_printf("GPIO [%4d] 2:%08x 3:%08x (DONE=%d, OK=%d, COUNT=%d, RDY=%d, RUN=%d, STATE=%d)\r\n", \
+					i, gp2, gp3, \
+					!!(gp2 & 0x00000001), \
+					!!(gp2 & 0x00000002), \
+					 ((gp2 & 0x0000007c) >> 2), \
+					!!(gp2 & 0x00000080), \
+					!!(gp2 & 0x00000100), \
+					 ((gp2 & 0x0000fc00) >> 10));
+    	}
+
+    	arb_delay(1000000000);
+    }
+#endif
 
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
 		error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
@@ -153,16 +214,18 @@ int main()
 		dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
 		error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
-		for(n = 0; n < PACKET_MAXSIZE; n++) {
+		/*
+		for(n = 0; n < 2048; n++) {
 			tx_buffer[n] = n + iter;
 		}
+		*/
 
 		Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
 
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1, XAXIDMA_DEVICE_TO_DMA);
 		//debug_printf("Short Xfer error=%d\r\n", error);
 
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 128, XAXIDMA_DEVICE_TO_DMA);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1024, XAXIDMA_DEVICE_TO_DMA);
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) tx_buffer, PACKET_MAXSIZE, XAXIDMA_DMA_TO_DEVICE);
 
 		//while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA) /* || XAxiDma_Busy(&dma0_pointer, XAXIDMA_DMA_TO_DEVICE) */) {
@@ -171,7 +234,7 @@ int main()
 
 		arb_delay(4000000);
 
-		debug_printf("\033[2J");
+		debug_printf("\033[2J\033[0m");
 		debug_printf("Initialise Xfer error=%d, iter=%d\r\n", error, iter);
 
 		/*
@@ -186,7 +249,7 @@ int main()
 			debug_printf("Data: \r\n %08d  ", 0);
 
 			ptr = rx_buffer;
-			for(k = 0; k < (32); k++) {
+			for(k = 0; k < (64 / 4); k++) {
 				debug_printf("0x%08x ", *ptr++);
 				if(((k + 1) & 7) == 0) {
 					debug_printf("\r\n %08d  ", (k + 1) * 4);
@@ -196,7 +259,54 @@ int main()
 			debug_printf("\r\n\r\n");
 			//debug_printf("X");
 			iter2 = 0;
+
+			// Validate the data set.  Every 8 bytes the data set should increase by one count exactly in counter mode.
+			ptr = rx_buffer;
+			last_word0 = *ptr;
+			last_word1 = *(ptr + 1);
+
+			for(k = 0; k < ((1024 / 4) - 2); k += 2) {
+				ptr += 2;
+				this_word0 = *ptr;
+				this_word1 = *(ptr + 1);
+
+				if((((this_word0 - last_word0) != 0x01010101) || ((this_word1 - last_word1) != 0x01010101)) && (this_word0 != 0x00000000 && this_word1 != 0x00000000)) {
+					//debug_printf("ERR: Discontinuity at addr 0x%08x (k=0x%08x) (0x%08x -> 0x%08x, 0x%08x -> 0x%08x)\r\n", \
+							ptr, k, last_word0, this_word0, last_word1, this_word1);
+					debug_printf("Err (k=%4d) (", k);
+
+					for(byte = 3; byte >= 0; byte--) {
+						mask = 0x000000ff << (byte * 8);
+						mask_one = 0x00000001 << (byte * 8);
+
+						if(((this_word0 & mask) - (last_word0 & mask)) != mask_one) {
+							debug_printf("\033[91m");
+						}
+
+						debug_printf("%02x\033[37m", (this_word0 & mask) >> (byte * 8));
+					}
+
+					for(byte = 3; byte >= 0; byte--) {
+						mask = 0x000000ff << (byte * 8);
+						mask_one = 0x00000001 << (byte * 8);
+
+						if(((this_word0 & mask) - (last_word0 & mask)) != mask_one) {
+							debug_printf("\033[91m");
+						}
+
+						debug_printf("%02x\033[37m", (this_word1 & mask) >> (byte * 8));
+					}
+
+					debug_printf(") [LW0:0x%08x,TW0:0x%08x,LW1:0x%08x,TW1:0x%08x] 0x%08x 0x%08x\r\n", \
+							last_word0, this_word0, last_word1, this_word1, \
+							this_word0 - last_word0, this_word1 - last_word1);
+				}
+
+				last_word0 = this_word0;
+				last_word1 = this_word1;
+			}
 		}
+
 
 		debug_printf("Press 'r' to reset app processor\r\n");
 

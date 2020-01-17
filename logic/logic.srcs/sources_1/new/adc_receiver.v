@@ -50,8 +50,20 @@ module adc_receiver(
     // Data ready/valid signal for the ADC channels
     output reg adc_data_rdy,
     
+    // Clock for ADC data
+    output adc_data_clk,
+    
     // Debug outputs
-    output [1:0] debug,
+    output [7:0] debug,
+    
+    // Training state & control
+    input train_start,
+    output train_done,
+    output train_ok,
+    output [5:0] train_count,
+    output idelay_rdy,
+    input idelay_refclk,    // xx MHz refclk
+    output [7:0] train_data_debug,
     
     // Global CE & reset signals
     input g_rst,
@@ -60,6 +72,8 @@ module adc_receiver(
     // Reference clock for timing purposes
     input clk_ref
 );
+
+wire idelay_rdy, idelay_refclk;
 
 reg adc_data_wri_latch = 0;
 
@@ -188,13 +202,24 @@ always @(negedge adc_clk_div) begin
 end
 
 /*
+ * Implementation of the IDELAYCTRLE2 block which is required for delay calibration.
+ */
+IDELAYCTRL (
+    .RST(g_rst),
+    .REFCLK(idelay_refclk),
+    .RDY(idelay_rdy)
+);
+
+/*
  * Implementation of the BITSLIP generator, which measures the FCLK signal
  * from the ADC and generates BITSLIP pulses to maintain alignment.
  */
-wire bitslip_com;
-wire bitslip_lock_state;
+wire bitslip_com = 0;
+wire bitslip_lock_state = 1;
 wire [7:0] bitslip_pattern_debug;
 
+/* DISABLED TO TEST WITHOUT BITSLIP */
+/*
 adc_bitslip (
     .adc_clk_in_p(adc_clk),
     .adc_clk_div_in(adc_clk_div),
@@ -208,10 +233,32 @@ adc_bitslip (
     .clk_ref(clk_ref),
     .rst_gen(rst_gen_bitslip)
 );
+*/
+
+/*
+ * Common training signals and vectors.
+ */
+wire [7:0] debug_train_value;
+wire lvds_train_start = train_start;
+assign train_done = lvds_train_done[0];
+assign train_ok = lvds_train_ok[0];
+assign train_count = lvds_train_count[0];
+assign train_data_debug = adc_iserdese2_data[0];
+//assign train_data_debug = debug_train_value;
+
+wire [7:0] lvds_train_done;
+wire [7:0] lvds_train_ok;
+wire [7:0] lvds_train_count [5:0];
+
+wire [2:0] debug_train_state;
+
+assign debug[4:2] = debug_train_state;
 
 /*
  * Implementation of the 8 x 8-bit ISERDESE2 blocks.
  */
+wire train_debug2;
+
 // D1A, non-inverted
 adc_iserdese2_mod asi2_mod_inst0 (
     .adc_clk_in_p(adc_clk),
@@ -220,8 +267,16 @@ adc_iserdese2_mod asi2_mod_inst0 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(0),
-    .oq_data(adc_iserdese2_data[0])
+    .package_invert(1),
+    .oq_data(adc_iserdese2_data[0]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[0]),
+    .train_ok(lvds_train_ok[0]),
+    .train_count_out(lvds_train_count[0]),
+    .train_state_out(debug_train_state),
+    .train_debug(debug_train_value),
+    .train_debug2(train_debug2),
+    .clk_ref(clk_ref)
 );
 
 // D1B, non-inverted
@@ -232,8 +287,13 @@ adc_iserdese2_mod asi2_mod_inst1 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(0),
-    .oq_data(adc_iserdese2_data[1])
+    .package_invert(1),
+    .oq_data(adc_iserdese2_data[1]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[1]),
+    .train_ok(lvds_train_ok[1]),
+    .train_count_out(lvds_train_count[1]),
+    .clk_ref(clk_ref)
 );
 
 // D2A, non-inverted
@@ -244,8 +304,13 @@ adc_iserdese2_mod asi2_mod_inst2 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(0),
-    .oq_data(adc_iserdese2_data[2])
+    .package_invert(1),
+    .oq_data(adc_iserdese2_data[2]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[2]),
+    .train_ok(lvds_train_ok[2]),
+    .train_count_out(lvds_train_count[2]),
+    .clk_ref(clk_ref)
 );
 
 // D2B, inverted
@@ -256,8 +321,13 @@ adc_iserdese2_mod asi2_mod_inst3 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(1),
-    .oq_data(adc_iserdese2_data[3])
+    .package_invert(0),
+    .oq_data(adc_iserdese2_data[3]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[3]),
+    .train_ok(lvds_train_ok[3]),
+    .train_count_out(lvds_train_count[3]),
+    .clk_ref(clk_ref)
 );
 
 // D3A, inverted
@@ -268,8 +338,13 @@ adc_iserdese2_mod asi2_mod_inst4 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(1),
-    .oq_data(adc_iserdese2_data[4])
+    .package_invert(0),
+    .oq_data(adc_iserdese2_data[4]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[4]),
+    .train_ok(lvds_train_ok[4]),
+    .train_count_out(lvds_train_count[4]),
+    .clk_ref(clk_ref)
 );
 
 // D3B, inverted
@@ -280,8 +355,13 @@ adc_iserdese2_mod asi2_mod_inst5 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(1),
-    .oq_data(adc_iserdese2_data[5])
+    .package_invert(0),
+    .oq_data(adc_iserdese2_data[5]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[5]),
+    .train_ok(lvds_train_ok[5]),
+    .train_count_out(lvds_train_count[5]),
+    .clk_ref(clk_ref)
 );
 
 // D4A, inverted
@@ -292,8 +372,13 @@ adc_iserdese2_mod asi2_mod_inst6 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(1),
-    .oq_data(adc_iserdese2_data[6])
+    .package_invert(0),
+    .oq_data(adc_iserdese2_data[6]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[6]),
+    .train_ok(lvds_train_ok[6]),
+    .train_count_out(lvds_train_count[6]),
+    .clk_ref(clk_ref)
 );
 
 // D4B, non-inverted
@@ -304,12 +389,20 @@ adc_iserdese2_mod asi2_mod_inst7 (
     .ce(g_ce_clkdiv),
     .rst(g_rst_clkdiv),
     .bitslip(bitslip_com),
-    .package_invert(0),
-    .oq_data(adc_iserdese2_data[7])
+    .package_invert(1),
+    .oq_data(adc_iserdese2_data[7]),
+    .train_start(lvds_train_start),
+    .train_done(lvds_train_done[7]),
+    .train_ok(lvds_train_ok[7]),
+    .train_count_out(lvds_train_count[7]),
+    .clk_ref(clk_ref)
 );
 
-assign debug[0] = bitslip_com;
-assign debug[1] = bitslip_lock_state;
+//assign debug[0] = bitslip_com;
+//assign debug[1] = bitslip_lock_state;
+ 
+ assign debug[0] = train_debug2;
+ assign debug[1] = idelay_refclk;
     
 /* 
  * All logic runs from a divide-by-4 clock from the ADC inclk.  
@@ -321,6 +414,8 @@ assign debug[1] = bitslip_lock_state;
  * bit read.
  */
 integer i;
+
+assign adc_data_clk = adc_clk_div;
 
 always @(posedge adc_clk_div) begin
 

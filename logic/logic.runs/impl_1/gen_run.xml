@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7z014sclg400-1" LaunchTime="1578609760">
+<GenRun Id="impl_1" LaunchPart="xc7z014sclg400-1" LaunchTime="1579300595">
   <File Type="BITSTR-BMM" Name="main_bd.bmm"/>
   <File Type="OPT-METHODOLOGY-DRC" Name="main_methodology_drc_opted.rpt"/>
   <File Type="INIT-TIMING" Name="main_timing_summary_init.rpt"/>
@@ -78,13 +78,6 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/new/adc_iserdese2_mod.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -106,7 +99,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/clk_wiz_0/clk_wiz_0.xci">
+    <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -180,11 +173,12 @@
     <Step Id="write_bitstream"/>
   </Strategy>
   <BlockFileSet Type="BlockSrcs" Name="design_1_auto_pc_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="design_1_processing_system7_0_0"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_axi_dma_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="design_1_xbar_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="design_1_axis_data_fifo_0_0"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_auto_pc_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="design_1_rst_ps7_0_50M_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="design_1_processing_system7_0_1"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_adc_test_streamer_0_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="design_1_axis_data_fifo_0_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="design_1_rst_ps7_0_20M_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="design_1_xbar_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_1_idelay_refclk"/>
 </GenRun>
