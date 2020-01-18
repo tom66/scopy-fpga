@@ -222,7 +222,7 @@ adc_receiver (
     .clk_ref(clk_master)
 );
 
-always @(posedge clk_master) begin
+always @(posedge adc_data_clk) begin
 
     adc_bus[ 7: 0] <= adc_data_latched_0[7:0];
     adc_bus[15: 8] <= adc_data_latched_1[7:0];

@@ -417,6 +417,8 @@ integer i;
 
 assign adc_data_clk = adc_clk_div;
 
+reg [7:0] test_counter;
+
 always @(posedge adc_clk_div) begin
 
     //test_iserdese2_data <= test_iserdese2_data + 1;
@@ -458,6 +460,19 @@ always @(posedge adc_clk_div) begin
         adc_data_latched_6 <= adc_data_rx[6];
         adc_data_latched_7 <= adc_data_rx[7];
         adc_data_rdy <= 1;
+        
+        /*
+        adc_data_latched_0 <= test_counter;
+        adc_data_latched_1 <= test_counter;
+        adc_data_latched_2 <= test_counter;
+        adc_data_latched_3 <= test_counter;
+        adc_data_latched_4 <= test_counter;
+        adc_data_latched_5 <= test_counter;
+        adc_data_latched_6 <= test_counter;
+        adc_data_latched_7 <= test_counter;
+        test_counter <= test_counter + 1;
+        adc_data_rdy <= 1;
+        */
     end else begin
         adc_data_rdy <= 0;
     end
