@@ -69,7 +69,7 @@ wire clk_idelay_refclk;
 
 wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
-reg [63:0] adc_bus;
+//wire [63:0] adc_bus;
 wire adc_data_clk;
 
 wire [63:0] emio_output;
@@ -222,18 +222,38 @@ adc_receiver (
     .clk_ref(clk_master)
 );
 
+/*
+wire [63:0] adc_bus;
+assign adc_bus[ 7: 0] = adc_data_latched_0[7:0];
+assign adc_bus[15: 8] = adc_data_latched_1[7:0];
+assign adc_bus[23:16] = adc_data_latched_2[7:0];
+assign adc_bus[31:24] = adc_data_latched_3[7:0];
+assign adc_bus[39:32] = adc_data_latched_4[7:0];
+assign adc_bus[47:40] = adc_data_latched_5[7:0];
+assign adc_bus[55:48] = adc_data_latched_6[7:0];
+assign adc_bus[63:56] = adc_data_latched_7[7:0];
+*/
+
+reg [7:0] rep_counter;
+
+/*
+reg [63:0] adc_bus;
+*/
+
+wire [63:0] adc_bus;
+
+assign adc_bus[ 7: 0] = rep_counter;
+assign adc_bus[15: 8] = rep_counter;
+assign adc_bus[23:16] = rep_counter;
+assign adc_bus[31:24] = rep_counter;
+assign adc_bus[39:32] = rep_counter;
+assign adc_bus[47:40] = rep_counter;
+assign adc_bus[55:48] = rep_counter;
+assign adc_bus[63:56] = rep_counter;
+
 always @(posedge adc_data_clk) begin
 
-    adc_bus[ 7: 0] <= adc_data_latched_0[7:0];
-    adc_bus[15: 8] <= adc_data_latched_1[7:0];
-    adc_bus[23:16] <= adc_data_latched_2[7:0];
-    adc_bus[31:24] <= adc_data_latched_3[7:0];
-    adc_bus[39:32] <= adc_data_latched_4[7:0];
-    adc_bus[47:40] <= adc_data_latched_5[7:0];
-    adc_bus[55:48] <= adc_data_latched_6[7:0];
-    adc_bus[63:56] <= adc_data_latched_7[7:0];
-    
-    //adc_bus <= adc_bus + 1;
+    rep_counter <= rep_counter + 1;
 
 end
 

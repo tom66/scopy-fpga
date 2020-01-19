@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xAE46CE55BAA3ECF0",
+      "boundary_crc": "0xAE46CE55BDD93F13",
       "device": "xc7z014sclg400-1",
       "name": "design_1",
       "synth_flow_mode": "Hierarchical",
@@ -27,7 +27,9 @@
         }
       },
       "processing_system7_0": "",
-      "xlconcat_1": ""
+      "xlconcat_1": "",
+      "system_ila_0": "",
+      "system_ila_1": ""
     },
     "interface_ports": {
       "DDR": {
@@ -105,7 +107,7 @@
             "value_src": "default_prop"
           },
           "FREQ_HZ": {
-            "value": "160000000",
+            "value": "250000000",
             "value_src": "user_prop"
           },
           "INSERT_VIP": {
@@ -132,8 +134,7 @@
             "value_src": "default"
           },
           "FREQ_HZ": {
-            "value": "100000000",
-            "value_src": "default"
+            "value": "125000000"
           },
           "INSERT_VIP": {
             "value": "0",
@@ -185,7 +186,7 @@
             "value": "64"
           },
           "c_mm2s_burst_size": {
-            "value": "8"
+            "value": "256"
           },
           "c_s2mm_burst_size": {
             "value": "256"
@@ -199,8 +200,17 @@
         "vlnv": "xilinx.com:ip:axis_data_fifo:2.0",
         "xci_name": "design_1_axis_data_fifo_0_0",
         "parameters": {
+          "ACLKEN_CONV_MODE": {
+            "value": "0"
+          },
           "FIFO_DEPTH": {
-            "value": "512"
+            "value": "1024"
+          },
+          "HAS_AFULL": {
+            "value": "0"
+          },
+          "HAS_PROG_FULL": {
+            "value": "0"
           },
           "HAS_RD_DATA_COUNT": {
             "value": "0"
@@ -526,6 +536,12 @@
           }
         },
         "interface_nets": {
+          "m00_couplers_to_axi_mem_intercon": {
+            "interface_ports": [
+              "M00_AXI",
+              "m00_couplers/M_AXI"
+            ]
+          },
           "xbar_to_m00_couplers": {
             "interface_ports": [
               "xbar/M00_AXI",
@@ -554,12 +570,6 @@
             "interface_ports": [
               "s01_couplers/M_AXI",
               "xbar/S01_AXI"
-            ]
-          },
-          "m00_couplers_to_axi_mem_intercon": {
-            "interface_ports": [
-              "M00_AXI",
-              "m00_couplers/M_AXI"
             ]
           }
         },
@@ -806,7 +816,7 @@
             "value": "10.000000"
           },
           "PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ": {
-            "value": "160.000000"
+            "value": "250.000000"
           },
           "PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ": {
             "value": "10.000000"
@@ -830,7 +840,7 @@
             "value": "10.000000"
           },
           "PCW_ACT_SPI_PERIPHERAL_FREQMHZ": {
-            "value": "160.000000"
+            "value": "166.666672"
           },
           "PCW_ACT_TPIU_PERIPHERAL_FREQMHZ": {
             "value": "200.000000"
@@ -860,7 +870,7 @@
             "value": "111.111115"
           },
           "PCW_CLK0_FREQ": {
-            "value": "160000000"
+            "value": "250000000"
           },
           "PCW_CLK1_FREQ": {
             "value": "10000000"
@@ -923,7 +933,7 @@
             "value": "1"
           },
           "PCW_FPGA0_PERIPHERAL_FREQMHZ": {
-            "value": "160"
+            "value": "250"
           },
           "PCW_FPGA1_PERIPHERAL_FREQMHZ": {
             "value": "150"
@@ -1073,15 +1083,55 @@
             "value": "3"
           }
         }
+      },
+      "system_ila_0": {
+        "vlnv": "xilinx.com:ip:system_ila:1.1",
+        "xci_name": "design_1_system_ila_0_1",
+        "parameters": {
+          "C_DATA_DEPTH": {
+            "value": "8192"
+          },
+          "C_SLOT_0_INTF_TYPE": {
+            "value": "xilinx.com:interface:axis_rtl:1.0"
+          }
+        },
+        "interface_ports": {
+          "SLOT_0_AXIS": {
+            "mode": "Monitor",
+            "vlnv": "xilinx.com:interface:axis_rtl:1.0"
+          }
+        }
+      },
+      "system_ila_1": {
+        "vlnv": "xilinx.com:ip:system_ila:1.1",
+        "xci_name": "design_1_system_ila_0_0",
+        "parameters": {
+          "C_DATA_DEPTH": {
+            "value": "8192"
+          },
+          "C_NUM_MONITOR_SLOTS": {
+            "value": "2"
+          },
+          "C_SLOT": {
+            "value": "1"
+          },
+          "C_SLOT_0_INTF_TYPE": {
+            "value": "xilinx.com:interface:axis_rtl:1.0"
+          }
+        },
+        "interface_ports": {
+          "SLOT_0_AXIS": {
+            "mode": "Monitor",
+            "vlnv": "xilinx.com:interface:axis_rtl:1.0"
+          },
+          "SLOT_1_AXI": {
+            "mode": "Monitor",
+            "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+          }
+        }
       }
     },
     "interface_nets": {
-      "axi_dma_M_AXI_MM2S": {
-        "interface_ports": [
-          "axi_dma/M_AXI_MM2S",
-          "axi_mem_intercon/S00_AXI"
-        ]
-      },
       "axi_interconnect_0_M00_AXI": {
         "interface_ports": [
           "axi_dma/S_AXI_LITE",
@@ -1094,10 +1144,17 @@
           "processing_system7_0/DDR"
         ]
       },
-      "adc_test_streamer_0_M00_AXIS": {
+      "axi_dma_M_AXI_MM2S": {
         "interface_ports": [
-          "adc_axi_streamer/M00_AXIS",
-          "axis_data_fifo_0/S_AXIS"
+          "axi_dma/M_AXI_MM2S",
+          "axi_mem_intercon/S00_AXI"
+        ]
+      },
+      "axi_mem_intercon_M00_AXI": {
+        "interface_ports": [
+          "axi_mem_intercon/M00_AXI",
+          "processing_system7_0/S_AXI_HP0",
+          "system_ila_1/SLOT_1_AXI"
         ]
       },
       "processing_system7_0_M_AXI_GP0": {
@@ -1106,10 +1163,11 @@
           "axi_interconnect_0/S00_AXI"
         ]
       },
-      "processing_system7_0_FIXED_IO": {
+      "adc_test_streamer_0_M00_AXIS": {
         "interface_ports": [
-          "FIXED_IO",
-          "processing_system7_0/FIXED_IO"
+          "adc_axi_streamer/M00_AXIS",
+          "axis_data_fifo_0/S_AXIS",
+          "system_ila_0/SLOT_0_AXIS"
         ]
       },
       "axi_dma_M_AXI_S2MM": {
@@ -1118,16 +1176,17 @@
           "axi_mem_intercon/S01_AXI"
         ]
       },
+      "processing_system7_0_FIXED_IO": {
+        "interface_ports": [
+          "FIXED_IO",
+          "processing_system7_0/FIXED_IO"
+        ]
+      },
       "axis_data_fifo_0_M_AXIS": {
         "interface_ports": [
           "axis_data_fifo_0/M_AXIS",
-          "axi_dma/S_AXIS_S2MM"
-        ]
-      },
-      "axi_mem_intercon_M00_AXI": {
-        "interface_ports": [
-          "axi_mem_intercon/M00_AXI",
-          "processing_system7_0/S_AXI_HP0"
+          "axi_dma/S_AXIS_S2MM",
+          "system_ila_1/SLOT_0_AXIS"
         ]
       }
     },
@@ -1149,20 +1208,14 @@
           "axi_interconnect_0/S00_ACLK",
           "axi_mem_intercon/S01_ACLK",
           "processing_system7_0/M_AXI_GP0_ACLK",
-          "processing_system7_0/S_AXI_HP0_ACLK"
+          "processing_system7_0/S_AXI_HP0_ACLK",
+          "system_ila_1/clk"
         ]
       },
       "ADC_BUS_1": {
         "ports": [
           "ADC_BUS",
           "adc_axi_streamer/adc_bus"
-        ]
-      },
-      "ADC_DATA_CLK_1": {
-        "ports": [
-          "ADC_DATA_CLK",
-          "adc_axi_streamer/m00_axis_aclk",
-          "axis_data_fifo_0/s_axis_aclk"
         ]
       },
       "rst_ps7_0_20M_peripheral_aresetn": {
@@ -1177,7 +1230,9 @@
           "adc_axi_streamer/m00_axis_aresetn",
           "axi_interconnect_0/ARESETN",
           "axi_interconnect_0/M00_ARESETN",
-          "axi_interconnect_0/S00_ARESETN"
+          "axi_interconnect_0/S00_ARESETN",
+          "system_ila_0/resetn",
+          "system_ila_1/resetn"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -1220,6 +1275,14 @@
         "ports": [
           "PL_IRQ",
           "xlconcat_1/In2"
+        ]
+      },
+      "ADC_DATA_CLK_1": {
+        "ports": [
+          "ADC_DATA_CLK",
+          "adc_axi_streamer/m00_axis_aclk",
+          "axis_data_fifo_0/s_axis_aclk",
+          "system_ila_0/clk"
         ]
       }
     },

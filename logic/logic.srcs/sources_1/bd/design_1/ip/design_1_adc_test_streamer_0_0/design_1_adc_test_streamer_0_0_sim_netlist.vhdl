@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sun Jan 12 18:07:37 2020
+-- Date        : Sun Jan 12 18:07:36 2020
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/design_1_adc_test_streamer_0_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_adc_test_streamer_0_0 -prefix
+--               design_1_adc_test_streamer_0_0_ design_1_adc_test_streamer_0_0_sim_netlist.vhdl
 -- Design      : design_1_adc_test_streamer_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -23,8 +23,6 @@ entity design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS is
     adc_bus : in STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tready : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS : entity is "adc_test_streamer_v2_0_M00_AXIS";
 end design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS;
 
 architecture STRUCTURE of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS is
@@ -764,8 +762,6 @@ entity design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 is
     adc_bus : in STD_LOGIC_VECTOR ( 63 downto 0 );
     m00_axis_tready : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 : entity is "adc_test_streamer_v2_0";
 end design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0;
 
 architecture STRUCTURE of design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 is

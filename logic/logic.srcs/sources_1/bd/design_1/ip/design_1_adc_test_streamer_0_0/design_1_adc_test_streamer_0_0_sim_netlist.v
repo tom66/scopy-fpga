@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sun Jan 12 18:07:37 2020
+// Date        : Sun Jan 12 18:07:36 2020
 // Host        : TomsDesktop running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim
-//               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/design_1_adc_test_streamer_0_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top design_1_adc_test_streamer_0_0 -prefix
+//               design_1_adc_test_streamer_0_0_ design_1_adc_test_streamer_0_0_sim_netlist.v
 // Design      : design_1_adc_test_streamer_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -12,58 +12,6 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2018.3" *) 
-(* NotValidForBitStream *)
-module design_1_adc_test_streamer_0_0
-   (m00_axis_tdata,
-    m00_axis_tstrb,
-    m00_axis_tlast,
-    m00_axis_tvalid,
-    m00_axis_tready,
-    adc_bus,
-    m00_axis_aclk,
-    m00_axis_aresetn);
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TDATA" *) output [63:0]m00_axis_tdata;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TSTRB" *) output [7:0]m00_axis_tstrb;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TLAST" *) output m00_axis_tlast;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TVALID" *) output m00_axis_tvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, LAYERED_METADATA undef, INSERT_VIP 0" *) input m00_axis_tready;
-  input [63:0]adc_bus;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 M00_AXIS_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, INSERT_VIP 0" *) input m00_axis_aclk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 M00_AXIS_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input m00_axis_aresetn;
-
-  wire \<const0> ;
-  wire \<const1> ;
-  wire [63:0]adc_bus;
-  wire m00_axis_aclk;
-  wire m00_axis_aresetn;
-  wire [63:0]m00_axis_tdata;
-  wire m00_axis_tready;
-  wire m00_axis_tvalid;
-
-  assign m00_axis_tlast = \<const0> ;
-  assign m00_axis_tstrb[7] = \<const1> ;
-  assign m00_axis_tstrb[6] = \<const1> ;
-  assign m00_axis_tstrb[5] = \<const1> ;
-  assign m00_axis_tstrb[4] = \<const1> ;
-  assign m00_axis_tstrb[3] = \<const1> ;
-  assign m00_axis_tstrb[2] = \<const1> ;
-  assign m00_axis_tstrb[1] = \<const1> ;
-  assign m00_axis_tstrb[0] = \<const1> ;
-  GND GND
-       (.G(\<const0> ));
-  VCC VCC
-       (.P(\<const1> ));
-  design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 inst
-       (.adc_bus(adc_bus),
-        .m00_axis_aclk(m00_axis_aclk),
-        .m00_axis_aresetn(m00_axis_aresetn),
-        .m00_axis_tdata(m00_axis_tdata),
-        .m00_axis_tready(m00_axis_tready),
-        .m00_axis_tvalid(m00_axis_tvalid));
-endmodule
-
-(* ORIG_REF_NAME = "adc_test_streamer_v2_0" *) 
 module design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0
    (m00_axis_tdata,
     m00_axis_tvalid,
@@ -94,7 +42,6 @@ module design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0
         .m00_axis_tvalid(m00_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "adc_test_streamer_v2_0_M00_AXIS" *) 
 module design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS
    (m00_axis_tdata,
     m00_axis_tvalid,
@@ -655,6 +602,57 @@ module design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0_M00_AXIS
         .D(adc_bus[9]),
         .Q(m00_axis_tdata[9]),
         .R(\stream_data_out[63]_i_1_n_0 ));
+endmodule
+
+(* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2018.3" *) 
+(* NotValidForBitStream *)
+module design_1_adc_test_streamer_0_0
+   (m00_axis_tdata,
+    m00_axis_tstrb,
+    m00_axis_tlast,
+    m00_axis_tvalid,
+    m00_axis_tready,
+    adc_bus,
+    m00_axis_aclk,
+    m00_axis_aresetn);
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TDATA" *) output [63:0]m00_axis_tdata;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TSTRB" *) output [7:0]m00_axis_tstrb;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TLAST" *) output m00_axis_tlast;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TVALID" *) output m00_axis_tvalid;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, LAYERED_METADATA undef, INSERT_VIP 0" *) input m00_axis_tready;
+  input [63:0]adc_bus;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 M00_AXIS_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, INSERT_VIP 0" *) input m00_axis_aclk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 M00_AXIS_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input m00_axis_aresetn;
+
+  wire \<const0> ;
+  wire \<const1> ;
+  wire [63:0]adc_bus;
+  wire m00_axis_aclk;
+  wire m00_axis_aresetn;
+  wire [63:0]m00_axis_tdata;
+  wire m00_axis_tready;
+  wire m00_axis_tvalid;
+
+  assign m00_axis_tlast = \<const0> ;
+  assign m00_axis_tstrb[7] = \<const1> ;
+  assign m00_axis_tstrb[6] = \<const1> ;
+  assign m00_axis_tstrb[5] = \<const1> ;
+  assign m00_axis_tstrb[4] = \<const1> ;
+  assign m00_axis_tstrb[3] = \<const1> ;
+  assign m00_axis_tstrb[2] = \<const1> ;
+  assign m00_axis_tstrb[1] = \<const1> ;
+  assign m00_axis_tstrb[0] = \<const1> ;
+  GND GND
+       (.G(\<const0> ));
+  VCC VCC
+       (.P(\<const1> ));
+  design_1_adc_test_streamer_0_0_adc_test_streamer_v2_0 inst
+       (.adc_bus(adc_bus),
+        .m00_axis_aclk(m00_axis_aclk),
+        .m00_axis_aresetn(m00_axis_aresetn),
+        .m00_axis_tdata(m00_axis_tdata),
+        .m00_axis_tready(m00_axis_tready),
+        .m00_axis_tvalid(m00_axis_tvalid));
 endmodule
 `ifndef GLBL
 `define GLBL

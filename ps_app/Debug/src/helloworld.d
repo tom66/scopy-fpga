@@ -26,6 +26,9 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xscugic.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xscugic_hw.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h
 
 ../src/platform.h:
@@ -83,5 +86,11 @@ src/helloworld.o src/helloworld.o: ../src/helloworld.c ../src/platform.h \
 ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xscugic.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xscugic_hw.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:

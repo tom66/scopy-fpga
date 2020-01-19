@@ -58,6 +58,7 @@
 #include "xuartps_hw.h"
 #include "xgpiops.h"
 #include "xaxidma.h"
+#include "xscugic.h"
 #include "xdebug.h"
 
 uint32_t *mem_addr;
@@ -74,6 +75,11 @@ uint8_t rx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((sec
 uint8_t tx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
 
 //#define MEM_TEST
+
+XAxiDma dma0_pointer;
+XAxiDma_Config *dma0_config;
+XGpioPs gpio;
+XGpioPs_Config *gpio_config;
 
 #define MARK_UNCACHEABLE	0x701
 
@@ -97,6 +103,147 @@ void arb_delay(uint32_t n)
 	}
 }
 
+
+/*
+ * For hacking/test purposes.
+ * (C) Xilinx, Inc. https://www.xilinx.com/Attachment/xaxidma_example_sg_intr.c
+ */
+#define INTC					XScuGic
+#define INTC_HANDLER			XScuGic_InterruptHandler
+#define RESET_TIMEOUT_COUNTER	10000
+
+#define RX_INTR_ID				XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
+#define TX_INTR_ID				XPAR_FABRIC_AXIDMA_0_MM2S_INTROUT_VEC_ID
+
+#define INTC_DEVICE_ID          XPAR_SCUGIC_SINGLE_DEVICE_ID
+
+static INTC Intc;	/* Instance of the Interrupt Controller */
+
+static void RxIntrHandler(void *Callback)
+{
+	XAxiDma_BdRing *RxRingPtr = (XAxiDma_BdRing *) Callback;
+	u32 IrqStatus;
+	int TimeOut;
+
+	/* Read pending interrupts */
+	IrqStatus = XAxiDma_BdRingGetIrq(RxRingPtr);
+
+	/* Acknowledge pending interrupts */
+	XAxiDma_BdRingAckIrq(RxRingPtr, IrqStatus);
+
+	debug_printf("irq=0x%08x\r\n", IrqStatus);
+
+	/*
+	 * If no interrupt is asserted, we do not do anything
+	 */
+	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
+		debug_printf("NoIRQ?\r\n");
+		return;
+	}
+
+	/*
+	 * If error interrupt is asserted, raise error flag, reset the
+	 * hardware to recover from the error, and return with no further
+	 * processing.
+	 */
+	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
+		debug_printf("ErrorMask?\r\n");
+
+		XAxiDma_BdRingDumpRegs(RxRingPtr);
+
+		/* Reset could fail and hang
+		 * NEED a way to handle this or do not call it??
+		 */
+		XAxiDma_Reset(&dma0_pointer);
+
+		TimeOut = RESET_TIMEOUT_COUNTER;
+
+		while (TimeOut) {
+			if(XAxiDma_ResetIsDone(&dma0_pointer)) {
+				break;
+			}
+
+			TimeOut -= 1;
+		}
+
+		return;
+	}
+
+	/*
+	 * If completion interrupt is asserted, call RX call back function
+	 * to handle the processed BDs and then raise the according flag.
+	 */
+	if ((IrqStatus & (XAXIDMA_IRQ_DELAY_MASK | XAXIDMA_IRQ_IOC_MASK))) {
+		debug_printf("IOC!\r\n");
+	}
+}
+
+static int SetupIntrSystem(INTC * IntcInstancePtr,
+			   XAxiDma * AxiDmaPtr, u16 TxIntrId, u16 RxIntrId)
+{
+	XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+	XAxiDma_BdRing *RxRingPtr = XAxiDma_GetRxRing(AxiDmaPtr);
+	int Status;
+
+	XScuGic_Config *IntcConfig;
+
+
+	/*
+	 * Initialize the interrupt controller driver so that it is ready to
+	 * use.
+	 */
+	IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
+	if (NULL == IntcConfig) {
+		return XST_FAILURE;
+	}
+
+	Status = XScuGic_CfgInitialize(IntcInstancePtr, IntcConfig,
+					IntcConfig->CpuBaseAddress);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+
+	//XScuGic_SetPriorityTriggerType(IntcInstancePtr, TxIntrId, 0xA0, 0x3);
+
+	XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
+
+	/*
+	 * Connect the device driver handler that will be called when an
+	 * interrupt for the device occurs, the handler defined above performs
+	 * the specific interrupt processing for the device.
+	 */
+	/*
+	Status = XScuGic_Connect(IntcInstancePtr, TxIntrId,
+				(Xil_InterruptHandler)TxIntrHandler,
+				TxRingPtr);
+	if (Status != XST_SUCCESS) {
+		return Status;
+	}
+	*/
+
+	Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
+				(Xil_InterruptHandler)RxIntrHandler,
+				RxRingPtr);
+	if (Status != XST_SUCCESS) {
+		return Status;
+	}
+
+	//XScuGic_Enable(IntcInstancePtr, TxIntrId);
+	XScuGic_Enable(IntcInstancePtr, RxIntrId);
+
+	/* Enable interrupts from the hardware */
+
+	Xil_ExceptionInit();
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+			(Xil_ExceptionHandler)INTC_HANDLER,
+			(void *)IntcInstancePtr);
+
+	Xil_ExceptionEnable();
+
+	return XST_SUCCESS;
+}
+
 int main()
 {
 	uint32_t data;
@@ -114,11 +261,6 @@ int main()
 	uint32_t mask, mask_one;
 	uint32_t gp2, gp3;
 	int32_t byte;
-
-	XAxiDma dma0_pointer;
-	XAxiDma_Config *dma0_config;
-	XGpioPs gpio;
-	XGpioPs_Config *gpio_config;
 
     init_platform();
 
@@ -194,11 +336,20 @@ int main()
 	}
 	*/
 
+	/*
 	// Disable interrupts, we use polling mode
 	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK,
 						XAXIDMA_DEVICE_TO_DMA);
 	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK,
 						XAXIDMA_DMA_TO_DEVICE);
+	*/
+
+	// Enable interrupts, we use interrupt mode
+	SetupIntrSystem(&Intc, &dma0_pointer, TX_INTR_ID, RX_INTR_ID);
+
+	// Disable IRQ first then enable it
+	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+	XAxiDma_IntrEnable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 
 	debug_printf("OK, done.\r\n");
 
@@ -211,8 +362,8 @@ int main()
 		//debug_printf("Start SimpleTransfer\r\n");
 
 		// prep DMAblock
-		dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
-		error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
+		//dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
+		//error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
 		/*
 		for(n = 0; n < 2048; n++) {
@@ -225,17 +376,19 @@ int main()
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1, XAXIDMA_DEVICE_TO_DMA);
 		//debug_printf("Short Xfer error=%d\r\n", error);
 
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 1024, XAXIDMA_DEVICE_TO_DMA);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
 		//error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) tx_buffer, PACKET_MAXSIZE, XAXIDMA_DMA_TO_DEVICE);
 
-		//while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA) /* || XAxiDma_Busy(&dma0_pointer, XAXIDMA_DMA_TO_DEVICE) */) {
-		//	debug_printf("w");
-		//}
+#if 0
+		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA) /* || XAxiDma_Busy(&dma0_pointer, XAXIDMA_DMA_TO_DEVICE) */) {
+			debug_printf("w");
+		}
+#endif
 
-		arb_delay(4000000);
+		//arb_delay(400000);
 
 		debug_printf("\033[2J\033[0m");
-		debug_printf("Initialise Xfer error=%d, iter=%d\r\n", error, iter);
+		//debug_printf("Initialise Xfer error=%d, iter=%d\r\n", error, iter);
 
 		/*
 		while(XAxiDma_Busy(&dma0_pointer, XAXIDMA_DEVICE_TO_DMA)) {
@@ -245,6 +398,41 @@ int main()
 
 		Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
 
+#if 1
+		ptr = rx_buffer;
+
+		/*
+		debug_printf("\r\n %08d  ", 0);
+
+		for(k = 0; k < 2048; k++) {
+			debug_printf("0x%08x ", *ptr++);
+			if(((k + 1) & 7) == 0) {
+				debug_printf("\r\n %08d  ", (k + 1) * 4);
+			}
+		}
+
+		ptr = rx_buffer;
+
+		debug_printf("\r\n\r\n");
+		*/
+
+		debug_printf("Testing...\r\n\r\n");
+
+		for(k = 0; k < 16384; k += 2) {
+			this_word0 = *ptr;
+
+			//debug_printf("0x%08x 0x%08x \r\n", this_word0, last_word0);
+
+			if((this_word0 - last_word0) != 0x01010101 && k > 0 && this_word0 != 0x00000000) {
+				debug_printf("Discont. k=0x%08x ptr=0x%08x tw=0x%08x lw=0x%08x\r\n", k, ptr, this_word0, last_word0);
+			}
+
+			ptr += 2;
+			last_word0 = this_word0;
+		}
+#endif
+
+#if 0
 		if(1 /*iter2 > 0*/) {
 			debug_printf("Data: \r\n %08d  ", 0);
 
@@ -307,7 +495,6 @@ int main()
 			}
 		}
 
-
 		debug_printf("Press 'r' to reset app processor\r\n");
 
 		if(XUartPs_IsReceiveData(STDOUT_BASEADDRESS)) {
@@ -319,8 +506,9 @@ int main()
 
 		iter++;
 		iter2++;
+#endif
 
-		arb_delay(20000000);
+		//arb_delay(20000000);
 	}
 
     cleanup_platform();
