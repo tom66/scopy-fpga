@@ -24092,3 +24092,1346 @@ con
 ----------------End of Script----------------
 
 15:35:23 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:18:24 INFO  : Disconnected from the channel tcfchan#41.
+16:18:25 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:18:25 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:18:25 INFO  : Jtag cable frequency set to 12000000
+16:18:26 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:18:26 INFO  : 'jtag frequency' command is executed.
+16:18:26 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:18:26 INFO  : Context for 'APU' is selected.
+16:18:26 INFO  : System reset is completed.
+16:18:29 INFO  : 'after 3000' command is executed.
+16:18:29 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:18:34 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:18:35 INFO  : Context for 'APU' is selected.
+16:18:37 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:18:37 INFO  : 'configparams force-mem-access 1' command is executed.
+16:18:37 INFO  : Context for 'APU' is selected.
+16:18:37 INFO  : 'ps7_init' command is executed.
+16:18:38 INFO  : 'ps7_post_config' command is executed.
+16:18:38 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:19:07 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:19:08 INFO  : 'configparams force-mem-access 0' command is executed.
+16:19:08 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:19:08 INFO  : Memory regions updated for context APU
+16:19:08 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:19:08 INFO  : 'con' command is executed.
+16:19:08 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:19:08 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:22:39 INFO  : Disconnected from the channel tcfchan#42.
+16:22:40 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:22:40 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:22:41 INFO  : Jtag cable frequency set to 12000000
+16:22:41 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:22:41 INFO  : 'jtag frequency' command is executed.
+16:22:41 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:22:41 INFO  : Context for 'APU' is selected.
+16:22:41 INFO  : System reset is completed.
+16:22:44 INFO  : 'after 3000' command is executed.
+16:22:45 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:22:51 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:22:51 INFO  : Context for 'APU' is selected.
+16:22:53 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:22:53 INFO  : 'configparams force-mem-access 1' command is executed.
+16:22:53 INFO  : Context for 'APU' is selected.
+16:22:53 INFO  : 'ps7_init' command is executed.
+16:22:53 INFO  : 'ps7_post_config' command is executed.
+16:22:53 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:23:22 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:23:22 INFO  : 'configparams force-mem-access 0' command is executed.
+16:23:22 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:23:22 INFO  : Memory regions updated for context APU
+16:23:23 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:23:23 INFO  : 'con' command is executed.
+16:23:23 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:23:23 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:25:15 INFO  : Disconnected from the channel tcfchan#43.
+16:25:16 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:25:16 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:25:16 INFO  : Jtag cable frequency set to 12000000
+16:25:16 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:25:16 INFO  : 'jtag frequency' command is executed.
+16:25:16 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:25:16 INFO  : Context for 'APU' is selected.
+16:25:17 INFO  : System reset is completed.
+16:25:20 INFO  : 'after 3000' command is executed.
+16:25:20 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:25:25 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:25:25 INFO  : Context for 'APU' is selected.
+16:25:27 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:25:27 INFO  : 'configparams force-mem-access 1' command is executed.
+16:25:27 INFO  : Context for 'APU' is selected.
+16:25:27 INFO  : 'ps7_init' command is executed.
+16:25:27 INFO  : 'ps7_post_config' command is executed.
+16:25:27 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:25:57 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:25:57 INFO  : 'configparams force-mem-access 0' command is executed.
+16:25:57 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:25:57 INFO  : Memory regions updated for context APU
+16:25:57 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:25:57 INFO  : 'con' command is executed.
+16:25:57 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:25:57 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:28:17 INFO  : Disconnected from the channel tcfchan#44.
+16:28:18 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:28:18 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:28:18 INFO  : Jtag cable frequency set to 12000000
+16:28:18 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:28:18 INFO  : 'jtag frequency' command is executed.
+16:28:18 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:28:18 INFO  : Context for 'APU' is selected.
+16:28:19 INFO  : System reset is completed.
+16:28:22 INFO  : 'after 3000' command is executed.
+16:28:22 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:28:27 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:28:27 INFO  : Context for 'APU' is selected.
+16:28:29 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:28:29 INFO  : 'configparams force-mem-access 1' command is executed.
+16:28:29 INFO  : Context for 'APU' is selected.
+16:28:30 INFO  : 'ps7_init' command is executed.
+16:28:30 INFO  : 'ps7_post_config' command is executed.
+16:28:30 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:28:59 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:28:59 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:28:59 INFO  : 'configparams force-mem-access 0' command is executed.
+16:28:59 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:28:59 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:28:59 INFO  : Memory regions updated for context APU
+16:28:59 INFO  : Jtag cable frequency set to 12000000
+16:28:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:29:00 INFO  : 'con' command is executed.
+16:29:00 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:29:00 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:29:00 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:29:00 INFO  : 'jtag frequency' command is executed.
+16:29:00 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:29:00 INFO  : Context for 'APU' is selected.
+16:29:00 INFO  : System reset is completed.
+16:29:03 INFO  : 'after 3000' command is executed.
+16:29:03 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:29:09 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:29:10 INFO  : Context for 'APU' is selected.
+16:29:10 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:29:10 INFO  : 'configparams force-mem-access 1' command is executed.
+16:29:10 INFO  : Context for 'APU' is selected.
+16:29:10 INFO  : 'ps7_init' command is executed.
+16:29:10 INFO  : 'ps7_post_config' command is executed.
+16:29:10 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:29:41 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:29:41 INFO  : 'configparams force-mem-access 0' command is executed.
+16:29:41 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:29:41 INFO  : Memory regions updated for context APU
+16:29:41 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:29:41 INFO  : 'con' command is executed.
+16:29:41 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:29:41 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+16:57:45 INFO  : Disconnected from the channel tcfchan#45.
+16:57:46 INFO  : Connected to target on host 'localhost' and port '3121'.
+16:57:46 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:57:47 INFO  : Jtag cable frequency set to 12000000
+16:57:47 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+16:57:47 INFO  : 'jtag frequency' command is executed.
+16:57:47 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+16:57:47 INFO  : Context for 'APU' is selected.
+16:57:47 INFO  : System reset is completed.
+16:57:50 INFO  : 'after 3000' command is executed.
+16:57:50 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+16:57:56 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+16:57:56 INFO  : Context for 'APU' is selected.
+16:57:58 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+16:57:58 INFO  : 'configparams force-mem-access 1' command is executed.
+16:57:58 INFO  : Context for 'APU' is selected.
+16:57:58 INFO  : 'ps7_init' command is executed.
+16:57:58 INFO  : 'ps7_post_config' command is executed.
+16:57:58 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:58:27 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:58:27 INFO  : 'configparams force-mem-access 0' command is executed.
+16:58:27 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:58:28 INFO  : Memory regions updated for context APU
+16:58:28 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:58:28 INFO  : 'con' command is executed.
+16:58:28 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+16:58:28 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:01:08 INFO  : Disconnected from the channel tcfchan#46.
+17:01:09 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:01:09 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:01:09 INFO  : Jtag cable frequency set to 12000000
+17:01:09 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:01:09 INFO  : 'jtag frequency' command is executed.
+17:01:09 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:01:10 INFO  : Context for 'APU' is selected.
+17:01:10 INFO  : System reset is completed.
+17:01:13 INFO  : 'after 3000' command is executed.
+17:01:14 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:01:20 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:01:20 INFO  : Context for 'APU' is selected.
+17:01:22 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:01:22 INFO  : 'configparams force-mem-access 1' command is executed.
+17:01:22 INFO  : Context for 'APU' is selected.
+17:01:22 INFO  : 'ps7_init' command is executed.
+17:01:23 INFO  : 'ps7_post_config' command is executed.
+17:01:23 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:01:52 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:01:52 INFO  : 'configparams force-mem-access 0' command is executed.
+17:01:52 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:01:52 INFO  : Memory regions updated for context APU
+17:01:53 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:01:53 INFO  : 'con' command is executed.
+17:01:53 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:01:53 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:09:48 INFO  : Disconnected from the channel tcfchan#47.
+17:09:49 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:09:49 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:09:49 INFO  : Jtag cable frequency set to 12000000
+17:09:49 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:09:49 INFO  : 'jtag frequency' command is executed.
+17:09:49 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:09:49 INFO  : Context for 'APU' is selected.
+17:09:50 INFO  : System reset is completed.
+17:09:53 INFO  : 'after 3000' command is executed.
+17:09:53 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:09:58 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:09:58 INFO  : Context for 'APU' is selected.
+17:10:00 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:10:00 INFO  : 'configparams force-mem-access 1' command is executed.
+17:10:00 INFO  : Context for 'APU' is selected.
+17:10:01 INFO  : 'ps7_init' command is executed.
+17:10:01 INFO  : 'ps7_post_config' command is executed.
+17:10:01 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:10:30 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:10:30 INFO  : 'configparams force-mem-access 0' command is executed.
+17:10:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:10:30 INFO  : Memory regions updated for context APU
+17:10:31 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:10:31 INFO  : 'con' command is executed.
+17:10:31 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:10:31 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:11:48 INFO  : Disconnected from the channel tcfchan#48.
+17:11:49 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:11:49 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:11:49 INFO  : Jtag cable frequency set to 12000000
+17:11:49 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:11:49 INFO  : 'jtag frequency' command is executed.
+17:11:49 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:11:49 INFO  : Context for 'APU' is selected.
+17:11:49 INFO  : System reset is completed.
+17:11:52 INFO  : 'after 3000' command is executed.
+17:11:53 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:11:59 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:11:59 INFO  : Context for 'APU' is selected.
+17:12:01 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:12:01 INFO  : 'configparams force-mem-access 1' command is executed.
+17:12:01 INFO  : Context for 'APU' is selected.
+17:12:01 INFO  : 'ps7_init' command is executed.
+17:12:01 INFO  : 'ps7_post_config' command is executed.
+17:12:02 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:12:32 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:12:32 INFO  : 'configparams force-mem-access 0' command is executed.
+17:12:32 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:12:32 INFO  : Memory regions updated for context APU
+17:12:32 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:12:32 INFO  : 'con' command is executed.
+17:12:32 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:12:32 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:14:34 INFO  : Disconnected from the channel tcfchan#49.
+17:14:35 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:14:35 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:14:35 INFO  : Jtag cable frequency set to 12000000
+17:14:35 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:14:35 INFO  : 'jtag frequency' command is executed.
+17:14:35 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:14:35 INFO  : Context for 'APU' is selected.
+17:14:36 INFO  : System reset is completed.
+17:14:39 INFO  : 'after 3000' command is executed.
+17:14:39 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:14:45 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:14:46 INFO  : Context for 'APU' is selected.
+17:14:47 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:14:48 INFO  : 'configparams force-mem-access 1' command is executed.
+17:14:48 INFO  : Context for 'APU' is selected.
+17:14:48 INFO  : 'ps7_init' command is executed.
+17:14:48 INFO  : 'ps7_post_config' command is executed.
+17:14:48 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:15:18 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:15:18 INFO  : 'configparams force-mem-access 0' command is executed.
+17:15:18 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:15:18 INFO  : Memory regions updated for context APU
+17:15:18 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:15:18 INFO  : 'con' command is executed.
+17:15:18 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:15:18 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:17:31 INFO  : Disconnected from the channel tcfchan#50.
+17:17:32 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:17:32 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:17:32 INFO  : Jtag cable frequency set to 12000000
+17:17:32 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:17:32 INFO  : 'jtag frequency' command is executed.
+17:17:32 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:17:32 INFO  : Context for 'APU' is selected.
+17:17:32 INFO  : System reset is completed.
+17:17:35 INFO  : 'after 3000' command is executed.
+17:17:36 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:17:42 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:17:42 INFO  : Context for 'APU' is selected.
+17:17:44 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:17:44 INFO  : 'configparams force-mem-access 1' command is executed.
+17:17:45 INFO  : Context for 'APU' is selected.
+17:17:45 INFO  : 'ps7_init' command is executed.
+17:17:45 INFO  : 'ps7_post_config' command is executed.
+17:17:45 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:18:15 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:18:15 INFO  : 'configparams force-mem-access 0' command is executed.
+17:18:15 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:18:15 INFO  : Memory regions updated for context APU
+17:18:15 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:18:15 INFO  : 'con' command is executed.
+17:18:15 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:18:15 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:19:16 INFO  : Disconnected from the channel tcfchan#51.
+17:19:17 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:19:18 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:19:18 INFO  : Jtag cable frequency set to 12000000
+17:19:18 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:19:18 INFO  : 'jtag frequency' command is executed.
+17:19:18 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:19:18 INFO  : Context for 'APU' is selected.
+17:19:18 INFO  : System reset is completed.
+17:19:21 INFO  : 'after 3000' command is executed.
+17:19:22 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:19:28 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:19:28 INFO  : Context for 'APU' is selected.
+17:19:30 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:19:30 INFO  : 'configparams force-mem-access 1' command is executed.
+17:19:30 INFO  : Context for 'APU' is selected.
+17:19:31 INFO  : 'ps7_init' command is executed.
+17:19:31 INFO  : 'ps7_post_config' command is executed.
+17:19:31 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:20:01 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:20:01 INFO  : 'configparams force-mem-access 0' command is executed.
+17:20:01 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:20:01 INFO  : Memory regions updated for context APU
+17:20:01 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:20:01 INFO  : 'con' command is executed.
+17:20:01 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:20:01 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:29:22 INFO  : Disconnected from the channel tcfchan#52.
+17:29:23 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:29:23 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:29:23 INFO  : Jtag cable frequency set to 12000000
+17:29:23 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:29:23 INFO  : 'jtag frequency' command is executed.
+17:29:23 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:29:23 INFO  : Context for 'APU' is selected.
+17:29:23 INFO  : System reset is completed.
+17:29:26 INFO  : 'after 3000' command is executed.
+17:29:26 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:29:32 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:29:32 INFO  : Context for 'APU' is selected.
+17:29:34 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:29:34 INFO  : 'configparams force-mem-access 1' command is executed.
+17:29:34 INFO  : Context for 'APU' is selected.
+17:29:35 INFO  : 'ps7_init' command is executed.
+17:29:35 INFO  : 'ps7_post_config' command is executed.
+17:29:35 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:30:04 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:30:04 INFO  : 'configparams force-mem-access 0' command is executed.
+17:30:04 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:30:04 INFO  : Memory regions updated for context APU
+17:30:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:30:05 INFO  : 'con' command is executed.
+17:30:05 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:30:05 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:32:09 INFO  : Disconnected from the channel tcfchan#53.
+17:32:10 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:32:10 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:32:11 INFO  : Jtag cable frequency set to 12000000
+17:32:11 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:32:11 INFO  : 'jtag frequency' command is executed.
+17:32:11 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:32:11 INFO  : Context for 'APU' is selected.
+17:32:11 INFO  : System reset is completed.
+17:32:14 INFO  : 'after 3000' command is executed.
+17:32:15 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:32:21 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:32:22 INFO  : Context for 'APU' is selected.
+17:32:24 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:32:24 INFO  : 'configparams force-mem-access 1' command is executed.
+17:32:24 INFO  : Context for 'APU' is selected.
+17:32:24 INFO  : 'ps7_init' command is executed.
+17:32:24 INFO  : 'ps7_post_config' command is executed.
+17:32:24 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:32:54 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:32:54 INFO  : 'configparams force-mem-access 0' command is executed.
+17:32:54 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:32:54 INFO  : Memory regions updated for context APU
+17:32:55 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:32:55 INFO  : 'con' command is executed.
+17:32:55 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:32:55 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:33:39 INFO  : Disconnected from the channel tcfchan#54.
+17:33:40 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:33:40 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:33:40 INFO  : Jtag cable frequency set to 12000000
+17:33:40 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:33:40 INFO  : 'jtag frequency' command is executed.
+17:33:40 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:33:41 INFO  : Context for 'APU' is selected.
+17:33:41 INFO  : System reset is completed.
+17:33:44 INFO  : 'after 3000' command is executed.
+17:33:45 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:33:51 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:33:51 INFO  : Context for 'APU' is selected.
+17:33:54 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:33:54 INFO  : 'configparams force-mem-access 1' command is executed.
+17:33:54 INFO  : Context for 'APU' is selected.
+17:33:54 INFO  : 'ps7_init' command is executed.
+17:33:54 INFO  : 'ps7_post_config' command is executed.
+17:33:54 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:34:23 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:34:23 INFO  : 'configparams force-mem-access 0' command is executed.
+17:34:23 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:34:23 INFO  : Memory regions updated for context APU
+17:34:24 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:34:24 INFO  : 'con' command is executed.
+17:34:24 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:34:24 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:34:56 INFO  : Disconnected from the channel tcfchan#55.
+17:34:57 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:34:57 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:34:57 INFO  : Jtag cable frequency set to 12000000
+17:34:57 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:34:57 INFO  : 'jtag frequency' command is executed.
+17:34:57 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:34:57 INFO  : Context for 'APU' is selected.
+17:34:57 INFO  : System reset is completed.
+17:35:00 INFO  : 'after 3000' command is executed.
+17:35:01 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:35:06 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:35:07 INFO  : Context for 'APU' is selected.
+17:35:09 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:35:09 INFO  : 'configparams force-mem-access 1' command is executed.
+17:35:09 INFO  : Context for 'APU' is selected.
+17:35:10 INFO  : 'ps7_init' command is executed.
+17:35:10 INFO  : 'ps7_post_config' command is executed.
+17:35:10 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:35:39 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:35:39 INFO  : 'configparams force-mem-access 0' command is executed.
+17:35:39 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:35:39 INFO  : Memory regions updated for context APU
+17:35:39 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:35:39 INFO  : 'con' command is executed.
+17:35:39 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:35:39 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:36:27 INFO  : Disconnected from the channel tcfchan#56.
+17:36:28 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:36:28 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:36:28 INFO  : Jtag cable frequency set to 12000000
+17:36:28 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:36:28 INFO  : 'jtag frequency' command is executed.
+17:36:28 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:36:28 INFO  : Context for 'APU' is selected.
+17:36:28 INFO  : System reset is completed.
+17:36:31 INFO  : 'after 3000' command is executed.
+17:36:32 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:36:37 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:36:37 INFO  : Context for 'APU' is selected.
+17:36:39 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:36:39 INFO  : 'configparams force-mem-access 1' command is executed.
+17:36:39 INFO  : Context for 'APU' is selected.
+17:36:40 INFO  : 'ps7_init' command is executed.
+17:36:40 INFO  : 'ps7_post_config' command is executed.
+17:36:40 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:37:08 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:37:08 INFO  : 'configparams force-mem-access 0' command is executed.
+17:37:08 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:37:08 INFO  : Memory regions updated for context APU
+17:37:08 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:37:08 INFO  : 'con' command is executed.
+17:37:08 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:37:08 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:39:04 INFO  : Disconnected from the channel tcfchan#57.
+17:39:05 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:39:05 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:39:05 INFO  : Jtag cable frequency set to 12000000
+17:39:05 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:39:05 INFO  : 'jtag frequency' command is executed.
+17:39:05 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:39:05 INFO  : Context for 'APU' is selected.
+17:39:05 INFO  : System reset is completed.
+17:39:08 INFO  : 'after 3000' command is executed.
+17:39:08 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:39:14 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:39:14 INFO  : Context for 'APU' is selected.
+17:39:16 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:39:16 INFO  : 'configparams force-mem-access 1' command is executed.
+17:39:16 INFO  : Context for 'APU' is selected.
+17:39:16 INFO  : 'ps7_init' command is executed.
+17:39:16 INFO  : 'ps7_post_config' command is executed.
+17:39:16 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:39:45 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:39:45 INFO  : 'configparams force-mem-access 0' command is executed.
+17:39:45 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:39:45 INFO  : Memory regions updated for context APU
+17:39:45 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:39:45 INFO  : 'con' command is executed.
+17:39:45 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:39:45 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:40:24 INFO  : Disconnected from the channel tcfchan#58.
+17:40:25 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:40:25 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:40:25 INFO  : Jtag cable frequency set to 12000000
+17:40:25 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:40:25 INFO  : 'jtag frequency' command is executed.
+17:40:25 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:40:26 INFO  : Context for 'APU' is selected.
+17:40:26 INFO  : System reset is completed.
+17:40:29 INFO  : 'after 3000' command is executed.
+17:40:29 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:40:34 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:40:35 INFO  : Context for 'APU' is selected.
+17:40:36 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:40:36 INFO  : 'configparams force-mem-access 1' command is executed.
+17:40:36 INFO  : Context for 'APU' is selected.
+17:40:37 INFO  : 'ps7_init' command is executed.
+17:40:37 INFO  : 'ps7_post_config' command is executed.
+17:40:37 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:41:05 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:41:05 INFO  : 'configparams force-mem-access 0' command is executed.
+17:41:05 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:41:05 INFO  : Memory regions updated for context APU
+17:41:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:41:05 INFO  : 'con' command is executed.
+17:41:05 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:41:05 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:41:24 INFO  : Disconnected from the channel tcfchan#59.
+17:41:25 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:41:25 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:41:25 INFO  : Jtag cable frequency set to 12000000
+17:41:25 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:41:25 INFO  : 'jtag frequency' command is executed.
+17:41:25 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:41:25 INFO  : Context for 'APU' is selected.
+17:41:25 INFO  : System reset is completed.
+17:41:28 INFO  : 'after 3000' command is executed.
+17:41:28 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:41:34 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:41:34 INFO  : Context for 'APU' is selected.
+17:41:36 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:41:36 INFO  : 'configparams force-mem-access 1' command is executed.
+17:41:36 INFO  : Context for 'APU' is selected.
+17:41:36 INFO  : 'ps7_init' command is executed.
+17:41:36 INFO  : 'ps7_post_config' command is executed.
+17:41:36 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:42:05 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:42:05 INFO  : 'configparams force-mem-access 0' command is executed.
+17:42:05 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:42:05 INFO  : Memory regions updated for context APU
+17:42:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:42:05 INFO  : 'con' command is executed.
+17:42:05 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:42:05 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+17:55:14 INFO  : Disconnected from the channel tcfchan#60.
+17:55:15 INFO  : Connected to target on host 'localhost' and port '3121'.
+17:55:15 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:55:15 INFO  : Jtag cable frequency set to 12000000
+17:55:15 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+17:55:15 INFO  : 'jtag frequency' command is executed.
+17:55:15 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+17:55:15 INFO  : Context for 'APU' is selected.
+17:55:15 INFO  : System reset is completed.
+17:55:18 INFO  : 'after 3000' command is executed.
+17:55:18 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+17:55:24 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+17:55:24 INFO  : Context for 'APU' is selected.
+17:55:26 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+17:55:26 INFO  : 'configparams force-mem-access 1' command is executed.
+17:55:26 INFO  : Context for 'APU' is selected.
+17:55:27 INFO  : 'ps7_init' command is executed.
+17:55:27 INFO  : 'ps7_post_config' command is executed.
+17:55:27 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:55:55 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:55:55 INFO  : 'configparams force-mem-access 0' command is executed.
+17:55:55 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:55:55 INFO  : Memory regions updated for context APU
+17:55:55 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:55:55 INFO  : 'con' command is executed.
+17:55:55 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+17:55:55 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+18:25:13 INFO  : Disconnected from the channel tcfchan#61.
+18:25:14 INFO  : Connected to target on host 'localhost' and port '3121'.
+18:25:14 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:25:14 INFO  : Jtag cable frequency set to 12000000
+18:25:15 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:25:15 INFO  : 'jtag frequency' command is executed.
+18:25:15 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+18:25:15 INFO  : Context for 'APU' is selected.
+18:25:15 INFO  : System reset is completed.
+18:25:18 INFO  : 'after 3000' command is executed.
+18:25:18 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+18:25:23 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+18:25:23 INFO  : Context for 'APU' is selected.
+18:25:25 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+18:25:25 INFO  : 'configparams force-mem-access 1' command is executed.
+18:25:25 INFO  : Context for 'APU' is selected.
+18:25:26 INFO  : 'ps7_init' command is executed.
+18:25:26 INFO  : 'ps7_post_config' command is executed.
+18:25:26 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:25:54 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+18:25:54 INFO  : 'configparams force-mem-access 0' command is executed.
+18:25:54 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+18:25:54 INFO  : Memory regions updated for context APU
+18:25:54 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:25:54 INFO  : 'con' command is executed.
+18:25:54 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+18:25:54 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+18:30:39 INFO  : Disconnected from the channel tcfchan#62.
+18:30:40 INFO  : Connected to target on host 'localhost' and port '3121'.
+18:30:40 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:30:40 INFO  : Jtag cable frequency set to 12000000
+18:30:41 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:30:41 INFO  : 'jtag frequency' command is executed.
+18:30:41 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+18:30:41 INFO  : Context for 'APU' is selected.
+18:30:41 INFO  : System reset is completed.
+18:30:44 INFO  : 'after 3000' command is executed.
+18:30:44 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+18:30:49 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+18:30:50 INFO  : Context for 'APU' is selected.
+18:30:51 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+18:30:51 INFO  : 'configparams force-mem-access 1' command is executed.
+18:30:51 INFO  : Context for 'APU' is selected.
+18:30:52 INFO  : 'ps7_init' command is executed.
+18:30:52 INFO  : 'ps7_post_config' command is executed.
+18:30:52 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:31:20 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+18:31:20 INFO  : 'configparams force-mem-access 0' command is executed.
+18:31:20 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+18:31:20 INFO  : Memory regions updated for context APU
+18:31:20 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:31:20 INFO  : 'con' command is executed.
+18:31:20 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+18:31:20 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+18:31:58 INFO  : Disconnected from the channel tcfchan#63.
+18:31:59 INFO  : Connected to target on host 'localhost' and port '3121'.
+18:31:59 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:31:59 INFO  : Jtag cable frequency set to 12000000
+18:31:59 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:31:59 INFO  : 'jtag frequency' command is executed.
+18:31:59 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+18:32:00 INFO  : Context for 'APU' is selected.
+18:32:00 INFO  : System reset is completed.
+18:32:03 INFO  : 'after 3000' command is executed.
+18:32:03 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+18:32:09 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+18:32:09 INFO  : Context for 'APU' is selected.
+18:32:11 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+18:32:11 INFO  : 'configparams force-mem-access 1' command is executed.
+18:32:12 INFO  : Context for 'APU' is selected.
+18:32:12 INFO  : 'ps7_init' command is executed.
+18:32:12 INFO  : 'ps7_post_config' command is executed.
+18:32:12 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:32:42 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+18:32:42 INFO  : 'configparams force-mem-access 0' command is executed.
+18:32:42 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+18:32:42 INFO  : Memory regions updated for context APU
+18:32:42 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+18:32:42 INFO  : 'con' command is executed.
+18:32:42 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+18:32:42 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+18:56:02 INFO  : Disconnected from the channel tcfchan#64.
+18:56:03 INFO  : Connected to target on host 'localhost' and port '3121'.
+18:56:03 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:56:03 INFO  : Jtag cable frequency set to 12000000
+18:56:03 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+18:56:03 INFO  : 'jtag frequency' command is executed.
+18:56:03 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+18:56:03 INFO  : Context for 'APU' is selected.
+18:56:03 INFO  : System reset is completed.
+18:56:06 INFO  : 'after 3000' command is executed.
+18:56:07 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+18:56:09 ERROR : 'fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit' is cancelled.
+18:56:09 INFO  : Issued abort command to xsdb.
+18:56:09 ERROR : Exception occured while running Program FPGA.
+java.lang.RuntimeException: 'fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit' is cancelled.
+18:56:09 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+----------------End of Script----------------
+
+19:41:45 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1579462904041,  Project:1579212246990
+19:41:45 INFO  : Project mvp_hw_platform's source hardware specification located at C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\logic\logic.sdk\main.hdf is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated.
+19:41:49 INFO  : Copied contents of C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\logic\logic.sdk\main.hdf into \mvp_hw_platform\system.hdf.
+19:41:54 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+19:42:00 INFO  : 
+19:42:00 INFO  : Updating hardware inferred compiler options for ps_app.
+19:42:00 INFO  : Clearing existing target manager status.
+19:42:00 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+19:42:01 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+19:42:01 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+19:42:01 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+19:42:01 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+19:42:02 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+19:42:03 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+19:47:22 INFO  : Connected to target on host 'localhost' and port '3121'.
+19:47:22 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:47:22 INFO  : Jtag cable frequency set to 12000000
+19:47:22 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:47:22 INFO  : 'jtag frequency' command is executed.
+19:47:22 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+19:47:22 INFO  : Context for 'APU' is selected.
+19:47:22 INFO  : System reset is completed.
+19:47:25 INFO  : 'after 3000' command is executed.
+19:47:26 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+19:47:32 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+19:47:32 INFO  : Context for 'APU' is selected.
+19:47:32 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+19:47:32 INFO  : 'configparams force-mem-access 1' command is executed.
+19:47:32 INFO  : Context for 'APU' is selected.
+19:47:33 INFO  : 'ps7_init' command is executed.
+19:47:33 INFO  : 'ps7_post_config' command is executed.
+19:47:33 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:48:03 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+19:48:03 INFO  : 'configparams force-mem-access 0' command is executed.
+19:48:03 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:48:03 INFO  : Memory regions updated for context APU
+19:48:03 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:48:03 INFO  : 'con' command is executed.
+19:48:03 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+19:48:03 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+19:48:40 INFO  : Disconnected from the channel tcfchan#65.
+19:48:41 INFO  : Connected to target on host 'localhost' and port '3121'.
+19:48:41 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:48:41 INFO  : Jtag cable frequency set to 12000000
+19:48:41 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:48:41 INFO  : 'jtag frequency' command is executed.
+19:48:41 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+19:48:41 INFO  : Context for 'APU' is selected.
+19:48:41 INFO  : System reset is completed.
+19:48:44 INFO  : 'after 3000' command is executed.
+19:48:45 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+19:48:51 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+19:48:51 INFO  : Context for 'APU' is selected.
+19:48:55 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+19:48:55 INFO  : 'configparams force-mem-access 1' command is executed.
+19:48:55 INFO  : Context for 'APU' is selected.
+19:48:56 INFO  : 'ps7_init' command is executed.
+19:48:56 INFO  : 'ps7_post_config' command is executed.
+19:48:56 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:49:25 INFO  : The application 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf' is downloaded to processor 'ps7_cortexa9_0'.
+19:49:25 INFO  : 'configparams force-mem-access 0' command is executed.
+19:49:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
+fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:49:25 INFO  : Memory regions updated for context APU
+19:49:26 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:49:26 INFO  : 'con' command is executed.
+19:49:26 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+con
+----------------End of Script----------------
+
+19:49:26 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
+19:59:20 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1579463960808,  Project:1579462904041
+19:59:20 INFO  : Project mvp_hw_platform's source hardware specification located at C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\logic\logic.sdk\main.hdf is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated.
+20:00:38 INFO  : Copied contents of C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\logic\logic.sdk\main.hdf into \mvp_hw_platform\system.hdf.
+20:00:47 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+20:00:50 INFO  : 
+20:00:51 INFO  : Updating hardware inferred compiler options for ps_app.
+20:00:51 INFO  : Clearing existing target manager status.
+20:00:51 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+20:00:51 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+20:00:52 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+20:00:52 INFO  : Closing and re-opening the MSS file of ther project ps_app_bsp
+20:00:52 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+20:00:54 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+20:03:45 INFO  : Disconnected from the channel tcfchan#66.
+20:03:46 INFO  : Connected to target on host 'localhost' and port '3121'.
+20:03:46 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+20:03:47 INFO  : Jtag cable frequency set to 12000000
+20:03:47 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+20:03:47 INFO  : 'jtag frequency' command is executed.
+20:03:47 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+20:03:47 INFO  : Context for 'APU' is selected.
+20:03:47 INFO  : System reset is completed.
+20:03:50 INFO  : 'after 3000' command is executed.
+20:03:51 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+20:03:56 INFO  : FPGA configured successfully with bitstream "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit"
+20:03:56 INFO  : Context for 'APU' is selected.
+20:03:56 INFO  : Hardware design information is loaded from 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf'.
+20:03:56 INFO  : 'configparams force-mem-access 1' command is executed.
+20:03:57 INFO  : Context for 'APU' is selected.
+20:03:57 INFO  : 'ps7_init' command is executed.
+20:03:57 INFO  : 'ps7_post_config' command is executed.
+20:03:57 INFO  : Context for processor 'ps7_cortexa9_0' is selected.

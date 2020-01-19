@@ -27202,3 +27202,2979 @@ make pre-build main-build
 a9-linaro-pre-build-step
 ' '
 make: Nothing to be done for 'main-build'.
+16:57:37 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:60:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'SetupIntrSystem':
+../src/helloworld.c:184:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:287:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/helloworld.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:289:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/helloworld.c:60:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:291:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/helloworld.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:263:10: warning: unused variable 'byte' [-Wunused-variable]
+  int32_t byte;
+          ^~~~
+../src/helloworld.c:262:16: warning: unused variable 'gp3' [-Wunused-variable]
+  uint32_t gp2, gp3;
+                ^~~
+../src/helloworld.c:262:11: warning: unused variable 'gp2' [-Wunused-variable]
+  uint32_t gp2, gp3;
+           ^~~
+../src/helloworld.c:261:17: warning: unused variable 'mask_one' [-Wunused-variable]
+  uint32_t mask, mask_one;
+                 ^~~~~~~~
+../src/helloworld.c:261:11: warning: unused variable 'mask' [-Wunused-variable]
+  uint32_t mask, mask_one;
+           ^~~~
+../src/helloworld.c:260:23: warning: unused variable 'this_word1' [-Wunused-variable]
+  uint32_t this_word0, this_word1;
+                       ^~~~~~~~~~
+../src/helloworld.c:260:11: warning: unused variable 'this_word0' [-Wunused-variable]
+  uint32_t this_word0, this_word1;
+           ^~~~~~~~~~
+../src/helloworld.c:259:23: warning: unused variable 'last_word1' [-Wunused-variable]
+  uint32_t last_word0, last_word1;
+                       ^~~~~~~~~~
+../src/helloworld.c:259:11: warning: unused variable 'last_word0' [-Wunused-variable]
+  uint32_t last_word0, last_word1;
+           ^~~~~~~~~~
+../src/helloworld.c:258:21: warning: unused variable 'iter2' [-Wunused-variable]
+  uint32_t iter = 0, iter2 = 0;
+                     ^~~~~
+../src/helloworld.c:258:11: warning: unused variable 'iter' [-Wunused-variable]
+  uint32_t iter = 0, iter2 = 0;
+           ^~~~
+../src/helloworld.c:257:11: warning: unused variable 'n' [-Wunused-variable]
+  uint32_t n;
+           ^
+../src/helloworld.c:256:10: warning: unused variable 'result' [-Wunused-variable]
+  int32_t result;
+          ^~~~~~
+../src/helloworld.c:255:12: warning: unused variable 'ptr' [-Wunused-variable]
+  uint32_t *ptr;
+            ^~~
+../src/helloworld.c:254:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr;
+           ^~~~
+../src/helloworld.c:252:10: warning: unused variable 'k' [-Wunused-variable]
+  int32_t k;
+          ^
+../src/helloworld.c:251:11: warning: unused variable 'loops' [-Wunused-variable]
+  uint32_t loops = 0;
+           ^~~~~
+../src/helloworld.c:250:11: warning: unused variable 'i' [-Wunused-variable]
+  uint32_t i;
+           ^
+../src/helloworld.c:249:11: warning: unused variable 'data' [-Wunused-variable]
+  uint32_t data;
+           ^~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78340	2100576	  27328	2206244	 21aa24	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+16:57:43 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:01:00 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/helloworld.c:60:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/helloworld.c: In function 'SetupIntrSystem':
+../src/helloworld.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:275:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/helloworld.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:277:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/helloworld.c:60:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/helloworld.c:279:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/helloworld.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78356	2100576	  27328	2206260	 21aa34	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:01:05 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:06:17 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/helloworld.o ./src/platform.o  ./src/helloworld.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+17:06:18 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:60:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:275:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/main.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/main.c:60:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/main.c:55:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78356	2100576	  27328	2206260	 21aa34	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:08:56 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:111:21: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'AxiStatus'
+  u32 IrqStatus, u32 AxiStatus;
+                     ^~~~~~~~~
+../src/main.c:142:3: error: 'AxiStatus' undeclared (first use in this function); did you mean 'IrqStatus'?
+   AxiStatus = XAxiDma_ReadReg(RegBase, XAXIDMA_SR_OFFSET);
+   ^~~~~~~~~
+   IrqStatus
+../src/main.c:142:3: note: each undeclared identifier is reported only once for each function it appears in
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:114:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../src/main.c:142:31: error: 'RegBase' undeclared (first use in this function)
+   AxiStatus = XAxiDma_ReadReg(RegBase, XAXIDMA_SR_OFFSET);
+                               ^
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:316:19: note: in definition of macro 'XAxiDma_ReadReg'
+     XAxiDma_In32((BaseAddress) + (RegOffset))
+                   ^~~~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:179:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:268:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/main.c:270:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:272:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+17:09:08 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:114:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:143:31: error: 'RegBase' undeclared (first use in this function)
+   AxiStatus = XAxiDma_ReadReg(RegBase, XAXIDMA_SR_OFFSET);
+                               ^
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:316:19: note: in definition of macro 'XAxiDma_ReadReg'
+     XAxiDma_In32((BaseAddress) + (RegOffset))
+                   ^~~~~~~~~~~
+../src/main.c:143:31: note: each undeclared identifier is reported only once for each function it appears in
+   AxiStatus = XAxiDma_ReadReg(RegBase, XAXIDMA_SR_OFFSET);
+                               ^
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:316:19: note: in definition of macro 'XAxiDma_ReadReg'
+     XAxiDma_In32((BaseAddress) + (RegOffset))
+                   ^~~~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:180:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:269:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/main.c:271:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:273:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+17:09:34 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:114:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:143:43: error: invalid type argument of '->' (have 'XAxiDma {aka struct XAxiDma}')
+   AxiStatus = XAxiDma_ReadReg(dma0_pointer->ChanBase, XAXIDMA_SR_OFFSET);
+                                           ^
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:316:19: note: in definition of macro 'XAxiDma_ReadReg'
+     XAxiDma_In32((BaseAddress) + (RegOffset))
+                   ^~~~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:180:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:269:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/main.c:271:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:273:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+17:09:44 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:180:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:269:23: warning: passing argument 1 of 'Xil_DCacheFlushRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheFlushRange(tx_buffer, PACKET_MAXSIZE);
+                       ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:104:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheFlushRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~
+../src/main.c:271:48: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:273:28: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+  Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                            ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78404	2100576	  10944	2189924	 216a64	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:09:47 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:11:43 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:183:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:273:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:274:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78492	2100576	  10944	2190012	 216abc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:11:46 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:14:19 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:183:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:273:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:274:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78508	2100576	  10944	2190028	 216acc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:14:27 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:183:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:273:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:274:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78508	2100576	  10944	2190028	 216acc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:14:31 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:17:25 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:276:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78508	2100576	  10944	2190028	 216acc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:17:29 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:19:09 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:19:13 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:19:15 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:27:01 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/main.o ./src/platform.o  ./src/main.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+17:27:02 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:27:05 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/main.o ./src/platform.o  ./src/main.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+17:27:06 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:29:19 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:32:07 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:33:35 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:34:51 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78708	2100576	  10944	2190228	 216b94	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:34:54 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:36:24 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:186:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:279:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78724	2100576	  10944	2190244	 216ba4	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:38:59 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:280:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:281:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78492	2100576	  10944	2190012	 216abc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:39:02 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:40:22 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78556	2100576	  10944	2190076	 216afc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:41:19 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78556	2100576	  10944	2190076	 216afc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:41:22 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+17:55:08 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78556	2100576	  10944	2190076	 216afc	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+17:55:12 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+18:25:10 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78500	2100576	  10944	2190020	 216ac4	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:30:35 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78372	2100576	  10944	2189892	 216a44	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:30:38 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+18:31:53 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:115:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:114:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:188:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:281:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:282:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  78436	2100576	  10944	2189956	 216a84	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+18:31:56 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+18:37:39 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c:70:1: error: unknown type name 'XScuTimer'; did you mean 'XScuGic'?
+ XScuTimer Timer;
+ ^~~~~~~~~
+ XScuGic
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:117:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:116:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:190:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:262:26: error: 'GpioInstancePtr' undeclared (first use in this function)
+  XGpioPs_SetDirectionPin(GpioInstancePtr, 9, 1);
+                          ^~~~~~~~~~~~~~~
+../src/main.c:262:26: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:271:3: warning: implicit declaration of function 'XScuTimer_LoadTimer' [-Wimplicit-function-declaration]
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+   ^~~~~~~~~~~~~~~~~~~
+../src/main.c:271:23: error: 'TimerInstancePtr' undeclared (first use in this function); did you mean 'GpioInstancePtr'?
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+                       ^~~~~~~~~~~~~~~~
+                       GpioInstancePtr
+../src/main.c:271:41: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function)
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+                                         ^~~~~~~~~~~~~~~~
+../src/main.c:272:3: warning: implicit declaration of function 'XScuTimer_Start'; did you mean 'XScuGic_Stop'? [-Wimplicit-function-declaration]
+   XScuTimer_Start(TimerInstancePtr);
+   ^~~~~~~~~~~~~~~
+   XScuGic_Stop
+../src/main.c:274:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(TimerInstancePtr);
+   ^~
+../src/main.c:274:8: warning: implicit declaration of function 'XScuTimer_GetCounterValue' [-Wimplicit-function-declaration]
+   t0 = XScuTimer_GetCounterValue(TimerInstancePtr);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(TimerInstancePtr);
+    ^~
+    t0
+../src/main.c:282:5: error: 'tog' undeclared (first use in this function)
+     tog = ~tog;
+     ^~~
+../src/main.c:309:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:310:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+18:42:42 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:119:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:118:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:192:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:265:42: error: 'TIMER_DEVICE_ID' undeclared (first use in this function); did you mean 'INTC_DEVICE_ID'?
+  xscu_timer_cfg = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
+                                          ^~~~~~~~~~~~~~~
+                                          INTC_DEVICE_ID
+../src/main.c:265:42: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:266:2: error: 'Status' undeclared (first use in this function); did you mean 'XStatus'?
+  Status = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+  ^~~~~~
+  XStatus
+../src/main.c:266:77: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  Status = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                             ^~
+../src/main.c:266:35: error: incompatible type for argument 1 of 'XScuTimer_CfgInitialize'
+  Status = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                   ^~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer * {aka struct <anonymous> *}' but argument is of type 'XScuTimer {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:266:47: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  Status = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                               ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:275:26: error: 'GpioInstancePtr' undeclared (first use in this function)
+  XGpioPs_SetDirectionPin(GpioInstancePtr, 9, 1);
+                          ^~~~~~~~~~~~~~~
+../src/main.c:284:15: error: 'TimerInstancePtr' undeclared (first use in this function); did you mean 'GpioInstancePtr'?
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+               ^~~~~~~~~~~~~~~~
+               GpioInstancePtr
+../src/main.c:284:64: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+                                                                ^               
+                                                                XSCUTIMER_LOAD_OFFSET
+../src/main.c:287:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(TimerInstancePtr);
+   ^~
+../src/main.c:290:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(TimerInstancePtr);
+    ^~
+    t0
+../src/main.c:295:5: error: 'tog' undeclared (first use in this function)
+     tog = ~tog;
+     ^~~
+../src/main.c:322:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:323:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+18:55:59 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:42: error: 'TIMER_DEVICE_ID' undeclared (first use in this function); did you mean 'INTC_DEVICE_ID'?
+  xscu_timer_cfg = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
+                                          ^~~~~~~~~~~~~~~
+                                          INTC_DEVICE_ID
+../src/main.c:266:42: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:267:76: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                            ^~
+../src/main.c:267:34: error: incompatible type for argument 1 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                  ^~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer * {aka struct <anonymous> *}' but argument is of type 'XScuTimer {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:267:46: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                              ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:37: error: 'GPIO_DEVICE_ID' undeclared (first use in this function); did you mean 'UART_DEVICE_ID'?
+  gpio_config = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+                                     ^~~~~~~~~~~~~~
+                                     UART_DEVICE_ID
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:285:26: error: incompatible type for argument 1 of 'XGpioPs_SetDirectionPin'
+  XGpioPs_SetDirectionPin(gpio, 9, 1);
+                          ^~~~
+In file included from ../src/main.c:48:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:233:6: note: expected 'XGpioPs * {aka struct <anonymous> *}' but argument is of type 'XGpioPs {aka struct <anonymous>}'
+ void XGpioPs_SetDirectionPin(XGpioPs *InstancePtr, u32 Pin, u32 Direction);
+      ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:286:29: error: incompatible type for argument 1 of 'XGpioPs_SetOutputEnablePin'
+  XGpioPs_SetOutputEnablePin(gpio, 9, 1);
+                             ^~~~
+In file included from ../src/main.c:48:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:235:6: note: expected 'XGpioPs * {aka struct <anonymous> *}' but argument is of type 'XGpioPs {aka struct <anonymous>}'
+ void XGpioPs_SetOutputEnablePin(XGpioPs *InstancePtr, u32 Pin, u32 OpEnable);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:288:26: error: incompatible type for argument 1 of 'XGpioPs_SetDirectionPin'
+  XGpioPs_SetDirectionPin(gpio, 37, 1);
+                          ^~~~
+In file included from ../src/main.c:48:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:233:6: note: expected 'XGpioPs * {aka struct <anonymous> *}' but argument is of type 'XGpioPs {aka struct <anonymous>}'
+ void XGpioPs_SetDirectionPin(XGpioPs *InstancePtr, u32 Pin, u32 Direction);
+      ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:289:29: error: incompatible type for argument 1 of 'XGpioPs_SetOutputEnablePin'
+  XGpioPs_SetOutputEnablePin(gpio, 37, 1);
+                             ^~~~
+In file included from ../src/main.c:48:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:235:6: note: expected 'XGpioPs * {aka struct <anonymous> *}' but argument is of type 'XGpioPs {aka struct <anonymous>}'
+ void XGpioPs_SetOutputEnablePin(XGpioPs *InstancePtr, u32 Pin, u32 OpEnable);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:294:15: error: 'TimerInstancePtr' undeclared (first use in this function)
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+               ^~~~~~~~~~~~~~~~
+../src/main.c:294:64: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(TimerInstancePtr, TIMER_LOAD_VALUE);
+                                                                ^               
+                                                                XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(TimerInstancePtr);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(TimerInstancePtr);
+    ^~
+    t0
+../src/main.c:305:5: error: 'tog' undeclared (first use in this function)
+     tog = ~tog;
+     ^~~
+../src/main.c:306:22: error: 'GpioInstancePtr' undeclared (first use in this function); did you mean 'TimerInstancePtr'?
+     XGpioPs_WritePin(GpioInstancePtr, 9, tog);
+                      ^~~~~~~~~~~~~~~
+                      TimerInstancePtr
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:40:57 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:42: error: 'TIMER_DEVICE_ID' undeclared (first use in this function); did you mean 'INTC_DEVICE_ID'?
+  xscu_timer_cfg = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
+                                          ^~~~~~~~~~~~~~~
+                                          INTC_DEVICE_ID
+../src/main.c:266:42: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:267:76: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                            ^~
+../src/main.c:267:34: error: incompatible type for argument 1 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                  ^~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer * {aka struct <anonymous> *}' but argument is of type 'XScuTimer {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:267:46: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                              ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:37: error: 'GPIO_DEVICE_ID' undeclared (first use in this function); did you mean 'UART_DEVICE_ID'?
+  gpio_config = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+                                     ^~~~~~~~~~~~~~
+                                     UART_DEVICE_ID
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:41:35 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:42: error: 'TIMER_DEVICE_ID' undeclared (first use in this function); did you mean 'INTC_DEVICE_ID'?
+  xscu_timer_cfg = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
+                                          ^~~~~~~~~~~~~~~
+                                          INTC_DEVICE_ID
+../src/main.c:266:42: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:267:77: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                             ^~
+../src/main.c:267:47: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                               ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:37: error: 'GPIO_DEVICE_ID' undeclared (first use in this function); did you mean 'UART_DEVICE_ID'?
+  gpio_config = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+                                     ^~~~~~~~~~~~~~
+                                     UART_DEVICE_ID
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:42:02 **** Clean-only build of project ps_app_bsp ****
+make -k clean 
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+19:42:03 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/main.o ./src/platform.o  ./src/main.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+19:42:03 **** Build of project ps_app_bsp ****
+make -k all 
+"Running Make include in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/gpiops_v3_4/src"
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/spips_v3_1/src"
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/ttcps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make libs in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling axidma"
+arm-none-eabi-ar: creating ../../../lib/libxil.a
+"Running Make libs in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling coresightps_dcc"
+"Running Make libs in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling cpu_cortexa9"
+"Running Make libs in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling ddrps"
+"Running Make libs in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling devcfg"
+"Running Make libs in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling dmaps"
+"Running Make libs in ps7_cortexa9_0/libsrc/gpiops_v3_4/src"
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling gpiops"
+"Running Make libs in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scugic"
+"Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scutimer"
+"Running Make libs in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scuwdt"
+"Running Make libs in ps7_cortexa9_0/libsrc/spips_v3_1/src"
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling spips"
+"Running Make libs in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling standalone"
+In file included from usleep.c:56:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xil_sleeptimer.c:51:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xtime_l.c:49:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from sleep.c:53:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+"Running Make libs in ps7_cortexa9_0/libsrc/ttcps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling ttcps"
+"Running Make libs in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling uartps"
+"Running Make libs in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling xadcps"
+'Finished building libraries'
+19:42:26 **** Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:42: error: 'TIMER_DEVICE_ID' undeclared (first use in this function); did you mean 'INTC_DEVICE_ID'?
+  xscu_timer_cfg = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
+                                          ^~~~~~~~~~~~~~~
+                                          INTC_DEVICE_ID
+../src/main.c:266:42: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:267:77: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                             ^~
+../src/main.c:267:47: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                               ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:37: error: 'GPIO_DEVICE_ID' undeclared (first use in this function); did you mean 'UART_DEVICE_ID'?
+  gpio_config = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+                                     ^~~~~~~~~~~~~~
+                                     UART_DEVICE_ID
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:43:09 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:17: error: incompatible types when assigning to type 'XScuTimer_Config {aka struct <anonymous>}' from type 'XScuTimer_Config * {aka struct <anonymous> *}'
+  xscu_timer_cfg = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
+                 ^
+../src/main.c:267:77: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                             ^~
+../src/main.c:267:47: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                               ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:277:37: error: 'GPIO_DEVICE_ID' undeclared (first use in this function); did you mean 'UART_DEVICE_ID'?
+  gpio_config = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+                                     ^~~~~~~~~~~~~~
+                                     UART_DEVICE_ID
+../src/main.c:277:37: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:43:29 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:266:17: error: incompatible types when assigning to type 'XScuTimer_Config {aka struct <anonymous>}' from type 'XScuTimer_Config * {aka struct <anonymous> *}'
+  xscu_timer_cfg = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
+                 ^
+../src/main.c:267:77: error: invalid type argument of '->' (have 'XScuTimer_Config {aka struct <anonymous>}')
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                                                             ^~
+../src/main.c:267:47: error: incompatible type for argument 2 of 'XScuTimer_CfgInitialize'
+  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
+                                               ^~~~~~~~~~~~~~
+In file included from ../src/main.c:51:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:352:5: note: expected 'XScuTimer_Config * {aka struct <anonymous> *}' but argument is of type 'XScuTimer_Config {aka struct <anonymous>}'
+ s32 XScuTimer_CfgInitialize(XScuTimer *InstancePtr,
+     ^~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:278:52: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:43:52 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:278:52: error: 'GpioConfigPtr' undeclared (first use in this function); did you mean 'gpio_config'?
+  error = XGpioPs_CfgInitialize(&gpio, gpio_config, GpioConfigPtr->BaseAddr);
+                                                    ^~~~~~~~~~~~~
+                                                    gpio_config
+../src/main.c:278:52: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:44:00 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:294:59: error: 'TIMER_LOAD_VALUE' undeclared (first use in this function); did you mean 'XSCUTIMER_LOAD_OFFSET'?
+   XScuTimer_LoadTimer(&xscu_timer, TIMER_LOAD_VALUE);
+                                                           ^               
+                                                           XSCUTIMER_LOAD_OFFSET
+../src/main.c:294:59: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:47:03 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:297:3: error: 't0' undeclared (first use in this function)
+   t0 = XScuTimer_GetCounterValue(&xscu_timer);
+   ^~
+../src/main.c:297:3: note: each undeclared identifier is reported only once for each function it appears in
+../src/main.c:300:4: error: 't1' undeclared (first use in this function); did you mean 't0'?
+    t1 = XScuTimer_GetCounterValue(&xscu_timer);
+    ^~
+    t0
+../src/main.c:332:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:333:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:26: src/main.o] Error 1
+19:47:13 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:333:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:334:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:47:21 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+19:48:36 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:333:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:334:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77368	2100520	  10960	2188848	 216630	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+19:48:39 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:00:52 **** Clean-only build of project ps_app_bsp ****
+make -k clean 
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s clean 
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s clean 
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s clean 
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+rm -f ps7_cortexa9_0/lib/libxil.a
+20:00:54 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/main.o ./src/platform.o  ./src/main.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+20:00:54 **** Build of project ps_app_bsp ****
+make -k all 
+"Running Make include in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/gpiops_v3_4/src"
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/spips_v3_1/src"
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/ttcps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make include in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Running Make libs in ps7_cortexa9_0/libsrc/axidma_v9_8/src"
+make -C ps7_cortexa9_0/libsrc/axidma_v9_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling axidma"
+arm-none-eabi-ar: creating ../../../lib/libxil.a
+"Running Make libs in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling coresightps_dcc"
+"Running Make libs in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src"
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling cpu_cortexa9"
+"Running Make libs in ps7_cortexa9_0/libsrc/ddrps_v1_0/src"
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling ddrps"
+"Running Make libs in ps7_cortexa9_0/libsrc/devcfg_v3_5/src"
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling devcfg"
+"Running Make libs in ps7_cortexa9_0/libsrc/dmaps_v2_4/src"
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling dmaps"
+"Running Make libs in ps7_cortexa9_0/libsrc/gpiops_v3_4/src"
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling gpiops"
+"Running Make libs in ps7_cortexa9_0/libsrc/scugic_v3_10/src"
+make -C ps7_cortexa9_0/libsrc/scugic_v3_10/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scugic"
+"Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scutimer"
+"Running Make libs in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src"
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling scuwdt"
+"Running Make libs in ps7_cortexa9_0/libsrc/spips_v3_1/src"
+make -C ps7_cortexa9_0/libsrc/spips_v3_1/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling spips"
+"Running Make libs in ps7_cortexa9_0/libsrc/standalone_v6_8/src"
+make -C ps7_cortexa9_0/libsrc/standalone_v6_8/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling standalone"
+In file included from usleep.c:56:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xil_sleeptimer.c:51:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from xtime_l.c:49:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+In file included from sleep.c:53:0:
+xtime_l.h:87:9: note: #pragma message: For the sleep routines, Global timer is being used
+ #pragma message ("For the sleep routines, Global timer is being used")
+         ^~~~~~~
+"Running Make libs in ps7_cortexa9_0/libsrc/ttcps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling ttcps"
+"Running Make libs in ps7_cortexa9_0/libsrc/uartps_v3_7/src"
+make -C ps7_cortexa9_0/libsrc/uartps_v3_7/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling uartps"
+"Running Make libs in ps7_cortexa9_0/libsrc/xadcps_v2_3/src"
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
+"Compiling xadcps"
+'Finished building libraries'
+20:01:17 **** Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:333:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:334:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77368	2100520	  10960	2188848	 216630	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:03:41 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:333:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:334:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:03:44 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:06:07 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:333:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:334:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:06:10 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:09:39 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:334:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:335:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:09:44 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:334:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:335:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:09:46 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
+20:11:34 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:120:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:119:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:193:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:334:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:335:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  77296	2100520	  10960	2188776	 2165e8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+20:11:38 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.

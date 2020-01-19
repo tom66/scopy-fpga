@@ -694,6 +694,9 @@
   SPI0_SS1_O,
   SPI0_SS2_O,
   SPI0_SS_T,
+  TTC0_WAVE0_OUT,
+  TTC0_WAVE1_OUT,
+  TTC0_WAVE2_OUT,
   M_AXI_GP0_ARVALID,
   M_AXI_GP0_AWVALID,
   M_AXI_GP0_BREADY,
@@ -882,6 +885,9 @@
       output  SPI0_SS1_O;
       output  SPI0_SS2_O;
       output  SPI0_SS_T;
+      output  TTC0_WAVE0_OUT;
+      output  TTC0_WAVE1_OUT;
+      output  TTC0_WAVE2_OUT;
       output  M_AXI_GP0_ARVALID;
       output  M_AXI_GP0_AWVALID;
       output  M_AXI_GP0_BREADY;
@@ -1005,6 +1011,9 @@
       reg SPI0_SS1_O;
       reg SPI0_SS2_O;
       reg SPI0_SS_T;
+      reg TTC0_WAVE0_OUT;
+      reg TTC0_WAVE1_OUT;
+      reg TTC0_WAVE2_OUT;
       reg M_AXI_GP0_ARVALID;
       reg M_AXI_GP0_AWVALID;
       reg M_AXI_GP0_BREADY;

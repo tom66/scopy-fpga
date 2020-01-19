@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sat Jan 18 22:26:42 2020
+// Date        : Sun Jan 19 18:58:13 2020
 // Host        : TomsDesktop running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axis_data_fifo_0_0/design_1_axis_data_fifo_0_0_stub.v
@@ -16,8 +16,8 @@
 (* X_CORE_INFO = "axis_data_fifo_v2_0_0_top,Vivado 2018.3" *)
 module design_1_axis_data_fifo_0_0(s_axis_aresetn, s_axis_aclk, s_axis_tvalid, 
   s_axis_tready, s_axis_tdata, s_axis_tstrb, s_axis_tlast, m_axis_aclk, m_axis_tvalid, 
-  m_axis_tready, m_axis_tdata, m_axis_tstrb, m_axis_tlast)
-/* synthesis syn_black_box black_box_pad_pin="s_axis_aresetn,s_axis_aclk,s_axis_tvalid,s_axis_tready,s_axis_tdata[63:0],s_axis_tstrb[7:0],s_axis_tlast,m_axis_aclk,m_axis_tvalid,m_axis_tready,m_axis_tdata[63:0],m_axis_tstrb[7:0],m_axis_tlast" */;
+  m_axis_tready, m_axis_tdata, m_axis_tstrb, m_axis_tlast, almost_full)
+/* synthesis syn_black_box black_box_pad_pin="s_axis_aresetn,s_axis_aclk,s_axis_tvalid,s_axis_tready,s_axis_tdata[63:0],s_axis_tstrb[7:0],s_axis_tlast,m_axis_aclk,m_axis_tvalid,m_axis_tready,m_axis_tdata[63:0],m_axis_tstrb[7:0],m_axis_tlast,almost_full" */;
   input s_axis_aresetn;
   input s_axis_aclk;
   input s_axis_tvalid;
@@ -31,4 +31,5 @@ module design_1_axis_data_fifo_0_0(s_axis_aresetn, s_axis_aclk, s_axis_tvalid,
   output [63:0]m_axis_tdata;
   output [7:0]m_axis_tstrb;
   output m_axis_tlast;
+  output almost_full;
 endmodule

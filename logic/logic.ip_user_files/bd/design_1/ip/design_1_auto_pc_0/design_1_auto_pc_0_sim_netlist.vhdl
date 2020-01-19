@@ -1,11 +1,11 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Mon Jan 13 20:06:28 2020
+-- Date        : Sat Jan 18 18:59:54 2020
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim -rename_top design_1_auto_pc_0 -prefix
---               design_1_auto_pc_0_ design_1_auto_pc_1_sim_netlist.vhdl
--- Design      : design_1_auto_pc_1
+--               design_1_auto_pc_0_ design_1_auto_pc_0_sim_netlist.vhdl
+-- Design      : design_1_auto_pc_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7z014sclg400-1
@@ -45,12 +45,12 @@ architecture STRUCTURE of design_1_auto_pc_0_axi_protocol_converter_v2_1_18_b_do
   signal \repeat_cnt_reg__0\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal \^s_axi_bresp\ : STD_LOGIC_VECTOR ( 1 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \fifo_gen_inst_i_3__0\ : label is "soft_lutpair26";
-  attribute SOFT_HLUTNM of m_axi_bready_INST_0 : label is "soft_lutpair26";
-  attribute SOFT_HLUTNM of \repeat_cnt[0]_i_1\ : label is "soft_lutpair27";
-  attribute SOFT_HLUTNM of \repeat_cnt[1]_i_1\ : label is "soft_lutpair25";
-  attribute SOFT_HLUTNM of \repeat_cnt[2]_i_2\ : label is "soft_lutpair27";
-  attribute SOFT_HLUTNM of \repeat_cnt[3]_i_2\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of m_axi_bready_INST_0 : label is "soft_lutpair23";
+  attribute SOFT_HLUTNM of \repeat_cnt[0]_i_1\ : label is "soft_lutpair22";
+  attribute SOFT_HLUTNM of \repeat_cnt[1]_i_1\ : label is "soft_lutpair21";
+  attribute SOFT_HLUTNM of \repeat_cnt[2]_i_2\ : label is "soft_lutpair22";
+  attribute SOFT_HLUTNM of \repeat_cnt[3]_i_2\ : label is "soft_lutpair21";
+  attribute SOFT_HLUTNM of s_axi_bvalid_INST_0 : label is "soft_lutpair23";
 begin
   last_word <= \^last_word\;
   s_axi_bresp(1 downto 0) <= \^s_axi_bresp\(1 downto 0);
@@ -299,10 +299,10 @@ architecture STRUCTURE of design_1_auto_pc_0_axi_protocol_converter_v2_1_18_w_ax
   signal m_axi_wlast_INST_0_i_3_n_0 : STD_LOGIC;
   signal next_length_counter : STD_LOGIC_VECTOR ( 0 to 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \length_counter_1[1]_i_1\ : label is "soft_lutpair59";
-  attribute SOFT_HLUTNM of \length_counter_1[2]_i_2\ : label is "soft_lutpair59";
-  attribute SOFT_HLUTNM of \length_counter_1[3]_i_2\ : label is "soft_lutpair58";
-  attribute SOFT_HLUTNM of m_axi_wlast_INST_0_i_3 : label is "soft_lutpair58";
+  attribute SOFT_HLUTNM of \length_counter_1[0]_i_1\ : label is "soft_lutpair49";
+  attribute SOFT_HLUTNM of \length_counter_1[1]_i_1\ : label is "soft_lutpair48";
+  attribute SOFT_HLUTNM of \length_counter_1[2]_i_2\ : label is "soft_lutpair49";
+  attribute SOFT_HLUTNM of \length_counter_1[3]_i_2\ : label is "soft_lutpair48";
 begin
   m_axi_wlast <= \^m_axi_wlast\;
 \fifo_gen_inst_i_2__1\: unisim.vcomponents.LUT6
@@ -1106,10 +1106,10 @@ architecture STRUCTURE of design_1_auto_pc_0_rd_bin_cntr is
   signal \^q\ : STD_LOGIC_VECTOR ( 4 downto 0 );
   signal plusOp : STD_LOGIC_VECTOR ( 4 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \gc0.count[1]_i_1\ : label is "soft_lutpair37";
-  attribute SOFT_HLUTNM of \gc0.count[2]_i_1\ : label is "soft_lutpair37";
-  attribute SOFT_HLUTNM of \gc0.count[3]_i_1\ : label is "soft_lutpair36";
-  attribute SOFT_HLUTNM of \gc0.count[4]_i_1\ : label is "soft_lutpair36";
+  attribute SOFT_HLUTNM of \gc0.count[1]_i_1\ : label is "soft_lutpair30";
+  attribute SOFT_HLUTNM of \gc0.count[2]_i_1\ : label is "soft_lutpair30";
+  attribute SOFT_HLUTNM of \gc0.count[3]_i_1\ : label is "soft_lutpair29";
+  attribute SOFT_HLUTNM of \gc0.count[4]_i_1\ : label is "soft_lutpair29";
 begin
   Q(4 downto 0) <= \^q\(4 downto 0);
 \gc0.count[0]_i_1\: unisim.vcomponents.LUT1
@@ -1480,10 +1480,10 @@ architecture STRUCTURE of design_1_auto_pc_0_rd_bin_cntr_8 is
   signal \^q\ : STD_LOGIC_VECTOR ( 4 downto 0 );
   signal plusOp : STD_LOGIC_VECTOR ( 4 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \gc0.count[1]_i_1\ : label is "soft_lutpair29";
-  attribute SOFT_HLUTNM of \gc0.count[2]_i_1\ : label is "soft_lutpair29";
-  attribute SOFT_HLUTNM of \gc0.count[3]_i_1\ : label is "soft_lutpair28";
-  attribute SOFT_HLUTNM of \gc0.count[4]_i_1\ : label is "soft_lutpair28";
+  attribute SOFT_HLUTNM of \gc0.count[1]_i_1\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of \gc0.count[2]_i_1\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of \gc0.count[3]_i_1\ : label is "soft_lutpair24";
+  attribute SOFT_HLUTNM of \gc0.count[4]_i_1\ : label is "soft_lutpair24";
 begin
   Q(4 downto 0) <= \^q\(4 downto 0);
 \gc0.count[0]_i_1\: unisim.vcomponents.LUT1
@@ -2543,10 +2543,10 @@ architecture STRUCTURE of design_1_auto_pc_0_wr_bin_cntr is
   signal ram_empty_fb_i_i_5_n_0 : STD_LOGIC;
   signal ram_full_fb_i_i_3_n_0 : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[1]_i_1\ : label is "soft_lutpair38";
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[3]_i_1\ : label is "soft_lutpair39";
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[4]_i_1\ : label is "soft_lutpair39";
-  attribute SOFT_HLUTNM of ram_full_fb_i_i_2 : label is "soft_lutpair38";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[1]_i_1\ : label is "soft_lutpair32";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[2]_i_1\ : label is "soft_lutpair32";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[3]_i_1\ : label is "soft_lutpair31";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[4]_i_1\ : label is "soft_lutpair31";
 begin
   Q(4 downto 0) <= \^q\(4 downto 0);
 \gcc0.gc0.count[0]_i_1\: unisim.vcomponents.LUT1
@@ -3145,10 +3145,10 @@ architecture STRUCTURE of design_1_auto_pc_0_wr_bin_cntr_5 is
   signal ram_empty_fb_i_i_5_n_0 : STD_LOGIC;
   signal ram_full_fb_i_i_3_n_0 : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[1]_i_1\ : label is "soft_lutpair30";
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[3]_i_1\ : label is "soft_lutpair31";
-  attribute SOFT_HLUTNM of \gcc0.gc0.count[4]_i_1\ : label is "soft_lutpair31";
-  attribute SOFT_HLUTNM of ram_full_fb_i_i_2 : label is "soft_lutpair30";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[1]_i_1\ : label is "soft_lutpair26";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[3]_i_1\ : label is "soft_lutpair27";
+  attribute SOFT_HLUTNM of \gcc0.gc0.count[4]_i_1\ : label is "soft_lutpair27";
+  attribute SOFT_HLUTNM of ram_full_fb_i_i_2 : label is "soft_lutpair26";
 begin
   Q(4 downto 0) <= \^q\(4 downto 0);
 \gcc0.gc0.count[0]_i_1\: unisim.vcomponents.LUT1
@@ -8931,10 +8931,8 @@ architecture STRUCTURE of design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen is
   signal NLW_fifo_gen_inst_s_axi_ruser_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_fifo_gen_inst_wr_data_count_UNCONNECTED : STD_LOGIC_VECTOR ( 5 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \USE_B_CHANNEL.cmd_b_depth[2]_i_1\ : label is "soft_lutpair40";
-  attribute SOFT_HLUTNM of \USE_B_CHANNEL.cmd_b_depth[3]_i_1\ : label is "soft_lutpair40";
-  attribute SOFT_HLUTNM of \USE_B_CHANNEL.cmd_b_empty_i_1\ : label is "soft_lutpair41";
-  attribute SOFT_HLUTNM of cmd_b_push_block_i_1 : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \USE_B_CHANNEL.cmd_b_depth[2]_i_1\ : label is "soft_lutpair33";
+  attribute SOFT_HLUTNM of \USE_B_CHANNEL.cmd_b_depth[3]_i_1\ : label is "soft_lutpair33";
   attribute C_ADD_NGC_CONSTRAINT : integer;
   attribute C_ADD_NGC_CONSTRAINT of fifo_gen_inst : label is 0;
   attribute C_APPLICATION_TYPE_AXIS : integer;
@@ -9339,8 +9337,6 @@ architecture STRUCTURE of design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen is
   attribute C_WR_PNTR_WIDTH_WRCH of fifo_gen_inst : label is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of fifo_gen_inst : label is 1;
-  attribute SOFT_HLUTNM of fifo_gen_inst_i_2 : label is "soft_lutpair41";
-  attribute SOFT_HLUTNM of split_ongoing_i_1 : label is "soft_lutpair42";
 begin
   \allow_split_cmd__1\ <= \^allow_split_cmd__1\;
   cmd_push_block_reg <= \^cmd_push_block_reg\;
@@ -10042,12 +10038,8 @@ architecture STRUCTURE of \design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen__pa
   signal NLW_fifo_gen_inst_s_axi_ruser_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_fifo_gen_inst_wr_data_count_UNCONNECTED : STD_LOGIC_VECTOR ( 5 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \cmd_depth[1]_i_1__0\ : label is "soft_lutpair8";
-  attribute SOFT_HLUTNM of \cmd_depth[2]_i_1__0\ : label is "soft_lutpair8";
+  attribute SOFT_HLUTNM of \cmd_depth[2]_i_1__0\ : label is "soft_lutpair5";
   attribute SOFT_HLUTNM of \cmd_depth[3]_i_1__0\ : label is "soft_lutpair5";
-  attribute SOFT_HLUTNM of \cmd_depth[4]_i_2__0\ : label is "soft_lutpair4";
-  attribute SOFT_HLUTNM of \cmd_depth[5]_i_1__0\ : label is "soft_lutpair7";
-  attribute SOFT_HLUTNM of \cmd_depth[5]_i_3__0\ : label is "soft_lutpair5";
   attribute C_ADD_NGC_CONSTRAINT : integer;
   attribute C_ADD_NGC_CONSTRAINT of fifo_gen_inst : label is 0;
   attribute C_APPLICATION_TYPE_AXIS : integer;
@@ -10452,12 +10444,10 @@ architecture STRUCTURE of \design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen__pa
   attribute C_WR_PNTR_WIDTH_WRCH of fifo_gen_inst : label is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of fifo_gen_inst : label is 1;
-  attribute SOFT_HLUTNM of \fifo_gen_inst_i_2__0\ : label is "soft_lutpair4";
-  attribute SOFT_HLUTNM of fifo_gen_inst_i_3 : label is "soft_lutpair7";
-  attribute SOFT_HLUTNM of m_axi_arvalid_INST_0 : label is "soft_lutpair6";
-  attribute SOFT_HLUTNM of m_axi_rready_INST_0 : label is "soft_lutpair9";
-  attribute SOFT_HLUTNM of s_axi_rvalid_INST_0 : label is "soft_lutpair9";
-  attribute SOFT_HLUTNM of \split_ongoing_i_1__0\ : label is "soft_lutpair6";
+  attribute SOFT_HLUTNM of m_axi_arvalid_INST_0 : label is "soft_lutpair4";
+  attribute SOFT_HLUTNM of m_axi_rready_INST_0 : label is "soft_lutpair6";
+  attribute SOFT_HLUTNM of s_axi_rvalid_INST_0 : label is "soft_lutpair6";
+  attribute SOFT_HLUTNM of \split_ongoing_i_1__0\ : label is "soft_lutpair4";
 begin
   E(0) <= \^e\(0);
   din(0) <= \^din\(0);
@@ -11162,11 +11152,6 @@ architecture STRUCTURE of \design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen__xd
   signal NLW_fifo_gen_inst_s_axi_rresp_UNCONNECTED : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal NLW_fifo_gen_inst_s_axi_ruser_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_fifo_gen_inst_wr_data_count_UNCONNECTED : STD_LOGIC_VECTOR ( 5 downto 0 );
-  attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \cmd_depth[2]_i_1\ : label is "soft_lutpair32";
-  attribute SOFT_HLUTNM of \cmd_depth[3]_i_1\ : label is "soft_lutpair32";
-  attribute SOFT_HLUTNM of \cmd_depth[4]_i_2\ : label is "soft_lutpair35";
-  attribute SOFT_HLUTNM of \cmd_depth[5]_i_1\ : label is "soft_lutpair33";
   attribute C_ADD_NGC_CONSTRAINT : integer;
   attribute C_ADD_NGC_CONSTRAINT of fifo_gen_inst : label is 0;
   attribute C_APPLICATION_TYPE_AXIS : integer;
@@ -11571,10 +11556,9 @@ architecture STRUCTURE of \design_1_auto_pc_0_axi_data_fifo_v2_1_17_fifo_gen__xd
   attribute C_WR_PNTR_WIDTH_WRCH of fifo_gen_inst : label is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of fifo_gen_inst : label is 1;
-  attribute SOFT_HLUTNM of \first_mi_word_i_1__0\ : label is "soft_lutpair34";
-  attribute SOFT_HLUTNM of \queue_id[0]_i_1\ : label is "soft_lutpair35";
-  attribute SOFT_HLUTNM of s_axi_wready_INST_0 : label is "soft_lutpair34";
-  attribute SOFT_HLUTNM of split_in_progress_i_1 : label is "soft_lutpair33";
+  attribute SOFT_HLUTNM : string;
+  attribute SOFT_HLUTNM of \first_mi_word_i_1__0\ : label is "soft_lutpair28";
+  attribute SOFT_HLUTNM of s_axi_wready_INST_0 : label is "soft_lutpair28";
 begin
   SR(0) <= \^sr\(0);
   din(3 downto 0) <= \^din\(3 downto 0);
@@ -12548,36 +12532,34 @@ architecture STRUCTURE of design_1_auto_pc_0_axi_protocol_converter_v2_1_18_a_ax
   signal split_ongoing : STD_LOGIC;
   signal \NLW_next_mi_addr_reg[31]_i_1_CO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 to 3 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \addr_step_q[10]_i_1\ : label is "soft_lutpair51";
-  attribute SOFT_HLUTNM of \addr_step_q[11]_i_1\ : label is "soft_lutpair49";
-  attribute SOFT_HLUTNM of \addr_step_q[5]_i_1\ : label is "soft_lutpair52";
-  attribute SOFT_HLUTNM of \addr_step_q[6]_i_1\ : label is "soft_lutpair47";
-  attribute SOFT_HLUTNM of \addr_step_q[7]_i_1\ : label is "soft_lutpair48";
-  attribute SOFT_HLUTNM of \addr_step_q[8]_i_1\ : label is "soft_lutpair48";
-  attribute SOFT_HLUTNM of \addr_step_q[9]_i_1\ : label is "soft_lutpair45";
-  attribute SOFT_HLUTNM of \first_step_q[0]_i_1\ : label is "soft_lutpair44";
-  attribute SOFT_HLUTNM of \first_step_q[10]_i_1\ : label is "soft_lutpair54";
-  attribute SOFT_HLUTNM of \first_step_q[11]_i_1\ : label is "soft_lutpair57";
-  attribute SOFT_HLUTNM of \first_step_q[1]_i_1\ : label is "soft_lutpair45";
-  attribute SOFT_HLUTNM of \first_step_q[3]_i_1\ : label is "soft_lutpair50";
-  attribute SOFT_HLUTNM of \first_step_q[4]_i_1\ : label is "soft_lutpair44";
-  attribute SOFT_HLUTNM of \first_step_q[6]_i_1\ : label is "soft_lutpair54";
-  attribute SOFT_HLUTNM of \first_step_q[7]_i_1\ : label is "soft_lutpair50";
-  attribute SOFT_HLUTNM of \first_step_q[8]_i_1\ : label is "soft_lutpair56";
-  attribute SOFT_HLUTNM of \first_step_q[9]_i_1\ : label is "soft_lutpair57";
-  attribute SOFT_HLUTNM of \m_axi_awaddr[24]_INST_0\ : label is "soft_lutpair43";
-  attribute SOFT_HLUTNM of \next_mi_addr[11]_i_6\ : label is "soft_lutpair46";
-  attribute SOFT_HLUTNM of \next_mi_addr[3]_i_6\ : label is "soft_lutpair43";
-  attribute SOFT_HLUTNM of \pushed_commands[1]_i_1\ : label is "soft_lutpair53";
-  attribute SOFT_HLUTNM of \pushed_commands[2]_i_1\ : label is "soft_lutpair53";
-  attribute SOFT_HLUTNM of \pushed_commands[3]_i_2\ : label is "soft_lutpair46";
-  attribute SOFT_HLUTNM of \size_mask_q[0]_i_1\ : label is "soft_lutpair47";
-  attribute SOFT_HLUTNM of \size_mask_q[1]_i_1\ : label is "soft_lutpair55";
-  attribute SOFT_HLUTNM of \size_mask_q[2]_i_1\ : label is "soft_lutpair52";
-  attribute SOFT_HLUTNM of \size_mask_q[3]_i_1\ : label is "soft_lutpair56";
-  attribute SOFT_HLUTNM of \size_mask_q[4]_i_1\ : label is "soft_lutpair49";
-  attribute SOFT_HLUTNM of \size_mask_q[5]_i_1\ : label is "soft_lutpair55";
-  attribute SOFT_HLUTNM of \size_mask_q[6]_i_1\ : label is "soft_lutpair51";
+  attribute SOFT_HLUTNM of \addr_step_q[10]_i_1\ : label is "soft_lutpair40";
+  attribute SOFT_HLUTNM of \addr_step_q[11]_i_1\ : label is "soft_lutpair38";
+  attribute SOFT_HLUTNM of \addr_step_q[5]_i_1\ : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \addr_step_q[6]_i_1\ : label is "soft_lutpair37";
+  attribute SOFT_HLUTNM of \addr_step_q[7]_i_1\ : label is "soft_lutpair37";
+  attribute SOFT_HLUTNM of \addr_step_q[8]_i_1\ : label is "soft_lutpair38";
+  attribute SOFT_HLUTNM of \addr_step_q[9]_i_1\ : label is "soft_lutpair35";
+  attribute SOFT_HLUTNM of \first_step_q[0]_i_1\ : label is "soft_lutpair34";
+  attribute SOFT_HLUTNM of \first_step_q[10]_i_1\ : label is "soft_lutpair41";
+  attribute SOFT_HLUTNM of \first_step_q[11]_i_1\ : label is "soft_lutpair45";
+  attribute SOFT_HLUTNM of \first_step_q[1]_i_1\ : label is "soft_lutpair34";
+  attribute SOFT_HLUTNM of \first_step_q[3]_i_1\ : label is "soft_lutpair39";
+  attribute SOFT_HLUTNM of \first_step_q[4]_i_1\ : label is "soft_lutpair35";
+  attribute SOFT_HLUTNM of \first_step_q[6]_i_1\ : label is "soft_lutpair41";
+  attribute SOFT_HLUTNM of \first_step_q[7]_i_1\ : label is "soft_lutpair39";
+  attribute SOFT_HLUTNM of \first_step_q[8]_i_1\ : label is "soft_lutpair46";
+  attribute SOFT_HLUTNM of \first_step_q[9]_i_1\ : label is "soft_lutpair46";
+  attribute SOFT_HLUTNM of \pushed_commands[0]_i_1\ : label is "soft_lutpair47";
+  attribute SOFT_HLUTNM of \pushed_commands[1]_i_1\ : label is "soft_lutpair47";
+  attribute SOFT_HLUTNM of \pushed_commands[2]_i_1\ : label is "soft_lutpair36";
+  attribute SOFT_HLUTNM of \pushed_commands[3]_i_2\ : label is "soft_lutpair36";
+  attribute SOFT_HLUTNM of \size_mask_q[0]_i_1\ : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \size_mask_q[1]_i_1\ : label is "soft_lutpair44";
+  attribute SOFT_HLUTNM of \size_mask_q[2]_i_1\ : label is "soft_lutpair43";
+  attribute SOFT_HLUTNM of \size_mask_q[3]_i_1\ : label is "soft_lutpair45";
+  attribute SOFT_HLUTNM of \size_mask_q[4]_i_1\ : label is "soft_lutpair43";
+  attribute SOFT_HLUTNM of \size_mask_q[5]_i_1\ : label is "soft_lutpair44";
+  attribute SOFT_HLUTNM of \size_mask_q[6]_i_1\ : label is "soft_lutpair40";
 begin
   E(0) <= \^e\(0);
   areset_d(1 downto 0) <= \^areset_d\(1 downto 0);
@@ -15855,36 +15837,34 @@ architecture STRUCTURE of \design_1_auto_pc_0_axi_protocol_converter_v2_1_18_a_a
   signal split_ongoing : STD_LOGIC;
   signal \NLW_next_mi_addr_reg[31]_i_1__0_CO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 to 3 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \addr_step_q[10]_i_1__0\ : label is "soft_lutpair19";
-  attribute SOFT_HLUTNM of \addr_step_q[11]_i_1__0\ : label is "soft_lutpair18";
-  attribute SOFT_HLUTNM of \addr_step_q[5]_i_1__0\ : label is "soft_lutpair19";
-  attribute SOFT_HLUTNM of \addr_step_q[6]_i_1__0\ : label is "soft_lutpair15";
-  attribute SOFT_HLUTNM of \addr_step_q[7]_i_1__0\ : label is "soft_lutpair16";
-  attribute SOFT_HLUTNM of \addr_step_q[8]_i_1__0\ : label is "soft_lutpair15";
-  attribute SOFT_HLUTNM of \addr_step_q[9]_i_1__0\ : label is "soft_lutpair12";
-  attribute SOFT_HLUTNM of \first_step_q[0]_i_1__0\ : label is "soft_lutpair11";
-  attribute SOFT_HLUTNM of \first_step_q[10]_i_1__0\ : label is "soft_lutpair20";
-  attribute SOFT_HLUTNM of \first_step_q[11]_i_1__0\ : label is "soft_lutpair24";
-  attribute SOFT_HLUTNM of \first_step_q[1]_i_1__0\ : label is "soft_lutpair12";
-  attribute SOFT_HLUTNM of \first_step_q[3]_i_1__0\ : label is "soft_lutpair17";
-  attribute SOFT_HLUTNM of \first_step_q[4]_i_1__0\ : label is "soft_lutpair11";
-  attribute SOFT_HLUTNM of \first_step_q[6]_i_1__0\ : label is "soft_lutpair20";
-  attribute SOFT_HLUTNM of \first_step_q[7]_i_1__0\ : label is "soft_lutpair17";
-  attribute SOFT_HLUTNM of \first_step_q[8]_i_1__0\ : label is "soft_lutpair22";
-  attribute SOFT_HLUTNM of \first_step_q[9]_i_1__0\ : label is "soft_lutpair24";
-  attribute SOFT_HLUTNM of \m_axi_araddr[22]_INST_0\ : label is "soft_lutpair10";
-  attribute SOFT_HLUTNM of \next_mi_addr[11]_i_6__0\ : label is "soft_lutpair13";
-  attribute SOFT_HLUTNM of \next_mi_addr[3]_i_6__0\ : label is "soft_lutpair10";
-  attribute SOFT_HLUTNM of \pushed_commands[1]_i_1__0\ : label is "soft_lutpair14";
-  attribute SOFT_HLUTNM of \pushed_commands[2]_i_1__0\ : label is "soft_lutpair14";
-  attribute SOFT_HLUTNM of \pushed_commands[3]_i_2__0\ : label is "soft_lutpair13";
-  attribute SOFT_HLUTNM of \size_mask_q[0]_i_1__0\ : label is "soft_lutpair21";
-  attribute SOFT_HLUTNM of \size_mask_q[1]_i_1__0\ : label is "soft_lutpair23";
-  attribute SOFT_HLUTNM of \size_mask_q[2]_i_1__0\ : label is "soft_lutpair21";
-  attribute SOFT_HLUTNM of \size_mask_q[3]_i_1__0\ : label is "soft_lutpair23";
-  attribute SOFT_HLUTNM of \size_mask_q[4]_i_1__0\ : label is "soft_lutpair16";
-  attribute SOFT_HLUTNM of \size_mask_q[5]_i_1__0\ : label is "soft_lutpair22";
-  attribute SOFT_HLUTNM of \size_mask_q[6]_i_1__0\ : label is "soft_lutpair18";
+  attribute SOFT_HLUTNM of \addr_step_q[10]_i_1__0\ : label is "soft_lutpair12";
+  attribute SOFT_HLUTNM of \addr_step_q[11]_i_1__0\ : label is "soft_lutpair11";
+  attribute SOFT_HLUTNM of \addr_step_q[5]_i_1__0\ : label is "soft_lutpair14";
+  attribute SOFT_HLUTNM of \addr_step_q[6]_i_1__0\ : label is "soft_lutpair10";
+  attribute SOFT_HLUTNM of \addr_step_q[7]_i_1__0\ : label is "soft_lutpair10";
+  attribute SOFT_HLUTNM of \addr_step_q[8]_i_1__0\ : label is "soft_lutpair11";
+  attribute SOFT_HLUTNM of \addr_step_q[9]_i_1__0\ : label is "soft_lutpair8";
+  attribute SOFT_HLUTNM of \first_step_q[0]_i_1__0\ : label is "soft_lutpair7";
+  attribute SOFT_HLUTNM of \first_step_q[10]_i_1__0\ : label is "soft_lutpair13";
+  attribute SOFT_HLUTNM of \first_step_q[11]_i_1__0\ : label is "soft_lutpair20";
+  attribute SOFT_HLUTNM of \first_step_q[1]_i_1__0\ : label is "soft_lutpair7";
+  attribute SOFT_HLUTNM of \first_step_q[3]_i_1__0\ : label is "soft_lutpair16";
+  attribute SOFT_HLUTNM of \first_step_q[4]_i_1__0\ : label is "soft_lutpair8";
+  attribute SOFT_HLUTNM of \first_step_q[6]_i_1__0\ : label is "soft_lutpair13";
+  attribute SOFT_HLUTNM of \first_step_q[7]_i_1__0\ : label is "soft_lutpair16";
+  attribute SOFT_HLUTNM of \first_step_q[8]_i_1__0\ : label is "soft_lutpair20";
+  attribute SOFT_HLUTNM of \first_step_q[9]_i_1__0\ : label is "soft_lutpair19";
+  attribute SOFT_HLUTNM of \pushed_commands[0]_i_1__0\ : label is "soft_lutpair18";
+  attribute SOFT_HLUTNM of \pushed_commands[1]_i_1__0\ : label is "soft_lutpair18";
+  attribute SOFT_HLUTNM of \pushed_commands[2]_i_1__0\ : label is "soft_lutpair9";
+  attribute SOFT_HLUTNM of \pushed_commands[3]_i_2__0\ : label is "soft_lutpair9";
+  attribute SOFT_HLUTNM of \size_mask_q[0]_i_1__0\ : label is "soft_lutpair14";
+  attribute SOFT_HLUTNM of \size_mask_q[1]_i_1__0\ : label is "soft_lutpair17";
+  attribute SOFT_HLUTNM of \size_mask_q[2]_i_1__0\ : label is "soft_lutpair15";
+  attribute SOFT_HLUTNM of \size_mask_q[3]_i_1__0\ : label is "soft_lutpair19";
+  attribute SOFT_HLUTNM of \size_mask_q[4]_i_1__0\ : label is "soft_lutpair15";
+  attribute SOFT_HLUTNM of \size_mask_q[5]_i_1__0\ : label is "soft_lutpair17";
+  attribute SOFT_HLUTNM of \size_mask_q[6]_i_1__0\ : label is "soft_lutpair12";
 begin
   E(0) <= \^e\(0);
   \S_AXI_AID_Q_reg[0]_0\ <= \^s_axi_aid_q_reg[0]_0\;
@@ -19358,7 +19338,7 @@ entity design_1_auto_pc_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of design_1_auto_pc_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of design_1_auto_pc_0 : entity is "design_1_auto_pc_1,axi_protocol_converter_v2_1_18_axi_protocol_converter,{}";
+  attribute CHECK_LICENSE_TYPE of design_1_auto_pc_0 : entity is "design_1_auto_pc_0,axi_protocol_converter_v2_1_18_axi_protocol_converter,{}";
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of design_1_auto_pc_0 : entity is "yes";
   attribute X_CORE_INFO : string;
@@ -19427,7 +19407,7 @@ architecture STRUCTURE of design_1_auto_pc_0 is
   attribute X_INTERFACE_INFO : string;
   attribute X_INTERFACE_INFO of aclk : signal is "xilinx.com:signal:clock:1.0 CLK CLK";
   attribute X_INTERFACE_PARAMETER : string;
-  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLK, FREQ_HZ 20000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLK, FREQ_HZ 250000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of aresetn : signal is "xilinx.com:signal:reset:1.0 RST RST";
   attribute X_INTERFACE_PARAMETER of aresetn : signal is "XIL_INTERFACENAME RST, POLARITY ACTIVE_LOW, INSERT_VIP 0, TYPE INTERCONNECT";
   attribute X_INTERFACE_INFO of m_axi_arready : signal is "xilinx.com:interface:aximm:1.0 M_AXI ARREADY";
@@ -19438,7 +19418,7 @@ architecture STRUCTURE of design_1_auto_pc_0 is
   attribute X_INTERFACE_INFO of m_axi_bvalid : signal is "xilinx.com:interface:aximm:1.0 M_AXI BVALID";
   attribute X_INTERFACE_INFO of m_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 M_AXI RLAST";
   attribute X_INTERFACE_INFO of m_axi_rready : signal is "xilinx.com:interface:aximm:1.0 M_AXI RREADY";
-  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M_AXI, DATA_WIDTH 64, PROTOCOL AXI3, FREQ_HZ 20000000, ID_WIDTH 1, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 16, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M_AXI, DATA_WIDTH 64, PROTOCOL AXI3, FREQ_HZ 250000000, ID_WIDTH 1, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 16, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 M_AXI RVALID";
   attribute X_INTERFACE_INFO of m_axi_wlast : signal is "xilinx.com:interface:aximm:1.0 M_AXI WLAST";
   attribute X_INTERFACE_INFO of m_axi_wready : signal is "xilinx.com:interface:aximm:1.0 M_AXI WREADY";
@@ -19451,7 +19431,7 @@ architecture STRUCTURE of design_1_auto_pc_0 is
   attribute X_INTERFACE_INFO of s_axi_bvalid : signal is "xilinx.com:interface:aximm:1.0 S_AXI BVALID";
   attribute X_INTERFACE_INFO of s_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 S_AXI RLAST";
   attribute X_INTERFACE_INFO of s_axi_rready : signal is "xilinx.com:interface:aximm:1.0 S_AXI RREADY";
-  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 20000000, ID_WIDTH 1, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 250000000, ID_WIDTH 1, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 S_AXI RVALID";
   attribute X_INTERFACE_INFO of s_axi_wlast : signal is "xilinx.com:interface:aximm:1.0 S_AXI WLAST";
   attribute X_INTERFACE_INFO of s_axi_wready : signal is "xilinx.com:interface:aximm:1.0 S_AXI WREADY";
