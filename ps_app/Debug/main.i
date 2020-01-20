@@ -3555,7 +3555,7 @@ typedef void (*XExceptionHandler) (void *InstancePtr);
 #define XPAR_AXI_DMA_S2MM_BURST_SIZE 256
 #define XPAR_AXI_DMA_MICRO_DMA 0
 #define XPAR_AXI_DMA_ADDR_WIDTH 32
-#define XPAR_AXI_DMA_SG_LENGTH_WIDTH 18
+#define XPAR_AXI_DMA_SG_LENGTH_WIDTH 24
 
 
 
@@ -3578,7 +3578,7 @@ typedef void (*XExceptionHandler) (void *InstancePtr);
 #define XPAR_AXIDMA_0_S2MM_BURST_SIZE 256
 #define XPAR_AXIDMA_0_MICRO_DMA 0
 #define XPAR_AXIDMA_0_c_addr_width 32
-#define XPAR_AXIDMA_0_c_sg_length_width 18
+#define XPAR_AXIDMA_0_c_sg_length_width 24
 
 
 
@@ -6664,10 +6664,13 @@ uint32_t *base;
 
 static XScuGic Intc;
 
+#define TIMER_TICKS_TO_S (2.0f / XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ)
+#define TIMER_TICKS_TO_US (TIMER_TICKS_TO_S * 1e6)
 
 
-uint8_t rx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
-uint8_t tx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
+
+uint8_t rx_buffer[1 << 23] __attribute__((aligned (1048576)));
+uint8_t tx_buffer[1 << 23] __attribute__((aligned (1048576)));
 
 
 
@@ -6679,6 +6682,9 @@ XGpioPs_Config *gpio_config;
 XScuTimer xscu_timer;
 XScuTimer_Config *xscu_timer_cfg;
 
+uint32_t timer0, timer1;
+uint32_t tdelta;
+
 volatile uint32_t ioc_flag = 0;
 
 #define MARK_UNCACHEABLE 0x701
@@ -6689,30 +6695,30 @@ void debug_printf(char *fmt, ...)
 
  va_list args;
  
-# 94 "../src/main.c" 3 4
+# 100 "../src/main.c" 3 4
 __builtin_va_start(
-# 94 "../src/main.c"
+# 100 "../src/main.c"
 args
-# 94 "../src/main.c" 3 4
+# 100 "../src/main.c" 3 4
 ,
-# 94 "../src/main.c"
+# 100 "../src/main.c"
 fmt
-# 94 "../src/main.c" 3 4
+# 100 "../src/main.c" 3 4
 )
-# 94 "../src/main.c"
+# 100 "../src/main.c"
                    ;
 
  vsnprintf(buffer, 1024, fmt, args);
  print(buffer);
 
  
-# 99 "../src/main.c" 3 4
+# 105 "../src/main.c" 3 4
 __builtin_va_end(
-# 99 "../src/main.c"
+# 105 "../src/main.c"
 args
-# 99 "../src/main.c" 3 4
+# 105 "../src/main.c" 3 4
 )
-# 99 "../src/main.c"
+# 105 "../src/main.c"
             ;
 }
 
@@ -6722,7 +6728,6 @@ void arb_delay(uint32_t n)
   __asm__("nop");
  }
 }
-
 
 
 
@@ -6740,23 +6745,13 @@ static void RxIntrHandler(void *Callback)
  IrqStatus = (Xil_In32(((RxRingPtr)->ChanBase) + (0x00000004)) & 0x00007000);
 
 
- Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x00)) + (0x00000004), ((0x00007000) & 0x00007000));
+
 
 
  Xil_Out32(((RxRingPtr)->ChanBase) + (0x00000004), ((IrqStatus) & 0x00007000));
-
- debug_printf("irq=0x%08x\r\n", IrqStatus);
-
-
-
-
- if (!(IrqStatus & 0x00007000)) {
-  debug_printf("NoIRQ?\r\n");
-  return;
- }
-# 184 "../src/main.c"
+# 191 "../src/main.c"
  if ((IrqStatus & (0x00002000 | 0x00001000))) {
-  debug_printf("IOC!\r\n");
+
   ioc_flag = 1;
  }
 }
@@ -6776,9 +6771,9 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
  IntcConfig = XScuGic_LookupConfig(0U);
  if (
-# 204 "../src/main.c" 3 4
+# 211 "../src/main.c" 3 4
     ((void *)0) 
-# 204 "../src/main.c"
+# 211 "../src/main.c"
          == IntcConfig) {
   return 1L;
  }
@@ -6793,7 +6788,7 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
 
  XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
-# 233 "../src/main.c"
+# 240 "../src/main.c"
  Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
     (Xil_InterruptHandler)RxIntrHandler,
     RxRingPtr);
@@ -6816,11 +6811,36 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
  return 0L;
 }
 
+void start_timing()
+{
+ Xil_Out32(((&xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
+ XScuTimer_Start(&xscu_timer);
+
+ timer1 = 0;
+ timer0 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
+}
+
+void stop_timing()
+{
+ timer1 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
+ tdelta = timer0 - timer1;
+}
+
+void dump_timing(char *s)
+{
+ debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * ((2.0f / 666666687) * 1e6));
+}
+
 int main()
 {
  uint32_t counter = 0, tog = 0;
  int32_t error;
  uint32_t t0, t1;
+ uint32_t sz, i;
+ uint32_t error_ctr = 0, success_ctr = 0;
+ uint32_t this_value, last_value, last_error;
+ uint32_t *ptr;
+ float err_rate = 0.0f;
 
     init_platform();
 
@@ -6849,32 +6869,14 @@ int main()
 
  XGpioPs_SetDirectionPin(&gpio, 9, 1);
  XGpioPs_SetOutputEnablePin(&gpio, 9, 1);
+ XGpioPs_WritePin(&gpio, 9, 1);
 
  XGpioPs_SetDirectionPin(&gpio, 37, 1);
  XGpioPs_SetOutputEnablePin(&gpio, 37, 1);
+ XGpioPs_WritePin(&gpio, 37, 1);
 
  debug_printf("GPIO block configured\r\n");
-
- while(1) {
-  Xil_Out32(((&xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
-  XScuTimer_Start(&xscu_timer);
-
-  t0 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
-
-
-  while(1) {
-   t1 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
-
-
-
-   if((t0 - t1) > 65535) {
-    t0 = t1;
-    tog = ~tog;
-    XGpioPs_WritePin(&gpio, 9, tog);
-   }
-  }
- }
-
+# 350 "../src/main.c"
  dma0_config = XAxiDma_LookupConfig(0);
  error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
@@ -6894,28 +6896,78 @@ int main()
 
  while(1) {
   counter = 0;
+  sz = (1 << 23);
 
-  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, 0x01);
+  error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, 0x01);
   Xil_DCacheInvalidateRange(rx_buffer, 16383);
 
   debug_printf("Waiting, Err=%d...\r\n", error);
 
-  while(!ioc_flag) {
-   counter++;
+  XGpioPs_WritePin(&gpio, 9, 1);
+  start_timing();
+  while(!ioc_flag) ;
+  stop_timing();
+  XGpioPs_WritePin(&gpio, 9, 0);
+  dump_timing("Transfer interrupt");
+
+  debug_printf("TransferRate=%2.2f MiB/s\r\n", (sz * 1e-6) / (tdelta * (2.0f / 666666687)));
+  debug_printf("Starting to verify memory...\r\n");
+
+
+  ptr = rx_buffer;
+  last_value = *ptr++;
+  error_ctr = 0;
+  success_ctr = 0;
+  last_error = 0;
+
+  for(i = 1; i < (sz / 8); i++) {
+   this_value = *ptr;
+
+   if(((int32_t)this_value - (int32_t)last_value) != 1) {
+
+
+
+
+    error_ctr++;
+    last_error = i;
+   } else {
+    success_ctr++;
+   }
+
+
+
+
+
+
+
+   last_value = this_value;
+   ptr += 2;
   }
+
+  err_rate = (error_ctr * 100.0f) / (error_ctr + success_ctr);
+
+  if(error_ctr > 0) {
+   debug_printf("\033[91mERROR:\033[0m %d word errors (%d words OK, %2.5f%% error rate)\r\n",
+     error_ctr, success_ctr, err_rate);
+  } else {
+   debug_printf("\033[92mPASS: \033[0m %d words OK\r\n", success_ctr);
+  }
+
   ioc_flag = 0;
 
-  debug_printf("Transfer done, cycles=%d.\r\n", counter);
 
-
-
+  start_timing();
   XAxiDma_Reset(&dma0_pointer);
+  stop_timing();
+  dump_timing("Controller reset");
 
+  start_timing();
 
 
 
 
   Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
+  dump_timing("Interrupt setup");
  }
 
     cleanup_platform();

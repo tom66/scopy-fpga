@@ -235,11 +235,13 @@ assign adc_bus[63:56] = adc_data_latched_7[7:0];
 */
 
 reg [7:0] rep_counter;
+reg [31:0] adc32_counter;
+wire [63:0] adc_bus;
+
+assign adc_bus[31:0 ] = adc32_counter;
+assign adc_bus[63:32] = adc32_counter;
 
 /*
-reg [63:0] adc_bus;
-*/
-
 wire [63:0] adc_bus;
 
 assign adc_bus[ 7: 0] = rep_counter;
@@ -250,10 +252,12 @@ assign adc_bus[39:32] = rep_counter;
 assign adc_bus[47:40] = rep_counter;
 assign adc_bus[55:48] = rep_counter;
 assign adc_bus[63:56] = rep_counter;
+*/
 
 always @(posedge adc_data_clk) begin
 
-    rep_counter <= rep_counter + 1;
+    //rep_counter <= rep_counter + 1;
+    adc32_counter <= adc32_counter + 1;
 
 end
 

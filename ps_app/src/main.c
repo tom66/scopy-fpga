@@ -67,10 +67,13 @@ uint32_t *base;
 
 static INTC Intc;	/* Instance of the Interrupt Controller */
 
+#define TIMER_TICKS_TO_S		(2.0f / XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ)
+#define TIMER_TICKS_TO_US		(TIMER_TICKS_TO_S * 1e6)
+
 // These MUST be on 1MB boundaries to allow the cache to be invalidated safely
 // and they MUST be integer MB in size
-uint8_t rx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
-uint8_t tx_buffer[1048576] __attribute__((aligned (1048576))) __attribute__((section("ddr3")));
+uint8_t rx_buffer[1 << 23] __attribute__((aligned (1048576)));
+uint8_t tx_buffer[1 << 23] __attribute__((aligned (1048576)));
 
 //#define MEM_TEST
 
@@ -81,6 +84,9 @@ XGpioPs_Config *gpio_config;
 
 XScuTimer xscu_timer;
 XScuTimer_Config *xscu_timer_cfg;
+
+uint32_t timer0, timer1;
+uint32_t tdelta;
 
 volatile uint32_t ioc_flag = 0;
 
@@ -111,7 +117,6 @@ void arb_delay(uint32_t n)
  * For hacking/test purposes.
  * (C) Xilinx, Inc. https://www.xilinx.com/Attachment/xaxidma_example_sg_intr.c
  */
-
 static void RxIntrHandler(void *Callback)
 {
 	XAxiDma_BdRing *RxRingPtr = (XAxiDma_BdRing *) Callback;
@@ -123,20 +128,22 @@ static void RxIntrHandler(void *Callback)
 	IrqStatus = XAxiDma_BdRingGetIrq(RxRingPtr);
 
 	/* ACK at DMA peripheral. */
-	XAxiDma_IntrAckIrq(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+	//XAxiDma_IntrAckIrq(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 
 	/* Acknowledge pending interrupts */
 	XAxiDma_BdRingAckIrq(RxRingPtr, IrqStatus);
 
-	debug_printf("irq=0x%08x\r\n", IrqStatus);
+	//debug_printf("irq=0x%08x\r\n", IrqStatus);
 
 	/*
 	 * If no interrupt is asserted, we do not do anything
 	 */
+#if 0
 	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
-		debug_printf("NoIRQ?\r\n");
+		//debug_printf("NoIRQ?\r\n");
 		return;
 	}
+#endif
 
 	/*
 	 * If error interrupt is asserted, raise error flag, reset the
@@ -182,7 +189,7 @@ static void RxIntrHandler(void *Callback)
 	 * to handle the processed BDs and then raise the according flag.
 	 */
 	if ((IrqStatus & (XAXIDMA_IRQ_DELAY_MASK | XAXIDMA_IRQ_IOC_MASK))) {
-		debug_printf("IOC!\r\n");
+		//debug_printf("IOC!\r\n");
 		ioc_flag = 1;
 	}
 }
@@ -252,11 +259,36 @@ static int SetupIntrSystem(INTC * IntcInstancePtr,
 	return XST_SUCCESS;
 }
 
+void start_timing()
+{
+	XScuTimer_LoadTimer(&xscu_timer, 0xffffffff);
+	XScuTimer_Start(&xscu_timer);
+
+	timer1 = 0;
+	timer0 = XScuTimer_GetCounterValue(&xscu_timer);
+}
+
+void stop_timing()
+{
+	timer1 = XScuTimer_GetCounterValue(&xscu_timer);
+	tdelta = timer0 - timer1;
+}
+
+void dump_timing(char *s)
+{
+	debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * TIMER_TICKS_TO_US);
+}
+
 int main()
 {
 	uint32_t counter = 0, tog = 0;
 	int32_t error;
 	uint32_t t0, t1;
+	uint32_t sz, i;
+	uint32_t error_ctr = 0, success_ctr = 0;
+	uint32_t this_value, last_value, last_error;
+	uint32_t *ptr;
+	float err_rate = 0.0f;
 
     init_platform();
 
@@ -285,12 +317,15 @@ int main()
 
 	XGpioPs_SetDirectionPin(&gpio, 9, 1);
 	XGpioPs_SetOutputEnablePin(&gpio, 9, 1);
+	XGpioPs_WritePin(&gpio, 9, 1);
 
 	XGpioPs_SetDirectionPin(&gpio, 37, 1);
 	XGpioPs_SetOutputEnablePin(&gpio, 37, 1);
+	XGpioPs_WritePin(&gpio, 37, 1);
 
 	debug_printf("GPIO block configured\r\n");
 
+#if 0
 	while(1) {
 		XScuTimer_LoadTimer(&xscu_timer, 0xffffffff);
 		XScuTimer_Start(&xscu_timer);
@@ -310,6 +345,7 @@ int main()
 			}
 		}
 	}
+#endif
 
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
 	error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
@@ -330,28 +366,78 @@ int main()
 
 	while(1) {
 		counter = 0;
+		sz = (1 << 23);
 
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, 262140, XAXIDMA_DEVICE_TO_DMA);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, XAXIDMA_DEVICE_TO_DMA);
 		Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
 
 		debug_printf("Waiting, Err=%d...\r\n", error);
 
-		while(!ioc_flag) {
-			counter++;
+		XGpioPs_WritePin(&gpio, 9, 1);
+		start_timing();
+		while(!ioc_flag) ;
+		stop_timing();
+		XGpioPs_WritePin(&gpio, 9, 0);
+		dump_timing("Transfer interrupt");
+
+		debug_printf("TransferRate=%2.2f MiB/s\r\n", (sz * 1e-6) / (tdelta * TIMER_TICKS_TO_S));
+		debug_printf("Starting to verify memory...\r\n");
+
+		// Verify data.
+		ptr = rx_buffer;
+		last_value = *ptr++;
+		error_ctr = 0;
+		success_ctr = 0;
+		last_error = 0;
+
+		for(i = 1; i < (sz / 8); i++) {
+			this_value = *ptr;
+
+			if(((int32_t)this_value - (int32_t)last_value) != 1) {
+				/*
+				debug_printf("this_value: 0x%08x, last_value: 0x%08x, delta=%d, error_at_word=%d, since_last_error=%d\r\n", \
+						this_value, last_value, (int32_t)this_value - (int32_t)last_value, i, i - last_error);
+				*/
+				error_ctr++;
+				last_error = i;
+			} else {
+				success_ctr++;
+			}
+
+			/*
+			if((i & 16383) == 0) {
+				debug_printf("this_value: 0x%08x, last_value: 0x%08x, delta=%d\r\n", this_value, last_value, (int32_t)this_value - (int32_t)last_value);
+			}
+			*/
+
+			last_value = this_value;
+			ptr += 2; // move 8 bytes
 		}
+
+		err_rate = (error_ctr * 100.0f) / (error_ctr + success_ctr);
+
+		if(error_ctr > 0) {
+			debug_printf("\033[91mERROR:\033[0m %d word errors (%d words OK, %2.5f%% error rate)\r\n", \
+					error_ctr, success_ctr, err_rate);
+		} else {
+			debug_printf("\033[92mPASS: \033[0m %d words OK\r\n", success_ctr);
+		}
+
 		ioc_flag = 0;
-
-		debug_printf("Transfer done, cycles=%d.\r\n", counter);
-
 		//error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
+		start_timing();
 		XAxiDma_Reset(&dma0_pointer);
+		stop_timing();
+		dump_timing("Controller reset");
 
+		start_timing();
 		// Enable interrupts, we use interrupt mode
 		//SetupIntrSystem(&Intc, &dma0_pointer, TX_INTR_ID, RX_INTR_ID);
 
 		//XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 		XAxiDma_IntrEnable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+		dump_timing("Interrupt setup");
 	}
 
     cleanup_platform();

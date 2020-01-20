@@ -2463,7 +2463,7 @@ cleanup_platform:
 	.uleb128 0x147
 	.4byte	.LASF655
 	.byte	0
-	.section	.debug_macro,"G",%progbits,wm4.xparameters.h.21.ce444a7102fd0a8bc6ed0f8a6c8bb7fb,comdat
+	.section	.debug_macro,"G",%progbits,wm4.xparameters.h.21.8f92ae8a925f97299d3bd45a8353cf03,comdat
 .Ldebug_macro3:
 	.2byte	0x4
 	.byte	0
@@ -4324,8 +4324,6 @@ cleanup_platform:
 	.ascii	"INTMAX_C(x) __INTMAX_C(x)\000"
 .LASF472:
 	.ascii	"XPAR_SCUTIMER_INTR XPS_SCU_TMR_INT_ID\000"
-.LASF679:
-	.ascii	"XPAR_AXI_DMA_SG_LENGTH_WIDTH 18\000"
 .LASF944:
 	.ascii	"INT_LEAST32_MAX (__INT_LEAST32_MAX__)\000"
 .LASF773:
@@ -4394,6 +4392,8 @@ cleanup_platform:
 	.ascii	"XPS_DMA0_ABORT_INT_ID 45U\000"
 .LASF417:
 	.ascii	"__thumb__\000"
+.LASF679:
+	.ascii	"XPAR_AXI_DMA_SG_LENGTH_WIDTH 24\000"
 .LASF753:
 	.ascii	"XPAR_PS7_SLCR_0_S_AXI_HIGHADDR 0xF8000FFF\000"
 .LASF941:
@@ -4625,8 +4625,6 @@ cleanup_platform:
 	.ascii	"__INT8_MAX__ 0x7f\000"
 .LASF838:
 	.ascii	"XPAR_PS7_XADC_0_HIGHADDR 0xF8007120\000"
-.LASF697:
-	.ascii	"XPAR_AXIDMA_0_c_sg_length_width 18\000"
 .LASF391:
 	.ascii	"__GCC_HAVE_DWARF2_CFI_ASM 1\000"
 .LASF402:
@@ -4697,6 +4695,8 @@ cleanup_platform:
 	.ascii	"_DEFAULT_SOURCE 1\000"
 .LASF192:
 	.ascii	"__FLT32_MANT_DIG__ 24\000"
+.LASF697:
+	.ascii	"XPAR_AXIDMA_0_c_sg_length_width 24\000"
 .LASF202:
 	.ascii	"__FLT32_DENORM_MIN__ 1.4012984643248171e-45F32\000"
 .LASF665:
