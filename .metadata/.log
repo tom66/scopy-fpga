@@ -8915,3 +8915,188 @@ Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.]. Thread: Worker-34
 
 !ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:10:16.312
 !MESSAGE XSCT command with result: [con], Result: [null, ]. Thread: Worker-34
+
+!ENTRY org.eclipse.ui.workbench 4 0 2020-01-20 22:19:06.623
+!MESSAGE Invalid thread access
+!STACK 0
+org.eclipse.swt.SWTException: Invalid thread access
+	at org.eclipse.swt.SWT.error(SWT.java:4533)
+	at org.eclipse.swt.SWT.error(SWT.java:4448)
+	at org.eclipse.swt.SWT.error(SWT.java:4419)
+	at org.eclipse.swt.widgets.Widget.error(Widget.java:482)
+	at org.eclipse.swt.widgets.Widget.checkWidget(Widget.java:373)
+	at org.eclipse.swt.widgets.Widget.getData(Widget.java:539)
+	at org.eclipse.ui.internal.ide.handlers.PagePropertyTester.test(PagePropertyTester.java:36)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:58)
+	at org.eclipse.core.internal.expressions.TestExpression.evaluate(TestExpression.java:100)
+	at org.eclipse.core.internal.expressions.CompositeExpression.evaluateAnd(CompositeExpression.java:53)
+	at org.eclipse.core.internal.expressions.WithExpression.evaluate(WithExpression.java:75)
+	at org.eclipse.core.internal.expressions.CompositeExpression.evaluateOr(CompositeExpression.java:68)
+	at org.eclipse.core.internal.expressions.OrExpression.evaluate(OrExpression.java:22)
+	at org.eclipse.core.internal.expressions.ReferenceExpression.evaluate(ReferenceExpression.java:71)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:72)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:97)
+	at org.eclipse.ui.internal.services.EvaluationService.requestEvaluation(EvaluationService.java:294)
+	at org.eclipse.ui.internal.handlers.DirtyStateTracker.update(DirtyStateTracker.java:45)
+	at org.eclipse.ui.internal.handlers.DirtyStateTracker.propertyChanged(DirtyStateTracker.java:107)
+	at org.eclipse.ui.part.WorkbenchPart.firePropertyChange(WorkbenchPart.java:120)
+	at com.xilinx.sdk.lscript.ui.LscriptEditor.access$2(LscriptEditor.java:1)
+	at com.xilinx.sdk.lscript.ui.LscriptEditor$ResourceChangeListener.resourceChanged(LscriptEditor.java:188)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:289)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:152)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:374)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1469)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:157)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:235)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.ui.workbench 4 0 2020-01-20 22:19:07.872
+!MESSAGE Invalid thread access
+!STACK 0
+org.eclipse.swt.SWTException: Invalid thread access
+	at org.eclipse.swt.SWT.error(SWT.java:4533)
+	at org.eclipse.swt.SWT.error(SWT.java:4448)
+	at org.eclipse.swt.SWT.error(SWT.java:4419)
+	at org.eclipse.swt.widgets.Widget.error(Widget.java:482)
+	at org.eclipse.swt.widgets.Widget.checkWidget(Widget.java:373)
+	at org.eclipse.swt.widgets.Widget.getData(Widget.java:539)
+	at org.eclipse.ui.internal.ide.handlers.PagePropertyTester.test(PagePropertyTester.java:36)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:58)
+	at org.eclipse.core.internal.expressions.TestExpression.evaluate(TestExpression.java:100)
+	at org.eclipse.core.internal.expressions.CompositeExpression.evaluateAnd(CompositeExpression.java:53)
+	at org.eclipse.core.internal.expressions.WithExpression.evaluate(WithExpression.java:75)
+	at org.eclipse.core.internal.expressions.CompositeExpression.evaluateOr(CompositeExpression.java:68)
+	at org.eclipse.core.internal.expressions.OrExpression.evaluate(OrExpression.java:22)
+	at org.eclipse.core.internal.expressions.ReferenceExpression.evaluate(ReferenceExpression.java:71)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:72)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:97)
+	at org.eclipse.ui.internal.services.EvaluationService.requestEvaluation(EvaluationService.java:294)
+	at org.eclipse.ui.internal.handlers.DirtyStateTracker.update(DirtyStateTracker.java:45)
+	at org.eclipse.ui.internal.handlers.DirtyStateTracker.propertyChanged(DirtyStateTracker.java:107)
+	at org.eclipse.ui.part.WorkbenchPart.firePropertyChange(WorkbenchPart.java:120)
+	at com.xilinx.sdk.lscript.ui.LscriptEditor.access$2(LscriptEditor.java:1)
+	at com.xilinx.sdk.lscript.ui.LscriptEditor$ResourceChangeListener.resourceChanged(LscriptEditor.java:188)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:289)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:152)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:374)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1469)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2253)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2262)
+	at org.eclipse.debug.core.model.LaunchConfigurationDelegate.buildProjects(LaunchConfigurationDelegate.java:437)
+	at org.eclipse.debug.core.model.LaunchConfigurationDelegate.buildForLaunch(LaunchConfigurationDelegate.java:130)
+	at org.eclipse.tcf.internal.debug.launch.TCFLaunchDelegate.buildForLaunch(TCFLaunchDelegate.java:406)
+	at com.xilinx.sdk.tcf.debug.BaseTcfLaunchDelegate.buildForLaunch(BaseTcfLaunchDelegate.java:430)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:855)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:07.903
+!MESSAGE XSCT Command: [disconnect tcfchan#18], Thread: Thread-1109
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:07.923
+!MESSAGE XSCT command with result: [disconnect tcfchan#18], Result: [null, ]. Thread: Thread-1109
+
+!ENTRY com.xilinx.sdk.utils 1 0 2020-01-20 22:19:08.910
+!MESSAGE Updating toolusage
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.919
+!MESSAGE XSCT Command: [connect -url tcp:localhost:3121], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.929
+!MESSAGE XSCT command with result: [connect -url tcp:localhost:3121], Result: [null, tcfchan#19]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.936
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.955
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1* Platform Cable USB 00001004b9fe01]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.962
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.989
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:08.996
+!MESSAGE XSCT Command: [jtag frequency 12000000], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.016
+!MESSAGE XSCT command with result: [jtag frequency 12000000], Result: [null, 12000000]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.024
+!MESSAGE XSCT Command: [version -server], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.035
+!MESSAGE XSCT command with result: [version -server], Result: [null, 2018.3]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.043
+!MESSAGE XSCT Command: [version], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.051
+!MESSAGE XSCT command with result: [version], Result: [null, xsct 2018.3
+SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.058
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.084
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.091
+!MESSAGE XSCT Command: [jtag frequency], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.098
+!MESSAGE XSCT command with result: [jtag frequency], Result: [null, 12000000]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.104
+!MESSAGE XSCT Command: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.113
+!MESSAGE XSCT command with result: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.120
+!MESSAGE XSCT Command: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.159
+!MESSAGE XSCT command with result: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.166
+!MESSAGE XSCT Command: [rst -system], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.312
+!MESSAGE XSCT command with result: [rst -system], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:09.318
+!MESSAGE XSCT Command: [after 3000], Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.341
+!MESSAGE XSCT command with result: [after 3000], Result: [null, ]. Thread: Worker-14
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.442
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.464
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1* Platform Cable USB 00001004b9fe01]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.471
+!MESSAGE XSCT Command: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.499
+!MESSAGE XSCT command with result: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Result: [null,      2  arm_dap (idcode 4ba00477 irlen 4)
+     3  xc7z014s (idcode 23728093 irlen 6 fpga)]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.505
+!MESSAGE XSCT Command: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.538
+!MESSAGE XSCT command with result: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Result: [null, ]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-20 22:19:12.545
+!MESSAGE XSCT Command: [fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit], Thread: ModalContext

@@ -612,16 +612,19 @@ dump_timing:
 	.ascii	"Starting to verify memory...\015\012\000"
 	.align	2
 .LC15:
+	.ascii	"Verify process\000"
+	.align	2
+.LC16:
 	.ascii	"\033[91mERROR:\033[0m %d word errors (%d words OK, "
 	.ascii	"%2.5f%% error rate)\015\012\000"
 	.align	2
-.LC16:
+.LC17:
 	.ascii	"\033[92mPASS: \033[0m %d words OK\015\012\000"
 	.align	2
-.LC17:
+.LC18:
 	.ascii	"Controller reset\000"
 	.align	2
-.LC18:
+.LC19:
 	.ascii	"Interrupt setup\000"
 	.text
 	.align	2
@@ -952,53 +955,61 @@ main:
 	mov	r3, #0
 	str	r3, [fp, #-56]
 	.loc 2 393 0
+	bl	start_timing
+	.loc 2 394 0
 	mov	r3, #1
 	str	r3, [fp, #-16]
 	b	.L27
 .L30:
-	.loc 2 394 0
+	.loc 2 395 0
 	ldr	r3, [fp, #-32]
 	ldr	r3, [r3]
 	str	r3, [fp, #-60]
-	.loc 2 396 0
+	.loc 2 397 0
 	ldr	r2, [fp, #-60]
 	ldr	r3, [fp, #-28]
 	sub	r3, r2, r3
 	cmp	r3, #1
 	beq	.L28
-	.loc 2 401 0
+	.loc 2 402 0
 	ldr	r3, [fp, #-20]
 	add	r3, r3, #1
 	str	r3, [fp, #-20]
-	.loc 2 402 0
+	.loc 2 403 0
 	ldr	r3, [fp, #-16]
 	str	r3, [fp, #-56]
 	b	.L29
 .L28:
-	.loc 2 404 0
+	.loc 2 405 0
 	ldr	r3, [fp, #-24]
 	add	r3, r3, #1
 	str	r3, [fp, #-24]
 .L29:
-	.loc 2 413 0 discriminator 2
+	.loc 2 414 0 discriminator 2
 	ldr	r3, [fp, #-60]
 	str	r3, [fp, #-28]
-	.loc 2 414 0 discriminator 2
+	.loc 2 415 0 discriminator 2
 	ldr	r3, [fp, #-32]
 	add	r3, r3, #8
 	str	r3, [fp, #-32]
-	.loc 2 393 0 discriminator 2
+	.loc 2 394 0 discriminator 2
 	ldr	r3, [fp, #-16]
 	add	r3, r3, #1
 	str	r3, [fp, #-16]
 .L27:
-	.loc 2 393 0 is_stmt 0 discriminator 1
+	.loc 2 394 0 is_stmt 0 discriminator 1
 	ldr	r3, [fp, #-52]
 	lsr	r3, r3, #3
 	ldr	r2, [fp, #-16]
 	cmp	r2, r3
 	bcc	.L30
-	.loc 2 417 0 is_stmt 1
+	.loc 2 418 0 is_stmt 1
+	bl	stop_timing
+	.loc 2 419 0
+	movw	r0, #:lower16:.LC15
+	movt	r0, #:upper16:.LC15
+	bl	dump_timing
+	.loc 2 421 0
 	ldr	r3, [fp, #-20]
 	vmov	s15, r3	@ int
 	vcvt.f32.u32	s15, s15
@@ -1011,47 +1022,47 @@ main:
 	vcvt.f32.u32	s14, s15
 	vdiv.f32	s15, s13, s14
 	vstr.32	s15, [fp, #-44]
-	.loc 2 419 0
+	.loc 2 423 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
 	beq	.L31
-	.loc 2 420 0
+	.loc 2 424 0
 	vldr.32	s15, [fp, #-44]
 	vcvt.f64.f32	d16, s15
 	vstr.64	d16, [sp]
 	ldr	r2, [fp, #-24]
 	ldr	r1, [fp, #-20]
-	movw	r0, #:lower16:.LC15
-	movt	r0, #:upper16:.LC15
-	bl	debug_printf
-	b	.L32
-.L31:
-	.loc 2 423 0
-	ldr	r1, [fp, #-24]
 	movw	r0, #:lower16:.LC16
 	movt	r0, #:upper16:.LC16
 	bl	debug_printf
+	b	.L32
+.L31:
+	.loc 2 427 0
+	ldr	r1, [fp, #-24]
+	movw	r0, #:lower16:.LC17
+	movt	r0, #:upper16:.LC17
+	bl	debug_printf
 .L32:
-	.loc 2 426 0
+	.loc 2 430 0
 	movw	r3, #:lower16:ioc_flag
 	movt	r3, #:upper16:ioc_flag
 	mov	r2, #0
 	str	r2, [r3]
-	.loc 2 429 0
+	.loc 2 433 0
 	bl	start_timing
-	.loc 2 430 0
+	.loc 2 434 0
 	movw	r0, #:lower16:dma0_pointer
 	movt	r0, #:upper16:dma0_pointer
 	bl	XAxiDma_Reset
-	.loc 2 431 0
+	.loc 2 435 0
 	bl	stop_timing
-	.loc 2 432 0
-	movw	r0, #:lower16:.LC17
-	movt	r0, #:upper16:.LC17
+	.loc 2 436 0
+	movw	r0, #:lower16:.LC18
+	movt	r0, #:upper16:.LC18
 	bl	dump_timing
-	.loc 2 434 0
+	.loc 2 438 0
 	bl	start_timing
-	.loc 2 439 0
+	.loc 2 443 0
 	movw	r3, #:lower16:dma0_pointer
 	movt	r3, #:upper16:dma0_pointer
 	ldr	r3, [r3]
@@ -1067,9 +1078,9 @@ main:
 	mov	r1, r3
 	mov	r0, r4
 	bl	Xil_Out32
-	.loc 2 440 0
-	movw	r0, #:lower16:.LC18
-	movt	r0, #:upper16:.LC18
+	.loc 2 444 0
+	movw	r0, #:lower16:.LC19
+	movt	r0, #:upper16:.LC19
 	bl	dump_timing
 	.loc 2 368 0
 	b	.L33

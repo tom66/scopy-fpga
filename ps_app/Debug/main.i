@@ -6920,6 +6920,7 @@ int main()
   success_ctr = 0;
   last_error = 0;
 
+  start_timing();
   for(i = 1; i < (sz / 8); i++) {
    this_value = *ptr;
 
@@ -6943,6 +6944,9 @@ int main()
    last_value = this_value;
    ptr += 2;
   }
+
+  stop_timing();
+  dump_timing("Verify process");
 
   err_rate = (error_ctr * 100.0f) / (error_ctr + success_ctr);
 

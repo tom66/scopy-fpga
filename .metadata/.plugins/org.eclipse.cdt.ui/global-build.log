@@ -33667,3 +33667,79 @@ make pre-build main-build
 a9-linaro-pre-build-step
 ' '
 make: Nothing to be done for 'main-build'.
+22:19:05 **** Auto Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
+                 from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
+                 from ../src/main.c:49:
+../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+../src/main.c: In function 'RxIntrHandler':
+../src/main.c:125:6: warning: unused variable 'TimeOut' [-Wunused-variable]
+  int TimeOut;
+      ^~~~~~~
+../src/main.c:124:6: warning: unused variable 'AxiStatus' [-Wunused-variable]
+  u32 AxiStatus;
+      ^~~~~~~~~
+../src/main.c: In function 'SetupIntrSystem':
+../src/main.c:200:18: warning: unused variable 'TxRingPtr' [-Wunused-variable]
+  XAxiDma_BdRing *TxRingPtr = XAxiDma_GetTxRing(AxiDmaPtr);
+                  ^~~~~~~~~
+../src/main.c: In function 'main':
+../src/main.c:371:49: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, XAXIDMA_DEVICE_TO_DMA);
+                                                 ^
+In file included from ../src/main.c:49:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:751:5: note: expected 'UINTPTR {aka unsigned int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+     ^~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:372:29: warning: passing argument 1 of 'Xil_DCacheInvalidateRange' makes integer from pointer without a cast [-Wint-conversion]
+   Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+                             ^~~~~~~~~
+In file included from ../src/main.c:44:0:
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:102:6: note: expected 'INTPTR {aka int}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void Xil_DCacheInvalidateRange(INTPTR adr, u32 len);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/main.c:387:7: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+   ptr = rx_buffer;
+       ^
+../src/main.c:289:35: warning: variable 'last_error' set but not used [-Wunused-but-set-variable]
+  uint32_t this_value, last_value, last_error;
+                                   ^~~~~~~~~~
+../src/main.c:286:15: warning: unused variable 't1' [-Wunused-variable]
+  uint32_t t0, t1;
+               ^~
+../src/main.c:286:11: warning: unused variable 't0' [-Wunused-variable]
+  uint32_t t0, t1;
+           ^~
+../src/main.c:284:24: warning: unused variable 'tog' [-Wunused-variable]
+  uint32_t counter = 0, tog = 0;
+                        ^~~
+../src/main.c:284:11: warning: variable 'counter' set but not used [-Wunused-but-set-variable]
+  uint32_t counter = 0, tog = 0;
+           ^~~~~~~
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  87500	   3440	18882640	18973580	121838c	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+22:19:06 **** Incremental Build of configuration Debug for project ps_app ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+make: Nothing to be done for 'main-build'.
