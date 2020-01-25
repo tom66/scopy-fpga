@@ -6915,7 +6915,7 @@ int main()
 
  while(1) {
   counter = 0;
-  sz = (1 << 15);
+  sz = (1 << 22);
 
   debug_printf("\r\n\r\nPress any key to START\r\n");
   inbyte();

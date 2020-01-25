@@ -881,7 +881,7 @@ main:
 	mov	r3, #0
 	str	r3, [fp, #-36]
 	.loc 2 378 0
-	mov	r3, #32768
+	mov	r3, #4194304
 	str	r3, [fp, #-52]
 	.loc 2 380 0
 	movw	r0, #:lower16:.LC11
