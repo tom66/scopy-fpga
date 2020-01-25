@@ -111,6 +111,12 @@ Intc:
 	.size	ioc_flag, 4
 ioc_flag:
 	.space	4
+	.global	err_flag
+	.align	2
+	.type	err_flag, %object
+	.size	err_flag, 4
+err_flag:
+	.space	4
 	.text
 	.align	2
 	.global	debug_printf
@@ -121,7 +127,7 @@ ioc_flag:
 debug_printf:
 .LFB13:
 	.file 2 "../src/main.c"
-	.loc 2 96 0
+	.loc 2 97 0
 	.cfi_startproc
 	@ args = 4, pretend = 16, frame = 1032
 	@ frame_needed = 1, uses_anonymous_args = 1
@@ -139,22 +145,22 @@ debug_printf:
 	.cfi_def_cfa 11, 20
 	sub	sp, sp, #1024
 	sub	sp, sp, #8
-	.loc 2 100 0
+	.loc 2 101 0
 	add	r3, fp, #8
 	str	r3, [fp, #-1032]
-	.loc 2 102 0
+	.loc 2 103 0
 	sub	r0, fp, #1024
 	sub	r0, r0, #4
 	ldr	r3, [fp, #-1032]
 	ldr	r2, [fp, #4]
 	mov	r1, #1024
 	bl	vsnprintf
-	.loc 2 103 0
+	.loc 2 104 0
 	sub	r3, fp, #1024
 	sub	r3, r3, #4
 	mov	r0, r3
 	bl	print
-	.loc 2 106 0
+	.loc 2 107 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 24
@@ -181,7 +187,7 @@ debug_printf:
 	.type	arb_delay, %function
 arb_delay:
 .LFB14:
-	.loc 2 109 0
+	.loc 2 110 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -193,24 +199,24 @@ arb_delay:
 	.cfi_def_cfa_register 11
 	sub	sp, sp, #12
 	str	r0, [fp, #-8]
-	.loc 2 110 0
+	.loc 2 111 0
 	b	.L6
 .L7:
-	.loc 2 111 0
+	.loc 2 112 0
 	.syntax divided
-@ 111 "../src/main.c" 1
+@ 112 "../src/main.c" 1
 	nop
 @ 0 "" 2
 	.arm
 	.syntax unified
 .L6:
-	.loc 2 110 0
+	.loc 2 111 0
 	ldr	r3, [fp, #-8]
 	sub	r2, r3, #1
 	str	r2, [fp, #-8]
 	cmp	r3, #0
 	bne	.L7
-	.loc 2 113 0
+	.loc 2 114 0
 	nop
 	add	sp, fp, #0
 	.cfi_def_cfa_register 13
@@ -222,17 +228,6 @@ arb_delay:
 	.cfi_endproc
 .LFE14:
 	.size	arb_delay, .-arb_delay
-	.section	.rodata
-	.align	2
-.LC0:
-	.ascii	"irq=0x%08x\015\012\000"
-	.align	2
-.LC1:
-	.ascii	"ErrorMask?\015\012\000"
-	.align	2
-.LC2:
-	.ascii	"IOC!\015\012\000"
-	.text
 	.align	2
 	.syntax unified
 	.arm
@@ -240,7 +235,7 @@ arb_delay:
 	.type	RxIntrHandler, %function
 RxIntrHandler:
 .LFB15:
-	.loc 2 121 0
+	.loc 2 122 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 16
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -252,10 +247,10 @@ RxIntrHandler:
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #16
 	str	r0, [fp, #-16]
-	.loc 2 122 0
+	.loc 2 123 0
 	ldr	r3, [fp, #-16]
 	str	r3, [fp, #-8]
-	.loc 2 128 0
+	.loc 2 129 0
 	ldr	r3, [fp, #-8]
 	ldr	r3, [r3]
 	add	r3, r3, #4
@@ -264,7 +259,7 @@ RxIntrHandler:
 	mov	r3, r0
 	and	r3, r3, #28672
 	str	r3, [fp, #-12]
-	.loc 2 134 0
+	.loc 2 135 0
 	ldr	r3, [fp, #-8]
 	ldr	r3, [r3]
 	add	r2, r3, #4
@@ -273,37 +268,29 @@ RxIntrHandler:
 	mov	r1, r3
 	mov	r0, r2
 	bl	Xil_Out32
-	.loc 2 136 0
-	ldr	r1, [fp, #-12]
-	movw	r0, #:lower16:.LC0
-	movt	r0, #:upper16:.LC0
-	bl	debug_printf
-	.loc 2 154 0
+	.loc 2 155 0
 	ldr	r3, [fp, #-12]
 	and	r3, r3, #16384
 	cmp	r3, #0
 	beq	.L9
-	.loc 2 155 0
-	movw	r0, #:lower16:.LC1
-	movt	r0, #:upper16:.LC1
-	bl	debug_printf
+	.loc 2 156 0
+	movw	r3, #:lower16:err_flag
+	movt	r3, #:upper16:err_flag
+	mov	r2, #1
+	str	r2, [r3]
 .L9:
-	.loc 2 193 0
+	.loc 2 195 0
 	ldr	r3, [fp, #-12]
 	and	r3, r3, #12288
 	cmp	r3, #0
 	beq	.L11
-	.loc 2 194 0
-	movw	r0, #:lower16:.LC2
-	movt	r0, #:upper16:.LC2
-	bl	debug_printf
-	.loc 2 195 0
+	.loc 2 197 0
 	movw	r3, #:lower16:ioc_flag
 	movt	r3, #:upper16:ioc_flag
 	mov	r2, #1
 	str	r2, [r3]
 .L11:
-	.loc 2 197 0
+	.loc 2 199 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -319,7 +306,7 @@ RxIntrHandler:
 	.type	SetupIntrSystem, %function
 SetupIntrSystem:
 .LFB16:
-	.loc 2 201 0
+	.loc 2 203 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 40
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -338,27 +325,27 @@ SetupIntrSystem:
 	strh	r3, [fp, #-38]	@ movhi
 	mov	r3, r2	@ movhi
 	strh	r3, [fp, #-40]	@ movhi
-	.loc 2 202 0
+	.loc 2 204 0
 	ldr	r3, [fp, #-36]
 	add	r3, r3, #20
 	str	r3, [fp, #-8]
-	.loc 2 203 0
+	.loc 2 205 0
 	ldr	r3, [fp, #-36]
 	add	r3, r3, #128
 	str	r3, [fp, #-12]
-	.loc 2 212 0
+	.loc 2 214 0
 	mov	r0, #0
 	bl	XScuGic_LookupConfig
 	str	r0, [fp, #-16]
-	.loc 2 213 0
+	.loc 2 215 0
 	ldr	r3, [fp, #-16]
 	cmp	r3, #0
 	bne	.L13
-	.loc 2 214 0
+	.loc 2 216 0
 	mov	r3, #1
 	b	.L14
 .L13:
-	.loc 2 217 0
+	.loc 2 219 0
 	ldr	r3, [fp, #-16]
 	ldr	r3, [r3, #4]
 	mov	r2, r3
@@ -366,21 +353,21 @@ SetupIntrSystem:
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_CfgInitialize
 	str	r0, [fp, #-20]
-	.loc 2 219 0
+	.loc 2 221 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
 	beq	.L15
-	.loc 2 220 0
+	.loc 2 222 0
 	mov	r3, #1
 	b	.L14
 .L15:
-	.loc 2 226 0
+	.loc 2 228 0
 	ldrh	r1, [fp, #-40]
 	mov	r3, #3
 	mov	r2, #160
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_SetPriorityTriggerType
-	.loc 2 242 0
+	.loc 2 244 0
 	ldrh	r1, [fp, #-40]
 	ldr	r3, [fp, #-12]
 	movw	r2, #:lower16:RxIntrHandler
@@ -388,33 +375,33 @@ SetupIntrSystem:
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_Connect
 	str	r0, [fp, #-20]
-	.loc 2 245 0
+	.loc 2 247 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
 	beq	.L16
-	.loc 2 246 0
+	.loc 2 248 0
 	ldr	r3, [fp, #-20]
 	b	.L14
 .L16:
-	.loc 2 250 0
+	.loc 2 252 0
 	ldrh	r3, [fp, #-40]
 	mov	r1, r3
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_Enable
-	.loc 2 254 0
+	.loc 2 256 0
 	bl	Xil_ExceptionInit
-	.loc 2 255 0
+	.loc 2 257 0
 	ldr	r2, [fp, #-32]
 	movw	r1, #:lower16:XScuGic_InterruptHandler
 	movt	r1, #:upper16:XScuGic_InterruptHandler
 	mov	r0, #5
 	bl	Xil_ExceptionRegisterHandler
 .LBB2:
-	.loc 2 259 0
+	.loc 2 261 0
 	mov	r3, #0
 	str	r3, [fp, #-24]
 	.syntax divided
-@ 259 "../src/main.c" 1
+@ 261 "../src/main.c" 1
 	mrs	r3, cpsr
 
 @ 0 "" 2
@@ -425,16 +412,16 @@ SetupIntrSystem:
 .LBE2:
 	bic	r3, r3, #128
 	.syntax divided
-@ 259 "../src/main.c" 1
+@ 261 "../src/main.c" 1
 	msr	cpsr,r3
 
 @ 0 "" 2
-	.loc 2 261 0
+	.loc 2 263 0
 	.arm
 	.syntax unified
 	mov	r3, #0
 .L14:
-	.loc 2 262 0
+	.loc 2 264 0
 	mov	r0, r3
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -451,7 +438,7 @@ SetupIntrSystem:
 	.type	start_timing, %function
 start_timing:
 .LFB17:
-	.loc 2 265 0
+	.loc 2 267 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -461,23 +448,23 @@ start_timing:
 	.cfi_offset 14, -4
 	add	fp, sp, #4
 	.cfi_def_cfa 11, 4
-	.loc 2 266 0
+	.loc 2 268 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
 	mvn	r1, #0
 	mov	r0, r3
 	bl	Xil_Out32
-	.loc 2 267 0
+	.loc 2 269 0
 	movw	r0, #:lower16:xscu_timer
 	movt	r0, #:upper16:xscu_timer
 	bl	XScuTimer_Start
-	.loc 2 269 0
+	.loc 2 271 0
 	movw	r3, #:lower16:timer1
 	movt	r3, #:upper16:timer1
 	mov	r2, #0
 	str	r2, [r3]
-	.loc 2 270 0
+	.loc 2 272 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
@@ -488,7 +475,7 @@ start_timing:
 	movw	r3, #:lower16:timer0
 	movt	r3, #:upper16:timer0
 	str	r2, [r3]
-	.loc 2 271 0
+	.loc 2 273 0
 	nop
 	pop	{fp, pc}
 	.cfi_endproc
@@ -502,7 +489,7 @@ start_timing:
 	.type	stop_timing, %function
 stop_timing:
 .LFB18:
-	.loc 2 274 0
+	.loc 2 276 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -512,7 +499,7 @@ stop_timing:
 	.cfi_offset 14, -4
 	add	fp, sp, #4
 	.cfi_def_cfa 11, 4
-	.loc 2 275 0
+	.loc 2 277 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
@@ -523,7 +510,7 @@ stop_timing:
 	movw	r3, #:lower16:timer1
 	movt	r3, #:upper16:timer1
 	str	r2, [r3]
-	.loc 2 276 0
+	.loc 2 278 0
 	movw	r3, #:lower16:timer0
 	movt	r3, #:upper16:timer0
 	ldr	r2, [r3]
@@ -534,7 +521,7 @@ stop_timing:
 	movw	r3, #:lower16:tdelta
 	movt	r3, #:upper16:tdelta
 	str	r2, [r3]
-	.loc 2 277 0
+	.loc 2 279 0
 	nop
 	pop	{fp, pc}
 	.cfi_endproc
@@ -542,7 +529,7 @@ stop_timing:
 	.size	stop_timing, .-stop_timing
 	.section	.rodata
 	.align	2
-.LC3:
+.LC0:
 	.ascii	"%s [~%d CPU cycles (~%4.1f us)]\015\012\000"
 	.text
 	.align	2
@@ -553,7 +540,7 @@ stop_timing:
 	.type	dump_timing, %function
 dump_timing:
 .LFB19:
-	.loc 2 280 0
+	.loc 2 282 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -565,7 +552,7 @@ dump_timing:
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #16
 	str	r0, [fp, #-8]
-	.loc 2 281 0
+	.loc 2 283 0
 	movw	r3, #:lower16:tdelta
 	movt	r3, #:upper16:tdelta
 	ldr	r3, [r3]
@@ -579,10 +566,10 @@ dump_timing:
 	vmul.f64	d16, d16, d17
 	vstr.64	d16, [sp]
 	ldr	r1, [fp, #-8]
-	movw	r0, #:lower16:.LC3
-	movt	r0, #:upper16:.LC3
+	movw	r0, #:lower16:.LC0
+	movt	r0, #:upper16:.LC0
 	bl	debug_printf
-	.loc 2 282 0
+	.loc 2 284 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -598,58 +585,76 @@ dump_timing:
 	.size	dump_timing, .-dump_timing
 	.section	.rodata
 	.align	2
-.LC4:
+.LC1:
 	.ascii	"\033[2J\033[0m\000"
 	.align	2
-.LC5:
+.LC2:
 	.ascii	"\015\012\015\012DemoApp v1.0 - DMA controlled trans"
 	.ascii	"fers\015\012\000"
 	.align	2
-.LC6:
+.LC3:
 	.ascii	"\015\012\015\012Press any key to start\015\012\000"
 	.align	2
-.LC7:
+.LC4:
 	.ascii	"ERROR: Initialising timer failed\015\012\000"
 	.align	2
-.LC8:
+.LC5:
 	.ascii	"Timer ready\015\012\000"
 	.align	2
-.LC9:
+.LC6:
 	.ascii	"ERROR: Initialising GPIO failed\015\012\000"
 	.align	2
-.LC10:
+.LC7:
 	.ascii	"GPIO block configured\015\012\000"
 	.align	2
-.LC11:
+.LC8:
 	.ascii	"\015\012\015\012Press any key to START\015\012\000"
 	.align	2
-.LC12:
+.LC9:
 	.ascii	"Invalidate cache\000"
 	.align	2
-.LC13:
+.LC10:
+	.ascii	"Reset AXIDMA\000"
+	.align	2
+.LC11:
+	.ascii	"Setup interrupts\000"
+	.align	2
+.LC12:
 	.ascii	"Waiting, Err=%d...\015\012\000"
+	.align	2
+.LC13:
+	.ascii	"Transfer interrupt\000"
 	.align	2
 .LC14:
 	.ascii	"TransferRate=%2.2f MiB/s\015\012\000"
 	.align	2
 .LC15:
-	.ascii	"Starting to verify memory...\015\012\000"
+	.ascii	"\033[91mERROR:\033[0m err_flag in interrupt was set"
+	.ascii	"\015\012\000"
 	.align	2
 .LC16:
-	.ascii	"Verify process\000"
+	.ascii	"Starting to verify memory...\015\012\000"
 	.align	2
 .LC17:
+	.ascii	"this_value: 0x%08x, last_value: 0x%08x, delta=%d, e"
+	.ascii	"rror_at_word=%d, since_last_error=%d\015\012\000"
+	.align	2
+.LC18:
+	.ascii	"this_value: 0x%08x, last_value: 0x%08x, delta=%d\015"
+	.ascii	"\012\000"
+	.align	2
+.LC19:
+	.ascii	"Verify process\000"
+	.align	2
+.LC20:
 	.ascii	"\033[91mERROR:\033[0m %d word errors (%d words OK, "
 	.ascii	"%2.5f%% error rate)\015\012\000"
 	.align	2
-.LC18:
+.LC21:
 	.ascii	"\033[92mPASS: \033[0m %d words OK\015\012\000"
 	.align	2
-.LC19:
+.LC22:
 	.ascii	"Controller reset\000"
-	.align	2
-.LC20:
-	.ascii	"Interrupt setup\000"
 	.text
 	.align	2
 	.global	main
@@ -659,7 +664,7 @@ dump_timing:
 	.type	main, %function
 main:
 .LFB20:
-	.loc 2 285 0
+	.loc 2 287 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 48
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -671,43 +676,43 @@ main:
 	add	fp, sp, #8
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #60
-	.loc 2 286 0
-	mov	r3, #0
-	str	r3, [fp, #-36]
+	.loc 2 288 0
 	mov	r3, #0
 	str	r3, [fp, #-40]
-	.loc 2 290 0
+	mov	r3, #0
+	str	r3, [fp, #-44]
+	.loc 2 292 0
 	mov	r3, #0
 	str	r3, [fp, #-20]
 	mov	r3, #0
 	str	r3, [fp, #-24]
-	.loc 2 293 0
-	mov	r3, #0
-	str	r3, [fp, #-44]	@ float
 	.loc 2 295 0
-	bl	init_platform
+	mov	r3, #0
+	str	r3, [fp, #-48]	@ float
 	.loc 2 297 0
-	movw	r0, #:lower16:.LC4
-	movt	r0, #:upper16:.LC4
-	bl	debug_printf
-	.loc 2 298 0
-	movw	r0, #:lower16:.LC5
-	movt	r0, #:upper16:.LC5
+	bl	init_platform
+	.loc 2 299 0
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
 	bl	debug_printf
 	.loc 2 300 0
-	movw	r0, #:lower16:.LC6
-	movt	r0, #:upper16:.LC6
+	movw	r0, #:lower16:.LC2
+	movt	r0, #:upper16:.LC2
 	bl	debug_printf
-	.loc 2 301 0
+	.loc 2 302 0
+	movw	r0, #:lower16:.LC3
+	movt	r0, #:upper16:.LC3
+	bl	debug_printf
+	.loc 2 303 0
 	bl	inbyte
-	.loc 2 304 0
+	.loc 2 306 0
 	mov	r0, #0
 	bl	XScuTimer_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:xscu_timer_cfg
 	movt	r3, #:upper16:xscu_timer_cfg
 	str	r2, [r3]
-	.loc 2 305 0
+	.loc 2 307 0
 	movw	r3, #:lower16:xscu_timer_cfg
 	movt	r3, #:upper16:xscu_timer_cfg
 	ldr	r1, [r3]
@@ -719,31 +724,31 @@ main:
 	movw	r0, #:lower16:xscu_timer
 	movt	r0, #:upper16:xscu_timer
 	bl	XScuTimer_CfgInitialize
-	str	r0, [fp, #-48]
-	.loc 2 307 0
-	ldr	r3, [fp, #-48]
+	str	r0, [fp, #-52]
+	.loc 2 309 0
+	ldr	r3, [fp, #-52]
 	cmp	r3, #0
 	beq	.L23
-	.loc 2 308 0
-	movw	r0, #:lower16:.LC7
-	movt	r0, #:upper16:.LC7
+	.loc 2 310 0
+	movw	r0, #:lower16:.LC4
+	movt	r0, #:upper16:.LC4
 	bl	xil_printf
 .L24:
-	.loc 2 309 0 discriminator 1
+	.loc 2 311 0 discriminator 1
 	b	.L24
 .L23:
-	.loc 2 312 0
-	movw	r0, #:lower16:.LC8
-	movt	r0, #:upper16:.LC8
+	.loc 2 314 0
+	movw	r0, #:lower16:.LC5
+	movt	r0, #:upper16:.LC5
 	bl	debug_printf
-	.loc 2 315 0
+	.loc 2 317 0
 	mov	r0, #0
 	bl	XGpioPs_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:gpio_config
 	movt	r3, #:upper16:gpio_config
 	str	r2, [r3]
-	.loc 2 316 0
+	.loc 2 318 0
 	movw	r3, #:lower16:gpio_config
 	movt	r3, #:upper16:gpio_config
 	ldr	r1, [r3]
@@ -755,79 +760,79 @@ main:
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_CfgInitialize
-	str	r0, [fp, #-48]
-	.loc 2 318 0
-	ldr	r3, [fp, #-48]
+	str	r0, [fp, #-52]
+	.loc 2 320 0
+	ldr	r3, [fp, #-52]
 	cmp	r3, #0
 	beq	.L25
-	.loc 2 319 0
-	movw	r0, #:lower16:.LC9
-	movt	r0, #:upper16:.LC9
+	.loc 2 321 0
+	movw	r0, #:lower16:.LC6
+	movt	r0, #:upper16:.LC6
 	bl	xil_printf
 .L26:
-	.loc 2 320 0 discriminator 2
+	.loc 2 322 0 discriminator 2
 	b	.L26
 .L25:
-	.loc 2 323 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_SetDirectionPin
-	.loc 2 324 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_SetOutputEnablePin
 	.loc 2 325 0
 	mov	r2, #1
 	mov	r1, #9
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
-	bl	XGpioPs_WritePin
-	.loc 2 327 0
-	mov	r2, #1
-	mov	r1, #37
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
 	bl	XGpioPs_SetDirectionPin
-	.loc 2 328 0
+	.loc 2 326 0
 	mov	r2, #1
-	mov	r1, #37
+	mov	r1, #9
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_SetOutputEnablePin
+	.loc 2 327 0
+	mov	r2, #1
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_WritePin
 	.loc 2 329 0
 	mov	r2, #1
 	mov	r1, #37
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetDirectionPin
+	.loc 2 330 0
+	mov	r2, #1
+	mov	r1, #37
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetOutputEnablePin
+	.loc 2 331 0
+	mov	r2, #1
+	mov	r1, #37
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
 	bl	XGpioPs_WritePin
-	.loc 2 332 0
+	.loc 2 334 0
 	mvn	r2, #0
 	mov	r1, #2
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_SetDirection
-	.loc 2 333 0
+	.loc 2 335 0
 	mvn	r2, #0
 	mov	r1, #3
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_SetDirection
-	.loc 2 335 0
-	movw	r0, #:lower16:.LC10
-	movt	r0, #:upper16:.LC10
+	.loc 2 337 0
+	movw	r0, #:lower16:.LC7
+	movt	r0, #:upper16:.LC7
 	bl	debug_printf
-	.loc 2 359 0
+	.loc 2 361 0
 	mov	r0, #0
 	bl	XAxiDma_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:dma0_config
 	movt	r3, #:upper16:dma0_config
 	str	r2, [r3]
-	.loc 2 360 0
+	.loc 2 362 0
 	movw	r3, #:lower16:dma0_config
 	movt	r3, #:upper16:dma0_config
 	ldr	r3, [r3]
@@ -835,8 +840,8 @@ main:
 	movw	r0, #:lower16:dma0_pointer
 	movt	r0, #:upper16:dma0_pointer
 	bl	XAxiDma_CfgInitialize
-	str	r0, [fp, #-48]
-	.loc 2 368 0
+	str	r0, [fp, #-52]
+	.loc 2 370 0
 	mov	r3, #62
 	mov	r2, #61
 	movw	r1, #:lower16:dma0_pointer
@@ -844,7 +849,60 @@ main:
 	movw	r0, #:lower16:Intc
 	movt	r0, #:upper16:Intc
 	bl	SetupIntrSystem
-	.loc 2 371 0
+.L35:
+	.loc 2 376 0
+	mov	r3, #0
+	str	r3, [fp, #-40]
+	.loc 2 377 0
+	mov	r3, #4194304
+	str	r3, [fp, #-56]
+	.loc 2 379 0
+	movw	r0, #:lower16:.LC8
+	movt	r0, #:upper16:.LC8
+	bl	debug_printf
+	.loc 2 380 0
+	bl	inbyte
+	.loc 2 383 0
+	mov	r2, #0
+	mov	r1, #2
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 384 0
+	mov	r2, #0
+	mov	r1, #3
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 386 0
+	bl	start_timing
+	.loc 2 387 0
+	movw	r3, #:lower16:rx_buffer
+	movt	r3, #:upper16:rx_buffer
+	movw	r1, #16383
+	mov	r0, r3
+	bl	Xil_DCacheInvalidateRange
+	.loc 2 388 0
+	bl	stop_timing
+	.loc 2 389 0
+	movw	r0, #:lower16:.LC9
+	movt	r0, #:upper16:.LC9
+	bl	dump_timing
+	.loc 2 391 0
+	bl	start_timing
+	.loc 2 392 0
+	movw	r0, #:lower16:dma0_pointer
+	movt	r0, #:upper16:dma0_pointer
+	bl	XAxiDma_Reset
+	.loc 2 393 0
+	bl	stop_timing
+	.loc 2 394 0
+	movw	r0, #:lower16:.LC10
+	movt	r0, #:upper16:.LC10
+	bl	dump_timing
+	.loc 2 397 0
+	bl	start_timing
+	.loc 2 398 0
 	movw	r3, #:lower16:dma0_pointer
 	movt	r3, #:upper16:dma0_pointer
 	ldr	r3, [r3]
@@ -860,7 +918,7 @@ main:
 	mov	r1, r3
 	mov	r0, r4
 	bl	Xil_Out32
-	.loc 2 372 0
+	.loc 2 399 0
 	movw	r3, #:lower16:dma0_pointer
 	movt	r3, #:upper16:dma0_pointer
 	ldr	r3, [r3]
@@ -876,88 +934,85 @@ main:
 	mov	r1, r3
 	mov	r0, r4
 	bl	Xil_Out32
-.L33:
-	.loc 2 377 0
-	mov	r3, #0
-	str	r3, [fp, #-36]
-	.loc 2 378 0
-	mov	r3, #4194304
-	str	r3, [fp, #-52]
-	.loc 2 380 0
+	.loc 2 400 0
+	bl	stop_timing
+	.loc 2 401 0
 	movw	r0, #:lower16:.LC11
 	movt	r0, #:upper16:.LC11
-	bl	debug_printf
-	.loc 2 381 0
-	bl	inbyte
-	.loc 2 384 0
-	mov	r2, #0
-	mov	r1, #2
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_Write
-	.loc 2 385 0
-	mov	r2, #0
-	mov	r1, #3
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_Write
-	.loc 2 387 0
-	bl	start_timing
-	.loc 2 388 0
-	movw	r3, #:lower16:rx_buffer
-	movt	r3, #:upper16:rx_buffer
-	movw	r1, #16383
-	mov	r0, r3
-	bl	Xil_DCacheInvalidateRange
-	.loc 2 389 0
-	bl	stop_timing
-	.loc 2 390 0
-	movw	r0, #:lower16:.LC12
-	movt	r0, #:upper16:.LC12
 	bl	dump_timing
-	.loc 2 393 0
+	.loc 2 403 0
 	movw	r1, #:lower16:rx_buffer
 	movt	r1, #:upper16:rx_buffer
 	mov	r3, #1
-	ldr	r2, [fp, #-52]
+	ldr	r2, [fp, #-56]
 	movw	r0, #:lower16:dma0_pointer
 	movt	r0, #:upper16:dma0_pointer
 	bl	XAxiDma_SimpleTransfer
 	mov	r3, r0
-	str	r3, [fp, #-48]
-	.loc 2 395 0
+	str	r3, [fp, #-52]
+	.loc 2 405 0
 	mvn	r2, #0
 	mov	r1, #2
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_Write
-	.loc 2 396 0
+	.loc 2 406 0
 	mvn	r2, #0
 	mov	r1, #3
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_Write
-	.loc 2 398 0
-	ldr	r1, [fp, #-48]
+	.loc 2 408 0
+	ldr	r1, [fp, #-52]
+	movw	r0, #:lower16:.LC12
+	movt	r0, #:upper16:.LC12
+	bl	debug_printf
+	.loc 2 410 0
+	mov	r2, #1
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_WritePin
+	.loc 2 411 0
+	bl	start_timing
+	.loc 2 412 0
+	nop
+.L27:
+	.loc 2 412 0 is_stmt 0 discriminator 1
+	movw	r3, #:lower16:ioc_flag
+	movt	r3, #:upper16:ioc_flag
+	ldr	r3, [r3]
+	cmp	r3, #0
+	beq	.L27
+	.loc 2 413 0 is_stmt 1
+	movw	r3, #:lower16:ioc_flag
+	movt	r3, #:upper16:ioc_flag
+	mov	r2, #0
+	str	r2, [r3]
+	.loc 2 414 0
+	bl	stop_timing
+	.loc 2 415 0
+	mov	r2, #0
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_WritePin
+	.loc 2 416 0
 	movw	r0, #:lower16:.LC13
 	movt	r0, #:upper16:.LC13
-	bl	debug_printf
-	.loc 2 409 0
-	movw	r0, #16960
-	movt	r0, 15
-	bl	arb_delay
-	.loc 2 411 0
-	ldr	r3, [fp, #-52]
+	bl	dump_timing
+	.loc 2 420 0
+	ldr	r3, [fp, #-56]
 	vmov	s15, r3	@ int
 	vcvt.f64.u32	d16, s15
-	vldr.64	d17, .L34
+	vldr.64	d17, .L37
 	vmul.f64	d17, d16, d17
 	movw	r3, #:lower16:tdelta
 	movt	r3, #:upper16:tdelta
 	ldr	r3, [r3]
 	vmov	s15, r3	@ int
 	vcvt.f32.u32	s15, s15
-	vldr.32	s14, .L34+8
+	vldr.32	s14, .L37+8
 	vmul.f32	s15, s15, s14
 	vcvt.f64.f32	d16, s15
 	vdiv.f64	d18, d17, d16
@@ -965,89 +1020,131 @@ main:
 	movw	r0, #:lower16:.LC14
 	movt	r0, #:upper16:.LC14
 	bl	debug_printf
-	.loc 2 412 0
+	.loc 2 422 0
+	movw	r3, #:lower16:err_flag
+	movt	r3, #:upper16:err_flag
+	ldr	r3, [r3]
+	cmp	r3, #0
+	beq	.L28
+	.loc 2 423 0
 	movw	r0, #:lower16:.LC15
 	movt	r0, #:upper16:.LC15
 	bl	debug_printf
-	.loc 2 415 0
+.L28:
+	.loc 2 426 0
+	movw	r3, #:lower16:err_flag
+	movt	r3, #:upper16:err_flag
+	mov	r2, #0
+	str	r2, [r3]
+	.loc 2 427 0
+	movw	r0, #:lower16:.LC16
+	movt	r0, #:upper16:.LC16
+	bl	debug_printf
+	.loc 2 430 0
 	movw	r3, #:lower16:rx_buffer
 	movt	r3, #:upper16:rx_buffer
-	str	r3, [fp, #-32]
-	.loc 2 416 0
-	ldr	r3, [fp, #-32]
+	str	r3, [fp, #-36]
+	.loc 2 431 0
+	ldr	r3, [fp, #-36]
 	add	r2, r3, #4
-	str	r2, [fp, #-32]
+	str	r2, [fp, #-36]
 	ldr	r3, [r3]
 	str	r3, [fp, #-28]
-	.loc 2 417 0
+	.loc 2 432 0
 	mov	r3, #0
 	str	r3, [fp, #-20]
-	.loc 2 418 0
+	.loc 2 433 0
 	mov	r3, #0
 	str	r3, [fp, #-24]
-	.loc 2 419 0
+	.loc 2 434 0
 	mov	r3, #0
-	str	r3, [fp, #-56]
-	.loc 2 421 0
+	str	r3, [fp, #-32]
+	.loc 2 436 0
 	bl	start_timing
-	.loc 2 422 0
+	.loc 2 437 0
 	mov	r3, #1
 	str	r3, [fp, #-16]
-	b	.L27
-.L30:
-	.loc 2 423 0
-	ldr	r3, [fp, #-32]
+	b	.L29
+.L32:
+	.loc 2 438 0
+	ldr	r3, [fp, #-36]
 	ldr	r3, [r3]
 	str	r3, [fp, #-60]
-	.loc 2 425 0
+	.loc 2 440 0
 	ldr	r2, [fp, #-60]
 	ldr	r3, [fp, #-28]
 	sub	r3, r2, r3
 	cmp	r3, #1
-	beq	.L28
-	.loc 2 430 0
+	beq	.L30
+	.loc 2 442 0
+	ldr	r2, [fp, #-60]
+	ldr	r3, [fp, #-28]
+	.loc 2 441 0
+	sub	r1, r2, r3
+	ldr	r2, [fp, #-16]
+	ldr	r3, [fp, #-32]
+	sub	r3, r2, r3
+	str	r3, [sp, #4]
+	ldr	r3, [fp, #-16]
+	str	r3, [sp]
+	mov	r3, r1
+	ldr	r2, [fp, #-28]
+	ldr	r1, [fp, #-60]
+	movw	r0, #:lower16:.LC17
+	movt	r0, #:upper16:.LC17
+	bl	debug_printf
+	.loc 2 443 0
 	ldr	r3, [fp, #-20]
 	add	r3, r3, #1
 	str	r3, [fp, #-20]
-	.loc 2 431 0
+	.loc 2 444 0
 	ldr	r3, [fp, #-16]
-	str	r3, [fp, #-56]
-	b	.L29
-.L28:
-	.loc 2 433 0
+	str	r3, [fp, #-32]
+	b	.L36
+.L30:
+	.loc 2 446 0
 	ldr	r3, [fp, #-24]
 	add	r3, r3, #1
 	str	r3, [fp, #-24]
-.L29:
-	.loc 2 442 0 discriminator 2
+.L36:
+	.loc 2 456 0
+	ldr	r2, [fp, #-60]
+	ldr	r3, [fp, #-28]
+	sub	r3, r2, r3
+	ldr	r2, [fp, #-28]
+	ldr	r1, [fp, #-60]
+	movw	r0, #:lower16:.LC18
+	movt	r0, #:upper16:.LC18
+	bl	debug_printf
+	.loc 2 459 0
 	ldr	r3, [fp, #-60]
 	str	r3, [fp, #-28]
-	.loc 2 443 0 discriminator 2
-	ldr	r3, [fp, #-32]
+	.loc 2 460 0
+	ldr	r3, [fp, #-36]
 	add	r3, r3, #8
-	str	r3, [fp, #-32]
-	.loc 2 422 0 discriminator 2
+	str	r3, [fp, #-36]
+	.loc 2 437 0
 	ldr	r3, [fp, #-16]
 	add	r3, r3, #1
 	str	r3, [fp, #-16]
-.L27:
-	.loc 2 422 0 is_stmt 0 discriminator 1
-	ldr	r3, [fp, #-52]
+.L29:
+	.loc 2 437 0 is_stmt 0 discriminator 1
+	ldr	r3, [fp, #-56]
 	lsr	r3, r3, #3
 	ldr	r2, [fp, #-16]
 	cmp	r2, r3
-	bcc	.L30
-	.loc 2 446 0 is_stmt 1
+	bcc	.L32
+	.loc 2 463 0 is_stmt 1
 	bl	stop_timing
-	.loc 2 447 0
-	movw	r0, #:lower16:.LC16
-	movt	r0, #:upper16:.LC16
+	.loc 2 464 0
+	movw	r0, #:lower16:.LC19
+	movt	r0, #:upper16:.LC19
 	bl	dump_timing
-	.loc 2 449 0
+	.loc 2 466 0
 	ldr	r3, [fp, #-20]
 	vmov	s15, r3	@ int
 	vcvt.f32.u32	s15, s15
-	vldr.32	s14, .L34+12
+	vldr.32	s14, .L37+12
 	vmul.f32	s13, s15, s14
 	ldr	r2, [fp, #-20]
 	ldr	r3, [fp, #-24]
@@ -1055,74 +1152,50 @@ main:
 	vmov	s15, r3	@ int
 	vcvt.f32.u32	s14, s15
 	vdiv.f32	s15, s13, s14
-	vstr.32	s15, [fp, #-44]
-	.loc 2 451 0
+	vstr.32	s15, [fp, #-48]
+	.loc 2 468 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
-	beq	.L31
-	.loc 2 452 0
-	vldr.32	s15, [fp, #-44]
+	beq	.L33
+	.loc 2 469 0
+	vldr.32	s15, [fp, #-48]
 	vcvt.f64.f32	d16, s15
 	vstr.64	d16, [sp]
 	ldr	r2, [fp, #-24]
 	ldr	r1, [fp, #-20]
-	movw	r0, #:lower16:.LC17
-	movt	r0, #:upper16:.LC17
+	movw	r0, #:lower16:.LC20
+	movt	r0, #:upper16:.LC20
 	bl	debug_printf
-	b	.L32
-.L31:
-	.loc 2 455 0
+	b	.L34
+.L33:
+	.loc 2 472 0
 	ldr	r1, [fp, #-24]
-	movw	r0, #:lower16:.LC18
-	movt	r0, #:upper16:.LC18
+	movw	r0, #:lower16:.LC21
+	movt	r0, #:upper16:.LC21
 	bl	debug_printf
-.L32:
-	.loc 2 458 0
+.L34:
+	.loc 2 475 0
 	movw	r3, #:lower16:ioc_flag
 	movt	r3, #:upper16:ioc_flag
 	mov	r2, #0
 	str	r2, [r3]
-	.loc 2 461 0
+	.loc 2 478 0
 	bl	start_timing
-	.loc 2 462 0
+	.loc 2 479 0
 	movw	r0, #:lower16:dma0_pointer
 	movt	r0, #:upper16:dma0_pointer
 	bl	XAxiDma_Reset
-	.loc 2 463 0
+	.loc 2 480 0
 	bl	stop_timing
-	.loc 2 464 0
-	movw	r0, #:lower16:.LC19
-	movt	r0, #:upper16:.LC19
+	.loc 2 481 0
+	movw	r0, #:lower16:.LC22
+	movt	r0, #:upper16:.LC22
 	bl	dump_timing
-	.loc 2 466 0
-	bl	start_timing
-	.loc 2 471 0
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r4, r3, #48
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r3, r3, #48
-	mov	r0, r3
-	bl	Xil_In32
-	mov	r3, r0
-	orr	r3, r3, #28672
-	mov	r1, r3
-	mov	r0, r4
-	bl	Xil_Out32
-	.loc 2 472 0
-	bl	stop_timing
-	.loc 2 473 0
-	movw	r0, #:lower16:.LC20
-	movt	r0, #:upper16:.LC20
-	bl	dump_timing
-	.loc 2 377 0
-	b	.L33
-.L35:
+	.loc 2 376 0
+	b	.L35
+.L38:
 	.align	3
-.L34:
+.L37:
 	.word	-1598689907
 	.word	1051772663
 	.word	827205774
@@ -1152,15 +1225,15 @@ main:
 	.file 21 "../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h"
 	.section	.debug_info,"",%progbits
 .Ldebug_info0:
-	.4byte	0x1322
+	.4byte	0x1333
 	.2byte	0x4
 	.4byte	.Ldebug_abbrev0
 	.byte	0x4
 	.uleb128 0x1
-	.4byte	.LASF2710
-	.byte	0xc
 	.4byte	.LASF2711
+	.byte	0xc
 	.4byte	.LASF2712
+	.4byte	.LASF2713
 	.4byte	.Ltext0
 	.4byte	.Letext0-.Ltext0
 	.4byte	.Ldebug_line0
@@ -2986,7 +3059,7 @@ main:
 	.byte	0x3
 	.4byte	base
 	.uleb128 0x26
-	.4byte	.LASF2673
+	.4byte	.LASF2674
 	.byte	0x2
 	.byte	0x44
 	.4byte	0xe68
@@ -3107,100 +3180,60 @@ main:
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	ioc_flag
-	.uleb128 0x29
-	.4byte	.LASF2683
+	.uleb128 0x25
+	.4byte	.LASF2673
 	.byte	0x2
-	.2byte	0x11c
+	.byte	0x5c
+	.4byte	0x90c
+	.uleb128 0x5
+	.byte	0x3
+	.4byte	err_flag
+	.uleb128 0x29
+	.4byte	.LASF2684
+	.byte	0x2
+	.2byte	0x11e
 	.4byte	0x8d
 	.4byte	.LFB20
 	.4byte	.LFE20-.LFB20
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x10eb
+	.4byte	0x10fc
 	.uleb128 0x2a
-	.4byte	.LASF2674
+	.4byte	.LASF2675
 	.byte	0x2
-	.2byte	0x11e
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -40
-	.uleb128 0x2b
-	.ascii	"tog\000"
-	.byte	0x2
-	.2byte	0x11e
+	.2byte	0x120
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -44
-	.uleb128 0x2a
-	.4byte	.LASF2675
+	.uleb128 0x2b
+	.ascii	"tog\000"
 	.byte	0x2
-	.2byte	0x11f
+	.2byte	0x120
+	.4byte	0x901
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -48
+	.uleb128 0x2a
+	.4byte	.LASF2676
+	.byte	0x2
+	.2byte	0x121
 	.4byte	0x8f6
 	.uleb128 0x2
 	.byte	0x91
-	.sleb128 -52
+	.sleb128 -56
 	.uleb128 0x2c
 	.ascii	"t0\000"
 	.byte	0x2
-	.2byte	0x120
+	.2byte	0x122
 	.4byte	0x901
 	.uleb128 0x2c
 	.ascii	"t1\000"
 	.byte	0x2
-	.2byte	0x120
+	.2byte	0x122
 	.4byte	0x901
 	.uleb128 0x2b
 	.ascii	"sz\000"
-	.byte	0x2
-	.2byte	0x121
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -56
-	.uleb128 0x2b
-	.ascii	"i\000"
-	.byte	0x2
-	.2byte	0x121
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -20
-	.uleb128 0x2a
-	.4byte	.LASF2676
-	.byte	0x2
-	.2byte	0x122
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -24
-	.uleb128 0x2a
-	.4byte	.LASF2677
-	.byte	0x2
-	.2byte	0x122
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -28
-	.uleb128 0x2a
-	.4byte	.LASF2678
-	.byte	0x2
-	.2byte	0x123
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -64
-	.uleb128 0x2a
-	.4byte	.LASF2679
-	.byte	0x2
-	.2byte	0x123
-	.4byte	0x901
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -32
-	.uleb128 0x2a
-	.4byte	.LASF2680
 	.byte	0x2
 	.2byte	0x123
 	.4byte	0x901
@@ -3208,130 +3241,178 @@ main:
 	.byte	0x91
 	.sleb128 -60
 	.uleb128 0x2b
-	.ascii	"ptr\000"
+	.ascii	"i\000"
 	.byte	0x2
-	.2byte	0x124
-	.4byte	0xee8
+	.2byte	0x123
+	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
-	.sleb128 -36
+	.sleb128 -20
+	.uleb128 0x2a
+	.4byte	.LASF2677
+	.byte	0x2
+	.2byte	0x124
+	.4byte	0x901
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -24
+	.uleb128 0x2a
+	.4byte	.LASF2678
+	.byte	0x2
+	.2byte	0x124
+	.4byte	0x901
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -28
+	.uleb128 0x2a
+	.4byte	.LASF2679
+	.byte	0x2
+	.2byte	0x125
+	.4byte	0x901
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -64
+	.uleb128 0x2a
+	.4byte	.LASF2680
+	.byte	0x2
+	.2byte	0x125
+	.4byte	0x901
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -32
 	.uleb128 0x2a
 	.4byte	.LASF2681
 	.byte	0x2
 	.2byte	0x125
-	.4byte	0x10eb
+	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
-	.sleb128 -48
+	.sleb128 -36
+	.uleb128 0x2b
+	.ascii	"ptr\000"
+	.byte	0x2
+	.2byte	0x126
+	.4byte	0xee8
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -40
+	.uleb128 0x2a
+	.4byte	.LASF2682
+	.byte	0x2
+	.2byte	0x127
+	.4byte	0x10fc
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -52
 	.byte	0
 	.uleb128 0x2
 	.byte	0x4
 	.byte	0x4
-	.4byte	.LASF2682
+	.4byte	.LASF2683
 	.uleb128 0x2d
-	.4byte	.LASF2684
+	.4byte	.LASF2685
 	.byte	0x2
-	.2byte	0x117
+	.2byte	0x119
 	.4byte	.LFB19
 	.4byte	.LFE19-.LFB19
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x1116
+	.4byte	0x1127
 	.uleb128 0x2e
 	.ascii	"s\000"
 	.byte	0x2
-	.2byte	0x117
+	.2byte	0x119
 	.4byte	0x5b1
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
 	.byte	0
 	.uleb128 0x2f
-	.4byte	.LASF2685
+	.4byte	.LASF2686
 	.byte	0x2
-	.2byte	0x111
+	.2byte	0x113
 	.4byte	.LFB18
 	.4byte	.LFE18-.LFB18
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x2f
-	.4byte	.LASF2686
+	.4byte	.LASF2687
 	.byte	0x2
-	.2byte	0x108
+	.2byte	0x10a
 	.4byte	.LFB17
 	.4byte	.LFE17-.LFB17
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x30
-	.4byte	.LASF2713
+	.4byte	.LASF2714
 	.byte	0x2
-	.byte	0xc7
+	.byte	0xc9
 	.4byte	0x8d
 	.4byte	.LFB16
 	.4byte	.LFE16-.LFB16
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x11dd
+	.4byte	0x11ee
 	.uleb128 0x31
-	.4byte	.LASF2687
+	.4byte	.LASF2688
 	.byte	0x2
-	.byte	0xc7
-	.4byte	0x11dd
+	.byte	0xc9
+	.4byte	0x11ee
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -36
 	.uleb128 0x31
-	.4byte	.LASF2688
+	.4byte	.LASF2689
 	.byte	0x2
-	.byte	0xc8
-	.4byte	0x11e3
+	.byte	0xca
+	.4byte	0x11f4
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -40
 	.uleb128 0x31
-	.4byte	.LASF2689
+	.4byte	.LASF2690
 	.byte	0x2
-	.byte	0xc8
+	.byte	0xca
 	.4byte	0x957
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -42
 	.uleb128 0x31
-	.4byte	.LASF2690
+	.4byte	.LASF2691
 	.byte	0x2
-	.byte	0xc8
+	.byte	0xca
 	.4byte	0x957
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -44
 	.uleb128 0x26
-	.4byte	.LASF2691
+	.4byte	.LASF2692
 	.byte	0x2
-	.byte	0xca
-	.4byte	0x11e9
+	.byte	0xcc
+	.4byte	0x11fa
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
 	.uleb128 0x26
-	.4byte	.LASF2692
+	.4byte	.LASF2693
 	.byte	0x2
-	.byte	0xcb
-	.4byte	0x11e9
+	.byte	0xcd
+	.4byte	0x11fa
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -16
 	.uleb128 0x26
-	.4byte	.LASF2693
+	.4byte	.LASF2694
 	.byte	0x2
-	.byte	0xcc
+	.byte	0xce
 	.4byte	0x8d
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -24
 	.uleb128 0x26
-	.4byte	.LASF2694
+	.4byte	.LASF2695
 	.byte	0x2
-	.byte	0xce
+	.byte	0xd0
 	.4byte	0xe62
 	.uleb128 0x2
 	.byte	0x91
@@ -3340,9 +3421,9 @@ main:
 	.4byte	.LBB2
 	.4byte	.LBE2-.LBB2
 	.uleb128 0x2a
-	.4byte	.LASF2695
+	.4byte	.LASF2696
 	.byte	0x2
-	.2byte	0x103
+	.2byte	0x105
 	.4byte	0x962
 	.uleb128 0x2
 	.byte	0x91
@@ -3359,97 +3440,97 @@ main:
 	.byte	0x4
 	.4byte	0xbe2
 	.uleb128 0x33
-	.4byte	.LASF2704
+	.4byte	.LASF2705
 	.byte	0x2
-	.byte	0x78
+	.byte	0x79
 	.4byte	.LFB15
 	.4byte	.LFE15-.LFB15
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x1245
+	.4byte	0x1256
 	.uleb128 0x31
-	.4byte	.LASF2696
+	.4byte	.LASF2697
 	.byte	0x2
-	.byte	0x78
+	.byte	0x79
 	.4byte	0xd4
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -20
 	.uleb128 0x26
-	.4byte	.LASF2692
+	.4byte	.LASF2693
 	.byte	0x2
-	.byte	0x7a
-	.4byte	0x11e9
+	.byte	0x7b
+	.4byte	0x11fa
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
 	.uleb128 0x26
-	.4byte	.LASF2697
+	.4byte	.LASF2698
 	.byte	0x2
-	.byte	0x7b
+	.byte	0x7c
 	.4byte	0x962
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -16
 	.uleb128 0x34
-	.4byte	.LASF2698
-	.byte	0x2
-	.byte	0x7c
-	.4byte	0x962
-	.uleb128 0x34
 	.4byte	.LASF2699
 	.byte	0x2
 	.byte	0x7d
+	.4byte	0x962
+	.uleb128 0x34
+	.4byte	.LASF2700
+	.byte	0x2
+	.byte	0x7e
 	.4byte	0x8d
 	.byte	0
 	.uleb128 0x35
-	.4byte	.LASF2700
+	.4byte	.LASF2701
 	.byte	0x2
-	.byte	0x6c
+	.byte	0x6d
 	.4byte	.LFB14
 	.4byte	.LFE14-.LFB14
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x1267
+	.4byte	0x1278
 	.uleb128 0x36
 	.ascii	"n\000"
 	.byte	0x2
-	.byte	0x6c
+	.byte	0x6d
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
 	.byte	0
 	.uleb128 0x37
-	.4byte	.LASF2701
+	.4byte	.LASF2702
 	.byte	0x2
-	.byte	0x5f
+	.byte	0x60
 	.4byte	.LFB13
 	.4byte	.LFE13-.LFB13
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x12aa
+	.4byte	0x12bb
 	.uleb128 0x36
 	.ascii	"fmt\000"
 	.byte	0x2
-	.byte	0x5f
+	.byte	0x60
 	.4byte	0x5b1
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -16
 	.uleb128 0x38
 	.uleb128 0x26
-	.4byte	.LASF2702
+	.4byte	.LASF2703
 	.byte	0x2
-	.byte	0x61
-	.4byte	0x12aa
+	.byte	0x62
+	.4byte	0x12bb
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -1048
 	.uleb128 0x26
-	.4byte	.LASF2703
+	.4byte	.LASF2704
 	.byte	0x2
-	.byte	0x63
+	.byte	0x64
 	.4byte	0x91c
 	.uleb128 0x3
 	.byte	0x91
@@ -3457,22 +3538,22 @@ main:
 	.byte	0
 	.uleb128 0xc
 	.4byte	0x5b7
-	.4byte	0x12bb
+	.4byte	0x12cc
 	.uleb128 0x39
 	.4byte	0xa4
 	.2byte	0x3ff
 	.byte	0
 	.uleb128 0x3a
-	.4byte	.LASF2705
+	.4byte	.LASF2706
 	.byte	0x1
 	.byte	0xdb
 	.4byte	.LFB7
 	.4byte	.LFE7-.LFB7
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x12fb
+	.4byte	0x130c
 	.uleb128 0x31
-	.4byte	.LASF2706
+	.4byte	.LASF2707
 	.byte	0x1
 	.byte	0xdb
 	.4byte	0x97d
@@ -3480,7 +3561,7 @@ main:
 	.byte	0x91
 	.sleb128 -20
 	.uleb128 0x31
-	.4byte	.LASF2707
+	.4byte	.LASF2708
 	.byte	0x1
 	.byte	0xdb
 	.4byte	0x962
@@ -3488,10 +3569,10 @@ main:
 	.byte	0x91
 	.sleb128 -24
 	.uleb128 0x26
-	.4byte	.LASF2708
+	.4byte	.LASF2709
 	.byte	0x1
 	.byte	0xde
-	.4byte	0x12fb
+	.4byte	0x130c
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
@@ -3500,7 +3581,7 @@ main:
 	.byte	0x4
 	.4byte	0x96d
 	.uleb128 0x3b
-	.4byte	.LASF2709
+	.4byte	.LASF2710
 	.byte	0x1
 	.byte	0x93
 	.4byte	0x962
@@ -3509,7 +3590,7 @@ main:
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x31
-	.4byte	.LASF2706
+	.4byte	.LASF2707
 	.byte	0x1
 	.byte	0x93
 	.4byte	0x97d
@@ -6318,7 +6399,7 @@ main:
 	.uleb128 0x47
 	.4byte	.LASF2443
 	.byte	0x5
-	.uleb128 0x5d
+	.uleb128 0x5e
 	.4byte	.LASF2444
 	.byte	0x4
 	.byte	0
@@ -12722,7 +12803,7 @@ main:
 	.ascii	"__sferror(p) ((int)(((p)->_flags & __SERR) != 0))\000"
 .LASF1454:
 	.ascii	"BSPCONFIG_H \000"
-.LASF2694:
+.LASF2695:
 	.ascii	"IntcConfig\000"
 .LASF435:
 	.ascii	"__ARM_PCS_VFP 1\000"
@@ -12748,7 +12829,7 @@ main:
 	.ascii	"__FLT64_MIN_10_EXP__ (-307)\000"
 .LASF580:
 	.ascii	"__GNUCLIKE_BUILTIN_CONSTANT_P 1\000"
-.LASF2673:
+.LASF2674:
 	.ascii	"Intc\000"
 .LASF2448:
 	.ascii	"__uint8_t\000"
@@ -12825,7 +12906,7 @@ main:
 	.ascii	"XSCUGIC_H \000"
 .LASF1867:
 	.ascii	"XUARTPS_RXBS_BYTE3_BRKE 0x00000800U\000"
-.LASF2687:
+.LASF2688:
 	.ascii	"IntcInstancePtr\000"
 .LASF139:
 	.ascii	"__UINT_FAST64_MAX__ 0xffffffffffffffffULL\000"
@@ -13205,8 +13286,6 @@ main:
 	.ascii	"_T_PTRDIFF_ \000"
 .LASF1358:
 	.ascii	"XPAR_PS7_RAM_0_S_AXI_BASEADDR 0x00000000\000"
-.LASF88:
-	.ascii	"__WCHAR_WIDTH__ 32\000"
 .LASF2639:
 	.ascii	"S2MmDataWidth\000"
 .LASF42:
@@ -13283,7 +13362,7 @@ main:
 	.ascii	"__GNUCLIKE___OFFSETOF 1\000"
 .LASF927:
 	.ascii	"isspace(__c) (__ctype_lookup(__c)&_S)\000"
-.LASF2696:
+.LASF2697:
 	.ascii	"Callback\000"
 .LASF2601:
 	.ascii	"DataWidth\000"
@@ -13293,7 +13372,7 @@ main:
 	.ascii	"Addr_ext\000"
 .LASF2132:
 	.ascii	"XAXIDMA_ERR_SG_SLV_MASK 0x00000200\000"
-.LASF2699:
+.LASF2700:
 	.ascii	"TimeOut\000"
 .LASF2180:
 	.ascii	"XAXIDMA_BD_TDEST_FIELD_MASK 0x0000000F\000"
@@ -13321,7 +13400,7 @@ main:
 	.ascii	"XAxiDma_BdRingGetCnt(RingPtr) ((RingPtr)->AllCnt)\000"
 .LASF2612:
 	.ascii	"HwTail\000"
-.LASF2676:
+.LASF2677:
 	.ascii	"error_ctr\000"
 .LASF749:
 	.ascii	"_REENT_CHECK_ASCTIME_BUF(ptr) \000"
@@ -13367,8 +13446,8 @@ main:
 	.ascii	"_N 04\000"
 .LASF2141:
 	.ascii	"XAXIDMA_DELAY_SHIFT 24\000"
-.LASF1130:
-	.ascii	"XPS_GEM1_BASEADDR 0xE000C000U\000"
+.LASF1040:
+	.ascii	"UINT32_C(x) __UINT32_C(x)\000"
 .LASF1325:
 	.ascii	"XPAR_PS7_DMA_S_HIGHADDR 0xF8003FFF\000"
 .LASF766:
@@ -13535,6 +13614,8 @@ main:
 	.ascii	"XIL_EXCEPTION_ID_PREFETCH_ABORT_INT 3U\000"
 .LASF109:
 	.ascii	"__INT8_C(c) c\000"
+.LASF1709:
+	.ascii	"XREG_MVFR0_A_SIMD_BIT (0)\000"
 .LASF2106:
 	.ascii	"XAXIDMA_SR_OFFSET 0x00000004\000"
 .LASF436:
@@ -13901,6 +13982,10 @@ main:
 	.ascii	"__DEC32_EPSILON__ 1E-6DF\000"
 .LASF1386:
 	.ascii	"XPAR_SCUGIC_0_CPU_HIGHADDR 0xF8F001FFU\000"
+.LASF2433:
+	.ascii	"XScuTimer_GetInterruptStatus(InstancePtr) XScuTimer"
+	.ascii	"_ReadReg((InstancePtr)->Config.BaseAddr, XSCUTIMER_"
+	.ascii	"ISR_OFFSET)\000"
 .LASF1702:
 	.ascii	"XREG_MVFR0_DIVIDE_MASK (0xF << XREG_MVFR0_DIVIDE_BI"
 	.ascii	"T)\000"
@@ -13953,10 +14038,8 @@ main:
 	.ascii	"XPAR_PS7_TTC_2_TTC_CLK_CLKSRC 0U\000"
 .LASF938:
 	.ascii	"__PLATFORM_H_ \000"
-.LASF2433:
-	.ascii	"XScuTimer_GetInterruptStatus(InstancePtr) XScuTimer"
-	.ascii	"_ReadReg((InstancePtr)->Config.BaseAddr, XSCUTIMER_"
-	.ascii	"ISR_OFFSET)\000"
+.LASF2381:
+	.ascii	"XSCUGIC_CNTR_EN_S_MASK 0x00000001U\000"
 .LASF2491:
 	.ascii	"_dso_handle\000"
 .LASF389:
@@ -14033,7 +14116,7 @@ main:
 	.ascii	"PLATFORM_ZYNQ \000"
 .LASF401:
 	.ascii	"__ARM_FEATURE_QRDMX\000"
-.LASF2679:
+.LASF2680:
 	.ascii	"last_value\000"
 .LASF1601:
 	.ascii	"XREG_CP15_CLEAN_DC_LINE_MVA_POC \"p15, 0, %0,  c7, "
@@ -14086,7 +14169,7 @@ main:
 	.ascii	"XST_FLASH_TOO_MANY_REGIONS 1133L\000"
 .LASF2591:
 	.ascii	"MaxPinNum\000"
-.LASF2682:
+.LASF2683:
 	.ascii	"float\000"
 .LASF1552:
 	.ascii	"XREG_CP15_AUX_CONTROL \"p15, 0, %0,  c1,  c0, 1\"\000"
@@ -14114,7 +14197,7 @@ main:
 .LASF765:
 	.ascii	"_REENT_STRTOK_LAST(ptr) ((ptr)->_new._reent._strtok"
 	.ascii	"_last)\000"
-.LASF2685:
+.LASF2686:
 	.ascii	"stop_timing\000"
 .LASF578:
 	.ascii	"__GNUCLIKE___SECTION 1\000"
@@ -14353,6 +14436,8 @@ main:
 	.ascii	" c1, 0\"\000"
 .LASF1756:
 	.ascii	"XUARTPS_HW_H \000"
+.LASF1084:
+	.ascii	"XPAR_SCUTIMER_INTR XPS_SCU_TMR_INT_ID\000"
 .LASF819:
 	.ascii	"FD_ZERO(p) (__extension__ (void)({ size_t __i; char"
 	.ascii	" *__tmp = (char *)p; for (__i = 0; __i < sizeof (*("
@@ -14387,7 +14472,7 @@ main:
 .LASF1607:
 	.ascii	"XREG_CP15_CLEAN_INVAL_DC_LINE_MVA_POC \"p15, 0, %0,"
 	.ascii	"  c7, c14, 1\"\000"
-.LASF2711:
+.LASF2712:
 	.ascii	"../src/main.c\000"
 .LASF1081:
 	.ascii	"XPAR_XSDIOPS_1_INTR XPS_SDIO1_INT_ID\000"
@@ -14494,7 +14579,7 @@ main:
 	.ascii	"_REENT_CHECK_TM(ptr) \000"
 .LASF1468:
 	.ascii	"XREG_GPR2 r2\000"
-.LASF2690:
+.LASF2691:
 	.ascii	"RxIntrId\000"
 .LASF1469:
 	.ascii	"XREG_GPR3 r3\000"
@@ -14662,7 +14747,7 @@ main:
 	.ascii	"XAXIDMA_BD_NDESC_MSB_OFFSET 0x04\000"
 .LASF2316:
 	.ascii	"XSCUGIC_AHB_CONFIG_OFFSET 0x00000D80U\000"
-.LASF2675:
+.LASF2676:
 	.ascii	"error\000"
 .LASF806:
 	.ascii	"_SYS_TIMESPEC_H_ \000"
@@ -14739,8 +14824,8 @@ main:
 	.ascii	"XPS_UART0_INT_ID 59U\000"
 .LASF1517:
 	.ascii	"XREG_CPSR_SYSTEM_MODE 0x1F\000"
-.LASF1084:
-	.ascii	"XPAR_SCUTIMER_INTR XPS_SCU_TMR_INT_ID\000"
+.LASF2673:
+	.ascii	"err_flag\000"
 .LASF78:
 	.ascii	"__WCHAR_MIN__ 0U\000"
 .LASF2420:
@@ -14840,7 +14925,7 @@ main:
 	.ascii	"XSCUGIC_SPI_TARGET_OFFSET_CALC(InterruptID) ((u32)X"
 	.ascii	"SCUGIC_SPI_TARGET_OFFSET + (((InterruptID)/4U) * 4U"
 	.ascii	"))\000"
-.LASF2700:
+.LASF2701:
 	.ascii	"arb_delay\000"
 .LASF1888:
 	.ascii	"XGPIOPS_H \000"
@@ -14882,7 +14967,7 @@ main:
 	.ascii	"__tm_hour\000"
 .LASF2006:
 	.ascii	"XST_OPBARB_NOT_SUSPENDED 1177\000"
-.LASF2678:
+.LASF2679:
 	.ascii	"this_value\000"
 .LASF1963:
 	.ascii	"XST_UART_BAUD_ERROR 1055L\000"
@@ -14922,7 +15007,7 @@ main:
 	.ascii	"_new\000"
 .LASF274:
 	.ascii	"__UFRACT_EPSILON__ 0x1P-16UR\000"
-.LASF2681:
+.LASF2682:
 	.ascii	"err_rate\000"
 .LASF241:
 	.ascii	"__DEC64_MANT_DIG__ 16\000"
@@ -15003,8 +15088,8 @@ main:
 	.ascii	"IDE_FIELD_MASK)\000"
 .LASF62:
 	.ascii	"__INT_FAST64_TYPE__ long long int\000"
-.LASF2381:
-	.ascii	"XSCUGIC_CNTR_EN_S_MASK 0x00000001U\000"
+.LASF1910:
+	.ascii	"XST_NOT_INTERRUPT 20L\000"
 .LASF1495:
 	.ascii	"XREG_CP12 12\000"
 .LASF618:
@@ -15039,8 +15124,8 @@ main:
 	.ascii	"tx_buffer\000"
 .LASF2018:
 	.ascii	"XST_FR_TX_ERROR 1400\000"
-.LASF1040:
-	.ascii	"UINT32_C(x) __UINT32_C(x)\000"
+.LASF400:
+	.ascii	"__ARM_FEATURE_UNALIGNED 1\000"
 .LASF1286:
 	.ascii	"XPAR_AXI_DMA_NUM_S2MM_CHANNELS 1\000"
 .LASF805:
@@ -15136,7 +15221,7 @@ main:
 	.ascii	"XSCUGIC_RUN_PRIOR_OFFSET 0x00000014U\000"
 .LASF404:
 	.ascii	"__ARM_32BIT_STATE 1\000"
-.LASF2677:
+.LASF2678:
 	.ascii	"success_ctr\000"
 .LASF2475:
 	.ascii	"_next\000"
@@ -15211,7 +15296,7 @@ main:
 	.ascii	"__GCC_IEC_559 2\000"
 .LASF2248:
 	.ascii	"XAXIDMA_NO_CHANGE 0xFFFFFFFF\000"
-.LASF2695:
+.LASF2696:
 	.ascii	"rval\000"
 .LASF229:
 	.ascii	"__FLT32X_EPSILON__ 2.2204460492503131e-16F32x\000"
@@ -15356,7 +15441,7 @@ main:
 	.ascii	"XSCUGIC_SPI_CPU1_MASK 0x00000002U\000"
 .LASF970:
 	.ascii	"__FAST32 \000"
-.LASF2713:
+.LASF2714:
 	.ascii	"SetupIntrSystem\000"
 .LASF1109:
 	.ascii	"XPAR_SCUGIC_DIST_BASEADDR (XPS_SCU_PERIPH_BASE + 0x"
@@ -15368,8 +15453,8 @@ main:
 .LASF1652:
 	.ascii	"XREG_CP15_MAIN_TLB_ATTR \"p15, 5, %0, c15,  c7, 2\""
 	.ascii	"\000"
-.LASF1910:
-	.ascii	"XST_NOT_INTERRUPT 20L\000"
+.LASF679:
+	.ascii	"_BSD_PTRDIFF_T_ \000"
 .LASF855:
 	.ascii	"__SNLK 0x0001\000"
 .LASF2587:
@@ -15513,9 +15598,6 @@ main:
 	.ascii	"t)\000"
 .LASF1817:
 	.ascii	"XUARTPS_IXR_RBRK 0x00002000U\000"
-.LASF2388:
-	.ascii	"XSCUGIC_INT_CFG_OFFSET_CALC(InterruptID) ((u32)XSCU"
-	.ascii	"GIC_INT_CFG_OFFSET + (((InterruptID)/16U) * 4U))\000"
 .LASF1982:
 	.ascii	"XST_FLASH_ERASE_SUSPENDED 1129L\000"
 .LASF2636:
@@ -15669,7 +15751,7 @@ main:
 	.ascii	"XDEBUG_WARNING \000"
 .LASF322:
 	.ascii	"__ULACCUM_MIN__ 0.0ULK\000"
-.LASF2710:
+.LASF2711:
 	.ascii	"GNU C11 7.3.1 20180314 -mcpu=cortex-a9 -mfpu=vfpv3 "
 	.ascii	"-mfloat-abi=hard -g3 -O0 -fmessage-length=0\000"
 .LASF1261:
@@ -15881,7 +15963,7 @@ main:
 	.ascii	"\000"
 .LASF2009:
 	.ascii	"XST_INTC_FAIL_SELFTEST 1201\000"
-.LASF2697:
+.LASF2698:
 	.ascii	"IrqStatus\000"
 .LASF543:
 	.ascii	"_BSD_SIZE_T_ \000"
@@ -15952,7 +16034,7 @@ main:
 	.ascii	"__FLT32_MAX_10_EXP__ 38\000"
 .LASF1151:
 	.ascii	"XPS_AFI3_BASEADDR 0xF800B000U\000"
-.LASF2674:
+.LASF2675:
 	.ascii	"counter\000"
 .LASF756:
 	.ascii	"_REENT_RAND48_MULT(ptr) ((ptr)->_new._reent._r48._m"
@@ -16191,7 +16273,7 @@ main:
 	.ascii	"XST_NAND_TIMEOUT_ERROR 1446L\000"
 .LASF2080:
 	.ascii	"XGPIOPS_IRQ_TYPE_EDGE_RISING 0x00U\000"
-.LASF2680:
+.LASF2681:
 	.ascii	"last_error\000"
 .LASF723:
 	.ascii	"unsigned\000"
@@ -16287,7 +16369,7 @@ main:
 	.ascii	"__GNUC_STDC_INLINE__ 1\000"
 .LASF1139:
 	.ascii	"XPS_QSPI_LINEAR_BASEADDR 0xFC000000U\000"
-.LASF2684:
+.LASF2685:
 	.ascii	"dump_timing\000"
 .LASF2481:
 	.ascii	"__tm_min\000"
@@ -16317,8 +16399,8 @@ main:
 	.ascii	"_PTRDIFF_T_ \000"
 .LASF1351:
 	.ascii	"XPAR_PS7_OCMC_0_S_AXI_HIGHADDR 0xF800CFFF\000"
-.LASF400:
-	.ascii	"__ARM_FEATURE_UNALIGNED 1\000"
+.LASF88:
+	.ascii	"__WCHAR_WIDTH__ 32\000"
 .LASF2047:
 	.ascii	"XGPIOPS_INTMASK_OFFSET 0x0000020CU\000"
 .LASF2395:
@@ -16422,7 +16504,7 @@ main:
 	.ascii	"uint32_t\000"
 .LASF513:
 	.ascii	"_CAST_VOID (void)\000"
-.LASF2693:
+.LASF2694:
 	.ascii	"Status\000"
 .LASF541:
 	.ascii	"__SIZE_T \000"
@@ -16845,8 +16927,8 @@ main:
 	.ascii	"XPS_SDIO1_INT_ID 79U\000"
 .LASF2112:
 	.ascii	"XAXIDMA_SRCADDR_MSB_OFFSET 0x0000001C\000"
-.LASF1065:
-	.ascii	"XPAR_XUARTPS_1_INTR XPS_UART1_INT_ID\000"
+.LASF434:
+	.ascii	"__ARM_ARCH_7A__ 1\000"
 .LASF1966:
 	.ascii	"XST_IIC_BUS_BUSY 1077\000"
 .LASF124:
@@ -16883,7 +16965,7 @@ main:
 	.ascii	"XPAR_XADCPS_NUM_INSTANCES 1\000"
 .LASF1783:
 	.ascii	"XUARTPS_CR_STARTBRK 0x00000080U\000"
-.LASF2702:
+.LASF2703:
 	.ascii	"buffer\000"
 .LASF1116:
 	.ascii	"XPAR_CPU_CORTEXA9_CORE_CLOCK_FREQ_HZ XPAR_CPU_CORTE"
@@ -17006,7 +17088,7 @@ main:
 	.ascii	"__FINITE_MATH_ONLY__ 0\000"
 .LASF2569:
 	.ascii	"_impure_ptr\000"
-.LASF2688:
+.LASF2689:
 	.ascii	"AxiDmaPtr\000"
 .LASF1813:
 	.ascii	"XUARTPS_MR_CHARLEN_8_BIT 0x00000000U\000"
@@ -17247,7 +17329,7 @@ main:
 	.ascii	"__USQ_IBIT__ 0\000"
 .LASF2331:
 	.ascii	"XSCUGIC_PEND_CLR_MASK 0x00000001U\000"
-.LASF2703:
+.LASF2704:
 	.ascii	"args\000"
 .LASF1740:
 	.ascii	"Xil_In32LE Xil_In32\000"
@@ -17306,7 +17388,7 @@ main:
 	.ascii	"__LONG_WIDTH__ 32\000"
 .LASF761:
 	.ascii	"_REENT_MP_FREELIST(ptr) ((ptr)->_freelist)\000"
-.LASF2701:
+.LASF2702:
 	.ascii	"debug_printf\000"
 .LASF1811:
 	.ascii	"XUARTPS_MR_CHARLEN_6_BIT 0x00000006U\000"
@@ -17350,7 +17432,7 @@ main:
 	.ascii	"__u_short_defined \000"
 .LASF2313:
 	.ascii	"XSCUGIC_INT_CFG_OFFSET 0x00000C00U\000"
-.LASF2686:
+.LASF2687:
 	.ascii	"start_timing\000"
 .LASF2070:
 	.ascii	"XPLAT_ZYNQ_ULTRA_MP 0x1\000"
@@ -17399,8 +17481,9 @@ main:
 	.ascii	"XREG_FPSID_VARIANT_MASK (0xF << FPSID_VARIANT_BIT)\000"
 .LASF378:
 	.ascii	"__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 1\000"
-.LASF434:
-	.ascii	"__ARM_ARCH_7A__ 1\000"
+.LASF2388:
+	.ascii	"XSCUGIC_INT_CFG_OFFSET_CALC(InterruptID) ((u32)XSCU"
+	.ascii	"GIC_INT_CFG_OFFSET + (((InterruptID)/16U) * 4U))\000"
 .LASF630:
 	.ascii	"__hidden __attribute__((__visibility__(\"hidden\"))"
 	.ascii	")\000"
@@ -17514,8 +17597,8 @@ main:
 .LASF1730:
 	.ascii	"str(adr,val) __asm__ __volatile__( \"str\011%0,[%1]"
 	.ascii	"\\n\" : : \"r\" (val), \"r\" (adr) )\000"
-.LASF679:
-	.ascii	"_BSD_PTRDIFF_T_ \000"
+.LASF1130:
+	.ascii	"XPS_GEM1_BASEADDR 0xE000C000U\000"
 .LASF689:
 	.ascii	"__WCHAR_T \000"
 .LASF1700:
@@ -17685,7 +17768,7 @@ main:
 	.ascii	"XPAR_PS7_GLOBALTIMER_0_S_AXI_HIGHADDR 0xF8F002FF\000"
 .LASF1559:
 	.ascii	"XREG_CP15_CONTROL_AFE_BIT 0x20000000U\000"
-.LASF2708:
+.LASF2709:
 	.ascii	"LocalAddr\000"
 .LASF259:
 	.ascii	"__SFRACT_EPSILON__ 0x1P-7HR\000"
@@ -17716,7 +17799,7 @@ main:
 	.ascii	"__USFRACT_FBIT__ 8\000"
 .LASF1719:
 	.ascii	"cpsiei() __asm__ __volatile__(\"cpsie\011i\\n\")\000"
-.LASF2689:
+.LASF2690:
 	.ascii	"TxIntrId\000"
 .LASF2134:
 	.ascii	"XAXIDMA_ERR_ALL_MASK 0x00000770\000"
@@ -17773,7 +17856,7 @@ main:
 	.ascii	"XGPIOPS_INTTYPE_BANK1_RESET 0x003FFFFFU\000"
 .LASF1812:
 	.ascii	"XUARTPS_MR_CHARLEN_7_BIT 0x00000004U\000"
-.LASF2704:
+.LASF2705:
 	.ascii	"RxIntrHandler\000"
 .LASF838:
 	.ascii	"_flockfile(fp) (((fp)->_flags & __SSTR) ? 0 : __loc"
@@ -18113,7 +18196,7 @@ main:
 	.ascii	"TIMESPEC_TO_TIMEVAL(tv,ts) do { (tv)->tv_sec = (ts)"
 	.ascii	"->tv_sec; (tv)->tv_usec = (ts)->tv_nsec / 1000; } w"
 	.ascii	"hile (0)\000"
-.LASF2692:
+.LASF2693:
 	.ascii	"RxRingPtr\000"
 .LASF463:
 	.ascii	"_FSEEK_OPTIMIZATION 1\000"
@@ -18124,7 +18207,7 @@ main:
 	.ascii	"\"\000"
 .LASF857:
 	.ascii	"_IOFBF 0\000"
-.LASF2709:
+.LASF2710:
 	.ascii	"Xil_In32\000"
 .LASF1442:
 	.ascii	"XPAR_XUARTPS_0_DEVICE_ID XPAR_PS7_UART_1_DEVICE_ID\000"
@@ -18144,7 +18227,7 @@ main:
 	.ascii	"INT_FAST32_MAX (__INT_FAST32_MAX__)\000"
 .LASF2644:
 	.ascii	"SgLengthWidth\000"
-.LASF2691:
+.LASF2692:
 	.ascii	"TxRingPtr\000"
 .LASF5:
 	.ascii	"__GNUC__ 7\000"
@@ -18182,7 +18265,7 @@ main:
 	.ascii	"XPAR_XSCUTIMER_0_BASEADDR 0xF8F00600\000"
 .LASF1923:
 	.ascii	"XST_PFIFO_ERROR 504L\000"
-.LASF2706:
+.LASF2707:
 	.ascii	"Addr\000"
 .LASF173:
 	.ascii	"__DBL_DENORM_MIN__ ((double)4.9406564584124654e-324"
@@ -18239,7 +18322,7 @@ main:
 	.ascii	"_reent\000"
 .LASF22:
 	.ascii	"__SIZEOF_FLOAT__ 4\000"
-.LASF2683:
+.LASF2684:
 	.ascii	"main\000"
 .LASF253:
 	.ascii	"__DEC128_EPSILON__ 1E-33DL\000"
@@ -18308,11 +18391,11 @@ main:
 	.ascii	"__UFRACT_FBIT__ 16\000"
 .LASF1407:
 	.ascii	"XPAR_XSPIPS_0_DEVICE_ID XPAR_PS7_SPI_0_DEVICE_ID\000"
-.LASF2698:
+.LASF2699:
 	.ascii	"AxiStatus\000"
 .LASF2458:
 	.ascii	"unsigned int\000"
-.LASF2712:
+.LASF2713:
 	.ascii	"C:\\\\Users\\\\Tom\\\\Documents\\\\Projects\\\\Scop"
 	.ascii	"y_MVP_Platform\\\\scopy-fpga\\\\ps_app\\\\Debug\000"
 .LASF928:
@@ -18331,7 +18414,7 @@ main:
 	.ascii	"XPS_GPIO_INT_ID 52U\000"
 .LASF68:
 	.ascii	"__UINTPTR_TYPE__ unsigned int\000"
-.LASF2707:
+.LASF2708:
 	.ascii	"Value\000"
 .LASF1583:
 	.ascii	"XREG_CP15_NOP \"p15, 0, %0,  c7,  c0, 4\"\000"
@@ -18444,10 +18527,10 @@ main:
 	.ascii	"__FLT_DENORM_MIN__ 1.4012984643248171e-45F\000"
 .LASF2600:
 	.ascii	"HasDRE\000"
-.LASF2705:
+.LASF2706:
 	.ascii	"Xil_Out32\000"
-.LASF1709:
-	.ascii	"XREG_MVFR0_A_SIMD_BIT (0)\000"
+.LASF1065:
+	.ascii	"XPAR_XUARTPS_1_INTR XPS_UART1_INT_ID\000"
 .LASF1679:
 	.ascii	"XREG_FPSCR_ROUND_NEAREST (0 << 22)\000"
 .LASF929:

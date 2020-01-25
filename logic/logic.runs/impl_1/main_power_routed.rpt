@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date             : Sat Jan 25 11:19:14 2020
+| Date             : Sat Jan 25 12:37:55 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.664        |
+| Total On-Chip Power (W)  | 1.662        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.515        |
+| Dynamic (W)              | 1.513        |
 | Device Static (W)        | 0.149        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 65.8         |
@@ -52,22 +52,22 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.057 |        9 |       --- |             --- |
-| Slice Logic              |     0.008 |    14332 |       --- |             --- |
-|   LUT as Logic           |     0.006 |     4606 |     40600 |           11.34 |
+| Clocks                   |     0.056 |        9 |       --- |             --- |
+| Slice Logic              |     0.008 |    14342 |       --- |             --- |
+|   LUT as Logic           |     0.006 |     4618 |     40600 |           11.37 |
 |   CARRY4                 |    <0.001 |      228 |     13300 |            1.71 |
 |   Register               |    <0.001 |     6984 |     81200 |            8.60 |
 |   LUT as Distributed RAM |    <0.001 |       90 |     17400 |            0.52 |
 |   LUT as Shift Register  |    <0.001 |      445 |     17400 |            2.56 |
 |   F7/F8 Muxes            |    <0.001 |       42 |     53200 |            0.08 |
-|   Others                 |     0.000 |      907 |       --- |             --- |
-| Signals                  |     0.016 |    10223 |       --- |             --- |
+|   Others                 |     0.000 |      908 |       --- |             --- |
+| Signals                  |     0.016 |    10195 |       --- |             --- |
 | Block RAM                |     0.031 |     42.5 |       107 |           39.72 |
 | MMCM                     |     0.093 |        1 |         4 |           25.00 |
 | I/O                      |     0.027 |        6 |       125 |            4.80 |
 | PS7                      |     1.283 |        1 |       --- |             --- |
 | Static Power             |     0.149 |          |           |                 |
-| Total                    |     1.663 |          |           |                 |
+| Total                    |     1.662 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -77,7 +77,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.132 |       0.116 |      0.016 |
+| Vccint    |       1.000 |     0.130 |       0.114 |      0.016 |
 | Vccaux    |       1.800 |     0.073 |       0.058 |      0.015 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
 | Vcco25    |       2.500 |     0.005 |       0.004 |      0.001 |
@@ -159,7 +159,7 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| main                     |     1.515 |
+| main                     |     1.513 |
 |   dbg_hub                |     0.004 |
 |     inst                 |     0.004 |
 |       BSCANID.u_xsdbm_id |     0.004 |
@@ -167,11 +167,11 @@ Table of Contents
 |     inst                 |     0.094 |
 |   nolabel_line173        |     0.027 |
 |     asi2_mod_inst0       |     0.010 |
-|   nolabel_line84         |     1.382 |
+|   nolabel_line84         |     1.381 |
 |     adc_axi_streamer     |     0.006 |
 |       inst               |     0.006 |
-|     axi_dma              |     0.032 |
-|       U0                 |     0.032 |
+|     axi_dma              |     0.031 |
+|       U0                 |     0.031 |
 |     axi_interconnect_0   |     0.008 |
 |       s00_couplers       |     0.008 |
 |     axi_mem_intercon     |     0.005 |

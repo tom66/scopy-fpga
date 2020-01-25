@@ -6686,6 +6686,7 @@ uint32_t timer0, timer1;
 uint32_t tdelta;
 
 volatile uint32_t ioc_flag = 0;
+volatile uint32_t err_flag = 0;
 
 #define MARK_UNCACHEABLE 0x701
 
@@ -6695,30 +6696,30 @@ void debug_printf(char *fmt, ...)
 
  va_list args;
  
-# 100 "../src/main.c" 3 4
+# 101 "../src/main.c" 3 4
 __builtin_va_start(
-# 100 "../src/main.c"
+# 101 "../src/main.c"
 args
-# 100 "../src/main.c" 3 4
+# 101 "../src/main.c" 3 4
 ,
-# 100 "../src/main.c"
+# 101 "../src/main.c"
 fmt
-# 100 "../src/main.c" 3 4
+# 101 "../src/main.c" 3 4
 )
-# 100 "../src/main.c"
+# 101 "../src/main.c"
                    ;
 
  vsnprintf(buffer, 1024, fmt, args);
  print(buffer);
 
  
-# 105 "../src/main.c" 3 4
+# 106 "../src/main.c" 3 4
 __builtin_va_end(
-# 105 "../src/main.c"
+# 106 "../src/main.c"
 args
-# 105 "../src/main.c" 3 4
+# 106 "../src/main.c" 3 4
 )
-# 105 "../src/main.c"
+# 106 "../src/main.c"
             ;
 }
 
@@ -6749,12 +6750,10 @@ static void RxIntrHandler(void *Callback)
 
 
  Xil_Out32(((RxRingPtr)->ChanBase) + (0x00000004), ((IrqStatus) & 0x00007000));
-
- debug_printf("irq=0x%08x\r\n", IrqStatus);
-# 154 "../src/main.c"
+# 155 "../src/main.c"
  if ((IrqStatus & 0x00004000)) {
-  debug_printf("ErrorMask?\r\n");
-# 186 "../src/main.c"
+  err_flag = 1;
+# 188 "../src/main.c"
  }
 
 
@@ -6763,7 +6762,7 @@ static void RxIntrHandler(void *Callback)
 
 
  if ((IrqStatus & (0x00002000 | 0x00001000))) {
-  debug_printf("IOC!\r\n");
+
   ioc_flag = 1;
  }
 }
@@ -6783,9 +6782,9 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
  IntcConfig = XScuGic_LookupConfig(0U);
  if (
-# 213 "../src/main.c" 3 4
+# 215 "../src/main.c" 3 4
     ((void *)0) 
-# 213 "../src/main.c"
+# 215 "../src/main.c"
          == IntcConfig) {
   return 1L;
  }
@@ -6800,7 +6799,7 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
 
  XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
-# 242 "../src/main.c"
+# 244 "../src/main.c"
  Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
     (Xil_InterruptHandler)RxIntrHandler,
     RxRingPtr);
@@ -6895,7 +6894,7 @@ int main()
  XGpioPs_SetDirection(&gpio, 3, 0xffffffff);
 
  debug_printf("GPIO block configured\r\n");
-# 359 "../src/main.c"
+# 361 "../src/main.c"
  dma0_config = XAxiDma_LookupConfig(0);
  error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
@@ -6907,9 +6906,6 @@ int main()
 
  SetupIntrSystem(&Intc, &dma0_pointer, 61U, 62U);
 
-
- Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) & ~(0x00007000 & 0x00007000)));
- Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
 
 
 
@@ -6929,6 +6925,17 @@ int main()
   stop_timing();
   dump_timing("Invalidate cache");
 
+  start_timing();
+  XAxiDma_Reset(&dma0_pointer);
+  stop_timing();
+  dump_timing("Reset AXIDMA");
+
+
+  start_timing();
+  Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) & ~(0x00007000 & 0x00007000)));
+  Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
+  stop_timing();
+  dump_timing("Setup interrupts");
 
   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, 0x01);
 
@@ -6936,10 +6943,24 @@ int main()
   XGpioPs_Write(&gpio, 3, 0xffffffff);
 
   debug_printf("Waiting, Err=%d...\r\n", error);
-# 409 "../src/main.c"
-  arb_delay(1000000);
+
+  XGpioPs_WritePin(&gpio, 9, 1);
+  start_timing();
+  while(!ioc_flag) ;
+  ioc_flag = 0;
+  stop_timing();
+  XGpioPs_WritePin(&gpio, 9, 0);
+  dump_timing("Transfer interrupt");
+
+
 
   debug_printf("TransferRate=%2.2f MiB/s\r\n", (sz * 1e-6) / (tdelta * (2.0f / 666666687)));
+
+  if(err_flag) {
+   debug_printf("\033[91mERROR:\033[0m err_flag in interrupt was set\r\n");
+  }
+
+  err_flag = 0;
   debug_printf("Starting to verify memory...\r\n");
 
 
@@ -6954,10 +6975,8 @@ int main()
    this_value = *ptr;
 
    if(((int32_t)this_value - (int32_t)last_value) != 1) {
-
-
-
-
+    debug_printf("this_value: 0x%08x, last_value: 0x%08x, delta=%d, error_at_word=%d, since_last_error=%d\r\n",
+      this_value, last_value, (int32_t)this_value - (int32_t)last_value, i, i - last_error);
     error_ctr++;
     last_error = i;
    } else {
@@ -6969,6 +6988,10 @@ int main()
 
 
 
+
+   if(1) {
+    debug_printf("this_value: 0x%08x, last_value: 0x%08x, delta=%d\r\n", this_value, last_value, (int32_t)this_value - (int32_t)last_value);
+   }
 
    last_value = this_value;
    ptr += 2;
@@ -6993,15 +7016,7 @@ int main()
   XAxiDma_Reset(&dma0_pointer);
   stop_timing();
   dump_timing("Controller reset");
-
-  start_timing();
-
-
-
-
-  Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
-  stop_timing();
-  dump_timing("Interrupt setup");
+# 493 "../src/main.c"
  }
 
     cleanup_platform();

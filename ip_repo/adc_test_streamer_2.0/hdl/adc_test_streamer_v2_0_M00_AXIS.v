@@ -125,7 +125,7 @@ wire fifo_int_reset = ((!M_AXIS_ARESETN) || ADC_FIFO_RESET);    // FIFO reset a 
 fifo_generator_0 fifo_generator_0_inst (
     .full(ADC_FIFO_FULL),
     .wr_en(fifo_wr_en),
-    .almost_empty(fifo_almost_empty),
+    .prog_empty(fifo_almost_empty),
     .rd_en(fifo_rd_en),
     .din(ADC_BUS),
     .wr_clk(ADC_DATA_CLK),

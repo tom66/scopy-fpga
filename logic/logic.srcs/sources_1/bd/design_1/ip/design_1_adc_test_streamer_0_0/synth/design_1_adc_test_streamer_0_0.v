@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 17
+// IP Revision: 18
 
 (* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=17,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
+(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_adc_test_streamer_0_0 (
   m00_axis_tdata,
