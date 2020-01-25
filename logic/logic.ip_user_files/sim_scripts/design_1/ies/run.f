@@ -50,16 +50,10 @@
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/design_1/ip/design_1_axi_dma_0/sim/design_1_axi_dma_0.vhd" \
 -endlib
--makelib ies_lib/axis_infrastructure_v1_1_0 \
-  "../../../../logic.srcs/sources_1/bd/design_1/ipshared/8713/hdl/axis_infrastructure_v1_1_vl_rfs.v" \
--endlib
--makelib ies_lib/axis_data_fifo_v2_0_0 \
-  "../../../../logic.srcs/sources_1/bd/design_1/ipshared/4efd/hdl/axis_data_fifo_v2_0_vl_rfs.v" \
--endlib
 -makelib ies_lib/xil_defaultlib \
-  "../../../bd/design_1/ip/design_1_axis_data_fifo_0_0/sim/design_1_axis_data_fifo_0_0.v" \
-  "../../../bd/design_1/ipshared/07ed/hdl/adc_test_streamer_v2_0_M00_AXIS.v" \
-  "../../../bd/design_1/ipshared/07ed/hdl/adc_test_streamer_v2_0.v" \
+  "../../../bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_0_1/sim/fifo_generator_0.v" \
+  "../../../bd/design_1/ipshared/5b4f/hdl/adc_test_streamer_v2_0_M00_AXIS.v" \
+  "../../../bd/design_1/ipshared/5b4f/hdl/adc_test_streamer_v2_0.v" \
   "../../../bd/design_1/ip/design_1_adc_test_streamer_0_0/sim/design_1_adc_test_streamer_0_0.v" \
 -endlib
 -makelib ies_lib/proc_sys_reset_v5_0_13 \
@@ -111,16 +105,6 @@
   "../../../bd/design_1/ip/design_1_system_ila_0_1/bd_0/ip/ip_1/bd_36cd_g_inst_0_gigantic_mux.v" \
   "../../../bd/design_1/ip/design_1_system_ila_0_1/bd_0/ip/ip_1/sim/bd_36cd_g_inst_0.v" \
   "../../../bd/design_1/ip/design_1_system_ila_0_1/sim/design_1_system_ila_0_1.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/sim/bd_f60c.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/sim/bd_f60c_ila_lib_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_1/bd_f60c_g_inst_0_gigantic_mux.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_1/sim/bd_f60c_g_inst_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/sim/bd_f60c_slot_1_aw_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_3/sim/bd_f60c_slot_1_w_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_4/sim/bd_f60c_slot_1_b_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_5/sim/bd_f60c_slot_1_ar_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_6/sim/bd_f60c_slot_1_r_0.v" \
-  "../../../bd/design_1/ip/design_1_system_ila_0_0/sim/design_1_system_ila_0_0.v" \
 -endlib
 -makelib ies_lib/axi_protocol_converter_v2_1_18 \
   "../../../../logic.srcs/sources_1/bd/design_1/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \

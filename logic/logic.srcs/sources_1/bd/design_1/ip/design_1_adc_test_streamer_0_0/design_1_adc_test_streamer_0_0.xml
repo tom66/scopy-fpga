@@ -131,7 +131,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS.FREQ_HZ">125000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS.FREQ_HZ">177777771</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -149,7 +149,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>CLK_DOMAIN</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS.CLK_DOMAIN">design_1_ADC_DATA_CLK</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS.CLK_DOMAIN">design_1_processing_system7_0_1_FCLK_CLK0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -233,7 +233,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS_CLK.FREQ_HZ">125000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS_CLK.FREQ_HZ">177777771</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -251,7 +251,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>CLK_DOMAIN</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS_CLK.CLK_DOMAIN">design_1_ADC_DATA_CLK</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXIS_CLK.CLK_DOMAIN">design_1_processing_system7_0_1_FCLK_CLK0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -261,6 +261,114 @@
         <spirit:parameter>
           <spirit:name>INSERT_VIP</spirit:name>
           <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.M00_AXIS_CLK.INSERT_VIP">0</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>simulation.rtl</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>adc_fifo_reset</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RST</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>adc_fifo_reset</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>POLARITY</spirit:name>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_FIFO_RESET.POLARITY">ACTIVE_LOW</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>INSERT_VIP</spirit:name>
+          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.ADC_FIFO_RESET.INSERT_VIP">0</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>simulation.rtl</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>adc_data_clk</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>CLK</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>adc_data_clk</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>FREQ_HZ</spirit:name>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.FREQ_HZ">125000000</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>PHASE</spirit:name>
+          <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.PHASE">0.000</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>CLK_DOMAIN</spirit:name>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.CLK_DOMAIN">design_1_ADC_DATA_CLK</spirit:value>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>ASSOCIATED_BUSIF</spirit:name>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.ASSOCIATED_BUSIF"/>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>ASSOCIATED_RESET</spirit:name>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.ASSOCIATED_RESET"/>
+          <spirit:vendorExtensions>
+            <xilinx:parameterInfo>
+              <xilinx:parameterUsage>none</xilinx:parameterUsage>
+            </xilinx:parameterInfo>
+          </spirit:vendorExtensions>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>INSERT_VIP</spirit:name>
+          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.ADC_DATA_CLK.INSERT_VIP">0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.rtl</xilinx:parameterUsage>
@@ -284,11 +392,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Jan 12 18:05:55 UTC 2020</spirit:value>
+            <spirit:value>Sat Jan 25 11:03:54 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:78f12e75</spirit:value>
+            <spirit:value>9:0a58d49e</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -304,11 +412,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Jan 12 18:05:55 UTC 2020</spirit:value>
+            <spirit:value>Sat Jan 25 11:03:54 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:78f12e75</spirit:value>
+            <spirit:value>9:0a58d49e</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -324,11 +432,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Jan 12 18:05:55 UTC 2020</spirit:value>
+            <spirit:value>Sat Jan 25 11:03:54 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:d9f4df66</spirit:value>
+            <spirit:value>9:539a8ed2</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -344,29 +452,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Jan 12 18:05:55 UTC 2020</spirit:value>
+            <spirit:value>Sat Jan 25 11:03:54 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:d9f4df66</spirit:value>
-          </spirit:parameter>
-        </spirit:parameters>
-      </spirit:view>
-      <spirit:view>
-        <spirit:name>xilinx_externalfiles</spirit:name>
-        <spirit:displayName>External Files</spirit:displayName>
-        <spirit:envIdentifier>:vivado.xilinx.com:external.files</spirit:envIdentifier>
-        <spirit:fileSetRef>
-          <spirit:localName>xilinx_externalfiles_view_fileset</spirit:localName>
-        </spirit:fileSetRef>
-        <spirit:parameters>
-          <spirit:parameter>
-            <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Jan 18 18:55:38 UTC 2020</spirit:value>
-          </spirit:parameter>
-          <spirit:parameter>
-            <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:78f12e75</spirit:value>
+            <spirit:value>9:539a8ed2</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -463,6 +553,105 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
+        <spirit:name>adc_data_clk</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>adc_data_valid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>adc_fifo_full</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>adc_fifo_reset</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>adc_eof</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>dbg_rd_data_count</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">9</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>dbg_wr_data_count</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">9</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
         <spirit:name>m00_axis_aclk</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
@@ -523,11 +712,15 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/07ed/hdl/adc_test_streamer_v2_0_M00_AXIS.v</spirit:name>
+        <spirit:name>src/fifo_generator_0_1/fifo_generator_0.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>../../ipshared/5b4f/hdl/adc_test_streamer_v2_0_M00_AXIS.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/07ed/hdl/adc_test_streamer_v2_0.v</spirit:name>
+        <spirit:name>../../ipshared/5b4f/hdl/adc_test_streamer_v2_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -542,11 +735,15 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/07ed/hdl/adc_test_streamer_v2_0_M00_AXIS.v</spirit:name>
+        <spirit:name>src/fifo_generator_0_1/fifo_generator_0.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>../../ipshared/5b4f/hdl/adc_test_streamer_v2_0_M00_AXIS.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/07ed/hdl/adc_test_streamer_v2_0.v</spirit:name>
+        <spirit:name>../../ipshared/5b4f/hdl/adc_test_streamer_v2_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -558,44 +755,8 @@
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
-    <spirit:fileSet>
-      <spirit:name>xilinx_externalfiles_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>design_1_adc_test_streamer_0_0.dcp</spirit:name>
-        <spirit:userFileType>dcp</spirit:userFileType>
-        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_adc_test_streamer_0_0_sim_netlist.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_single_language</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_adc_test_streamer_0_0_sim_netlist.vhdl</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_single_language</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_adc_test_streamer_0_0_stub.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>design_1_adc_test_streamer_0_0_stub.vhdl</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-    </spirit:fileSet>
   </spirit:fileSets>
-  <spirit:description>ADC AXI-4 Stream Bus Controller</spirit:description>
+  <spirit:description>ADC AXI-4 Stream Bus Controller (YAOS Project)</spirit:description>
   <spirit:parameters>
     <spirit:parameter>
       <spirit:name>C_M00_AXIS_TDATA_WIDTH</spirit:name>
@@ -624,7 +785,11 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:displayName>adc_streamer_v2.0</xilinx:displayName>
-      <xilinx:coreRevision>11</xilinx:coreRevision>
+      <xilinx:xpmLibraries>
+        <xilinx:xpmLibrary>XPM_MEMORY</xilinx:xpmLibrary>
+        <xilinx:xpmLibrary>XPM_CDC</xilinx:xpmLibrary>
+      </xilinx:xpmLibraries>
+      <xilinx:coreRevision>17</xilinx:coreRevision>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@3464a6dd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@7392cc26_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
@@ -710,8 +875,244 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@267e7339_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@58cb389b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4eb16235_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7510eafa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42e50748_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@53126780_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@694a113a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a2af6e1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@751df128_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@35d56f23_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f4274cf_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7de0eb39_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c6429cf_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2437a744_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d937ffa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4bb623ef_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fe567d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@40769a4f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@dff61c3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@34860d7f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@576243c3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fa774a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7073ee0d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1fe50faa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c8e475c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@25d364b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3634fb32_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37d54176_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@def2fb_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c033cb0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@50af8400_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@158a2bc9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@ad2b853_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43f2d351_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f6e7227_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3eed98bc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b9fe29c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5de914ff_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e1ded41_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d664d21_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ff55cd3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4276ebe3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@72473cdf_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3b58c959_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29735d4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@283f9393_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5691ea70_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f8a6fed_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2dabeeb1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1056538b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@54a3d99a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2344ef30_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3dfed18b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7080fca_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2da432a0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@441c401d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7cbc0c0d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29da03b1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a768927_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a70a78d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5572d65c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@749036ea_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@60add258_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e6e8636_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b6ddb00_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d73fc69_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4069cb68_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6015540d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f028b36_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c1b2823_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6209c1bd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@412a1eed_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6634519c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@34de8aec_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@391411a6_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@419e065c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43b04080_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4db86fb7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9c662f1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b04acb7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24490474_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2407509e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a8eab79_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d9559f4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b473361_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4cdad101_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6bda8e58_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@fd4edf6_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d69e33e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@28185393_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4119e3a8_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2be10274_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@78e9d38e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3da64815_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4171be0c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21b5abe2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31eb639e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6bdad179_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ba54cb5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@41e13376_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@689a6f7b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61e03589_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43737d0d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@16cfe856_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@77a463cc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c258f8f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ca9f4b5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@223b7294_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e749427_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@34f28516_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@c4e97b1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37654383_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@f6015b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48a3243e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a979e53_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45d326be_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fd797c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73b4988f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7512136f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49f50655_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@47584863_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@545129d9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e441ec_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@15a678b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1ed59931_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@271f2da2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d4ac192_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b01d97f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@32331491_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59b80495_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@bd946e7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1614a385_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64e9258_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5bb81091_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@51bae289_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@354851a3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fad0228_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48fd3630_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d3ec5c4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c53fc83_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@772bbde_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6305619a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4bb9bc1d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@526abd06_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21fdb70f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e1b542e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@53c9ccd3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@27af5cc5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5cd5f0aa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52f7671d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@f54fef8_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@16f1abad_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ebd2d60_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c62aaa7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@66130ff2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2050a68a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61da881f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6fb5a885_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@89618f5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58b405ca_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1558efdf_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@afdf80d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@642e4fdd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@70de2c63_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65ff02dc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44d00693_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b15a6e1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63ef8c85_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@187ae5b7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@641e7e75_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e7b8f5a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@752d348d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ab6712e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@17776c45_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6fef5cd3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64534f1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1ef476ae_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7aa55324_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61f9ae99_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1eed2763_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d1aa747_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@16183bbd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61c02a28_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@904dccd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@307d25a0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@512e5816_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f56ad33_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@34438276_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@112db95b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f1f12e6_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@248f018a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@171be5f2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24f27f91_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4feea428_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a8218d2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e6db9ab_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73e9e705_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20962cb1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43b60404_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65bda3d2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e4c4e1f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@541c9e2e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@165d176_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@306c388c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67bdf2a9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e209067_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@28dcae0b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1ef69dab_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@313f5d94_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6715028b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5379cc8_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a069aea_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c9e1f8b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@163acca8_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6679a263_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55617a12_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ecb50bc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@178241ee_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5f1cee38_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e42eb2d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4cd25fa1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1afe8ce1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76a9eca9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4e162683_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@118cf4a9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75afd002_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5460366f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e0a0418_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f0bf9f3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f5ceece_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5fb263c7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23cf2b1f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@486a5bcd_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1c799878_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b4198a0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@18f84e29_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@25ae1f26_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0</xilinx:tag>
       </xilinx:tags>
       <xilinx:configElementInfos>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.ADC_DATA_CLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.ADC_DATA_CLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXIS.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXIS.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXIS.HAS_TKEEP" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
@@ -729,9 +1130,9 @@
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2018.3</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="8a2a6053"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="2a2c4c77"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="fb8fa5a1"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="4fe4aa69"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="5a4d2820"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="f56e76bf"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="46a163fd"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="c2057464"/>
     </xilinx:packagingInfo>

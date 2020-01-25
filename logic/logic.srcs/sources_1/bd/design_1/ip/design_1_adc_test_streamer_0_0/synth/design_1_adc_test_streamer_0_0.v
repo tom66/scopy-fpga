@@ -47,12 +47,12 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: xilinx.com:user:adc_test_streamer:2.0
-// IP Revision: 11
+// IP VLNV: xilinx.com:user:adc_streamer:2.0
+// IP Revision: 17
 
 (* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_test_streamer,x_ipVersion=2.0,x_ipCoreRevision=11,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
+(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=17,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_adc_test_streamer_0_0 (
   m00_axis_tdata,
@@ -61,6 +61,13 @@ module design_1_adc_test_streamer_0_0 (
   m00_axis_tvalid,
   m00_axis_tready,
   adc_bus,
+  adc_data_clk,
+  adc_data_valid,
+  adc_fifo_full,
+  adc_fifo_reset,
+  adc_eof,
+  dbg_rd_data_count,
+  dbg_wr_data_count,
   m00_axis_aclk,
   m00_axis_aresetn
 );
@@ -73,11 +80,22 @@ output wire [7 : 0] m00_axis_tstrb;
 output wire m00_axis_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TVALID" *)
 output wire m00_axis_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TREADY" *)
 input wire m00_axis_tready;
 input wire [63 : 0] adc_bus;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_data_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_data_clk CLK" *)
+input wire adc_data_clk;
+input wire adc_data_valid;
+output wire adc_fifo_full;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_fifo_reset, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_fifo_reset RST" *)
+input wire adc_fifo_reset;
+input wire adc_eof;
+output wire [9 : 0] dbg_rd_data_count;
+output wire [9 : 0] dbg_wr_data_count;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 M00_AXIS_CLK CLK" *)
 input wire m00_axis_aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
@@ -94,6 +112,13 @@ input wire m00_axis_aresetn;
     .m00_axis_tvalid(m00_axis_tvalid),
     .m00_axis_tready(m00_axis_tready),
     .adc_bus(adc_bus),
+    .adc_data_clk(adc_data_clk),
+    .adc_data_valid(adc_data_valid),
+    .adc_fifo_full(adc_fifo_full),
+    .adc_fifo_reset(adc_fifo_reset),
+    .adc_eof(adc_eof),
+    .dbg_rd_data_count(dbg_rd_data_count),
+    .dbg_wr_data_count(dbg_wr_data_count),
     .m00_axis_aclk(m00_axis_aclk),
     .m00_axis_aresetn(m00_axis_aresetn)
   );

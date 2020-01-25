@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jan 23 11:31:49 2020" VIVADOVERSION="2018.3">
+
+  <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
+
+  <EXTERNALPORTS>
+    <PORT DIR="I" LEFT="63" NAME="ADC_BUS" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_bus"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_EOF" SIGIS="undef" SIGNAME="External_Ports_ADC_EOF">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_eof"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT CLKFREQUENCY="200000000" DIR="I" NAME="AXI_CLK" SIGIS="clk" SIGNAME="External_Ports_AXI_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_aclk"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="AXI_ARESETN" SIGIS="undef" SIGNAME="External_Ports_AXI_ARESETN">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_aresetn"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_FIFO_RST" SIGIS="undef" SIGNAME="External_Ports_ADC_FIFO_RST">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_fifo_reset"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_DATA_CLK" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_data_clk"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_DATA_VALID" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_data_valid"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="63" NAME="M00_TDATA" RIGHT="0" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tdata">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_tdata"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="7" NAME="M00_TSTRB" RIGHT="0" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tstrb">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_tstrb"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="M00_TLAST" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tlast">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_tlast"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="M00_TVALID" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tvalid">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_tvalid"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="M00_TREADY" SIGIS="undef" SIGNAME="External_Ports_M00_TREADY">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="m00_axis_tready"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="ADC_FIFO_FULL" SIGIS="undef" SIGNAME="adc_streamer_0_adc_fifo_full">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_streamer_0" PORT="adc_fifo_full"/>
+      </CONNECTIONS>
+    </PORT>
+  </EXTERNALPORTS>
+
+  <EXTERNALINTERFACES/>
+
+  <MODULES>
+    <MODULE COREREVISION="12" FULLNAME="/adc_streamer_0" HWVERSION="2.0" INSTANCE="adc_streamer_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_streamer" VLNV="xilinx.com:user:adc_streamer:2.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="C_M00_AXIS_TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="C_M00_AXIS_START_COUNT" VALUE="32"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_adc_streamer_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" LEFT="63" NAME="m00_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="M00_TDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="m00_axis_tstrb" RIGHT="0" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="M00_TSTRB"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m00_axis_tlast" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="M00_TLAST"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m00_axis_tvalid" SIGIS="undef" SIGNAME="adc_streamer_0_m00_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="M00_TVALID"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m00_axis_tready" SIGIS="undef" SIGNAME="External_Ports_M00_TREADY">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="M00_TREADY"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="adc_bus" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_BUS"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="adc_data_clk" SIGIS="clk" SIGNAME="External_Ports_ADC_DATA_CLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_CLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_data_valid" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_VALID"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="adc_fifo_full" SIGIS="undef" SIGNAME="adc_streamer_0_adc_fifo_full">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_FIFO_FULL"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_fifo_reset" SIGIS="rst" SIGNAME="External_Ports_ADC_FIFO_RST">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_FIFO_RST"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_eof" SIGIS="undef" SIGNAME="External_Ports_ADC_EOF">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_EOF"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="200000000" DIR="I" NAME="m00_axis_aclk" SIGIS="clk" SIGNAME="External_Ports_AXI_CLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="AXI_CLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m00_axis_aresetn" SIGIS="rst" SIGNAME="External_Ports_AXI_ARESETN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="AXI_ARESETN"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="M00_AXIS" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="WIZ_DATA_WIDTH" VALUE="32"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="1"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="200000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_AXI_CLK"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m00_axis_tdata"/>
+            <PORTMAP LOGICAL="TSTRB" PHYSICAL="m00_axis_tstrb"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="m00_axis_tlast"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m00_axis_tvalid"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m00_axis_tready"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+  </MODULES>
+
+</EDKSYSTEM>

@@ -6749,9 +6749,21 @@ static void RxIntrHandler(void *Callback)
 
 
  Xil_Out32(((RxRingPtr)->ChanBase) + (0x00000004), ((IrqStatus) & 0x00007000));
-# 191 "../src/main.c"
- if ((IrqStatus & (0x00002000 | 0x00001000))) {
 
+ debug_printf("irq=0x%08x\r\n", IrqStatus);
+# 154 "../src/main.c"
+ if ((IrqStatus & 0x00004000)) {
+  debug_printf("ErrorMask?\r\n");
+# 186 "../src/main.c"
+ }
+
+
+
+
+
+
+ if ((IrqStatus & (0x00002000 | 0x00001000))) {
+  debug_printf("IOC!\r\n");
   ioc_flag = 1;
  }
 }
@@ -6771,9 +6783,9 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
  IntcConfig = XScuGic_LookupConfig(0U);
  if (
-# 211 "../src/main.c" 3 4
+# 213 "../src/main.c" 3 4
     ((void *)0) 
-# 211 "../src/main.c"
+# 213 "../src/main.c"
          == IntcConfig) {
   return 1L;
  }
@@ -6788,7 +6800,7 @@ static int SetupIntrSystem(XScuGic * IntcInstancePtr,
 
 
  XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
-# 240 "../src/main.c"
+# 242 "../src/main.c"
  Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
     (Xil_InterruptHandler)RxIntrHandler,
     RxRingPtr);
@@ -6847,6 +6859,9 @@ int main()
  debug_printf("\033[2J\033[0m");
  debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
 
+ debug_printf("\r\n\r\nPress any key to start\r\n");
+ inbyte();
+
 
  xscu_timer_cfg = XScuTimer_LookupConfig(0);
  error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
@@ -6875,40 +6890,54 @@ int main()
  XGpioPs_SetOutputEnablePin(&gpio, 37, 1);
  XGpioPs_WritePin(&gpio, 37, 1);
 
+
+ XGpioPs_SetDirection(&gpio, 2, 0xffffffff);
+ XGpioPs_SetDirection(&gpio, 3, 0xffffffff);
+
  debug_printf("GPIO block configured\r\n");
-# 350 "../src/main.c"
+# 359 "../src/main.c"
  dma0_config = XAxiDma_LookupConfig(0);
  error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
- debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
 
- debug_printf("TXBuff Addr=0x%08x\r\n", &tx_buffer);
- debug_printf("RXBuff Addr=0x%08x\r\n", &rx_buffer);
+
+
+
 
 
  SetupIntrSystem(&Intc, &dma0_pointer, 61U, 62U);
 
 
- Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) & ~(0x00001000 & 0x00007000)));
- Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00001000 & 0x00007000)));
+ Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) & ~(0x00007000 & 0x00007000)));
+ Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
 
- debug_printf("OK, done.\r\n");
+
 
  while(1) {
   counter = 0;
-  sz = (1 << 23);
+  sz = (1 << 15);
+
+  debug_printf("\r\n\r\nPress any key to START\r\n");
+  inbyte();
+
+
+  XGpioPs_Write(&gpio, 2, 0x00000000);
+  XGpioPs_Write(&gpio, 3, 0x00000000);
+
+  start_timing();
+  Xil_DCacheInvalidateRange(rx_buffer, 16383);
+  stop_timing();
+  dump_timing("Invalidate cache");
+
 
   error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, 0x01);
-  Xil_DCacheInvalidateRange(rx_buffer, 16383);
+
+  XGpioPs_Write(&gpio, 2, 0xffffffff);
+  XGpioPs_Write(&gpio, 3, 0xffffffff);
 
   debug_printf("Waiting, Err=%d...\r\n", error);
-
-  XGpioPs_WritePin(&gpio, 9, 1);
-  start_timing();
-  while(!ioc_flag) ;
-  stop_timing();
-  XGpioPs_WritePin(&gpio, 9, 0);
-  dump_timing("Transfer interrupt");
+# 409 "../src/main.c"
+  arb_delay(1000000);
 
   debug_printf("TransferRate=%2.2f MiB/s\r\n", (sz * 1e-6) / (tdelta * (2.0f / 666666687)));
   debug_printf("Starting to verify memory...\r\n");
@@ -6971,6 +7000,7 @@ int main()
 
 
   Xil_Out32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000), ((Xil_In32(((&dma0_pointer)->RegBase + (0x00000030 * 0x01)) + (0x00000000))) | (0x00007000 & 0x00007000)));
+  stop_timing();
   dump_timing("Interrupt setup");
  }
 

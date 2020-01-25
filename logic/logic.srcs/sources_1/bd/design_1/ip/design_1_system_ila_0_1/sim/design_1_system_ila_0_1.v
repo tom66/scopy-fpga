@@ -55,6 +55,13 @@
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_system_ila_0_1 (
   clk,
+  probe0,
+  probe1,
+  probe2,
+  probe3,
+  probe4,
+  probe5,
+  probe6,
   SLOT_0_AXIS_tdata,
   SLOT_0_AXIS_tstrb,
   SLOT_0_AXIS_tlast,
@@ -63,9 +70,16 @@ module design_1_system_ila_0_1 (
   resetn
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, ASSOCIATED_BUSIF SLOT_0_AXIS, ASSOCIATED_RESET resetn, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 250000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, ASSOCIATED_BUSIF SLOT_0_AXIS, ASSOCIATED_RESET resetn, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.clk CLK" *)
 input wire clk;
+input wire [63 : 0] probe0;
+input wire [0 : 0] probe1;
+input wire [0 : 0] probe2;
+input wire [0 : 0] probe3;
+input wire [0 : 0] probe4;
+input wire [9 : 0] probe5;
+input wire [9 : 0] probe6;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_0_AXIS TDATA" *)
 input wire [63 : 0] SLOT_0_AXIS_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_0_AXIS TSTRB" *)
@@ -74,7 +88,7 @@ input wire [7 : 0] SLOT_0_AXIS_tstrb;
 input wire SLOT_0_AXIS_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_0_AXIS TVALID" *)
 input wire SLOT_0_AXIS_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXIS, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXIS, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 250000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_0_AXIS TREADY" *)
 input wire SLOT_0_AXIS_tready;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.resetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
@@ -83,6 +97,13 @@ input wire resetn;
 
   bd_36cd inst (
     .clk(clk),
+    .probe0(probe0),
+    .probe1(probe1),
+    .probe2(probe2),
+    .probe3(probe3),
+    .probe4(probe4),
+    .probe5(probe5),
+    .probe6(probe6),
     .SLOT_0_AXIS_tdata(SLOT_0_AXIS_tdata),
     .SLOT_0_AXIS_tstrb(SLOT_0_AXIS_tstrb),
     .SLOT_0_AXIS_tlast(SLOT_0_AXIS_tlast),

@@ -133,7 +133,7 @@ static void RxIntrHandler(void *Callback)
 	/* Acknowledge pending interrupts */
 	XAxiDma_BdRingAckIrq(RxRingPtr, IrqStatus);
 
-	//debug_printf("irq=0x%08x\r\n", IrqStatus);
+	debug_printf("irq=0x%08x\r\n", IrqStatus);
 
 	/*
 	 * If no interrupt is asserted, we do not do anything
@@ -150,10 +150,11 @@ static void RxIntrHandler(void *Callback)
 	 * hardware to recover from the error, and return with no further
 	 * processing.
 	 */
-#if 0
+#if 1
 	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
 		debug_printf("ErrorMask?\r\n");
 
+#if 0
 		/*
 		 * Ignore DataMover error.  It's caused by not handling TLAST correctly which will be fixed in a
 		 * later ADC controller version.
@@ -181,6 +182,7 @@ static void RxIntrHandler(void *Callback)
 
 			return;
 		}
+#endif
 	}
 #endif
 
@@ -189,7 +191,7 @@ static void RxIntrHandler(void *Callback)
 	 * to handle the processed BDs and then raise the according flag.
 	 */
 	if ((IrqStatus & (XAXIDMA_IRQ_DELAY_MASK | XAXIDMA_IRQ_IOC_MASK))) {
-		//debug_printf("IOC!\r\n");
+		debug_printf("IOC!\r\n");
 		ioc_flag = 1;
 	}
 }
@@ -295,6 +297,9 @@ int main()
 	debug_printf("\033[2J\033[0m");
 	debug_printf("\r\n\r\nDemoApp v1.0 - DMA controlled transfers\r\n");
 
+	debug_printf("\r\n\r\nPress any key to start\r\n");
+	inbyte();
+
 	// Initialize the Scu Private Timer so that it is ready to use.
 	xscu_timer_cfg = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
 	error = XScuTimer_CfgInitialize(&xscu_timer, xscu_timer_cfg, xscu_timer_cfg->BaseAddr);
@@ -323,6 +328,10 @@ int main()
 	XGpioPs_SetOutputEnablePin(&gpio, 37, 1);
 	XGpioPs_WritePin(&gpio, 37, 1);
 
+	// EMIO ports all as outputs for now.  Inputs unused.
+	XGpioPs_SetDirection(&gpio, 2, 0xffffffff);
+	XGpioPs_SetDirection(&gpio, 3, 0xffffffff);
+
 	debug_printf("GPIO block configured\r\n");
 
 #if 0
@@ -350,35 +359,54 @@ int main()
 	dma0_config = XAxiDma_LookupConfig(XPAR_AXIDMA_0_DEVICE_ID);
 	error = XAxiDma_CfgInitialize(&dma0_pointer, dma0_config);
 
-	debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
+	//debug_printf("XAxiDma_CfgInitialize error=%d\r\n", error);
 
-	debug_printf("TXBuff Addr=0x%08x\r\n", &tx_buffer);
-	debug_printf("RXBuff Addr=0x%08x\r\n", &rx_buffer);
+	//debug_printf("TXBuff Addr=0x%08x\r\n", &tx_buffer);
+	//debug_printf("RXBuff Addr=0x%08x\r\n", &rx_buffer);
 
 	// Enable interrupts, we use interrupt mode
 	SetupIntrSystem(&Intc, &dma0_pointer, TX_INTR_ID, RX_INTR_ID);
 
-	// Disable IRQ first then enable it
-	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
-	XAxiDma_IntrEnable(&dma0_pointer, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
+	// Disable IRQ first then enable it.  XAXIDMA_IRQ_ALL_MASK includes errors.  XAXIDMA_IRQ_IOC_MASK for Interrupt-on-Complete only.
+	XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+	XAxiDma_IntrEnable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 
-	debug_printf("OK, done.\r\n");
+	//debug_printf("OK, done.\r\n");
 
 	while(1) {
 		counter = 0;
-		sz = (1 << 23);
+		sz = (1 << 15);
 
-		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, XAXIDMA_DEVICE_TO_DMA);
+		debug_printf("\r\n\r\nPress any key to START\r\n");
+		inbyte();
+		//continue;
+
+		XGpioPs_Write(&gpio, 2, 0x00000000);
+		XGpioPs_Write(&gpio, 3, 0x00000000);
+
+		start_timing();
 		Xil_DCacheInvalidateRange(rx_buffer, PACKET_MAXSIZE);
+		stop_timing();
+		dump_timing("Invalidate cache");
+
+		//XAxiDma_Reset(&dma0_pointer);
+		error = XAxiDma_SimpleTransfer(&dma0_pointer, (uint8_t *) rx_buffer, sz, XAXIDMA_DEVICE_TO_DMA);
+		//GpioPs_WritePin(&gpio, 37, 1);
+		XGpioPs_Write(&gpio, 2, 0xffffffff);
+		XGpioPs_Write(&gpio, 3, 0xffffffff);
 
 		debug_printf("Waiting, Err=%d...\r\n", error);
 
+		/*
 		XGpioPs_WritePin(&gpio, 9, 1);
 		start_timing();
 		while(!ioc_flag) ;
 		stop_timing();
 		XGpioPs_WritePin(&gpio, 9, 0);
 		dump_timing("Transfer interrupt");
+		*/
+
+		arb_delay(1000000);
 
 		debug_printf("TransferRate=%2.2f MiB/s\r\n", (sz * 1e-6) / (tdelta * TIMER_TICKS_TO_S));
 		debug_printf("Starting to verify memory...\r\n");
@@ -441,6 +469,7 @@ int main()
 
 		//XAxiDma_IntrDisable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 		XAxiDma_IntrEnable(&dma0_pointer, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+		stop_timing();
 		dump_timing("Interrupt setup");
 	}
 

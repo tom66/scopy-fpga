@@ -163,6 +163,13 @@ proc create_root_design { parentCell } {
    CONFIG.ASSOCIATED_BUSIF {SLOT_0_AXIS} \
    CONFIG.ASSOCIATED_RESET {resetn} \
  ] $clk
+  set probe0 [ create_bd_port -dir I -from 63 -to 0 probe0 ]
+  set probe1 [ create_bd_port -dir I -from 0 -to 0 probe1 ]
+  set probe2 [ create_bd_port -dir I -from 0 -to 0 probe2 ]
+  set probe3 [ create_bd_port -dir I -from 0 -to 0 probe3 ]
+  set probe4 [ create_bd_port -dir I -from 0 -to 0 probe4 ]
+  set probe5 [ create_bd_port -dir I -from 9 -to 0 probe5 ]
+  set probe6 [ create_bd_port -dir I -from 9 -to 0 probe6 ]
   set resetn [ create_bd_port -dir I -type rst resetn ]
 
   # Create instance: g_inst, and set properties
@@ -191,20 +198,41 @@ proc create_root_design { parentCell } {
    CONFIG.C_DATA_DEPTH {8192} \
    CONFIG.C_EN_STRG_QUAL {0} \
    CONFIG.C_EN_TIME_TAG {0} \
-   CONFIG.C_ILA_CLK_FREQ {125000000} \
+   CONFIG.C_ILA_CLK_FREQ {177777771} \
    CONFIG.C_INPUT_PIPE_STAGES {0} \
    CONFIG.C_MONITOR_TYPE {Native} \
-   CONFIG.C_NUM_OF_PROBES {5} \
+   CONFIG.C_NUM_OF_PROBES {12} \
+   CONFIG.C_PROBE0_MU_CNT {1} \
    CONFIG.C_PROBE0_TYPE {0} \
    CONFIG.C_PROBE0_WIDTH {64} \
+   CONFIG.C_PROBE10_TYPE {0} \
+   CONFIG.C_PROBE10_WIDTH {1} \
+   CONFIG.C_PROBE11_TYPE {0} \
+   CONFIG.C_PROBE11_WIDTH {1} \
+   CONFIG.C_PROBE1_MU_CNT {1} \
    CONFIG.C_PROBE1_TYPE {0} \
-   CONFIG.C_PROBE1_WIDTH {8} \
+   CONFIG.C_PROBE1_WIDTH {1} \
+   CONFIG.C_PROBE2_MU_CNT {1} \
    CONFIG.C_PROBE2_TYPE {0} \
    CONFIG.C_PROBE2_WIDTH {1} \
+   CONFIG.C_PROBE3_MU_CNT {1} \
    CONFIG.C_PROBE3_TYPE {0} \
    CONFIG.C_PROBE3_WIDTH {1} \
+   CONFIG.C_PROBE4_MU_CNT {1} \
    CONFIG.C_PROBE4_TYPE {0} \
    CONFIG.C_PROBE4_WIDTH {1} \
+   CONFIG.C_PROBE5_MU_CNT {1} \
+   CONFIG.C_PROBE5_TYPE {0} \
+   CONFIG.C_PROBE5_WIDTH {10} \
+   CONFIG.C_PROBE6_MU_CNT {1} \
+   CONFIG.C_PROBE6_TYPE {0} \
+   CONFIG.C_PROBE6_WIDTH {10} \
+   CONFIG.C_PROBE7_TYPE {0} \
+   CONFIG.C_PROBE7_WIDTH {64} \
+   CONFIG.C_PROBE8_TYPE {0} \
+   CONFIG.C_PROBE8_WIDTH {8} \
+   CONFIG.C_PROBE9_TYPE {0} \
+   CONFIG.C_PROBE9_WIDTH {1} \
    CONFIG.C_TIME_TAG_WIDTH {32} \
    CONFIG.C_TRIGIN_EN {false} \
    CONFIG.C_TRIGOUT_EN {false} \
@@ -216,11 +244,18 @@ connect_bd_intf_net -intf_net Conn [get_bd_intf_ports SLOT_0_AXIS] [get_bd_intf_
 
   # Create port connections
   connect_bd_net -net clk_1 [get_bd_ports clk] [get_bd_pins g_inst/aclk] [get_bd_pins ila_lib/clk]
-  connect_bd_net -net net_slot_0_axis_tdata [get_bd_pins g_inst/m_slot_0_axis_tdata] [get_bd_pins ila_lib/probe0]
-  connect_bd_net -net net_slot_0_axis_tlast [get_bd_pins g_inst/m_slot_0_axis_tlast] [get_bd_pins ila_lib/probe4]
-  connect_bd_net -net net_slot_0_axis_tready [get_bd_pins g_inst/m_slot_0_axis_tready] [get_bd_pins ila_lib/probe3]
-  connect_bd_net -net net_slot_0_axis_tstrb [get_bd_pins g_inst/m_slot_0_axis_tstrb] [get_bd_pins ila_lib/probe1]
-  connect_bd_net -net net_slot_0_axis_tvalid [get_bd_pins g_inst/m_slot_0_axis_tvalid] [get_bd_pins ila_lib/probe2]
+  connect_bd_net -net net_slot_0_axis_tdata [get_bd_pins g_inst/m_slot_0_axis_tdata] [get_bd_pins ila_lib/probe7]
+  connect_bd_net -net net_slot_0_axis_tlast [get_bd_pins g_inst/m_slot_0_axis_tlast] [get_bd_pins ila_lib/probe11]
+  connect_bd_net -net net_slot_0_axis_tready [get_bd_pins g_inst/m_slot_0_axis_tready] [get_bd_pins ila_lib/probe10]
+  connect_bd_net -net net_slot_0_axis_tstrb [get_bd_pins g_inst/m_slot_0_axis_tstrb] [get_bd_pins ila_lib/probe8]
+  connect_bd_net -net net_slot_0_axis_tvalid [get_bd_pins g_inst/m_slot_0_axis_tvalid] [get_bd_pins ila_lib/probe9]
+  connect_bd_net -net probe0_1 [get_bd_ports probe0] [get_bd_pins ila_lib/probe0]
+  connect_bd_net -net probe1_1 [get_bd_ports probe1] [get_bd_pins ila_lib/probe1]
+  connect_bd_net -net probe2_1 [get_bd_ports probe2] [get_bd_pins ila_lib/probe2]
+  connect_bd_net -net probe3_1 [get_bd_ports probe3] [get_bd_pins ila_lib/probe3]
+  connect_bd_net -net probe4_1 [get_bd_ports probe4] [get_bd_pins ila_lib/probe4]
+  connect_bd_net -net probe5_1 [get_bd_ports probe5] [get_bd_pins ila_lib/probe5]
+  connect_bd_net -net probe6_1 [get_bd_ports probe6] [get_bd_pins ila_lib/probe6]
   connect_bd_net -net resetn_1 [get_bd_ports resetn] [get_bd_pins g_inst/aresetn]
 
   # Create address segments

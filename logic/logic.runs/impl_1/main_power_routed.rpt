@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date             : Mon Jan 20 20:38:55 2020
+| Date             : Sat Jan 25 11:19:14 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.812        |
+| Total On-Chip Power (W)  | 1.664        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.654        |
-| Device Static (W)        | 0.158        |
+| Dynamic (W)              | 1.515        |
+| Device Static (W)        | 0.149        |
 | Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 64.1         |
-| Junction Temperature (C) | 45.9         |
+| Max Ambient (C)          | 65.8         |
+| Junction Temperature (C) | 44.2         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,22 +52,22 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.110 |        9 |       --- |             --- |
-| Slice Logic              |     0.011 |    20954 |       --- |             --- |
-|   LUT as Logic           |     0.009 |     6215 |     40600 |           15.31 |
-|   CARRY4                 |     0.001 |      324 |     13300 |            2.44 |
-|   Register               |     0.001 |    10228 |     81200 |           12.60 |
-|   LUT as Shift Register  |    <0.001 |      825 |     17400 |            4.74 |
-|   LUT as Distributed RAM |    <0.001 |       46 |     17400 |            0.26 |
-|   F7/F8 Muxes            |    <0.001 |      179 |     53200 |            0.34 |
-|   Others                 |     0.000 |     1466 |       --- |             --- |
-| Signals                  |     0.024 |    14815 |       --- |             --- |
-| Block RAM                |     0.086 |       98 |       107 |           91.59 |
-| MMCM                     |     0.108 |        1 |         4 |           25.00 |
-| I/O                      |     0.037 |        6 |       125 |            4.80 |
-| PS7                      |     1.279 |        1 |       --- |             --- |
-| Static Power             |     0.158 |          |           |                 |
-| Total                    |     1.812 |          |           |                 |
+| Clocks                   |     0.057 |        9 |       --- |             --- |
+| Slice Logic              |     0.008 |    14332 |       --- |             --- |
+|   LUT as Logic           |     0.006 |     4606 |     40600 |           11.34 |
+|   CARRY4                 |    <0.001 |      228 |     13300 |            1.71 |
+|   Register               |    <0.001 |     6984 |     81200 |            8.60 |
+|   LUT as Distributed RAM |    <0.001 |       90 |     17400 |            0.52 |
+|   LUT as Shift Register  |    <0.001 |      445 |     17400 |            2.56 |
+|   F7/F8 Muxes            |    <0.001 |       42 |     53200 |            0.08 |
+|   Others                 |     0.000 |      907 |       --- |             --- |
+| Signals                  |     0.016 |    10223 |       --- |             --- |
+| Block RAM                |     0.031 |     42.5 |       107 |           39.72 |
+| MMCM                     |     0.093 |        1 |         4 |           25.00 |
+| I/O                      |     0.027 |        6 |       125 |            4.80 |
+| PS7                      |     1.283 |        1 |       --- |             --- |
+| Static Power             |     0.149 |          |           |                 |
+| Total                    |     1.663 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -77,22 +77,22 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.249 |       0.230 |      0.019 |
-| Vccaux    |       1.800 |     0.082 |       0.067 |      0.016 |
+| Vccint    |       1.000 |     0.132 |       0.116 |      0.016 |
+| Vccaux    |       1.800 |     0.073 |       0.058 |      0.015 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
-| Vcco25    |       2.500 |     0.008 |       0.007 |      0.001 |
+| Vcco25    |       2.500 |     0.005 |       0.004 |      0.001 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccbram   |       1.000 |     0.014 |       0.007 |      0.007 |
+| Vccbram   |       1.000 |     0.006 |       0.002 |      0.004 |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
 | MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccpint   |       1.000 |     0.707 |       0.675 |      0.032 |
+| Vccpint   |       1.000 |     0.706 |       0.677 |      0.030 |
 | Vccpaux   |       1.800 |     0.036 |       0.026 |      0.010 |
-| Vccpll    |       1.800 |     0.017 |       0.014 |      0.003 |
+| Vccpll    |       1.800 |     0.018 |       0.015 |      0.003 |
 | Vcco_ddr  |       1.500 |     0.356 |       0.354 |      0.002 |
 | Vcco_mio0 |       3.300 |     0.001 |       0.000 |      0.001 |
 | Vcco_mio1 |       3.300 |     0.001 |       0.000 |      0.001 |
@@ -140,12 +140,12 @@ Table of Contents
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
 | Clock                                                                                      | Domain                                                               | Constraint (ns) |
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
-| adc_data_clk                                                                               | nolabel_line164/adc_data_clk                                         |             4.0 |
+| adc_data_clk                                                                               | nolabel_line173/adc_data_clk                                         |             4.0 |
 | adc_lvds_clk                                                                               | adc_lclk_p                                                           |             1.0 |
-| clk_fpga_0                                                                                 | nolabel_line79/processing_system7_0/inst/FCLK_CLK0                   |             4.0 |
-| clk_fpga_0                                                                                 | nolabel_line79/processing_system7_0/inst/FCLK_CLK_unbuffered[0]      |             4.0 |
-| clk_out1_clk_wiz_1_idelay_refclk                                                           | nolabel_line144/inst/clk_out1_clk_wiz_1_idelay_refclk                |             5.0 |
-| clkfbout_clk_wiz_1_idelay_refclk                                                           | nolabel_line144/inst/clkfbout_clk_wiz_1_idelay_refclk                |             4.0 |
+| clk_fpga_0                                                                                 | nolabel_line84/processing_system7_0/inst/FCLK_CLK0                   |             5.6 |
+| clk_fpga_0                                                                                 | nolabel_line84/processing_system7_0/inst/FCLK_CLK_unbuffered[0]      |             5.6 |
+| clk_out1_clk_wiz_1_idelay_refclk                                                           | nolabel_line150/inst/clk_out1_clk_wiz_1_idelay_refclk                |             5.0 |
+| clkfbout_clk_wiz_1_idelay_refclk                                                           | nolabel_line150/inst/clkfbout_clk_wiz_1_idelay_refclk                |             4.0 |
 | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/tck_bs |            33.0 |
 +--------------------------------------------------------------------------------------------+----------------------------------------------------------------------+-----------------+
 
@@ -159,32 +159,28 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| main                     |     1.654 |
-|   dbg_hub                |     0.005 |
-|     inst                 |     0.005 |
-|       BSCANID.u_xsdbm_id |     0.005 |
-|   nolabel_line144        |     0.109 |
-|     inst                 |     0.109 |
-|   nolabel_line164        |     0.027 |
-|     asi2_mod_inst0       |     0.011 |
-|   nolabel_line79         |     1.497 |
-|     adc_axi_streamer     |     0.001 |
-|       inst               |     0.001 |
-|     axi_dma              |     0.044 |
-|       U0                 |     0.044 |
-|     axi_interconnect_0   |     0.011 |
-|       s00_couplers       |     0.011 |
-|     axi_mem_intercon     |     0.006 |
-|       m00_couplers       |     0.004 |
+| main                     |     1.515 |
+|   dbg_hub                |     0.004 |
+|     inst                 |     0.004 |
+|       BSCANID.u_xsdbm_id |     0.004 |
+|   nolabel_line150        |     0.094 |
+|     inst                 |     0.094 |
+|   nolabel_line173        |     0.027 |
+|     asi2_mod_inst0       |     0.010 |
+|   nolabel_line84         |     1.382 |
+|     adc_axi_streamer     |     0.006 |
+|       inst               |     0.006 |
+|     axi_dma              |     0.032 |
+|       U0                 |     0.032 |
+|     axi_interconnect_0   |     0.008 |
+|       s00_couplers       |     0.008 |
+|     axi_mem_intercon     |     0.005 |
+|       m00_couplers       |     0.003 |
 |       xbar               |     0.002 |
-|     axis_data_fifo_0     |     0.008 |
-|       inst               |     0.008 |
-|     processing_system7_0 |     1.281 |
-|       inst               |     1.281 |
-|     system_ila_0         |     0.032 |
-|       inst               |     0.032 |
-|     system_ila_1         |     0.113 |
-|       inst               |     0.113 |
+|     processing_system7_0 |     1.284 |
+|       inst               |     1.284 |
+|     system_ila_0         |     0.047 |
+|       inst               |     0.047 |
 +--------------------------+-----------+
 
 

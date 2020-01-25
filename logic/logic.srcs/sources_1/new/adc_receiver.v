@@ -401,7 +401,7 @@ adc_iserdese2_mod asi2_mod_inst7 (
 //assign debug[0] = bitslip_com;
 //assign debug[1] = bitslip_lock_state;
  
- assign debug[0] = train_debug2;
+ assign debug[0] = adc_clk_div;
  assign debug[1] = idelay_refclk;
     
 /* 

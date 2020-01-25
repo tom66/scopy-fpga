@@ -1,0 +1,170 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xDB295F21BA8FB95",
+      "device": "xc7z014sclg400-1",
+      "name": "design_1",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2018.3",
+      "validated": "true"
+    },
+    "design_tree": {
+      "adc_streamer_0": ""
+    },
+    "ports": {
+      "ADC_BUS": {
+        "direction": "I",
+        "left": "63",
+        "right": "0"
+      },
+      "ADC_EOF": {
+        "direction": "I"
+      },
+      "AXI_CLK": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "ASSOCIATED_RESET": {
+            "value": "AXI_ARESETN",
+            "value_src": "default"
+          },
+          "CLK_DOMAIN": {
+            "value": "design_1_AXI_CLK",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "200000000"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "AXI_ARESETN": {
+        "direction": "I"
+      },
+      "ADC_FIFO_RST": {
+        "direction": "I"
+      },
+      "ADC_DATA_CLK": {
+        "direction": "I"
+      },
+      "ADC_DATA_VALID": {
+        "direction": "I"
+      },
+      "M00_TDATA": {
+        "direction": "O",
+        "left": "63",
+        "right": "0"
+      },
+      "M00_TSTRB": {
+        "direction": "O",
+        "left": "7",
+        "right": "0"
+      },
+      "M00_TLAST": {
+        "direction": "O"
+      },
+      "M00_TVALID": {
+        "direction": "O"
+      },
+      "M00_TREADY": {
+        "direction": "I"
+      },
+      "ADC_FIFO_FULL": {
+        "direction": "O"
+      }
+    },
+    "components": {
+      "adc_streamer_0": {
+        "vlnv": "xilinx.com:user:adc_streamer:2.0",
+        "xci_name": "design_1_adc_streamer_0_0"
+      }
+    },
+    "nets": {
+      "ADC_EOF_1": {
+        "ports": [
+          "ADC_EOF",
+          "adc_streamer_0/adc_eof"
+        ]
+      },
+      "AXI_CLK_1": {
+        "ports": [
+          "AXI_CLK",
+          "adc_streamer_0/m00_axis_aclk"
+        ]
+      },
+      "AXI_ARESETN_1": {
+        "ports": [
+          "AXI_ARESETN",
+          "adc_streamer_0/m00_axis_aresetn"
+        ]
+      },
+      "AXI_FIFO_RST_1": {
+        "ports": [
+          "ADC_FIFO_RST",
+          "adc_streamer_0/adc_fifo_reset"
+        ]
+      },
+      "ADC_DATA_CLK_1": {
+        "ports": [
+          "ADC_DATA_CLK",
+          "adc_streamer_0/adc_data_clk"
+        ]
+      },
+      "ADC_BUS_1": {
+        "ports": [
+          "ADC_BUS",
+          "adc_streamer_0/adc_bus"
+        ]
+      },
+      "ADC_DATA_VALID_1": {
+        "ports": [
+          "ADC_DATA_VALID",
+          "adc_streamer_0/adc_data_valid"
+        ]
+      },
+      "adc_streamer_0_m00_axis_tdata": {
+        "ports": [
+          "adc_streamer_0/m00_axis_tdata",
+          "M00_TDATA"
+        ]
+      },
+      "adc_streamer_0_m00_axis_tstrb": {
+        "ports": [
+          "adc_streamer_0/m00_axis_tstrb",
+          "M00_TSTRB"
+        ]
+      },
+      "M00_TREADY_1": {
+        "ports": [
+          "M00_TREADY",
+          "adc_streamer_0/m00_axis_tready"
+        ]
+      },
+      "adc_streamer_0_m00_axis_tvalid": {
+        "ports": [
+          "adc_streamer_0/m00_axis_tvalid",
+          "M00_TVALID"
+        ]
+      },
+      "adc_streamer_0_m00_axis_tlast": {
+        "ports": [
+          "adc_streamer_0/m00_axis_tlast",
+          "M00_TLAST"
+        ]
+      },
+      "adc_streamer_0_adc_fifo_full": {
+        "ports": [
+          "adc_streamer_0/adc_fifo_full",
+          "ADC_FIFO_FULL"
+        ]
+      }
+    }
+  }
+}

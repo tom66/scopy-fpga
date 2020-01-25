@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Sun Jan 19 21:20:13 2020
+//Date        : Sat Jan 25 11:03:53 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -12,6 +12,9 @@
 module design_1_wrapper
    (ADC_BUS,
     ADC_DATA_CLK,
+    ADC_DATA_EOF,
+    ADC_DATA_VALID,
+    ADC_FIFO_RESET,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -39,6 +42,9 @@ module design_1_wrapper
     PL_IRQ);
   input [63:0]ADC_BUS;
   input ADC_DATA_CLK;
+  input ADC_DATA_EOF;
+  input ADC_DATA_VALID;
+  input ADC_FIFO_RESET;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -67,6 +73,9 @@ module design_1_wrapper
 
   wire [63:0]ADC_BUS;
   wire ADC_DATA_CLK;
+  wire ADC_DATA_EOF;
+  wire ADC_DATA_VALID;
+  wire ADC_FIFO_RESET;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -96,6 +105,9 @@ module design_1_wrapper
   design_1 design_1_i
        (.ADC_BUS(ADC_BUS),
         .ADC_DATA_CLK(ADC_DATA_CLK),
+        .ADC_DATA_EOF(ADC_DATA_EOF),
+        .ADC_DATA_VALID(ADC_DATA_VALID),
+        .ADC_FIFO_RESET(ADC_FIFO_RESET),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),

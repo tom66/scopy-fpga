@@ -66,8 +66,11 @@ output led_PL0, led_PL1;
 //
 
 wire clk_idelay_refclk;
-
 wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
+
+reg g_rst_gen = 0;
+reg g_rst_state = 0;
+reg [7:0] g_rst_counter = 0;
 
 //wire [63:0] adc_bus;
 wire adc_data_clk;
@@ -76,22 +79,25 @@ wire [63:0] emio_output;
 wire [63:0] emio_input;
 reg [14:0] pl_irq;
 
+wire adc_valid;
+
 design_1 (
     .ADC_BUS(adc_bus),
     .ADC_DATA_CLK(adc_data_clk),
+    .ADC_DATA_VALID(adc_valid),
+    .ADC_FIFO_RESET(g_rst_gen),     // for now, connect to global reset; later, to be initiated by command
+    .ADC_DATA_EOF(1'b0),            // for now, data never ends
     .FCLK_CLK0(clk_master),
     
     // EMIO 64-bit low speed signalling bus between ARM and fabric
-    .EMIO_I(emio_input),    // Data into ARM
-    .EMIO_O(emio_output),   // Data from ARM
+    .EMIO_I(emio_input),            // Data into ARM
+    .EMIO_O(emio_output),           // Data from ARM
     
     // IRQ outputs from PL
     .PL_IRQ(pl_irq)
 );
 
-reg g_rst_gen = 0;
-reg g_rst_state = 0;
-reg [7:0] g_rst_counter = 0;
+assign adc_valid = emio_output[0];
 
 reg [15:0] emio_counter;
 wire [7:0] train_data_debug;
@@ -116,7 +122,7 @@ always @(posedge clk_master) begin
             g_rst_gen <= 1;   
         end
         
-        if (g_rst_counter == 15) begin
+        if (g_rst_counter == 150) begin
             g_rst_gen <= 0;
             g_rst_state <= 1;   
         end
@@ -158,8 +164,11 @@ wire [13:0] adc_data_latched_7;
 
 wire [7:0] debug_adc;
 
-assign led_PL0 = debug_adc[0];
-assign led_PL1 = debug_adc[1];
+reg [23:0] adc_testcntr;
+reg led_PL1 = 0;
+
+assign led_PL0 = adc_valid; // debug_adc[0];
+//assign led_PL1 = debug_adc[1];
 
 adc_receiver (
     // ADC interface
@@ -258,6 +267,12 @@ always @(posedge adc_data_clk) begin
 
     //rep_counter <= rep_counter + 1;
     adc32_counter <= adc32_counter + 1;
+    
+    adc_testcntr <= adc_testcntr + 1;
+    
+    if (adc_testcntr == 0) begin
+        led_PL1 <= ~led_PL1;
+    end
 
 end
 

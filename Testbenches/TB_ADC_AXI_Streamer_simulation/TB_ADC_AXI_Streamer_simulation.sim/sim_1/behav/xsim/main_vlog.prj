@@ -1,0 +1,14 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../TB_ADC_AXI_Streamer_simulation.ip_user_files/bd/design_1/ip/design_1_adc_streamer_0_0/src/fifo_generator_0_1/sim/fifo_generator_0.v" \
+"../../../../TB_ADC_AXI_Streamer_simulation.ip_user_files/bd/design_1/ipshared/ca0b/hdl/adc_test_streamer_v2_0_M00_AXIS.v" \
+"../../../../TB_ADC_AXI_Streamer_simulation.ip_user_files/bd/design_1/ipshared/ca0b/hdl/adc_test_streamer_v2_0.v" \
+"../../../../TB_ADC_AXI_Streamer_simulation.ip_user_files/bd/design_1/ip/design_1_adc_streamer_0_0/sim/design_1_adc_streamer_0_0.v" \
+"../../../../TB_ADC_AXI_Streamer_simulation.ip_user_files/bd/design_1/sim/design_1.v" \
+"../../../../TB_ADC_AXI_Streamer_simulation.srcs/sim_1/new/main.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

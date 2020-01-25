@@ -222,6 +222,17 @@ arb_delay:
 	.cfi_endproc
 .LFE14:
 	.size	arb_delay, .-arb_delay
+	.section	.rodata
+	.align	2
+.LC0:
+	.ascii	"irq=0x%08x\015\012\000"
+	.align	2
+.LC1:
+	.ascii	"ErrorMask?\015\012\000"
+	.align	2
+.LC2:
+	.ascii	"IOC!\015\012\000"
+	.text
 	.align	2
 	.syntax unified
 	.arm
@@ -262,18 +273,37 @@ RxIntrHandler:
 	mov	r1, r3
 	mov	r0, r2
 	bl	Xil_Out32
-	.loc 2 191 0
+	.loc 2 136 0
+	ldr	r1, [fp, #-12]
+	movw	r0, #:lower16:.LC0
+	movt	r0, #:upper16:.LC0
+	bl	debug_printf
+	.loc 2 154 0
+	ldr	r3, [fp, #-12]
+	and	r3, r3, #16384
+	cmp	r3, #0
+	beq	.L9
+	.loc 2 155 0
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
+	bl	debug_printf
+.L9:
+	.loc 2 193 0
 	ldr	r3, [fp, #-12]
 	and	r3, r3, #12288
 	cmp	r3, #0
-	beq	.L10
-	.loc 2 193 0
+	beq	.L11
+	.loc 2 194 0
+	movw	r0, #:lower16:.LC2
+	movt	r0, #:upper16:.LC2
+	bl	debug_printf
+	.loc 2 195 0
 	movw	r3, #:lower16:ioc_flag
 	movt	r3, #:upper16:ioc_flag
 	mov	r2, #1
 	str	r2, [r3]
-.L10:
-	.loc 2 195 0
+.L11:
+	.loc 2 197 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -289,7 +319,7 @@ RxIntrHandler:
 	.type	SetupIntrSystem, %function
 SetupIntrSystem:
 .LFB16:
-	.loc 2 199 0
+	.loc 2 201 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 40
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -308,27 +338,27 @@ SetupIntrSystem:
 	strh	r3, [fp, #-38]	@ movhi
 	mov	r3, r2	@ movhi
 	strh	r3, [fp, #-40]	@ movhi
-	.loc 2 200 0
+	.loc 2 202 0
 	ldr	r3, [fp, #-36]
 	add	r3, r3, #20
 	str	r3, [fp, #-8]
-	.loc 2 201 0
+	.loc 2 203 0
 	ldr	r3, [fp, #-36]
 	add	r3, r3, #128
 	str	r3, [fp, #-12]
-	.loc 2 210 0
+	.loc 2 212 0
 	mov	r0, #0
 	bl	XScuGic_LookupConfig
 	str	r0, [fp, #-16]
-	.loc 2 211 0
+	.loc 2 213 0
 	ldr	r3, [fp, #-16]
 	cmp	r3, #0
-	bne	.L12
-	.loc 2 212 0
+	bne	.L13
+	.loc 2 214 0
 	mov	r3, #1
-	b	.L13
-.L12:
-	.loc 2 215 0
+	b	.L14
+.L13:
+	.loc 2 217 0
 	ldr	r3, [fp, #-16]
 	ldr	r3, [r3, #4]
 	mov	r2, r3
@@ -336,21 +366,21 @@ SetupIntrSystem:
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_CfgInitialize
 	str	r0, [fp, #-20]
-	.loc 2 217 0
+	.loc 2 219 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
-	beq	.L14
-	.loc 2 218 0
+	beq	.L15
+	.loc 2 220 0
 	mov	r3, #1
-	b	.L13
-.L14:
-	.loc 2 224 0
+	b	.L14
+.L15:
+	.loc 2 226 0
 	ldrh	r1, [fp, #-40]
 	mov	r3, #3
 	mov	r2, #160
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_SetPriorityTriggerType
-	.loc 2 240 0
+	.loc 2 242 0
 	ldrh	r1, [fp, #-40]
 	ldr	r3, [fp, #-12]
 	movw	r2, #:lower16:RxIntrHandler
@@ -358,33 +388,33 @@ SetupIntrSystem:
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_Connect
 	str	r0, [fp, #-20]
-	.loc 2 243 0
+	.loc 2 245 0
 	ldr	r3, [fp, #-20]
 	cmp	r3, #0
-	beq	.L15
-	.loc 2 244 0
+	beq	.L16
+	.loc 2 246 0
 	ldr	r3, [fp, #-20]
-	b	.L13
-.L15:
-	.loc 2 248 0
+	b	.L14
+.L16:
+	.loc 2 250 0
 	ldrh	r3, [fp, #-40]
 	mov	r1, r3
 	ldr	r0, [fp, #-32]
 	bl	XScuGic_Enable
-	.loc 2 252 0
+	.loc 2 254 0
 	bl	Xil_ExceptionInit
-	.loc 2 253 0
+	.loc 2 255 0
 	ldr	r2, [fp, #-32]
 	movw	r1, #:lower16:XScuGic_InterruptHandler
 	movt	r1, #:upper16:XScuGic_InterruptHandler
 	mov	r0, #5
 	bl	Xil_ExceptionRegisterHandler
 .LBB2:
-	.loc 2 257 0
+	.loc 2 259 0
 	mov	r3, #0
 	str	r3, [fp, #-24]
 	.syntax divided
-@ 257 "../src/main.c" 1
+@ 259 "../src/main.c" 1
 	mrs	r3, cpsr
 
 @ 0 "" 2
@@ -395,16 +425,16 @@ SetupIntrSystem:
 .LBE2:
 	bic	r3, r3, #128
 	.syntax divided
-@ 257 "../src/main.c" 1
+@ 259 "../src/main.c" 1
 	msr	cpsr,r3
 
 @ 0 "" 2
-	.loc 2 259 0
+	.loc 2 261 0
 	.arm
 	.syntax unified
 	mov	r3, #0
-.L13:
-	.loc 2 260 0
+.L14:
+	.loc 2 262 0
 	mov	r0, r3
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -421,7 +451,7 @@ SetupIntrSystem:
 	.type	start_timing, %function
 start_timing:
 .LFB17:
-	.loc 2 263 0
+	.loc 2 265 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -431,23 +461,23 @@ start_timing:
 	.cfi_offset 14, -4
 	add	fp, sp, #4
 	.cfi_def_cfa 11, 4
-	.loc 2 264 0
+	.loc 2 266 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
 	mvn	r1, #0
 	mov	r0, r3
 	bl	Xil_Out32
-	.loc 2 265 0
+	.loc 2 267 0
 	movw	r0, #:lower16:xscu_timer
 	movt	r0, #:upper16:xscu_timer
 	bl	XScuTimer_Start
-	.loc 2 267 0
+	.loc 2 269 0
 	movw	r3, #:lower16:timer1
 	movt	r3, #:upper16:timer1
 	mov	r2, #0
 	str	r2, [r3]
-	.loc 2 268 0
+	.loc 2 270 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
@@ -458,7 +488,7 @@ start_timing:
 	movw	r3, #:lower16:timer0
 	movt	r3, #:upper16:timer0
 	str	r2, [r3]
-	.loc 2 269 0
+	.loc 2 271 0
 	nop
 	pop	{fp, pc}
 	.cfi_endproc
@@ -472,7 +502,7 @@ start_timing:
 	.type	stop_timing, %function
 stop_timing:
 .LFB18:
-	.loc 2 272 0
+	.loc 2 274 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -482,7 +512,7 @@ stop_timing:
 	.cfi_offset 14, -4
 	add	fp, sp, #4
 	.cfi_def_cfa 11, 4
-	.loc 2 273 0
+	.loc 2 275 0
 	movw	r3, #:lower16:xscu_timer
 	movt	r3, #:upper16:xscu_timer
 	ldr	r3, [r3, #4]
@@ -493,7 +523,7 @@ stop_timing:
 	movw	r3, #:lower16:timer1
 	movt	r3, #:upper16:timer1
 	str	r2, [r3]
-	.loc 2 274 0
+	.loc 2 276 0
 	movw	r3, #:lower16:timer0
 	movt	r3, #:upper16:timer0
 	ldr	r2, [r3]
@@ -504,7 +534,7 @@ stop_timing:
 	movw	r3, #:lower16:tdelta
 	movt	r3, #:upper16:tdelta
 	str	r2, [r3]
-	.loc 2 275 0
+	.loc 2 277 0
 	nop
 	pop	{fp, pc}
 	.cfi_endproc
@@ -512,7 +542,7 @@ stop_timing:
 	.size	stop_timing, .-stop_timing
 	.section	.rodata
 	.align	2
-.LC0:
+.LC3:
 	.ascii	"%s [~%d CPU cycles (~%4.1f us)]\015\012\000"
 	.text
 	.align	2
@@ -523,7 +553,7 @@ stop_timing:
 	.type	dump_timing, %function
 dump_timing:
 .LFB19:
-	.loc 2 278 0
+	.loc 2 280 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -535,7 +565,7 @@ dump_timing:
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #16
 	str	r0, [fp, #-8]
-	.loc 2 279 0
+	.loc 2 281 0
 	movw	r3, #:lower16:tdelta
 	movt	r3, #:upper16:tdelta
 	ldr	r3, [r3]
@@ -545,22 +575,22 @@ dump_timing:
 	ldr	r3, [r3]
 	vmov	s15, r3	@ int
 	vcvt.f64.u32	d16, s15
-	vldr.64	d17, .L19
+	vldr.64	d17, .L20
 	vmul.f64	d16, d16, d17
 	vstr.64	d16, [sp]
 	ldr	r1, [fp, #-8]
-	movw	r0, #:lower16:.LC0
-	movt	r0, #:upper16:.LC0
+	movw	r0, #:lower16:.LC3
+	movt	r0, #:upper16:.LC3
 	bl	debug_printf
-	.loc 2 280 0
+	.loc 2 282 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
 	@ sp needed
 	pop	{fp, pc}
-.L20:
+.L21:
 	.align	3
-.L19:
+.L20:
 	.word	-1585512448
 	.word	1063818100
 	.cfi_endproc
@@ -568,63 +598,57 @@ dump_timing:
 	.size	dump_timing, .-dump_timing
 	.section	.rodata
 	.align	2
-.LC1:
+.LC4:
 	.ascii	"\033[2J\033[0m\000"
 	.align	2
-.LC2:
+.LC5:
 	.ascii	"\015\012\015\012DemoApp v1.0 - DMA controlled trans"
 	.ascii	"fers\015\012\000"
 	.align	2
-.LC3:
-	.ascii	"ERROR: Initialising timer failed\015\012\000"
-	.align	2
-.LC4:
-	.ascii	"Timer ready\015\012\000"
-	.align	2
-.LC5:
-	.ascii	"ERROR: Initialising GPIO failed\015\012\000"
-	.align	2
 .LC6:
-	.ascii	"GPIO block configured\015\012\000"
+	.ascii	"\015\012\015\012Press any key to start\015\012\000"
 	.align	2
 .LC7:
-	.ascii	"XAxiDma_CfgInitialize error=%d\015\012\000"
+	.ascii	"ERROR: Initialising timer failed\015\012\000"
 	.align	2
 .LC8:
-	.ascii	"TXBuff Addr=0x%08x\015\012\000"
+	.ascii	"Timer ready\015\012\000"
 	.align	2
 .LC9:
-	.ascii	"RXBuff Addr=0x%08x\015\012\000"
+	.ascii	"ERROR: Initialising GPIO failed\015\012\000"
 	.align	2
 .LC10:
-	.ascii	"OK, done.\015\012\000"
+	.ascii	"GPIO block configured\015\012\000"
 	.align	2
 .LC11:
-	.ascii	"Waiting, Err=%d...\015\012\000"
+	.ascii	"\015\012\015\012Press any key to START\015\012\000"
 	.align	2
 .LC12:
-	.ascii	"Transfer interrupt\000"
+	.ascii	"Invalidate cache\000"
 	.align	2
 .LC13:
-	.ascii	"TransferRate=%2.2f MiB/s\015\012\000"
+	.ascii	"Waiting, Err=%d...\015\012\000"
 	.align	2
 .LC14:
-	.ascii	"Starting to verify memory...\015\012\000"
+	.ascii	"TransferRate=%2.2f MiB/s\015\012\000"
 	.align	2
 .LC15:
-	.ascii	"Verify process\000"
+	.ascii	"Starting to verify memory...\015\012\000"
 	.align	2
 .LC16:
+	.ascii	"Verify process\000"
+	.align	2
+.LC17:
 	.ascii	"\033[91mERROR:\033[0m %d word errors (%d words OK, "
 	.ascii	"%2.5f%% error rate)\015\012\000"
 	.align	2
-.LC17:
+.LC18:
 	.ascii	"\033[92mPASS: \033[0m %d words OK\015\012\000"
 	.align	2
-.LC18:
+.LC19:
 	.ascii	"Controller reset\000"
 	.align	2
-.LC19:
+.LC20:
 	.ascii	"Interrupt setup\000"
 	.text
 	.align	2
@@ -635,7 +659,7 @@ dump_timing:
 	.type	main, %function
 main:
 .LFB20:
-	.loc 2 283 0
+	.loc 2 285 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 48
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -647,37 +671,43 @@ main:
 	add	fp, sp, #8
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #60
-	.loc 2 284 0
+	.loc 2 286 0
 	mov	r3, #0
 	str	r3, [fp, #-36]
 	mov	r3, #0
 	str	r3, [fp, #-40]
-	.loc 2 288 0
+	.loc 2 290 0
 	mov	r3, #0
 	str	r3, [fp, #-20]
 	mov	r3, #0
 	str	r3, [fp, #-24]
-	.loc 2 291 0
+	.loc 2 293 0
 	mov	r3, #0
 	str	r3, [fp, #-44]	@ float
-	.loc 2 293 0
-	bl	init_platform
 	.loc 2 295 0
-	movw	r0, #:lower16:.LC1
-	movt	r0, #:upper16:.LC1
+	bl	init_platform
+	.loc 2 297 0
+	movw	r0, #:lower16:.LC4
+	movt	r0, #:upper16:.LC4
 	bl	debug_printf
-	.loc 2 296 0
-	movw	r0, #:lower16:.LC2
-	movt	r0, #:upper16:.LC2
+	.loc 2 298 0
+	movw	r0, #:lower16:.LC5
+	movt	r0, #:upper16:.LC5
 	bl	debug_printf
-	.loc 2 299 0
+	.loc 2 300 0
+	movw	r0, #:lower16:.LC6
+	movt	r0, #:upper16:.LC6
+	bl	debug_printf
+	.loc 2 301 0
+	bl	inbyte
+	.loc 2 304 0
 	mov	r0, #0
 	bl	XScuTimer_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:xscu_timer_cfg
 	movt	r3, #:upper16:xscu_timer_cfg
 	str	r2, [r3]
-	.loc 2 300 0
+	.loc 2 305 0
 	movw	r3, #:lower16:xscu_timer_cfg
 	movt	r3, #:upper16:xscu_timer_cfg
 	ldr	r1, [r3]
@@ -690,30 +720,30 @@ main:
 	movt	r0, #:upper16:xscu_timer
 	bl	XScuTimer_CfgInitialize
 	str	r0, [fp, #-48]
-	.loc 2 302 0
+	.loc 2 307 0
 	ldr	r3, [fp, #-48]
 	cmp	r3, #0
-	beq	.L22
-	.loc 2 303 0
-	movw	r0, #:lower16:.LC3
-	movt	r0, #:upper16:.LC3
+	beq	.L23
+	.loc 2 308 0
+	movw	r0, #:lower16:.LC7
+	movt	r0, #:upper16:.LC7
 	bl	xil_printf
+.L24:
+	.loc 2 309 0 discriminator 1
+	b	.L24
 .L23:
-	.loc 2 304 0 discriminator 1
-	b	.L23
-.L22:
-	.loc 2 307 0
-	movw	r0, #:lower16:.LC4
-	movt	r0, #:upper16:.LC4
+	.loc 2 312 0
+	movw	r0, #:lower16:.LC8
+	movt	r0, #:upper16:.LC8
 	bl	debug_printf
-	.loc 2 310 0
+	.loc 2 315 0
 	mov	r0, #0
 	bl	XGpioPs_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:gpio_config
 	movt	r3, #:upper16:gpio_config
 	str	r2, [r3]
-	.loc 2 311 0
+	.loc 2 316 0
 	movw	r3, #:lower16:gpio_config
 	movt	r3, #:upper16:gpio_config
 	ldr	r1, [r3]
@@ -726,66 +756,78 @@ main:
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_CfgInitialize
 	str	r0, [fp, #-48]
-	.loc 2 313 0
+	.loc 2 318 0
 	ldr	r3, [fp, #-48]
 	cmp	r3, #0
-	beq	.L24
-	.loc 2 314 0
-	movw	r0, #:lower16:.LC5
-	movt	r0, #:upper16:.LC5
-	bl	xil_printf
-.L25:
-	.loc 2 315 0 discriminator 2
-	b	.L25
-.L24:
-	.loc 2 318 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_SetDirectionPin
+	beq	.L25
 	.loc 2 319 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_SetOutputEnablePin
-	.loc 2 320 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_WritePin
-	.loc 2 322 0
-	mov	r2, #1
-	mov	r1, #37
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_SetDirectionPin
+	movw	r0, #:lower16:.LC9
+	movt	r0, #:upper16:.LC9
+	bl	xil_printf
+.L26:
+	.loc 2 320 0 discriminator 2
+	b	.L26
+.L25:
 	.loc 2 323 0
 	mov	r2, #1
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetDirectionPin
+	.loc 2 324 0
+	mov	r2, #1
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetOutputEnablePin
+	.loc 2 325 0
+	mov	r2, #1
+	mov	r1, #9
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_WritePin
+	.loc 2 327 0
+	mov	r2, #1
+	mov	r1, #37
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetDirectionPin
+	.loc 2 328 0
+	mov	r2, #1
 	mov	r1, #37
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_SetOutputEnablePin
-	.loc 2 324 0
+	.loc 2 329 0
 	mov	r2, #1
 	mov	r1, #37
 	movw	r0, #:lower16:gpio
 	movt	r0, #:upper16:gpio
 	bl	XGpioPs_WritePin
-	.loc 2 326 0
-	movw	r0, #:lower16:.LC6
-	movt	r0, #:upper16:.LC6
+	.loc 2 332 0
+	mvn	r2, #0
+	mov	r1, #2
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetDirection
+	.loc 2 333 0
+	mvn	r2, #0
+	mov	r1, #3
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_SetDirection
+	.loc 2 335 0
+	movw	r0, #:lower16:.LC10
+	movt	r0, #:upper16:.LC10
 	bl	debug_printf
-	.loc 2 350 0
+	.loc 2 359 0
 	mov	r0, #0
 	bl	XAxiDma_LookupConfig
 	mov	r2, r0
 	movw	r3, #:lower16:dma0_config
 	movt	r3, #:upper16:dma0_config
 	str	r2, [r3]
-	.loc 2 351 0
+	.loc 2 360 0
 	movw	r3, #:lower16:dma0_config
 	movt	r3, #:upper16:dma0_config
 	ldr	r3, [r3]
@@ -794,24 +836,7 @@ main:
 	movt	r0, #:upper16:dma0_pointer
 	bl	XAxiDma_CfgInitialize
 	str	r0, [fp, #-48]
-	.loc 2 353 0
-	ldr	r1, [fp, #-48]
-	movw	r0, #:lower16:.LC7
-	movt	r0, #:upper16:.LC7
-	bl	debug_printf
-	.loc 2 355 0
-	movw	r1, #:lower16:tx_buffer
-	movt	r1, #:upper16:tx_buffer
-	movw	r0, #:lower16:.LC8
-	movt	r0, #:upper16:.LC8
-	bl	debug_printf
-	.loc 2 356 0
-	movw	r1, #:lower16:rx_buffer
-	movt	r1, #:upper16:rx_buffer
-	movw	r0, #:lower16:.LC9
-	movt	r0, #:upper16:.LC9
-	bl	debug_printf
-	.loc 2 359 0
+	.loc 2 368 0
 	mov	r3, #62
 	mov	r2, #61
 	movw	r1, #:lower16:dma0_pointer
@@ -819,250 +844,23 @@ main:
 	movw	r0, #:lower16:Intc
 	movt	r0, #:upper16:Intc
 	bl	SetupIntrSystem
-	.loc 2 362 0
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r4, r3, #48
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r3, r3, #48
-	mov	r0, r3
-	bl	Xil_In32
-	mov	r3, r0
-	bic	r3, r3, #4096
-	mov	r1, r3
-	mov	r0, r4
-	bl	Xil_Out32
-	.loc 2 363 0
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r4, r3, #48
-	movw	r3, #:lower16:dma0_pointer
-	movt	r3, #:upper16:dma0_pointer
-	ldr	r3, [r3]
-	add	r3, r3, #48
-	mov	r0, r3
-	bl	Xil_In32
-	mov	r3, r0
-	orr	r3, r3, #4096
-	mov	r1, r3
-	mov	r0, r4
-	bl	Xil_Out32
-	.loc 2 365 0
-	movw	r0, #:lower16:.LC10
-	movt	r0, #:upper16:.LC10
-	bl	debug_printf
-.L33:
-	.loc 2 368 0
-	mov	r3, #0
-	str	r3, [fp, #-36]
-	.loc 2 369 0
-	mov	r3, #8388608
-	str	r3, [fp, #-52]
 	.loc 2 371 0
-	movw	r1, #:lower16:rx_buffer
-	movt	r1, #:upper16:rx_buffer
-	mov	r3, #1
-	ldr	r2, [fp, #-52]
-	movw	r0, #:lower16:dma0_pointer
-	movt	r0, #:upper16:dma0_pointer
-	bl	XAxiDma_SimpleTransfer
-	mov	r3, r0
-	str	r3, [fp, #-48]
-	.loc 2 372 0
-	movw	r3, #:lower16:rx_buffer
-	movt	r3, #:upper16:rx_buffer
-	movw	r1, #16383
+	movw	r3, #:lower16:dma0_pointer
+	movt	r3, #:upper16:dma0_pointer
+	ldr	r3, [r3]
+	add	r4, r3, #48
+	movw	r3, #:lower16:dma0_pointer
+	movt	r3, #:upper16:dma0_pointer
+	ldr	r3, [r3]
+	add	r3, r3, #48
 	mov	r0, r3
-	bl	Xil_DCacheInvalidateRange
-	.loc 2 374 0
-	ldr	r1, [fp, #-48]
-	movw	r0, #:lower16:.LC11
-	movt	r0, #:upper16:.LC11
-	bl	debug_printf
-	.loc 2 376 0
-	mov	r2, #1
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_WritePin
-	.loc 2 377 0
-	bl	start_timing
-	.loc 2 378 0
-	nop
-.L26:
-	.loc 2 378 0 is_stmt 0 discriminator 1
-	movw	r3, #:lower16:ioc_flag
-	movt	r3, #:upper16:ioc_flag
-	ldr	r3, [r3]
-	cmp	r3, #0
-	beq	.L26
-	.loc 2 379 0 is_stmt 1
-	bl	stop_timing
-	.loc 2 380 0
-	mov	r2, #0
-	mov	r1, #9
-	movw	r0, #:lower16:gpio
-	movt	r0, #:upper16:gpio
-	bl	XGpioPs_WritePin
-	.loc 2 381 0
-	movw	r0, #:lower16:.LC12
-	movt	r0, #:upper16:.LC12
-	bl	dump_timing
-	.loc 2 383 0
-	ldr	r3, [fp, #-52]
-	vmov	s15, r3	@ int
-	vcvt.f64.u32	d16, s15
-	vldr.64	d17, .L34
-	vmul.f64	d17, d16, d17
-	movw	r3, #:lower16:tdelta
-	movt	r3, #:upper16:tdelta
-	ldr	r3, [r3]
-	vmov	s15, r3	@ int
-	vcvt.f32.u32	s15, s15
-	vldr.32	s14, .L34+8
-	vmul.f32	s15, s15, s14
-	vcvt.f64.f32	d16, s15
-	vdiv.f64	d18, d17, d16
-	vmov	r2, r3, d18
-	movw	r0, #:lower16:.LC13
-	movt	r0, #:upper16:.LC13
-	bl	debug_printf
-	.loc 2 384 0
-	movw	r0, #:lower16:.LC14
-	movt	r0, #:upper16:.LC14
-	bl	debug_printf
-	.loc 2 387 0
-	movw	r3, #:lower16:rx_buffer
-	movt	r3, #:upper16:rx_buffer
-	str	r3, [fp, #-32]
-	.loc 2 388 0
-	ldr	r3, [fp, #-32]
-	add	r2, r3, #4
-	str	r2, [fp, #-32]
-	ldr	r3, [r3]
-	str	r3, [fp, #-28]
-	.loc 2 389 0
-	mov	r3, #0
-	str	r3, [fp, #-20]
-	.loc 2 390 0
-	mov	r3, #0
-	str	r3, [fp, #-24]
-	.loc 2 391 0
-	mov	r3, #0
-	str	r3, [fp, #-56]
-	.loc 2 393 0
-	bl	start_timing
-	.loc 2 394 0
-	mov	r3, #1
-	str	r3, [fp, #-16]
-	b	.L27
-.L30:
-	.loc 2 395 0
-	ldr	r3, [fp, #-32]
-	ldr	r3, [r3]
-	str	r3, [fp, #-60]
-	.loc 2 397 0
-	ldr	r2, [fp, #-60]
-	ldr	r3, [fp, #-28]
-	sub	r3, r2, r3
-	cmp	r3, #1
-	beq	.L28
-	.loc 2 402 0
-	ldr	r3, [fp, #-20]
-	add	r3, r3, #1
-	str	r3, [fp, #-20]
-	.loc 2 403 0
-	ldr	r3, [fp, #-16]
-	str	r3, [fp, #-56]
-	b	.L29
-.L28:
-	.loc 2 405 0
-	ldr	r3, [fp, #-24]
-	add	r3, r3, #1
-	str	r3, [fp, #-24]
-.L29:
-	.loc 2 414 0 discriminator 2
-	ldr	r3, [fp, #-60]
-	str	r3, [fp, #-28]
-	.loc 2 415 0 discriminator 2
-	ldr	r3, [fp, #-32]
-	add	r3, r3, #8
-	str	r3, [fp, #-32]
-	.loc 2 394 0 discriminator 2
-	ldr	r3, [fp, #-16]
-	add	r3, r3, #1
-	str	r3, [fp, #-16]
-.L27:
-	.loc 2 394 0 is_stmt 0 discriminator 1
-	ldr	r3, [fp, #-52]
-	lsr	r3, r3, #3
-	ldr	r2, [fp, #-16]
-	cmp	r2, r3
-	bcc	.L30
-	.loc 2 418 0 is_stmt 1
-	bl	stop_timing
-	.loc 2 419 0
-	movw	r0, #:lower16:.LC15
-	movt	r0, #:upper16:.LC15
-	bl	dump_timing
-	.loc 2 421 0
-	ldr	r3, [fp, #-20]
-	vmov	s15, r3	@ int
-	vcvt.f32.u32	s15, s15
-	vldr.32	s14, .L34+12
-	vmul.f32	s13, s15, s14
-	ldr	r2, [fp, #-20]
-	ldr	r3, [fp, #-24]
-	add	r3, r2, r3
-	vmov	s15, r3	@ int
-	vcvt.f32.u32	s14, s15
-	vdiv.f32	s15, s13, s14
-	vstr.32	s15, [fp, #-44]
-	.loc 2 423 0
-	ldr	r3, [fp, #-20]
-	cmp	r3, #0
-	beq	.L31
-	.loc 2 424 0
-	vldr.32	s15, [fp, #-44]
-	vcvt.f64.f32	d16, s15
-	vstr.64	d16, [sp]
-	ldr	r2, [fp, #-24]
-	ldr	r1, [fp, #-20]
-	movw	r0, #:lower16:.LC16
-	movt	r0, #:upper16:.LC16
-	bl	debug_printf
-	b	.L32
-.L31:
-	.loc 2 427 0
-	ldr	r1, [fp, #-24]
-	movw	r0, #:lower16:.LC17
-	movt	r0, #:upper16:.LC17
-	bl	debug_printf
-.L32:
-	.loc 2 430 0
-	movw	r3, #:lower16:ioc_flag
-	movt	r3, #:upper16:ioc_flag
-	mov	r2, #0
-	str	r2, [r3]
-	.loc 2 433 0
-	bl	start_timing
-	.loc 2 434 0
-	movw	r0, #:lower16:dma0_pointer
-	movt	r0, #:upper16:dma0_pointer
-	bl	XAxiDma_Reset
-	.loc 2 435 0
-	bl	stop_timing
-	.loc 2 436 0
-	movw	r0, #:lower16:.LC18
-	movt	r0, #:upper16:.LC18
-	bl	dump_timing
-	.loc 2 438 0
-	bl	start_timing
-	.loc 2 443 0
+	bl	Xil_In32
+	mov	r3, r0
+	bic	r3, r3, #28672
+	mov	r1, r3
+	mov	r0, r4
+	bl	Xil_Out32
+	.loc 2 372 0
 	movw	r3, #:lower16:dma0_pointer
 	movt	r3, #:upper16:dma0_pointer
 	ldr	r3, [r3]
@@ -1078,11 +876,249 @@ main:
 	mov	r1, r3
 	mov	r0, r4
 	bl	Xil_Out32
-	.loc 2 444 0
+.L33:
+	.loc 2 377 0
+	mov	r3, #0
+	str	r3, [fp, #-36]
+	.loc 2 378 0
+	mov	r3, #32768
+	str	r3, [fp, #-52]
+	.loc 2 380 0
+	movw	r0, #:lower16:.LC11
+	movt	r0, #:upper16:.LC11
+	bl	debug_printf
+	.loc 2 381 0
+	bl	inbyte
+	.loc 2 384 0
+	mov	r2, #0
+	mov	r1, #2
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 385 0
+	mov	r2, #0
+	mov	r1, #3
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 387 0
+	bl	start_timing
+	.loc 2 388 0
+	movw	r3, #:lower16:rx_buffer
+	movt	r3, #:upper16:rx_buffer
+	movw	r1, #16383
+	mov	r0, r3
+	bl	Xil_DCacheInvalidateRange
+	.loc 2 389 0
+	bl	stop_timing
+	.loc 2 390 0
+	movw	r0, #:lower16:.LC12
+	movt	r0, #:upper16:.LC12
+	bl	dump_timing
+	.loc 2 393 0
+	movw	r1, #:lower16:rx_buffer
+	movt	r1, #:upper16:rx_buffer
+	mov	r3, #1
+	ldr	r2, [fp, #-52]
+	movw	r0, #:lower16:dma0_pointer
+	movt	r0, #:upper16:dma0_pointer
+	bl	XAxiDma_SimpleTransfer
+	mov	r3, r0
+	str	r3, [fp, #-48]
+	.loc 2 395 0
+	mvn	r2, #0
+	mov	r1, #2
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 396 0
+	mvn	r2, #0
+	mov	r1, #3
+	movw	r0, #:lower16:gpio
+	movt	r0, #:upper16:gpio
+	bl	XGpioPs_Write
+	.loc 2 398 0
+	ldr	r1, [fp, #-48]
+	movw	r0, #:lower16:.LC13
+	movt	r0, #:upper16:.LC13
+	bl	debug_printf
+	.loc 2 409 0
+	movw	r0, #16960
+	movt	r0, 15
+	bl	arb_delay
+	.loc 2 411 0
+	ldr	r3, [fp, #-52]
+	vmov	s15, r3	@ int
+	vcvt.f64.u32	d16, s15
+	vldr.64	d17, .L34
+	vmul.f64	d17, d16, d17
+	movw	r3, #:lower16:tdelta
+	movt	r3, #:upper16:tdelta
+	ldr	r3, [r3]
+	vmov	s15, r3	@ int
+	vcvt.f32.u32	s15, s15
+	vldr.32	s14, .L34+8
+	vmul.f32	s15, s15, s14
+	vcvt.f64.f32	d16, s15
+	vdiv.f64	d18, d17, d16
+	vmov	r2, r3, d18
+	movw	r0, #:lower16:.LC14
+	movt	r0, #:upper16:.LC14
+	bl	debug_printf
+	.loc 2 412 0
+	movw	r0, #:lower16:.LC15
+	movt	r0, #:upper16:.LC15
+	bl	debug_printf
+	.loc 2 415 0
+	movw	r3, #:lower16:rx_buffer
+	movt	r3, #:upper16:rx_buffer
+	str	r3, [fp, #-32]
+	.loc 2 416 0
+	ldr	r3, [fp, #-32]
+	add	r2, r3, #4
+	str	r2, [fp, #-32]
+	ldr	r3, [r3]
+	str	r3, [fp, #-28]
+	.loc 2 417 0
+	mov	r3, #0
+	str	r3, [fp, #-20]
+	.loc 2 418 0
+	mov	r3, #0
+	str	r3, [fp, #-24]
+	.loc 2 419 0
+	mov	r3, #0
+	str	r3, [fp, #-56]
+	.loc 2 421 0
+	bl	start_timing
+	.loc 2 422 0
+	mov	r3, #1
+	str	r3, [fp, #-16]
+	b	.L27
+.L30:
+	.loc 2 423 0
+	ldr	r3, [fp, #-32]
+	ldr	r3, [r3]
+	str	r3, [fp, #-60]
+	.loc 2 425 0
+	ldr	r2, [fp, #-60]
+	ldr	r3, [fp, #-28]
+	sub	r3, r2, r3
+	cmp	r3, #1
+	beq	.L28
+	.loc 2 430 0
+	ldr	r3, [fp, #-20]
+	add	r3, r3, #1
+	str	r3, [fp, #-20]
+	.loc 2 431 0
+	ldr	r3, [fp, #-16]
+	str	r3, [fp, #-56]
+	b	.L29
+.L28:
+	.loc 2 433 0
+	ldr	r3, [fp, #-24]
+	add	r3, r3, #1
+	str	r3, [fp, #-24]
+.L29:
+	.loc 2 442 0 discriminator 2
+	ldr	r3, [fp, #-60]
+	str	r3, [fp, #-28]
+	.loc 2 443 0 discriminator 2
+	ldr	r3, [fp, #-32]
+	add	r3, r3, #8
+	str	r3, [fp, #-32]
+	.loc 2 422 0 discriminator 2
+	ldr	r3, [fp, #-16]
+	add	r3, r3, #1
+	str	r3, [fp, #-16]
+.L27:
+	.loc 2 422 0 is_stmt 0 discriminator 1
+	ldr	r3, [fp, #-52]
+	lsr	r3, r3, #3
+	ldr	r2, [fp, #-16]
+	cmp	r2, r3
+	bcc	.L30
+	.loc 2 446 0 is_stmt 1
+	bl	stop_timing
+	.loc 2 447 0
+	movw	r0, #:lower16:.LC16
+	movt	r0, #:upper16:.LC16
+	bl	dump_timing
+	.loc 2 449 0
+	ldr	r3, [fp, #-20]
+	vmov	s15, r3	@ int
+	vcvt.f32.u32	s15, s15
+	vldr.32	s14, .L34+12
+	vmul.f32	s13, s15, s14
+	ldr	r2, [fp, #-20]
+	ldr	r3, [fp, #-24]
+	add	r3, r2, r3
+	vmov	s15, r3	@ int
+	vcvt.f32.u32	s14, s15
+	vdiv.f32	s15, s13, s14
+	vstr.32	s15, [fp, #-44]
+	.loc 2 451 0
+	ldr	r3, [fp, #-20]
+	cmp	r3, #0
+	beq	.L31
+	.loc 2 452 0
+	vldr.32	s15, [fp, #-44]
+	vcvt.f64.f32	d16, s15
+	vstr.64	d16, [sp]
+	ldr	r2, [fp, #-24]
+	ldr	r1, [fp, #-20]
+	movw	r0, #:lower16:.LC17
+	movt	r0, #:upper16:.LC17
+	bl	debug_printf
+	b	.L32
+.L31:
+	.loc 2 455 0
+	ldr	r1, [fp, #-24]
+	movw	r0, #:lower16:.LC18
+	movt	r0, #:upper16:.LC18
+	bl	debug_printf
+.L32:
+	.loc 2 458 0
+	movw	r3, #:lower16:ioc_flag
+	movt	r3, #:upper16:ioc_flag
+	mov	r2, #0
+	str	r2, [r3]
+	.loc 2 461 0
+	bl	start_timing
+	.loc 2 462 0
+	movw	r0, #:lower16:dma0_pointer
+	movt	r0, #:upper16:dma0_pointer
+	bl	XAxiDma_Reset
+	.loc 2 463 0
+	bl	stop_timing
+	.loc 2 464 0
 	movw	r0, #:lower16:.LC19
 	movt	r0, #:upper16:.LC19
 	bl	dump_timing
-	.loc 2 368 0
+	.loc 2 466 0
+	bl	start_timing
+	.loc 2 471 0
+	movw	r3, #:lower16:dma0_pointer
+	movt	r3, #:upper16:dma0_pointer
+	ldr	r3, [r3]
+	add	r4, r3, #48
+	movw	r3, #:lower16:dma0_pointer
+	movt	r3, #:upper16:dma0_pointer
+	ldr	r3, [r3]
+	add	r3, r3, #48
+	mov	r0, r3
+	bl	Xil_In32
+	mov	r3, r0
+	orr	r3, r3, #28672
+	mov	r1, r3
+	mov	r0, r4
+	bl	Xil_Out32
+	.loc 2 472 0
+	bl	stop_timing
+	.loc 2 473 0
+	movw	r0, #:lower16:.LC20
+	movt	r0, #:upper16:.LC20
+	bl	dump_timing
+	.loc 2 377 0
 	b	.L33
 .L35:
 	.align	3
@@ -3074,7 +3110,7 @@ main:
 	.uleb128 0x29
 	.4byte	.LASF2683
 	.byte	0x2
-	.2byte	0x11a
+	.2byte	0x11c
 	.4byte	0x8d
 	.4byte	.LFB20
 	.4byte	.LFE20-.LFB20
@@ -3084,7 +3120,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2674
 	.byte	0x2
-	.2byte	0x11c
+	.2byte	0x11e
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3092,7 +3128,7 @@ main:
 	.uleb128 0x2b
 	.ascii	"tog\000"
 	.byte	0x2
-	.2byte	0x11c
+	.2byte	0x11e
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3100,7 +3136,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2675
 	.byte	0x2
-	.2byte	0x11d
+	.2byte	0x11f
 	.4byte	0x8f6
 	.uleb128 0x2
 	.byte	0x91
@@ -3108,17 +3144,17 @@ main:
 	.uleb128 0x2c
 	.ascii	"t0\000"
 	.byte	0x2
-	.2byte	0x11e
+	.2byte	0x120
 	.4byte	0x901
 	.uleb128 0x2c
 	.ascii	"t1\000"
 	.byte	0x2
-	.2byte	0x11e
+	.2byte	0x120
 	.4byte	0x901
 	.uleb128 0x2b
 	.ascii	"sz\000"
 	.byte	0x2
-	.2byte	0x11f
+	.2byte	0x121
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3126,7 +3162,7 @@ main:
 	.uleb128 0x2b
 	.ascii	"i\000"
 	.byte	0x2
-	.2byte	0x11f
+	.2byte	0x121
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3134,7 +3170,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2676
 	.byte	0x2
-	.2byte	0x120
+	.2byte	0x122
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3142,7 +3178,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2677
 	.byte	0x2
-	.2byte	0x120
+	.2byte	0x122
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3150,7 +3186,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2678
 	.byte	0x2
-	.2byte	0x121
+	.2byte	0x123
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3158,7 +3194,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2679
 	.byte	0x2
-	.2byte	0x121
+	.2byte	0x123
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3166,7 +3202,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2680
 	.byte	0x2
-	.2byte	0x121
+	.2byte	0x123
 	.4byte	0x901
 	.uleb128 0x2
 	.byte	0x91
@@ -3174,7 +3210,7 @@ main:
 	.uleb128 0x2b
 	.ascii	"ptr\000"
 	.byte	0x2
-	.2byte	0x122
+	.2byte	0x124
 	.4byte	0xee8
 	.uleb128 0x2
 	.byte	0x91
@@ -3182,7 +3218,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2681
 	.byte	0x2
-	.2byte	0x123
+	.2byte	0x125
 	.4byte	0x10eb
 	.uleb128 0x2
 	.byte	0x91
@@ -3195,7 +3231,7 @@ main:
 	.uleb128 0x2d
 	.4byte	.LASF2684
 	.byte	0x2
-	.2byte	0x115
+	.2byte	0x117
 	.4byte	.LFB19
 	.4byte	.LFE19-.LFB19
 	.uleb128 0x1
@@ -3204,7 +3240,7 @@ main:
 	.uleb128 0x2e
 	.ascii	"s\000"
 	.byte	0x2
-	.2byte	0x115
+	.2byte	0x117
 	.4byte	0x5b1
 	.uleb128 0x2
 	.byte	0x91
@@ -3213,7 +3249,7 @@ main:
 	.uleb128 0x2f
 	.4byte	.LASF2685
 	.byte	0x2
-	.2byte	0x10f
+	.2byte	0x111
 	.4byte	.LFB18
 	.4byte	.LFE18-.LFB18
 	.uleb128 0x1
@@ -3221,7 +3257,7 @@ main:
 	.uleb128 0x2f
 	.4byte	.LASF2686
 	.byte	0x2
-	.2byte	0x106
+	.2byte	0x108
 	.4byte	.LFB17
 	.4byte	.LFE17-.LFB17
 	.uleb128 0x1
@@ -3229,7 +3265,7 @@ main:
 	.uleb128 0x30
 	.4byte	.LASF2713
 	.byte	0x2
-	.byte	0xc5
+	.byte	0xc7
 	.4byte	0x8d
 	.4byte	.LFB16
 	.4byte	.LFE16-.LFB16
@@ -3239,7 +3275,7 @@ main:
 	.uleb128 0x31
 	.4byte	.LASF2687
 	.byte	0x2
-	.byte	0xc5
+	.byte	0xc7
 	.4byte	0x11dd
 	.uleb128 0x2
 	.byte	0x91
@@ -3247,7 +3283,7 @@ main:
 	.uleb128 0x31
 	.4byte	.LASF2688
 	.byte	0x2
-	.byte	0xc6
+	.byte	0xc8
 	.4byte	0x11e3
 	.uleb128 0x2
 	.byte	0x91
@@ -3255,7 +3291,7 @@ main:
 	.uleb128 0x31
 	.4byte	.LASF2689
 	.byte	0x2
-	.byte	0xc6
+	.byte	0xc8
 	.4byte	0x957
 	.uleb128 0x2
 	.byte	0x91
@@ -3263,7 +3299,7 @@ main:
 	.uleb128 0x31
 	.4byte	.LASF2690
 	.byte	0x2
-	.byte	0xc6
+	.byte	0xc8
 	.4byte	0x957
 	.uleb128 0x2
 	.byte	0x91
@@ -3271,7 +3307,7 @@ main:
 	.uleb128 0x26
 	.4byte	.LASF2691
 	.byte	0x2
-	.byte	0xc8
+	.byte	0xca
 	.4byte	0x11e9
 	.uleb128 0x2
 	.byte	0x91
@@ -3279,7 +3315,7 @@ main:
 	.uleb128 0x26
 	.4byte	.LASF2692
 	.byte	0x2
-	.byte	0xc9
+	.byte	0xcb
 	.4byte	0x11e9
 	.uleb128 0x2
 	.byte	0x91
@@ -3287,7 +3323,7 @@ main:
 	.uleb128 0x26
 	.4byte	.LASF2693
 	.byte	0x2
-	.byte	0xca
+	.byte	0xcc
 	.4byte	0x8d
 	.uleb128 0x2
 	.byte	0x91
@@ -3295,7 +3331,7 @@ main:
 	.uleb128 0x26
 	.4byte	.LASF2694
 	.byte	0x2
-	.byte	0xcc
+	.byte	0xce
 	.4byte	0xe62
 	.uleb128 0x2
 	.byte	0x91
@@ -3306,7 +3342,7 @@ main:
 	.uleb128 0x2a
 	.4byte	.LASF2695
 	.byte	0x2
-	.2byte	0x101
+	.2byte	0x103
 	.4byte	0x962
 	.uleb128 0x2
 	.byte	0x91
