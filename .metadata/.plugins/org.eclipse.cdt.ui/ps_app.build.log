@@ -1,42 +1,31 @@
-13:39:36 **** Auto Build of configuration Debug for project ps_app ****
+20:43:49 **** Auto Build of configuration Debug for project ps_app ****
 make pre-build main-build 
 a9-linaro-pre-build-step
 ' '
-'Building file: ../src/hal.c'
+'Building file: ../src/main.c'
 'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/hal.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/hal.d" -MT"src/hal.o" -o "src/hal.o" "../src/hal.c"
+arm-none-eabi-gcc -DDEBUG -UNDEBUG -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -save-temps -I../../ps_app_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
 In file included from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:116:0,
                  from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:83,
                  from ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:488,
                  from ../src/hal.h:32,
-                 from ../src/hal.c:21:
+                 from ../src/main.c:41:
 ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:8:2: warning: #warning DEBUG is enabled [-Wcpp]
  #warning DEBUG is enabled
   ^~~~~~~
-../src/hal.c: In function 'd_stop_timing':
-../src/hal.c:288:10: warning: unused variable 't_delta' [-Wunused-variable]
-  int64_t t_delta;
-          ^~~~~~~
-../src/hal.c: In function 'd_dump_timing':
-../src/hal.c:332:11: warning: passing argument 1 of 'd_printf' makes integer from pointer without a cast [-Wint-conversion]
-  d_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, d_read_timing(index) * XSCUTIMER_TICKS_TO_CPUCYC, d_read_timing_us(index));
-           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/hal.c:161:6: note: expected 'int' but argument is of type 'char *'
- void d_printf(int debug_code, char *fmt, ...)
-      ^~~~~~~~
-'Finished building: ../src/hal.c'
+'Finished building: ../src/main.c'
 ' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../ps_app_bsp/ps7_cortexa9_0/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 'Finished building target: ps_app.elf'
 ' '
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  80688	   3372	18882640	18966700	12168ac	ps_app.elf
+  81440	   3372	 138384	 223196	  367dc	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-13:39:37 Build Finished (took 1s.40ms)
+20:44:04 Build Finished (took 14s.968ms)
 

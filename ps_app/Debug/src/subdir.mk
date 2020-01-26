@@ -7,16 +7,19 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
+../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
 ../src/platform.c 
 
 OBJS += \
+./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
 ./src/platform.o 
 
 C_DEPS += \
+./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \
 ./src/platform.d 

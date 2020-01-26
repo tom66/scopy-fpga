@@ -6715,18 +6715,27 @@ u8 XScuTimer_GetPrescaler(XScuTimer *InstancePtr);
 #define XSCUTIMER_TICKS_TO_US (XSCUTIMER_TICKS_TO_S * 1e6)
 #define XSCUTIMER_TICKS_TO_CPUCYC 2
 
-#define XSCUTIMER_OVERFLOW_TIME ((0xffffffffLU) / XSCUTIMER_CLOCK)
+#define XSCUTIMER_LOAD_VALUE (0xffffffff)
+#define XSCUTIMER_LOAD_VALUE_LU (0xffffffffLU)
+
+#define XSCUTIMER_OVERFLOW_TIME (XSCUTIMER_LOAD_VALUE_LU / XSCUTIMER_CLOCK)
 #define XSCUTIMER_OVERFLOW_TIME_US ((XSCUTIMER_OVERFLOW_TIME) * 1e6)
 
-#define XSCUTIMER_NEAR_OVERFLOW 0xffffff00
+#define XSCUTIMER_NEAR_OVERFLOW (XSCUTIMER_LOAD_VALUE - 0xff)
 
 #define NUM_DEBUG_TIMERS 16
 
+#define GPIO_PS_LED_0_PIN 9
+#define GPIO_PS_LED_1_PIN 37
 
 #define D_ASSERT(expr) { if(!(expr)) { d_printf(D_ERROR, "assertion failed: `%s' (file %s, line %d)", #expr, __FILE__, __LINE__); } }
 
 
 
+
+
+#define BOGOCAL_ITERAMT 100000
+#define BOGOCAL_ITERCNT 2
 
 
 struct hal_t {
@@ -6744,211 +6753,29 @@ struct hal_t {
 
  uint64_t timers[16];
  int64_t timer_deltas[16];
+
+
+ float bogo_cal;
 };
 
+extern struct hal_t g_hal;
+
 void hal_init();
+void bogo_delay(uint32_t us);
+void gpio_led_write(int index, int enable);
 void d_printf(int debug_code, char *fmt, ...);
 void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret);
 void d_start_timing(int index);
 void d_stop_timing(int index);
 uint64_t d_read_timing(int index);
 float d_read_timing_us(int index);
+void d_dump_timing(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
 # 42 "../src/main.c" 2
-# 56 "../src/main.c"
-uint32_t *mem_addr;
-uint32_t *base;
-
-#define PACKET_MAXSIZE 16383
-
-#define INTC XScuGic
-#define INTC_HANDLER XScuGic_InterruptHandler
-#define RESET_TIMEOUT_COUNTER 10000
-
-#define RX_INTR_ID XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
-#define TX_INTR_ID XPAR_FABRIC_AXIDMA_0_MM2S_INTROUT_VEC_ID
-
-#define INTC_DEVICE_ID XPAR_SCUGIC_SINGLE_DEVICE_ID
-
-static XScuGic Intc;
-
-
-
-uint8_t rx_buffer[1 << 23] __attribute__((aligned (1048576)));
-uint8_t tx_buffer[1 << 23] __attribute__((aligned (1048576)));
-
-
-
-XAxiDma dma0_pointer;
-XAxiDma_Config *dma0_config;
-XGpioPs gpio;
-XGpioPs_Config *gpio_config;
-
-XScuTimer xscu_timer;
-XScuTimer_Config *xscu_timer_cfg;
-
-uint32_t timer0, timer1;
-uint32_t tdelta;
-
-volatile uint32_t ioc_flag = 0;
-volatile uint32_t err_flag = 0;
-
-#define MARK_UNCACHEABLE 0x701
-
-void debug_printf(char *fmt, ...)
-{
- char buffer[1024];
-
- va_list args;
- 
-# 100 "../src/main.c" 3 4
-__builtin_va_start(
-# 100 "../src/main.c"
-args
-# 100 "../src/main.c" 3 4
-,
-# 100 "../src/main.c"
-fmt
-# 100 "../src/main.c" 3 4
-)
-# 100 "../src/main.c"
-                   ;
-
- vsnprintf(buffer, 1024, fmt, args);
- print(buffer);
-
- 
-# 105 "../src/main.c" 3 4
-__builtin_va_end(
-# 105 "../src/main.c"
-args
-# 105 "../src/main.c" 3 4
-)
-# 105 "../src/main.c"
-            ;
-}
-
-void arb_delay(uint32_t n)
-{
- while(n--) {
-  __asm__("nop");
- }
-}
-
-
-
-
-
-
-static void RxIntrHandler(void *Callback)
-{
- XAxiDma_BdRing *RxRingPtr = (XAxiDma_BdRing *) Callback;
- u32 IrqStatus;
- u32 AxiStatus;
- int TimeOut;
-
-
- IrqStatus = (Xil_In32(((RxRingPtr)->ChanBase) + (0x00000004)) & 0x00007000);
-
-
-
-
-
- Xil_Out32(((RxRingPtr)->ChanBase) + (0x00000004), ((IrqStatus) & 0x00007000));
-# 154 "../src/main.c"
- if ((IrqStatus & 0x00004000)) {
-  err_flag = 1;
-# 187 "../src/main.c"
- }
-
-
-
-
-
-
- if ((IrqStatus & (0x00002000 | 0x00001000))) {
-
-  ioc_flag = 1;
- }
-}
-
-static int SetupIntrSystem(XScuGic * IntcInstancePtr,
-      XAxiDma * AxiDmaPtr, u16 TxIntrId, u16 RxIntrId)
-{
- XAxiDma_BdRing *TxRingPtr = (&((AxiDmaPtr)->TxBdRing));
- XAxiDma_BdRing *RxRingPtr = (&((AxiDmaPtr)->RxBdRing[0]));
- int Status;
-
- XScuGic_Config *IntcConfig;
-
-
-
-
-
- IntcConfig = XScuGic_LookupConfig(0U);
- if (
-# 214 "../src/main.c" 3 4
-    ((void *)0) 
-# 214 "../src/main.c"
-         == IntcConfig) {
-  return 1L;
- }
-
- Status = XScuGic_CfgInitialize(IntcInstancePtr, IntcConfig,
-     IntcConfig->CpuBaseAddress);
- if (Status != 0L) {
-  return 1L;
- }
-
-
-
-
- XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
-# 243 "../src/main.c"
- Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
-    (Xil_InterruptHandler)RxIntrHandler,
-    RxRingPtr);
- if (Status != 0L) {
-  return Status;
- }
-
-
- XScuGic_Enable(IntcInstancePtr, RxIntrId);
-
-
-
- Xil_ExceptionInit();
- Xil_ExceptionRegisterHandler(5U,
-   (Xil_ExceptionHandler)XScuGic_InterruptHandler,
-   (void *)IntcInstancePtr);
-
- __asm__ __volatile__( "msr	cpsr,%0\n" : : "r" (({u32 rval = 0U; __asm__ __volatile__( "mrs	%0, cpsr\n" : "=r" (rval) ); rval; }) & ~ ((0x80) & (0x40 | 0x80))) );
-
- return 0L;
-}
-
-void start_timing()
-{
- Xil_Out32(((&xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
- XScuTimer_Start(&xscu_timer);
-
- timer1 = 0;
- timer0 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
-}
-
-void stop_timing()
-{
- timer1 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
- tdelta = timer0 - timer1;
-}
-
-void dump_timing(char *s)
-{
- debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * ((2.0f / 666666687) * 1e6));
-}
 
 int main()
 {
  hal_init();
-# 502 "../src/main.c"
+
+    cleanup_platform();
 }

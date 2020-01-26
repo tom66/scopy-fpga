@@ -19,6 +19,7 @@
 
 // Local application includes
 #include "hal.h"
+#include "fabric_config.h"
 #include "version_tag.h"
 
 // Xilinx includes
@@ -57,11 +58,14 @@ void hal_init()
 {
 	int error;
 
-	// Get platform up. This also initialises USART, so we can start debug output immediately.
-    init_platform();
-    Xil_AssertSetCallback(&d_xilinx_assert);
+	// Reset BogoCal compensation factor.
+	g_hal.bogo_cal = 1.0f;
 
-    // Clear junk on terminal, if any present; print startup message.
+	// Get platform up. This also initialises USART, so we can start debug output immediately.
+	init_platform();
+	Xil_AssertSetCallback(&d_xilinx_assert);
+
+	// Clear junk on terminal, if any present; print startup message.
 	d_printf(D_RAW, "\r\n\r\n\033[2J\033[0m\r\n");
 	d_printf(D_INFO, "ps_app: Zynq application for YAOS Oscilloscope Project (%s)", PS_APP_VERSION_TAG);
 	d_printf(D_INFO, "Built %s %s", __DATE__, __TIME__);
@@ -73,9 +77,9 @@ void hal_init()
 	d_printf(D_INFO, "For information see LICENCE in the Git repository");
 	d_printf(D_INFO, "");
 
-    /*
-     * Prepare global interrupt controller.
-     */
+	/*
+	 * Prepare global interrupt controller.
+	 */
 	g_hal.xscu_gic_cfg = XScuGic_LookupConfig(XPAR_SCUGIC_SINGLE_DEVICE_ID);
 	if(g_hal.xscu_gic_cfg == NULL) {
 		d_printf(D_ERROR, "XScuGic: configuration lookup returns NULL");
@@ -100,23 +104,24 @@ void hal_init()
 	 */
 	g_hal.xscu_timer_cfg = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
 	error = XScuTimer_CfgInitialize(&g_hal.xscu_timer, g_hal.xscu_timer_cfg, g_hal.xscu_timer_cfg->BaseAddr);
-
 	if (error != XST_SUCCESS) {
 		d_printf(D_ERROR, "XScuTimer: returned error code: %d, unable to start", error);
 		exit(-1);
 	}
 
 	error = XScuTimer_SelfTest(&g_hal.xscu_timer);
-
 	if (error != XST_SUCCESS) {
 		d_printf(D_ERROR, "XScuTimer: self test failed with error %d", error);
 		exit(-1);
 	}
 
 	d_printf(D_INFO, "XScuTimer: ready");
-	d_printf(D_EXINFO, "XScuTimer: config: %3.3f MHz, 1 tick = %.3f us", XSCUTIMER_CLOCK / 1e6f, XSCUTIMER_TICKS_TO_US);
 
 	error = XScuGic_Connect(&g_hal.xscu_gic, XPAR_SCUTIMER_INTR, (Xil_ExceptionHandler)irq_xscutimer, (void *)&g_hal.xscu_timer);
+	if (error != XST_SUCCESS) {
+		d_printf(D_ERROR, "XScuTimer: unable to connect interrupt handler: error code %d", error);
+		exit(-1);
+	}
 
 	// Enable CPU excception handler
 	Xil_ExceptionEnable();
@@ -126,12 +131,22 @@ void hal_init()
 	 * timer will refresh once it downcounts to zero.  Enable the interrupts.
 	 */
 	g_hal.g_timer_overflow = 0;
-	XScuTimer_LoadTimer(&g_hal.xscu_timer, 0xffffffff);
+	XScuTimer_LoadTimer(&g_hal.xscu_timer, XSCUTIMER_LOAD_VALUE);
 	XScuTimer_EnableAutoReload(&g_hal.xscu_timer);
 	XScuTimer_EnableInterrupt(&g_hal.xscu_timer);
 	XScuGic_Enable(&g_hal.xscu_gic, XPAR_SCUTIMER_INTR);
 	XScuTimer_Start(&g_hal.xscu_timer);
 	g_hal.g_timer_have_init = 1;
+
+	d_printf(D_EXINFO, "XScuTimer: config: %3.3f MHz, 1 tick = %.3f us", XSCUTIMER_CLOCK / 1e6f, XSCUTIMER_TICKS_TO_US);
+
+	// Calibrate the BogoTimer
+	bogo_calibrate();
+
+	d_start_timing(0);
+	bogo_delay(100000);
+	d_stop_timing(0);
+	d_dump_timing("BogoDelay: Test 100 ms", 0);
 
 	/*
 	 * Initialise the GPIO controller.  EMIO is primarily used inside the device to pass
@@ -145,7 +160,96 @@ void hal_init()
 		exit(-1);
 	}
 
+	// Set all IO ports initially as inputs.  These will be changed as needed.
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 0, 0x00000000);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 1, 0x00000000);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 2, 0x00000000);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 3, 0x00000000);
+
+	// Setup LED PS#0 and PS#1 as outputs (enabled) with outputs off initially.
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, GPIO_PS_LED_0_PIN, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, GPIO_PS_LED_0_PIN, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, GPIO_PS_LED_1_PIN, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, GPIO_PS_LED_1_PIN, 1);
+
+	gpio_led_write(0, 0);
+	gpio_led_write(1, 0);
+
 	d_printf(D_INFO, "XGpioPs: ready");
+
+	// Initialise the fabric configuration engine
+	fabcfg_init();
+}
+
+/**
+ * Calibrate the BogoTimer.  This runs a few bogo_delay() iterations and calculates
+ * an average CPU cycle delay to make 1 microsecond.
+ */
+void bogo_calibrate()
+{
+	uint64_t timing_total = 0;
+	float us_total = 0.0f;
+	int total_delay = 0, i;
+
+	d_printf(D_EXINFO, "BogoDelay: starting calibration");
+
+	g_hal.bogo_cal = 2.5f; // Ensure some FPU operation still happens
+
+	for(i = 0; i < BOGOCAL_ITERCNT; i++) {
+		d_start_timing(0);
+		bogo_delay(BOGOCAL_ITERAMT);
+		d_stop_timing(0);
+		timing_total += d_read_timing(0);
+		total_delay += BOGOCAL_ITERAMT;
+	}
+
+	/*
+	 * We know that BOGOCAL_ITERAMT*BOGOCAL_ITERCNT iterations delays us_total
+	 * on average, so calculate the required us-to-iter multiplier.
+	 */
+	us_total = timing_total * XSCUTIMER_TICKS_TO_US;
+	g_hal.bogo_cal = (((float)(BOGOCAL_ITERAMT * BOGOCAL_ITERCNT) / (float)us_total)) * 2.5f;
+
+	d_printf(D_INFO, "BogoDelay: calibrated: 1us = %2.3f cycles (total time %2.1f us) (%2.2f BogoMIPS)", \
+			g_hal.bogo_cal, us_total, total_delay / us_total);
+}
+
+/*
+ * bogo_delay:  Calibrated delay routine.  Calibration run on startup.  May be
+ * used for approx delays in routines; do not rely on for precise event timing.
+ *
+ * @param	delay	Amount of time to delay in microseconds
+ */
+volatile void bogo_delay(volatile uint32_t delay)
+{
+	// Must use 64-bit to allow delays >~40ms
+	uint64_t iters = (uint64_t)((float)(delay * g_hal.bogo_cal));
+
+	while(iters--) {
+		__asm__("nop");
+	}
+}
+
+/**
+ * Control one of the two LEDs attached to the PS.
+ *
+ * @param	index		0 or 1, for PS LEDs 0 and 1
+ * @param	enable		0 = off, 1 = on
+ */
+void gpio_led_write(int index, int enable)
+{
+	// Ensure value is zero or one
+	enable = !!(enable);
+
+	switch(index) {
+		case 0:
+			XGpioPs_WritePin(&g_hal.xgpio_ps, GPIO_PS_LED_0_PIN, enable);
+			break;
+
+		case 1:
+			XGpioPs_WritePin(&g_hal.xgpio_ps, GPIO_PS_LED_1_PIN, enable);
+			break;
+	}
 }
 
 /**
@@ -253,7 +357,7 @@ void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
 		msb = g_hal.g_timer_overflow;
 	}
 
-	*lsb_ret = lsb;
+	*lsb_ret = XSCUTIMER_LOAD_VALUE_LU - lsb;
 	*msb_ret = msb;
 }
 
@@ -329,7 +433,9 @@ float d_read_timing_us(int index)
  */
 void d_dump_timing(char *s, int index)
 {
-	d_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, d_read_timing(index) * XSCUTIMER_TICKS_TO_CPUCYC, d_read_timing_us(index));
+	d_printf(D_INFO, "%s [~%llu CPU cycles (~%4.1f us)]", s, (int64_t)(d_read_timing(index) * XSCUTIMER_TICKS_TO_CPUCYC), d_read_timing_us(index));
+	//d_printf(D_INFO, "%s %llu", s, d_read_timing(0));
+	//d_printf(D_INFO, "Hello");
 }
 
 /**

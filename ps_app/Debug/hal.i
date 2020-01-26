@@ -6717,18 +6717,27 @@ u8 XScuTimer_GetPrescaler(XScuTimer *InstancePtr);
 #define XSCUTIMER_TICKS_TO_US (XSCUTIMER_TICKS_TO_S * 1e6)
 #define XSCUTIMER_TICKS_TO_CPUCYC 2
 
-#define XSCUTIMER_OVERFLOW_TIME ((0xffffffffLU) / XSCUTIMER_CLOCK)
+#define XSCUTIMER_LOAD_VALUE (0xffffffff)
+#define XSCUTIMER_LOAD_VALUE_LU (0xffffffffLU)
+
+#define XSCUTIMER_OVERFLOW_TIME (XSCUTIMER_LOAD_VALUE_LU / XSCUTIMER_CLOCK)
 #define XSCUTIMER_OVERFLOW_TIME_US ((XSCUTIMER_OVERFLOW_TIME) * 1e6)
 
-#define XSCUTIMER_NEAR_OVERFLOW 0xffffff00
+#define XSCUTIMER_NEAR_OVERFLOW (XSCUTIMER_LOAD_VALUE - 0xff)
 
 #define NUM_DEBUG_TIMERS 16
 
+#define GPIO_PS_LED_0_PIN 9
+#define GPIO_PS_LED_1_PIN 37
 
 #define D_ASSERT(expr) { if(!(expr)) { d_printf(D_ERROR, "assertion failed: `%s' (file %s, line %d)", #expr, __FILE__, __LINE__); } }
 
 
 
+
+
+#define BOGOCAL_ITERAMT 100000
+#define BOGOCAL_ITERCNT 2
 
 
 struct hal_t {
@@ -6746,23 +6755,67 @@ struct hal_t {
 
  uint64_t timers[16];
  int64_t timer_deltas[16];
+
+
+ float bogo_cal;
 };
 
+extern struct hal_t g_hal;
+
 void hal_init();
+void bogo_delay(uint32_t us);
+void gpio_led_write(int index, int enable);
 void d_printf(int debug_code, char *fmt, ...);
 void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret);
 void d_start_timing(int index);
 void d_stop_timing(int index);
 uint64_t d_read_timing(int index);
 float d_read_timing_us(int index);
+void d_dump_timing(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
 # 22 "../src/hal.c" 2
+# 1 "../src/fabric_config.h" 1
+# 11 "../src/fabric_config.h"
+#define SRC_FABRIC_CONFIG_H_ 
+
+
+
+
+
+
+
+# 1 "../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h" 1
+# 20 "../src/fabric_config.h" 2
+# 34 "../src/fabric_config.h"
+#define AXI_CFG_BRAM_BASE_ADDRESS XPAR_AXI_BRAM_CTRL_0_S_AXI_BASEADDR
+
+
+#define FAB_CFG_DUMMY1 0x000
+#define FAB_CFG_DUMMY2 0x001
+#define FAB_CFG_MAGIC1 0x002
+#define FAB_CFG_VERSION 0x003
+#define FAB_CFG_ACQ_SIZE 0x004
+#define FAB_CFG_ACQ_TRIGGER_PTR 0x005
+#define FAB_CFG_ACQ_DEMUX_MODE 0x006
+#define FAB_CFG_GPIO_TEST 0x007
+
+#define FAB_CFG_ADDR_MASK 0xfff
+
+
+#define FAB_CFG_EMIO_COMMIT 3
+#define FAB_CFG_EMIO_DONE 4
+
+void fabcfg_init();
+void fabcfg_write(uint32_t reg, uint32_t data);
+uint32_t fabcfg_read(uint32_t reg);
+void fabcfg_commit();
+# 23 "../src/hal.c" 2
 # 1 "../src/version_tag.h" 1
 # 9 "../src/version_tag.h"
 #define SRC_VERSION_TAG_H_ 
 
 #define PS_APP_VERSION_TAG "v0.0.1-alpha"
-# 23 "../src/hal.c" 2
+# 24 "../src/hal.c" 2
 
 
 
@@ -6770,8 +6823,8 @@ void d_xilinx_assert(const char8 *File, s32 Line);
 
 
 # 1 "../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h" 1
-# 30 "../src/hal.c" 2
-# 39 "../src/hal.c"
+# 31 "../src/hal.c" 2
+# 40 "../src/hal.c"
 struct hal_t g_hal;
 
 
@@ -6794,13 +6847,16 @@ void hal_init()
  int error;
 
 
-    init_platform();
-    Xil_AssertSetCallback(&d_xilinx_assert);
+ g_hal.bogo_cal = 1.0f;
+
+
+ init_platform();
+ Xil_AssertSetCallback(&d_xilinx_assert);
 
 
  d_printf(0, "\r\n\r\n\033[2J\033[0m\r\n");
  d_printf(2, "ps_app: Zynq application for YAOS Oscilloscope Project (%s)", "v0.0.1-alpha");
- d_printf(2, "Built %s %s", "Jan 26 2020", "13:39:36");
+ d_printf(2, "Built %s %s", "Jan 26 2020", "20:43:38");
  d_printf(2, "");
  d_printf(2, "Application (C) 2020 Tomato Engineering Ltd.");
  d_printf(2, "Parts       (C) 2005 - 2015 Xilinx, Inc.");
@@ -6814,9 +6870,9 @@ void hal_init()
 
  g_hal.xscu_gic_cfg = XScuGic_LookupConfig(0U);
  if(g_hal.xscu_gic_cfg == 
-# 80 "../src/hal.c" 3 4
+# 84 "../src/hal.c" 3 4
                          ((void *)0)
-# 80 "../src/hal.c"
+# 84 "../src/hal.c"
                              ) {
   d_printf(4, "XScuGic: configuration lookup returns NULL");
   exit(-1);
@@ -6840,23 +6896,24 @@ void hal_init()
 
  g_hal.xscu_timer_cfg = XScuTimer_LookupConfig(0);
  error = XScuTimer_CfgInitialize(&g_hal.xscu_timer, g_hal.xscu_timer_cfg, g_hal.xscu_timer_cfg->BaseAddr);
-
  if (error != 0L) {
   d_printf(4, "XScuTimer: returned error code: %d, unable to start", error);
   exit(-1);
  }
 
  error = XScuTimer_SelfTest(&g_hal.xscu_timer);
-
  if (error != 0L) {
   d_printf(4, "XScuTimer: self test failed with error %d", error);
   exit(-1);
  }
 
  d_printf(2, "XScuTimer: ready");
- d_printf(1, "XScuTimer: config: %3.3f MHz, 1 tick = %.3f us", (666666687 / 2.0f) / 1e6f, ((2.0f / 666666687) * 1e6));
 
  error = XScuGic_Connect(&g_hal.xscu_gic, 29U, (Xil_ExceptionHandler)irq_xscutimer, (void *)&g_hal.xscu_timer);
+ if (error != 0L) {
+  d_printf(4, "XScuTimer: unable to connect interrupt handler: error code %d", error);
+  exit(-1);
+ }
 
 
  __asm__ __volatile__( "msr	cpsr,%0\n" : : "r" (({u32 rval = 0U; __asm__ __volatile__( "mrs	%0, cpsr\n" : "=r" (rval) ); rval; }) & ~ ((0x80) & (0x40 | 0x80))) );
@@ -6866,12 +6923,22 @@ void hal_init()
 
 
  g_hal.g_timer_overflow = 0;
- Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
+ Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x00U), (((0xffffffff))));
  Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U), ((Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U)) | 0x00000002U)));
  Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U), ((Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U)) | 0x00000004U)));
  XScuGic_Enable(&g_hal.xscu_gic, 29U);
  XScuTimer_Start(&g_hal.xscu_timer);
  g_hal.g_timer_have_init = 1;
+
+ d_printf(1, "XScuTimer: config: %3.3f MHz, 1 tick = %.3f us", (666666687 / 2.0f) / 1e6f, ((2.0f / 666666687) * 1e6));
+
+
+ bogo_calibrate();
+
+ d_start_timing(0);
+ bogo_delay(100000);
+ d_stop_timing(0);
+ d_dump_timing("BogoDelay: Test 100 ms", 0);
 
 
 
@@ -6885,9 +6952,98 @@ void hal_init()
   exit(-1);
  }
 
+
+ XGpioPs_SetDirection(&g_hal.xgpio_ps, 0, 0x00000000);
+ XGpioPs_SetDirection(&g_hal.xgpio_ps, 1, 0x00000000);
+ XGpioPs_SetDirection(&g_hal.xgpio_ps, 2, 0x00000000);
+ XGpioPs_SetDirection(&g_hal.xgpio_ps, 3, 0x00000000);
+
+
+ XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, 9, 1);
+ XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, 9, 1);
+ XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, 37, 1);
+ XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, 37, 1);
+
+ gpio_led_write(0, 0);
+ gpio_led_write(1, 0);
+
  d_printf(2, "XGpioPs: ready");
+
+
+ fabcfg_init();
 }
-# 161 "../src/hal.c"
+
+
+
+
+
+void bogo_calibrate()
+{
+ uint64_t timing_total = 0;
+ float us_total = 0.0f;
+ int total_delay = 0, i;
+
+ d_printf(1, "BogoDelay: starting calibration");
+
+ g_hal.bogo_cal = 2.5f;
+
+ for(i = 0; i < 2; i++) {
+  d_start_timing(0);
+  bogo_delay(100000);
+  d_stop_timing(0);
+  timing_total += d_read_timing(0);
+  total_delay += 100000;
+ }
+
+
+
+
+
+ us_total = timing_total * ((2.0f / 666666687) * 1e6);
+ g_hal.bogo_cal = (((float)(100000 * 2) / (float)us_total)) * 2.5f;
+
+ d_printf(2, "BogoDelay: calibrated: 1us = %2.3f cycles (total time %2.1f us) (%2.2f BogoMIPS)",
+   g_hal.bogo_cal, us_total, total_delay / us_total);
+}
+
+
+
+
+
+
+
+volatile void bogo_delay(volatile uint32_t delay)
+{
+
+ uint64_t iters = (uint64_t)((float)(delay * g_hal.bogo_cal));
+
+ while(iters--) {
+  __asm__("nop");
+ }
+}
+
+
+
+
+
+
+
+void gpio_led_write(int index, int enable)
+{
+
+ enable = !!(enable);
+
+ switch(index) {
+  case 0:
+   XGpioPs_WritePin(&g_hal.xgpio_ps, 9, enable);
+   break;
+
+  case 1:
+   XGpioPs_WritePin(&g_hal.xgpio_ps, 37, enable);
+   break;
+ }
+}
+# 265 "../src/hal.c"
 void d_printf(int debug_code, char *fmt, ...)
 {
  uint64_t total_usec;
@@ -6934,17 +7090,17 @@ void d_printf(int debug_code, char *fmt, ...)
 
   va_list args;
   
-# 206 "../src/hal.c" 3 4
+# 310 "../src/hal.c" 3 4
  __builtin_va_start(
-# 206 "../src/hal.c"
+# 310 "../src/hal.c"
  args
-# 206 "../src/hal.c" 3 4
+# 310 "../src/hal.c" 3 4
  ,
-# 206 "../src/hal.c"
+# 310 "../src/hal.c"
  fmt
-# 206 "../src/hal.c" 3 4
+# 310 "../src/hal.c" 3 4
  )
-# 206 "../src/hal.c"
+# 310 "../src/hal.c"
                     ;
 
   vsnprintf(buffer, 4096, fmt, args);
@@ -6955,30 +7111,30 @@ void d_printf(int debug_code, char *fmt, ...)
   }
 
   
-# 215 "../src/hal.c" 3 4
+# 319 "../src/hal.c" 3 4
  __builtin_va_end(
-# 215 "../src/hal.c"
+# 319 "../src/hal.c"
  args
-# 215 "../src/hal.c" 3 4
+# 319 "../src/hal.c" 3 4
  )
-# 215 "../src/hal.c"
+# 319 "../src/hal.c"
              ;
  }
 }
-# 227 "../src/hal.c"
+# 331 "../src/hal.c"
 void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
 {
  uint32_t lsb, msb;
 
 
  lsb = Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x04U));
-# 243 "../src/hal.c"
- if(lsb > 0xffffff00) {
+# 347 "../src/hal.c"
+ if(lsb > ((0xffffffff) - 0xff)) {
 
 
 
 
-  while(lsb < 0xffffff00) {
+  while(lsb < ((0xffffffff) - 0xff)) {
    msb = g_hal.g_timer_overflow;
    lsb = Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x04U));
   }
@@ -6986,7 +7142,7 @@ void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
   msb = g_hal.g_timer_overflow;
  }
 
- *lsb_ret = lsb;
+ *lsb_ret = (0xffffffffLU) - lsb;
  *msb_ret = msb;
 }
 
@@ -7000,7 +7156,7 @@ void d_start_timing(int index)
  uint32_t lsb, msb;
  uint64_t timer_value;
 
- { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 270); } } ;
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 374); } } ;
 
  d_read_global_timer(&lsb, &msb);
  timer_value = (((uint64_t)msb) << 32) | lsb;
@@ -7020,23 +7176,23 @@ void d_stop_timing(int index)
  uint64_t timer_value;
  int64_t t_delta;
 
- { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 290); } } ;
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 394); } } ;
 
  d_read_global_timer(&lsb, &msb);
  timer_value = (((uint64_t)msb) << 32) | lsb;
 
  g_hal.timer_deltas[index] = timer_value - g_hal.timers[index];
 }
-# 305 "../src/hal.c"
+# 409 "../src/hal.c"
 uint64_t d_read_timing(int index)
 {
- { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 307); } } ;
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 411); } } ;
  return g_hal.timer_deltas[index];
 }
-# 318 "../src/hal.c"
+# 422 "../src/hal.c"
 float d_read_timing_us(int index)
 {
- { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 320); } } ;
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 424); } } ;
  return g_hal.timer_deltas[index] * ((2.0f / 666666687) * 1e6);
 }
 
@@ -7048,7 +7204,9 @@ float d_read_timing_us(int index)
 
 void d_dump_timing(char *s, int index)
 {
- d_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, d_read_timing(index) * 2, d_read_timing_us(index));
+ d_printf(2, "%s [~%llu CPU cycles (~%4.1f us)]", s, (int64_t)(d_read_timing(index) * 2), d_read_timing_us(index));
+
+
 }
 
 

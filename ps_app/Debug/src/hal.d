@@ -31,7 +31,9 @@ src/hal.o src/hal.o: ../src/hal.c ../src/hal.h ../src/platform.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h ../src/version_tag.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h ../src/fabric_config.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h \
+ ../src/version_tag.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h
 
 ../src/hal.h:
@@ -103,6 +105,10 @@ src/hal.o src/hal.o: ../src/hal.c ../src/hal.h ../src/platform.h \
 ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:
+
+../src/fabric_config.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h:
 
 ../src/version_tag.h:
 

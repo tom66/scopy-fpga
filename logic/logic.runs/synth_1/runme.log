@@ -13,20 +13,22 @@ INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0'.
 INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_streamer_1.0'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'G:/Xilinx/Vivado/2018.3/data/ip'.
+update_ip_catalog: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 275.723 ; gain = 22.836
 WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
 Current IP cache path is c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/ip 
+add_files: Time (s): cpu = 00:00:04 ; elapsed = 00:00:16 . Memory (MB): peak = 304.191 ; gain = 28.469
 Command: synth_design -top main -part xc7z014sclg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 2588 
+INFO: Helper process launched with PID 19424 
 WARNING: [Synth 8-2368] multiple overrides for parameter SERDES_MODE [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_iserdese2_mod.v:328]
 WARNING: [Synth 8-2611] redeclaration of ansi port idelay_rdy is not allowed [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_receiver.v:76]
 WARNING: [Synth 8-2611] redeclaration of ansi port idelay_refclk is not allowed [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_receiver.v:76]
 WARNING: [Synth 8-2507] parameter declaration becomes local in adc_test_streamer_v2_0_M00_AXIS with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/94a6/hdl/adc_test_streamer_v2_0_M00_AXIS.v:69]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:13 . Memory (MB): peak = 430.633 ; gain = 118.734
+Starting RTL Elaboration : Time (s): cpu = 00:00:14 ; elapsed = 00:00:35 . Memory (MB): peak = 431.891 ; gain = 120.613
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 	Parameter EMIO_ACQ_RUN bound to: 0 - type: integer 
@@ -4875,7 +4877,7 @@ WARNING: [Synth 8-3331] design processing_system7_v5_5_processing_system7 has un
 WARNING: [Synth 8-3331] design processing_system7_v5_5_processing_system7 has unconnected port FTMD_TRACEIN_DATA[12]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:04:57 ; elapsed = 00:05:21 . Memory (MB): peak = 968.480 ; gain = 656.582
+Finished RTL Elaboration : Time (s): cpu = 00:06:08 ; elapsed = 00:11:02 . Memory (MB): peak = 968.465 ; gain = 657.188
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -4989,13 +4991,13 @@ INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instan
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:04:59 ; elapsed = 00:05:23 . Memory (MB): peak = 968.480 ; gain = 656.582
+Finished Handling Custom Attributes : Time (s): cpu = 00:06:11 ; elapsed = 00:11:05 . Memory (MB): peak = 968.465 ; gain = 657.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:04:59 ; elapsed = 00:05:23 . Memory (MB): peak = 968.480 ; gain = 656.582
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:06:11 ; elapsed = 00:11:05 . Memory (MB): peak = 968.465 ; gain = 657.188
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 63 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
@@ -5216,7 +5218,7 @@ INFO: [Common 17-14] Message 'Netlist 29-160' appears 100 times and further inst
 Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1/design_1_processing_system7_0_1.xdc] for cell 'nolabel_line124/processing_system7_0/inst'
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1/design_1_processing_system7_0_1.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/main_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1051.184 ; gain = 0.039
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1051.457 ; gain = 0.000
 Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc]
 WARNING: [Vivado 12-584] No ports matched 'csi_d0_p'. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc:16]
 WARNING: [Vivado 12-584] No ports matched 'csi_d0_p'. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_1/new/constraints.xdc:17]
@@ -5251,7 +5253,7 @@ Finished Parsing XDC File [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/sc
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/dont_touch.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/main_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 INFO: [Timing 38-2] Deriving generated clocks
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1056.129 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1056.125 ; gain = 0.000
 Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0_clocks.xdc] for cell 'nolabel_line124/axi_dma/U0'
 Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0_clocks.xdc] for cell 'nolabel_line124/axi_dma/U0'
 Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_0_1/fifo_generator_0_clocks.xdc] for cell 'nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0'
@@ -5290,10 +5292,10 @@ Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst
 Finished Sourcing Tcl File [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [G:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/main_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1056.129 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.069 . Memory (MB): peak = 1056.125 ; gain = 0.000
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1056.129 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.030 . Memory (MB): peak = 1056.125 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 31 instances were transformed.
   FDR => FDRE: 25 instances
@@ -5301,17 +5303,17 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   MUXCY_L => MUXCY: 4 instances
   SRL16 => SRL16E: 1 instances
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1056.129 ; gain = 0.000
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.175 . Memory (MB): peak = 1056.129 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1056.125 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.275 . Memory (MB): peak = 1056.125 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:05:24 ; elapsed = 00:05:51 . Memory (MB): peak = 1056.129 ; gain = 744.230
+Finished Constraint Validation : Time (s): cpu = 00:06:40 ; elapsed = 00:11:42 . Memory (MB): peak = 1056.125 ; gain = 744.848
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:05:24 ; elapsed = 00:05:51 . Memory (MB): peak = 1056.129 ; gain = 744.230
+Finished Loading Part and Timing Information : Time (s): cpu = 00:06:40 ; elapsed = 00:11:42 . Memory (MB): peak = 1056.125 ; gain = 744.848
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -5350,7 +5352,7 @@ Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DA
 Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT /I_DATA_FIFO/\BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT /I_XD_FIFO/\NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:05:25 ; elapsed = 00:05:51 . Memory (MB): peak = 1056.129 ; gain = 744.230
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:06:40 ; elapsed = 00:11:43 . Memory (MB): peak = 1056.125 ; gain = 744.848
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5544] ROM "max_wrap_burst" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "max_wrap_burst" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
@@ -5820,7 +5822,7 @@ INFO: [Synth 8-3898] No Re-encoding of one hot register 'cfg_ctrl_state_reg' in 
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'train_state_reg' using encoding 'sequential' in module 'adc_iserdese2_mod'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:05:39 ; elapsed = 00:06:08 . Memory (MB): peak = 1056.129 ; gain = 744.230
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:06:57 ; elapsed = 00:12:03 . Memory (MB): peak = 1056.125 ; gain = 744.848
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7636,7 +7638,7 @@ WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/GE
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\I_ADDR_CNTL/sig_next_size_reg_reg[2] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/I_ADDR_CNTL/sig_next_size_reg_reg[2] )
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:06:24 ; elapsed = 00:06:56 . Memory (MB): peak = 1056.129 ; gain = 744.230
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:07:47 ; elapsed = 00:13:10 . Memory (MB): peak = 1056.125 ; gain = 744.848
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
@@ -7692,7 +7694,7 @@ INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line201/clk_out1'
 INFO: [Synth 8-5783] Moving clock source from hierarchical pin 'nolabel_line201/clk_in1' to 'nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/grf.rfi_4/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_reg[0]/C'
 INFO: [Synth 8-5819] Moved 2 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:06:35 ; elapsed = 00:07:08 . Memory (MB): peak = 1106.633 ; gain = 794.734
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:08:00 ; elapsed = 00:13:25 . Memory (MB): peak = 1104.824 ; gain = 793.547
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
@@ -7700,7 +7702,7 @@ Start Timing Optimization
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:06:45 ; elapsed = 00:07:19 . Memory (MB): peak = 1213.934 ; gain = 902.035
+Finished Timing Optimization : Time (s): cpu = 00:08:12 ; elapsed = 00:13:43 . Memory (MB): peak = 1217.535 ; gain = 906.258
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -7739,7 +7741,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:06:55 ; elapsed = 00:07:29 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Technology Mapping : Time (s): cpu = 00:08:24 ; elapsed = 00:14:00 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7765,7 +7767,7 @@ Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 CRITICAL WARNING: [Synth 8-4442] BlackBox module nolabel_line201 has unconnected pin reset
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:06:57 ; elapsed = 00:07:32 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished IO Insertion : Time (s): cpu = 00:08:27 ; elapsed = 00:14:04 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -7778,7 +7780,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:06:57 ; elapsed = 00:07:32 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Renaming Generated Instances : Time (s): cpu = 00:08:27 ; elapsed = 00:14:04 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7790,25 +7792,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:06:59 ; elapsed = 00:07:34 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:08:30 ; elapsed = 00:14:07 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:06:59 ; elapsed = 00:07:34 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Renaming Generated Ports : Time (s): cpu = 00:08:30 ; elapsed = 00:14:08 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:07:00 ; elapsed = 00:07:34 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Handling Custom Attributes : Time (s): cpu = 00:08:30 ; elapsed = 00:14:08 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:07:00 ; elapsed = 00:07:34 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Renaming Generated Nets : Time (s): cpu = 00:08:30 ; elapsed = 00:14:08 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -8243,17 +8245,17 @@ Report Instance Areas:
 |342   |    asi2_mod_inst7                                                                             |adc_iserdese2_mod_6                                                   |    53|
 +------+-----------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:07:00 ; elapsed = 00:07:34 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Finished Writing Synthesis Report : Time (s): cpu = 00:08:30 ; elapsed = 00:14:08 . Memory (MB): peak = 1218.578 ; gain = 907.301
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 1 critical warnings and 3893 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:40 ; elapsed = 00:07:11 . Memory (MB): peak = 1214.945 ; gain = 815.398
-Synthesis Optimization Complete : Time (s): cpu = 00:07:00 ; elapsed = 00:07:35 . Memory (MB): peak = 1214.945 ; gain = 903.047
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:55 ; elapsed = 00:13:37 . Memory (MB): peak = 1218.578 ; gain = 819.641
+Synthesis Optimization Complete : Time (s): cpu = 00:08:30 ; elapsed = 00:14:09 . Memory (MB): peak = 1218.578 ; gain = 907.301
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 373 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 1 inverter(s) to 8 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1214.945 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1218.578 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 37 instances were transformed.
   (MUXCY,XORCY) => CARRY4: 1 instances
@@ -8266,10 +8268,10 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 1130 Infos, 517 Warnings, 101 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:07:08 ; elapsed = 00:07:43 . Memory (MB): peak = 1214.945 ; gain = 909.957
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1214.945 ; gain = 0.000
+synth_design: Time (s): cpu = 00:08:39 ; elapsed = 00:14:23 . Memory (MB): peak = 1218.578 ; gain = 914.387
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1218.578 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_1/main.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Jan 26 09:17:53 2020...
+INFO: [Common 17-206] Exiting Vivado at Sun Jan 26 19:38:59 2020...
