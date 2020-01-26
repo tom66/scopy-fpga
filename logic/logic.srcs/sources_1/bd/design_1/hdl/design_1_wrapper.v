@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Sat Jan 25 12:24:37 2020
+//Date        : Sat Jan 25 22:55:53 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -15,6 +15,14 @@ module design_1_wrapper
     ADC_DATA_EOF,
     ADC_DATA_VALID,
     ADC_FIFO_RESET,
+    CFG_BRAM_ADDRB,
+    CFG_BRAM_BUSYB,
+    CFG_BRAM_CLKB,
+    CFG_BRAM_DINB,
+    CFG_BRAM_DOUTB,
+    CFG_BRAM_ENB,
+    CFG_BRAM_RSTB,
+    CFG_BRAM_WEB,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -45,6 +53,14 @@ module design_1_wrapper
   input ADC_DATA_EOF;
   input ADC_DATA_VALID;
   input ADC_FIFO_RESET;
+  input [31:0]CFG_BRAM_ADDRB;
+  output CFG_BRAM_BUSYB;
+  input CFG_BRAM_CLKB;
+  input [31:0]CFG_BRAM_DINB;
+  output [31:0]CFG_BRAM_DOUTB;
+  input CFG_BRAM_ENB;
+  input CFG_BRAM_RSTB;
+  input [3:0]CFG_BRAM_WEB;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -76,6 +92,14 @@ module design_1_wrapper
   wire ADC_DATA_EOF;
   wire ADC_DATA_VALID;
   wire ADC_FIFO_RESET;
+  wire [31:0]CFG_BRAM_ADDRB;
+  wire CFG_BRAM_BUSYB;
+  wire CFG_BRAM_CLKB;
+  wire [31:0]CFG_BRAM_DINB;
+  wire [31:0]CFG_BRAM_DOUTB;
+  wire CFG_BRAM_ENB;
+  wire CFG_BRAM_RSTB;
+  wire [3:0]CFG_BRAM_WEB;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -108,6 +132,14 @@ module design_1_wrapper
         .ADC_DATA_EOF(ADC_DATA_EOF),
         .ADC_DATA_VALID(ADC_DATA_VALID),
         .ADC_FIFO_RESET(ADC_FIFO_RESET),
+        .CFG_BRAM_ADDRB(CFG_BRAM_ADDRB),
+        .CFG_BRAM_BUSYB(CFG_BRAM_BUSYB),
+        .CFG_BRAM_CLKB(CFG_BRAM_CLKB),
+        .CFG_BRAM_DINB(CFG_BRAM_DINB),
+        .CFG_BRAM_DOUTB(CFG_BRAM_DOUTB),
+        .CFG_BRAM_ENB(CFG_BRAM_ENB),
+        .CFG_BRAM_RSTB(CFG_BRAM_RSTB),
+        .CFG_BRAM_WEB(CFG_BRAM_WEB),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),

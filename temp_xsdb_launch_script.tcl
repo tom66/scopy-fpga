@@ -1,1 +1,0 @@
-set xsdb_idle_timeout -1;source G:/Xilinx/SDK/2018.3/scripts/xsdb/xsdb/xsdb-server.tcl

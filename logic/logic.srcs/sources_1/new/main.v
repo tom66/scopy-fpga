@@ -51,6 +51,13 @@ module main(
     led_PL1         // diagnostic LED PL1
  );
 
+// EMIO indexes
+parameter EMIO_ACQ_RUN = 0;
+parameter EMIO_ACQ_ABORT = 1;
+parameter EMIO_ACQ_DONE = 2;
+parameter EMIO_CFG_COMMIT = 3;
+parameter EMIO_CFG_DONE = 4;
+
 //output csi_clk_p, csi_clk_n, csi_d0_p, csi_d0_n, csi_d1_p, csi_d1_n, csi_lpd0_n, csi_lpd0_p, csi_lpd1_n, csi_lpd1_p, csi_lpclk_n, csi_lpclk_p;
 input adc_l1a_p, adc_l1a_n, adc_l1b_p, adc_l1b_n, adc_l2a_p, adc_l2a_n, adc_l2b_p, adc_l2b_n, adc_l3a_p, adc_l3a_n;
 input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk_p, adc_lclk_n, adc_fclk_p, adc_fclk_n;
@@ -79,34 +86,6 @@ wire [63:0] emio_output;
 wire [63:0] emio_input;
 reg [14:0] pl_irq;
 
-wire adc_valid;
-
-design_1 (
-    .ADC_BUS(adc_bus),
-    .ADC_DATA_CLK(adc_data_clk),
-    .ADC_DATA_VALID(adc_valid),
-    .ADC_FIFO_RESET(g_rst_gen),     // for now, connect to global reset; later, to be initiated by command
-    .ADC_DATA_EOF(1'b0),            // for now, data never ends
-    .FCLK_CLK0(clk_master),
-    
-    // EMIO 64-bit low speed signalling bus between ARM and fabric
-    .EMIO_I(emio_input),            // Data into ARM
-    .EMIO_O(emio_output),           // Data from ARM
-    
-    // IRQ outputs from PL
-    .PL_IRQ(pl_irq)
-);
-
-assign adc_valid = emio_output[0];
-
-reg [15:0] emio_counter;
-wire [7:0] train_data_debug;
-
-assign emio_input[63:48] = emio_counter;
-assign emio_input[9] = emio_output[0];
-assign emio_input[15:10] = debug_adc[7:2];
-assign emio_input[31:24] = train_data_debug;
-
 // Reset pulse generator. Generates a one time reset pulse for the following blocks.
 // TODO:  I think this should become a global block.
 always @(posedge clk_master) begin
@@ -130,6 +109,78 @@ always @(posedge clk_master) begin
     end
     
 end
+
+wire adc_valid;
+wire [63:0] adc_bus;
+
+wire [31:0] cfg_bram_addrb;
+wire [31:0] cfg_bram_doutb;
+wire [31:0] cfg_bram_dinb;
+wire cfg_bram_clkb;
+wire [3:0] cfg_bram_web;
+wire cfg_bram_enb;
+wire cfg_bram_busyb;
+
+design_1 (
+    .ADC_BUS(adc_bus),
+    .ADC_DATA_CLK(adc_data_clk),
+    .ADC_DATA_VALID(adc_valid),
+    .ADC_FIFO_RESET(g_rst_gen),     // for now, connect to global reset; later, to be initiated by command
+    .ADC_DATA_EOF(1'b0),            // for now, data never ends
+    
+    .CFG_BRAM_ADDRB(cfg_bram_addrb),
+    .CFG_BRAM_DOUTB(cfg_bram_doutb),
+    .CFG_BRAM_DINB(cfg_bram_dinb),
+    .CFG_BRAM_CLKB(cfg_bram_clkb),
+    .CFG_BRAM_ENB(cfg_bram_enb),
+    .CFG_BRAM_WEB(cfg_bram_web),
+    .CFG_BRAM_BUSYB(cfg_bram_busyb),
+    
+    // Master clock (~177MHz currently, actual value not particularly important but must be
+    // set up in clock wizards correctly.)
+    .FCLK_CLK0(clk_master),
+    
+    // EMIO 64-bit low speed signalling bus between ARM and fabric
+    .EMIO_I(emio_input),            // Data into ARM
+    .EMIO_O(emio_output),           // Data from ARM
+    
+    // IRQ outputs from fabric
+    .PL_IRQ(pl_irq)
+);
+
+wire [31:0] R_acq_size;
+reg [31:0] R_acq_trigger_ptr;
+wire [2:0] R_acq_demux_mode;
+wire [1:0] R_gpio_test;
+
+assign led_PL0 = R_gpio_test[0];
+assign led_PL1 = R_gpio_test[1];
+
+cfg_bram_controller (
+    // BRAM, EMIO, Clock interface
+    .cfg_bram_addr(cfg_bram_addrb),
+    .cfg_bram_dout(cfg_bram_doutb),
+    .cfg_bram_din(cfg_bram_dinb),
+    .cfg_bram_clk(cfg_bram_clkb),
+    .cfg_bram_en(cfg_bram_enb),
+    .cfg_bram_we(cfg_bram_web),
+    .cfg_bram_busy(cfg_bram_busyb),
+    .cfg_commit(emio_input[EMIO_CFG_COMMIT]),
+    .cfg_commit_done(emio_output[EMIO_CFG_DONE]),
+    .g_rst(g_rst_gen),
+    .clk_ref(clk_master),
+    
+    // Register interface
+    .R_acq_size(R_acq_size),
+    .R_acq_trigger_ptr(R_acq_trigger_ptr),
+    .R_acq_demux_mode(R_acq_demux_mode),
+    .R_gpio_test(R_gpio_test)
+);
+
+assign adc_valid = emio_output[0];
+
+reg [15:0] emio_counter;
+wire [7:0] train_data_debug;
 
 /*
 clk_wiz_0 (
@@ -165,9 +216,9 @@ wire [13:0] adc_data_latched_7;
 wire [7:0] debug_adc;
 
 reg [23:0] adc_testcntr;
-reg led_PL1 = 0;
+//reg led_PL1 = 0;
 
-assign led_PL0 = adc_valid; // debug_adc[0];
+//assign led_PL0 = adc_valid; // debug_adc[0];
 //assign led_PL1 = debug_adc[1];
 
 adc_receiver (
@@ -245,7 +296,6 @@ assign adc_bus[63:56] = adc_data_latched_7[7:0];
 
 reg [7:0] rep_counter;
 reg [31:0] adc32_counter;
-wire [63:0] adc_bus;
 
 assign adc_bus[31:0 ] = adc32_counter;
 assign adc_bus[63:32] = adc32_counter;
@@ -268,11 +318,13 @@ always @(posedge adc_data_clk) begin
     //rep_counter <= rep_counter + 1;
     adc32_counter <= adc32_counter + 1;
     
+    /*
     adc_testcntr <= adc_testcntr + 1;
     
     if (adc_testcntr == 0) begin
         led_PL1 <= ~led_PL1;
     end
+    */
 
 end
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7z014sclg400-1" LaunchTime="1579955093">
+<GenRun Id="impl_1" LaunchPart="xc7z014sclg400-1" LaunchTime="1580029789">
   <File Type="BITSTR-BMM" Name="main_bd.bmm"/>
   <File Type="OPT-METHODOLOGY-DRC" Name="main_methodology_drc_opted.rpt"/>
   <File Type="INIT-TIMING" Name="main_timing_summary_init.rpt"/>
@@ -92,6 +92,13 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/cfg_bram_controller.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/main.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -161,7 +168,9 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
+      <Desc>Default settings for Implementation.</Desc>
+    </StratHandle>
     <Step Id="init_design"/>
     <Step Id="opt_design"/>
     <Step Id="power_opt_design"/>
