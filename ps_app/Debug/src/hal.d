@@ -1,4 +1,4 @@
-src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
+src/hal.o src/hal.o: ../src/hal.c ../src/hal.h ../src/platform.h \
  ../src/platform_config.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_printf.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_types.h \
@@ -31,7 +31,8 @@ src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h \
  ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h ../src/version_tag.h \
+ ../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h
 
 ../src/hal.h:
 
@@ -102,3 +103,7 @@ src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
 ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h:
 
 ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:
+
+../src/version_tag.h:
+
+../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h:

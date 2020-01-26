@@ -1,4 +1,4 @@
-# 1 "../src/main.c"
+# 1 "../src/hal.c"
 # 1 "C:\\Users\\Tom\\Documents\\Projects\\Scopy_MVP_Platform\\scopy-fpga\\ps_app\\Debug//"
 # 1 "<built-in>"
 #define __STDC__ 1
@@ -468,8 +468,8 @@
 #define __USES_INITFINI__ 1
 #define DEBUG 1
 #undef NDEBUG
-# 1 "../src/main.c"
-# 37 "../src/main.c"
+# 1 "../src/hal.c"
+# 15 "../src/hal.c"
 # 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\stdio.h" 1 3 4
 # 27 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\stdio.h" 3 4
 #define _STDIO_H_ 
@@ -2533,7 +2533,7 @@ static __inline__ int __sputc_r(struct _reent *_ptr, int _c, FILE *_p) {
 
 
 
-# 38 "../src/main.c" 2
+# 16 "../src/hal.c" 2
 # 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stdarg.h" 1 3 4
 # 31 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stdarg.h" 3 4
 #define _STDARG_H 
@@ -2569,95 +2569,7 @@ typedef __gnuc_va_list va_list;
 
 
 #define __va_list__ 
-# 39 "../src/main.c" 2
-# 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 1 3 4
-
-#define _CTYPE_H_ 
-
-
-
-
-
-
-int isalnum (int __c);
-int isalpha (int __c);
-int iscntrl (int __c);
-int isdigit (int __c);
-int isgraph (int __c);
-int islower (int __c);
-int isprint (int __c);
-int ispunct (int __c);
-int isspace (int __c);
-int isupper (int __c);
-int isxdigit (int __c);
-int tolower (int __c);
-int toupper (int __c);
-
-
-int isblank (int __c);
-
-
-
-int isascii (int __c);
-int toascii (int __c);
-#define _tolower(__c) ((unsigned char)(__c) - 'A' + 'a')
-#define _toupper(__c) ((unsigned char)(__c) - 'a' + 'A')
-
-
-#define _U 01
-#define _L 02
-#define _N 04
-#define _S 010
-#define _P 020
-#define _C 040
-#define _X 0100
-#define _B 0200
-
-
-
-
-extern char *__ctype_ptr__;
-# 58 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
-#define __ctype_lookup(__c) ((__ctype_ptr__+sizeof(""[__c]))[(int)(__c)])
-
-#define isalpha(__c) (__ctype_lookup(__c)&(_U|_L))
-#define isupper(__c) ((__ctype_lookup(__c)&(_U|_L))==_U)
-#define islower(__c) ((__ctype_lookup(__c)&(_U|_L))==_L)
-#define isdigit(__c) (__ctype_lookup(__c)&_N)
-#define isxdigit(__c) (__ctype_lookup(__c)&(_X|_N))
-#define isspace(__c) (__ctype_lookup(__c)&_S)
-#define ispunct(__c) (__ctype_lookup(__c)&_P)
-#define isalnum(__c) (__ctype_lookup(__c)&(_U|_L|_N))
-#define isprint(__c) (__ctype_lookup(__c)&(_P|_U|_L|_N|_B))
-#define isgraph(__c) (__ctype_lookup(__c)&(_P|_U|_L|_N))
-#define iscntrl(__c) (__ctype_lookup(__c)&_C)
-
-
-#define isblank(__c) __extension__ ({ __typeof__ (__c) __x = (__c); (__ctype_lookup(__x)&_B) || (int) (__x) == '\t';})
-# 84 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
-#define toupper(__c) __extension__ ({ __typeof__ (__c) __x = (__c); islower (__x) ? (int) __x - 'a' + 'A' : (int) __x;})
-
-
-#define tolower(__c) __extension__ ({ __typeof__ (__c) __x = (__c); isupper (__x) ? (int) __x - 'A' + 'a' : (int) __x;})
-# 103 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
-#define isascii(__c) ((unsigned)(__c)<=0177)
-#define toascii(__c) ((__c)&0177)
-
-
-
-
-
-extern const char _ctype_[];
-
-
-# 40 "../src/main.c" 2
-
-# 1 "../src/hal.h" 1
-# 16 "../src/hal.h"
-#define SRC_HAL_H_ 
-
-
-
+# 17 "../src/hal.c" 2
 # 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stdint.h" 1 3 4
 # 9 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stdint.h" 3 4
 # 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\stdint.h" 1 3 4
@@ -2982,7 +2894,97 @@ typedef __uint_least64_t uint_least64_t;
 
 
 #define _GCC_WRAP_STDINT_H 
-# 21 "../src/hal.h" 2
+# 18 "../src/hal.c" 2
+# 1 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 1 3 4
+
+#define _CTYPE_H_ 
+
+
+
+
+
+
+int isalnum (int __c);
+int isalpha (int __c);
+int iscntrl (int __c);
+int isdigit (int __c);
+int isgraph (int __c);
+int islower (int __c);
+int isprint (int __c);
+int ispunct (int __c);
+int isspace (int __c);
+int isupper (int __c);
+int isxdigit (int __c);
+int tolower (int __c);
+int toupper (int __c);
+
+
+int isblank (int __c);
+
+
+
+int isascii (int __c);
+int toascii (int __c);
+#define _tolower(__c) ((unsigned char)(__c) - 'A' + 'a')
+#define _toupper(__c) ((unsigned char)(__c) - 'a' + 'A')
+
+
+#define _U 01
+#define _L 02
+#define _N 04
+#define _S 010
+#define _P 020
+#define _C 040
+#define _X 0100
+#define _B 0200
+
+
+
+
+extern char *__ctype_ptr__;
+# 58 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
+#define __ctype_lookup(__c) ((__ctype_ptr__+sizeof(""[__c]))[(int)(__c)])
+
+#define isalpha(__c) (__ctype_lookup(__c)&(_U|_L))
+#define isupper(__c) ((__ctype_lookup(__c)&(_U|_L))==_U)
+#define islower(__c) ((__ctype_lookup(__c)&(_U|_L))==_L)
+#define isdigit(__c) (__ctype_lookup(__c)&_N)
+#define isxdigit(__c) (__ctype_lookup(__c)&(_X|_N))
+#define isspace(__c) (__ctype_lookup(__c)&_S)
+#define ispunct(__c) (__ctype_lookup(__c)&_P)
+#define isalnum(__c) (__ctype_lookup(__c)&(_U|_L|_N))
+#define isprint(__c) (__ctype_lookup(__c)&(_P|_U|_L|_N|_B))
+#define isgraph(__c) (__ctype_lookup(__c)&(_P|_U|_L|_N))
+#define iscntrl(__c) (__ctype_lookup(__c)&_C)
+
+
+#define isblank(__c) __extension__ ({ __typeof__ (__c) __x = (__c); (__ctype_lookup(__x)&_B) || (int) (__x) == '\t';})
+# 84 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
+#define toupper(__c) __extension__ ({ __typeof__ (__c) __x = (__c); islower (__x) ? (int) __x - 'a' + 'A' : (int) __x;})
+
+
+#define tolower(__c) __extension__ ({ __typeof__ (__c) __x = (__c); isupper (__x) ? (int) __x - 'A' + 'a' : (int) __x;})
+# 103 "g:\\xilinx\\sdk\\2018.3\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\arm-none-eabi\\libc\\usr\\include\\ctype.h" 3 4
+#define isascii(__c) ((unsigned)(__c)<=0177)
+#define toascii(__c) ((__c)&0177)
+
+
+
+
+
+extern const char _ctype_[];
+
+
+# 19 "../src/hal.c" 2
+
+
+# 1 "../src/hal.h" 1
+# 16 "../src/hal.h"
+#define SRC_HAL_H_ 
+
+
+
+
 
 
 
@@ -6754,201 +6756,305 @@ void d_stop_timing(int index);
 uint64_t d_read_timing(int index);
 float d_read_timing_us(int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
-# 42 "../src/main.c" 2
-# 56 "../src/main.c"
-uint32_t *mem_addr;
-uint32_t *base;
+# 22 "../src/hal.c" 2
+# 1 "../src/version_tag.h" 1
+# 9 "../src/version_tag.h"
+#define SRC_VERSION_TAG_H_ 
 
-#define PACKET_MAXSIZE 16383
-
-#define INTC XScuGic
-#define INTC_HANDLER XScuGic_InterruptHandler
-#define RESET_TIMEOUT_COUNTER 10000
-
-#define RX_INTR_ID XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
-#define TX_INTR_ID XPAR_FABRIC_AXIDMA_0_MM2S_INTROUT_VEC_ID
-
-#define INTC_DEVICE_ID XPAR_SCUGIC_SINGLE_DEVICE_ID
-
-static XScuGic Intc;
+#define PS_APP_VERSION_TAG "v0.0.1-alpha"
+# 23 "../src/hal.c" 2
 
 
 
-uint8_t rx_buffer[1 << 23] __attribute__((aligned (1048576)));
-uint8_t tx_buffer[1 << 23] __attribute__((aligned (1048576)));
 
 
 
-XAxiDma dma0_pointer;
-XAxiDma_Config *dma0_config;
-XGpioPs gpio;
-XGpioPs_Config *gpio_config;
+# 1 "../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h" 1
+# 30 "../src/hal.c" 2
+# 39 "../src/hal.c"
+struct hal_t g_hal;
 
-XScuTimer xscu_timer;
-XScuTimer_Config *xscu_timer_cfg;
 
-uint32_t timer0, timer1;
-uint32_t tdelta;
 
-volatile uint32_t ioc_flag = 0;
-volatile uint32_t err_flag = 0;
 
-#define MARK_UNCACHEABLE 0x701
-
-void debug_printf(char *fmt, ...)
+volatile void irq_xscutimer(void *callback)
 {
- char buffer[1024];
+ XScuTimer *timer = (XScuTimer *) callback;
 
- va_list args;
- 
-# 100 "../src/main.c" 3 4
-__builtin_va_start(
-# 100 "../src/main.c"
-args
-# 100 "../src/main.c" 3 4
-,
-# 100 "../src/main.c"
-fmt
-# 100 "../src/main.c" 3 4
-)
-# 100 "../src/main.c"
-                   ;
-
- vsnprintf(buffer, 1024, fmt, args);
- print(buffer);
-
- 
-# 105 "../src/main.c" 3 4
-__builtin_va_end(
-# 105 "../src/main.c"
-args
-# 105 "../src/main.c" 3 4
-)
-# 105 "../src/main.c"
-            ;
-}
-
-void arb_delay(uint32_t n)
-{
- while(n--) {
-  __asm__("nop");
+ if(((Xil_In32(((timer)->Config.BaseAddr) + (0x0CU)) & 0x00000001U) == 0x00000001U)) {
+  g_hal.g_timer_overflow++;
  }
 }
 
 
 
 
-
-
-static void RxIntrHandler(void *Callback)
+void hal_init()
 {
- XAxiDma_BdRing *RxRingPtr = (XAxiDma_BdRing *) Callback;
- u32 IrqStatus;
- u32 AxiStatus;
- int TimeOut;
+ int error;
 
 
- IrqStatus = (Xil_In32(((RxRingPtr)->ChanBase) + (0x00000004)) & 0x00007000);
+    init_platform();
+    Xil_AssertSetCallback(&d_xilinx_assert);
+
+
+ d_printf(0, "\r\n\r\n\033[2J\033[0m\r\n");
+ d_printf(2, "ps_app: Zynq application for YAOS Oscilloscope Project (%s)", "v0.0.1-alpha");
+ d_printf(2, "Built %s %s", "Jan 26 2020", "13:39:36");
+ d_printf(2, "");
+ d_printf(2, "Application (C) 2020 Tomato Engineering Ltd.");
+ d_printf(2, "Parts       (C) 2005 - 2015 Xilinx, Inc.");
+ d_printf(2, "");
+ d_printf(2, "Application is licenced under the MIT Licence");
+ d_printf(2, "For information see LICENCE in the Git repository");
+ d_printf(2, "");
 
 
 
 
-
- Xil_Out32(((RxRingPtr)->ChanBase) + (0x00000004), ((IrqStatus) & 0x00007000));
-# 154 "../src/main.c"
- if ((IrqStatus & 0x00004000)) {
-  err_flag = 1;
-# 187 "../src/main.c"
+ g_hal.xscu_gic_cfg = XScuGic_LookupConfig(0U);
+ if(g_hal.xscu_gic_cfg == 
+# 80 "../src/hal.c" 3 4
+                         ((void *)0)
+# 80 "../src/hal.c"
+                             ) {
+  d_printf(4, "XScuGic: configuration lookup returns NULL");
+  exit(-1);
  }
 
+ error = XScuGic_CfgInitialize(&g_hal.xscu_gic, g_hal.xscu_gic_cfg, g_hal.xscu_gic_cfg->CpuBaseAddress);
 
-
-
-
-
- if ((IrqStatus & (0x00002000 | 0x00001000))) {
-
-  ioc_flag = 1;
+ if(error != 0L) {
+  d_printf(4, "XScuGic: configuration init returned error %d", error);
+  exit(-1);
  }
-}
-
-static int SetupIntrSystem(XScuGic * IntcInstancePtr,
-      XAxiDma * AxiDmaPtr, u16 TxIntrId, u16 RxIntrId)
-{
- XAxiDma_BdRing *TxRingPtr = (&((AxiDmaPtr)->TxBdRing));
- XAxiDma_BdRing *RxRingPtr = (&((AxiDmaPtr)->RxBdRing[0]));
- int Status;
-
- XScuGic_Config *IntcConfig;
-
-
-
-
-
- IntcConfig = XScuGic_LookupConfig(0U);
- if (
-# 214 "../src/main.c" 3 4
-    ((void *)0) 
-# 214 "../src/main.c"
-         == IntcConfig) {
-  return 1L;
- }
-
- Status = XScuGic_CfgInitialize(IntcInstancePtr, IntcConfig,
-     IntcConfig->CpuBaseAddress);
- if (Status != 0L) {
-  return 1L;
- }
-
-
-
-
- XScuGic_SetPriorityTriggerType(IntcInstancePtr, RxIntrId, 0xA0, 0x3);
-# 243 "../src/main.c"
- Status = XScuGic_Connect(IntcInstancePtr, RxIntrId,
-    (Xil_InterruptHandler)RxIntrHandler,
-    RxRingPtr);
- if (Status != 0L) {
-  return Status;
- }
-
-
- XScuGic_Enable(IntcInstancePtr, RxIntrId);
-
-
 
  Xil_ExceptionInit();
- Xil_ExceptionRegisterHandler(5U,
-   (Xil_ExceptionHandler)XScuGic_InterruptHandler,
-   (void *)IntcInstancePtr);
+ Xil_ExceptionRegisterHandler(5U, (Xil_ExceptionHandler)XScuGic_InterruptHandler, &g_hal.xscu_gic);
+
+ d_printf(2, "XScuGic: interrupt controller ready");
+
+
+
+
+
+ g_hal.xscu_timer_cfg = XScuTimer_LookupConfig(0);
+ error = XScuTimer_CfgInitialize(&g_hal.xscu_timer, g_hal.xscu_timer_cfg, g_hal.xscu_timer_cfg->BaseAddr);
+
+ if (error != 0L) {
+  d_printf(4, "XScuTimer: returned error code: %d, unable to start", error);
+  exit(-1);
+ }
+
+ error = XScuTimer_SelfTest(&g_hal.xscu_timer);
+
+ if (error != 0L) {
+  d_printf(4, "XScuTimer: self test failed with error %d", error);
+  exit(-1);
+ }
+
+ d_printf(2, "XScuTimer: ready");
+ d_printf(1, "XScuTimer: config: %3.3f MHz, 1 tick = %.3f us", (666666687 / 2.0f) / 1e6f, ((2.0f / 666666687) * 1e6));
+
+ error = XScuGic_Connect(&g_hal.xscu_gic, 29U, (Xil_ExceptionHandler)irq_xscutimer, (void *)&g_hal.xscu_timer);
+
 
  __asm__ __volatile__( "msr	cpsr,%0\n" : : "r" (({u32 rval = 0U; __asm__ __volatile__( "mrs	%0, cpsr\n" : "=r" (rval) ); rval; }) & ~ ((0x80) & (0x40 | 0x80))) );
 
- return 0L;
+
+
+
+
+ g_hal.g_timer_overflow = 0;
+ Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
+ Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U), ((Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U)) | 0x00000002U)));
+ Xil_Out32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U), ((Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x08U)) | 0x00000004U)));
+ XScuGic_Enable(&g_hal.xscu_gic, 29U);
+ XScuTimer_Start(&g_hal.xscu_timer);
+ g_hal.g_timer_have_init = 1;
+
+
+
+
+
+ g_hal.xgpio_ps_cfg = XGpioPs_LookupConfig(0);
+ error = XGpioPs_CfgInitialize(&g_hal.xgpio_ps, g_hal.xgpio_ps_cfg, g_hal.xgpio_ps_cfg->BaseAddr);
+
+ if (error != 0L) {
+  d_printf(4, "XGpioPs: returned error code: %d, unable to start", error);
+  exit(-1);
+ }
+
+ d_printf(2, "XGpioPs: ready");
+}
+# 161 "../src/hal.c"
+void d_printf(int debug_code, char *fmt, ...)
+{
+ uint64_t total_usec;
+ uint32_t sec, usec, timer;
+
+ char buffer[4096];
+ char time_buffer[10];
+
+ if(debug_code == 0 || debug_code >= 1) {
+  switch(debug_code) {
+   case 1:
+    print("[--] ");
+    break;
+
+   case 2:
+    print("\033[0;97m[ii] ");
+    break;
+
+   case 3:
+    print("\033[30;103m[WW]\033[0;93m ");
+    break;
+
+   case 4:
+    print("\033[97;41m[EE]\033[0;91m ");
+    break;
+  }
+
+
+  if(g_hal.g_timer_have_init) {
+   timer = Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x04U));
+   total_usec = (((((0xffffffffLU) / (666666687 / 2.0f))) * 1e6) * g_hal.g_timer_overflow) + ((0xffffffff - timer) * ((2.0f / 666666687) * 1e6));
+   sec = total_usec / 1000000;
+   usec = total_usec % 1000000;
+  } else {
+   sec = 0;
+   usec = 0;
+  }
+
+  if(debug_code != 0) {
+   snprintf(time_buffer, 4096, "[%3u.%06u] ", (unsigned int)sec, (unsigned int)usec);
+   print(time_buffer);
+  }
+
+
+  va_list args;
+  
+# 206 "../src/hal.c" 3 4
+ __builtin_va_start(
+# 206 "../src/hal.c"
+ args
+# 206 "../src/hal.c" 3 4
+ ,
+# 206 "../src/hal.c"
+ fmt
+# 206 "../src/hal.c" 3 4
+ )
+# 206 "../src/hal.c"
+                    ;
+
+  vsnprintf(buffer, 4096, fmt, args);
+  print(buffer);
+
+  if(debug_code != 0) {
+   print("\033[m\r\n");
+  }
+
+  
+# 215 "../src/hal.c" 3 4
+ __builtin_va_end(
+# 215 "../src/hal.c"
+ args
+# 215 "../src/hal.c" 3 4
+ )
+# 215 "../src/hal.c"
+             ;
+ }
+}
+# 227 "../src/hal.c"
+void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
+{
+ uint32_t lsb, msb;
+
+
+ lsb = Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x04U));
+# 243 "../src/hal.c"
+ if(lsb > 0xffffff00) {
+
+
+
+
+  while(lsb < 0xffffff00) {
+   msb = g_hal.g_timer_overflow;
+   lsb = Xil_In32(((&g_hal.xscu_timer)->Config.BaseAddr) + (0x04U));
+  }
+ } else {
+  msb = g_hal.g_timer_overflow;
+ }
+
+ *lsb_ret = lsb;
+ *msb_ret = msb;
 }
 
-void start_timing()
-{
- Xil_Out32(((&xscu_timer)->Config.BaseAddr) + (0x00U), ((0xffffffff)));
- XScuTimer_Start(&xscu_timer);
 
- timer1 = 0;
- timer0 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
+
+
+
+
+void d_start_timing(int index)
+{
+ uint32_t lsb, msb;
+ uint64_t timer_value;
+
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 270); } } ;
+
+ d_read_global_timer(&lsb, &msb);
+ timer_value = (((uint64_t)msb) << 32) | lsb;
+
+ g_hal.timers[index] = timer_value;
 }
 
-void stop_timing()
+
+
+
+
+
+
+void d_stop_timing(int index)
 {
- timer1 = Xil_In32(((&xscu_timer)->Config.BaseAddr) + (0x04U));
- tdelta = timer0 - timer1;
+ uint32_t lsb, msb;
+ uint64_t timer_value;
+ int64_t t_delta;
+
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 290); } } ;
+
+ d_read_global_timer(&lsb, &msb);
+ timer_value = (((uint64_t)msb) << 32) | lsb;
+
+ g_hal.timer_deltas[index] = timer_value - g_hal.timers[index];
+}
+# 305 "../src/hal.c"
+uint64_t d_read_timing(int index)
+{
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 307); } } ;
+ return g_hal.timer_deltas[index];
+}
+# 318 "../src/hal.c"
+float d_read_timing_us(int index)
+{
+ { if(!(index < 16)) { d_printf(4, "assertion failed: `%s' (file %s, line %d)", "index < NUM_DEBUG_TIMERS", "../src/hal.c", 320); } } ;
+ return g_hal.timer_deltas[index] * ((2.0f / 666666687) * 1e6);
 }
 
-void dump_timing(char *s)
+
+
+
+
+
+
+void d_dump_timing(char *s, int index)
 {
- debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * ((2.0f / 666666687) * 1e6));
+ d_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, d_read_timing(index) * 2, d_read_timing_us(index));
 }
 
-int main()
+
+
+
+void d_xilinx_assert(const char8 *file, s32 line)
 {
- hal_init();
-# 502 "../src/main.c"
+ d_printf(4, "Assert failed at line %d of file `%s'\r\n", line, file);
 }

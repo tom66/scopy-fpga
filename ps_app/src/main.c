@@ -38,6 +38,8 @@
 #include <stdarg.h>
 #include <ctype.h>
 
+#include "hal.h"
+
 #include "platform.h"
 #include "xil_printf.h"
 #include "xil_types.h"
@@ -66,9 +68,6 @@ uint32_t *base;
 #define INTC_DEVICE_ID          XPAR_SCUGIC_SINGLE_DEVICE_ID
 
 static INTC Intc;	/* Instance of the Interrupt Controller */
-
-#define TIMER_TICKS_TO_S		(2.0f / XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ)
-#define TIMER_TICKS_TO_US		(TIMER_TICKS_TO_S * 1e6)
 
 // These MUST be on 1MB boundaries to allow the cache to be invalidated safely
 // and they MUST be integer MB in size
@@ -280,11 +279,14 @@ void stop_timing()
 
 void dump_timing(char *s)
 {
-	debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * TIMER_TICKS_TO_US);
+	debug_printf("%s [~%d CPU cycles (~%4.1f us)]\r\n", s, 2 * tdelta, tdelta * XSCUTIMER_TICKS_TO_US);
 }
 
 int main()
 {
+	hal_init();
+
+#if 0
 	uint32_t counter = 0, tog = 0;
 	int32_t error;
 	uint32_t t0, t1;
@@ -495,4 +497,6 @@ int main()
     cleanup_platform();
 
     return 0;
+
+#endif
 }
