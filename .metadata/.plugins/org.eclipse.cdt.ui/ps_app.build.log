@@ -1,8 +1,56 @@
-19:06:11 **** Incremental Build of configuration Debug for project ps_app ****
-make pre-build main-build 
+21:19:01 **** Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
-make: Nothing to be done for 'main-build'.
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building file: ../src/hal.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/hal.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/hal.d" -MT"src/hal.o" -o "src/hal.o" "../src/hal.c"
+../src/hal.c: In function 'hal_init':
+../src/hal.c:144:2: warning: implicit declaration of function 'bogo_calibrate'; did you mean 'bogo_delay'? [-Wimplicit-function-declaration]
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+  bogo_delay
+../src/hal.c: At top level:
+../src/hal.c:188:6: warning: conflicting types for 'bogo_calibrate'
+ void bogo_calibrate()
+      ^~~~~~~~~~~~~~
+../src/hal.c:144:2: note: previous implicit declaration of 'bogo_calibrate' was here
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+../src/hal.c: In function 'd_stop_timing':
+../src/hal.c:392:10: warning: unused variable 't_delta' [-Wunused-variable]
+  int64_t t_delta;
+          ^~~~~~~
+'Finished building: ../src/hal.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69232	   3376	 138384	 210992	  33830	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
 
-19:06:11 Build Finished (took 275ms)
+21:19:07 Build Finished (took 5s.699ms)
 

@@ -1,40 +1,41 @@
 src/hal.o src/hal.o: ../src/hal.c ../src/hal.h ../src/platform.h \
  ../src/platform_config.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_printf.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_types.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/bspconfig.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_types.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_printf.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xreg_cortexa9.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xuartps_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xplatform_info.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xscugic.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xscugic_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h ../src/fabric_config.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_types.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters_ps.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/bspconfig.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_types.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_cache.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xpseudo_asm.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xreg_cortexa9.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xpseudo_asm_gcc.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_testmem.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xuartps_hw.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_assert.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xgpiops.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xstatus.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xgpiops_hw.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xplatform_info.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_hw.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_cache.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscugic.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscugic_hw.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_exception.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscutimer.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscutimer_hw.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h \
+ ../src/fabric_config.h \
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h \
  ../src/version_tag.h \
- ../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h
+ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_assert.h
 
 ../src/hal.h:
 
@@ -42,74 +43,74 @@ src/hal.o src/hal.o: ../src/hal.c ../src/hal.h ../src/platform.h \
 
 ../src/platform_config.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_printf.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_types.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_types.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xparameters_ps.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters_ps.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/bspconfig.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/bspconfig.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_types.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_types.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_cache.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_printf.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xpseudo_asm.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xreg_cortexa9.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xreg_cortexa9.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xpseudo_asm_gcc.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_testmem.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_testmem.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xuartps_hw.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xuartps_hw.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_assert.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_io.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xgpiops.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xstatus.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xstatus.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xgpiops_hw.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xgpiops_hw.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xplatform_info.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xplatform_info.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_hw.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_cache.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_cache.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xscugic.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscugic.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xscugic_hw.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscugic_hw.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_exception.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_exception.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscutimer.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xscutimer_hw.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xscutimer_hw.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xdebug.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:
 
 ../src/fabric_config.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xparameters.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h:
 
 ../src/version_tag.h:
 
-../../ps_app_bsp/ps7_cortexa9_0/include/xil_assert.h:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_assert.h:

@@ -17,6 +17,7 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param chipscope.maxJobs 1
 set_param xicom.use_bs_reader 1
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
@@ -55,7 +56,7 @@ read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 
-set cached_ip [config_ip_cache -export -no_bom -use_project_ipc -dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/clk_wiz_1_idelay_refclk_synth_1 -new_name clk_wiz_1_idelay_refclk -ip [get_ips clk_wiz_1_idelay_refclk]]
+set cached_ip [config_ip_cache -export -no_bom  -dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/clk_wiz_1_idelay_refclk_synth_1 -new_name clk_wiz_1_idelay_refclk -ip [get_ips clk_wiz_1_idelay_refclk]]
 
 if { $cached_ip eq {} } {
 close [open __synthesis_is_running__ w]

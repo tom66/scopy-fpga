@@ -47,14 +47,14 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:ip:axi_bram_ctrl:4.1
--- IP Revision: 0
+-- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-LIBRARY axi_bram_ctrl_v4_1_0;
-USE axi_bram_ctrl_v4_1_0.axi_bram_ctrl;
+LIBRARY axi_bram_ctrl_v4_1_2;
+USE axi_bram_ctrl_v4_1_2.axi_bram_ctrl;
 
 ENTITY design_1_axi_bram_ctrl_0_0 IS
   PORT (
@@ -120,7 +120,6 @@ ARCHITECTURE design_1_axi_bram_ctrl_0_0_arch OF design_1_axi_bram_ctrl_0_0 IS
       C_S_AXI_SUPPORTS_NARROW_BURST : INTEGER;
       C_SINGLE_PORT_BRAM : INTEGER;
       C_FAMILY : STRING;
-      C_SELECT_XPM : INTEGER;
       C_READ_LATENCY : INTEGER;
       C_RD_CMD_OPTIMIZATION : INTEGER;
       C_S_AXI_CTRL_ADDR_WIDTH : INTEGER;
@@ -203,12 +202,12 @@ ARCHITECTURE design_1_axi_bram_ctrl_0_0_arch OF design_1_axi_bram_ctrl_0_0 IS
     );
   END COMPONENT axi_bram_ctrl;
   ATTRIBUTE X_CORE_INFO : STRING;
-  ATTRIBUTE X_CORE_INFO OF design_1_axi_bram_ctrl_0_0_arch: ARCHITECTURE IS "axi_bram_ctrl,Vivado 2018.3";
+  ATTRIBUTE X_CORE_INFO OF design_1_axi_bram_ctrl_0_0_arch: ARCHITECTURE IS "axi_bram_ctrl,Vivado 2019.2";
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_axi_bram_ctrl_0_0_arch : ARCHITECTURE IS "design_1_axi_bram_ctrl_0_0,axi_bram_ctrl,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_axi_bram_ctrl_0_0_arch: ARCHITECTURE IS "design_1_axi_bram_ctrl_0_0,axi_bram_ctrl,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_bram_ctrl,x_ipVersion=4.1,x_ipCoreRevision=0,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_BRAM_INST_MODE=EXTERNAL,C_MEMORY_DEPTH=2048,C_BRAM_ADDR_WIDTH=11,C_S_AXI_ADDR_WIDTH=13,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ID_WIDTH=12,C_S_AXI_PROTOCOL=AXI4,C_S_AXI_SUPPORTS_NARROW_BURST=0,C_SINGLE_PORT_BRAM=1,C_FAMILY=zynq,C_SELECT_XPM=1,C_READ_LATENCY=1,C_RD_CMD_OPTIMIZATION=0,C_S_AXI_CTRL_ADDR_" & 
-"WIDTH=32,C_S_AXI_CTRL_DATA_WIDTH=32,C_ECC=0,C_ECC_TYPE=0,C_FAULT_INJECT=0,C_ECC_ONOFF_RESET_VALUE=0}";
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_axi_bram_ctrl_0_0_arch: ARCHITECTURE IS "design_1_axi_bram_ctrl_0_0,axi_bram_ctrl,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_bram_ctrl,x_ipVersion=4.1,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_BRAM_INST_MODE=EXTERNAL,C_MEMORY_DEPTH=2048,C_BRAM_ADDR_WIDTH=11,C_S_AXI_ADDR_WIDTH=13,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ID_WIDTH=12,C_S_AXI_PROTOCOL=AXI4,C_S_AXI_SUPPORTS_NARROW_BURST=0,C_SINGLE_PORT_BRAM=1,C_FAMILY=zynq,C_READ_LATENCY=1,C_RD_CMD_OPTIMIZATION=0,C_S_AXI_CTRL_ADDR_WIDTH=32,C_S_AX" & 
+"I_CTRL_DATA_WIDTH=32,C_ECC=0,C_ECC_TYPE=0,C_FAULT_INJECT=0,C_ECC_ONOFF_RESET_VALUE=0}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF bram_rddata_a: SIGNAL IS "xilinx.com:interface:bram:1.0 BRAM_PORTA DOUT";
@@ -273,7 +272,6 @@ BEGIN
       C_S_AXI_SUPPORTS_NARROW_BURST => 0,
       C_SINGLE_PORT_BRAM => 1,
       C_FAMILY => "zynq",
-      C_SELECT_XPM => 1,
       C_READ_LATENCY => 1,
       C_RD_CMD_OPTIMIZATION => 0,
       C_S_AXI_CTRL_ADDR_WIDTH => 32,

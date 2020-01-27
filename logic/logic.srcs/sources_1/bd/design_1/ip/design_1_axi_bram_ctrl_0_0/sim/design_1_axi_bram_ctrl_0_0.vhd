@@ -47,14 +47,14 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:ip:axi_bram_ctrl:4.1
--- IP Revision: 0
+-- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-LIBRARY axi_bram_ctrl_v4_1_0;
-USE axi_bram_ctrl_v4_1_0.axi_bram_ctrl;
+LIBRARY axi_bram_ctrl_v4_1_2;
+USE axi_bram_ctrl_v4_1_2.axi_bram_ctrl;
 
 ENTITY design_1_axi_bram_ctrl_0_0 IS
   PORT (
@@ -120,7 +120,6 @@ ARCHITECTURE design_1_axi_bram_ctrl_0_0_arch OF design_1_axi_bram_ctrl_0_0 IS
       C_S_AXI_SUPPORTS_NARROW_BURST : INTEGER;
       C_SINGLE_PORT_BRAM : INTEGER;
       C_FAMILY : STRING;
-      C_SELECT_XPM : INTEGER;
       C_READ_LATENCY : INTEGER;
       C_RD_CMD_OPTIMIZATION : INTEGER;
       C_S_AXI_CTRL_ADDR_WIDTH : INTEGER;
@@ -266,7 +265,6 @@ BEGIN
       C_S_AXI_SUPPORTS_NARROW_BURST => 0,
       C_SINGLE_PORT_BRAM => 1,
       C_FAMILY => "zynq",
-      C_SELECT_XPM => 1,
       C_READ_LATENCY => 1,
       C_RD_CMD_OPTIMIZATION => 0,
       C_S_AXI_CTRL_ADDR_WIDTH => 32,
