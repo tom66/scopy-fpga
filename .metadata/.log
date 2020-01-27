@@ -4746,3 +4746,1426 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:05:54.963
 !MESSAGE XSCT command with result: [::hsi::utils::closesw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_bsp/system.mss], Result: [null, ]. Thread: main
+
+!ENTRY com.xilinx.sdk.utils 1 0 2020-01-26 22:16:43.608
+!MESSAGE Updating toolusage
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:43.772
+!MESSAGE XSCT Command: [::hsi::utils::get_ps_config_params -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.004
+!MESSAGE XSCT command with result: [::hsi::utils::get_ps_config_params -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf], Result: [null, {"PCW_APU_PERIPHERAL_FREQMHZ": "666.666666",
+"PCW_DDR_HPRLPR_QUEUE_PARTITION": "HPR(0)/LPR(32)",
+"PCW_DDR_HPR_TO_CRITICAL_PRIORITY_LEVEL": "15",
+"PCW_DDR_LPR_TO_CRITICAL_PRIORITY_LEVEL": "2",
+"PCW_DDR_PORT0_HPR_ENABLE": "0",
+"PCW_DDR_PORT1_HPR_ENABLE": "0",
+"PCW_DDR_PORT2_HPR_ENABLE": "0",
+"PCW_DDR_PORT3_HPR_ENABLE": "0",
+"PCW_DDR_WRITE_TO_CRITICAL_PRIORITY_LEVEL": "2",
+"PCW_FPGA0_PERIPHERAL_FREQMHZ": "180",
+"PCW_UIPARAM_DDR_BUS_WIDTH": "16 Bit",
+"PCW_UIPARAM_DDR_FREQ_MHZ": "533.333333",
+}]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.018
+!MESSAGE XSCT Command: [::hsi::utils::get_all_register_data -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.439
+!MESSAGE XSCT command with result: [::hsi::utils::get_all_register_data -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Result: [null, {"axi_bram_ctrl_0": {},
+"axi_dma": {"MM2S_DMACR": {"description": "MM2S DMA Control Register",
+"address_offset": "0x0",
+"access": "read-write",
+"size": "32",
+"fields": {"RS": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Run / Stop control for controlling running and stopping of the DMA channel.
+  0 - Stop – DMA stops when current (if any) DMA operations are complete. For Scatter / Gather Mode pending commands/transfers are flushed or completed. 
+  AXI4-Stream outs are potentially terminated early. Descriptors in the update queue are allowed to finish updating to remote memory before engine halt.
+  For Direct Register mode pending commands/transfers are flushed or completed. AXI4-Stream outs are potentially terminated.
+  The halted bit in the DMA Status register asserts to 1 when the DMA engine is halted. This bit is cleared by AXI DMA hardware when an error occurs. The CPU can also choose to clear this bit to stop DMA operations.
+  1 - Run – Start DMA operations. The halted bit in the DMA Status register deasserts to 0 when the DMA engine begins operations.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Reset": {"access": "read-write",
+"bit_offset": "2",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Soft reset for resetting the AXI DMA core. Setting this bit to a 1 causes the AXI DMA to be reset. Reset is accomplished gracefully. Pending commands/transfers are flushed or completed.
+AXI4-Stream outs are potentially terminated early. Setting either MM2S_DMACR. Reset = 1 or S2MM_DMACR.Reset = 1 resets the entire AXI DMA engine. After completion of a soft reset, all registers and bits are in the Reset State.      0 - Normal operation.   1 - Reset in progress.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Keyhole": {"access": "read-write",
+"bit_offset": "3",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Keyhole Read. Setting this bit to 1 causes AXI DMA to initiate MM2S reads (AXI4read) in non-incrementing address mode (Fixed Address Burst transfer on AXI4). This bit can be updated when AXI DMA is in idle. When using keyhole operation the Max Burst Length should not exceed 16. This bit should not be set when DRE is enabled.
+This bit is non functional when the multichannel feature is enabled or in Direct Register mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Cyclic_BD_Enable": {"access": "read-write",
+"bit_offset": "4",
+"bit_range": "",
+"bit_width": "1",
+"desc": "When set to 1, the DMA operates in Cyclic Buffer Descriptor (BD) mode without any user intervention. In this mode, the Scatter Gather module ignores the Completed bit of the BD. With this bit set, you can use the same BDs in cyclic manner without worrying about any stale descriptor errors.
+This bit should be set/unset only when the DMA is idle or when not running. Updating this bit while the DMA is running can result in unexpected behavior.
+This bit is non functional when DMA operates in multichannel mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IOC_IrqEn": {"access": "read-write",
+"bit_offset": "12",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Complete (IOC) Interrupt Enable. When set to 1, allows DMASR.IOC_Irq to generate an interrupt out for descriptors with the IOC bit set.   0 - IOC Interrupt disabled      1 - IOC Interrupt enabled
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Dly_IrqEn": {"access": "read-write",
+"bit_offset": "13",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Delay Timer Interrupt Enable. When set to 1, allows DMASR.Dly_Irq to generate an interrupt out.      0 - Delay Interrupt disabled   1 - Delay Interrupt enabled Note: This field is ignored when AXI DMA is configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Err_IrqEn": {"access": "read-write",
+"bit_offset": "14",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Error Interrupt Enable.
+  0 - Error Interrupt disabled
+  1 - Error Interrupt enabled
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQThreshold": {"access": "read-write",
+"bit_offset": "16",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Threshold. This value is used for setting the interrupt threshold. When IOC interrupt events occur, an internal counter counts down from the Interrupt Threshold setting. When the count reaches zero, an interrupt out is generated by the DMA engine.   Note: The minimum setting for the threshold is 0x01. A write of 0x00 to this register has no effect.   Note: This field is ignored when AXI DMA is configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQDelay": {"access": "read-write",
+"bit_offset": "24",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Delay Time Out. This value is used for setting the interrupt timeout value. The interrupt timeout mechanism causes the DMA engine to generate an interrupt after the delay time period has expired. Timer begins counting at the end of a packet and resets with receipt of a new packet or a timeout event occurs.
+Note: Setting this value to zero disables the delay timer interrupt.
+Note: This field is ignored when AXI DMA is configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"MM2S_DMASR": {"description": "MM2S DMA Status Register",
+"address_offset": "0x04",
+"access": "read-write",
+"size": "32",
+"fields": {"Halted": {"access": "read-only",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Channel Halted. Indicates the run/stop state of the DMA channel.      0 - DMA channel running.      1 - DMA channel halted.  For Scatter / Gather Mode this bit gets set when DMACR.RS = 0 and DMA and SG operations have halted. For Direct Register mode (C_INCLUDE_SG = 0) this bit gets set when DMACR.RS = 0 and DMA operations have halted. There can be a lag of time between when DMACR.RS = 0 and when DMASR.Halted = 1 Note: When halted (RS= 0 and Halted = 1), writing to CURDESC_PTR or TAILDESC_PTR pointer registers has no effect on DMA operations when in Scatter Gather Mode. For Direct Register Mode, writing to the LENGTH register has no effect on DMA operations.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Idle": {"access": "read-only",
+"bit_offset": "1",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Channel Idle. Indicates the state of AXI DMA operations.
+For Scatter / Gather Mode when IDLE indicates the SG Engine has reached the tail pointer for the associated channel and all queued descriptors have been processed. Writing to the tail pointer register automatically restarts DMA operations.
+For Direct Register Mode when IDLE indicates the current transfer has completed.      0 - Not Idle. For Scatter / Gather Mode, SG has not reached tail descriptor pointer and/or DMA operations in progress. For Direct Register Mode, transfer is not complete.      1 - Idle. For Scatter / Gather Mode, SG has reached tail descriptor pointer and DMA operation paused. for Direct Register Mode, DMA transfer has completed and controller is paused.  Note: This bit is 0 when channel is halted (DMASR.Halted=1). This bit is also 0 prior to initial transfer when AXI DMA configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGIncld": {"access": "read-only",
+"bit_offset": "3",
+"bit_range": "",
+"bit_width": "1",
+"desc": "1 - Scatter Gather Enabled
+0 - Scatter Gather not enabled
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMAIntErr": {"access": "read-only",
+"bit_offset": "4",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Internal Error. Internal error occurs if the buffer length specified in the fetched descriptor is set to 0. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No DMA Internal Errors        1 - DMA Internal Error detected. DMA Engine halts
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMASlvErr": {"access": "read-only",
+"bit_offset": "5",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Slave Error. This error occurs if the slave read from the Memory Map interface issues a Slave Error. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No DMA Slave Errors.      1 - DMA Slave Error detected. DMA Engine halts
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMADecErr": {"access": "read-only",
+"bit_offset": "6",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Decode Error. This error occurs if the address request points to an invalid address. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No DMA Decode Errors.      1 - DMA Decode Error detected. DMA Engine halts.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGIntErr": {"access": "read-only",
+"bit_offset": "8",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Internal Error. This error occurs if a descriptor with the “Complete bit” already set is fetched. Refer to the Scatter Gather Descriptor section for more information.This indicates to the SG Engine that the descriptor is a stale descriptor. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Internal Errors.      1 - SG Internal Error detected. DMA Engine halts.  Note: This bit is not used and is fixed at 0 when AXI DMA is configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGSlvErr": {"access": "read-only",
+"bit_offset": "9",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Slave Error. This error occurs if the slave read from on the Memory Map interface issues a Slave error. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Slave Errors.      1 - SG Slave Error detected. DMA Engine halts.  Note: This bit is not used and is fixed at 0 when AXI DMA is configured for Direct Register Mode. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGDecErr": {"access": "read-only",
+"bit_offset": "10",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Decode Error. This error occurs if CURDESC_PTR and/or NXTDESC_PTR points to an invalid address. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Decode Errors.      1 - SG Decode Error detected. DMA Engine halts.  Note: This bit is not used and is fixed at 0 when AXI DMA is configured for Direct Register Mode. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IOC_Irq": {"access": "read-write",
+"bit_offset": "12",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Complete. When set to 1 for Scatter/Gather Mode, indicates an interrupt event was generated on completion of a descriptor. This occurs for descriptors with the End of Frame (EOF) bit set. When set to 1 for Direct Register Mode, indicates an interrupt event was generated on completion of a transfer. If the corresponding bit is enabled in the MM2S_DMACR (IOC_IrqEn = 1) and if the interrupt threshold has been met, causes an interrupt out to be generated from the AXI DMA.      0 - No IOC Interrupt.      1 - IOC Interrupt detected.  Writing a 1 to this bit will clear it.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Dly_Irq": {"access": "read-write",
+"bit_offset": "13",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Delay. When set to 1, indicates an interrupt event was generated on delay timer time out. If the corresponding bit is enabled in the MM2S_DMACR (Dly_IrqEn = 1), an interrupt out is generated from the AXI DMA.      0 - No Delay Interrupt.      1 - Delay Interrupt detected. Note: This bit is not used and is fixed at 0 when AXI DMA is configured for Direct Register Mode. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Err_Irq": {"access": "read-write",
+"bit_offset": "14",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Error. When set to 1, indicates an interrupt event was generated on error. If the corresponding bit is enabled in the MM2S_DMACR (Err_IrqEn = 1), an interrupt out is generated from the AXI DMA.
+Writing a 1 to this bit will clear it.   
+0 - No error Interrupt.   
+1 - Error interrupt detected.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQThresholdSts": {"access": "read-only",
+"bit_offset": "16",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Threshold Status. Indicates current interrupt threshold value.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQDelaySts": {"access": "read-only",
+"bit_offset": "24",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Delay Time Status. Indicates current interrupt delay time value.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"MM2S_SA": {"description": "MM2S Source Address Register",
+"address_offset": "0x18",
+"access": "read-write",
+"size": "32",
+"fields": {"Source_Address": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "32",
+"desc": "Indicates the source address AXI DMA reads from to transfer data to AXI4-Stream on the MM2S Channel.
+Note: If Data Realignment Engine is included, the Source Address can be at any byte offset. If Data Realignment Engine is not included, the Source Address must be MM2S Memory Map data width aligned.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"MM2S_SA_MSB": {"description": "MM2S Source Address Register",
+"address_offset": "0x1C",
+"access": "read-write",
+"size": "32",
+"fields": {"Source_Address": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "32",
+"desc": "Indicates the MSB 32 bits of the source address AXI DMA reads from to transfer data to AXI4-Stream on the MM2S Channel.
+Note: If Data Realignment Engine is included, the Source Address can be at any byte offset. If Data Realignment Engine is not included, the Source Address must be MM2S Memory Map data width aligned.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"MM2S_LENGTH": {"description": "MM2S DMA Transfer Length Register",
+"address_offset": "0x28",
+"access": "read-write",
+"size": "32",
+"fields": {"Length": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "26",
+"desc": "Indicates the number of bytes to transfer for the MM2S channel. Writing a non-zero value to this register starts the MM2S transfer.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"S2MM_DMACR": {"description": "S2MM DMA Control Register",
+"address_offset": "0x30",
+"access": "read-write",
+"size": "32",
+"fields": {"RS": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Run / Stop control for controlling running and stopping of the DMA channel.
+  0 - Stop – DMA stops when current (if any) DMA operations are complete. For Scatter / Gather Mode pending commands/transfers are flushed or completed. 
+  AXI4-Stream outs are potentially terminated early. Descriptors in the update queue are allowed to finish updating to remote memory before engine halt.
+  For Direct Register mode pending commands/transfers are flushed or completed. AXI4-Stream outs are potentially terminated. Data integrity on S2MM AXI4 cannot be guaranteed.
+  The halted bit in the DMA Status register asserts to 1 when the DMA engine is halted. This bit is cleared by AXI DMA hardware when an error occurs. The CPU can also choose to clear this bit to stop DMA operations.
+  1 - Run – Start DMA operations. The halted bit in the DMA Status register deasserts to 0 when the DMA engine begins operations.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Reset": {"access": "read-write",
+"bit_offset": "2",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Soft reset for resetting the AXI DMA core. Setting this bit to a 1 causes the AXI DMA to be reset. Reset is accomplished gracefully. Pending commands/transfers are flushed or completed.
+AXI4-Stream outs are terminated early, if necessary with associated TLAST. Setting either MM2S_DMACR.Reset = 1 or S2MM_DMACR.Reset = 1 resets the entire AXI DMA engine. After completion of a soft reset, all registers and bits are in the Reset State.      0 - Reset not in progress. Normal operation.      1 - Reset in progress
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Keyhole": {"access": "read-write",
+"bit_offset": "3",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Keyhole Write. Setting this bit to 1 causes AXI DMA to initiate S2MM writes (AXI4 Writes) in non-incrementing address mode (Fixed Address Burst transfer on AXI4). This bit can be modified when AXI DMA is in idle. When enabling Key hole operation the maximum burst length cannot be more than 16. This bit should not be set when DRE is enabled.
+This bit is non functional when DMA is used in multichannel mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Cyclic_BD_Enable": {"access": "read-write",
+"bit_offset": "4",
+"bit_range": "",
+"bit_width": "1",
+"desc": "When set to 1, the DMA operates in Cyclic Buffer Descriptor (BD) mode without any user intervention. In this mode, the Scatter Gather module ignores the Completed bit of the BD. With this bit set, you can use the same BDs in cyclic manner without worrying about any stale descriptor errors.
+This bit is non functional when DMA operates in Multichannel mode. or in Direct Register Mode
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IOC_IrqEn": {"access": "read-write",
+"bit_offset": "12",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Complete (IOC) Interrupt Enable. When set to 1, allows Interrupt On Complete events to generate an interrupt out for descriptors with the Complete bit set.      0 - IOC Interrupt disabled      1 - IOC Interrupt enabled
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Dly_IrqEn": {"access": "read-write",
+"bit_offset": "13",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Delay Timer Interrupt Enable. When set to 1, allows error events to generate an interrupt out.      0 - Delay Interrupt disabled      1 - Delay Interrupt enabled  Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Err_IrqEn": {"access": "read-write",
+"bit_offset": "14",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Error Interrupt Enable. When set to 1, allows error events to generate an interrupt out.      0 - Error Interrupt disabled      1 - Error Interrupt enabled
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQThreshold": {"access": "read-write",
+"bit_offset": "16",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Threshold. This value is used for setting the interrupt threshold. When IOC interrupt events occur, an internal counter counts down from the Interrupt Threshold setting. When the count reaches zero, an interrupt out is generated by the DMA engine.
+Note: The minimum setting for the threshold is 0x01. A write of 0x00 to this register has no effect.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQDelay": {"access": "read-write",
+"bit_offset": "24",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Delay Time Out. This value is used for setting the interrupt timeout value. The interrupt timeout mechanism causes the DMA engine to generate an interrupt after the delay time period has expired. Timer begins counting at the end of a packet and resets with receipt of a new packet or a timeout event occurs.
+Note: Setting this value to zero disables the delay timer interrupt.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"S2MM_DMASR": {"description": "S2MM DMA Status Register",
+"address_offset": "0x34",
+"access": "read-write",
+"size": "32",
+"fields": {"Halted": {"access": "read-only",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Channel Halted. Indicates the run/stop state of the DMA channel.      0 - DMA channel running.      1 - DMA channel halted.  For Scatter/Gather Mode this bit gets set when DMACR.RS = 0 and DMA and SG operations have halted. For Direct Register Mode this bit gets set when DMACR.RS = 0 and DMA operations have halted. There can be a lag of time between when DMACR.RS = 0 and when DMASR.Halted = 1 
+Note: When halted (RS= 0 and Halted = 1), writing to CURDESC_PTR or TAILDESC_PTR pointer registers has no effect on DMA operations when in Scatter Gather Mode. For Direct Register Mode, writing to the LENGTH register has no effect on DMA operations.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Idle": {"access": "read-only",
+"bit_offset": "1",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Channel Idle. Indicates the state of AXI DMA operations.
+For Scatter / Gather Mode when IDLE indicates the SG Engine has reached the tail pointer for the associated channel and all queued descriptors have been processed. Writing to the tail pointer register automatically restarts DMA operations.
+For Direct Register Mode when IDLE indicates the current transfer has completed.      0 - Not Idle.      1 - Idle.   Note: This bit is 0 when channel is halted (DMASR.Halted=1). This bit is also 0 prior to initial transfer when AXI DMA configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGIncld": {"access": "read-only",
+"bit_offset": "3",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Engine Included. DMASR.SGIncld = 1 indicates the Scatter Gather engine is included and the AXI DMA is configured for Scatter Gather mode. DMASR.SGIncld = 0 indicates the Scatter Gather engine is excluded and the AXI DMA is configured for Direct Register Mode.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMAIntErr": {"access": "read-only",
+"bit_offset": "4",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Internal Error. This error occurs if the buffer length specified in the fetched descriptor is set to 0. Also, when in Scatter Gather Mode and using the status app length field, this error occurs when the Status AXI4-Stream packet RxLength field does not match the S2MM packet being received by the S_AXIS_S2MM interface. When Scatter Gather is disabled, this error is flagged if any error occurs during Memory write or if the incoming packet is bigger than what is specified in the DMA length register.
+This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No DMA Internal Errors      1 - DMA Internal Error detected.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMASlvErr": {"access": "read-only",
+"bit_offset": "5",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Slave Error. This error occurs if the slave read from the Memory Map interface issues a Slave Error. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No DMA Slave Errors.      1 - DMA Slave Error detected.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"DMADecErr": {"access": "read-only",
+"bit_offset": "6",
+"bit_range": "",
+"bit_width": "1",
+"desc": "DMA Decode Error. This error occurs if the address request points to an invalid address. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.     0 - No DMA Decode Errors.   1 - DMA Decode Error detected.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGIntErr": {"access": "read-only",
+"bit_offset": "8",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Internal Error. This error occurs if a descriptor with the “Complete bit” already set is fetched. This indicates to the SG Engine that the descriptor is a tail descriptor. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Internal Errors.      1 - SG Internal Error detected.  Note: Applicable only when Scatter Gather is enabled. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGSlvErr": {"access": "read-only",
+"bit_offset": "9",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Slave Error. This error occurs if the slave read from on the Memory Map interface issues a Slave error. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Slave Errors.      1 - SG Slave Error detected. DMA Engine halts. Note: Applicable only when Scatter Gather is enabled. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"SGDecErr": {"access": "read-only",
+"bit_offset": "10",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Scatter Gather Decode Error. This error occurs if CURDESC_PTR and/or NXTDESC_PTR points to an invalid address. This error condition causes the AXI DMA to halt gracefully. The DMACR.RS bit is set to 0, and when the engine has completely shut down, the DMASR.Halted bit is set to 1.      0 - No SG Decode Errors.      1 - SG Decode Error detected. DMA Engine halts. Note: Applicable only when Scatter Gather is enabled. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IOC_Irq": {"access": "read-write",
+"bit_offset": "12",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Complete. When set to 1 for Scatter/Gather Mode, indicates an interrupt event was generated on completion of a descriptor. This occurs for descriptors with the End of Frame (EOF) bit set. When set to 1 for Direct Register Mode, indicates an interrupt event was generated on completion of a transfer. If the corresponding bit in S2MM_DMACR is enabled (IOC_IrqEn = 1) and if the interrupt threshold has been met, causes an interrupt out to be generated from the AXI DMA.      0 - No IOC Interrupt.      1 - IOC Interrupt detected. Writing a 1 to this bit will clear it.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Dly_Irq": {"access": "read-write",
+"bit_offset": "13",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Delay. When set to 1, indicates an interrupt event was generated on delay timer time out. If the corresponding bit is enabled in the S2MM_DMACR (Dly_IrqEn = 1), an interrupt out is generated from the AXI DMA.      0 - No Delay Interrupt.      1 - Delay Interrupt detected.1 = IOC Interrupt detected. Writing a 1 to this bit will clear it. Note: Applicable only when Scatter Gather is enabled. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"Err_Irq": {"access": "read-write",
+"bit_offset": "14",
+"bit_range": "",
+"bit_width": "1",
+"desc": "Interrupt on Error. When set to 1, indicates an interrupt event was generated on error. If the corresponding bit is enabled in the S2MM_DMACR (Err_IrqEn = 1), an interrupt out is generated from the AXI DMA.
+Writing a 1 to this bit will clear it.      0 - No error Interrupt.      1 - Error interrupt detected.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQThresholdSts": {"access": "read-only",
+"bit_offset": "16",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Threshold Status. Indicates current interrupt threshold value.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+"IRQDelaySts": {"access": "read-only",
+"bit_offset": "24",
+"bit_range": "",
+"bit_width": "8",
+"desc": "Interrupt Delay Time Status. Indicates current interrupt delay time value.
+Note: Applicable only when Scatter Gather is enabled.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"S2MM_DA": {"description": "S2MM DMA Destination Address Register",
+"address_offset": "0x48",
+"access": "read-write",
+"size": "32",
+"fields": {"Destination_Address": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "32",
+"desc": "Indicates the destination address the AXI DMA writes to transfer data from AXI4-Stream on S2MM Channel.
+Note: If Data Realignment Engine is included, the Destination Address can be at any byte offset. If Data Realignment Engine is not included, the Destination Address must be S2MM Memory Map data width aligned.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"S2MM_DA_MSB": {"description": "S2MM Destination Address Register",
+"address_offset": "0x4C",
+"access": "read-write",
+"size": "32",
+"fields": {"Destination_Address": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "32",
+"desc": "Indicates the MSB 32 bits of the Destination address AXI DMA writes to transfer data from AXI4-Stream on the S2MM Channel.
+Note: If Data Realignment Engine is included, the Destination Address can be at any byte offset. If Data Realignment Engine is not included, the Dstination Address must be S2MM Memory Map data width aligned.
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+"S2MM_LENGTH": {"description": "S2MM DMA Transfer Length Register",
+"address_offset": "0x58",
+"access": "read-write",
+"size": "32",
+"fields": {"Length": {"access": "read-write",
+"bit_offset": "0",
+"bit_range": "",
+"bit_width": "26",
+"desc": "Indicates the length in bytes of the S2MM buffer available to write receive data from the S2MM channel. Writing a non-zero value to this register enables S2MM channel to receive packet data.
+At the completion of the S2MM transfer, the number of actual bytes written on the S2MM AXI4 interface is updated to the S2MM_LENGTH register.
+Note: This value must be greater than or equal to the largest expected packet to be received on S2MM AXI4-Stream. Values smaller than the received packet result in undefined behavior. 
+",
+"enum_values": "",
+"lsb": "",
+"mod_write_val": "",
+"msb": "",
+"read_action": "",
+},
+},
+},
+},
+"ps7_afi_0": {},
+"ps7_afi_1": {},
+"ps7_afi_2": {},
+"ps7_afi_3": {},
+"ps7_coresight_comp_0": {},
+"ps7_ddr_0": {},
+"ps7_ddrc_0": {},
+"ps7_dev_cfg_0": {},
+"ps7_dma_ns": {},
+"ps7_dma_s": {},
+"ps7_globaltimer_0": {},
+"ps7_gpio_0": {},
+"ps7_gpv_0": {},
+"ps7_intc_dist_0": {},
+"ps7_iop_bus_config_0": {},
+"ps7_l2cachec_0": {},
+"ps7_ocmc_0": {},
+"ps7_pl310_0": {},
+"ps7_pmu_0": {},
+"ps7_ram_0": {},
+"ps7_ram_1": {},
+"ps7_scuc_0": {},
+"ps7_scugic_0": {},
+"ps7_scutimer_0": {},
+"ps7_scuwdt_0": {},
+"ps7_slcr_0": {},
+"ps7_spi_0": {},
+"ps7_ttc_0": {},
+"ps7_uart_1": {},
+"ps7_xadc_0": {},
+}]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.533
+!MESSAGE XSCT Command: [::hsi::utils::get_addr_ranges -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.657
+!MESSAGE XSCT command with result: [::hsi::utils::get_addr_ranges -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Result: [null, {"axi_dma_S_AXI_LITE": {"name": "axi_dma",
+"base": "0x40400000",
+"high": "0x4040FFFF",
+"size": "65536",
+"slaveintf": "S_AXI_LITE",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_afi_0": {"name": "ps7_afi_0",
+"base": "0xF8008000",
+"high": "0xF8008FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_afi_1": {"name": "ps7_afi_1",
+"base": "0xF8009000",
+"high": "0xF8009FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_afi_2": {"name": "ps7_afi_2",
+"base": "0xF800A000",
+"high": "0xF800AFFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_afi_3": {"name": "ps7_afi_3",
+"base": "0xF800B000",
+"high": "0xF800BFFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_coresight_comp_0": {"name": "ps7_coresight_comp_0",
+"base": "0xF8800000",
+"high": "0xF88FFFFF",
+"size": "1048576",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_ddrc_0": {"name": "ps7_ddrc_0",
+"base": "0xF8006000",
+"high": "0xF8006FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_dev_cfg_0": {"name": "ps7_dev_cfg_0",
+"base": "0xF8007000",
+"high": "0xF80070FF",
+"size": "256",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_dma_ns": {"name": "ps7_dma_ns",
+"base": "0xF8004000",
+"high": "0xF8004FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_dma_s": {"name": "ps7_dma_s",
+"base": "0xF8003000",
+"high": "0xF8003FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_globaltimer_0": {"name": "ps7_globaltimer_0",
+"base": "0xF8F00200",
+"high": "0xF8F002FF",
+"size": "256",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_gpio_0": {"name": "ps7_gpio_0",
+"base": "0xE000A000",
+"high": "0xE000AFFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_gpv_0": {"name": "ps7_gpv_0",
+"base": "0xF8900000",
+"high": "0xF89FFFFF",
+"size": "1048576",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_intc_dist_0": {"name": "ps7_intc_dist_0",
+"base": "0xF8F01000",
+"high": "0xF8F01FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_iop_bus_config_0": {"name": "ps7_iop_bus_config_0",
+"base": "0xE0200000",
+"high": "0xE0200FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_l2cachec_0": {"name": "ps7_l2cachec_0",
+"base": "0xF8F02000",
+"high": "0xF8F02FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_ocmc_0": {"name": "ps7_ocmc_0",
+"base": "0xF800C000",
+"high": "0xF800CFFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_pl310_0": {"name": "ps7_pl310_0",
+"base": "0xF8F02000",
+"high": "0xF8F02FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_pmu_0": {"name": "ps7_pmu_0",
+"base": "0xF8893000",
+"high": "0xF8893FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_scuc_0": {"name": "ps7_scuc_0",
+"base": "0xF8F00000",
+"high": "0xF8F000FC",
+"size": "253",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_scugic_0": {"name": "ps7_scugic_0",
+"base": "0xF8F00100",
+"high": "0xF8F001FF",
+"size": "256",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_scutimer_0": {"name": "ps7_scutimer_0",
+"base": "0xF8F00600",
+"high": "0xF8F0061F",
+"size": "32",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_scuwdt_0": {"name": "ps7_scuwdt_0",
+"base": "0xF8F00620",
+"high": "0xF8F006FF",
+"size": "224",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_slcr_0": {"name": "ps7_slcr_0",
+"base": "0xF8000000",
+"high": "0xF8000FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_spi_0": {"name": "ps7_spi_0",
+"base": "0xE0006000",
+"high": "0xE0006FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_ttc_0": {"name": "ps7_ttc_0",
+"base": "0xF8001000",
+"high": "0xF8001FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_uart_1": {"name": "ps7_uart_1",
+"base": "0xE0001000",
+"high": "0xE0001FFF",
+"size": "4096",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_xadc_0": {"name": "ps7_xadc_0",
+"base": "0xF8007100",
+"high": "0xF8007120",
+"size": "33",
+"slaveintf": "",
+"type": "REGISTER",
+"flags": "3",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"axi_bram_ctrl_0_S_AXI_Mem0": {"name": "axi_bram_ctrl_0",
+"base": "0x40000000",
+"high": "0x40001FFF",
+"size": "8192",
+"slaveintf": "S_AXI",
+"type": "MEMORY",
+"flags": "7",
+"segment": "Mem0",
+"acctype": "",
+"tz": "",
+},
+"ps7_ddr_0": {"name": "ps7_ddr_0",
+"base": "0x00100000",
+"high": "0x0FFFFFFF",
+"size": "267386880",
+"slaveintf": "",
+"type": "MEMORY",
+"flags": "7",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_ram_0": {"name": "ps7_ram_0",
+"base": "0x00000000",
+"high": "0x0002FFFF",
+"size": "196608",
+"slaveintf": "",
+"type": "MEMORY",
+"flags": "7",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+"ps7_ram_1": {"name": "ps7_ram_1",
+"base": "0xFFFF0000",
+"high": "0xFFFFFDFF",
+"size": "65024",
+"slaveintf": "",
+"type": "MEMORY",
+"flags": "7",
+"segment": "",
+"acctype": "",
+"tz": "",
+},
+}]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.671
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_ENABLED], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.686
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_ENABLED], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.693
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_EVENT_COUNTERS], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.707
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_EVENT_COUNTERS], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.719
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_LATENCY_COUNTERS], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.733
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_LATENCY_COUNTERS], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.746
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_COUNTER_WIDTH], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.760
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_DEBUG_COUNTER_WIDTH], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.780
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_FREQ], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.789
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_FREQ], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.802
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_CPU_CLK_FREQ_HZ], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.808
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_param_value C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0 C_CPU_CLK_FREQ_HZ], Result: [null, 666666687]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.815
+!MESSAGE XSCT Command: [::hsi::utils::get_cpu_nr -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.826
+!MESSAGE XSCT command with result: [::hsi::utils::get_cpu_nr -json C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf], Result: [null, {"ps7_cortexa9_0": {"bscan": "",
+"index": "0",
+},
+}]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.843
+!MESSAGE XSCT Command: [::hsi::utils::get_connected_periphs C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.860
+!MESSAGE XSCT command with result: [::hsi::utils::get_connected_periphs C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf ps7_cortexa9_0], Result: [null, axi_bram_ctrl_0 axi_dma ps7_afi_0 ps7_afi_1 ps7_afi_2 ps7_afi_3 ps7_coresight_comp_0 ps7_ddr_0 ps7_ddrc_0 ps7_dev_cfg_0 ps7_dma_ns ps7_dma_s ps7_globaltimer_0 ps7_gpio_0 ps7_gpv_0 ps7_intc_dist_0 ps7_iop_bus_config_0 ps7_l2cachec_0 ps7_ocmc_0 ps7_pl310_0 ps7_pmu_0 ps7_ram_0 ps7_ram_1 ps7_scuc_0 ps7_scugic_0 ps7_scutimer_0 ps7_scuwdt_0 ps7_slcr_0 ps7_spi_0 ps7_ttc_0 ps7_uart_1 ps7_xadc_0]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.885
+!MESSAGE XSCT Command: [::hsi::utils::get_hw_files_on_hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf bit], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.894
+!MESSAGE XSCT command with result: [::hsi::utils::get_hw_files_on_hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/system.hdf bit], Result: [null, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:44.905
+!MESSAGE XSCT Command: [connect -url tcp:localhost:3121], Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:16:47.050
+!MESSAGE XSCT command with result: [connect -url tcp:localhost:3121], Result: [{Format=No connection could be made because the target machine actively refused it, Time=1580077007045, Code=1}, ]. Thread: Worker-23
+
+!ENTRY com.xilinx.sdk.utils 1 0 2020-01-26 22:21:53.647
+!MESSAGE Updating toolusage
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:21:54.032
+!MESSAGE XSCT Command: [connect -url tcp:localhost:3121], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:21:57.233
+!MESSAGE XSCT command with result: [connect -url tcp:localhost:3121], Result: [{Format=No connection could be made because the target machine actively refused it, Time=1580077317221, Code=1}, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 1 0 2020-01-26 22:24:03.237
+!MESSAGE Updating toolusage
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:03.249
+!MESSAGE XSCT Command: [connect -url tcp:localhost:3121], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:07.033
+!MESSAGE XSCT command with result: [connect -url tcp:localhost:3121], Result: [null, tcfchan#1]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:07.056
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:10.428
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1  Platform Cable USB 00001004b9fe01]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:10.457
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:11.568
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:11.579
+!MESSAGE XSCT Command: [jtag frequency 12000000], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:11.788
+!MESSAGE XSCT command with result: [jtag frequency 12000000], Result: [null, 12000000]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:11.845
+!MESSAGE XSCT Command: [version -server], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.027
+!MESSAGE XSCT command with result: [version -server], Result: [null, 2018.3]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.047
+!MESSAGE XSCT Command: [version], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.443
+!MESSAGE XSCT command with result: [version], Result: [null, xsct 2018.3
+SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.482
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.563
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.600
+!MESSAGE XSCT Command: [jtag frequency], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.712
+!MESSAGE XSCT command with result: [jtag frequency], Result: [null, 12000000]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.755
+!MESSAGE XSCT Command: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.838
+!MESSAGE XSCT command with result: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:12.868
+!MESSAGE XSCT Command: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:13.155
+!MESSAGE XSCT command with result: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:13.176
+!MESSAGE XSCT Command: [rst -system], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:13.478
+!MESSAGE XSCT command with result: [rst -system], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:13.486
+!MESSAGE XSCT Command: [after 3000], Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:16.882
+!MESSAGE XSCT command with result: [after 3000], Result: [null, ]. Thread: Worker-29
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:16.949
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:16.975
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1* Platform Cable USB 00001004b9fe01]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:16.981
+!MESSAGE XSCT Command: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:17.009
+!MESSAGE XSCT command with result: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Result: [null,      2  arm_dap (idcode 4ba00477 irlen 4)
+     3  xc7z014s (idcode 23728093 irlen 6 fpga)]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:17.016
+!MESSAGE XSCT Command: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:17.077
+!MESSAGE XSCT command with result: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Result: [null, ]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:17.084
+!MESSAGE XSCT Command: [fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-26 22:24:17.118
+!MESSAGE XSCT command with result: [fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit], Result: [{Format=couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory, Time=1580077457116, Code=1}, ]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 1 0 2020-01-27 19:06:12.172
+!MESSAGE Updating toolusage
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.180
+!MESSAGE XSCT Command: [connect -url tcp:localhost:3121], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.188
+!MESSAGE XSCT command with result: [connect -url tcp:localhost:3121], Result: [null, tcfchan#1]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.212
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.234
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1* Platform Cable USB 00001004b9fe01]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.240
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.270
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.277
+!MESSAGE XSCT Command: [jtag frequency 12000000], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.317
+!MESSAGE XSCT command with result: [jtag frequency 12000000], Result: [null, 12000000]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.324
+!MESSAGE XSCT Command: [version -server], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.331
+!MESSAGE XSCT command with result: [version -server], Result: [null, 2018.3]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.338
+!MESSAGE XSCT Command: [version], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.351
+!MESSAGE XSCT command with result: [version], Result: [null, xsct 2018.3
+SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.359
+!MESSAGE XSCT Command: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.390
+!MESSAGE XSCT command with result: [jtag targets -set -filter {name =~ "Platform Cable USB 00001004b9fe01" && level == 0}], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.402
+!MESSAGE XSCT Command: [jtag frequency], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.409
+!MESSAGE XSCT command with result: [jtag frequency], Result: [null, 12000000]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.418
+!MESSAGE XSCT Command: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.440
+!MESSAGE XSCT command with result: [source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.447
+!MESSAGE XSCT Command: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.479
+!MESSAGE XSCT command with result: [targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.485
+!MESSAGE XSCT Command: [rst -system], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.602
+!MESSAGE XSCT command with result: [rst -system], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:12.608
+!MESSAGE XSCT Command: [after 3000], Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.615
+!MESSAGE XSCT command with result: [after 3000], Result: [null, ]. Thread: Worker-104
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.636
+!MESSAGE XSCT Command: [jtag targets -filter {level == 0}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.649
+!MESSAGE XSCT command with result: [jtag targets -filter {level == 0}], Result: [null,   1* Platform Cable USB 00001004b9fe01]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.655
+!MESSAGE XSCT Command: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.681
+!MESSAGE XSCT command with result: [jtag targets -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==1}], Result: [null,      2  arm_dap (idcode 4ba00477 irlen 4)
+     3  xc7z014s (idcode 23728093 irlen 6 fpga)]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.686
+!MESSAGE XSCT Command: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.724
+!MESSAGE XSCT command with result: [targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1], Result: [null, ]. Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.730
+!MESSAGE XSCT Command: [fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit], Thread: ModalContext
+
+!ENTRY com.xilinx.sdk.utils 0 0 2020-01-27 19:06:15.739
+!MESSAGE XSCT command with result: [fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit], Result: [{Format=couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory, Time=1580151975739, Code=1}, ]. Thread: ModalContext

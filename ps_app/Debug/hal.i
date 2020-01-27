@@ -6856,7 +6856,7 @@ void hal_init()
 
  d_printf(0, "\r\n\r\n\033[2J\033[0m\r\n");
  d_printf(2, "ps_app: Zynq application for YAOS Oscilloscope Project (%s)", "v0.0.1-alpha");
- d_printf(2, "Built %s %s", "Jan 26 2020", "20:43:38");
+ d_printf(2, "Built %s %s", "Jan 26 2020", "22:16:14");
  d_printf(2, "");
  d_printf(2, "Application (C) 2020 Tomato Engineering Ltd.");
  d_printf(2, "Parts       (C) 2005 - 2015 Xilinx, Inc.");

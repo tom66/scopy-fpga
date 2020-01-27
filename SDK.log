@@ -36231,3 +36231,41 @@ con
 
 17:19:58 INFO  : Launch script is exported to file 'C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_on_local.tcl'
 20:06:32 INFO  : Disconnected from the channel tcfchan#109.
+20:39:15 INFO  : Registering command handlers for SDK TCF services
+20:39:18 INFO  : Launching XSCT server: xsct.bat -interactive C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\temp_xsdb_launch_script.tcl
+20:39:43 INFO  : XSCT server has started successfully.
+20:40:03 INFO  : Successfully done setting XSCT server connection channel  
+20:40:03 INFO  : Successfully done setting SDK workspace  
+22:16:47 ERROR : Failed to connect to hardware server on host 'localhost' and port '3121'.
+Reason: No connection could be made because the target machine actively refused it
+22:16:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+----------------End of Script----------------
+
+22:21:57 ERROR : Failed to connect to hardware server on host 'localhost' and port '3121'.
+Reason: No connection could be made because the target machine actively refused it
+22:21:57 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+----------------End of Script----------------
+
+22:24:07 INFO  : Connected to target on host 'localhost' and port '3121'.
+22:24:11 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+22:24:11 INFO  : Jtag cable frequency set to 12000000
+22:24:12 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+22:24:12 INFO  : 'jtag frequency' command is executed.
+22:24:12 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+22:24:13 INFO  : Context for 'APU' is selected.
+22:24:13 INFO  : System reset is completed.
+22:24:16 INFO  : 'after 3000' command is executed.
+22:24:17 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+22:24:17 ERROR : couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory
+22:24:17 ERROR : Exception occured while running Program FPGA.
+java.lang.RuntimeException: couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory
+22:24:17 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+----------------End of Script----------------
+

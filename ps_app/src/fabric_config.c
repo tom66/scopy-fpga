@@ -38,13 +38,19 @@ void fabcfg_init()
 	fabcfg_commit();
 
 	// Check BRAM data
-	d_printf(D_INFO, "FabCfg: Magic 0x%08x", fabcfg_read(FAB_CFG_MAGIC1));
+	while(1) {
+		fabcfg_write(FAB_CFG_MAGIC1, 0xff5500ff);
+		d_printf(D_INFO, "FabCfg: Magic 0x%08x", fabcfg_read(FAB_CFG_MAGIC1));
+	}
+
 	d_printf(D_INFO, "FabCfg: Bitstream version 0x%08x", fabcfg_read(FAB_CFG_VERSION));
 
+	/*
 	while(1) {
 		fabcfg_write(FAB_CFG_GPIO_TEST, 0xffffffff);
 		fabcfg_commit();
 	}
+	*/
 }
 
 /*

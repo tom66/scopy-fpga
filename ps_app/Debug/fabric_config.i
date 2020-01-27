@@ -6825,15 +6825,21 @@ void fabcfg_init()
  fabcfg_commit();
 
 
- d_printf(2, "FabCfg: Magic 0x%08x", fabcfg_read(0x002));
+ while(1) {
+  fabcfg_write(0x002, 0xff5500ff);
+  d_printf(2, "FabCfg: Magic 0x%08x", fabcfg_read(0x002));
+ }
+
  d_printf(2, "FabCfg: Bitstream version 0x%08x", fabcfg_read(0x003));
 
- while(1) {
-  fabcfg_write(0x007, 0xffffffff);
-  fabcfg_commit();
- }
+
+
+
+
+
+
 }
-# 57 "../src/fabric_config.c"
+# 63 "../src/fabric_config.c"
 uint32_t fabcfg_read(uint32_t reg)
 {
  reg &= 0xfff;

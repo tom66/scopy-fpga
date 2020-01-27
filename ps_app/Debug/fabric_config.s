@@ -91,9 +91,6 @@ Xil_Out32:
 	.align	2
 .LC0:
 	.ascii	"FabCfg: Magic 0x%08x\000"
-	.align	2
-.LC1:
-	.ascii	"FabCfg: Bitstream version 0x%08x\000"
 	.text
 	.align	2
 	.global	fabcfg_init
@@ -131,7 +128,13 @@ fabcfg_init:
 	bl	XGpioPs_SetDirectionPin
 	.loc 2 38 0
 	bl	fabcfg_commit
-	.loc 2 41 0
+.L5:
+	.loc 2 42 0 discriminator 1
+	mov	r1, #255
+	movt	r1, 65365
+	mov	r0, #2
+	bl	fabcfg_write
+	.loc 2 43 0 discriminator 1
 	mov	r0, #2
 	bl	fabcfg_read
 	mov	r3, r0
@@ -140,23 +143,7 @@ fabcfg_init:
 	movt	r1, #:upper16:.LC0
 	mov	r0, #2
 	bl	d_printf
-	.loc 2 42 0
-	mov	r0, #3
-	bl	fabcfg_read
-	mov	r3, r0
-	mov	r2, r3
-	movw	r1, #:lower16:.LC1
-	movt	r1, #:upper16:.LC1
-	mov	r0, #2
-	bl	d_printf
-.L5:
-	.loc 2 45 0 discriminator 1
-	mvn	r1, #0
-	mov	r0, #7
-	bl	fabcfg_write
-	.loc 2 46 0 discriminator 1
-	bl	fabcfg_commit
-	.loc 2 45 0 discriminator 1
+	.loc 2 42 0 discriminator 1
 	b	.L5
 .L7:
 	.align	2
@@ -173,7 +160,7 @@ fabcfg_init:
 	.type	fabcfg_read, %function
 fabcfg_read:
 .LFB14:
-	.loc 2 58 0
+	.loc 2 64 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -185,18 +172,18 @@ fabcfg_read:
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #8
 	str	r0, [fp, #-8]
-	.loc 2 59 0
+	.loc 2 65 0
 	ldr	r3, [fp, #-8]
 	ubfx	r3, r3, #0, #12
 	str	r3, [fp, #-8]
-	.loc 2 60 0
+	.loc 2 66 0
 	ldr	r3, [fp, #-8]
 	add	r3, r3, #268435456
 	lsl	r3, r3, #2
 	mov	r0, r3
 	bl	Xil_In32
 	mov	r3, r0
-	.loc 2 61 0
+	.loc 2 67 0
 	mov	r0, r3
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -213,7 +200,7 @@ fabcfg_read:
 	.type	fabcfg_write, %function
 fabcfg_write:
 .LFB15:
-	.loc 2 70 0
+	.loc 2 76 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -226,18 +213,18 @@ fabcfg_write:
 	sub	sp, sp, #8
 	str	r0, [fp, #-8]
 	str	r1, [fp, #-12]
-	.loc 2 71 0
+	.loc 2 77 0
 	ldr	r3, [fp, #-8]
 	ubfx	r3, r3, #0, #12
 	str	r3, [fp, #-8]
-	.loc 2 72 0
+	.loc 2 78 0
 	ldr	r3, [fp, #-8]
 	add	r3, r3, #268435456
 	lsl	r3, r3, #2
 	ldr	r1, [fp, #-12]
 	mov	r0, r3
 	bl	Xil_Out32
-	.loc 2 73 0
+	.loc 2 79 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -248,10 +235,10 @@ fabcfg_write:
 	.size	fabcfg_write, .-fabcfg_write
 	.section	.rodata
 	.align	2
-.LC2:
+.LC1:
 	.ascii	"FabCfg commit\000"
 	.align	2
-.LC3:
+.LC2:
 	.ascii	"FabCfg: Timeout waiting for fabric to respond to CO"
 	.ascii	"MMIT\000"
 	.text
@@ -263,7 +250,7 @@ fabcfg_write:
 	.type	fabcfg_commit, %function
 fabcfg_commit:
 .LFB16:
-	.loc 2 79 0
+	.loc 2 85 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -274,40 +261,40 @@ fabcfg_commit:
 	add	fp, sp, #4
 	.cfi_def_cfa 11, 4
 	sub	sp, sp, #8
-	.loc 2 80 0
+	.loc 2 86 0
 	mov	r3, #200
 	str	r3, [fp, #-8]
-	.loc 2 84 0
+	.loc 2 90 0
 	mov	r2, #1
 	mov	r1, #3
 	ldr	r0, .L19
 	bl	XGpioPs_WritePin
-	.loc 2 85 0
+	.loc 2 91 0
 	mov	r0, #1
 	bl	bogo_delay
-	.loc 2 86 0
+	.loc 2 92 0
 	mov	r2, #0
 	mov	r1, #3
 	ldr	r0, .L19
 	bl	XGpioPs_WritePin
-	.loc 2 89 0
+	.loc 2 95 0
 	mov	r0, #15
 	bl	d_start_timing
-	.loc 2 90 0
+	.loc 2 96 0
 	b	.L12
 .L15:
-	.loc 2 91 0
+	.loc 2 97 0
 	mov	r1, #4
 	ldr	r0, .L19
 	bl	XGpioPs_ReadPin
 	mov	r3, r0
 	cmp	r3, #0
 	bne	.L17
-	.loc 2 95 0
+	.loc 2 101 0
 	mov	r0, #50
 	bl	bogo_delay
 .L12:
-	.loc 2 90 0
+	.loc 2 96 0
 	ldr	r3, [fp, #-8]
 	sub	r2, r3, #1
 	str	r2, [fp, #-8]
@@ -315,31 +302,31 @@ fabcfg_commit:
 	bne	.L15
 	b	.L14
 .L17:
-	.loc 2 92 0
+	.loc 2 98 0
 	nop
 .L14:
-	.loc 2 97 0
+	.loc 2 103 0
 	mov	r0, #15
 	bl	d_stop_timing
-	.loc 2 98 0
+	.loc 2 104 0
 	mov	r1, #15
-	movw	r0, #:lower16:.LC2
-	movt	r0, #:upper16:.LC2
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
 	bl	d_dump_timing
-	.loc 2 100 0
+	.loc 2 106 0
 	ldr	r3, [fp, #-8]
 	cmp	r3, #0
 	bne	.L18
-	.loc 2 101 0
-	movw	r1, #:lower16:.LC3
-	movt	r1, #:upper16:.LC3
+	.loc 2 107 0
+	movw	r1, #:lower16:.LC2
+	movt	r1, #:upper16:.LC2
 	mov	r0, #4
 	bl	d_printf
-	.loc 2 102 0
+	.loc 2 108 0
 	mvn	r0, #0
 	bl	exit
 .L18:
-	.loc 2 104 0
+	.loc 2 110 0
 	nop
 	sub	sp, fp, #4
 	.cfi_def_cfa 13, 8
@@ -1895,7 +1882,7 @@ fabcfg_commit:
 	.uleb128 0x24
 	.4byte	.LASF2687
 	.byte	0x2
-	.byte	0x4e
+	.byte	0x54
 	.4byte	.LFB16
 	.4byte	.LFE16-.LFB16
 	.uleb128 0x1
@@ -1904,7 +1891,7 @@ fabcfg_commit:
 	.uleb128 0x25
 	.4byte	.LASF2680
 	.byte	0x2
-	.byte	0x50
+	.byte	0x56
 	.4byte	0xa3
 	.uleb128 0x2
 	.byte	0x91
@@ -1913,7 +1900,7 @@ fabcfg_commit:
 	.uleb128 0x26
 	.4byte	.LASF2688
 	.byte	0x2
-	.byte	0x45
+	.byte	0x4b
 	.4byte	.LFB15
 	.4byte	.LFE15-.LFB15
 	.uleb128 0x1
@@ -1922,7 +1909,7 @@ fabcfg_commit:
 	.uleb128 0x27
 	.ascii	"reg\000"
 	.byte	0x2
-	.byte	0x45
+	.byte	0x4b
 	.4byte	0x8f0
 	.uleb128 0x2
 	.byte	0x91
@@ -1930,7 +1917,7 @@ fabcfg_commit:
 	.uleb128 0x28
 	.4byte	.LASF2677
 	.byte	0x2
-	.byte	0x45
+	.byte	0x4b
 	.4byte	0x8f0
 	.uleb128 0x2
 	.byte	0x91
@@ -1939,7 +1926,7 @@ fabcfg_commit:
 	.uleb128 0x29
 	.4byte	.LASF2689
 	.byte	0x2
-	.byte	0x39
+	.byte	0x3f
 	.4byte	0x8f0
 	.4byte	.LFB14
 	.4byte	.LFE14-.LFB14
@@ -1949,7 +1936,7 @@ fabcfg_commit:
 	.uleb128 0x27
 	.ascii	"reg\000"
 	.byte	0x2
-	.byte	0x39
+	.byte	0x3f
 	.4byte	0x8f0
 	.uleb128 0x2
 	.byte	0x91

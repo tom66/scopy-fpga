@@ -153,7 +153,7 @@ irq_xscutimer:
 	.ascii	"ect (%s)\000"
 	.align	2
 .LC3:
-	.ascii	"20:43:38\000"
+	.ascii	"22:16:14\000"
 	.align	2
 .LC4:
 	.ascii	"Jan 26 2020\000"

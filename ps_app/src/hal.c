@@ -324,8 +324,8 @@ void d_printf(int debug_code, char *fmt, ...)
  * Read the timer value as an MSB, LSB pair.  The values are returned by reference.
  *
  * This function attempts to safely read the registers and avoids overflow errors
- * by checking for an overflow boundary and waiting for it before occurs.  This has
- * the side effect of the timer having a +/-1us uncertainty, but this is unavoidable
+ * by checking for an overflow boundary and waiting for it to occur.  This has the
+ * side effect of the timer having a +/-1us uncertainty, but this is unavoidable
  * with the present implementation.
  */
 void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
