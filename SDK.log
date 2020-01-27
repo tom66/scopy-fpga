@@ -36269,3 +36269,24 @@ rst -system
 after 3000
 ----------------End of Script----------------
 
+19:06:12 INFO  : Connected to target on host 'localhost' and port '3121'.
+19:06:12 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:06:12 INFO  : Jtag cable frequency set to 12000000
+19:06:12 INFO  : Jtag cable 'Platform Cable USB 00001004b9fe01' is selected.
+19:06:12 INFO  : 'jtag frequency' command is executed.
+19:06:12 INFO  : Sourcing of 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl' is done.
+19:06:12 INFO  : Context for 'APU' is selected.
+19:06:12 INFO  : System reset is completed.
+19:06:15 INFO  : 'after 3000' command is executed.
+19:06:15 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1' command is executed.
+19:06:15 ERROR : couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory
+19:06:15 ERROR : Exception occured while running Program FPGA.
+java.lang.RuntimeException: couldn't open "C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_1/main.bit": no such file or directory
+19:06:15 INFO  : ----------------XSDB Script----------------
+connect -url tcp:localhost:3121
+source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/mvp_hw_platform/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Platform Cable USB 00001004b9fe01"} -index 0
+rst -system
+after 3000
+----------------End of Script----------------
+
