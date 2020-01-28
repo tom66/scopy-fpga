@@ -1,0 +1,30 @@
+version = "1.0";
+clients =
+(
+	{ client_name = "project"; 
+		rules = (
+			{
+				context="software_version_and_target_device";
+				xml_map="software_version_and_target_device";
+				html_map="software_version_and_target_device";
+				html_format="UserEnvStyle";
+			},
+			{
+				context="user_environment";
+				xml_map="user_environment";
+				html_map="user_environment";
+				html_format="UserEnvStyle";
+			}
+		);
+     },
+	{ client_name = "vitis"; 
+		rules = (
+			{
+				context="vitis\\\\tool/1580247665595";
+				xml_map="vitis\\\\tool/1580247665595";
+				html_map="vitis\\\\tool/1580247665595";
+				html_format="UnisimStatsStyle";
+			}
+		);
+     }
+);

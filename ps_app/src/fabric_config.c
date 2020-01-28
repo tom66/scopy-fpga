@@ -29,6 +29,8 @@
  */
 void fabcfg_init()
 {
+	int i;
+
 	// Set commit pin as output and done pin as input
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
@@ -38,12 +40,54 @@ void fabcfg_init()
 	fabcfg_commit();
 
 	// Check BRAM data
+#if 0
 	while(1) {
 		fabcfg_write(FAB_CFG_MAGIC1, 0xff5500ff);
 		d_printf(D_INFO, "FabCfg: Magic 0x%08x", fabcfg_read(FAB_CFG_MAGIC1));
+		fabcfg_commit();
+		d_printf(D_INFO, "FabCfg: Magic 0x%08x (post commit)", fabcfg_read(FAB_CFG_MAGIC1));
 	}
 
 	d_printf(D_INFO, "FabCfg: Bitstream version 0x%08x", fabcfg_read(FAB_CFG_VERSION));
+#endif
+
+	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 0, 0xffffffff);
+	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 1, 0xffffffff);
+	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 2, 0xffffffff);
+	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 3, 0xffffffff);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 0, 0xffffffff);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 1, 0xffffffff);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 2, 0xffffffff);
+	XGpioPs_SetDirection(&g_hal.xgpio_ps, 3, 0xffffffff);
+
+	while(1) {
+		/*
+		d_printf(D_INFO, "FabCfg: Setting all pins...", i);
+		XGpioPs_Write(&g_hal.xgpio_ps, 0, 0x00000000);
+		XGpioPs_Write(&g_hal.xgpio_ps, 1, 0x00000000);
+		XGpioPs_Write(&g_hal.xgpio_ps, 2, 0x00000000);
+		XGpioPs_Write(&g_hal.xgpio_ps, 3, 0x00000000);
+		bogo_delay(1000000);
+
+		XGpioPs_Write(&g_hal.xgpio_ps, 0, 0xffffffff);
+		XGpioPs_Write(&g_hal.xgpio_ps, 1, 0xffffffff);
+		XGpioPs_Write(&g_hal.xgpio_ps, 2, 0xffffffff);
+		XGpioPs_Write(&g_hal.xgpio_ps, 3, 0xffffffff);
+		bogo_delay(1000000);
+		*/
+
+		for(i = 0; i < 117; i++) {
+			d_printf(D_INFO, "FabCfg: Toggling pin %d", i);
+
+			//XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, 0 + i, 1);
+			//XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, 0 + i, 1);
+			XGpioPs_WritePin(&g_hal.xgpio_ps, 0 + i, 1);
+			bogo_delay(20000);
+
+			XGpioPs_WritePin(&g_hal.xgpio_ps, 0 + i, 0);
+			bogo_delay(20000);
+		}
+	}
 
 	/*
 	while(1) {
