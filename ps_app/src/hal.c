@@ -434,8 +434,17 @@ float d_read_timing_us(int index)
 void d_dump_timing(char *s, int index)
 {
 	d_printf(D_INFO, "%s [~%llu CPU cycles (~%4.1f us)]", s, (int64_t)(d_read_timing(index) * XSCUTIMER_TICKS_TO_CPUCYC), d_read_timing_us(index));
-	//d_printf(D_INFO, "%s %llu", s, d_read_timing(0));
-	//d_printf(D_INFO, "Hello");
+}
+
+/**
+ * Dump timing data for a given timer index using extrainfo (often not printed)
+ *
+ * @paraam	Prefix string (to indicate e.g. what this timed)
+ * @param	Timer index (0-15)
+ */
+void d_dump_timing_ex(char *s, int index)
+{
+	d_printf(D_EXINFO, "%s [~%llu CPU cycles (~%4.1f us)]", s, (int64_t)(d_read_timing(index) * XSCUTIMER_TICKS_TO_CPUCYC), d_read_timing_us(index));
 }
 
 /**

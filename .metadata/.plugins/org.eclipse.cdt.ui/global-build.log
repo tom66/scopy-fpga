@@ -1,6 +1,109 @@
-21:18:00 **** Build of project main ****
-buildplatform.bat 6322 main  
-XSDB Server Channel: tcfchan#1
+Nothing to build in platform 'main'
+
+22:22:53 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+Nothing to build in platform 'main'
+
+22:24:07 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+22:27:03 **** Clean-only build of project main ****
+buildplatform.bat 44172 main clean 
+XSDB Server Channel: tcfchan#108
+Cleaning the zynq_fsbl application.
+rm -rf  sd.o  nand.o  image_mover.o  md5.o  fsbl_hooks.o  main.o  nor.o  qspi.o  rsa.o  ps7_init.o  pcap.o  fsbl_handoff.o zynq
+_fsbl_bsp/ps7_cortexa9_0/lib/libxil.a executable.elf *.o
+
+Cleaning the zynq_fsbl application, bsp
+make -C ps7_cortexa9_0/libsrc/axidma_v9_10/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/bram_v4_3/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_6/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_8/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_5/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_6/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scugic_v4_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/spips_v3_3/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/standalone_v7_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_10/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/uartps_v3_8/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/xilffs_v4_2/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/xilrsa_v1_5/src -s clean 
+
+rm -f ps7_cortexa9_0/lib/libxil.a
+
+Cleaning the BSP for domain  - standalone_domain
+make -C ps7_cortexa9_0/libsrc/axidma_v9_10/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/bram_v4_3/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_6/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_8/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_5/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_5/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/gpiops_v3_6/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scugic_v4_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/spips_v3_3/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/standalone_v7_1/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/ttcps_v3_10/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/uartps_v3_8/src -s clean 
+
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_3/src -s clean 
+
+rm -f ps7_cortexa9_0/lib/libxil.a
+
+22:27:08 **** Clean-only build of configuration Debug for project ps_app ****
+make clean 
+rm -rf  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o  ./src/fabric_config.d ./src/hal.d ./src/main.d ./src/platform.d  ps_app.elf.size  ps_app.elf
+' '
+22:27:08 **** Build of project main ****
+buildplatform.bat 44172 main  
+XSDB Server Channel: tcfchan#109
 Building the zynq_fsbl application.
 make -C zynq_fsbl_bsp
 
@@ -541,9 +644,6 @@ include -I.
 arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c nand.c -o nand.o -Izynq_fsbl_bsp/ps7_cortexa
 9_0/include -I.
 
-arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c nor.c -o nor.o -Izynq_fsbl_bsp/ps7_cortexa9_
-0/include -I.
-
 arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c image_mover.c -o image_mover.o -Izynq_fsbl_b
 sp/ps7_cortexa9_0/include -I.
 
@@ -563,6 +663,9 @@ zynq_fsbl_bsp/ps7_cortexa9_0/include/xtime_l.h:85:9: note: #pragma message: For 
 arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c rsa.c -o rsa.o -Izynq_fsbl_bsp/ps7_cortexa9_
 0/include -I.
 
+arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c nor.c -o nor.o -Izynq_fsbl_bsp/ps7_cortexa9_
+0/include -I.
+
 arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c qspi.c -o qspi.o -Izynq_fsbl_bsp/ps7_cortexa
 9_0/include -I.
 
@@ -579,7 +682,7 @@ zynq_fsbl_bsp/ps7_cortexa9_0/include/xtime_l.h:85:9: note: #pragma message: For 
 arm-none-eabi-gcc -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -c fsbl_handoff.S -o fsbl_handoff.o -Izynq_fsbl
 _bsp/ps7_cortexa9_0/include -I.
 
-arm-none-eabi-gcc -o executable.elf  sd.o  nand.o  nor.o  image_mover.o  md5.o  fsbl_hooks.o  main.o  rsa.o  qspi.o  ps7_init.o
+arm-none-eabi-gcc -o executable.elf  sd.o  nand.o  image_mover.o  md5.o  fsbl_hooks.o  main.o  rsa.o  nor.o  qspi.o  ps7_init.o
   pcap.o  fsbl_handoff.o -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard   -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=
 hard -Wl,-build-id=none -specs=Xilinx.spec  -lrsa -Wl,--start-group,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lxilffs,-lxi
 l,-lgcc,-lc,--end-group -Wl,--start-group,-lrsa,-lxil,-lgcc,-lc,--end-group                                  -Wl,--gc-sections 
@@ -829,7 +932,7 @@ files -g -Wall -Wextra"
 
 'Finished building libraries'
 
-21:19:01 **** Build of configuration Debug for project ps_app ****
+22:28:06 **** Build of configuration Debug for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
@@ -879,6 +982,645 @@ arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=non
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  69232	   3376	 138384	 210992	  33830	ps_app.elf
+  69288	   3376	 138384	 211048	  33868	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
+22:28:10 **** Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+Nothing to build in platform 'main'
+
+22:28:23 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+Nothing to build in platform 'main'
+
+22:29:02 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69288	   3376	 138384	 211048	  33868	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+Nothing to build in platform 'main'
+
+22:30:31 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+Nothing to build in platform 'main'
+
+Nothing to build in platform 'main'
+
+22:34:13 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+22:34:15 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+22:46:01 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+22:46:03 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:05:43 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+09:05:47 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:10:43 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:48:12: error: 'D_ERR' undeclared (first use in this function); did you mean 'D_ERROR'?
+   d_printf(D_ERR, "FabCfg: Magic value: 0x%08x - Not OK, Expect 0x%08x", magic, FAB_MAGIC_VALUE);
+            ^~~~~
+            D_ERROR
+../src/fabric_config.c:48:12: note: each undeclared identifier is reported only once for each function it appears in
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+make[1]: *** [src/subdir.mk:32: src/fabric_config.o] Error 1
+make: *** [makefile:34: all] Error 2
+09:10:46 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:11:42 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building file: ../src/hal.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/hal.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/hal.d" -MT"src/hal.o" -o "src/hal.o" "../src/hal.c"
+../src/hal.c: In function 'hal_init':
+../src/hal.c:144:2: warning: implicit declaration of function 'bogo_calibrate'; did you mean 'bogo_delay'? [-Wimplicit-function-declaration]
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+  bogo_delay
+../src/hal.c: At top level:
+../src/hal.c:188:6: warning: conflicting types for 'bogo_calibrate'
+ void bogo_calibrate()
+      ^~~~~~~~~~~~~~
+../src/hal.c:144:2: note: previous implicit declaration of 'bogo_calibrate' was here
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+../src/hal.c: In function 'd_stop_timing':
+../src/hal.c:392:10: warning: unused variable 't_delta' [-Wunused-variable]
+  int64_t t_delta;
+          ^~~~~~~
+'Finished building: ../src/hal.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69296	   3376	 138384	 211056	  33870	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+09:11:47 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:20:16 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building file: ../src/hal.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/hal.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/hal.d" -MT"src/hal.o" -o "src/hal.o" "../src/hal.c"
+../src/hal.c: In function 'hal_init':
+../src/hal.c:144:2: warning: implicit declaration of function 'bogo_calibrate'; did you mean 'bogo_delay'? [-Wimplicit-function-declaration]
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+  bogo_delay
+../src/hal.c: At top level:
+../src/hal.c:188:6: warning: conflicting types for 'bogo_calibrate'
+ void bogo_calibrate()
+      ^~~~~~~~~~~~~~
+../src/hal.c:144:2: note: previous implicit declaration of 'bogo_calibrate' was here
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+../src/hal.c: In function 'd_stop_timing':
+../src/hal.c:392:10: warning: unused variable 't_delta' [-Wunused-variable]
+  int64_t t_delta;
+          ^~~~~~~
+'Finished building: ../src/hal.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69816	   3376	 138384	 211576	  33a78	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+09:20:19 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:21:09 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69648	   3376	 138384	 211408	  339d0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+09:21:12 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:23:19 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69648	   3376	 138384	 211408	  339d0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+09:23:22 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+09:24:03 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69816	   3376	 138384	 211576	  33a78	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+09:24:06 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+12:00:01 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69880	   3376	 138384	 211640	  33ab8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+12:00:06 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+12:00:50 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69880	   3376	 138384	 211640	  33ab8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+12:00:53 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+12:56:51 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+12:56:54 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:13:39 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+make[1]: Nothing to be done for 'main-build'.
+13:13:42 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:15:37 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:32:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69880	   3376	 138384	 211640	  33ab8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:15:41 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:22:41 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+../src/fabric_config.c: In function 'fabcfg_init':
+../src/fabric_config.c:36:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69832	   3376	 138384	 211592	  33a88	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:22:44 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:27:01 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69448	   3376	 138384	 211208	  33908	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:27:05 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:28:30 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  69568	   3376	 138384	 211328	  33980	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:28:33 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:29:14 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  70024	   3376	 138384	 211784	  33b48	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:29:17 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+13:39:30 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building file: ../src/hal.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/hal.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/hal.d" -MT"src/hal.o" -o "src/hal.o" "../src/hal.c"
+../src/hal.c: In function 'hal_init':
+../src/hal.c:144:2: warning: implicit declaration of function 'bogo_calibrate'; did you mean 'bogo_delay'? [-Wimplicit-function-declaration]
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+  bogo_delay
+../src/hal.c: At top level:
+../src/hal.c:188:6: warning: conflicting types for 'bogo_calibrate'
+ void bogo_calibrate()
+      ^~~~~~~~~~~~~~
+../src/hal.c:144:2: note: previous implicit declaration of 'bogo_calibrate' was here
+  bogo_calibrate();
+  ^~~~~~~~~~~~~~
+../src/hal.c: In function 'd_stop_timing':
+../src/hal.c:392:10: warning: unused variable 't_delta' [-Wunused-variable]
+  int64_t t_delta;
+          ^~~~~~~
+'Finished building: ../src/hal.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  70184	   3376	 138384	 211944	  33be8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+13:39:34 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+14:39:33 **** Incremental Build of configuration Debug for project ps_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/fabric_config.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
+'Finished building: ../src/fabric_config.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ps_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  70184	   3376	 138384	 211944	  33be8	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
+14:39:37 **** Incremental Build of configuration Debug for project ps_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 44172 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm standalone_domain C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/main.xpfm --sys_config main --bif C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/system.bif --no_bitstream --elf C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf,ps7_cortexa9_0
+Running G:/Xilinx/Vitis/2019.2/bin/bootgen  -image C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN

@@ -2,8 +2,6 @@ connect -url tcp:127.0.0.1:3121
 targets -set -nocase -filter {name =~"APU*"}
 rst -system
 after 3000
-targets -set -filter {jtag_cable_name =~ "Platform Cable USB 00001004b9fe01" && level==0} -index 1
-fpga -file C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_2/main.bit
 targets -set -nocase -filter {name =~"APU*"}
 loadhw -hw C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/hw/main.xsa -mem-ranges [list {0x40000000 0xbfffffff}]
 configparams force-mem-access 1
@@ -12,6 +10,7 @@ source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/_ide
 ps7_init
 ps7_post_config
 targets -set -nocase -filter {name =~ "*A9*#0"}
-dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Release/ps_app.elf
 configparams force-mem-access 0
-bpadd -addr &main
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con

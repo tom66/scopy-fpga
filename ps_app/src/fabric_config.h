@@ -38,16 +38,21 @@
 #define FAB_CFG_DUMMY2					0x001
 #define FAB_CFG_MAGIC1					0x002
 #define FAB_CFG_VERSION					0x003
-#define FAB_CFG_ACQ_SIZE				0x004
-#define FAB_CFG_ACQ_TRIGGER_PTR			0x005
-#define FAB_CFG_ACQ_DEMUX_MODE			0x006
-#define FAB_CFG_GPIO_TEST				0x007
+#define FAB_CFG_USRACCESS				0x004
+#define FAB_CFG_ACQ_SIZE				0x005
+#define FAB_CFG_ACQ_TRIGGER_PTR			0x006
+#define FAB_CFG_ACQ_DEMUX_MODE			0x007
+#define FAB_CFG_GPIO_TEST				0x008
 
 #define FAB_CFG_ADDR_MASK				0xfff
 
+#define FAB_MAGIC_VALUE					0x536d7670
+#define FAB_TEST_VALUE1					0xaaaaaaaa
+#define FAB_TEST_VALUE2					0xf0f0f0f0
+
 // Fabric EMIO pin definitions
-#define FAB_CFG_EMIO_COMMIT				3
-#define FAB_CFG_EMIO_DONE				4
+#define FAB_CFG_EMIO_COMMIT				(54 + 3)
+#define FAB_CFG_EMIO_DONE				(54 + 4)
 
 void fabcfg_init();
 void fabcfg_write(uint32_t reg, uint32_t data);

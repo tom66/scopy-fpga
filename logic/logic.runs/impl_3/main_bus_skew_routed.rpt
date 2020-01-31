@@ -1,0 +1,228 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Jan 31 14:38:30 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : report_bus_skew -warn_on_violation -file main_bus_skew_routed.rpt -pb main_bus_skew_routed.pb -rpx main_bus_skew_routed.rpx
+| Design       : main
+| Device       : 7z014s-clg400
+| Speed File   : -1  PRODUCTION 1.11 2016-07-27
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+Table of Contents
+-----------------
+1. Bus Skew Report Summary
+2. Bus Skew Report Per Constraint
+
+1. Bus Skew Report Summary
+--------------------------
+
+Id  Position  From                            To                              Corner  Requirement(ns)  Actual(ns)  Slack(ns)
+--  --------  ------------------------------  ------------------------------  ------  ---------------  ----------  ---------
+1   52        [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[4]}]]
+                                              [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][4]}]]
+                                                                              Slow              4.000       0.727      3.273
+2   54        [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[4]}]]
+                                              [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]}]]
+                                                                              Slow              4.000       0.749      3.251
+
+
+2. Bus Skew Report Per Constraint
+---------------------------------
+
+Id: 1
+set_bus_skew -from [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[4]}]] -to [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][4]}]] 4.000
+Requirement: 4.000ns
+Endpoints: 5
+
+From Clock            To Clock              Endpoint Pin                    Reference Pin                   Corner  Actual(ns)  Slack(ns)
+--------------------  --------------------  ------------------------------  ------------------------------  ------  ----------  ---------
+clk_fpga_0            adc_data_clk          nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/D
+                                                                            nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]/D
+                                                                                                            Slow         0.727      3.273
+
+
+Slack (MET) :             3.273ns  (requirement - actual skew)
+  Endpoint Source:        nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0)
+  Endpoint Destination:   nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/D
+                            (rising edge-triggered cell FDRE clocked by adc_data_clk)
+  Reference Source:       nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0)
+  Reference Destination:  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]/D
+                            (rising edge-triggered cell FDRE clocked by adc_data_clk)
+  Path Type:              Bus Skew (Max at Slow Process Corner)
+  Requirement:            4.000ns
+  Endpoint Relative Delay:    0.950ns
+  Reference Relative Delay:  -0.201ns
+  Relative CRPR:              0.515ns
+  Uncertainty:                0.092ns
+  Actual Bus Skew:            0.727ns  (Endpoint Relative Delay - Reference Relative Delay - Relative CRPR + Uncertainty)
+
+Endpoint path:
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_fpga_0 rise edge)
+                                                      0.000     0.000 r  
+    PS7_X0Y0             PS7                          0.000     0.000 r  nolabel_line124/processing_system7_0/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.193     1.193    nolabel_line124/processing_system7_0/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y16       BUFG (Prop_bufg_I_O)         0.101     1.294 r  nolabel_line124/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=5134, routed)        1.711     3.005    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_clk
+    SLICE_X55Y53         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X55Y53         FDRE (Prop_fdre_C_Q)         0.419     3.424 r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[1]/Q
+                         net (fo=1, routed)           0.470     3.894    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/async_path[1]
+    SLICE_X56Y53         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock adc_data_clk rise edge)
+                                                      0.000     0.000 r  
+    U18                                               0.000     0.000 r  adc_lclk_p (IN)
+                         net (fo=0)                   0.000     0.000    nolabel_line225/adc_lclk_p
+    U18                  IBUFDS (Prop_ibufds_I_O)     0.924     0.924 r  nolabel_line225/nolabel_line146/O
+                         net (fo=1, routed)           0.459     1.383    nolabel_line225/adc_clk
+    BUFR_X1Y5            BUFR (Prop_bufr_I_O)         0.919     2.302 r  nolabel_line225/bufr_adc_ref_clkdiv/O
+                         net (fo=172, routed)         0.910     3.212    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_clk
+    SLICE_X56Y53         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/C
+                         clock pessimism              0.000     3.212    
+    SLICE_X56Y53         FDRE (Setup_fdre_C_D)       -0.268     2.944    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][1]
+  -------------------------------------------------------------------
+                         data arrival                           3.894    
+                         clock arrival                          2.944    
+  -------------------------------------------------------------------
+                         relative delay                         0.950    
+
+Reference path:
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_fpga_0 rise edge)
+                                                      0.000     0.000 r  
+    PS7_X0Y0             PS7                          0.000     0.000 r  nolabel_line124/processing_system7_0/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.088     1.088    nolabel_line124/processing_system7_0/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y16       BUFG (Prop_bufg_I_O)         0.091     1.179 r  nolabel_line124/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=5134, routed)        1.536     2.715    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_clk
+    SLICE_X55Y55         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X55Y55         FDRE (Prop_fdre_C_Q)         0.367     3.082 r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/src_gray_ff_reg[2]/Q
+                         net (fo=1, routed)           0.373     3.455    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/async_path[2]
+    SLICE_X57Y55         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock adc_data_clk rise edge)
+                                                      0.000     0.000 r  
+    U18                                               0.000     0.000 r  adc_lclk_p (IN)
+                         net (fo=0)                   0.000     0.000    nolabel_line225/adc_lclk_p
+    U18                  IBUFDS (Prop_ibufds_I_O)     0.967     0.967 r  nolabel_line225/nolabel_line146/O
+                         net (fo=1, routed)           0.510     1.477    nolabel_line225/adc_clk
+    BUFR_X1Y5            BUFR (Prop_bufr_I_O)         1.032     2.509 r  nolabel_line225/bufr_adc_ref_clkdiv/O
+                         net (fo=172, routed)         0.977     3.486    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_clk
+    SLICE_X57Y55         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]/C
+                         clock pessimism              0.000     3.486    
+    SLICE_X57Y55         FDRE (Hold_fdre_C_D)         0.169     3.655    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst/dest_graysync_ff_reg[0][2]
+  -------------------------------------------------------------------
+                         data arrival                           3.455    
+                         clock arrival                          3.655    
+  -------------------------------------------------------------------
+                         relative delay                        -0.201    
+
+
+
+Id: 2
+set_bus_skew -from [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[4]}]] -to [get_cells [list {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][0]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][1]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][2]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]} {nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]}]] 4.000
+Requirement: 4.000ns
+Endpoints: 5
+
+From Clock            To Clock              Endpoint Pin                    Reference Pin                   Corner  Actual(ns)  Slack(ns)
+--------------------  --------------------  ------------------------------  ------------------------------  ------  ----------  ---------
+adc_data_clk          clk_fpga_0            nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]/D
+                                                                            nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]/D
+                                                                                                            Slow         0.749      3.251
+
+
+Slack (MET) :             3.251ns  (requirement - actual skew)
+  Endpoint Source:        nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by adc_data_clk)
+  Endpoint Destination:   nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]/D
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0)
+  Reference Source:       nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[4]/C
+                            (rising edge-triggered cell FDRE clocked by adc_data_clk)
+  Reference Destination:  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]/D
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0)
+  Path Type:              Bus Skew (Max at Slow Process Corner)
+  Requirement:            4.000ns
+  Endpoint Relative Delay:    1.992ns
+  Reference Relative Delay:   0.820ns
+  Relative CRPR:              0.515ns
+  Uncertainty:                0.092ns
+  Actual Bus Skew:            0.749ns  (Endpoint Relative Delay - Reference Relative Delay - Relative CRPR + Uncertainty)
+
+Endpoint path:
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock adc_data_clk rise edge)
+                                                      0.000     0.000 r  
+    U18                                               0.000     0.000 r  adc_lclk_p (IN)
+                         net (fo=0)                   0.000     0.000    nolabel_line225/adc_lclk_p
+    U18                  IBUFDS (Prop_ibufds_I_O)     0.967     0.967 r  nolabel_line225/nolabel_line146/O
+                         net (fo=1, routed)           0.510     1.477    nolabel_line225/adc_clk
+    BUFR_X1Y5            BUFR (Prop_bufr_I_O)         1.032     2.509 r  nolabel_line225/bufr_adc_ref_clkdiv/O
+                         net (fo=172, routed)         0.976     3.485    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_clk
+    SLICE_X55Y54         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X55Y54         FDRE (Prop_fdre_C_Q)         0.419     3.904 r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[3]/Q
+                         net (fo=1, routed)           0.587     4.491    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/async_path[3]
+    SLICE_X54Y54         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_fpga_0 rise edge)
+                                                      0.000     0.000 r  
+    PS7_X0Y0             PS7                          0.000     0.000 r  nolabel_line124/processing_system7_0/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.088     1.088    nolabel_line124/processing_system7_0/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y16       BUFG (Prop_bufg_I_O)         0.091     1.179 r  nolabel_line124/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=5134, routed)        1.536     2.715    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_clk
+    SLICE_X54Y54         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]/C
+                         clock pessimism              0.000     2.715    
+    SLICE_X54Y54         FDRE (Setup_fdre_C_D)       -0.215     2.500    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][3]
+  -------------------------------------------------------------------
+                         data arrival                           4.491    
+                         clock arrival                          2.500    
+  -------------------------------------------------------------------
+                         relative delay                         1.992    
+
+Reference path:
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock adc_data_clk rise edge)
+                                                      0.000     0.000 r  
+    U18                                               0.000     0.000 r  adc_lclk_p (IN)
+                         net (fo=0)                   0.000     0.000    nolabel_line225/adc_lclk_p
+    U18                  IBUFDS (Prop_ibufds_I_O)     0.924     0.924 r  nolabel_line225/nolabel_line146/O
+                         net (fo=1, routed)           0.459     1.383    nolabel_line225/adc_clk
+    BUFR_X1Y5            BUFR (Prop_bufr_I_O)         0.919     2.302 r  nolabel_line225/bufr_adc_ref_clkdiv/O
+                         net (fo=172, routed)         0.908     3.210    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_clk
+    SLICE_X55Y57         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[4]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X55Y57         FDRE (Prop_fdre_C_Q)         0.367     3.577 r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/src_gray_ff_reg[4]/Q
+                         net (fo=1, routed)           0.478     4.055    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/async_path[4]
+    SLICE_X54Y57         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_fpga_0 rise edge)
+                                                      0.000     0.000 r  
+    PS7_X0Y0             PS7                          0.000     0.000 r  nolabel_line124/processing_system7_0/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.193     1.193    nolabel_line124/processing_system7_0/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y16       BUFG (Prop_bufg_I_O)         0.101     1.294 r  nolabel_line124/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=5134, routed)        1.710     3.004    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_clk
+    SLICE_X54Y57         FDRE                                         r  nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]/C
+                         clock pessimism              0.000     3.004    
+    SLICE_X54Y57         FDRE (Hold_fdre_C_D)         0.231     3.235    nolabel_line124/adc_axi_streamer/inst/adc_test_streamer_v2_0_M00_AXIS_inst/fifo_generator_0_inst/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_cdc_inst/dest_graysync_ff_reg[0][4]
+  -------------------------------------------------------------------
+                         data arrival                           4.055    
+                         clock arrival                          3.235    
+  -------------------------------------------------------------------
+                         relative delay                         0.820    
+
+
+

@@ -105,6 +105,7 @@ void d_stop_timing(int index);
 uint64_t d_read_timing(int index);
 float d_read_timing_us(int index);
 void d_dump_timing(char *s, int index);
+void d_dump_timing_ex(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
 
 #endif /* SRC_HAL_H_ */

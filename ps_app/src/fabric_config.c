@@ -24,77 +24,80 @@
 #include "hal.h"
 #include "fabric_config.h"
 
+const uint32_t fbcfg_dummy_tests[] = {
+	0xaaaaaaaa, 0x55555555, 0x5c093ef0, 0xffff0000, 0x00000000, 0xffffffff
+};
+
+#define FBCFG_NUM_TEST_PATTERNS		(sizeof(fbcfg_dummy_tests) / sizeof(fbcfg_dummy_tests[0]))
+
 /*
  * Initialise the fabric configuration engine.  Tests the peripheral.
  */
 void fabcfg_init()
 {
 	int i;
+	uint32_t magic, test, version, ver_uh, ver_lh, userid;
 
 	// Set commit pin as output and done pin as input
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_DONE, 0);
 
 	// Run the initial commit so that data is made available in BRAM
 	fabcfg_commit();
 
-	// Check BRAM data
-#if 0
-	while(1) {
-		fabcfg_write(FAB_CFG_MAGIC1, 0xff5500ff);
-		d_printf(D_INFO, "FabCfg: Magic 0x%08x", fabcfg_read(FAB_CFG_MAGIC1));
-		fabcfg_commit();
-		d_printf(D_INFO, "FabCfg: Magic 0x%08x (post commit)", fabcfg_read(FAB_CFG_MAGIC1));
-	}
-
-	d_printf(D_INFO, "FabCfg: Bitstream version 0x%08x", fabcfg_read(FAB_CFG_VERSION));
-#endif
-
-	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 0, 0xffffffff);
-	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 1, 0xffffffff);
-	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 2, 0xffffffff);
-	XGpioPs_SetOutputEnable(&g_hal.xgpio_ps, 3, 0xffffffff);
-	XGpioPs_SetDirection(&g_hal.xgpio_ps, 0, 0xffffffff);
-	XGpioPs_SetDirection(&g_hal.xgpio_ps, 1, 0xffffffff);
-	XGpioPs_SetDirection(&g_hal.xgpio_ps, 2, 0xffffffff);
-	XGpioPs_SetDirection(&g_hal.xgpio_ps, 3, 0xffffffff);
-
-	while(1) {
-		/*
-		d_printf(D_INFO, "FabCfg: Setting all pins...", i);
-		XGpioPs_Write(&g_hal.xgpio_ps, 0, 0x00000000);
-		XGpioPs_Write(&g_hal.xgpio_ps, 1, 0x00000000);
-		XGpioPs_Write(&g_hal.xgpio_ps, 2, 0x00000000);
-		XGpioPs_Write(&g_hal.xgpio_ps, 3, 0x00000000);
-		bogo_delay(1000000);
-
-		XGpioPs_Write(&g_hal.xgpio_ps, 0, 0xffffffff);
-		XGpioPs_Write(&g_hal.xgpio_ps, 1, 0xffffffff);
-		XGpioPs_Write(&g_hal.xgpio_ps, 2, 0xffffffff);
-		XGpioPs_Write(&g_hal.xgpio_ps, 3, 0xffffffff);
-		bogo_delay(1000000);
-		*/
-
-		for(i = 0; i < 117; i++) {
-			d_printf(D_INFO, "FabCfg: Toggling pin %d", i);
-
-			//XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, 0 + i, 1);
-			//XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, 0 + i, 1);
-			XGpioPs_WritePin(&g_hal.xgpio_ps, 0 + i, 1);
-			bogo_delay(20000);
-
-			XGpioPs_WritePin(&g_hal.xgpio_ps, 0 + i, 0);
-			bogo_delay(20000);
-		}
+	// Verify that magic value is present and correct
+	magic = fabcfg_read(FAB_CFG_MAGIC1);
+	if(magic == FAB_MAGIC_VALUE) {
+		d_printf(D_INFO, "FabCfg: Magic value: 0x%08x - OK", magic);
+	} else {
+		d_printf(D_ERROR, "FabCfg: Magic value: 0x%08x - Not OK, Expect 0x%08x", magic, FAB_MAGIC_VALUE);
+		exit(-1);
 	}
 
 	/*
-	while(1) {
-		fabcfg_write(FAB_CFG_GPIO_TEST, 0xffffffff);
+	 * Test the BRAM block by writing a number of patterns into DUMMY1 and
+	 * reading them out of DUMMY1 and DUMMY2.  Data is copied from DUMMY1
+	 * into DUMMY2 via the fabric.
+	 */
+	d_printf(D_INFO, "FabCfg: Running %d test patterns of register interface", FBCFG_NUM_TEST_PATTERNS);
+
+	for(i = 0; i < FBCFG_NUM_TEST_PATTERNS; i++) {
+		fabcfg_write(FAB_CFG_DUMMY1, fbcfg_dummy_tests[i]);
 		fabcfg_commit();
+
+		// Value of DUMMY2 should appear in DUMMY1.  DUMMY2 should also read the same value.
+		test = fabcfg_read(FAB_CFG_DUMMY1);
+
+		if(test == fbcfg_dummy_tests[i]) {
+			d_printf(D_EXINFO, "FabCfg: DummyTest1 value: 0x%08x - OK", test);
+		} else {
+			d_printf(D_ERROR, "FabCfg: DummyTest1 value: 0x%08x - Not OK, Expect 0x%08x", test, FAB_TEST_VALUE1);
+			exit(-1);
+		}
+
+		test = fabcfg_read(FAB_CFG_DUMMY2);
+
+		if(test == fbcfg_dummy_tests[i]) {
+			d_printf(D_EXINFO, "FabCfg: DummyTest2 value: 0x%08x - OK", test);
+		} else {
+			d_printf(D_ERROR, "FabCfg: DummyTest2 value: 0x%08x - Not OK, Expect 0x%08x", test, FAB_TEST_VALUE1);
+			exit(-1);
+		}
 	}
-	*/
+
+	d_printf(D_INFO, "FabCfg: All tests passed");
+
+	/*
+	 * Read the bitstream version and USRACCESS data
+	 */
+	version = fabcfg_read(FAB_CFG_VERSION);
+	ver_uh = (version & 0xffff0000) >> 16;
+	ver_lh = (version & 0x0000ffff);
+	userid = fabcfg_read(FAB_CFG_USRACCESS);
+
+	d_printf(D_INFO, "FabCfg: Bitstream version minor %d.%2d, major 0x%04x, userid 0x%08x", \
+			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
 }
 
 /*
@@ -127,7 +130,7 @@ void fabcfg_write(uint32_t reg, uint32_t data)
  */
 void fabcfg_commit()
 {
-	int timeout = 200;
+	int timeout = 1000;
 
 	// Drive COMMIT for 10us (TODO: PL needs to ignore continuously held COMMIT signal as this will
 	// lead to DONE never reading HIGH.)
@@ -141,11 +144,10 @@ void fabcfg_commit()
 		if(XGpioPs_ReadPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_DONE)) {
 			break;
 		}
-
-		bogo_delay(50);
+		bogo_delay(1);
 	}
 	d_stop_timing(15);
-	d_dump_timing("FabCfg commit", 15);
+	d_dump_timing_ex("FabCfg commit", 15);
 
 	if(timeout == 0) {
 		d_printf(D_ERROR, "FabCfg: Timeout waiting for fabric to respond to COMMIT");

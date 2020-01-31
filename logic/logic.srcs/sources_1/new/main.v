@@ -135,6 +135,7 @@ design_1 (
     .CFG_BRAM_ENB(cfg_bram_enb),
     .CFG_BRAM_WEB(cfg_bram_web),
     .CFG_BRAM_BUSYB(cfg_bram_busyb),
+    .CFG_BRAM_RSTB(1'b0),
     
     // Master clock (~177MHz currently, actual value not particularly important but must be
     // set up in clock wizards correctly.)
@@ -165,8 +166,8 @@ cfg_bram_controller (
     .cfg_bram_en(cfg_bram_enb),
     .cfg_bram_we(cfg_bram_web),
     .cfg_bram_busy(cfg_bram_busyb),
-    .cfg_commit(emio_input[EMIO_CFG_COMMIT]),
-    .cfg_commit_done(emio_output[EMIO_CFG_DONE]),
+    .cfg_commit(emio_output[EMIO_CFG_COMMIT]),
+    .cfg_commit_done(emio_input[EMIO_CFG_DONE]),
     .g_rst(g_rst_gen),
     .clk_ref(clk_master),
     
@@ -264,6 +265,7 @@ adc_receiver (
     .debug(debug_adc),
     
     // Training state & control
+    /*
     .train_start(emio_output[0]),
     .train_done(emio_input[0]),
     .train_ok(emio_input[1]),
@@ -271,6 +273,7 @@ adc_receiver (
     .idelay_rdy(emio_input[8]),
     .idelay_refclk(clk_idelay_refclk), // xxx MHz refclk for IDELAYE2
     .train_data_debug(train_data_debug),
+    */
     
     // Global reset signal: not asserted for now
     .g_rst(g_rst_gen),

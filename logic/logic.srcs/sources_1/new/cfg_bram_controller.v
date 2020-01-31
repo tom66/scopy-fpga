@@ -46,117 +46,163 @@ module cfg_bram_controller(
     output reg [31:0] R_acq_size,
     input [31:0] R_acq_trigger_ptr,
     output reg [2:0] R_acq_demux_mode,
-    output reg [1:0] R_gpio_test
+    output [1:0] R_gpio_test
 );
 
 reg [3:0] cfg_ctrl_state = CFG_BRAM_CTRL_STATE_IDLE;
-reg [11:0] cfg_ctrl_idx = 0;
+reg [1:0] cfg_bram_substate = CFG_BRAM_CTRL_SUBSTATE_ADDR;
+reg [12:0] cfg_ctrl_idx = 0;
 reg cfg_bram_write_en = 0;
+reg cfg_last_commit = 0;
+
+wire clk_ref_bram;
 
 assign cfg_bram_we = (cfg_bram_write_en) ? 4'b1111 : 4'b0000;
-assign cfg_bram_clk = clk_ref;
+assign cfg_bram_clk = clk_ref_bram;
 
 reg cfg_commit_done_reg = 0;
 assign cfg_commit_done = cfg_commit_done_reg;
 
+//assign R_gpio_test = R_gpio_test_reg;
+reg [1:0] R_gpio_test_reg;
+
+assign R_gpio_test[0] = R_gpio_test_reg[0];
+assign R_gpio_test[1] = R_gpio_test_reg[1];
+
 reg [31:0] dummy1;
 
-parameter BITSTREAM_VERSION = 32'hb37a0100;
+parameter BITSTREAM_VERSION = 32'hb37a0010;
 
 parameter CFG_BRAM_CTRL_STATE_IDLE = 1;
 parameter CFG_BRAM_CTRL_STATE_SYNC = 2;
 
-always @(posedge clk_ref) begin
+parameter CFG_BRAM_CTRL_SUBSTATE_ADDR = 0;
+parameter CFG_BRAM_CTRL_SUBSTATE_DATA = 3;
 
-    // required?
-    if (g_rst) begin
-        cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_IDLE;
-        cfg_ctrl_idx <= 0;
-    end
+/*
+ * Input clock is divided - no need for this block to run at ~200MHz.
+ */
+BUFR #(
+    .BUFR_DIVIDE("4")
+) bufr_bram_cfg_local_div (
+    .I(clk_ref),
+    .O(clk_ref_bram),
+    .CE(1'b1),
+    .CLR(1'b0)
+);
+
+/*
+ * USRACCESSE2 register - encodes bitstream ID.
+ */
+wire [31:0] usraccess_bitstream_id;
+
+USR_ACCESSE2 (
+    .DATA(usraccess_bitstream_id)
+);
+
+always @(posedge clk_ref_bram) begin
 
     // Two states:  CFG BRAM is either idle, or syncing
     case (cfg_ctrl_state) 
     
         CFG_BRAM_CTRL_STATE_IDLE: begin
-            if (cfg_commit && (!cfg_bram_busy)) begin
-                cfg_ctrl_idx <= 0;
-                cfg_bram_en <= 0;
+            cfg_bram_en <= 0;
+            cfg_ctrl_idx <= 0;
+            
+            if (cfg_commit && /*(!cfg_bram_busy) && */(!cfg_last_commit)) begin
                 cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_SYNC;
                 cfg_commit_done_reg <= 0;
             end
         end
     
         CFG_BRAM_CTRL_STATE_SYNC: begin
-            
-            cfg_bram_addr <= cfg_ctrl_idx;
-            cfg_bram_en <= 1;
-            
-            // Increase the cfg_ctrl_idx and sync registers in one direction or another
-            case (cfg_ctrl_idx)
-            
-                // dummy1: read value into internal dummy1 register
-                12'h000: begin
-                    cfg_bram_write_en <= 0;
-                    dummy1 <= cfg_bram_dout;
-                end
+            // Address BRAM on cycle 0-2, register data on cycle 1
+            if (cfg_bram_substate != CFG_BRAM_CTRL_SUBSTATE_DATA) begin
+                cfg_bram_en <= 1;
+                cfg_bram_addr <= cfg_ctrl_idx * 4;
+                cfg_bram_write_en <= 0;
+                cfg_bram_substate <= cfg_bram_substate + 1;
+            end else begin
+                // Sync registers by address (read or write dependent)
+                case (cfg_ctrl_idx)
                 
-                // dummy2: BRAM written with contents of dummy1 
-                12'h001: begin
-                    cfg_bram_write_en <= 1;
-                    cfg_bram_din <= dummy1;
-                end
-                
-                // magic1: BRAM written with magic bit pattern
-                12'h002: begin
-                    cfg_bram_write_en <= 1;
-                    cfg_bram_din <= 32'h536d7670; // "Smvp"
-                end
-                
-                // version: BRAM written with version bit pattern
-                12'h003: begin
-                    cfg_bram_write_en <= 1;
-                    cfg_bram_din <= BITSTREAM_VERSION; 
-                end
+                    // dummy1: read value into internal dummy1 register
+                    12'h000: begin
+                        cfg_bram_write_en <= 0;
+                        dummy1 <= cfg_bram_dout;
+                    end
                     
-                // acq_size
-                12'h004: begin
-                    cfg_bram_write_en <= 0;
-                    R_acq_size <= cfg_bram_dout;
-                end
+                    // dummy2: BRAM written with contents of dummy1 
+                    12'h001: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= dummy1;
+                    end
                     
-                // acq_trigger_ptr
-                12'h005: begin
-                    cfg_bram_write_en <= 1;
-                    cfg_bram_din <= R_acq_trigger_ptr;
-                end
+                    // magic1: BRAM written with magic bit pattern
+                    12'h002: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= 32'h536d7670; // "Smvp"
+                    end
                     
-                // acq_demux_mode
-                12'h006: begin
-                    cfg_bram_write_en <= 0;
-                    R_acq_demux_mode <= cfg_bram_dout;
-                end
+                    // version: BRAM written with version bit pattern
+                    12'h003: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= BITSTREAM_VERSION; 
+                    end
+                    
+                    // user_access:  BRAM written with bitstream ID
+                    12'h004: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= usraccess_bitstream_id; 
+                    end
+                        
+                    // acq_size
+                    12'h005: begin
+                        cfg_bram_write_en <= 0;
+                        R_acq_size <= cfg_bram_dout;
+                    end
+                        
+                    // acq_trigger_ptr
+                    12'h006: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= R_acq_trigger_ptr;
+                    end
+                        
+                    // acq_demux_mode
+                    12'h007: begin
+                        cfg_bram_write_en <= 0;
+                        R_acq_demux_mode <= cfg_bram_dout;
+                    end
+                    
+                    // gpio_test
+                    12'h008: begin
+                        cfg_bram_write_en <= 0;
+                        R_gpio_test_reg <= cfg_bram_dout;
+                    end
+                    
+                    // EOF
+                    12'h080: begin
+                        cfg_bram_write_en <= 0;
+                        cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_IDLE;
+                        cfg_commit_done_reg <= 1;
+                    end   
+                    
+                    default: begin
+                        cfg_bram_write_en <= 1;
+                        cfg_bram_din <= 32'hffffffff;
+                    end
+                    
+                endcase
                 
-                // gpio_test
-                12'h007: begin
-                    cfg_bram_write_en <= 0;
-                    R_gpio_test <= cfg_bram_dout;
-                end
-                
-                // EOF
-                12'h008: begin
-                    cfg_bram_write_en <= 0;
-                    cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_IDLE;
-                    cfg_commit_done_reg <= 1;
-                end   
-                
-            endcase
-            
-            cfg_ctrl_idx <= cfg_ctrl_idx + 1;
-            
+                cfg_ctrl_idx <= cfg_ctrl_idx + 1;
+                cfg_bram_substate <= CFG_BRAM_CTRL_SUBSTATE_ADDR;
+            end
         end
     
     endcase
-
+    
+    cfg_last_commit <= cfg_commit;
+            
 end
     
 endmodule
