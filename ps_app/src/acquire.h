@@ -11,46 +11,86 @@
  * Acquistion control engine.  This handles all oscilloscope acquisition functions
  * including memory buffer allocation, PL interface, AXI bus DMA and trigger setup.
  *
- * The acquisition engine is primarily driven by interrupts.
+ * The acquisition engine is primarily driven by interrupts.  Hold-off is implemented
+ * by the trigger engine.
  */
 
 #ifndef SRC_ACQUIRE_H_
 #define SRC_ACQUIRE_H_
 
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-#define ACQSTATE_UNINIT			0						// Not ready: not initialised (memory or other)
-#define ACQSTATE_STOPPED		1						// Stopped but ready to start
-#define ACQSTATE_PREP			2						// Started but not acquiring data yet
-#define ACQSTATE_WAIT_TRIG		3						// Waiting for trigger, pre-trigger buffer running
-#define ACQSTATE_RUNNING		4						// Data acquisition in progress
-#define ACQSTATE_HOLDOFF		5						// Data acquisition done and now in holdoff period
+#include "xaxidma.h"
+#include "xscugic.h"
 
-#define ACQ_MIN_BUFFER_SIZE		1024					// Minimum 1K samples buffer size
-#define ACQ_MAX_BUFFER_SIZE		(64 * 1024 * 1024)		// Maximum 64M samples buffer size
+#define ACQSTATE_UNINIT				0								// Not ready: not initialised (memory or other)
+#define ACQSTATE_STOPPED			1								// Stopped but ready to start
+#define ACQSTATE_PREP				2								// Started but not acquiring data yet
+#define ACQSTATE_WAIT_TRIG			3								// Waiting for trigger, pre-trigger buffer running
+#define ACQSTATE_RUNNING			4								// Data acquisition in progress
+#define ACQSTATE_HOLDOFF			5								// Data acquisition done and now in holdoff period
 
-#define ACQ_MIN_PREPOST_SIZE	128						// Minimum size of any pre or post window.
+#define ACQSUBST_NONE				0								// Sub state machine not running
+#define ACQSUBST_PRE_TRIG_FILL		1								// Gathering first pre-trigger buffer
+#define ACQSUBST_PRE_TRIG_WAIT		2								// Waiting for trigger, continuing to loop through pre-trigger buffer
+#define ACQSUBST_POST_TRIG			3								// Post trigger acquisition
 
-#define ACQ_MODE_8BIT			0x00000001				// 8-bit high speed
-#define ACQ_MODE_12BIT			0x00000002				// 12-bit mid speed
-#define ACQ_MODE_14BIT			0x00000004				// 14-bit low speed
-#define ACQ_MODE_1CH			0x00000020				// 1 channel mode
-#define ACQ_MODE_2CH			0x00000040				// 2 channel mode
-#define ACQ_MODE_4CH			0x00000080				// 4 channel mode
-#define ACQ_MODE_TRIGGERED		0x00000100				// Triggered mode (normal/auto/single acquisition)
-#define ACQ_MODE_CONTINUOUS		0x00000200				// Special continuous mode (rolling buffer)
+#define ACQ_MIN_BUFFER_SIZE			1024							// Minimum 1K samples buffer size
+#define ACQ_MAX_BUFFER_SIZE			(64 * 1024 * 1024)				// Maximum 64M samples buffer size
 
-#define ACQ_BUFFER_ALIGN		8						// Required byte alignment for AXI DMA (Must be a power of two)
-#define ACQ_BUFFER_ALIGN_AMOD	(ACQ_BUFFER_ALIGN - 1)	// Modulo (binary-AND) used to determine alignment of above value
+#define ACQ_MIN_PREPOST_SIZE		128								// Minimum size of any pre or post window.
 
-#define ACQERR_MALLOC_FAIL		-1
+#define ACQ_MODE_8BIT				0x00000001						// 8-bit high speed
+#define ACQ_MODE_12BIT				0x00000002						// 12-bit mid speed
+#define ACQ_MODE_14BIT				0x00000004						// 14-bit low speed
+#define ACQ_MODE_1CH				0x00000020						// 1 channel mode
+#define ACQ_MODE_2CH				0x00000040						// 2 channel mode
+#define ACQ_MODE_4CH				0x00000080						// 4 channel mode
+#define ACQ_MODE_TRIGGERED			0x00000100						// Triggered mode (normal/auto/single acquisition)
+#define ACQ_MODE_CONTINUOUS			0x00000200						// Special continuous mode (rolling buffer)
+
+#define ACQ_SAMPLES_ALIGN_8B		8								// Buffers must be 8-sample sized in 8-bit mode
+#define ACQ_SAMPLES_ALIGN_8B_AMOD	(ACQ_SAMPLES_ALIGN_8B - 1)
+
+#define ACQ_SAMPLES_ALIGN_PR		4								// Buffers must be 4-sample sized in 12-bit/14-bit mode (precision modes)
+#define ACQ_SAMPLES_ALIGN_PR_AMOD	(ACQ_SAMPLES_ALIGN_PRC - 1)
+
+#define ACQ_BUFFER_ALIGN			8								// Required byte alignment for AXI DMA (Must be a power of two)
+#define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
+
+#define ACQRES_TOTAL_MALLOC_FAIL	-4
+#define ACQRES_PARAM_FAIL			-3
+#define ACQRES_ALIGN_FAIL			-2
+#define ACQRES_MALLOC_FAIL			-1
+#define ACQRES_OK					0
+
+// Demux register on PL.  6-bits wide
+#define ADCDEMUX_1CH				0x01
+#define ADCDEMUX_2CH				0x02
+#define ADCDEMUX_4CH				0x04
+#define ADCDEMUX_8BIT				0x08
+#define ADCDEMUX_12BIT				0x10
+#define ADCDEMUX_14BIT				0x20
+
+#define ACQ_TOTAL_MEMORY_AVAIL		(192 * 1024 * 1024)				// Configured total memory limit for general purpose acquisition.
+
+#define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID
+#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
+#define ACQ_DMA_IRQ_RX_PRIORITY		0x08							// Configured to essentially the highest priority possible, besides exceptions
 
 struct acq_state_t {
-	// State of the acquisition state machine
+	// States of the acquisition state machine
 	int state;
+	int sub_state;
+
+	// AXI DMA peripheral references
+	XAxiDma dma;
+	XAxiDma_Config *dma_config;
 
 	// Acquisition control flags
+	uint32_t acq_mode_flags;
 
 	// Sizes of the acquisition ranges and number of acquisitions to make
 	uint32_t pre_buffsz;
@@ -66,7 +106,7 @@ struct acq_state_t {
 struct acq_buffer_t {
 	int idx;
 	uint32_t *buff_alloc;		// Pointer that was actually allocated
-	uint32_t *buff_real;		// Pointer that is used for acquisition
+	uint32_t *buff_acq;			// Pointer that is used for acquisition
 	uint32_t trigger_at;
 	struct acq_buffer_t *next;
 };
@@ -75,7 +115,9 @@ extern struct acq_state_t g_acq_state;
 
 void acq_init();
 int acq_get_next_alloc(struct acq_buffer_t *next);
-void acq_prepare(int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
+int acq_append_next_alloc();
+void acq_free_all_alloc();
+void acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
 bool acq_is_done();
 
 #endif // SRC_ACQUIRE_H_

@@ -1,4 +1,4 @@
-18:21:50 **** Incremental Build of configuration Debug for project ps_app ****
+20:25:39 **** Incremental Build of configuration Debug for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
@@ -24,11 +24,6 @@ arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/acquire.o" -mcpu=c
  ^
 'Finished building: ../src/acquire.c'
 ' '
-'Building file: ../src/main.c'
-'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
-'Finished building: ../src/main.c'
-' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
 arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
@@ -37,9 +32,9 @@ arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=non
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  70380	   3376	201399456	201473212	c023cbc	ps_app.elf
+  70444	   3376	201399456	201473276	c023cfc	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-18:21:52 Build Finished (took 2s.98ms)
+20:25:42 Build Finished (took 2s.888ms)
 
