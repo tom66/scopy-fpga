@@ -79,6 +79,8 @@ set_property used_in_implementation false [get_files C:/Users/Tom/Documents/Proj
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/synth_3/main.dcp
 close [open __synthesis_is_running__ w]
 
 synth_design -top main -part xc7z014sclg400-1 -flatten_hierarchy none -directive RuntimeOptimized -fsm_extraction off

@@ -96,8 +96,17 @@ void fabcfg_init()
 	ver_lh = (version & 0x0000ffff);
 	userid = fabcfg_read(FAB_CFG_USRACCESS);
 
-	d_printf(D_INFO, "FabCfg: Bitstream version minor %d.%2d, major 0x%04x, userid 0x%08x", \
+	d_printf(D_INFO, "FabCfg: Bitstream version %d.%02d, code 0x%04x, userid 0x%08x", \
 			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
+
+	/*
+	 * Write GPIOs for test purposes.
+	 */
+	while(1) {
+		fabcfg_write(FAB_CFG_GPIO_TEST, i);
+		fabcfg_commit();
+		i++;
+	}
 }
 
 /*
@@ -147,7 +156,7 @@ void fabcfg_commit()
 		bogo_delay(1);
 	}
 	d_stop_timing(15);
-	d_dump_timing_ex("FabCfg commit", 15);
+	//d_dump_timing_ex("FabCfg commit", 15);
 
 	if(timeout == 0) {
 		d_printf(D_ERROR, "FabCfg: Timeout waiting for fabric to respond to COMMIT");

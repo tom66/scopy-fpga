@@ -2,8 +2,8 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Fri Jan 31 14:30:59 2020
-# Process ID: 1436
+# Start of session at: Sat Feb  1 12:23:22 2020
+# Process ID: 23392
 # Current directory: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3
 # Command line: vivado.exe -log main.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source main.tcl
 # Log file: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.vds
@@ -16,13 +16,17 @@ INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/Tom/Documents/Projec
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'G:/Xilinx/Vivado/2019.2/data/ip'.
 WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
 Current IP cache path is c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/ip 
+Command: read_checkpoint -auto_incremental -incremental C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/synth_3/main.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/synth_3/main.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top main -part xc7z014sclg400-1 -flatten_hierarchy none -directive RuntimeOptimized -fsm_extraction off
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014s'
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
+WARNING: [Designutils 20-4072] Reference run did not run incremental synthesis because the design is too small; reverting to default synthesis
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 12844 
+INFO: Helper process launched with PID 12964 
 WARNING: [Synth 8-6901] identifier 'TRAIN_IDLE' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_iserdese2_mod.v:60]
 WARNING: [Synth 8-6901] identifier 'train_output' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_iserdese2_mod.v:86]
 WARNING: [Synth 8-2368] multiple overrides for parameter SERDES_MODE [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_iserdese2_mod.v:328]
@@ -38,7 +42,7 @@ WARNING: [Synth 8-6901] identifier 'emio_counter' is used before its declaration
 WARNING: [Synth 8-2507] parameter declaration becomes local in adc_test_streamer_v2_0_M00_AXIS with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/94a6/hdl/adc_test_streamer_v2_0_M00_AXIS.v:69]
 WARNING: [Synth 8-6901] identifier 'fifo_almost_empty' is used before its declaration [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/94a6/hdl/adc_test_streamer_v2_0_M00_AXIS.v:98]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 908.359 ; gain = 244.941
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 911.355 ; gain = 245.711
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 	Parameter EMIO_ACQ_RUN bound to: 0 - type: integer 
@@ -4651,12 +4655,12 @@ INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "no" *) on RAM ge
 INFO: [Synth 8-5772] Detected attribute (* ram_optimization = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 WARNING: [Synth 8-689] width (15) of port connection 'PL_IRQ' does not match port width (14) of module 'design_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:149]
 WARNING: [Synth 8-7023] instance 'nolabel_line124' of module 'design_1' has 38 connections declared, but only 17 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:124]
-	Parameter BITSTREAM_VERSION bound to: -1283850224 - type: integer 
+	Parameter BITSTREAM_VERSION bound to: -1283850239 - type: integer 
 	Parameter CFG_BRAM_CTRL_STATE_IDLE bound to: 1 - type: integer 
 	Parameter CFG_BRAM_CTRL_STATE_SYNC bound to: 2 - type: integer 
 	Parameter CFG_BRAM_CTRL_SUBSTATE_ADDR bound to: 0 - type: integer 
 	Parameter CFG_BRAM_CTRL_SUBSTATE_DATA bound to: 3 - type: integer 
-	Parameter BUFR_DIVIDE bound to: 4 - type: string 
+	Parameter BUFR_DIVIDE bound to: 2 - type: string 
 	Parameter SIM_DEVICE bound to: 7SERIES - type: string 
 WARNING: [Synth 8-7023] instance 'nolabel_line99' of module 'USR_ACCESSE2' has 3 connections declared, but only 1 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/cfg_bram_controller.v:99]
 INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/cfg_bram_controller.v:106]
@@ -4673,6 +4677,8 @@ WARNING: [Synth 8-7023] instance 'nolabel_line202' of module 'clk_wiz_1_idelay_r
 	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
 	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
 	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+	Parameter BUFR_DIVIDE bound to: 4 - type: string 
+	Parameter SIM_DEVICE bound to: 7SERIES - type: string 
 	Parameter SIM_DEVICE bound to: 7SERIES - type: string 
 	Parameter TRAIN_IDLE bound to: 1 - type: integer 
 	Parameter TRAIN_FIND_LOW_DELAY bound to: 2 - type: integer 
@@ -4854,7 +4860,7 @@ WARNING: [Synth 8-3331] design processing_system7_v5_5_processing_system7 has un
 WARNING: [Synth 8-3331] design processing_system7_v5_5_processing_system7 has unconnected port FTMD_TRACEIN_DATA[14]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:56 ; elapsed = 00:00:58 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished RTL Elaboration : Time (s): cpu = 00:00:57 ; elapsed = 00:01:01 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -4867,12 +4873,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:59 ; elapsed = 00:01:04 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:59 ; elapsed = 00:01:04 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1353.629 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1360.457 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 64 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -5144,7 +5150,7 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1353.629 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1360.457 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 31 instances were transformed.
   FDR => FDRE: 25 instances
@@ -5152,16 +5158,17 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   MUXCY_L => MUXCY: 4 instances
   SRL16 => SRL16E: 1 instance 
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.323 . Memory (MB): peak = 1353.629 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.326 . Memory (MB): peak = 1360.457 ; gain = 0.000
+WARNING: [Designutils 20-4072] Reference run did not run incremental synthesis because the design is too small; reverting to default synthesis
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:01:21 ; elapsed = 00:01:23 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished Constraint Validation : Time (s): cpu = 00:01:22 ; elapsed = 00:01:27 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:01:21 ; elapsed = 00:01:23 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished Loading Part and Timing Information : Time (s): cpu = 00:01:22 ; elapsed = 00:01:27 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -5200,7 +5207,7 @@ Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DA
 Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT /I_DATA_FIFO/\BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT /I_XD_FIFO/\NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:01:21 ; elapsed = 00:01:24 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:01:22 ; elapsed = 00:01:28 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5544] ROM "wrap_burst_total_cmb" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-4471] merging register 'GEN_SYNC_WRITE.rst_wvalid_re_reg' into 'GEN_SYNC_WRITE.bvalid_i_reg' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/ec2a/hdl/axi_dma_v7_1_vh_rfs.vhd:2193]
@@ -5265,7 +5272,7 @@ INFO: [Synth 8-5546] ROM "R_gpio_test_reg" won't be mapped to RAM because it is 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:34 ; elapsed = 00:01:37 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:35 ; elapsed = 00:01:42 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7044,7 +7051,7 @@ INFO: [Synth 8-3333] propagating constant 1 across sequential element (nolabel_l
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /I_ADDR_CNTL/\sig_next_size_reg_reg[2] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line124/axi_dma/U0/I_PRMRY_DATAMOVER/\GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER /I_ADDR_CNTL/\sig_next_size_reg_reg[2] )
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:04 ; elapsed = 00:02:10 . Memory (MB): peak = 1353.629 ; gain = 690.211
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:04 ; elapsed = 00:02:14 . Memory (MB): peak = 1360.457 ; gain = 694.813
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
@@ -7095,7 +7102,7 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:15 ; elapsed = 00:02:21 . Memory (MB): peak = 1376.238 ; gain = 712.820
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:15 ; elapsed = 00:02:25 . Memory (MB): peak = 1365.008 ; gain = 699.363
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -7134,7 +7141,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:30 ; elapsed = 00:02:38 . Memory (MB): peak = 1410.160 ; gain = 746.742
+Finished Technology Mapping : Time (s): cpu = 00:02:30 ; elapsed = 00:02:42 . Memory (MB): peak = 1398.848 ; gain = 733.203
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7233,13 +7240,13 @@ WARNING: [Synth 8-3295] tying undriven pin nolabel_line124:PL_IRQ[0] to constant
 WARNING: [Synth 8-3295] tying undriven pin nolabel_line225:idelay_refclk to constant 0
 CRITICAL WARNING: [Synth 8-4442] BlackBox module nolabel_line202 has unconnected pin reset
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:37 ; elapsed = 00:02:46 . Memory (MB): peak = 1413.953 ; gain = 750.535
+Finished IO Insertion : Time (s): cpu = 00:02:37 ; elapsed = 00:02:49 . Memory (MB): peak = 1402.637 ; gain = 736.992
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:37 ; elapsed = 00:02:46 . Memory (MB): peak = 1413.953 ; gain = 750.535
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:37 ; elapsed = 00:02:49 . Memory (MB): peak = 1402.637 ; gain = 736.992
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -7258,7 +7265,7 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:38 ; elapsed = 00:02:46 . Memory (MB): peak = 1413.953 ; gain = 750.535
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:37 ; elapsed = 00:02:50 . Memory (MB): peak = 1402.637 ; gain = 736.992
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -7312,46 +7319,47 @@ Report Cell Usage:
 |1     |clk_wiz_1_idelay_refclk |     1|
 |2     |BIBUF                   |   130|
 |3     |BUFG                    |     1|
-|4     |BUFR                    |     2|
-|5     |CARRY4                  |   259|
-|6     |IDELAYCTRL              |     1|
-|7     |IDELAYE2                |     8|
-|8     |ISERDESE2               |     8|
-|9     |LUT1                    |   372|
-|10    |LUT2                    |   881|
-|11    |LUT3                    |  1494|
-|12    |LUT4                    |   791|
-|13    |LUT5                    |   844|
-|14    |LUT6                    |  1231|
-|15    |MUXCY_L                 |     3|
-|16    |MUXF7                   |    86|
-|17    |MUXF8                   |     2|
-|18    |PS7                     |     1|
-|19    |RAM32M                  |    16|
-|20    |RAM32X1D                |     1|
-|21    |RAMB18E1_1              |     2|
-|22    |RAMB36E1_1              |     2|
-|23    |RAMB36E1_2              |     8|
-|24    |SRL16                   |     1|
-|25    |SRL16E                  |   242|
-|26    |SRLC32E                 |    52|
-|27    |USR_ACCESSE2            |     1|
-|28    |XORCY                   |     4|
-|29    |FDCE                    |   176|
-|30    |FDPE                    |    52|
-|31    |FDR                     |    17|
-|32    |FDRE                    |  5493|
-|33    |FDSE                    |   166|
-|34    |IBUFDS                  |     9|
-|35    |IBUFGDS                 |     1|
-|36    |OBUF                    |     2|
+|4     |BUFR                    |     1|
+|5     |BUFR_1                  |     1|
+|6     |CARRY4                  |   259|
+|7     |IDELAYCTRL              |     1|
+|8     |IDELAYE2                |     8|
+|9     |ISERDESE2               |     8|
+|10    |LUT1                    |   372|
+|11    |LUT2                    |   881|
+|12    |LUT3                    |  1493|
+|13    |LUT4                    |   771|
+|14    |LUT5                    |   845|
+|15    |LUT6                    |  1249|
+|16    |MUXCY_L                 |     3|
+|17    |MUXF7                   |    86|
+|18    |MUXF8                   |     2|
+|19    |PS7                     |     1|
+|20    |RAM32M                  |    16|
+|21    |RAM32X1D                |     1|
+|22    |RAMB18E1_1              |     2|
+|23    |RAMB36E1_1              |     2|
+|24    |RAMB36E1_2              |     8|
+|25    |SRL16                   |     1|
+|26    |SRL16E                  |   242|
+|27    |SRLC32E                 |    52|
+|28    |USR_ACCESSE2            |     1|
+|29    |XORCY                   |     4|
+|30    |FDCE                    |   176|
+|31    |FDPE                    |    52|
+|32    |FDR                     |    17|
+|33    |FDRE                    |  5525|
+|34    |FDSE                    |   134|
+|35    |IBUFDS                  |     9|
+|36    |IBUFGDS                 |     1|
+|37    |OBUF                    |     2|
 +------+------------------------+------+
 
 Report Instance Areas: 
 +------+----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------+
 |      |Instance                                                                                                  |Module                                                                |Cells |
 +------+----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------+
-|1     |top                                                                                                       |                                                                      | 12361|
+|1     |top                                                                                                       |                                                                      | 12359|
 |2     |  nolabel_line124                                                                                         |design_1                                                              | 11656|
 |3     |    adc_axi_streamer                                                                                      |design_1_adc_test_streamer_0_0                                        |   264|
 |4     |      inst                                                                                                |adc_test_streamer_v2_0                                                |   264|
@@ -7753,7 +7761,7 @@ Report Instance Areas:
 |400   |        SEQ                                                                                               |sequence_psr                                                          |    36|
 |401   |          SEQ_COUNTER                                                                                     |upcnt_n                                                               |    13|
 |402   |    xlconcat_1                                                                                            |design_1_xlconcat_1_0                                                 |     0|
-|403   |  nolabel_line160                                                                                         |cfg_bram_controller                                                   |   164|
+|403   |  nolabel_line160                                                                                         |cfg_bram_controller                                                   |   162|
 |404   |  nolabel_line225                                                                                         |adc_receiver                                                          |   470|
 |405   |    asi2_mod_inst0                                                                                        |adc_iserdese2_mod__1                                                  |    54|
 |406   |    asi2_mod_inst1                                                                                        |adc_iserdese2_mod__2                                                  |    54|
@@ -7765,18 +7773,18 @@ Report Instance Areas:
 |412   |    asi2_mod_inst7                                                                                        |adc_iserdese2_mod                                                     |    54|
 +------+----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:38 ; elapsed = 00:02:46 . Memory (MB): peak = 1413.953 ; gain = 750.535
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:37 ; elapsed = 00:02:50 . Memory (MB): peak = 1402.637 ; gain = 736.992
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 1 critical warnings and 80 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:23 ; elapsed = 00:02:30 . Memory (MB): peak = 1413.953 ; gain = 750.535
-Synthesis Optimization Complete : Time (s): cpu = 00:02:38 ; elapsed = 00:02:46 . Memory (MB): peak = 1413.953 ; gain = 750.535
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:22 ; elapsed = 00:02:33 . Memory (MB): peak = 1402.637 ; gain = 736.992
+Synthesis Optimization Complete : Time (s): cpu = 00:02:38 ; elapsed = 00:02:50 . Memory (MB): peak = 1402.637 ; gain = 736.992
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.837 . Memory (MB): peak = 1423.004 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.748 . Memory (MB): peak = 1411.695 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 429 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 8 inverter(s) to 8 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1442.074 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1429.957 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 37 instances were transformed.
   (MUXCY,XORCY) => CARRY4: 1 instance 
@@ -7787,13 +7795,12 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   SRL16 => SRL16E: 1 instance 
 
 INFO: [Common 17-83] Releasing license: Synthesis
-902 Infos, 362 Warnings, 101 Critical Warnings and 0 Errors encountered.
+904 Infos, 364 Warnings, 101 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:52 ; elapsed = 00:03:02 . Memory (MB): peak = 1442.074 ; gain = 1096.133
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1442.074 ; gain = 0.000
+synth_design: Time (s): cpu = 00:02:51 ; elapsed = 00:03:05 . Memory (MB): peak = 1429.957 ; gain = 1064.902
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1429.957 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.dcp' has been generated.
-write_checkpoint: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1442.074 ; gain = 0.000
 INFO: [runtcl-4] Executing : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Jan 31 14:34:13 2020...
+INFO: [Common 17-206] Exiting Vivado at Sat Feb  1 12:26:45 2020...

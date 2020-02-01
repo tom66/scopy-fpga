@@ -39,6 +39,7 @@
 #include <ctype.h>
 
 #include "hal.h"
+#include "acquire.h"
 
 int main()
 {

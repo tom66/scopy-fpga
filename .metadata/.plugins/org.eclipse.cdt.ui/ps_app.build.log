@@ -1,25 +1,45 @@
-14:39:33 **** Incremental Build of configuration Debug for project ps_app ****
+18:21:50 **** Incremental Build of configuration Debug for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
 make --no-print-directory main-build
-'Building file: ../src/fabric_config.c'
+'Building file: ../src/acquire.c'
 'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/fabric_config.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/fabric_config.d" -MT"src/fabric_config.o" -o "src/fabric_config.o" "../src/fabric_config.c"
-'Finished building: ../src/fabric_config.c'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/acquire.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/acquire.d" -MT"src/acquire.o" -o "src/acquire.o" "../src/acquire.c"
+../src/acquire.c: In function 'acq_get_next_alloc':
+../src/acquire.c:47:19: warning: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+  work.buff_real = malloc(g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN);
+                   ^~~~~~
+../src/acquire.c:47:19: warning: incompatible implicit declaration of built-in function 'malloc'
+../src/acquire.c:47:19: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+../src/acquire.c:21:1:
++#include <stdlib.h>
+ 
+../src/acquire.c:47:19:
+  work.buff_real = malloc(g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN);
+                   ^~~~~~
+../src/acquire.c:56:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+'Finished building: ../src/acquire.c'
+' '
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
 ' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 'Finished building target: ps_app.elf'
 ' '
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  70184	   3376	 138384	 211944	  33be8	ps_app.elf
+  70380	   3376	201399456	201473212	c023cbc	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-14:39:35 Build Finished (took 1s.683ms)
+18:21:52 Build Finished (took 2s.98ms)
 

@@ -71,7 +71,7 @@ assign R_gpio_test[1] = R_gpio_test_reg[1];
 
 reg [31:0] dummy1;
 
-parameter BITSTREAM_VERSION = 32'hb37a0010;
+parameter BITSTREAM_VERSION = 32'hb37a0001;
 
 parameter CFG_BRAM_CTRL_STATE_IDLE = 1;
 parameter CFG_BRAM_CTRL_STATE_SYNC = 2;
@@ -83,7 +83,7 @@ parameter CFG_BRAM_CTRL_SUBSTATE_DATA = 3;
  * Input clock is divided - no need for this block to run at ~200MHz.
  */
 BUFR #(
-    .BUFR_DIVIDE("4")
+    .BUFR_DIVIDE("2")
 ) bufr_bram_cfg_local_div (
     .I(clk_ref),
     .O(clk_ref_bram),
@@ -181,7 +181,7 @@ always @(posedge clk_ref_bram) begin
                     end
                     
                     // EOF
-                    12'h080: begin
+                    12'h00c: begin
                         cfg_bram_write_en <= 0;
                         cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_IDLE;
                         cfg_commit_done_reg <= 1;
