@@ -20,7 +20,6 @@
 #include <stdint.h>
 #include <ctype.h>
 
-// Xilinx includes
 #include "platform.h"
 #include "xil_printf.h"
 #include "xil_types.h"

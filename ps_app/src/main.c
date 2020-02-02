@@ -43,7 +43,24 @@
 
 int main()
 {
+	int res;
+
 	hal_init();
+	acq_init();
+
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 65536, 100);
+	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
+	acq_debug_dump();
+
+	d_printf(D_INFO, "Starting acquisition");
+	acq_start();
+	acq_debug_dump();
+
+	d_printf(D_INFO, "Waiting...");
+
+	while(!acq_is_done()) ;
+
+	d_printf(D_INFO, "Done!");
 
     cleanup_platform();
 }

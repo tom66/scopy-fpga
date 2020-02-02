@@ -30,12 +30,14 @@
 #define ACQSTATE_PREP				2								// Started but not acquiring data yet
 #define ACQSTATE_WAIT_TRIG			3								// Waiting for trigger, pre-trigger buffer running
 #define ACQSTATE_RUNNING			4								// Data acquisition in progress
-#define ACQSTATE_HOLDOFF			5								// Data acquisition done and now in holdoff period
+#define ACQSTATE_DONE				5								// All acquisitions complete
 
 #define ACQSUBST_NONE				0								// Sub state machine not running
 #define ACQSUBST_PRE_TRIG_FILL		1								// Gathering first pre-trigger buffer
 #define ACQSUBST_PRE_TRIG_WAIT		2								// Waiting for trigger, continuing to loop through pre-trigger buffer
 #define ACQSUBST_POST_TRIG			3								// Post trigger acquisition
+#define ACQSUBST_DONE_WAVE			4								// Post trigger done, so next waveform to be acquired
+#define ACQSUBST_DONE_ALL			5								// All waveforms acquired as requested
 
 #define ACQ_MIN_BUFFER_SIZE			1024							// Minimum 1K samples buffer size
 #define ACQ_MAX_BUFFER_SIZE			(64 * 1024 * 1024)				// Maximum 64M samples buffer size
@@ -55,11 +57,15 @@
 #define ACQ_SAMPLES_ALIGN_8B_AMOD	(ACQ_SAMPLES_ALIGN_8B - 1)
 
 #define ACQ_SAMPLES_ALIGN_PR		4								// Buffers must be 4-sample sized in 12-bit/14-bit mode (precision modes)
-#define ACQ_SAMPLES_ALIGN_PR_AMOD	(ACQ_SAMPLES_ALIGN_PRC - 1)
+#define ACQ_SAMPLES_ALIGN_PR_AMOD	(ACQ_SAMPLES_ALIGN_PR - 1)
 
-#define ACQ_BUFFER_ALIGN			8								// Required byte alignment for AXI DMA (Must be a power of two)
+#define ACQ_BUFFER_ALIGN			32								// Required byte alignment for AXI DMA (Must be a power of two)
 #define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
 
+#define ACQRES_NOT_STOPPED			-8
+#define ACQRES_NOT_IMPLEMENTED		-7
+#define ACQRES_NOT_INITIALISED		-6
+#define ACQRES_DMA_FAIL				-5
 #define ACQRES_TOTAL_MALLOC_FAIL	-4
 #define ACQRES_PARAM_FAIL			-3
 #define ACQRES_ALIGN_FAIL			-2
@@ -79,7 +85,44 @@
 #define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID
 #define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
 #define ACQ_DMA_IRQ_RX_PRIORITY		0x08							// Configured to essentially the highest priority possible, besides exceptions
+#define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
 
+// Fabric EMIO pin definitions.  54 is the EMIO offset for bank2.
+#define ACQ_EMIO_RUN				(54 + 0)
+#define ACQ_EMIO_ABORT				(54 + 1)
+#define ACQ_EMIO_DONE				(54 + 2)
+#define ACQ_EMIO_TRIG_MASK			(54 + 5)						// Mask to ignore trigger events (1 = ignore, 0 = pass trigger)
+#define ACQ_EMIO_FIFO_RESET			(54 + 6)						// Reset signal to clear FIFO
+#define ACQ_EMIO_HAVE_TRIG			(54 + 7)						// Signal to indicate a trigger occurred
+#define ACQ_EMIO_TRIG_RESET			(54 + 8)						// Reset signal to re-arm trigger engine
+
+/*
+ * Statistics counters for acquisition engine.
+ */
+struct acq_stat_t {
+	uint64_t num_acq_total;		// Total number of acq. completed
+	uint64_t num_pre_total;		// Total number of pre-trigger acq. completed
+	uint64_t num_post_total;	// Total number of post-trigger acq. completed
+	uint64_t num_err_total;		// Total number of errors during transfer
+	uint64_t num_samples;		// Total number of samples acquired into memory (excluding pre-trig fill)
+};
+
+/*
+ * One buffer reference with allocated memory and a pointer to the next buffer
+ * in the linked list of buffers.
+ */
+struct acq_buffer_t {
+	int idx;
+	uint32_t *buff_alloc;		// Pointer that was actually allocated
+	uint32_t *buff_acq;			// Pointer that is used for acquisition
+	uint32_t trigger_at;
+	struct acq_buffer_t *next;
+};
+
+/*
+ * The global structure storing all related control variables for the acquisition
+ * engine, and the root of the linked list of acquisition buffers.
+ */
 struct acq_state_t {
 	// States of the acquisition state machine
 	int state;
@@ -92,32 +135,37 @@ struct acq_state_t {
 	// Acquisition control flags
 	uint32_t acq_mode_flags;
 
-	// Sizes of the acquisition ranges and number of acquisitions to make
+	// Sizes of the acquisition ranges (in bytes) and number of acquisitions to make
 	uint32_t pre_buffsz;
 	uint32_t post_buffsz;
 	uint32_t total_buffsz;
-	uint32_t num_acq;
+	uint32_t aligned_buffsz;	// Aligned buffsz so that buffer terminates within a cache line
+	uint32_t num_acq_request;	// Number of acquisitions requested
+	uint32_t num_acq_made;		// Number of acquisitions made so far
+
+	// Demux register for PL - debug use only, writing to this has no effect.
+	uint32_t demux_reg;
+
+	// Statistics counters
+	struct acq_stat_t stats;
 
 	// Pointer to the first and current acquisiton buffers.
 	struct acq_buffer_t *acq_first;
 	struct acq_buffer_t *acq_current;
 };
 
-struct acq_buffer_t {
-	int idx;
-	uint32_t *buff_alloc;		// Pointer that was actually allocated
-	uint32_t *buff_acq;			// Pointer that is used for acquisition
-	uint32_t trigger_at;
-	struct acq_buffer_t *next;
-};
-
 extern struct acq_state_t g_acq_state;
 
+void _acq_irq_error_dma();
+void _acq_irq_rx_handler(void *cb);
 void acq_init();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();
-void acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
+int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
+int acq_start();
+int acq_force_stop();
 bool acq_is_done();
+void acq_debug_dump();
 
 #endif // SRC_ACQUIRE_H_

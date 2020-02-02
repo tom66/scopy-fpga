@@ -40,9 +40,10 @@ main-build: ps_app.elf secondary-outputs
 ps_app.elf: $(OBJS) ../src/lscript.ld $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM v7 gcc linker'
-	arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-Map=ps_app_gen.map --verbose -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
+	$(MAKE) --no-print-directory post-build
 
 ps_app.elf.size: ps_app.elf
 	@echo 'Invoking: ARM v7 Print Size'
@@ -59,8 +60,13 @@ pre-build:
 	-a9-linaro-pre-build-step
 	-@echo ' '
 
+post-build:
+	-@echo 'try to produce objectdump'
+	-objdump -drwC -S -m arm ../Release/ps_app.elf > ../Release/ps_app.objdump
+	-@echo ' '
+
 secondary-outputs: $(ELFSIZE)
 
-.PHONY: all clean dependents main-build pre-build
+.PHONY: all clean dependents main-build pre-build post-build
 
 -include ../makefile.targets

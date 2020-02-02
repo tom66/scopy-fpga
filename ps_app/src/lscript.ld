@@ -52,6 +52,10 @@ SECTIONS
    *(.gnu.linkonce.armextab.*)
 } > ps7_ram_0
 
+.force_ocm : {
+   *(.force_ocm)
+} > ocm1
+
 .init : {
    KEEP (*(.init))
 } > ps7_ram_0
@@ -280,7 +284,7 @@ _SDA2_BASE_ = __sdata2_start + ((__sbss2_end - __sdata2_start) / 2 );
    . += _UNDEF_STACK_SIZE;
    . = ALIGN(16);
    __undef_stack = .;
-} > ps7_ram_0
+} > ocm1
 
 _end = .;
 }

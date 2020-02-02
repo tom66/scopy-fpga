@@ -25,13 +25,13 @@
                     					
                     <folderInfo id="com.xilinx.sdx.system.managedbuilder.debugConfiguration.1866567656." name="/" resourcePath="">
                         						
-                        <toolChain id="com.xilinx.sdx.system.managedbuilder.debug.toolChain.1902326051" name="System Toolchain" superClass="com.xilinx.sdx.system.managedbuilder.debug.toolChain">
+                        <toolChain id="com.xilinx.sdx.system.managedbuilder.debug.toolChain.1902326051" name="System Toolchain" nonInternalBuilderId="com.xilinx.sdx.system.managedbuilder.systemBuilder" superClass="com.xilinx.sdx.system.managedbuilder.debug.toolChain">
                             							
                             <targetPlatform id="com.xilinx.sdx.system.managedbuilder.debugConfiguration.1866567656..2049988835" name=""/>
                             							
-                            <builder buildPath="${workspace_loc:/ps_app_system}/Debug" enableAutoBuild="true" id="com.xilinx.sdx.system.managedbuilder.systemBuilder.438695109" managedBuildOn="true" name="System Project Builder.Debug" superClass="com.xilinx.sdx.system.managedbuilder.systemBuilder"/>
+                            <builder buildPath="${workspace_loc:/ps_app_system}/Debug" enableAutoBuild="true" id="com.xilinx.sdx.system.managedbuilder.systemBuilder.832181372" name="System Project Builder" superClass="com.xilinx.sdx.system.managedbuilder.systemBuilder"/>
                             							
-                            <tool id="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool.2079948265" name="System Builder" superClass="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool"/>
+                            <tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} --TestPostfix" id="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool.2079948265" name="System Builder" superClass="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool"/>
                             						
                         </toolChain>
                         					
@@ -42,6 +42,8 @@
             </storageModule>
             			
             <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+            			
+            <storageModule moduleId="ilg.gnuarmeclipse.managedbuild.packs"/>
             		
         </cconfiguration>
         		
@@ -71,7 +73,7 @@
                             							
                             <targetPlatform id="com.xilinx.sdx.system.managedbuilder.releaseConfiguration.1754956756..1192379036" name=""/>
                             							
-                            <builder buildPath="${workspace_loc:/ps_app_system}/Release" enableAutoBuild="true" id="com.xilinx.sdx.system.managedbuilder.systemBuilder.1270282832" managedBuildOn="true" name="System Project Builder.Release" superClass="com.xilinx.sdx.system.managedbuilder.systemBuilder"/>
+                            <builder buildPath="${workspace_loc:/ps_app_system}/Release" enableAutoBuild="true" id="com.xilinx.sdx.system.managedbuilder.systemBuilder.1270282832" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="System Project Builder" superClass="com.xilinx.sdx.system.managedbuilder.systemBuilder"/>
                             							
                             <tool id="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool.260924763" name="System Builder" superClass="com.xilinx.sdx.system.managedbuilder.toolchain.cfjoinTool"/>
                             						
@@ -103,8 +105,30 @@
         	
     </storageModule>
     	
-    <storageModule moduleId="refreshScope"/>
+    <storageModule moduleId="refreshScope" versionNumber="2">
+        		
+        <configuration configurationName="Debug">
+            			
+            <resource resourceType="PROJECT" workspacePath="/ps_app_system"/>
+            		
+        </configuration>
+        		
+        <configuration configurationName="Release">
+            			
+            <resource resourceType="PROJECT" workspacePath="/ps_app_system"/>
+            		
+        </configuration>
+        	
+    </storageModule>
     	
-    <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+    <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings">
+        		
+        <doc-comment-owner id="org.eclipse.cdt.ui.doxygen">
+            			
+            <path value=""/>
+            		
+        </doc-comment-owner>
+        	
+    </storageModule>
     
 </cproject>

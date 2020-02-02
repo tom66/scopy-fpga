@@ -58,10 +58,13 @@ void hal_init()
 {
 	int error;
 
-	// Reset BogoCal compensation factor.
 	g_hal.bogo_cal = 1.0f;
 
-	// Get platform up. This also initialises USART, so we can start debug output immediately.
+	/*
+	 * Get platform up. This also initialises USART, so we can start debug output immediately.
+	 * It's necessary to invalidate the instruction and data caches to ensure we start cleanly
+	 * (as per UG647 page 6).
+	 */
 	init_platform();
 	Xil_AssertSetCallback(&d_xilinx_assert);
 
@@ -76,6 +79,15 @@ void hal_init()
 	d_printf(D_INFO, "Application is licenced under the MIT Licence");
 	d_printf(D_INFO, "For information see LICENCE in the Git repository");
 	d_printf(D_INFO, "");
+
+	/*
+	 * Enable instruction and data caches to improve application performance.
+	 *
+	 * TODO:  Sending invalidate here causes a processor lockup; to be investigated.
+	 */
+	Xil_ICacheEnable();
+	Xil_DCacheEnable();
+	d_printf(D_INFO, "boot: enabled D- and I-cache");
 
 	/*
 	 * Prepare global interrupt controller.

@@ -12,7 +12,7 @@ source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/_ide
 ps7_init
 ps7_post_config
 targets -set -nocase -filter {name =~ "*A9*#0"}
-dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Debug/ps_app.elf
+dow C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ps_app/Release/ps_app.elf
 configparams force-mem-access 0
 targets -set -nocase -filter {name =~ "*A9*#0"}
 con

@@ -45,7 +45,7 @@ module cfg_bram_controller(
     // Register interface
     output reg [31:0] R_acq_size,
     input [31:0] R_acq_trigger_ptr,
-    output reg [2:0] R_acq_demux_mode,
+    output reg [6:0] R_acq_demux_mode,
     output [1:0] R_gpio_test
 );
 

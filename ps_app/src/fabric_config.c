@@ -99,6 +99,7 @@ void fabcfg_init()
 	d_printf(D_INFO, "FabCfg: Bitstream version %d.%02d, code 0x%04x, userid 0x%08x", \
 			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
 
+#if 0
 	/*
 	 * Write GPIOs for test purposes.
 	 */
@@ -107,6 +108,7 @@ void fabcfg_init()
 		fabcfg_commit();
 		i++;
 	}
+#endif
 }
 
 /*
