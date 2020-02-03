@@ -37,7 +37,7 @@
 #include "xscutimer.h"
 #include "xdebug.h"
 
-struct hal_t g_hal;
+struct hal_t g_hal __attribute__((section(".force_ocm")));;
 
 /**
  * Interrupt handler for XScuTimer.

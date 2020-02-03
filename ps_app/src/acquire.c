@@ -60,8 +60,11 @@ void _acq_irq_rx_handler(void *callback)
 	 */
 	if(status & XAXIDMA_IRQ_IOC_MASK) {
 		switch(g_acq_state.sub_state) {
-			// PRE_TRIG_FILL:  Fill up the buffer first, before
+			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
 			case ACQSUBST_PRE_TRIG_FILL:
+				// Stop the AXI bus momentarily (TVALID will go low)
+				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+
 				// Start the next transfer.
 				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
@@ -74,7 +77,9 @@ void _acq_irq_rx_handler(void *callback)
 				g_acq_state.sub_state = ACQSUBST_PRE_TRIG_WAIT;
 				g_acq_state.state = ACQSTATE_WAIT_TRIG;
 
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 0);  // Triggers de-masked, now may generate a trigger.
+				// Demask triggers; start AXI bus transactions again.
+				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 0);
+				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
 
 				// Statistics
 				g_acq_state.stats.num_acq_total++;
@@ -87,6 +92,12 @@ void _acq_irq_rx_handler(void *callback)
 				 * post-trigger buffer; if not, then go back to the start.
 				 */
 				if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG)) {
+					// Stop the AXI bus momentarily (TVALID will go low)
+					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+
+					// Tell the PL that we want to use the 'B' channel acquisition depth now.
+					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1);
+
 					// XXX: DMA transfers are in BYTE SIZES, so convert pointer to an integer before
 					// adding the pre buffer offset.
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, \
@@ -99,6 +110,9 @@ void _acq_irq_rx_handler(void *callback)
 						return;
 					}
 
+					// Start the AXI bus again (TVALID will go low)
+					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+
 					/*
 					 * We can relax a bit here. The transfer is now running, so record the address
 					 * that the trigger occurred at from the fabric.
@@ -108,7 +122,9 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.sub_state = ACQSUBST_POST_TRIG;
 					g_acq_state.stats.num_samples += g_acq_state.acq_current->trigger_at;
 				} else {
-					// No trigger. So just re-arm the pre-trigger.
+					// No trigger. So just re-arm the pre-trigger, starting from the beginning of
+					// the acquisition buffer.
+					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
@@ -116,6 +132,8 @@ void _acq_irq_rx_handler(void *callback)
 						d_printf(D_ERROR, "acquire: unable to start transfer in IRQ, error %d", error);
 						return;
 					}
+
+					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
 				}
 
 				// Statistics
@@ -142,6 +160,7 @@ void _acq_irq_rx_handler(void *callback)
 
 				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);  	// Triggers masked
 				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 0);  		// Acquisition idled
+				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);		// AXI bus activity paused
 
 				// Allocate the next buffer if we haven't filled the total waveform count.
 				g_acq_state.num_acq_made++;
@@ -238,6 +257,7 @@ void acq_init()
 	 *   - ACQ_EMIO_FIFO_RESET:		Signal to PL to reset FIFO contents
 	 *   - ACQ_EMIO_HAVE_TRIG:		Signal to PS to indicate a trigger was received and this was cause of TLAST generation
 	 *   - ACQ_EMIO_TRIG_RESET:		Signal to PL to reset and rearm trigger
+	 *   - ACQ_EMIO_DEPTH_MUX:		Signal to PL to indicate which acq. counter to use ('A' = 0, 'B' = 1)
 	 */
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
@@ -249,6 +269,8 @@ void acq_init()
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 1);
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1)
 
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG, 0);
@@ -258,6 +280,7 @@ void acq_init()
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 0);
+	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
 
 	d_printf(D_INFO, "acquire: engine initialised");
 }
@@ -282,6 +305,7 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 
 	if(work.buff_alloc == NULL) {
 		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN);
+		g_acq_state.stats.num_alloc_err_total++;
 		return ACQRES_MALLOC_FAIL;
 	}
 
@@ -291,13 +315,14 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 		next->buff_acq = work.buff_alloc;
 	}
 
-
 	d_printf(D_EXINFO, "acquire: next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next->buff_acq, work.buff_alloc);
 
 	next->trigger_at = 0;
 	next->idx = 0;
 	next->buff_alloc = work.buff_alloc;
 	next->next = NULL;
+
+	g_acq_state.stats.num_alloc_total++;
 
 	return ACQRES_OK;
 }
@@ -308,10 +333,25 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
  */
 int acq_append_next_alloc()
 {
-	struct acq_buffer_t next;
+	struct acq_buffer_t *next;
 	int res;
 
-	res = acq_get_next_alloc(&next);
+	next = malloc(sizeof(struct acq_buffer_t));
+
+	/*
+	 * Allocate the struct that stores the buffer info first.  This is
+	 * just a few bytes, but could fail if we are near the memory limit.
+	 */
+	if(next == 0) {
+		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for alloc structure", sizeof(struct acq_buffer_t));
+		g_acq_state.stats.num_alloc_err_total++;
+		return ACQRES_MALLOC_FAIL;
+	}
+
+	/*
+	 * Then allocate the next buffer to be chained onto the list.
+	 */
+	res = acq_get_next_alloc(next);
 	if(res != ACQRES_OK) {
 		return res;
 	}
@@ -321,9 +361,10 @@ int acq_append_next_alloc()
 	 * to be one higher than the last index then move the current pointer to reference
 	 * this structure.
 	 */
-	g_acq_state.acq_current->next = &next;
+	g_acq_state.acq_current->next = next;
 	g_acq_state.acq_current->next->idx = g_acq_state.acq_current->idx + 1;
-	g_acq_state.acq_current = &next;
+	g_acq_state.acq_current = next;
+	g_acq_state.stats.num_alloc_total++;
 
 	return ACQRES_OK;
 }
@@ -452,9 +493,10 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 
 	/*
 	 * Ensure that the total acquisition size doesn't exceed the available memory.  If
-	 * that's OK, then free any existing buffers and create the first buffer.
+	 * that's OK, then free any existing buffers and create the first buffer.  Include an
+	 * allocation penalty.
 	 */
-	total_acq_sz = total_sz * num_acq;
+	total_acq_sz = (total_sz + ACQ_BUFFER_ALIGN) * num_acq;
 
 	if(total_acq_sz > ACQ_TOTAL_MEMORY_AVAIL) {
 		return ACQRES_TOTAL_MALLOC_FAIL;
@@ -490,7 +532,8 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	/*
 	 * Initialise the fabric configuration.
 	 */
-	fabcfg_write(FAB_CFG_ACQ_SIZE, pre_sz);  // Acquisition initially starts at pre-trigger size;  trigger interrupt sets up post-trigger.
+	fabcfg_write(FAB_CFG_ACQ_SIZE_A, pre_sz);
+	fabcfg_write(FAB_CFG_ACQ_SIZE_B, post_sz);
 	demux = 0;
 
 	if(mode_flags & ACQ_MODE_8BIT) {
@@ -574,10 +617,14 @@ int acq_start()
 		XAxiDma_IntrDisable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
 		XAxiDma_IntrEnable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
 
+		// Start on 'A' mux: pre-trigger
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
+
 		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 0);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);		// AXI bus activity enabled
 
 		return ACQRES_OK;
 	} else {

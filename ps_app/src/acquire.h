@@ -95,16 +95,20 @@
 #define ACQ_EMIO_FIFO_RESET			(54 + 6)						// Reset signal to clear FIFO
 #define ACQ_EMIO_HAVE_TRIG			(54 + 7)						// Signal to indicate a trigger occurred
 #define ACQ_EMIO_TRIG_RESET			(54 + 8)						// Reset signal to re-arm trigger engine
+#define ACQ_EMIO_DEPTH_MUX			(54 + 9)						// Depth multiplex signal: '0' to use A counter, '1' to use B counter (pre and post trigger sizes)
+#define ACQ_EMIO_AXI_RUN			(54 + 10)						// AXI Bus pause/run control
 
 /*
  * Statistics counters for acquisition engine.
  */
 struct acq_stat_t {
-	uint64_t num_acq_total;		// Total number of acq. completed
-	uint64_t num_pre_total;		// Total number of pre-trigger acq. completed
-	uint64_t num_post_total;	// Total number of post-trigger acq. completed
-	uint64_t num_err_total;		// Total number of errors during transfer
-	uint64_t num_samples;		// Total number of samples acquired into memory (excluding pre-trig fill)
+	uint64_t num_acq_total;				// Total number of acq. completed
+	uint64_t num_pre_total;				// Total number of pre-trigger acq. completed
+	uint64_t num_post_total;			// Total number of post-trigger acq. completed
+	uint64_t num_err_total;				// Total number of errors during transfer
+	uint64_t num_samples;				// Total number of samples acquired into memory (excluding pre-trig fill)
+	uint64_t num_alloc_err_total;		// Total number of errors while allocating buffers
+	uint64_t num_alloc_total;			// Total number of successful buffer allocations
 };
 
 /*

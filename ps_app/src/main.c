@@ -43,7 +43,7 @@
 
 int main()
 {
-	int res;
+	int res, i;
 
 	hal_init();
 	acq_init();
@@ -52,6 +52,7 @@ int main()
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
 
+#if 0
 	d_printf(D_INFO, "Starting acquisition");
 	acq_start();
 	acq_debug_dump();
@@ -61,6 +62,18 @@ int main()
 	while(!acq_is_done()) ;
 
 	d_printf(D_INFO, "Done!");
+#endif
+
+#if 1
+	d_start_timing(2);
+	for(i = 0; i < 1000; i++) {
+		acq_append_next_alloc();
+	}
+	d_stop_timing(2);
+	d_dump_timing("1000 alloc", 2);
+
+	acq_debug_dump();
+#endif
 
     cleanup_platform();
 }

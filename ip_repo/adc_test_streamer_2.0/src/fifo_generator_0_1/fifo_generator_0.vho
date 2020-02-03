@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:ip:fifo_generator:13.2
--- IP Revision: 3
+-- IP Revision: 5
 
 -- The following code must appear in the VHDL architecture header.
 
@@ -63,9 +63,9 @@ COMPONENT fifo_generator_0
     dout : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
     full : OUT STD_LOGIC;
     empty : OUT STD_LOGIC;
-    almost_empty : OUT STD_LOGIC;
     rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
-    wr_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
+    wr_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
+    prog_empty : OUT STD_LOGIC
   );
 END COMPONENT;
 -- COMP_TAG_END ------ End COMPONENT Declaration ------------
@@ -85,9 +85,9 @@ your_instance_name : fifo_generator_0
     dout => dout,
     full => full,
     empty => empty,
-    almost_empty => almost_empty,
     rd_data_count => rd_data_count,
-    wr_data_count => wr_data_count
+    wr_data_count => wr_data_count,
+    prog_empty => prog_empty
   );
 -- INST_TAG_END ------ End INSTANTIATION Template ---------
 

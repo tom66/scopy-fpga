@@ -39,10 +39,11 @@
 #define FAB_CFG_MAGIC1					0x002
 #define FAB_CFG_VERSION					0x003
 #define FAB_CFG_USRACCESS				0x004
-#define FAB_CFG_ACQ_SIZE				0x005
-#define FAB_CFG_ACQ_TRIGGER_PTR			0x006
-#define FAB_CFG_ACQ_DEMUX_MODE			0x007
-#define FAB_CFG_GPIO_TEST				0x008
+#define FAB_CFG_ACQ_SIZE_A				0x005
+#define FAB_CFG_ACQ_SIZE_B				0x006
+#define FAB_CFG_ACQ_TRIGGER_PTR			0x007
+#define FAB_CFG_ACQ_DEMUX_MODE			0x008
+#define FAB_CFG_GPIO_TEST				0x009
 
 #define FAB_CFG_ADDR_MASK				0xfff
 
