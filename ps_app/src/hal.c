@@ -333,6 +333,14 @@ void d_printf(int debug_code, char *fmt, ...)
 }
 
 /**
+ * Wait for user to press key on terminal.  Useful for syncing with ILA tests.
+ */
+void d_waitkey()
+{
+	inbyte();
+}
+
+/**
  * Read the timer value as an MSB, LSB pair.  The values are returned by reference.
  *
  * This function attempts to safely read the registers and avoids overflow errors

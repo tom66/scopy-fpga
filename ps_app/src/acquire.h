@@ -97,6 +97,11 @@
 #define ACQ_EMIO_TRIG_RESET			(54 + 8)						// Reset signal to re-arm trigger engine
 #define ACQ_EMIO_DEPTH_MUX			(54 + 9)						// Depth multiplex signal: '0' to use A counter, '1' to use B counter (pre and post trigger sizes)
 #define ACQ_EMIO_AXI_RUN			(54 + 10)						// AXI Bus pause/run control
+#define ACQ_EMIO_ADC_VALID			(54 + 11)						// ADC Valid signal (indicates ADC data should be used)
+
+// Trigger position signalling words (passed in trigger_pos from fabric)
+#define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
+#define TRIGGER_INVALID_NO_TRIG		0xffffffff						// Trigger position invalid as no trigger occurred within window
 
 /*
  * Statistics counters for acquisition engine.
@@ -109,6 +114,7 @@ struct acq_stat_t {
 	uint64_t num_samples;				// Total number of samples acquired into memory (excluding pre-trig fill)
 	uint64_t num_alloc_err_total;		// Total number of errors while allocating buffers
 	uint64_t num_alloc_total;			// Total number of successful buffer allocations
+	uint64_t num_irqs;					// Total number of IRQs for DMA
 };
 
 /*

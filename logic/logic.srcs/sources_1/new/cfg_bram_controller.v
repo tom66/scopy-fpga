@@ -43,7 +43,8 @@ module cfg_bram_controller(
     input clk_ref,          // xx MHz master clock source (~170MHz as of writing)
     
     // Register interface
-    output reg [31:0] R_acq_size,
+    output reg [31:0] R_acq_size_a,
+    output reg [31:0] R_acq_size_b,
     input [31:0] R_acq_trigger_ptr,
     output reg [6:0] R_acq_demux_mode,
     output [1:0] R_gpio_test
@@ -156,26 +157,32 @@ always @(posedge clk_ref_bram) begin
                         cfg_bram_din <= usraccess_bitstream_id; 
                     end
                         
-                    // acq_size
+                    // acq_size_A
                     12'h005: begin
                         cfg_bram_write_en <= 0;
-                        R_acq_size <= cfg_bram_dout;
+                        R_acq_size_a <= cfg_bram_dout;
+                    end
+                        
+                    // acq_size_B
+                    12'h006: begin
+                        cfg_bram_write_en <= 0;
+                        R_acq_size_b <= cfg_bram_dout;
                     end
                         
                     // acq_trigger_ptr
-                    12'h006: begin
+                    12'h007: begin
                         cfg_bram_write_en <= 1;
                         cfg_bram_din <= R_acq_trigger_ptr;
                     end
                         
                     // acq_demux_mode
-                    12'h007: begin
+                    12'h008: begin
                         cfg_bram_write_en <= 0;
                         R_acq_demux_mode <= cfg_bram_dout;
                     end
                     
                     // gpio_test
-                    12'h008: begin
+                    12'h009: begin
                         cfg_bram_write_en <= 0;
                         R_gpio_test_reg <= cfg_bram_dout;
                     end

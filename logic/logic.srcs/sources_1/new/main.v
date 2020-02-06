@@ -110,7 +110,7 @@ always @(posedge clk_master) begin
     
 end
 
-wire adc_valid;
+//wire adc_valid;
 wire [63:0] adc_bus;
 
 wire [31:0] cfg_bram_addrb;
@@ -122,12 +122,31 @@ wire cfg_bram_enb;
 wire cfg_bram_busyb;
 
 design_1 (
+    // 64-bit ADC bus
     .ADC_BUS(adc_bus),
     .ADC_DATA_CLK(adc_data_clk),
-    .ADC_DATA_VALID(adc_valid),
+    .ADC_DATA_VALID(1'b1),          // TODO: this should be coming from the PS
     .ADC_FIFO_RESET(g_rst_gen),     // for now, connect to global reset; later, to be initiated by command
     .ADC_DATA_EOF(1'b0),            // for now, data never ends
     
+    // Acquisition/control bus
+    // TODO: EMIO constant indexes to be parameterised
+    .ACQ_RUN(emio_output[0]),
+    .ACQ_ABORT(emio_output[1]),
+    .ACQ_TRIG_MASK(emio_output[5]),
+    .ACQ_TRIG_RST(emio_output[8]),
+    .ACQ_DEPTH_MUX(emio_output[9]),
+    .ACQ_DEPTH_A(R_acq_size_a),
+    .ACQ_DEPTH_B(R_acq_size_b),
+    .ACQ_AXI_RUN(emio_output[10]),
+    .ACQ_DONE(emio_input[2]),
+    .ACQ_HAVE_TRIG(emio_input[7]),
+    .TRIGGER_IN(1'b0),                  // Level sensitive trigger input from trigger block
+    .TRIGGER_SUB_WORD(3'b101),          // Fixed value for now; later this will indicate which word generated event 1st
+    .TRIGGER_POS(R_acq_trigger_ptr),    // Registered trigger output position for FabCfg
+    .TRIGGER_OUT(trig_out),             // Trigger output to GPIO
+    
+    // FabCfg interface to AXI BRAM
     .CFG_BRAM_ADDRB(cfg_bram_addrb),
     .CFG_BRAM_DOUTB(cfg_bram_doutb),
     .CFG_BRAM_DINB(cfg_bram_dinb),
@@ -149,8 +168,9 @@ design_1 (
     .PL_IRQ(pl_irq)
 );
 
-wire [31:0] R_acq_size;
-reg [31:0] R_acq_trigger_ptr;
+wire [31:0] R_acq_size_a;
+wire [31:0] R_acq_size_b;
+wire [31:0] R_acq_trigger_ptr;
 wire [2:0] R_acq_demux_mode;
 wire [1:0] R_gpio_test;
 
@@ -172,13 +192,14 @@ cfg_bram_controller (
     .clk_ref(clk_master),
     
     // Register interface
-    .R_acq_size(R_acq_size),
+    .R_acq_size_a(R_acq_size_a),
+    .R_acq_size_b(R_acq_size_b),
     .R_acq_trigger_ptr(R_acq_trigger_ptr),
     .R_acq_demux_mode(R_acq_demux_mode),
     .R_gpio_test(R_gpio_test)
 );
 
-assign adc_valid = emio_output[0];
+//assign adc_valid = emio_output[0];
 
 reg [15:0] emio_counter;
 wire [7:0] train_data_debug;

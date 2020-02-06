@@ -52,19 +52,29 @@ int main()
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
 
-#if 0
+#if 1
+	d_printf(D_WARN, "Press key to start");
+
+	d_waitkey();
+
 	d_printf(D_INFO, "Starting acquisition");
-	acq_start();
+	res = acq_start();
+	d_printf(D_INFO, "acq_start = %d", res);
+
 	acq_debug_dump();
 
 	d_printf(D_INFO, "Waiting...");
 
-	while(!acq_is_done()) ;
+	while(!acq_is_done()) {
+		//d_printf(D_RAW, "\r\n\r\n\033[2J\033[0m\r\n");
+		//acq_debug_dump();
+		bogo_delay(1000000);
+	}
 
 	d_printf(D_INFO, "Done!");
 #endif
 
-#if 1
+#if 0
 	d_start_timing(2);
 	for(i = 0; i < 1000; i++) {
 		acq_append_next_alloc();

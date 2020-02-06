@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Mon Jan 27 21:05:21 2020
+//Date        : Thu Feb  6 21:53:29 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -10,7 +10,17 @@
 `timescale 1 ps / 1 ps
 
 module design_1_wrapper
-   (ADC_BUS,
+   (ACQ_ABORT,
+    ACQ_AXI_RUN,
+    ACQ_DEPTH_A,
+    ACQ_DEPTH_B,
+    ACQ_DEPTH_MUX,
+    ACQ_DONE,
+    ACQ_HAVE_TRIG,
+    ACQ_RUN,
+    ACQ_TRIG_MASK,
+    ACQ_TRIG_RST,
+    ADC_BUS,
     ADC_DATA_CLK,
     ADC_DATA_EOF,
     ADC_DATA_VALID,
@@ -47,7 +57,21 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    PL_IRQ);
+    PL_IRQ,
+    TRIGGER_IN,
+    TRIGGER_OUT,
+    TRIGGER_POS,
+    TRIGGER_SUB_WORD);
+  input ACQ_ABORT;
+  input ACQ_AXI_RUN;
+  input [28:0]ACQ_DEPTH_A;
+  input [28:0]ACQ_DEPTH_B;
+  input ACQ_DEPTH_MUX;
+  output ACQ_DONE;
+  output ACQ_HAVE_TRIG;
+  input ACQ_RUN;
+  input ACQ_TRIG_MASK;
+  input ACQ_TRIG_RST;
   input [63:0]ADC_BUS;
   input ADC_DATA_CLK;
   input ADC_DATA_EOF;
@@ -86,7 +110,21 @@ module design_1_wrapper
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
   input [13:0]PL_IRQ;
+  input TRIGGER_IN;
+  output TRIGGER_OUT;
+  output [31:0]TRIGGER_POS;
+  input [2:0]TRIGGER_SUB_WORD;
 
+  wire ACQ_ABORT;
+  wire ACQ_AXI_RUN;
+  wire [28:0]ACQ_DEPTH_A;
+  wire [28:0]ACQ_DEPTH_B;
+  wire ACQ_DEPTH_MUX;
+  wire ACQ_DONE;
+  wire ACQ_HAVE_TRIG;
+  wire ACQ_RUN;
+  wire ACQ_TRIG_MASK;
+  wire ACQ_TRIG_RST;
   wire [63:0]ADC_BUS;
   wire ADC_DATA_CLK;
   wire ADC_DATA_EOF;
@@ -125,9 +163,23 @@ module design_1_wrapper
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
   wire [13:0]PL_IRQ;
+  wire TRIGGER_IN;
+  wire TRIGGER_OUT;
+  wire [31:0]TRIGGER_POS;
+  wire [2:0]TRIGGER_SUB_WORD;
 
   design_1 design_1_i
-       (.ADC_BUS(ADC_BUS),
+       (.ACQ_ABORT(ACQ_ABORT),
+        .ACQ_AXI_RUN(ACQ_AXI_RUN),
+        .ACQ_DEPTH_A(ACQ_DEPTH_A),
+        .ACQ_DEPTH_B(ACQ_DEPTH_B),
+        .ACQ_DEPTH_MUX(ACQ_DEPTH_MUX),
+        .ACQ_DONE(ACQ_DONE),
+        .ACQ_HAVE_TRIG(ACQ_HAVE_TRIG),
+        .ACQ_RUN(ACQ_RUN),
+        .ACQ_TRIG_MASK(ACQ_TRIG_MASK),
+        .ACQ_TRIG_RST(ACQ_TRIG_RST),
+        .ADC_BUS(ADC_BUS),
         .ADC_DATA_CLK(ADC_DATA_CLK),
         .ADC_DATA_EOF(ADC_DATA_EOF),
         .ADC_DATA_VALID(ADC_DATA_VALID),
@@ -164,5 +216,9 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .PL_IRQ(PL_IRQ));
+        .PL_IRQ(PL_IRQ),
+        .TRIGGER_IN(TRIGGER_IN),
+        .TRIGGER_OUT(TRIGGER_OUT),
+        .TRIGGER_POS(TRIGGER_POS),
+        .TRIGGER_SUB_WORD(TRIGGER_SUB_WORD));
 endmodule
