@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Feb  6 21:53:29 2020
+//Date        : Sat Feb  8 14:41:09 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -410,7 +410,7 @@ module design_1
         .m00_axis_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .m00_axis_tdata(adc_axi_streamer_m00_axis_tdata),
         .m00_axis_tlast(adc_axi_streamer_m00_axis_tlast),
-        .m00_axis_tready(1'b1),
+        .m00_axis_tready(axi_dma_s_axis_s2mm_tready),
         .m00_axis_tvalid(adc_axi_streamer_m00_axis_tvalid),
         .trigger_in(ACQ_TRIGGER_IN_1),
         .trigger_out(adc_axi_streamer_trigger_out),
@@ -516,11 +516,11 @@ module design_1
         .s_axi_lite_wdata(axi_interconnect_0_M00_AXI_WDATA),
         .s_axi_lite_wready(axi_interconnect_0_M00_AXI_WREADY),
         .s_axi_lite_wvalid(axi_interconnect_0_M00_AXI_WVALID),
-        .s_axis_s2mm_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .s_axis_s2mm_tdata(adc_axi_streamer_m00_axis_tdata),
         .s_axis_s2mm_tkeep({1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1}),
-        .s_axis_s2mm_tlast(1'b0),
+        .s_axis_s2mm_tlast(adc_axi_streamer_m00_axis_tlast),
         .s_axis_s2mm_tready(axi_dma_s_axis_s2mm_tready),
-        .s_axis_s2mm_tvalid(1'b0));
+        .s_axis_s2mm_tvalid(adc_axi_streamer_m00_axis_tvalid));
   design_1_axi_interconnect_0_0 axi_interconnect_0
        (.ACLK(processing_system7_0_FCLK_CLK0),
         .ARESETN(rst_ps7_0_20M_peripheral_aresetn),
@@ -730,6 +730,8 @@ module design_1
         .probe21(adc_axi_streamer_dbg_acq_trigger_out_ctr),
         .probe22(adc_axi_streamer_acq_have_trig),
         .probe23(adc_axi_streamer_trigger_out),
+        .probe24(axi_dma_mm2s_introut),
+        .probe25(axi_dma_s2mm_introut),
         .probe3(axi_dma_s_axis_s2mm_tready),
         .probe4(adc_axi_streamer_acq_done),
         .probe5(adc_axi_streamer_trigger_pos),

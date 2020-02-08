@@ -30,7 +30,7 @@ const char *acq_substate_to_str[] = {
 };
 
 // This block is in OCM to ensure fast access during DMA acquisition/interrupts.
-struct acq_state_t g_acq_state __attribute__((section(".force_ocm")));
+struct acq_state_t g_acq_state; // __attribute__((section(".force_ocm")));
 
 /*
  * Interrupt handler for the DMA RX interrupt.  Private.
@@ -41,13 +41,30 @@ void _acq_irq_rx_handler(void *callback)
 	uint32_t status;
 	int error;
 
-	d_printf(D_WARN, "_acq_irq_rx_handler");
+	//d_printf(D_WARN, "_acq_irq_rx_handler");
 	g_acq_state.stats.num_irqs++;
 
 	// Get status and ACK the interrupt.
 	status = XAxiDma_BdRingGetIrq(bd_ring);
 	XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 	XAxiDma_BdRingAckIrq(bd_ring, status);
+
+	/*
+	 * Check for a DMA Error.  Error conditions force an increase of the error
+	 * statistic counter and a reset of the state machine and DMA.
+	 */
+#if 1
+	if(status & XAXIDMA_IRQ_ERROR_MASK) {
+		//d_printf(D_WARN, "XAXIDMA_IRQ_ERROR_MASK");
+
+		d_printf(D_ERROR, "acquire: IRQ reports error (rxSR:0x%08x,txSR:0x%08x) during transfer (TLAST likely not asserted)", \
+				XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET),
+				XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_TX_OFFSET));
+		_acq_irq_error_dma();
+
+		return;
+	}
+#endif
 
 	/*
 	 * Check for IOC complete.  When an IOC event occurs it has occurred for one
@@ -61,8 +78,10 @@ void _acq_irq_rx_handler(void *callback)
 	 * which means we must start the new transaction within 4us (~2,700 CPU cycles)
 	 * to avoid any sample loss.
 	 */
+	//d_printf(D_WARN, "%08x", status);
+
 	if(status & XAXIDMA_IRQ_IOC_MASK) {
-		d_printf(D_WARN, "XAXIDMA_IRQ_IOC_MASK");
+		//d_printf(D_WARN, "XAXIDMA_IRQ_IOC_MASK");
 
 		switch(g_acq_state.sub_state) {
 			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
@@ -71,7 +90,7 @@ void _acq_irq_rx_handler(void *callback)
 				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
 
 				// Start the next transfer.
-				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
+				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 2048 /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 				if(error != XST_SUCCESS) {
 					_acq_irq_error_dma();
@@ -89,6 +108,7 @@ void _acq_irq_rx_handler(void *callback)
 				// Statistics
 				g_acq_state.stats.num_acq_total++;
 				g_acq_state.stats.num_pre_total++;
+				g_acq_state.stats.num_pre_fill_total++;
 				break;
 
 			case ACQSUBST_PRE_TRIG_WAIT:
@@ -107,7 +127,7 @@ void _acq_irq_rx_handler(void *callback)
 					// adding the pre buffer offset.
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, \
 							((uint32_t)g_acq_state.acq_current->buff_acq) + g_acq_state.pre_buffsz, \
-							g_acq_state.post_buffsz, XAXIDMA_DEVICE_TO_DMA);
+							2048 /*g_acq_state.post_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -186,18 +206,6 @@ void _acq_irq_rx_handler(void *callback)
 		}
 	}
 
-	/*
-	 * Check for a DMA Error.  Error conditions force an increase of the error
-	 * statistic counter and a reset of the state machine and DMA.
-	 */
-	if(status & XAXIDMA_IRQ_ERROR_MASK) {
-		d_printf(D_WARN, "XAXIDMA_IRQ_ERROR_MASK");
-
-		_acq_irq_error_dma();
-		d_printf(D_ERROR, "acquire: IRQ reports error during transfer (TLAST likely not asserted)");
-		return;
-	}
-
 }
 
 /*
@@ -236,6 +244,13 @@ void acq_init()
 	}
 
 	d_printf(D_INFO, "acquire: DMA initialised");
+
+	d_printf(D_INFO, "acquire: Waiting for DMA reset to complete");
+
+	XAxiDma_Reset(&g_acq_state.dma);
+	while(!XAxiDma_ResetIsDone(&g_acq_state.dma)) ;
+
+	d_printf(D_INFO, "acquire: DMA reset OK");
 
 	/*
 	 * Setup the SCUGIC interrupt controller.  Fail terribly if this can't be done.
@@ -292,7 +307,7 @@ void acq_init()
 
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 0);
+	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
@@ -436,8 +451,9 @@ void acq_free_all_alloc()
 int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t total_sz, uint32_t num_acq)
 {
 	struct acq_buffer_t *first;
-	uint32_t pre_sz, post_sz;
+	uint32_t pre_sz, post_sz, pre_sampct, post_sampct;
 	uint32_t total_acq_sz;
+	uint32_t align_mask;
 	uint32_t demux;
 	int error = 0;
 
@@ -476,20 +492,30 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 		pre_sz = total_sz - post_sz;
 	}
 
-	if(mode_flags & ACQ_MODE_8BIT) {
-		if(post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD)
-			error = 1;
+	error = 0;
 
-		if(pre_sz & ACQ_SAMPLES_ALIGN_8B_AMOD)
+	if(mode_flags & ACQ_MODE_8BIT) {
+		align_mask = ACQ_SAMPLES_ALIGN_8B_AMOD;
+
+		if(post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD) {
 			error = 1;
+		}
+
+		if(pre_sz & ACQ_SAMPLES_ALIGN_8B_AMOD) {
+			error = 1;
+		}
 	}
 
 	if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
-		if(post_sz & ACQ_SAMPLES_ALIGN_PR_AMOD)
-			error = 1;
+		align_mask = ACQ_SAMPLES_ALIGN_PR_AMOD;
 
-		if(pre_sz & ACQ_SAMPLES_ALIGN_PR_AMOD)
+		if(post_sz & ACQ_SAMPLES_ALIGN_PR_AMOD) {
 			error = 1;
+		}
+
+		if(pre_sz & ACQ_SAMPLES_ALIGN_PR_AMOD) {
+			error = 1;
+		}
 	}
 
 	if(pre_sz < ACQ_MIN_PREPOST_SIZE || post_sz < ACQ_MIN_PREPOST_SIZE) {
@@ -497,15 +523,26 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	}
 
 	if(error) {
-		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary (pre=%d post=%d total_sz=%d)", pre_sz, post_sz, total_sz);
+		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary or too small (pre=%d post=%d total_sz=%d req_align_mask=0x%08x test=0x%08x)", \
+				pre_sz, post_sz, total_sz, align_mask, post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD);
 		return ACQRES_ALIGN_FAIL;
 	}
 
 	// Scale total_sz and pre/post sizes, if appropriate
 	if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
-		total_sz /= 2;
-		post_sz /= 2;
-		pre_sz /= 2;
+		// 4 samples per readout (64-bit)
+		total_sz *= 4;
+		pre_sampct = pre_sz;
+		post_sampct = post_sz;
+		post_sz *= 4;
+		pre_sz *= 4;
+	} else if(mode_flags & (ACQ_MODE_8BIT)) {
+		// 8 samples per readout (64-bit)
+		total_sz *= 8;
+		pre_sampct = pre_sz;
+		post_sampct = post_sz;
+		post_sz *= 8;
+		pre_sz *= 8;
 	}
 
 	/*
@@ -539,6 +576,8 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	g_acq_state.acq_current = first;
 	g_acq_state.pre_buffsz = pre_sz;
 	g_acq_state.post_buffsz = post_sz;
+	g_acq_state.pre_sampct = pre_sampct;
+	g_acq_state.post_sampct = post_sampct;
 	g_acq_state.total_buffsz = total_sz;
 	g_acq_state.num_acq_request = num_acq;
 	g_acq_state.num_acq_made = 0;
@@ -549,10 +588,8 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	/*
 	 * Initialise the fabric configuration.
 	 */
-	fabcfg_write(FAB_CFG_ACQ_SIZE_A, 1024);
-	fabcfg_write(FAB_CFG_ACQ_SIZE_B, 1024);
-	//fabcfg_write(FAB_CFG_ACQ_SIZE_A, pre_sz);
-	//fabcfg_write(FAB_CFG_ACQ_SIZE_B, post_sz);
+	fabcfg_write(FAB_CFG_ACQ_SIZE_A, g_acq_state.pre_sampct);
+	fabcfg_write(FAB_CFG_ACQ_SIZE_B, g_acq_state.post_sampct);
 	demux = 0;
 
 	if(mode_flags & ACQ_MODE_8BIT) {
@@ -572,7 +609,6 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	}
 
 	g_acq_state.demux_reg = demux;
-
 	fabcfg_write(FAB_CFG_ACQ_DEMUX_MODE, demux);
 	fabcfg_commit();
 
@@ -609,13 +645,41 @@ int acq_start()
 	}
 
 	if(g_acq_state.acq_mode_flags & ACQ_MODE_TRIGGERED) {
+		// Disable the interrupt then re-enable it, to reset it.
+		// TODO: Determine if this is strictly necessary!
+		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+		//XAxiDma_IntrEnable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
+		//XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+		XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+
+		// Set delay and coalesce to minimum values
+		//XAxiDma_WriteReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET, \
+				(XAxiDma_ReadReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET) | (0x0001 << XAXIDMA_COALESCE_SHIFT)));
+
+		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+		//XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+
 		/*
 		 * We must invalidate the cache line before starting the transfer.  This
 		 * invalidation restricts us to 32-byte aligned pages.  Then we can start
 		 * the AXI transfer.
 		 */
-		//Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
-		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
+		d_printf(D_WARN, "XAxiDmaBusy=%d", XAxiDma_Busy(&g_acq_state.dma, XAXIDMA_DEVICE_TO_DMA));
+		d_printf(D_WARN, "SR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET));
+		d_printf(D_WARN, "SR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET));
+		d_printf(D_WARN, "CR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET));
+		d_printf(D_WARN, "CR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET + XAXIDMA_RX_OFFSET));
+
+		Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
+		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 2048 /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+		//error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 4096, XAXIDMA_DEVICE_TO_DMA);
+		//error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 16, XAXIDMA_DEVICE_TO_DMA);
+
+		if(error != XST_SUCCESS) {
+			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
+			return ACQRES_DMA_FAIL;
+		}
 
 		d_printf(D_EXINFO, "align:            0x%08x", g_acq_state.dma.TxBdRing.DataWidth);
 		d_printf(D_EXINFO, "length:           0x%08x", g_acq_state.pre_buffsz);
@@ -623,22 +687,16 @@ int acq_start()
 		d_printf(D_EXINFO, "current_buff_acq: 0x%08x", (INTPTR)g_acq_state.acq_current->buff_acq);
 		d_printf(D_EXINFO, "total_buffsz:     0x%08x", g_acq_state.total_buffsz);
 
-		if(error != XST_SUCCESS) {
-			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
-			return ACQRES_DMA_FAIL;
-		}
-
 		// Set the state machine
 		g_acq_state.state = ACQSTATE_PREP;
 		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 
-		// Disable the interrupt then re-enable it, to reset it.
-		// TODO: Determine if this is strictly necessary!
-		XAxiDma_IntrDisable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
-		XAxiDma_IntrEnable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
-
 		// Start on 'A' mux: pre-trigger
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
+
+		// Drive FIFO reset signal, just long to ensure a reset of the FIFO occurs.
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 1);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 0);
 
 		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 0);
@@ -702,6 +760,8 @@ void acq_debug_dump()
 	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
 	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
 	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
+	d_printf(D_INFO, "pre_sampct            = %d wavepoints", g_acq_state.pre_sampct);
+	d_printf(D_INFO, "post_sampct           = %d wavepoints", g_acq_state.post_sampct);
 	d_printf(D_INFO, "num_acq_request       = %d waves", g_acq_state.num_acq_request);
 	d_printf(D_INFO, "num_acq_made          = %d waves", g_acq_state.num_acq_made);
 	d_printf(D_INFO, "");
@@ -711,8 +771,36 @@ void acq_debug_dump()
 	d_printf(D_INFO, "s.num_err_total       = %d", g_acq_state.stats.num_err_total);
 	d_printf(D_INFO, "s.num_post_total      = %d", g_acq_state.stats.num_post_total);
 	d_printf(D_INFO, "s.num_pre_total       = %d", g_acq_state.stats.num_pre_total);
+	d_printf(D_INFO, "s.num_pre_fill_total  = %d", g_acq_state.stats.num_pre_fill_total);
 	d_printf(D_INFO, "s.num_samples         = %d", g_acq_state.stats.num_samples);
 	d_printf(D_INFO, "s.num_irqs            = %d", g_acq_state.stats.num_irqs);
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "** End **");
+}
+
+/*
+ * Dump contents of buffer in active acquisition.
+ *
+ * @param	prepost		0 = pre, 1 = post
+ */
+void acq_debug_dump_wavedata()
+{
+	uint32_t sz;
+	uint32_t i;
+
+	if(g_acq_state.sub_state == ACQSUBST_PRE_TRIG_FILL || g_acq_state.sub_state == ACQSUBST_PRE_TRIG_WAIT) {
+		sz = g_acq_state.pre_buffsz;
+		d_printf(D_INFO, "** Waveform Data (Pre-Trigger) -- %d bytes **", g_acq_state.pre_buffsz);
+	} else {
+		sz = g_acq_state.post_buffsz;
+		d_printf(D_INFO, "** Waveform Data (Post-Trigger) -- %d bytes **", g_acq_state.pre_buffsz);
+	}
+
+	sz /= 4;
+
+	for(i = 0; i <= sz; i += 2) {
+		d_printf(D_INFO, "0x%08x: 0x%08x 0x%08x", i * 4, *(g_acq_state.acq_current->buff_acq + i), *(g_acq_state.acq_current->buff_acq + i + 1));
+	}
+
+	d_printf(D_INFO, "** End of Waveform Data **");
 }

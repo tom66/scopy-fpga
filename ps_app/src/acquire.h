@@ -42,7 +42,7 @@
 #define ACQ_MIN_BUFFER_SIZE			1024							// Minimum 1K samples buffer size
 #define ACQ_MAX_BUFFER_SIZE			(64 * 1024 * 1024)				// Maximum 64M samples buffer size
 
-#define ACQ_MIN_PREPOST_SIZE		128								// Minimum size of any pre or post window.
+#define ACQ_MIN_PREPOST_SIZE		32								// Minimum size of any pre or post window.
 
 #define ACQ_MODE_8BIT				0x00000001						// 8-bit high speed
 #define ACQ_MODE_12BIT				0x00000002						// 12-bit mid speed
@@ -84,7 +84,7 @@
 
 #define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID
 #define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
-#define ACQ_DMA_IRQ_RX_PRIORITY		0x08							// Configured to essentially the highest priority possible, besides exceptions
+#define ACQ_DMA_IRQ_RX_PRIORITY		0xA0							// Low priority: TODO make this high priority
 #define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
 
 // Fabric EMIO pin definitions.  54 is the EMIO offset for bank2.
@@ -109,6 +109,7 @@
 struct acq_stat_t {
 	uint64_t num_acq_total;				// Total number of acq. completed
 	uint64_t num_pre_total;				// Total number of pre-trigger acq. completed
+	uint64_t num_pre_fill_total;		// Total number of pre-trigger fill acq. completed
 	uint64_t num_post_total;			// Total number of post-trigger acq. completed
 	uint64_t num_err_total;				// Total number of errors during transfer
 	uint64_t num_samples;				// Total number of samples acquired into memory (excluding pre-trig fill)
@@ -153,6 +154,14 @@ struct acq_state_t {
 	uint32_t num_acq_request;	// Number of acquisitions requested
 	uint32_t num_acq_made;		// Number of acquisitions made so far
 
+	/*
+	 * Sizes (in samples) of the acquisition data;  the counts are given in samples
+	 * so there is an 8x or 4x relationship to the byte counts. This maximises the depth of
+	 * the on-fabric 28-bit counter.
+	 */
+	uint32_t pre_sampct;
+	uint32_t post_sampct;
+
 	// Demux register for PL - debug use only, writing to this has no effect.
 	uint32_t demux_reg;
 
@@ -177,5 +186,6 @@ int acq_start();
 int acq_force_stop();
 bool acq_is_done();
 void acq_debug_dump();
+void acq_debug_dump_wavedata();
 
 #endif // SRC_ACQUIRE_H_

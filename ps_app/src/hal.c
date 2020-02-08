@@ -37,7 +37,7 @@
 #include "xscutimer.h"
 #include "xdebug.h"
 
-struct hal_t g_hal __attribute__((section(".force_ocm")));;
+struct hal_t g_hal; // __attribute__((section(".force_ocm")));;
 
 /**
  * Interrupt handler for XScuTimer.
@@ -107,6 +107,7 @@ void hal_init()
 
 	Xil_ExceptionInit();
 	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, &g_hal.xscu_gic);
+	Xil_ExceptionEnable();
 
 	d_printf(D_INFO, "XScuGic: interrupt controller ready");
 
@@ -134,9 +135,6 @@ void hal_init()
 		d_printf(D_ERROR, "XScuTimer: unable to connect interrupt handler: error code %d", error);
 		exit(-1);
 	}
-
-	// Enable CPU excception handler
-	Xil_ExceptionEnable();
 
 	/*
 	 * Start the timer, loaded with the maximum 32-bit count.  Enable auto reload so the
@@ -338,6 +336,15 @@ void d_printf(int debug_code, char *fmt, ...)
 void d_waitkey()
 {
 	inbyte();
+}
+
+/**
+ * Return TRUE if a key is pressed and has not been read from the buffer,
+ * FALSE otherwise.
+ */
+bool d_iskeypress()
+{
+	return XUartPs_IsReceiveData(STDIN_BASEADDRESS);
 }
 
 /**

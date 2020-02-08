@@ -61,19 +61,8 @@ module adc_test_streamer_v2_0_M00_AXIS #
     output wire  M_AXIS_TLAST,
     // TREADY indicates that the slave can accept a transfer in the current cycle.
     input wire  M_AXIS_TREADY
-);
-// Total number of output data                                                 
-localparam NUMBER_OF_OUTPUT_WORDS = 32;                                               
-                                                                                     
-// function called clogb2 that returns an integer which has the                      
-// value of the ceiling of the log base 2.                                           
-function integer clogb2 (input integer bit_depth);                                   
-  begin                                                                              
-    for(clogb2=0; bit_depth>0; clogb2=clogb2+1)                                      
-      bit_depth = bit_depth >> 1;                                                    
-  end                                                                                
-endfunction                                                                          
-                                                                                     
+);               
+                                                                           
 parameter ST_IDLE = 0;                                                               
 parameter ST_STREAMING = 1;                                                          
 parameter ST_STOP_TRIGGERED = 2;                                                     
@@ -97,18 +86,12 @@ reg acq_axi_running = 0;
 reg [28:0] acq_axi_downcounter = 0;
 reg [28:0] acq_axi_upcounter = 0;
 
-// I/O Connections assignments
-
 wire [63:0] fifo_data_out;
 
 // TVALID is high when: FIFO reset not busy,  FIFO not almost empty
-assign M_AXIS_TVALID = /*(!fifo_rd_busy) && */(!fifo_almost_empty) && acq_tvalid; 
-
-// TDATA == stream_data_out
+assign M_AXIS_TVALID = /*(!fifo_rd_busy) && */(!fifo_almost_empty) && acq_gen_tvalid_mask; 
 assign M_AXIS_TDATA	= fifo_data_out;
-
-// TLAST == ADC_EOF (signal generated external to this module)
-assign M_AXIS_TLAST	= acq_gen_tlast;
+assign M_AXIS_TLAST	= acq_gen_tlast; 
 
 // TSTRB == not used (set to all 1's)
 assign M_AXIS_TSTRB	= {(C_M_AXIS_TDATA_WIDTH/8){1'b1}};
@@ -123,8 +106,8 @@ wire fifo_rd_busy;
 // Write enabled when ADC_VALID asserted (Data should start filling FIFO; DMA will ready when ready)
 wire fifo_wr_en = ADC_DATA_VALID;                             
  
-// Read enabled when TREADY asserted & data available in FIFO & acq_axi_running asserted
-wire fifo_rd_en = M_AXIS_TREADY && (!fifo_almost_empty) && acq_axi_running;        
+// Read enabled when TREADY asserted & data available in FIFO & acq_axi_running asserted & TVALID present
+wire fifo_rd_en = M_AXIS_TREADY && (!fifo_almost_empty) && acq_axi_running && acq_gen_tvalid_mask;        
 
 // FIFO reset a combination of external reset and global slow reset signal
 wire fifo_int_reset = ((!M_AXIS_ARESETN) || ADC_FIFO_RESET);    
@@ -147,26 +130,39 @@ fifo_generator_0 fifo_generator_0_inst (
 );
 
 /*
- * TLAST generator.  Crosses clock domain to generate short TLAST pulse
+ * TLAST/TVALID generator.  Crosses clock domain to generate short TLAST pulse
  * when signalled.
  */
 reg acq_gen_tlast = 0; 
+reg acq_gen_tvalid_mask = 0;
 reg [1:0] acq_gen_tlast_ctr = 0;
 reg adcclkdm_tlast_gen = 0;         // Signal from ADC clock domain that TLAST should be generated
+reg adcclkdm_tvalid_init = 0;       // Signal from ADC clock domain that TVALID MASK should be generated
 reg adcclkdm_tlast_gen_last = 0;
 
 always @(posedge M_AXIS_ACLK) begin
 
+    // TVALID signal - start generating mask for TVALID
+    if (adcclkdm_tvalid_init) begin
+        acq_gen_tvalid_mask <= 1; 
+    end
+    
+    // TVALID stays high while TLAST is asserted;  this state will remain for 1 cycle.
+    // Only generate TLAST pulse on rising edge of ADC clock domain TLAST signal.
     if (adcclkdm_tlast_gen && !adcclkdm_tlast_gen_last) begin
         acq_gen_tlast <= 1;
+        //acq_gen_tvalid_mask <= 1;
         acq_gen_tlast_ctr <= 0;
     end
     
+    // Increment our tiny counter if TLAST is being generated.
     if (acq_gen_tlast) begin
         acq_gen_tlast_ctr <= acq_gen_tlast_ctr + 1;
     end
     
-    if (acq_gen_tlast_ctr == 2) begin
+    // TVALID and TLAST fall at same time
+    if (acq_gen_tlast_ctr == 1) begin
+        acq_gen_tvalid_mask <= 0;
         acq_gen_tlast <= 0;
     end
 
@@ -212,7 +208,7 @@ always @(posedge ADC_DATA_CLK) begin
     
                 acq_axi_upcounter <= 0;
                 acq_axi_running <= 1;
-                acq_tvalid <= 1;
+                adcclkdm_tvalid_init <= 1;
                 adcstream_state <= ST_STREAMING;
             end
         end
@@ -220,6 +216,13 @@ always @(posedge ADC_DATA_CLK) begin
         ST_STREAMING : begin
             // Only adjust counters if data is available in FIFO (no underrun)
             acq_axi_upcounter <= acq_axi_upcounter + 1;
+            
+            // Remove TVALID generator signal after a few ticks;  the exact time
+            // is not terribly important, it just needs to have reached the AXI 
+            // clock domain.
+            if (acq_axi_upcounter == 4) begin
+                adcclkdm_tvalid_init <= 0;
+            end
         
             // Streaming jumps to STOP_EOF if downcounter is zero
             acq_axi_downcounter <= acq_axi_downcounter - 1;

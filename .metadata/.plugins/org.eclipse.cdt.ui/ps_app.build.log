@@ -1,4 +1,4 @@
-21:24:47 **** Incremental Build of configuration Release for project ps_app ****
+22:16:40 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
@@ -10,11 +10,22 @@ arm-none-eabi-gcc -DDEBUG -Wall -O2 -g -c -fmessage-length=0 -MT"src/acquire.o" 
 In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:114,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
-                 from ../src/hal.h:31,
+                 from ../src/hal.h:32,
                  from ../src/acquire.c:20:
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:12:2: warning: #warning DEBUG is enabled [-Wcpp]
  #warning DEBUG is enabled
   ^~~~~~~
+../src/acquire.c: In function 'acq_start':
+../src/acquire.c:657:3: warning: multi-line comment [-Wcomment]
+   //XAxiDma_WriteReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET, \
+   ^
+../src/acquire.c: In function 'acq_prepare_triggered':
+../src/acquire.c:580:26: warning: 'post_sampct' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  g_acq_state.post_sampct = post_sampct;
+  ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+../src/acquire.c:591:2: warning: 'pre_sampct' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  fabcfg_write(FAB_CFG_ACQ_SIZE_A, g_acq_state.pre_sampct);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 'Finished building: ../src/acquire.c'
 ' '
 'Building target: ps_app.elf'
@@ -31,7 +42,7 @@ gcc version 8.2.0 (GCC)
 COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
 LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
- g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\cc5kJW9f.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccPIFAR7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
 'Finished building target: ps_app.elf'
 ' '
@@ -44,9 +55,9 @@ make[2]: [makefile:65: post-build] Error 1 (ignored)
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  85368	   5832	201399080	201490280	c027f68	ps_app.elf
+  86300	   3488	201401440	201491228	c02831c	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-21:24:49 Build Finished (took 1s.981ms)
+22:16:42 Build Finished (took 1s.628ms)
 

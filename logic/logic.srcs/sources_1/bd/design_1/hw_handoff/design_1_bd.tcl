@@ -259,10 +259,10 @@ proc create_root_design { parentCell } {
   # Create instance: ila_0, and set properties
   set ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:ila:6.2 ila_0 ]
   set_property -dict [ list \
-   CONFIG.C_DATA_DEPTH {2048} \
+   CONFIG.C_DATA_DEPTH {8192} \
    CONFIG.C_ENABLE_ILA_AXI_MON {false} \
    CONFIG.C_MONITOR_TYPE {Native} \
-   CONFIG.C_NUM_OF_PROBES {24} \
+   CONFIG.C_NUM_OF_PROBES {26} \
  ] $ila_0
 
   # Create instance: processing_system7_0, and set properties
@@ -708,14 +708,14 @@ proc create_root_design { parentCell } {
   connect_bd_net -net adc_axi_streamer_dbg_axi_rdy [get_bd_pins adc_axi_streamer/dbg_axi_rdy] [get_bd_pins ila_0/probe17]
   connect_bd_net -net adc_axi_streamer_dbg_rd_data_count [get_bd_pins adc_axi_streamer/dbg_rd_data_count] [get_bd_pins ila_0/probe11]
   connect_bd_net -net adc_axi_streamer_dbg_wr_data_count [get_bd_pins adc_axi_streamer/dbg_wr_data_count] [get_bd_pins ila_0/probe12]
-  connect_bd_net -net adc_axi_streamer_m00_axis_tdata [get_bd_pins adc_axi_streamer/m00_axis_tdata] [get_bd_pins ila_0/probe0]
-  connect_bd_net -net adc_axi_streamer_m00_axis_tlast [get_bd_pins adc_axi_streamer/m00_axis_tlast] [get_bd_pins ila_0/probe1]
-  connect_bd_net -net adc_axi_streamer_m00_axis_tvalid [get_bd_pins adc_axi_streamer/m00_axis_tvalid] [get_bd_pins ila_0/probe2]
+  connect_bd_net -net adc_axi_streamer_m00_axis_tdata [get_bd_pins adc_axi_streamer/m00_axis_tdata] [get_bd_pins axi_dma/s_axis_s2mm_tdata] [get_bd_pins ila_0/probe0]
+  connect_bd_net -net adc_axi_streamer_m00_axis_tlast [get_bd_pins adc_axi_streamer/m00_axis_tlast] [get_bd_pins axi_dma/s_axis_s2mm_tlast] [get_bd_pins ila_0/probe1]
+  connect_bd_net -net adc_axi_streamer_m00_axis_tvalid [get_bd_pins adc_axi_streamer/m00_axis_tvalid] [get_bd_pins axi_dma/s_axis_s2mm_tvalid] [get_bd_pins ila_0/probe2]
   connect_bd_net -net adc_axi_streamer_trigger_out [get_bd_ports TRIGGER_OUT] [get_bd_pins adc_axi_streamer/trigger_out] [get_bd_pins ila_0/probe23]
   connect_bd_net -net adc_axi_streamer_trigger_pos [get_bd_ports TRIGGER_POS] [get_bd_pins adc_axi_streamer/trigger_pos] [get_bd_pins ila_0/probe5]
-  connect_bd_net -net axi_dma_mm2s_introut [get_bd_pins axi_dma/mm2s_introut] [get_bd_pins xlconcat_1/In0]
-  connect_bd_net -net axi_dma_s2mm_introut [get_bd_pins axi_dma/s2mm_introut] [get_bd_pins xlconcat_1/In1]
-  connect_bd_net -net axi_dma_s_axis_s2mm_tready [get_bd_pins axi_dma/s_axis_s2mm_tready] [get_bd_pins ila_0/probe3]
+  connect_bd_net -net axi_dma_mm2s_introut [get_bd_pins axi_dma/mm2s_introut] [get_bd_pins ila_0/probe24] [get_bd_pins xlconcat_1/In0]
+  connect_bd_net -net axi_dma_s2mm_introut [get_bd_pins axi_dma/s2mm_introut] [get_bd_pins ila_0/probe25] [get_bd_pins xlconcat_1/In1]
+  connect_bd_net -net axi_dma_s_axis_s2mm_tready [get_bd_pins adc_axi_streamer/m00_axis_tready] [get_bd_pins axi_dma/s_axis_s2mm_tready] [get_bd_pins ila_0/probe3]
   connect_bd_net -net blk_mem_gen_0_doutb [get_bd_ports CFG_BRAM_DOUTB] [get_bd_pins blk_mem_gen_0/doutb]
   connect_bd_net -net blk_mem_gen_0_rstb_busy [get_bd_ports CFG_BRAM_BUSYB] [get_bd_pins blk_mem_gen_0/rstb_busy]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins axi_bram_ctrl_0/s_axi_aclk] [get_bd_pins axi_dma/m_axi_mm2s_aclk] [get_bd_pins axi_dma/m_axi_s2mm_aclk] [get_bd_pins axi_dma/s_axi_lite_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins axi_mem_intercon/S01_ACLK] [get_bd_pins ila_0/clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk]

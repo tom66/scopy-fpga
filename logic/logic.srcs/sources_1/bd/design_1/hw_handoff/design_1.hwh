@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Feb  6 21:53:33 2020" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sat Feb  8 14:41:11 2020" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -321,7 +321,7 @@
   </EXTERNALINTERFACES>
 
   <MODULES>
-    <MODULE COREREVISION="24" FULLNAME="/adc_axi_streamer" HWVERSION="2.0" INSTANCE="adc_axi_streamer" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_streamer" VLNV="xilinx.com:user:adc_streamer:2.0">
+    <MODULE COREREVISION="25" FULLNAME="/adc_axi_streamer" HWVERSION="2.0" INSTANCE="adc_axi_streamer" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_streamer" VLNV="xilinx.com:user:adc_streamer:2.0">
       <DOCUMENTS/>
       <PARAMETERS>
         <PARAMETER NAME="C_M00_AXIS_TDATA_WIDTH" VALUE="64"/>
@@ -487,6 +487,7 @@
         <PORT DIR="O" NAME="m00_axis_tvalid" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tvalid">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ila_0" PORT="probe2"/>
+            <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tvalid"/>
@@ -495,6 +496,7 @@
         <PORT DIR="O" LEFT="63" NAME="m00_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ila_0" PORT="probe0"/>
+            <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tdata"/>
@@ -504,13 +506,15 @@
         <PORT DIR="O" NAME="m00_axis_tlast" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ila_0" PORT="probe1"/>
+            <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tlast"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="m00_axis_tready" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tready">
+        <PORT DIR="I" NAME="m00_axis_tready" SIGIS="undef" SIGNAME="axi_dma_s_axis_s2mm_tready">
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tready"/>
             <CONNECTION INSTANCE="axi_dma" PORT="s_axis_s2mm_tready"/>
           </CONNECTIONS>
         </PORT>
@@ -2341,9 +2345,15 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tdata"/>
           </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tdata"/>
+          </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="7" NAME="s_axis_s2mm_tkeep" RIGHT="0" SIGIS="undef"/>
         <PORT DIR="I" NAME="s_axis_s2mm_tvalid" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tvalid"/>
+          </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tvalid"/>
           </CONNECTIONS>
@@ -2352,9 +2362,13 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
             <CONNECTION INSTANCE="ila_0" PORT="probe3"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s_axis_s2mm_tlast" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tlast"/>
+          </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tlast"/>
           </CONNECTIONS>
@@ -2362,11 +2376,13 @@
         <PORT DIR="O" NAME="mm2s_introut" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="axi_dma_mm2s_introut">
           <CONNECTIONS>
             <CONNECTION INSTANCE="xlconcat_1" PORT="In0"/>
+            <CONNECTION INSTANCE="ila_0" PORT="probe24"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="s2mm_introut" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="axi_dma_s2mm_introut">
           <CONNECTIONS>
             <CONNECTION INSTANCE="xlconcat_1" PORT="In1"/>
+            <CONNECTION INSTANCE="ila_0" PORT="probe25"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -3954,107 +3970,6 @@
             <CONNECTION INSTANCE="axi_dma" PORT="m_axi_mm2s_rready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="S01_AXI_awid" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="31" NAME="S01_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="7" NAME="S01_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awlen">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awlen"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="2" NAME="S01_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awsize">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awsize"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="S01_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awburst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awburst"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="S01_AXI_awlock" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="3" NAME="S01_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awcache">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awcache"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="2" NAME="S01_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="S01_AXI_awqos" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="0" NAME="S01_AXI_awvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="0" NAME="S01_AXI_awready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="63" NAME="S01_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="7" NAME="S01_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="0" NAME="S01_AXI_wlast" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wlast">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wlast"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="0" NAME="S01_AXI_wvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="0" NAME="S01_AXI_wready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="S01_AXI_bid" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="1" NAME="S01_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="0" NAME="S01_AXI_bvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="0" NAME="S01_AXI_bready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="S01_AXI_arid" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_araddr" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arlen" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arsize" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arburst" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arlock" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arcache" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arprot" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arqos" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_arvalid" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_arready" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_rid" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_rdata" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_rresp" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_rlast" SIGIS="undef"/>
-        <PORT DIR="O" NAME="S01_AXI_rvalid" SIGIS="undef"/>
-        <PORT DIR="I" NAME="S01_AXI_rready" SIGIS="undef"/>
         <PORT DIR="O" LEFT="0" NAME="M00_AXI_awid" RIGHT="0" SIGIS="undef" SIGNAME="axi_mem_intercon_M00_AXI_awid">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="S_AXI_HP0_AWID"/>
@@ -4245,6 +4160,107 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="S_AXI_HP0_RREADY"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="I" NAME="S01_AXI_awid" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="31" NAME="S01_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="S01_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awlen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awlen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="2" NAME="S01_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awsize">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awsize"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="S01_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awburst">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awburst"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S01_AXI_awlock" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="3" NAME="S01_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awcache">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awcache"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="2" NAME="S01_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S01_AXI_awqos" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="0" NAME="S01_AXI_awvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="S01_AXI_awready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="S01_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="S01_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="S01_AXI_wlast" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wlast"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="S01_AXI_wvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="S01_AXI_wready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S01_AXI_bid" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="1" NAME="S01_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="S01_AXI_bvalid" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="S01_AXI_bready" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_m_axi_s2mm_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="m_axi_s2mm_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S01_AXI_arid" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_araddr" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arlen" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arsize" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arburst" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arlock" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arcache" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arprot" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arqos" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_arvalid" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_arready" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_rid" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_rdata" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_rresp" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_rlast" SIGIS="undef"/>
+        <PORT DIR="O" NAME="S01_AXI_rvalid" SIGIS="undef"/>
+        <PORT DIR="I" NAME="S01_AXI_rready" SIGIS="undef"/>
       </PORTS>
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="axi_dma_M_AXI_MM2S" DATAWIDTH="64" NAME="S00_AXI" TYPE="SLAVE" VLNV="xilinx.com:interface:aximm:1.0">
@@ -4662,8 +4678,8 @@
         <PARAMETER NAME="C_SLOT_0_AXI_PROTOCOL" VALUE="AXI4"/>
         <PARAMETER NAME="C_NUM_MONITOR_SLOTS" VALUE="1"/>
         <PARAMETER NAME="C_ENABLE_ILA_AXI_MON" VALUE="0"/>
-        <PARAMETER NAME="C_NUM_OF_PROBES" VALUE="24"/>
-        <PARAMETER NAME="C_DATA_DEPTH" VALUE="2048"/>
+        <PARAMETER NAME="C_NUM_OF_PROBES" VALUE="26"/>
+        <PARAMETER NAME="C_DATA_DEPTH" VALUE="8192"/>
         <PARAMETER NAME="C_MAJOR_VERSION" VALUE="2019"/>
         <PARAMETER NAME="C_MINOR_VERSION" VALUE="2"/>
         <PARAMETER NAME="C_BUILD_REVISION" VALUE="0"/>
@@ -7905,6 +7921,16 @@
         <PORT DIR="I" LEFT="0" NAME="probe23" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_out">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="probe24" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_mm2s_introut">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="mm2s_introut"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="probe25" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_s2mm_introut">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma" PORT="s2mm_introut"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

@@ -203,7 +203,7 @@
       <File Path="$PSRCDIR/utils_1/imports/synth_3/main.dcp">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PRUNDIR/synth_3/main.dcp"/>
-          <Attr Name="ImportTime" Val="1581026000"/>
+          <Attr Name="ImportTime" Val="1581172860"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedInSteps" Val="synth_3"/>
@@ -291,9 +291,7 @@
     </Run>
     <Run Id="synth_3" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z014sclg400-1" ConstrsSet="constrs_2" Description="Trades off Performance and Area for better Runtime." AutoIncrementalCheckpoint="true" IncrementalCheckpoint="$PSRCDIR/utils_1/imports/synth_3/main.dcp" WriteIncrSynthDcp="true" State="current" Dir="$PRUNDIR/synth_3" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Synthesis 2019">
-          <Desc>Trades off Performance and Area for better Runtime.</Desc>
-        </StratHandle>
+        <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Synthesis 2019"/>
         <Step Id="synth_design">
           <Option Id="FlattenHierarchy">1</Option>
           <Option Id="Directive">0</Option>
@@ -365,9 +363,7 @@
     </Run>
     <Run Id="impl_3" Type="Ft2:EntireDesign" Part="xc7z014sclg400-1" ConstrsSet="constrs_2" Description="Each implementation step trades design performance for better runtime. Physical optimization (phys_opt_design) is disabled." AutoIncrementalCheckpoint="true" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_3" SynthRun="synth_3" IncludeInArchive="true" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Implementation 2019">
-          <Desc>Each implementation step trades design performance for better runtime. Physical optimization (phys_opt_design) is disabled.</Desc>
-        </StratHandle>
+        <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Implementation 2019"/>
         <Step Id="init_design"/>
         <Step Id="opt_design">
           <Option Id="Directive">4</Option>

@@ -48,11 +48,11 @@ int main()
 	hal_init();
 	acq_init();
 
-	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 65536, 100);
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
+	acq_debug_dump_wavedata();
 
-#if 1
 	d_printf(D_WARN, "Press key to start");
 
 	d_waitkey();
@@ -63,6 +63,7 @@ int main()
 
 	acq_debug_dump();
 
+	/*
 	d_printf(D_INFO, "Waiting...");
 
 	while(!acq_is_done()) {
@@ -70,9 +71,14 @@ int main()
 		//acq_debug_dump();
 		bogo_delay(1000000);
 	}
+	*/
+
+	d_printf(D_INFO, "Busy Wait...");
+	bogo_delay(1000000);
+
+	acq_debug_dump_wavedata();
 
 	d_printf(D_INFO, "Done!");
-#endif
 
 #if 0
 	d_start_timing(2);
