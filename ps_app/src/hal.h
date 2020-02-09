@@ -109,5 +109,7 @@ float d_read_timing_us(int index);
 void d_dump_timing(char *s, int index);
 void d_dump_timing_ex(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
+void emio_fast_set(int pin);
+void emio_fast_clr(int pin);
 
 #endif /* SRC_HAL_H_ */

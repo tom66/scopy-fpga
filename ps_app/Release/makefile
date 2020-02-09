@@ -62,7 +62,7 @@ pre-build:
 
 post-build:
 	-@echo 'try to produce objectdump'
-	-objdump -drwC -S -m arm ../Release/ps_app.elf > ../Release/ps_app.objdump
+	-arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
 	-@echo ' '
 
 secondary-outputs: $(ELFSIZE)

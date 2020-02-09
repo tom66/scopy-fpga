@@ -126,7 +126,7 @@ design_1 (
     .ADC_BUS(adc_bus),
     .ADC_DATA_CLK(adc_data_clk),
     .ADC_DATA_VALID(1'b1),          // TODO: this should be coming from the PS
-    .ADC_FIFO_RESET(g_rst_gen),     // for now, connect to global reset; later, to be initiated by command
+    .ADC_FIFO_RESET(emio_output[6]),
     .ADC_DATA_EOF(1'b0),            // for now, data never ends
     
     // Acquisition/control bus
@@ -141,6 +141,7 @@ design_1 (
     .ACQ_AXI_RUN(emio_output[10]),
     .ACQ_DONE(emio_input[2]),
     .ACQ_HAVE_TRIG(emio_input[7]),
+    .ACQ_DATA_LOSS(emio_input[11]),     // Data loss signal to PS indicating that FIFO data may be stale due to read delay
     .TRIGGER_IN(1'b0),                  // Level sensitive trigger input from trigger block
     .TRIGGER_SUB_WORD(3'b101),          // Fixed value for now; later this will indicate which word generated event 1st
     .TRIGGER_POS(R_acq_trigger_ptr),    // Registered trigger output position for FabCfg

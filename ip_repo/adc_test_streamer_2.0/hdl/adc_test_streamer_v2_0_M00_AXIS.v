@@ -15,7 +15,6 @@ module adc_test_streamer_v2_0_M00_AXIS #
     input wire [63:0] ADC_BUS,
     input wire ADC_DATA_CLK,
     input wire ADC_DATA_VALID,
-    output wire ADC_FIFO_FULL,
     input wire ADC_FIFO_RESET,
     input wire ADC_EOF,
     
@@ -25,8 +24,8 @@ module adc_test_streamer_v2_0_M00_AXIS #
     output wire [31:0] dbg_acq_axi_upcounter,
     output wire [31:0] dbg_acq_axi_downcounter,
     output wire [10:0] dbg_acq_trigger_out_ctr,
-    output wire [9:0] dbg_rd_data_count,
-    output wire [9:0] dbg_wr_data_count,
+    output wire [15:0] dbg_rd_data_count,
+    output wire [15:0] dbg_wr_data_count,
 
     input ACQ_RUN,
     input ACQ_ABORT,
@@ -38,6 +37,7 @@ module adc_test_streamer_v2_0_M00_AXIS #
     output reg ACQ_DONE,
     output reg ACQ_HAVE_TRIG,
     input ACQ_AXI_RUN,
+    output ACQ_FULL_DATA_LOSS,
     
     input TRIGGER_IN,
     output reg TRIGGER_OUT,
@@ -82,11 +82,20 @@ reg [5:0] adcstream_state = ST_IDLE;
 reg acq_tvalid = 0;
 reg acq_axi_running = 0;
 
+reg acq_gen_tlast = 0; 
+reg acq_gen_tvalid_mask = 0;
+reg [1:0] acq_gen_tlast_ctr = 0;
+ 
+reg [10:0] trigger_out_ctr;
+
 // TODO: try to figure out how we could common these counters
 reg [28:0] acq_axi_downcounter = 0;
 reg [28:0] acq_axi_upcounter = 0;
 
 wire [63:0] fifo_data_out;
+
+reg adc_fifo_full_latch = 0;
+assign ACQ_FULL_DATA_LOSS = adc_fifo_full_latch;
 
 // TVALID is high when: FIFO reset not busy,  FIFO not almost empty
 assign M_AXIS_TVALID = /*(!fifo_rd_busy) && */(!fifo_almost_empty) && acq_gen_tvalid_mask; 
@@ -109,8 +118,14 @@ wire fifo_wr_en = ADC_DATA_VALID;
 // Read enabled when TREADY asserted & data available in FIFO & acq_axi_running asserted & TVALID present
 wire fifo_rd_en = M_AXIS_TREADY && (!fifo_almost_empty) && acq_axi_running && acq_gen_tvalid_mask;        
 
-// FIFO reset a combination of external reset and global slow reset signal
+// FIFO reset a combination of AXI reset and external slow reset signal
 wire fifo_int_reset = ((!M_AXIS_ARESETN) || ADC_FIFO_RESET);    
+
+// FIFO data in and data out consists of trigger_signal + 64-bit data.  
+wire [64:0] fifo_data_in = {(TRIGGER_IN && !ACQ_TRIG_MASK), ADC_BUS};
+wire [64:0] fifo_data_out;
+
+assign fifo_out_trigger = fifo_data_out[64];
 
 // FIFO generator connection (block design)
 fifo_generator_0 fifo_generator_0_inst (
@@ -118,7 +133,7 @@ fifo_generator_0 fifo_generator_0_inst (
     .wr_en(fifo_wr_en),
     .prog_empty(fifo_almost_empty),
     .rd_en(fifo_rd_en),
-    .din(ADC_BUS),
+    .din(fifo_data_in),
     .wr_clk(ADC_DATA_CLK),
     .dout(fifo_data_out),
     .rd_clk(M_AXIS_ACLK),
@@ -130,63 +145,30 @@ fifo_generator_0 fifo_generator_0_inst (
 );
 
 /*
- * TLAST/TVALID generator.  Crosses clock domain to generate short TLAST pulse
- * when signalled.
+ * State machine.  This runs on the AXI bus clock. 
  */
-reg acq_gen_tlast = 0; 
-reg acq_gen_tvalid_mask = 0;
-reg [1:0] acq_gen_tlast_ctr = 0;
-reg adcclkdm_tlast_gen = 0;         // Signal from ADC clock domain that TLAST should be generated
-reg adcclkdm_tvalid_init = 0;       // Signal from ADC clock domain that TVALID MASK should be generated
-reg adcclkdm_tlast_gen_last = 0;
-
 always @(posedge M_AXIS_ACLK) begin
 
-    // TVALID signal - start generating mask for TVALID
-    if (adcclkdm_tvalid_init) begin
-        acq_gen_tvalid_mask <= 1; 
-    end
-    
-    // TVALID stays high while TLAST is asserted;  this state will remain for 1 cycle.
-    // Only generate TLAST pulse on rising edge of ADC clock domain TLAST signal.
-    if (adcclkdm_tlast_gen && !adcclkdm_tlast_gen_last) begin
-        acq_gen_tlast <= 1;
-        //acq_gen_tvalid_mask <= 1;
-        acq_gen_tlast_ctr <= 0;
-    end
-    
-    // Increment our tiny counter if TLAST is being generated.
-    if (acq_gen_tlast) begin
-        acq_gen_tlast_ctr <= acq_gen_tlast_ctr + 1;
-    end
-    
-    // TVALID and TLAST fall at same time
-    if (acq_gen_tlast_ctr == 1) begin
-        acq_gen_tvalid_mask <= 0;
-        acq_gen_tlast <= 0;
-    end
-
-    adcclkdm_tlast_gen_last <= adcclkdm_tlast_gen;  
-
-end
- 
-reg [10:0] trigger_out_ctr;
-
-/*
- * State machine.  This runs on the ADC clock.  
- * FIXME:  I need to analyse if there are metastability issues regarding
- * reading values from this clock domain into the fabric domain.
- */
-always @(posedge ADC_DATA_CLK) begin
-
-    // Trigger out generator.  Generate a 16-clock pulse every time a trigger
-    // is accepted by the acquisition engine.  Note this is NOT the same as 
-    // the direct trigger signal.
+    /*
+     * Trigger out generator.  Generate a 16-clock pulse every time a trigger
+     * is accepted by the acquisition engine.  Note this is NOT the same as 
+     * the direct trigger signal.  Also note the output pulse width is a multiple
+     * of the AXI bus clock, which should be fixed by design.
+     */
     if (trigger_out_ctr > 1) begin
         trigger_out_ctr <= trigger_out_ctr - 1;
         TRIGGER_OUT <= 1;
     end else begin
         TRIGGER_OUT <= 0;
+    end
+    
+    /*
+     * If FIFO_FULL goes high then we set a state which is only cleared by starting
+     * a new acquisition.  This signal indicates data has been lost and the FIFO must
+     * be reset to avoid data corruption.
+     */
+    if (ADC_FIFO_FULL) begin
+        adc_fifo_full_latch <= 1;
     end
 
     case (adcstream_state) 
@@ -195,64 +177,58 @@ always @(posedge ADC_DATA_CLK) begin
             if (ACQ_AXI_RUN && M_AXIS_TREADY) begin
                 ACQ_HAVE_TRIG <= 0;
                 ACQ_DONE <= 0;
-            
+                
                 // Load the required downcounter
-                if (ACQ_DEPTH_MUX) begin
+                if (!ACQ_DEPTH_MUX) begin
                     acq_axi_downcounter <= ACQ_DEPTH_A;
                 end else begin
                     acq_axi_downcounter <= ACQ_DEPTH_B;
                 end
                 
+                acq_axi_upcounter <= 0;
+                
                 // Invalid TRIGGER_POS:  Acq not yet run
                 TRIGGER_POS <= 32'hfffffffe;
-    
-                acq_axi_upcounter <= 0;
+                
+                adc_fifo_full_latch <= 0;
                 acq_axi_running <= 1;
-                adcclkdm_tvalid_init <= 1;
+                //adcclkdm_tvalid_init <= 1;
                 adcstream_state <= ST_STREAMING;
             end
         end
         
         ST_STREAMING : begin
-            // Only adjust counters if data is available in FIFO (no underrun)
-            acq_axi_upcounter <= acq_axi_upcounter + 1;
+            // Only adjust counters and handle triggers, etc. if data is available in FIFO.
+            if ((!fifo_almost_empty) && M_AXIS_TREADY && (!M_AXIS_TLAST)) begin
+                acq_axi_upcounter <= acq_axi_upcounter + 1;
+                acq_axi_downcounter <= acq_axi_downcounter - 1;
             
-            // Remove TVALID generator signal after a few ticks;  the exact time
-            // is not terribly important, it just needs to have reached the AXI 
-            // clock domain.
-            if (acq_axi_upcounter == 4) begin
-                adcclkdm_tvalid_init <= 0;
-            end
-        
-            // Streaming jumps to STOP_EOF if downcounter is zero
-            acq_axi_downcounter <= acq_axi_downcounter - 1;
-            
-            if (acq_axi_downcounter == 0) begin
-                // Trigger not valid in this instance; set TRIGGER_POS to invalid value
-                adcstream_state <= ST_STOP_EOF;
-                TRIGGER_POS <= 32'hffffffff;
- 
-                
-                // Stop TVALID generation (data is no longer valid); start TLAST pulse generation
-                acq_tvalid <= 0;
-                adcclkdm_tlast_gen <= 1;
-            end else begin
-                // Level sensitive trigger:  actual trigger state generated by external trigger machine
-                // If TRIG_MASK is high, then TRIGGER_IN is ignored.
-                if (TRIGGER_IN && !ACQ_TRIG_MASK) begin
+                if (acq_axi_downcounter == 0) begin
+                    // Trigger not valid in this instance; set TRIGGER_POS to invalid value
+                    adcstream_state <= ST_STOP_EOF;
+                    TRIGGER_POS <= 32'hffffffff;
+                    
+                    // Start TLAST pulse generation. TVALID stays active until 1 cycle of TLAST.
+                    acq_gen_tvalid_mask <= 1;
+                    acq_gen_tlast <= 1;
+                end else if (fifo_out_trigger) begin
                     adcstream_state <= ST_STOP_TRIGGERED;
                     
-                    // Stop TVALID generation (data is no longer valid)
-                    acq_tvalid <= 0;
-                    adcclkdm_tlast_gen <= 1;
+                    // Start TLAST pulse generation. TVALID stays active until 1 cycle of TLAST.
+                    acq_gen_tvalid_mask <= 1;
+                    acq_gen_tlast <= 1;
                 
-                    // Load merged trigger position register (30 bits)
+                    // Load merged trigger position register (32 bits)
                     TRIGGER_POS <= {2'b00, acq_axi_upcounter, TRIGGER_SUB_WORD};
                     
-                    // Load trigger counter to generate trigger pulse (1us at 1GSa/s)
-                    // TODO: this will be application configurable to consistently generate the same pulse
+                    // Load trigger counter to generate trigger pulse (1us at ~177MHz)
+                    // TODO: this might be application configurable to consistently generate the same pulse
                     // width at different sample rates, also for user configurability if desired.
-                    trigger_out_ctr <= 124; 
+                    trigger_out_ctr <= 177; 
+                end else begin
+                    // Otherwise, assert TVALID while streaming data.
+                    acq_gen_tvalid_mask <= 1;
+                    acq_gen_tlast <= 0;
                 end
             end
         end
@@ -263,9 +239,10 @@ always @(posedge ADC_DATA_CLK) begin
             ACQ_HAVE_TRIG <= 1;
             ACQ_DONE <= 1;
             
-            // Stop sending TLAST signal to TLAST generator block
-            adcclkdm_tlast_gen <= 0;
-            
+            // Stop sending TLAST signal, stop sending VALID signal
+            acq_gen_tlast <= 0;
+            acq_gen_tvalid_mask <= 0;
+                    
             if (!ACQ_AXI_RUN) begin
                 adcstream_state <= ST_IDLE;
             end
@@ -277,8 +254,9 @@ always @(posedge ADC_DATA_CLK) begin
             ACQ_HAVE_TRIG <= 0;
             ACQ_DONE <= 1;
             
-            // Stop sending TLAST signal to TLAST generator block
-            adcclkdm_tlast_gen <= 0;
+            // Stop sending TLAST signal, stop sending VALID signal
+            acq_gen_tlast <= 0;
+            acq_gen_tvalid_mask <= 0;
             
             if (!ACQ_AXI_RUN) begin
                 adcstream_state <= ST_IDLE;

@@ -48,13 +48,44 @@ int main()
 	hal_init();
 	acq_init();
 
+	/*
+	d_start_timing(0);
+
+	for(i = 0; i < 100000; i++) {
+		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+		emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+		emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+	}
+
+	d_stop_timing(0);
+	d_dump_timing("EMIO fast test", 0);
+
+	d_start_timing(0);
+
+	for(i = 0; i < 100000; i++) {
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+	}
+
+	d_stop_timing(0);
+	d_dump_timing("Xilinx GPIO test", 0);
+	*/
+
 	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
 	acq_debug_dump_wavedata();
 
 	d_printf(D_WARN, "Press key to start");
+	d_waitkey();
 
+	d_printf(D_WARN, "Press key again");
+	d_waitkey();
+
+	d_printf(D_WARN, "Press key again");
 	d_waitkey();
 
 	d_printf(D_INFO, "Starting acquisition");
@@ -74,7 +105,7 @@ int main()
 	*/
 
 	d_printf(D_INFO, "Busy Wait...");
-	bogo_delay(1000000);
+	bogo_delay(5000000);
 
 	acq_debug_dump_wavedata();
 

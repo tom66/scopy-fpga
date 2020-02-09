@@ -32,6 +32,11 @@ const char *acq_substate_to_str[] = {
 // This block is in OCM to ensure fast access during DMA acquisition/interrupts.
 struct acq_state_t g_acq_state; // __attribute__((section(".force_ocm")));
 
+uint32_t test_buffsz = 768;
+
+uint32_t test_sizes[1000];
+uint32_t test_sizeptr = 0;
+
 /*
  * Interrupt handler for the DMA RX interrupt.  Private.
  */
@@ -40,6 +45,7 @@ void _acq_irq_rx_handler(void *callback)
 	XAxiDma_BdRing *bd_ring = (XAxiDma_BdRing *) callback;
 	uint32_t status;
 	int error;
+	int i;
 
 	//d_printf(D_WARN, "_acq_irq_rx_handler");
 	g_acq_state.stats.num_irqs++;
@@ -49,6 +55,21 @@ void _acq_irq_rx_handler(void *callback)
 	XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 	XAxiDma_BdRingAckIrq(bd_ring, status);
 
+	//d_printf(D_INFO, "L:%08x", XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET));
+
+	if(test_sizeptr < 1000) {
+		test_sizes[test_sizeptr++] = XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET);
+	} else {
+		d_printf(D_INFO, "** OVERFLOW of SUCCESS **");
+
+		for(i = 0; i < test_sizeptr; i++) {
+			d_printf(D_INFO, "L%4d:%08x(%d)", i, test_sizes[i], test_sizes[i]);
+		}
+
+		d_printf(D_INFO, "** eof error **");
+		while(1) ;
+	}
+
 	/*
 	 * Check for a DMA Error.  Error conditions force an increase of the error
 	 * statistic counter and a reset of the state machine and DMA.
@@ -57,12 +78,19 @@ void _acq_irq_rx_handler(void *callback)
 	if(status & XAXIDMA_IRQ_ERROR_MASK) {
 		//d_printf(D_WARN, "XAXIDMA_IRQ_ERROR_MASK");
 
-		d_printf(D_ERROR, "acquire: IRQ reports error (rxSR:0x%08x,txSR:0x%08x) during transfer (TLAST likely not asserted)", \
-				XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET),
-				XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_TX_OFFSET));
+		//d_printf(D_ERROR, "acquire: IRQ reports error (rxSR:0x%08x,txSR:0x%08x) during transfer (TLAST likely not asserted)", \
+		//		XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET),
+		//		XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_TX_OFFSET));
+		for(i = 0; i < test_sizeptr; i++) {
+			d_printf(D_INFO, "L%4d:%08x(%d)", i, test_sizes[i], test_sizes[i]);
+		}
+
+		d_printf(D_INFO, "** eof error **");
+		test_sizeptr = 0;
+
 		_acq_irq_error_dma();
 
-		return;
+		//return;
 	}
 #endif
 
@@ -90,7 +118,8 @@ void _acq_irq_rx_handler(void *callback)
 				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
 
 				// Start the next transfer.
-				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 2048 /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
+						test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 				if(error != XST_SUCCESS) {
 					_acq_irq_error_dma();
@@ -127,7 +156,7 @@ void _acq_irq_rx_handler(void *callback)
 					// adding the pre buffer offset.
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, \
 							((uint32_t)g_acq_state.acq_current->buff_acq) + g_acq_state.pre_buffsz, \
-							2048 /*g_acq_state.post_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+							test_buffsz /*g_acq_state.post_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -150,7 +179,8 @@ void _acq_irq_rx_handler(void *callback)
 					// No trigger. So just re-arm the pre-trigger, starting from the beginning of
 					// the acquisition buffer.
 					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
-					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
+					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
+							test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -216,7 +246,7 @@ void _acq_irq_error_dma()
 	g_acq_state.stats.num_err_total++;
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.sub_state = ACQSUBST_NONE;
-	XAxiDma_Reset(&g_acq_state.dma);
+	//XAxiDma_Reset(&g_acq_state.dma);
 	return;
 }
 
@@ -587,9 +617,10 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 
 	/*
 	 * Initialise the fabric configuration.
+	 * Sample counters are off by 1 due to fabric design, so offset them here.
 	 */
-	fabcfg_write(FAB_CFG_ACQ_SIZE_A, g_acq_state.pre_sampct);
-	fabcfg_write(FAB_CFG_ACQ_SIZE_B, g_acq_state.post_sampct);
+	fabcfg_write(FAB_CFG_ACQ_SIZE_A, g_acq_state.pre_sampct - 1);
+	fabcfg_write(FAB_CFG_ACQ_SIZE_B, g_acq_state.post_sampct - 1);
 	demux = 0;
 
 	if(mode_flags & ACQ_MODE_8BIT) {
@@ -672,9 +703,8 @@ int acq_start()
 		d_printf(D_WARN, "CR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET + XAXIDMA_RX_OFFSET));
 
 		Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
-		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 2048 /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
-		//error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 4096, XAXIDMA_DEVICE_TO_DMA);
-		//error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, 16, XAXIDMA_DEVICE_TO_DMA);
+		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
+				test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
 
 		if(error != XST_SUCCESS) {
 			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
@@ -702,7 +732,9 @@ int acq_start()
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 0);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);		// AXI bus activity enabled
+		//XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);		// AXI bus activity enabled
+
+		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 		return ACQRES_OK;
 	} else {
