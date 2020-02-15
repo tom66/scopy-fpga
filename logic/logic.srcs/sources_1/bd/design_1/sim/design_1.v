@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 15 08:39:28 2020
+//Date        : Sat Feb 15 21:20:20 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -52,6 +52,8 @@ module design_1
     DDR_we_n,
     EMIO_I,
     EMIO_O,
+    FABCFG_COMMIT_MON,
+    FABCFG_DONE_MON,
     FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
@@ -105,6 +107,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR WE_N" *) inout DDR_we_n;
   input [63:0]EMIO_I;
   output [63:0]EMIO_O;
+  input FABCFG_COMMIT_MON;
+  input FABCFG_DONE_MON;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.FCLK_CLK0 CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.FCLK_CLK0, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, FREQ_HZ 177777771, INSERT_VIP 0, PHASE 0.000" *) output FCLK_CLK0;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false" *) inout FIXED_IO_ddr_vrn;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP" *) inout FIXED_IO_ddr_vrp;
@@ -140,6 +144,8 @@ module design_1
   wire [3:0]CFG_BRAM_WEB_1;
   wire CFG_BRAM_WREN_1;
   wire [63:0]EMIO_I_1;
+  wire FABCFG_COMMIT_MON_1;
+  wire FABCFG_DONE_MON_1;
   wire [13:0]PL_IRQ_1;
   wire adc_axi_streamer_acq_done;
   wire adc_axi_streamer_acq_have_trig;
@@ -380,6 +386,8 @@ module design_1
   assign CFG_BRAM_WREN_1 = CFG_BRAM_ENB;
   assign EMIO_I_1 = EMIO_I[63:0];
   assign EMIO_O[63:0] = processing_system7_0_GPIO_O;
+  assign FABCFG_COMMIT_MON_1 = FABCFG_COMMIT_MON;
+  assign FABCFG_DONE_MON_1 = FABCFG_DONE_MON;
   assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
   assign PL_IRQ_1 = PL_IRQ[13:0];
   assign TRIGGER_OUT = adc_axi_streamer_trigger_out;
@@ -719,34 +727,43 @@ module design_1
        (.clk(processing_system7_0_FCLK_CLK0),
         .probe0(adc_axi_streamer_m00_axis_tdata),
         .probe1(adc_axi_streamer_m00_axis_tlast),
-        .probe10(ACQ_AXI_RUN_1),
-        .probe11(adc_axi_streamer_dbg_rd_data_count),
-        .probe12(adc_axi_streamer_dbg_wr_data_count),
-        .probe13(ACQ_RUN_1),
-        .probe14(ACQ_ABORT_1),
+        .probe10(adc_axi_streamer_dbg_rd_data_count),
+        .probe11(adc_axi_streamer_dbg_wr_data_count),
+        .probe12(adc_axi_streamer_dbg_trig_post_fifo),
+        .probe13(adc_axi_streamer_acq_done),
+        .probe14(adc_axi_streamer_acq_have_trig),
         .probe15(adc_axi_streamer_adc_fifo_full),
-        .probe16(adc_axi_streamer_dbg_adcstream_state),
-        .probe17(adc_axi_streamer_dbg_axi_rdy),
-        .probe18(adc_axi_streamer_dbg_acq_axi_running),
-        .probe19(adc_axi_streamer_dbg_acq_axi_upcounter),
+        .probe16(adc_axi_streamer_trigger_pos),
+        .probe17(adc_axi_streamer_trigger_out),
+        .probe18(ADC_BUS_1),
+        .probe19(ADC_DATA_VALID_1),
         .probe2(adc_axi_streamer_m00_axis_tvalid),
-        .probe20(adc_axi_streamer_dbg_acq_axi_downcounter),
-        .probe21(adc_axi_streamer_dbg_acq_trigger_out_ctr),
-        .probe22(adc_axi_streamer_acq_have_trig),
-        .probe23(adc_axi_streamer_trigger_out),
-        .probe24(axi_dma_mm2s_introut),
-        .probe25(axi_dma_s2mm_introut),
-        .probe26(ACQ_TRIG_MASK_1),
-        .probe27(ADC_FIFO_RESET_1),
-        .probe28(ACQ_TRIGGER_IN_1),
-        .probe29(adc_axi_streamer_dbg_trig_post_fifo),
+        .probe20(ADC_FIFO_RESET_1),
+        .probe21(ADC_DATA_EOF_1),
+        .probe22(ACQ_RUN_1),
+        .probe23(ACQ_ABORT_1),
+        .probe24(ACQ_TRIG_MASK_1),
+        .probe25(ACQ_TRIG_RST_1),
+        .probe26(ACQ_DEPTH_MUX),
+        .probe27(ACQ_DEPTH_A_1),
+        .probe28(ACQ_DEPTH_B_1),
+        .probe29(ACQ_AXI_RUN_1),
         .probe3(axi_dma_s_axis_s2mm_tready),
-        .probe4(adc_axi_streamer_acq_done),
-        .probe5(adc_axi_streamer_trigger_pos),
-        .probe6(ADC_BUS_1),
-        .probe7(ACQ_DEPTH_MUX),
-        .probe8(ACQ_DEPTH_A_1),
-        .probe9(ACQ_DEPTH_B_1));
+        .probe30(ACQ_TRIGGER_IN_1),
+        .probe31(rst_ps7_0_20M_peripheral_aresetn),
+        .probe32(axi_dma_mm2s_introut),
+        .probe33(axi_dma_s2mm_introut),
+        .probe34(FABCFG_COMMIT_MON_1),
+        .probe35(FABCFG_DONE_MON_1),
+        .probe36(CFG_BRAM_DINB_1),
+        .probe37(blk_mem_gen_0_doutb),
+        .probe38(CFG_BRAM_WREN_1),
+        .probe4(adc_axi_streamer_dbg_adcstream_state),
+        .probe5(adc_axi_streamer_dbg_axi_rdy),
+        .probe6(adc_axi_streamer_dbg_acq_axi_running),
+        .probe7(adc_axi_streamer_dbg_acq_axi_upcounter),
+        .probe8(adc_axi_streamer_dbg_acq_axi_downcounter),
+        .probe9(adc_axi_streamer_dbg_acq_trigger_out_ctr));
   (* BMM_INFO_PROCESSOR = "arm > design_1 axi_bram_ctrl_0" *) 
   (* KEEP_HIERARCHY = "yes" *) 
   design_1_processing_system7_0_1 processing_system7_0

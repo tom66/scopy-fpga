@@ -68,7 +68,7 @@ int main()
 	d_start_timing(0);
 
 	for(i = 0; i < 100000; i++) {
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ	_EMIO_AXI_RUN, 1);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
 		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
@@ -81,7 +81,7 @@ int main()
 	//d_printf(D_INFO, "0x%08x", g_hal.xgpio_ps.GpioConfig.BaseAddr);
 
 	//res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
-	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 4096, 400);
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 4096, 5);
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
 	//acq_debug_dump_wavedata();
@@ -134,8 +134,13 @@ int main()
 	acq_debug_dump();
 #endif
 
-	bogo_delay(4000000);
+	//while(!acq_is_done()) ;
+
+	bogo_delay(1000000);
+	d_printf(D_INFO, "wait over...");
+
 	acq_debug_dump();
+	acq_debug_dump_wave(4);
 
 	while(1) ;
 

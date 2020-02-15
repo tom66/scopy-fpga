@@ -52,8 +52,8 @@
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_0_1/sim/fifo_generator_0.v" \
-  "../../../bd/design_1/ipshared/ea82/hdl/adc_test_streamer_v2_0_M00_AXIS.v" \
-  "../../../bd/design_1/ipshared/ea82/hdl/adc_test_streamer_v2_0.v" \
+  "../../../bd/design_1/ipshared/33f1/hdl/adc_test_streamer_v2_0_M00_AXIS.v" \
+  "../../../bd/design_1/ipshared/33f1/hdl/adc_test_streamer_v2_0.v" \
   "../../../bd/design_1/ip/design_1_adc_test_streamer_0_0/sim/design_1_adc_test_streamer_0_0.v" \
 -endlib
 -makelib xcelium_lib/proc_sys_reset_v5_0_13 \
@@ -107,7 +107,6 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/design_1/ip/design_1_xbar_2/sim/design_1_xbar_2.v" \
   "../../../bd/design_1/ip/design_1_xbar_3/sim/design_1_xbar_3.v" \
-  "../../../bd/design_1/ip/design_1_ila_0_0/sim/design_1_ila_0_0.v" \
   "../../../bd/design_1/sim/design_1.v" \
 -endlib
 -makelib xcelium_lib/axi_protocol_converter_v2_1_20 \

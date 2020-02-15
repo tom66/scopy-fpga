@@ -64,9 +64,9 @@ module adc_test_streamer_v2_0_M00_AXIS #
     input wire  M_AXIS_TREADY
 );               
                                                                            
-parameter ST_IDLE = 0;                                                               
-parameter ST_STREAMING = 1;                                                          
-parameter ST_STOP_TRIGGERED = 2;                                                     
+parameter ST_IDLE = 0;
+parameter ST_STREAMING = 1;
+parameter ST_STOP_TRIGGERED = 2;
 parameter ST_STOP_EOF = 3;
 
 // Debug signals
@@ -177,6 +177,13 @@ always @(posedge M_AXIS_ACLK) begin
     end
     
     /*
+     * AXI reset control.  Sets trigger_pos to invalid value during reset.
+     */
+    if (!M_AXIS_ARESETN) begin
+        TRIGGER_POS <= 32'hfffffffd;
+    end
+    
+    /*
      * If FIFO_FULL goes high then we set a state which is only cleared by starting
      * a new acquisition.  This signal indicates that the FIFO must be reset at the
      * next available opportunity.
@@ -202,9 +209,6 @@ always @(posedge M_AXIS_ACLK) begin
                 end
                 
                 acq_axi_upcounter <= 0;
-                
-                // Invalid TRIGGER_POS:  Acq not yet run
-                TRIGGER_POS <= 32'hfffffffe;
                 
                 adc_fifo_full_latch <= 0;
                 acq_axi_running <= 1;
@@ -242,6 +246,9 @@ always @(posedge M_AXIS_ACLK) begin
                     // width at different AXI(?) rates, also for user configurability if desired.
                     trigger_out_ctr <= 177; 
                 end
+            end else begin
+                // While acquiring, but without trigger, load trigger_pos with invalid value
+                TRIGGER_POS <= 32'hfffffffe;
             end
         end
         

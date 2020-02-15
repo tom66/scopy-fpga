@@ -44,6 +44,8 @@
 
 #define ACQ_MIN_PREPOST_SIZE		32								// Minimum size of any pre or post window.
 
+#define ACQ_WORD_SCALE				8								// Always 64-bit wide sample words by fabric design
+
 #define ACQ_MODE_8BIT				0x00000001						// 8-bit high speed
 #define ACQ_MODE_12BIT				0x00000002						// 12-bit mid speed
 #define ACQ_MODE_14BIT				0x00000004						// 14-bit low speed
@@ -108,6 +110,7 @@
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
 #define TRIGGER_INVALID_NO_TRIG		0xffffffff						// Trigger position invalid as no trigger occurred within window
+#define TRIGGER_INVALID_MASK		0x80000000						// This bit set indicates invalid trigger pointer
 
 /*
  * Statistics counters for acquisition engine.
@@ -166,7 +169,7 @@ struct acq_state_t {
 
 	/*
 	 * Sizes (in words) of the acquisition data;  the counts are given in 64-bit words
-	 * so there is an 8x or 4x relationship to the byte counts. This maximises the depth of
+	 * so there is an 8x or 4x relationship to the sample counts. This maximises the depth of
 	 * the on-fabric 28-bit counter.
 	 */
 	uint32_t pre_sampct;

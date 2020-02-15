@@ -46,10 +46,9 @@
 #define FAB_CFG_GPIO_TEST				0x009
 
 #define FAB_CFG_ADDR_MASK				0xfff
+#define FAB_CFG_MAGIC_VALUE				0x536d7670
 
-#define FAB_MAGIC_VALUE					0x536d7670
-#define FAB_TEST_VALUE1					0xaaaaaaaa
-#define FAB_TEST_VALUE2					0xf0f0f0f0
+#define FAB_CFG_COMMIT_TIME				50
 
 // Fabric EMIO pin definitions
 #define FAB_CFG_EMIO_COMMIT				(54 + 3)
@@ -59,5 +58,7 @@ void fabcfg_init();
 void fabcfg_write(uint32_t reg, uint32_t data);
 uint32_t fabcfg_read(uint32_t reg);
 void fabcfg_commit();
+void fabcfg_fastcfg_start();
+void fabcfg_fastcfg_wait();
 
 #endif /* SRC_FABRIC_CONFIG_H_ */

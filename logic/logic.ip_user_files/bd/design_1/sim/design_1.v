@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 15 08:39:28 2020
+//Date        : Sat Feb 15 12:54:28 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=21,numReposBlks=13,numNonXlnxBlks=0,numHierBlks=8,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=21,da_axi4_s2mm_cnt=1,da_board_cnt=1,da_bram_cntlr_cnt=2,da_clkrst_cnt=25,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=20,numReposBlks=12,numNonXlnxBlks=0,numHierBlks=8,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=21,da_axi4_s2mm_cnt=1,da_board_cnt=1,da_bram_cntlr_cnt=2,da_clkrst_cnt=25,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (ACQ_ABORT,
     ACQ_AXI_RUN,
@@ -144,15 +144,6 @@ module design_1
   wire adc_axi_streamer_acq_done;
   wire adc_axi_streamer_acq_have_trig;
   wire adc_axi_streamer_adc_fifo_full;
-  wire [31:0]adc_axi_streamer_dbg_acq_axi_downcounter;
-  wire adc_axi_streamer_dbg_acq_axi_running;
-  wire [31:0]adc_axi_streamer_dbg_acq_axi_upcounter;
-  wire [10:0]adc_axi_streamer_dbg_acq_trigger_out_ctr;
-  wire [5:0]adc_axi_streamer_dbg_adcstream_state;
-  wire adc_axi_streamer_dbg_axi_rdy;
-  wire [15:0]adc_axi_streamer_dbg_rd_data_count;
-  wire adc_axi_streamer_dbg_trig_post_fifo;
-  wire [15:0]adc_axi_streamer_dbg_wr_data_count;
   wire [63:0]adc_axi_streamer_m00_axis_tdata;
   wire adc_axi_streamer_m00_axis_tlast;
   wire adc_axi_streamer_m00_axis_tvalid;
@@ -401,15 +392,6 @@ module design_1
         .adc_data_valid(ADC_DATA_VALID_1),
         .adc_eof(ADC_DATA_EOF_1),
         .adc_fifo_reset(ADC_FIFO_RESET_1),
-        .dbg_acq_axi_downcounter(adc_axi_streamer_dbg_acq_axi_downcounter),
-        .dbg_acq_axi_running(adc_axi_streamer_dbg_acq_axi_running),
-        .dbg_acq_axi_upcounter(adc_axi_streamer_dbg_acq_axi_upcounter),
-        .dbg_acq_trigger_out_ctr(adc_axi_streamer_dbg_acq_trigger_out_ctr),
-        .dbg_adcstream_state(adc_axi_streamer_dbg_adcstream_state),
-        .dbg_axi_rdy(adc_axi_streamer_dbg_axi_rdy),
-        .dbg_rd_data_count(adc_axi_streamer_dbg_rd_data_count),
-        .dbg_trig_post_fifo(adc_axi_streamer_dbg_trig_post_fifo),
-        .dbg_wr_data_count(adc_axi_streamer_dbg_wr_data_count),
         .m00_axis_aclk(processing_system7_0_FCLK_CLK0),
         .m00_axis_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .m00_axis_tdata(adc_axi_streamer_m00_axis_tdata),
@@ -715,38 +697,6 @@ module design_1
         .rstb_busy(blk_mem_gen_0_rstb_busy),
         .wea(axi_bram_ctrl_0_BRAM_PORTA_WE),
         .web(CFG_BRAM_WEB_1));
-  design_1_ila_0_0 ila_0
-       (.clk(processing_system7_0_FCLK_CLK0),
-        .probe0(adc_axi_streamer_m00_axis_tdata),
-        .probe1(adc_axi_streamer_m00_axis_tlast),
-        .probe10(ACQ_AXI_RUN_1),
-        .probe11(adc_axi_streamer_dbg_rd_data_count),
-        .probe12(adc_axi_streamer_dbg_wr_data_count),
-        .probe13(ACQ_RUN_1),
-        .probe14(ACQ_ABORT_1),
-        .probe15(adc_axi_streamer_adc_fifo_full),
-        .probe16(adc_axi_streamer_dbg_adcstream_state),
-        .probe17(adc_axi_streamer_dbg_axi_rdy),
-        .probe18(adc_axi_streamer_dbg_acq_axi_running),
-        .probe19(adc_axi_streamer_dbg_acq_axi_upcounter),
-        .probe2(adc_axi_streamer_m00_axis_tvalid),
-        .probe20(adc_axi_streamer_dbg_acq_axi_downcounter),
-        .probe21(adc_axi_streamer_dbg_acq_trigger_out_ctr),
-        .probe22(adc_axi_streamer_acq_have_trig),
-        .probe23(adc_axi_streamer_trigger_out),
-        .probe24(axi_dma_mm2s_introut),
-        .probe25(axi_dma_s2mm_introut),
-        .probe26(ACQ_TRIG_MASK_1),
-        .probe27(ADC_FIFO_RESET_1),
-        .probe28(ACQ_TRIGGER_IN_1),
-        .probe29(adc_axi_streamer_dbg_trig_post_fifo),
-        .probe3(axi_dma_s_axis_s2mm_tready),
-        .probe4(adc_axi_streamer_acq_done),
-        .probe5(adc_axi_streamer_trigger_pos),
-        .probe6(ADC_BUS_1),
-        .probe7(ACQ_DEPTH_MUX),
-        .probe8(ACQ_DEPTH_A_1),
-        .probe9(ACQ_DEPTH_B_1));
   (* BMM_INFO_PROCESSOR = "arm > design_1 axi_bram_ctrl_0" *) 
   (* KEEP_HIERARCHY = "yes" *) 
   design_1_processing_system7_0_1 processing_system7_0

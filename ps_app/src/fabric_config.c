@@ -43,15 +43,18 @@ void fabcfg_init()
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_DONE, 0);
 
-	// Run the initial commit so that data is made available in BRAM
+	// Run the initial commit so that data is made available in BRAM.
+	// Run this twice to fix occasional power on reset bug.
+	fabcfg_commit();
+	bogo_delay(100000);
 	fabcfg_commit();
 
 	// Verify that magic value is present and correct
 	magic = fabcfg_read(FAB_CFG_MAGIC1);
-	if(magic == FAB_MAGIC_VALUE) {
+	if(magic == FAB_CFG_MAGIC_VALUE) {
 		d_printf(D_INFO, "FabCfg: Magic value: 0x%08x - OK", magic);
 	} else {
-		d_printf(D_ERROR, "FabCfg: Magic value: 0x%08x - Not OK, Expect 0x%08x", magic, FAB_MAGIC_VALUE);
+		d_printf(D_ERROR, "FabCfg: Magic value: 0x%08x - Not OK, Expect 0x%08x", magic, FAB_CFG_MAGIC_VALUE);
 		exit(-1);
 	}
 
@@ -72,7 +75,7 @@ void fabcfg_init()
 		if(test == fbcfg_dummy_tests[i]) {
 			d_printf(D_EXINFO, "FabCfg: DummyTest1 value: 0x%08x - OK", test);
 		} else {
-			d_printf(D_ERROR, "FabCfg: DummyTest1 value: 0x%08x - Not OK, Expect 0x%08x", test, FAB_TEST_VALUE1);
+			d_printf(D_ERROR, "FabCfg: DummyTest1 value: 0x%08x - Not OK, Expect 0x%08x", test, fbcfg_dummy_tests[i]);
 			exit(-1);
 		}
 
@@ -81,9 +84,14 @@ void fabcfg_init()
 		if(test == fbcfg_dummy_tests[i]) {
 			d_printf(D_EXINFO, "FabCfg: DummyTest2 value: 0x%08x - OK", test);
 		} else {
-			d_printf(D_ERROR, "FabCfg: DummyTest2 value: 0x%08x - Not OK, Expect 0x%08x", test, FAB_TEST_VALUE1);
+			d_printf(D_ERROR, "FabCfg: DummyTest2 value: 0x%08x - Not OK, Expect 0x%08x", test, fbcfg_dummy_tests[i]);
 			exit(-1);
 		}
+
+
+		fabcfg_write(FAB_CFG_DUMMY1, 0x12345678);
+		fabcfg_write(FAB_CFG_DUMMY2, 0x87654321);
+		fabcfg_commit();
 	}
 
 	d_printf(D_INFO, "FabCfg: All tests passed");
@@ -98,17 +106,6 @@ void fabcfg_init()
 
 	d_printf(D_INFO, "FabCfg: Bitstream version %d.%02d, code 0x%04x, userid 0x%08x", \
 			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
-
-#if 0
-	/*
-	 * Write GPIOs for test purposes.
-	 */
-	while(1) {
-		fabcfg_write(FAB_CFG_GPIO_TEST, i);
-		fabcfg_commit();
-		i++;
-	}
-#endif
 }
 
 /*
@@ -141,24 +138,52 @@ void fabcfg_write(uint32_t reg, uint32_t data)
  */
 void fabcfg_commit()
 {
-	int timeout = 1000;
+	/*
+	 * Drive COMMIT signal for some short period of time, long enough to
+	 * latch the rising edge on the PL side. Then read the DONE pin and wait
+	 * for a logic high to indicate completion of readout.
+	 */
+	fabcfg_fastcfg_start();
 
-	// Drive COMMIT for 10us (TODO: PL needs to ignore continuously held COMMIT signal as this will
-	// lead to DONE never reading HIGH.)
-	XGpioPs_WritePin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
-	bogo_delay(1);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 0);
+	/*
+	 * Wait for the fabric to send the done signal.  It might already be done
+	 * by the time we hit this function.
+	 */
+	fabcfg_fastcfg_wait();
+}
 
-	// Read the DONE pin and wait for a logic HIGH.  (Wait up to 10ms.)
-	d_start_timing(15);
-	while(timeout--) {
-		if(XGpioPs_ReadPin(&g_hal.xgpio_ps, FAB_CFG_EMIO_DONE)) {
+/*
+ * Fast fabric commit start.  Initiates the transfer of new information while
+ * the PS is otherwise busy.
+ */
+void fabcfg_fastcfg_start()
+{
+	int i;
+
+	emio_fast_write(FAB_CFG_EMIO_COMMIT, 1);
+
+	for(i = 0; i < FAB_CFG_COMMIT_TIME; i++) {
+		// if DONE signal is low then we can exit early
+		if(!emio_fast_read(FAB_CFG_EMIO_DONE)) {
 			break;
 		}
-		bogo_delay(1);
 	}
-	d_stop_timing(15);
-	//d_dump_timing_ex("FabCfg commit", 15);
+
+	emio_fast_write(FAB_CFG_EMIO_COMMIT, 0);
+}
+
+/*
+ * Fast fabric commit wait.  Waits for DONE signal.
+ */
+void fabcfg_fastcfg_wait()
+{
+	int i, timeout = 10000;
+
+	while(timeout--) {
+		if(emio_fast_read(FAB_CFG_EMIO_DONE)) {
+			break;
+		}
+	}
 
 	if(timeout == 0) {
 		d_printf(D_ERROR, "FabCfg: Timeout waiting for fabric to respond to COMMIT");

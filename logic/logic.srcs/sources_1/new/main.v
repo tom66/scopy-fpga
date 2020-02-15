@@ -51,12 +51,19 @@ module main(
     led_PL1         // diagnostic LED PL1
  );
 
-// EMIO indexes: need to be updated
+// EMIO indexes for interface port
 parameter EMIO_ACQ_RUN = 0;
 parameter EMIO_ACQ_ABORT = 1;
 parameter EMIO_ACQ_DONE = 2;
 parameter EMIO_CFG_COMMIT = 3;
 parameter EMIO_CFG_DONE = 4;
+parameter EMIO_ACQ_TRIG_MASK = 5;
+parameter EMIO_ACQ_FIFO_RESET = 6;
+parameter EMIO_ACQ_HAVE_TRIG = 7;
+parameter EMIO_ACQ_TRIG_RST = 8;
+parameter EMIO_ACQ_DEPTH_MUX = 9;
+parameter EMIO_ACQ_AXI_RUN = 10;
+parameter EMIO_ACQ_DATA_LOSS = 12;
 
 //output csi_clk_p, csi_clk_n, csi_d0_p, csi_d0_n, csi_d1_p, csi_d1_n, csi_lpd0_n, csi_lpd0_p, csi_lpd1_n, csi_lpd1_p, csi_lpclk_n, csi_lpclk_p;
 input adc_l1a_p, adc_l1a_n, adc_l1b_p, adc_l1b_n, adc_l2a_p, adc_l2a_n, adc_l2b_p, adc_l2b_n, adc_l3a_p, adc_l3a_n;
@@ -105,9 +112,19 @@ end
 /*
  * Connection to Block Design.
  */
+wire acq_done, acq_have_trig, acq_data_loss, fabcfg_done;
+assign emio_input[EMIO_CFG_DONE] = fabcfg_done;
+wire fabcfg_commit = emio_output[EMIO_CFG_COMMIT];
 wire acq_run = emio_output[EMIO_ACQ_RUN];
 wire acq_abort = emio_output[EMIO_ACQ_ABORT];
 assign emio_input[EMIO_ACQ_DONE] = acq_done;
+wire acq_trig_mask = emio_output[EMIO_ACQ_TRIG_MASK];
+wire acq_trig_rst = emio_output[EMIO_ACQ_TRIG_RST];
+wire acq_depth_mux = emio_output[EMIO_ACQ_DEPTH_MUX];
+wire acq_axi_run = emio_output[EMIO_ACQ_AXI_RUN];
+wire acq_fifo_reset = emio_output[EMIO_ACQ_FIFO_RESET];
+assign emio_input[EMIO_ACQ_HAVE_TRIG] = acq_have_trig;
+assign emio_input[EMIO_ACQ_DATA_LOSS] = acq_data_loss;
 
 wire [63:0] emio_output;
 wire [63:0] emio_input;
@@ -137,15 +154,15 @@ design_1 (
     // TODO: EMIO constant indexes to be parameterised
     .ACQ_RUN(acq_run),
     .ACQ_ABORT(acq_abort),
-    .ACQ_TRIG_MASK(emio_output[5]),
-    .ACQ_TRIG_RST(emio_output[8]),
-    .ACQ_DEPTH_MUX(emio_output[9]),
+    .ACQ_TRIG_MASK(acq_trig_mask),
+    .ACQ_TRIG_RST(acq_trig_rst),
+    .ACQ_DEPTH_MUX(acq_depth_mux),
     .ACQ_DEPTH_A(R_acq_size_a),
     .ACQ_DEPTH_B(R_acq_size_b),
-    .ACQ_AXI_RUN(emio_output[10]),
+    .ACQ_AXI_RUN(acq_axi_run),
     .ACQ_DONE(acq_done),
-    .ACQ_HAVE_TRIG(emio_input[7]),
-    .ACQ_DATA_LOSS(emio_input[12]),     // Data loss signal to PS indicating that FIFO data may be stale due to read delay
+    .ACQ_HAVE_TRIG(acq_have_trig),
+    .ACQ_DATA_LOSS(acq_data_loss),      // Data loss signal to PS indicating that FIFO data may be stale due to read delay
     .TRIGGER_IN(trig_gen),              // Level sensitive trigger input from trigger block
     .TRIGGER_SUB_WORD(3'b000),          // Fixed value for now; later this will indicate which word generated event first
     .TRIGGER_POS(R_acq_trigger_ptr),    // Registered trigger output position for FabCfg
@@ -160,6 +177,10 @@ design_1 (
     .CFG_BRAM_WEB(cfg_bram_web),
     .CFG_BRAM_BUSYB(cfg_bram_busyb),
     .CFG_BRAM_RSTB(1'b0),
+    
+    // Monitor signals for ILA
+    .FABCFG_COMMIT_MON(fabcfg_commit),
+    .FABCFG_DONE_MON(fabcfg_done),
     
     // Master clock (~177MHz currently, actual value not particularly important but must be
     // set up in clock wizards correctly.)
@@ -191,8 +212,8 @@ cfg_bram_controller (
     .cfg_bram_en(cfg_bram_enb),
     .cfg_bram_we(cfg_bram_web),
     .cfg_bram_busy(cfg_bram_busyb),
-    .cfg_commit(emio_output[EMIO_CFG_COMMIT]),
-    .cfg_commit_done(emio_input[EMIO_CFG_DONE]),
+    .cfg_commit(fabcfg_commit),
+    .cfg_commit_done(fabcfg_done),
     .g_rst(g_rst_gen),
     .clk_ref(clk_master),
     

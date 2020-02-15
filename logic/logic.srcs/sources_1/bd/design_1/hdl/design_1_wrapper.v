@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 15 08:39:28 2020
+//Date        : Sat Feb 15 21:20:20 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -51,6 +51,8 @@ module design_1_wrapper
     DDR_we_n,
     EMIO_I,
     EMIO_O,
+    FABCFG_COMMIT_MON,
+    FABCFG_DONE_MON,
     FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
@@ -104,6 +106,8 @@ module design_1_wrapper
   inout DDR_we_n;
   input [63:0]EMIO_I;
   output [63:0]EMIO_O;
+  input FABCFG_COMMIT_MON;
+  input FABCFG_DONE_MON;
   output FCLK_CLK0;
   inout FIXED_IO_ddr_vrn;
   inout FIXED_IO_ddr_vrp;
@@ -158,6 +162,8 @@ module design_1_wrapper
   wire DDR_we_n;
   wire [63:0]EMIO_I;
   wire [63:0]EMIO_O;
+  wire FABCFG_COMMIT_MON;
+  wire FABCFG_DONE_MON;
   wire FCLK_CLK0;
   wire FIXED_IO_ddr_vrn;
   wire FIXED_IO_ddr_vrp;
@@ -213,6 +219,8 @@ module design_1_wrapper
         .DDR_we_n(DDR_we_n),
         .EMIO_I(EMIO_I),
         .EMIO_O(EMIO_O),
+        .FABCFG_COMMIT_MON(FABCFG_COMMIT_MON),
+        .FABCFG_DONE_MON(FABCFG_DONE_MON),
         .FCLK_CLK0(FCLK_CLK0),
         .FIXED_IO_ddr_vrn(FIXED_IO_ddr_vrn),
         .FIXED_IO_ddr_vrp(FIXED_IO_ddr_vrp),
