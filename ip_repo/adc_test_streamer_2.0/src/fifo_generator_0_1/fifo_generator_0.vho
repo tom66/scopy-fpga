@@ -57,15 +57,17 @@ COMPONENT fifo_generator_0
     rst : IN STD_LOGIC;
     wr_clk : IN STD_LOGIC;
     rd_clk : IN STD_LOGIC;
-    din : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+    din : IN STD_LOGIC_VECTOR(64 DOWNTO 0);
     wr_en : IN STD_LOGIC;
     rd_en : IN STD_LOGIC;
-    dout : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+    dout : OUT STD_LOGIC_VECTOR(64 DOWNTO 0);
     full : OUT STD_LOGIC;
     empty : OUT STD_LOGIC;
-    rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
-    wr_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
-    prog_empty : OUT STD_LOGIC
+    rd_data_count : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
+    wr_data_count : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
+    prog_empty : OUT STD_LOGIC;
+    wr_rst_busy : OUT STD_LOGIC;
+    rd_rst_busy : OUT STD_LOGIC
   );
 END COMPONENT;
 -- COMP_TAG_END ------ End COMPONENT Declaration ------------
@@ -87,7 +89,9 @@ your_instance_name : fifo_generator_0
     empty => empty,
     rd_data_count => rd_data_count,
     wr_data_count => wr_data_count,
-    prog_empty => prog_empty
+    prog_empty => prog_empty,
+    wr_rst_busy => wr_rst_busy,
+    rd_rst_busy => rd_rst_busy
   );
 -- INST_TAG_END ------ End INSTANTIATION Template ---------
 

@@ -51,7 +51,7 @@ module main(
     led_PL1         // diagnostic LED PL1
  );
 
-// EMIO indexes
+// EMIO indexes: need to be updated
 parameter EMIO_ACQ_RUN = 0;
 parameter EMIO_ACQ_ABORT = 1;
 parameter EMIO_ACQ_DONE = 2;
@@ -79,19 +79,11 @@ reg g_rst_gen = 0;
 reg g_rst_state = 0;
 reg [7:0] g_rst_counter = 0;
 
-//wire [63:0] adc_bus;
 wire adc_data_clk;
 
-wire [63:0] emio_output;
-wire [63:0] emio_input;
-reg [14:0] pl_irq;
-
 // Reset pulse generator. Generates a one time reset pulse for the following blocks.
-// TODO:  I think this should become a global block.
+// TODO:  I think this should become a global block and be driven by the PS.
 always @(posedge clk_master) begin
-
-    // test EMIO
-    emio_counter <= emio_counter + 1;
 
     if (g_rst_state == 0) begin
     
@@ -110,9 +102,18 @@ always @(posedge clk_master) begin
     
 end
 
-//wire adc_valid;
-wire [63:0] adc_bus;
+/*
+ * Connection to Block Design.
+ */
+wire acq_run = emio_output[EMIO_ACQ_RUN];
+wire acq_abort = emio_output[EMIO_ACQ_ABORT];
+assign emio_input[EMIO_ACQ_DONE] = acq_done;
 
+wire [63:0] emio_output;
+wire [63:0] emio_input;
+reg [14:0] pl_irq;
+wire acq_done;
+wire [63:0] adc_bus;
 wire [31:0] cfg_bram_addrb;
 wire [31:0] cfg_bram_doutb;
 wire [31:0] cfg_bram_dinb;
@@ -120,6 +121,9 @@ wire cfg_bram_clkb;
 wire [3:0] cfg_bram_web;
 wire cfg_bram_enb;
 wire cfg_bram_busyb;
+
+// Test trigger generator
+reg trig_gen = 0;
 
 design_1 (
     // 64-bit ADC bus
@@ -131,21 +135,21 @@ design_1 (
     
     // Acquisition/control bus
     // TODO: EMIO constant indexes to be parameterised
-    .ACQ_RUN(emio_output[0]),
-    .ACQ_ABORT(emio_output[1]),
+    .ACQ_RUN(acq_run),
+    .ACQ_ABORT(acq_abort),
     .ACQ_TRIG_MASK(emio_output[5]),
     .ACQ_TRIG_RST(emio_output[8]),
     .ACQ_DEPTH_MUX(emio_output[9]),
     .ACQ_DEPTH_A(R_acq_size_a),
     .ACQ_DEPTH_B(R_acq_size_b),
     .ACQ_AXI_RUN(emio_output[10]),
-    .ACQ_DONE(emio_input[2]),
+    .ACQ_DONE(acq_done),
     .ACQ_HAVE_TRIG(emio_input[7]),
-    .ACQ_DATA_LOSS(emio_input[11]),     // Data loss signal to PS indicating that FIFO data may be stale due to read delay
-    .TRIGGER_IN(1'b0),                  // Level sensitive trigger input from trigger block
-    .TRIGGER_SUB_WORD(3'b101),          // Fixed value for now; later this will indicate which word generated event 1st
+    .ACQ_DATA_LOSS(emio_input[12]),     // Data loss signal to PS indicating that FIFO data may be stale due to read delay
+    .TRIGGER_IN(trig_gen),              // Level sensitive trigger input from trigger block
+    .TRIGGER_SUB_WORD(3'b000),          // Fixed value for now; later this will indicate which word generated event first
     .TRIGGER_POS(R_acq_trigger_ptr),    // Registered trigger output position for FabCfg
-    .TRIGGER_OUT(trig_out),             // Trigger output to GPIO
+    .TRIGGER_OUT(trig_out),             // Trigger output to GP output multiplexer
     
     // FabCfg interface to AXI BRAM
     .CFG_BRAM_ADDRB(cfg_bram_addrb),
@@ -319,38 +323,27 @@ assign adc_bus[55:48] = adc_data_latched_6[7:0];
 assign adc_bus[63:56] = adc_data_latched_7[7:0];
 */
 
-reg [7:0] rep_counter;
 reg [31:0] adc32_counter;
+wire [15:0] adc_trigref = adc32_counter[15:0];
 
 assign adc_bus[31:0 ] = adc32_counter;
 assign adc_bus[63:32] = adc32_counter;
 
-/*
-wire [63:0] adc_bus;
-
-assign adc_bus[ 7: 0] = rep_counter;
-assign adc_bus[15: 8] = rep_counter;
-assign adc_bus[23:16] = rep_counter;
-assign adc_bus[31:24] = rep_counter;
-assign adc_bus[39:32] = rep_counter;
-assign adc_bus[47:40] = rep_counter;
-assign adc_bus[55:48] = rep_counter;
-assign adc_bus[63:56] = rep_counter;
-*/
-
 always @(posedge adc_data_clk) begin
 
     //rep_counter <= rep_counter + 1;
-    adc32_counter <= adc32_counter + 1;
-    
-    /*
-    adc_testcntr <= adc_testcntr + 1;
-    
-    if (adc_testcntr == 0) begin
-        led_PL1 <= ~led_PL1;
+    if (acq_run) begin
+        adc32_counter <= adc32_counter + 1;
     end
-    */
-
+    
+    // trigger is 1cyc long max.
+    if (trig_gen) begin
+        trig_gen <= 0;
+    end else if ((adc_trigref == 16'h0200) && acq_run) begin
+        // generate trigger on test word
+        trig_gen <= 1;
+    end 
+    
 end
 
 endmodule

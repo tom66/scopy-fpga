@@ -43,23 +43,27 @@
 
 int main()
 {
-	int res, i;
+	int res, i, j;
 
 	hal_init();
 	acq_init();
 
-	/*
-	d_start_timing(0);
+#if 0
+	while(1) {
+		gpio_led_write(0, 1);
+		d_start_timing(0);
 
-	for(i = 0; i < 100000; i++) {
-		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
-		emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
-		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
-		emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+		for(i = 0; i < 1000000; i++) {
+			emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+			emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+			emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+			emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+		}
+
+		d_stop_timing(0);
+		gpio_led_write(0, 0);
+		d_dump_timing("EMIO fast test II", 0);
 	}
-
-	d_stop_timing(0);
-	d_dump_timing("EMIO fast test", 0);
 
 	d_start_timing(0);
 
@@ -72,12 +76,15 @@ int main()
 
 	d_stop_timing(0);
 	d_dump_timing("Xilinx GPIO test", 0);
-	*/
+#endif
 
-	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
+	//d_printf(D_INFO, "0x%08x", g_hal.xgpio_ps.GpioConfig.BaseAddr);
+
+	//res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 4096, 400);
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
-	acq_debug_dump_wavedata();
+	//acq_debug_dump_wavedata();
 
 	d_printf(D_WARN, "Press key to start");
 	d_waitkey();
@@ -85,14 +92,16 @@ int main()
 	d_printf(D_WARN, "Press key again");
 	d_waitkey();
 
-	d_printf(D_WARN, "Press key again");
-	d_waitkey();
+	//d_printf(D_WARN, "Press key again");
+	//d_waitkey();
 
 	d_printf(D_INFO, "Starting acquisition");
 	res = acq_start();
+
 	d_printf(D_INFO, "acq_start = %d", res);
 
-	acq_debug_dump();
+	//bogo_delay(1000000);
+	//acq_debug_dump();
 
 	/*
 	d_printf(D_INFO, "Waiting...");
@@ -104,12 +113,15 @@ int main()
 	}
 	*/
 
-	d_printf(D_INFO, "Busy Wait...");
-	bogo_delay(5000000);
+#if 0
+	d_printf(D_RAW, "\r\n\r\n\033[2J\033[0m\r\n");
 
-	acq_debug_dump_wavedata();
-
-	d_printf(D_INFO, "Done!");
+	while(1) {
+		d_printf(D_RAW, "\r\n\r\n\033[1;1H\033[0m\r\n");
+		acq_debug_dump();
+		bogo_delay(100000);
+	}
+#endif
 
 #if 0
 	d_start_timing(2);
@@ -121,6 +133,11 @@ int main()
 
 	acq_debug_dump();
 #endif
+
+	bogo_delay(4000000);
+	acq_debug_dump();
+
+	while(1) ;
 
     cleanup_platform();
 }

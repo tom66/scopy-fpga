@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb  8 23:03:24 2020
+//Date        : Sat Feb 15 08:39:28 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -12,6 +12,7 @@
 module design_1_wrapper
    (ACQ_ABORT,
     ACQ_AXI_RUN,
+    ACQ_DATA_LOSS,
     ACQ_DEPTH_A,
     ACQ_DEPTH_B,
     ACQ_DEPTH_MUX,
@@ -64,6 +65,7 @@ module design_1_wrapper
     TRIGGER_SUB_WORD);
   input ACQ_ABORT;
   input ACQ_AXI_RUN;
+  output ACQ_DATA_LOSS;
   input [28:0]ACQ_DEPTH_A;
   input [28:0]ACQ_DEPTH_B;
   input ACQ_DEPTH_MUX;
@@ -117,6 +119,7 @@ module design_1_wrapper
 
   wire ACQ_ABORT;
   wire ACQ_AXI_RUN;
+  wire ACQ_DATA_LOSS;
   wire [28:0]ACQ_DEPTH_A;
   wire [28:0]ACQ_DEPTH_B;
   wire ACQ_DEPTH_MUX;
@@ -171,6 +174,7 @@ module design_1_wrapper
   design_1 design_1_i
        (.ACQ_ABORT(ACQ_ABORT),
         .ACQ_AXI_RUN(ACQ_AXI_RUN),
+        .ACQ_DATA_LOSS(ACQ_DATA_LOSS),
         .ACQ_DEPTH_A(ACQ_DEPTH_A),
         .ACQ_DEPTH_B(ACQ_DEPTH_B),
         .ACQ_DEPTH_MUX(ACQ_DEPTH_MUX),

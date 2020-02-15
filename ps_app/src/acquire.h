@@ -72,6 +72,11 @@
 #define ACQRES_MALLOC_FAIL			-1
 #define ACQRES_OK					0
 
+// Flags for acq_buffer_t
+#define ACQBUF_FLAG_PKT_DONE		0x0001
+#define ACQBUF_FLAG_PKT_OVERRUN		0x0002							// Packet contains bad data due to FIFO overrun and will be discarded
+#define ACQBUF_FLAG_ALLOC			0x0080							// Marker flag set when memory allocated for this buffer
+
 // Demux register on PL.  6-bits wide
 #define ADCDEMUX_1CH				0x01
 #define ADCDEMUX_2CH				0x02
@@ -98,6 +103,7 @@
 #define ACQ_EMIO_DEPTH_MUX			(54 + 9)						// Depth multiplex signal: '0' to use A counter, '1' to use B counter (pre and post trigger sizes)
 #define ACQ_EMIO_AXI_RUN			(54 + 10)						// AXI Bus pause/run control
 #define ACQ_EMIO_ADC_VALID			(54 + 11)						// ADC Valid signal (indicates ADC data should be used)
+#define ACQ_EMIO_FIFO_OVERRUN		(54 + 12)						// Overrun signal from fabric indicating FIFO data loss.  FIFO reset required.
 
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
@@ -113,9 +119,12 @@ struct acq_stat_t {
 	uint64_t num_post_total;			// Total number of post-trigger acq. completed
 	uint64_t num_err_total;				// Total number of errors during transfer
 	uint64_t num_samples;				// Total number of samples acquired into memory (excluding pre-trig fill)
+	uint64_t num_samples_raw;			// Total number of samples acquired into memory (including pre-trig fill); not entirely correct!
 	uint64_t num_alloc_err_total;		// Total number of errors while allocating buffers
 	uint64_t num_alloc_total;			// Total number of successful buffer allocations
 	uint64_t num_irqs;					// Total number of IRQs for DMA
+	uint64_t num_fifo_full;				// Total number of FIFO full events
+	uint64_t num_fifo_pkt_dscd;			// Total number of discarded packets due to FIFO overrun
 };
 
 /*
@@ -127,6 +136,7 @@ struct acq_buffer_t {
 	uint32_t *buff_alloc;		// Pointer that was actually allocated
 	uint32_t *buff_acq;			// Pointer that is used for acquisition
 	uint32_t trigger_at;
+	uint16_t flags;
 	struct acq_buffer_t *next;
 };
 
@@ -155,7 +165,7 @@ struct acq_state_t {
 	uint32_t num_acq_made;		// Number of acquisitions made so far
 
 	/*
-	 * Sizes (in samples) of the acquisition data;  the counts are given in samples
+	 * Sizes (in words) of the acquisition data;  the counts are given in 64-bit words
 	 * so there is an 8x or 4x relationship to the byte counts. This maximises the depth of
 	 * the on-fabric 28-bit counter.
 	 */
@@ -168,6 +178,10 @@ struct acq_state_t {
 	// Statistics counters
 	struct acq_stat_t stats;
 
+	// Structure used to calculate acquisition rate
+	uint64_t last_debug_timer;
+	struct acq_stat_t stat_last;
+
 	// Pointer to the first and current acquisiton buffers.
 	struct acq_buffer_t *acq_first;
 	struct acq_buffer_t *acq_current;
@@ -177,6 +191,8 @@ extern struct acq_state_t g_acq_state;
 
 void _acq_irq_error_dma();
 void _acq_irq_rx_handler(void *cb);
+void _acq_reset_PL_fifo();
+void _acq_wait_for_ndone();
 void acq_init();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();

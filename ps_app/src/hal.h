@@ -109,7 +109,57 @@ float d_read_timing_us(int index);
 void d_dump_timing(char *s, int index);
 void d_dump_timing_ex(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
-void emio_fast_set(int pin);
-void emio_fast_clr(int pin);
+
+/**
+ * Fast read/write functions for EMIO port.  These are inlined
+ * into code where possible and included in the .h as they are not
+ * linked objects.
+ */
+
+/*
+ * Write a pin on the EMIO port quickly.  Only supports pins in range 53 ~ 117.
+ */
+inline static void emio_fast_write(unsigned int pin, int state)
+{
+	unsigned int bank;
+	uint32_t write;
+	uint32_t *reg;
+
+	D_ASSERT(pin >= 53 && pin <= 117) ;
+
+	state &= 1;
+	pin -= 54;
+	bank = (pin >> 5) + 2; // divide by 32, starting at offset '2'
+	reg = (uint32_t*)(bank * XGPIOPS_DATA_MASK_OFFSET);
+
+	if(pin > 15) {
+		pin -= 16;
+		reg += XGPIOPS_DATA_MSW_OFFSET;
+	} else {
+		reg += XGPIOPS_DATA_LSW_OFFSET;
+	}
+
+	write = ~(1 << (pin + 16)) & ((state << pin) | 0xffff0000);
+
+	XGpioPs_WriteReg(XPS_GPIO_BASEADDR, reg, write);
+}
+
+/*
+ * Read a pin on the EMIO port quickly.  Only supports pins in range 53 ~ 117.
+ */
+inline static int emio_fast_read(unsigned int pin)
+{
+	unsigned int bank;
+	uint32_t read;
+	uint32_t *reg;
+
+	D_ASSERT(pin >= 53 && pin <= 117) ;
+
+	pin -= 54;
+	bank = (pin >> 5) + 2;
+	reg = (uint32_t*)(bank * XGPIOPS_DATA_BANK_OFFSET);
+
+	return (XGpioPs_ReadReg(XPS_GPIO_BASEADDR, ((bank) * XGPIOPS_DATA_BANK_OFFSET) + XGPIOPS_DATA_RO_OFFSET) >> pin) & 0x01;
+}
 
 #endif /* SRC_HAL_H_ */

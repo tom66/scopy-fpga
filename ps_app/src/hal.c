@@ -481,35 +481,3 @@ void d_xilinx_assert(const char8 *file, s32 line)
 {
 	d_printf(D_ERROR, "Assert failed at line %d of file `%s'\r\n", line, file);
 }
-
-/**
- * Fast pin set/clear routine for EMIO range (53 ~ 117).  Do not use for regular GPIO.
- */
-void emio_fast_write(unsigned int pin, int state)
-{
-	unsigned int bank;
-	uint32_t write;
-	uint32_t *reg;
-
-	D_ASSERT(pin >= 53 && pin <= 117) ;
-
-	state &= 1;
-	pin -= 54;
-	bank = (pin >> 5) + 2; // divide by 32, starting at offset '2'
-
-	reg = (uint32_t*)(bank * XGPIOPS_DATA_MASK_OFFSET);
-	//reg += XGPIOPS_DATA_MSW_OFFSET * (pin > 15);
-	//pin &= 0xf;
-
-	if(pin > 15) {
-		pin -= 16;
-		reg += XGPIOPS_DATA_MSW_OFFSET;
-	} else {
-		reg += XGPIOPS_DATA_LSW_OFFSET;
-	}
-
-	write = ~(1 << (pin + 16)) & ((state << pin) | 0xffff0000);
-
-	XGpioPs_WriteReg(g_hal.xgpio_ps.GpioConfig.BaseAddr, reg, write);
-}
-

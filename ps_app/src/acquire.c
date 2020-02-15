@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <math.h>
 #include <errno.h>
 
 #include "hal.h"
@@ -31,8 +32,6 @@ const char *acq_substate_to_str[] = {
 
 // This block is in OCM to ensure fast access during DMA acquisition/interrupts.
 struct acq_state_t g_acq_state; // __attribute__((section(".force_ocm")));
-
-uint32_t test_buffsz = 768;
 
 uint32_t test_sizes[1000];
 uint32_t test_sizeptr = 0;
@@ -57,6 +56,7 @@ void _acq_irq_rx_handler(void *callback)
 
 	//d_printf(D_INFO, "L:%08x", XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET));
 
+#if 0
 	if(test_sizeptr < 1000) {
 		test_sizes[test_sizeptr++] = XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET);
 	} else {
@@ -66,33 +66,18 @@ void _acq_irq_rx_handler(void *callback)
 			d_printf(D_INFO, "L%4d:%08x(%d)", i, test_sizes[i], test_sizes[i]);
 		}
 
-		d_printf(D_INFO, "** eof error **");
-		while(1) ;
+		test_sizeptr = 0;
 	}
+#endif
 
 	/*
 	 * Check for a DMA Error.  Error conditions force an increase of the error
 	 * statistic counter and a reset of the state machine and DMA.
 	 */
-#if 1
 	if(status & XAXIDMA_IRQ_ERROR_MASK) {
-		//d_printf(D_WARN, "XAXIDMA_IRQ_ERROR_MASK");
-
-		//d_printf(D_ERROR, "acquire: IRQ reports error (rxSR:0x%08x,txSR:0x%08x) during transfer (TLAST likely not asserted)", \
-		//		XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET),
-		//		XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_TX_OFFSET));
-		for(i = 0; i < test_sizeptr; i++) {
-			d_printf(D_INFO, "L%4d:%08x(%d)", i, test_sizes[i], test_sizes[i]);
-		}
-
-		d_printf(D_INFO, "** eof error **");
-		test_sizeptr = 0;
-
 		_acq_irq_error_dma();
-
-		//return;
+		return;
 	}
-#endif
 
 	/*
 	 * Check for IOC complete.  When an IOC event occurs it has occurred for one
@@ -106,20 +91,19 @@ void _acq_irq_rx_handler(void *callback)
 	 * which means we must start the new transaction within 4us (~2,700 CPU cycles)
 	 * to avoid any sample loss.
 	 */
-	//d_printf(D_WARN, "%08x", status);
-
 	if(status & XAXIDMA_IRQ_IOC_MASK) {
-		//d_printf(D_WARN, "XAXIDMA_IRQ_IOC_MASK");
-
 		switch(g_acq_state.sub_state) {
 			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
 			case ACQSUBST_PRE_TRIG_FILL:
+				// Force depth 'A'
+				emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
+
 				// Stop the AXI bus momentarily (TVALID will go low, TLAST will go high)
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
 				// Start the next transfer.
 				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
-						test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+						g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 				if(error != XST_SUCCESS) {
 					_acq_irq_error_dma();
@@ -127,14 +111,27 @@ void _acq_irq_rx_handler(void *callback)
 					return;
 				}
 
-				g_acq_state.sub_state = ACQSUBST_PRE_TRIG_WAIT;
-				g_acq_state.state = ACQSTATE_WAIT_TRIG;
+				/*
+				 * If the FIFO is full, don't allow us to exit this state.  Instead, send a reset pulse
+				 * to the FIFO and revert back to PRE_TRIG_FILL.
+				 */
+				if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
+					_acq_reset_PL_fifo();
+					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
+					g_acq_state.state = ACQSTATE_PREP;
+					g_acq_state.stats.num_fifo_full++;
+				} else {
+					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_WAIT;
+					g_acq_state.state = ACQSTATE_WAIT_TRIG;
+				}
 
 				// Demask triggers; start AXI bus transactions again.
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 0);
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+				emio_fast_write(ACQ_EMIO_TRIG_MASK, 0);
+				emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 				// Statistics
+				g_acq_state.stats.num_samples += g_acq_state.pre_buffsz;
+				g_acq_state.stats.num_samples_raw += g_acq_state.pre_buffsz;
 				g_acq_state.stats.num_acq_total++;
 				g_acq_state.stats.num_pre_total++;
 				g_acq_state.stats.num_pre_fill_total++;
@@ -146,17 +143,27 @@ void _acq_irq_rx_handler(void *callback)
 				 * post-trigger buffer; if not, then go back to the start.
 				 */
 				if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG)) {
-					// Stop the AXI bus momentarily (TVALID will go low)
-					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
-
 					// Tell the PL that we want to use the 'B' channel acquisition depth now.
-					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1);
+					emio_fast_write(ACQ_EMIO_DEPTH_MUX, 1);
+
+					// Stop the AXI bus momentarily (TVALID will go low)
+					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+
+					/*
+					 * If the FIFO is full, capture the data but set the discard flag.
+					 */
+					if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
+						//d_printf(D_ERROR, "FIFO OVERRUN!", error);
+						//_acq_reset_PL_fifo();
+						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
+						g_acq_state.stats.num_fifo_full++;
+					}
 
 					// XXX: DMA transfers are in BYTE SIZES, so convert pointer to an integer before
 					// adding the pre buffer offset.
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, \
 							((uint32_t)g_acq_state.acq_current->buff_acq) + g_acq_state.pre_buffsz, \
-							test_buffsz /*g_acq_state.post_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+							g_acq_state.post_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -165,7 +172,7 @@ void _acq_irq_rx_handler(void *callback)
 					}
 
 					// Start the AXI bus again (TVALID will go low)
-					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 					/*
 					 * We can relax a bit here. The transfer is now running, so record the address
@@ -174,13 +181,25 @@ void _acq_irq_rx_handler(void *callback)
 					fabcfg_commit();
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 					g_acq_state.sub_state = ACQSUBST_POST_TRIG;
+					g_acq_state.stats.num_samples_raw += g_acq_state.acq_current->trigger_at;
 					g_acq_state.stats.num_samples += g_acq_state.acq_current->trigger_at;
 				} else {
 					// No trigger. So just re-arm the pre-trigger, starting from the beginning of
 					// the acquisition buffer.
-					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
+					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+					_acq_wait_for_ndone();
+
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
-							test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+							g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
+
+					// If the FIFO is full, capture the data but set the discard flag.
+					// XXX: Since there's no trigger consider a FIFO reset instead?
+					if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
+						//d_printf(D_ERROR, "FIFO OVERRUN!", error);
+						_acq_reset_PL_fifo();
+						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
+						g_acq_state.stats.num_fifo_full++;
+					}
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -188,7 +207,8 @@ void _acq_irq_rx_handler(void *callback)
 						return;
 					}
 
-					XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
+					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+					g_acq_state.stats.num_samples_raw += g_acq_state.pre_buffsz;
 				}
 
 				// Statistics
@@ -213,25 +233,53 @@ void _acq_irq_rx_handler(void *callback)
 					return;
 				}
 
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);  	// Triggers masked
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 0);  		// Acquisition idled
-				XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);		// AXI bus activity paused
+				emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
+				emio_fast_write(ACQ_EMIO_RUN, 0);
+				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
-				// Allocate the next buffer if we haven't filled the total waveform count.
-				g_acq_state.num_acq_made++;
-				if(g_acq_state.num_acq_made == g_acq_state.num_acq_request) {
-					g_acq_state.sub_state = ACQSUBST_DONE_ALL;
-					g_acq_state.state = ACQSTATE_STOPPED;
-				} else {
-					acq_append_next_alloc();
+				g_acq_state.stats.num_samples_raw += g_acq_state.post_buffsz;
+				g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_DONE;
+
+				/*
+				 * If the OVERRUN flag was set, then this waveform should be discarded as it is not valid.  The
+				 * acquisition restarts on the same wave.
+				 */
+				if(g_acq_state.acq_current->flags & ACQBUF_FLAG_PKT_OVERRUN) {
+					g_acq_state.stats.num_fifo_pkt_dscd++;
+
+					// Start a new transfer, but without allocating a new buffer or increasing the waveform count
+					_acq_reset_PL_fifo();
 					error = acq_start();
 
 					if(error != ACQRES_OK) {
-						d_printf(D_ERROR, "acquire: unable to start next transfer, error %d", error);
+						d_printf(D_ERROR, "acquire: unable to reset current transfer, error %d", error);
 						_acq_irq_error_dma();
 						return;
 					}
+				} else {
+					// Allocate the next buffer if we haven't filled the total waveform count.
+					g_acq_state.num_acq_made++;
+					g_acq_state.stats.num_samples += g_acq_state.post_buffsz;
+
+					if(g_acq_state.num_acq_made == g_acq_state.num_acq_request) {
+						g_acq_state.sub_state = ACQSUBST_DONE_ALL;
+						g_acq_state.state = ACQSTATE_STOPPED;
+					} else {
+						error = acq_append_next_alloc();
+						d_printf(D_EXINFO, "acquire: alloc in IRQ %d", error);
+
+						_acq_reset_PL_fifo(); // XXX: This might not be needed and could reduce performance
+						error = acq_start();
+
+						if(error != ACQRES_OK) {
+							d_printf(D_ERROR, "acquire: unable to start next transfer, error %d", error);
+							_acq_irq_error_dma();
+							return;
+						}
+					}
 				}
+
+				g_acq_state.stats.num_post_total++;
 				break;
 		}
 	}
@@ -246,8 +294,40 @@ void _acq_irq_error_dma()
 	g_acq_state.stats.num_err_total++;
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.sub_state = ACQSUBST_NONE;
-	//XAxiDma_Reset(&g_acq_state.dma);
+	XAxiDma_Reset(&g_acq_state.dma);
 	return;
+}
+
+/*
+ * Force a reset of the PL FIFO.  Internal function - do not call outside of acquire engine.
+ */
+void _acq_reset_PL_fifo()
+{
+	volatile int i;
+
+	/*
+	 * The reset signal is sampled on the AXI clock (160MHz).  As a result it is necessary to
+	 * drive the reset pulse for some cycles to ensure that the reset is received and the state
+	 * machine is in the correct state
+	 */
+	emio_fast_write(ACQ_EMIO_FIFO_RESET, 1);
+
+	for(i = 0; i < 20; i++) {
+		asm __volatile__("nop");
+	}
+
+	emio_fast_write(ACQ_EMIO_FIFO_RESET, 0);
+
+	// Test the FIFO full signal; wait for it to deassert before handing control back over
+	while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) ;
+}
+
+/*
+ * Blocks until the DONE signal is deasserted.
+ */
+void _acq_wait_for_ndone()
+{
+	while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE)) ;
 }
 
 /*
@@ -261,6 +341,7 @@ void acq_init()
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.acq_first = NULL;
 	g_acq_state.acq_current = NULL;
+	g_acq_state.last_debug_timer = 0;
 
 	/*
 	 * Setup the DMA engine.  Fail terribly if this can't be done.
@@ -314,6 +395,8 @@ void acq_init()
 	 *   							this is useful to pause AXI data generation until all parameters are configured.
 	 *   - ACQ_EMIO_ADC_VALID:		Signal to PL, currently ignored, that will control write_en of FIFO, pausing data
 	 *   							reception into FIFO until acquisition is ready (e.g. if ADC not yet initialised.)
+	 *   - ACQ_EMIO_FIFO_OVERRUN:	Signal to PS to indicate that acquisition has overrun the FIFO and a FIFO reset is
+	 *   							required.
 	 */
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
@@ -334,6 +417,7 @@ void acq_init()
 
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG, 0);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN, 0);
 
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
@@ -356,6 +440,7 @@ void acq_init()
 int acq_get_next_alloc(struct acq_buffer_t *next)
 {
 	struct acq_buffer_t work;
+	uint32_t buf_sz = g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN;
 
 	/*
 	 * Attempt to allocate the acquisition buffer, but make it ACQ_BUFFER_ALIGN bytes too big; this will
@@ -363,10 +448,10 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 	 *
 	 * TODO: Consider using _alloc_aligned.
 	 */
-	work.buff_alloc = malloc(g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN);
+	work.buff_alloc = malloc(buf_sz);
 
 	if(work.buff_alloc == NULL) {
-		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN);
+		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", buf_sz);
 		g_acq_state.stats.num_alloc_err_total++;
 		return ACQRES_MALLOC_FAIL;
 	}
@@ -379,8 +464,9 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 
 	d_printf(D_EXINFO, "acquire: next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next->buff_acq, work.buff_alloc);
 
-	next->trigger_at = 0;
 	next->idx = 0;
+	next->trigger_at = 0;
+	next->flags = ACQBUF_FLAG_ALLOC;
 	next->buff_alloc = work.buff_alloc;
 	next->next = NULL;
 
@@ -410,11 +496,17 @@ int acq_append_next_alloc()
 		return ACQRES_MALLOC_FAIL;
 	}
 
+	// ?
+	next->next = NULL;
+	next->flags = ACQBUF_FLAG_ALLOC;
+	next->trigger_at = 0;
+
 	/*
 	 * Then allocate the next buffer to be chained onto the list.
 	 */
 	res = acq_get_next_alloc(next);
 	if(res != ACQRES_OK) {
+		d_printf(D_ERROR, "acq_append_next_alloc: acq_get_next_alloc failed: %d", res);
 		return res;
 	}
 
@@ -647,14 +739,6 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 }
 
 /*
- * Returns TRUE if the requested acquisition is complete.
- */
-bool acq_is_done()
-{
-	return (g_acq_state.state == ACQSTATE_DONE);
-}
-
-/*
  * Start the acquisition engine.
  *
  * @return	ACQRES_NOT_INITIALISED if the transfer has not yet been initialised;
@@ -671,9 +755,11 @@ int acq_start()
 		return ACQRES_NOT_INITIALISED;
 	}
 
+#if 0
 	if(!(g_acq_state.state == ACQSTATE_STOPPED || g_acq_state.state == ACQSTATE_DONE)) {
 		return ACQRES_NOT_STOPPED;
 	}
+#endif
 
 	if(g_acq_state.acq_mode_flags & ACQ_MODE_TRIGGERED) {
 		// Disable the interrupt then re-enable it, to reset it.
@@ -693,53 +779,62 @@ int acq_start()
 
 		/*
 		 * We must invalidate the cache line before starting the transfer.  This
-		 * invalidation restricts us to 32-byte aligned pages.  Then we can start
+		 * invalidation restricts us to 32-byte aligned micropages.  Then we can start
 		 * the AXI transfer.
 		 */
+		/*
 		d_printf(D_WARN, "XAxiDmaBusy=%d", XAxiDma_Busy(&g_acq_state.dma, XAXIDMA_DEVICE_TO_DMA));
 		d_printf(D_WARN, "SR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET));
 		d_printf(D_WARN, "SR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET));
 		d_printf(D_WARN, "CR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET));
 		d_printf(D_WARN, "CR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET + XAXIDMA_RX_OFFSET));
+		*/
 
 		Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
 		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
-				test_buffsz /*g_acq_state.pre_buffsz*/, XAXIDMA_DEVICE_TO_DMA);
+				g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 		if(error != XST_SUCCESS) {
 			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
 			return ACQRES_DMA_FAIL;
 		}
 
+		/*
 		d_printf(D_EXINFO, "align:            0x%08x", g_acq_state.dma.TxBdRing.DataWidth);
 		d_printf(D_EXINFO, "length:           0x%08x", g_acq_state.pre_buffsz);
 		d_printf(D_EXINFO, "max_length:       0x%08x", g_acq_state.dma.TxBdRing.MaxTransferLen);
 		d_printf(D_EXINFO, "current_buff_acq: 0x%08x", (INTPTR)g_acq_state.acq_current->buff_acq);
 		d_printf(D_EXINFO, "total_buffsz:     0x%08x", g_acq_state.total_buffsz);
+		*/
 
 		// Set the state machine
 		g_acq_state.state = ACQSTATE_PREP;
 		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 
 		// Start on 'A' mux: pre-trigger
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
+		emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
 
-		// Drive FIFO reset signal, just long to ensure a reset of the FIFO occurs.
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 1);
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 0);
+		// Empty the FIFO
+		_acq_reset_PL_fifo();
 
 		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 0);
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
-		XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
-		//XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);		// AXI bus activity enabled
-
+		emio_fast_write(ACQ_EMIO_ABORT, 0);
+		emio_fast_write(ACQ_EMIO_RUN, 1);
+		emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
 		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 		return ACQRES_OK;
 	} else {
 		return ACQRES_NOT_IMPLEMENTED;
 	}
+}
+
+/*
+ * Returns TRUE if the requested acquisition is complete.
+ */
+bool acq_is_done()
+{
+	return (g_acq_state.state == ACQSTATE_DONE);
 }
 
 /*
@@ -774,7 +869,36 @@ int acq_force_stop()
  */
 void acq_debug_dump()
 {
-	void *sp = NULL;
+	void *sp = NULL;  // approximately the stack
+	uint64_t timer_value, time_delta, acq_delta;
+	uint64_t sample_delta;
+	uint32_t msb, lsb;
+	float time_delta_us, acq_rate = NAN, sample_rate = NAN;
+
+	// Calculate acquisition rate if last debug timer is set
+	if(g_acq_state.last_debug_timer != 0) {
+		// Compute time delta
+		d_read_global_timer(&lsb, &msb);
+		timer_value = (((uint64_t)msb) << 32) | lsb;
+		time_delta = timer_value - g_acq_state.last_debug_timer;
+		time_delta_us = time_delta * XSCUTIMER_TICKS_TO_US;
+
+		// Compute acq delta; ensure it is positive
+		acq_delta = g_acq_state.stats.num_acq_total - g_acq_state.stat_last.num_acq_total;
+		if(acq_delta > 0) {
+			if(time_delta_us > 0) {
+				acq_rate = ((float)acq_delta / time_delta_us) * 1e6;
+			}
+		}
+
+		// Compute data rate; ensure it is positive
+		sample_delta = g_acq_state.stats.num_samples_raw - g_acq_state.stat_last.num_samples_raw;
+		if(sample_delta > 0) {
+			if(time_delta_us > 0) {
+				sample_rate = ((float)sample_delta / time_delta_us) * 1e3;
+			}
+		}
+	}
 
 	d_printf(D_INFO, "** Acquisition State (g_acq_state: 0x%08x) **", &g_acq_state);
 	d_printf(D_INFO, "");
@@ -792,22 +916,36 @@ void acq_debug_dump()
 	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
 	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
 	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
-	d_printf(D_INFO, "pre_sampct            = %d wavepoints", g_acq_state.pre_sampct);
-	d_printf(D_INFO, "post_sampct           = %d wavepoints", g_acq_state.post_sampct);
+	d_printf(D_INFO, "pre_sampct            = %d wavewords", g_acq_state.pre_sampct);
+	d_printf(D_INFO, "post_sampct           = %d wavewords", g_acq_state.post_sampct);
 	d_printf(D_INFO, "num_acq_request       = %d waves", g_acq_state.num_acq_request);
 	d_printf(D_INFO, "num_acq_made          = %d waves", g_acq_state.num_acq_made);
 	d_printf(D_INFO, "");
-	d_printf(D_INFO, "s.num_acq_total       = %d", g_acq_state.stats.num_acq_total);
-	d_printf(D_INFO, "s.num_alloc_err_total = %d", g_acq_state.stats.num_alloc_err_total);
-	d_printf(D_INFO, "s.num_alloc_total     = %d", g_acq_state.stats.num_alloc_total);
-	d_printf(D_INFO, "s.num_err_total       = %d", g_acq_state.stats.num_err_total);
-	d_printf(D_INFO, "s.num_post_total      = %d", g_acq_state.stats.num_post_total);
-	d_printf(D_INFO, "s.num_pre_total       = %d", g_acq_state.stats.num_pre_total);
-	d_printf(D_INFO, "s.num_pre_fill_total  = %d", g_acq_state.stats.num_pre_fill_total);
-	d_printf(D_INFO, "s.num_samples         = %d", g_acq_state.stats.num_samples);
-	d_printf(D_INFO, "s.num_irqs            = %d", g_acq_state.stats.num_irqs);
+	d_printf(D_INFO, "acq_current->flags    = 0x%04x", g_acq_state.acq_current->flags);
+	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
+	d_printf(D_INFO, "");
+	d_printf(D_INFO, "s.num_acq_total       = %llu", g_acq_state.stats.num_acq_total);
+	d_printf(D_INFO, "s.num_alloc_err_total = %llu", g_acq_state.stats.num_alloc_err_total);
+	d_printf(D_INFO, "s.num_alloc_total     = %llu", g_acq_state.stats.num_alloc_total);
+	d_printf(D_INFO, "s.num_err_total       = %llu", g_acq_state.stats.num_err_total);
+	d_printf(D_INFO, "s.num_post_total      = %llu", g_acq_state.stats.num_post_total);
+	d_printf(D_INFO, "s.num_pre_total       = %llu", g_acq_state.stats.num_pre_total);
+	d_printf(D_INFO, "s.num_pre_fill_total  = %llu", g_acq_state.stats.num_pre_fill_total);
+	d_printf(D_INFO, "s.num_samples         = %llu", g_acq_state.stats.num_samples);
+	d_printf(D_INFO, "s.num_samples_raw     = %llu", g_acq_state.stats.num_samples_raw);
+	d_printf(D_INFO, "s.num_irqs            = %llu", g_acq_state.stats.num_irqs);
+	d_printf(D_INFO, "s.num_fifo_full       = %llu", g_acq_state.stats.num_fifo_full);
+	d_printf(D_INFO, "s.num_fifo_pkt_dscd   = %llu", g_acq_state.stats.num_fifo_pkt_dscd);
+	d_printf(D_INFO, "");
+	d_printf(D_INFO, "Approx acq. rate      = %d acq/s     ", (int)acq_rate);
+	d_printf(D_INFO, "Approx sample rate    = %d Ksa/s     ", (int)sample_rate);
+	d_printf(D_INFO, "Debug delta           = %d us     ", (int)time_delta_us);
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "** End **");
+
+	// Save last state...
+	g_acq_state.stat_last = g_acq_state.stats;
+	g_acq_state.last_debug_timer = timer_value;
 }
 
 /*
