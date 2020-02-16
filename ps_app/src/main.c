@@ -81,7 +81,7 @@ int main()
 	//d_printf(D_INFO, "0x%08x", g_hal.xgpio_ps.GpioConfig.BaseAddr);
 
 	//res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 192, 100);
-	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 4096, 5);
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 4096, 1);
 	d_printf(D_INFO, "acq_prepare_triggered = %d", res);
 	acq_debug_dump();
 	//acq_debug_dump_wavedata();
@@ -136,13 +136,10 @@ int main()
 
 	//while(!acq_is_done()) ;
 
-	bogo_delay(1000000);
-	d_printf(D_INFO, "wait over...");
+	bogo_delay(100000);
 
 	acq_debug_dump();
-	acq_debug_dump_wave(4);
-
-	while(1) ;
+	acq_debug_dump_wave(0);
 
     cleanup_platform();
 }

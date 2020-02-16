@@ -17,6 +17,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <errno.h>
+#include <malloc.h>
 
 #include "hal.h"
 #include "acquire.h"
@@ -198,7 +199,7 @@ void _acq_irq_rx_handler(void *callback)
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 					_acq_wait_for_ndone();
 
-					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
+					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, g_acq_state.acq_current->buff_acq, \
 							g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					// If the FIFO is full, capture the data but set the discard flag.
@@ -244,7 +245,7 @@ void _acq_irq_rx_handler(void *callback)
 				emio_fast_write(ACQ_EMIO_RUN, 0);
 				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
-				d_printf(D_ERROR, "ACQSUBST_POST_TRIG");
+				//d_printf(D_ERROR, "ACQSUBST_POST_TRIG");
 
 				g_acq_state.sub_state = ACQSUBST_DONE_WAVE;
 				g_acq_state.state = ACQSTATE_RUNNING;
@@ -280,25 +281,26 @@ void _acq_irq_rx_handler(void *callback)
 						//d_printf(D_EXINFO, "acquire: done all");
 
 						g_acq_state.sub_state = ACQSUBST_DONE_ALL;
-						g_acq_state.state = ACQSTATE_STOPPED;
+						g_acq_state.state = ACQSTATE_DONE;
 					} else {
 						//d_printf(D_EXINFO, "acquire: going for NEXT");
 
 						if(g_acq_state.acq_current->next != NULL) {
 							//d_printf(D_EXINFO, "acquire: pre sent");
-							d_printf(D_EXINFO, "acquire: %08x %08x", g_acq_state.acq_current->buff_acq, g_acq_state.acq_current->next->buff_acq);
+							//d_printf(D_EXINFO, "acquireI  : %08x NEXT:%08x BUFF:%08x", \
+									g_acq_state.acq_current, g_acq_state.acq_current->next, g_acq_state.acq_current->next->buff_acq);
+
 							g_acq_state.acq_current = g_acq_state.acq_current->next;
+
 							//d_printf(D_EXINFO, "acquire: DEREF");
 							//d_printf(D_ERROR, "acquire: next deref: 0x%08x", g_acq_state.acq_current);
 							error = acq_start();
-							d_printf(D_EXINFO, "acquire: start sent");
+							//d_printf(D_EXINFO, "acquire: start sent");
 
 							if(error != ACQRES_OK) {
 								d_printf(D_ERROR, "acquire: unable to start next transfer, error %d", error);
 								_acq_irq_error_dma();
 								return;
-							} else {
-								d_printf(D_EXINFO, "acquire: next request started");
 							}
 						} else {
 							d_printf(D_ERROR, "acquire: NULL deref trying to move to next wavebuffer; something's wrong!");
@@ -467,7 +469,10 @@ void acq_init()
  */
 int acq_get_next_alloc(struct acq_buffer_t *next)
 {
-	struct acq_buffer_t work;
+	uint32_t *work;
+	uint32_t buf_sz;
+
+#if 0
 	uint32_t buf_sz = g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN;
 
 	/*
@@ -476,26 +481,36 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 	 *
 	 * TODO: Consider using _alloc_aligned.
 	 */
-	work.buff_alloc = malloc(buf_sz);
+	work = calloc(1, buf_sz);  // Change to malloc later for performance reasons
 
-	if(work.buff_alloc == NULL) {
+	if(work == NULL) {
 		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", buf_sz);
 		g_acq_state.stats.num_alloc_err_total++;
 		return ACQRES_MALLOC_FAIL;
 	}
 
-	if((((uint32_t) work.buff_alloc) & ACQ_BUFFER_ALIGN_AMOD) != 0) {
-		next->buff_acq = (uint32_t *)((((uint32_t) work.buff_alloc) + ACQ_BUFFER_ALIGN) & ~(ACQ_BUFFER_ALIGN_AMOD));
+	if((((uint32_t) work) & ACQ_BUFFER_ALIGN_AMOD) != 0) {
+		next->buff_acq = (uint32_t *)((((uint32_t) work) + ACQ_BUFFER_ALIGN) & ~(ACQ_BUFFER_ALIGN_AMOD));
 	} else {
-		next->buff_acq = work.buff_alloc;
+		next->buff_acq = work;
+	}
+#endif
+
+	buf_sz = (g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN) & ~(ACQ_BUFFER_ALIGN_AMOD);
+	work = memalign(ACQ_BUFFER_ALIGN, buf_sz);
+
+	if(work == NULL) {
+		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", buf_sz);
+		g_acq_state.stats.num_alloc_err_total++;
+		return ACQRES_MALLOC_FAIL;
 	}
 
-	d_printf(D_EXINFO, "acquire: next = 0x%08x, next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next, next->buff_acq, work.buff_alloc);
+	d_printf(D_EXINFO, "acquire: next = 0x%08x, next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next, next->buff_acq, work);
 
 	next->idx = 0;
 	next->trigger_at = 0;
 	next->flags = ACQBUF_FLAG_ALLOC;
-	next->buff_alloc = work.buff_alloc;
+	next->buff_alloc = work;
 	next->next = NULL;
 
 	g_acq_state.stats.num_alloc_total++;
@@ -601,7 +616,7 @@ void acq_free_all_alloc()
 int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t total_sz, uint32_t num_acq)
 {
 	struct acq_buffer_t *first;
-	uint32_t pre_sz, post_sz, pre_sampct, post_sampct;
+	uint32_t pre_sz = 0, post_sz = 0, pre_sampct = 0, post_sampct = 0;
 	uint32_t total_acq_sz;
 	uint32_t align_mask;
 	uint32_t demux;
@@ -732,6 +747,8 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	 * If at any point this fails, bail out and free memory.
 	 */
 	for(i = 0; i < num_acq; i++) {
+		d_printf(D_EXINFO, "acq_current: 0x%08x", g_acq_state.acq_current);
+
 		error = acq_append_next_alloc();
 		if(error != ACQRES_OK) {
 			d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d, aborting allocation", error, i);
@@ -797,7 +814,7 @@ int acq_start()
 {
 	int error;
 
-	d_printf(D_ERROR, "acquire: starts");
+	//d_printf(D_ERROR, "acquire: starts");
 
 	if(g_acq_state.state == ACQSTATE_UNINIT) {
 		return ACQRES_NOT_INITIALISED;
@@ -817,7 +834,6 @@ int acq_start()
 		//XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 		XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
-		d_printf(D_ERROR, "acquire: XAxiDma_IntrEnable");
 
 		// Set delay and coalesce to minimum values
 		//XAxiDma_WriteReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET, \
@@ -839,16 +855,14 @@ int acq_start()
 		d_printf(D_WARN, "CR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET + XAXIDMA_RX_OFFSET));
 		*/
 
-		d_printf(D_ERROR, "acquire: start INVALIDATE range 0x%08x 0x%08x", g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
+		//d_printf(D_ERROR, "acquire: start INVALIDATE range 0x%08x 0x%08x", g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
 
-		Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
+		//Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
 
-		d_printf(D_ERROR, "acquire: Xil_DCacheInvalidateRange");
+		//d_printf(D_ERROR, "acquire: Xil_DCacheInvalidateRange");
 
 		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
 				g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
-
-		d_printf(D_ERROR, "acquire: XAxiDma_SimpleTransfer");
 
 		if(error != XST_SUCCESS) {
 			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
@@ -878,8 +892,6 @@ int acq_start()
 		emio_fast_write(ACQ_EMIO_RUN, 1);
 		emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
 		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
-
-		d_printf(D_ERROR, "acquire: DONE");
 
 		return ACQRES_OK;
 	} else {
@@ -1044,7 +1056,7 @@ void acq_debug_dump_wave(int index)
 	int first, i;
 
 	while(wave != NULL) {
-		//d_printf(D_EXINFO, "explore: 0x%08x (%d)", wave, wave->idx);
+		d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x)", wave, wave->idx, wave->buff_acq);
 
 		if(wave->idx == index)
 			break;
@@ -1071,10 +1083,12 @@ void acq_debug_dump_wave(int index)
 	d_printf(D_INFO, "trigger_at(div16)     = 0x%08x (%d)", wave->trigger_at >> 4, wave->trigger_at >> 4);
 	d_printf(D_INFO, "");
 
+#if 1
 	// If trigger_at is valid try to print wavedata
 	if(!(wave->trigger_at & TRIGGER_INVALID_MASK)) {
 		/*
 		 * To play back the waveform:
+		 *   - Invalidate the DCache for this line (do NOT flush line back to DDR3)
 		 *   - Start at pre-trigger address + 1
 		 *   - Copy words out until end of pre-buffer
 		 *   - Jump to start of pre-buffer
@@ -1088,10 +1102,34 @@ void acq_debug_dump_wave(int index)
 		 * The trigger_at value is given in 8-byte word counts; it must be scaled
 		 * by two to get the address.
 		 */
-		offs = wave->trigger_at >> 3;
-		addr_start = wave->buff_alloc + (offs / 2);
-		addr_end = wave->buff_alloc + g_acq_state.pre_buffsz;
+		Xil_DCacheInvalidateRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
+		//bogo_delay(1000000);
 
+		//offs = wave->trigger_at >> 3;
+		addr_start = &wave->buff_acq; // + (wave->trigger_at * 8);
+		//addr_end = &wave->buff_acq + g_acq_state.pre_buffsz;
+
+		// Correct for fabric offset in trigger position(?)
+		wave->trigger_at += 24;
+
+		for(i = 0; i < 4096; i++) {
+			deref = (uint32_t*)(addr_start + (i * 8));
+
+			if(i > (g_acq_state.pre_sampct + 2)) {
+				// post-trigger: green
+				d_printf(D_RAW, "\033[92m");
+			} else if(i > (wave->trigger_at >> 3)) {
+				// post-event: blue
+				d_printf(D_RAW, "\033[94m");
+			} else {
+				// pre-trigger: yellow
+				d_printf(D_RAW, "\033[93m");
+			}
+
+			d_printf(D_RAW, "%08x (buff + 0x%08x) (%08x / %9d) --> 0x%08x 0x%08x\033[0m\r\n", deref, (i * 8), i, i, *deref, *(deref + 1));
+		}
+
+#if 0
 		for(addr = addr_start, i = 0; addr < addr_end; addr += 8, i++) {
 			deref = addr;
 			d_printf(D_INFO, "%08x (%08x / %9d) --> 0x%08x 0x%08x", addr, i, i, *deref++, *deref);
@@ -1110,9 +1148,11 @@ void acq_debug_dump_wave(int index)
 				d_printf(D_INFO, "%08x (%08x / %9d) --> 0x%08x 0x%08x", addr, i, i, *deref++, *deref);
 			}
 		}
+#endif
 	} else {
 		d_printf(D_ERROR, "Trigger invalid for waveindex %d", index);
 	}
 
 	d_printf(D_INFO, "");
+#endif
 }
