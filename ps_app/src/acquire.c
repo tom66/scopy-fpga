@@ -517,7 +517,12 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 	next->flags = ACQBUF_FLAG_ALLOC;
 	next->next = NULL;
 
-	// both blocks allocated aligned, so both pointers are identical.  TODO: once tested buff_alloc
+	// Currently these values are the same for every transfer but we might support variable size waveform
+	// acquisition in the future
+	next->pre_sz = g_acq_state.pre_buffsz;
+	next->post_sz = g_acq_state.post_buffsz;
+
+	// Both blocks allocated aligned, so both pointers are identical.  TODO: once tested buff_alloc
 	// may be removed entirely.
 	next->buff_alloc = work;
 	next->buff_acq = work;

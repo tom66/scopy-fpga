@@ -142,6 +142,7 @@ struct acq_buffer_t {
 	uint32_t *buff_acq;			// Pointer that is used for acquisition
 	uint32_t trigger_at;
 	uint16_t flags;
+	uint32_t pre_sz, post_sz;	// Byte copies for size values
 	struct acq_buffer_t *next;
 };
 
