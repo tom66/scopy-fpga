@@ -73,6 +73,10 @@
 #define BOGOCAL_ITERCNT				2			// XXX: Bug if this is more than 2 causing shorter bogotimes than expected, to be investigated
 												// at a later date (26/01/2020)
 
+// TODO:  Move to common utils file
+#define MAX(a,b) 					((a) > (b) ? (a) : (b))
+#define MIN(a,b) 					((a) < (b) ? (a) : (b))
+
 struct hal_t {
 	XScuGic xscu_gic;
 	XScuGic_Config *xscu_gic_cfg;

@@ -24,7 +24,11 @@
 #ifndef SRC_MIPI_CSI_H_
 #define SRC_MIPI_CSI_H_
 
-#define MCSI_STATE_IDLE				0
+#include <stdint.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+#define MCSI_STATE_IDLE				0			// Nothing to do
 #define MCSI_STATE_RUN				1			// Transfer running
 #define MCSI_STATE_TRANSFER_MEMCPY	2			// Waiting for memcpy to be done
 #define MCSI_STATE_TRANSFER_DMA		3			// Waiting for PL330 DMA to be done
@@ -37,23 +41,29 @@
 #define MCSI_FLAG_USE_DMA			0x00000010
 #define MCSI_FLAG_USE_MEMCPY		0x00000020
 #define MCSI_FLAG_OUTPUT_MULTI		0x00000040	// CSI transfer is happening in multiple operations
+#define MCSI_FLAG_BUF_A_VALID		0x00000080
+#define MCSI_FLAG_BUF_B_VALID		0x00000100
 
 #define MCSI_MAX_TOTAL_BRAM_SIZE	65536		// Bytes
 #define MCSI_MAX_BUFFER_BRAM_SIZE	32768		// Bytes
+#define MCSI_LINE_SIZE				2048		// Bytes
 
 #define MCSI_RES_OK					0
 #define MCSI_RES_WAVE_ERROR			-1
+#define MCSI_RES_MEMCPY_BOUND		-2
 
 #define MCSI_BRAM_BASE				(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR)
 #define MCSI_BRAM_BASE_1_OFFSET		(MCSI_MAX_BUFFER_BRAM_SIZE)
+#define MCSI_BRAM_END				XPAR_AXI_BRAM_CTRL_1_S_AXI_HIGHADDR
 
 struct mcsi_state_t {
 	int state;
 	uint32_t flags;
 
-	/* Buffer in use (0, 1) and BRAM address */
+	/* Buffer in use (0, 1) */
 	int buffer_id;
 	uint32_t bram_addr;
+	uint32_t bram_offs;
 
 	/* Desired MIPI line size.  Should be a power of two. */
 	uint32_t mipi_line_size;
@@ -68,10 +78,11 @@ struct mcsi_state_t {
 };
 
 void mcsi_init();
-void mcsi_setup_transfer_by_id(uint32_t wave_id);
-void mcsi_setup_multi_transfer_by_id(uint32_t wave_start, uint32_t wave_end);
+int mcsi_setup_transfer_by_id(uint32_t wave_id);
+int mcsi_setup_multi_transfer_by_id(uint32_t wave_start, uint32_t wave_end);
 void mcsi_start();
 void mcsi_tick();
-void _mcsi_tx_memcpy(struct acq_buffer_t *buf, uint32_t offset_src, uint32_t bram_dest);
+void _mcsi_tx_memcpy(struct acq_buffer_t *buf, uint32_t offset_src, uint32_t bram_des, uint32_t bytes_max);
+int _mcsi_tx_memcpy_assist_bounded(void *base, void *src, size_t length, uint32_t addr_limit);
 
 #endif // SRC_MIPI_CSI_H_
