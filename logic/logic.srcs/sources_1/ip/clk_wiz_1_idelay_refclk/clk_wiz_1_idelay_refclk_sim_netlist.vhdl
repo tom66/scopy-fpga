@@ -1,7 +1,7 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
--- Date        : Mon Jan 27 21:21:30 2020
+-- Date        : Sun Feb 16 22:07:46 2020
 -- Host        : TomsDesktop running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk_sim_netlist.vhdl
@@ -80,12 +80,12 @@ clkout1_buf: unisim.vcomponents.BUFG
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
-      CLKFBOUT_MULT_F => 4.000000,
+      CLKFBOUT_MULT_F => 57.625000,
       CLKFBOUT_PHASE => 0.000000,
       CLKFBOUT_USE_FINE_PS => false,
-      CLKIN1_PERIOD => 4.000000,
+      CLKIN1_PERIOD => 5.650000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE_F => 5.000000,
+      CLKOUT0_DIVIDE_F => 4.250000,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,
@@ -115,7 +115,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKOUT6_PHASE => 0.000000,
       CLKOUT6_USE_FINE_PS => false,
       COMPENSATION => "ZHOLD",
-      DIVCLK_DIVIDE => 1,
+      DIVCLK_DIVIDE => 12,
       IS_CLKINSEL_INVERTED => '0',
       IS_PSEN_INVERTED => '0',
       IS_PSINCDEC_INVERTED => '0',

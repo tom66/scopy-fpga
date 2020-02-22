@@ -12,7 +12,7 @@
 // maintains a copy in the BRAM and synchronises, on request, this data to on-device
 // registers, located in various blocks.  The interface must be edited to add any
 // further registers;  such should be added as 'in' or 'out' constructs which connect 
-// ultimately to registers.
+// ultimately to the fabric in some way.
 //
 // Note it is only possible to represent registers that can be read or registers that
 // can be written this way.  Bidirectional use of registers is not implemented to
@@ -47,7 +47,10 @@ module cfg_bram_controller(
     output reg [31:0] R_acq_size_b,
     input [31:0] R_acq_trigger_ptr,
     output reg [6:0] R_acq_demux_mode,
-    output [1:0] R_gpio_test
+    output reg [1:0] R_gpio_test,
+    output reg [5:0] R_csi_line_count,
+    output reg [20:0] R_csi_line_byte_count,
+    output reg [7:0] R_csi_data_type
 );
 
 reg [3:0] cfg_ctrl_state = CFG_BRAM_CTRL_STATE_IDLE;
@@ -63,12 +66,6 @@ assign cfg_bram_clk = clk_ref_bram;
 
 reg cfg_commit_done_reg = 0;
 assign cfg_commit_done = cfg_commit_done_reg;
-
-//assign R_gpio_test = R_gpio_test_reg;
-reg [1:0] R_gpio_test_reg;
-
-assign R_gpio_test[0] = R_gpio_test_reg[0];
-assign R_gpio_test[1] = R_gpio_test_reg[1];
 
 reg [31:0] dummy1;
 
@@ -184,11 +181,29 @@ always @(posedge clk_ref_bram) begin
                     // gpio_test
                     12'h009: begin
                         cfg_bram_write_en <= 0;
-                        R_gpio_test_reg <= cfg_bram_dout;
+                        R_gpio_test <= cfg_bram_dout;
+                    end
+                    
+                    // csi_line_count
+                    12'h00a : begin
+                        cfg_bram_write_en <= 0;
+                        R_csi_line_count <= cfg_bram_dout;
+                    end
+                    
+                    // csi_line_byte_count
+                    12'h00b : begin
+                        cfg_bram_write_en <= 0;
+                        R_csi_line_byte_count <= cfg_bram_dout;
+                    end
+                    
+                    // csi_data_type
+                    12'h00c : begin
+                        cfg_bram_write_en <= 0;
+                        R_csi_data_type <= cfg_bram_dout;
                     end
                     
                     // EOF
-                    12'h00c: begin
+                    12'h010: begin
                         cfg_bram_write_en <= 0;
                         cfg_ctrl_state <= CFG_BRAM_CTRL_STATE_IDLE;
                         cfg_commit_done_reg <= 1;

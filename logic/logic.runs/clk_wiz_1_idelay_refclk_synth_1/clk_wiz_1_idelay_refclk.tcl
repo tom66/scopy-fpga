@@ -17,7 +17,9 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
-set_param chipscope.maxJobs 1
+set_param tcl.collectionResultDisplayLimit 0
+set_param general.maxThreads 8
+set_param chipscope.maxJobs 4
 set_param xicom.use_bs_reader 1
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run

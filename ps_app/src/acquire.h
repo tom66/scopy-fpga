@@ -64,6 +64,8 @@
 #define ACQ_BUFFER_ALIGN			32								// Required byte alignment for AXI DMA (Must be a power of two)
 #define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
 
+#define ACQRES_WAVE_NOT_READY		-10
+#define ACQRES_WAVE_NOT_FOUND		-9
 #define ACQRES_NOT_STOPPED			-8
 #define ACQRES_NOT_IMPLEMENTED		-7
 #define ACQRES_NOT_INITIALISED		-6
@@ -75,7 +77,7 @@
 #define ACQRES_OK					0
 
 // Flags for acq_buffer_t
-#define ACQBUF_FLAG_PKT_DONE		0x0001
+#define ACQBUF_FLAG_PKT_DONE		0x0001							// Packet is done
 #define ACQBUF_FLAG_PKT_OVERRUN		0x0002							// Packet contains bad data due to FIFO overrun and will be discarded
 #define ACQBUF_FLAG_ALLOC			0x0080							// Marker flag set when memory allocated for this buffer
 
@@ -90,7 +92,7 @@
 #define ACQ_TOTAL_MEMORY_AVAIL		(192 * 1024 * 1024)				// Configured total memory limit for general purpose acquisition.
 
 #define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID
-#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_S2MM_INTROUT_VEC_ID
+#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_VEC_ID
 #define ACQ_DMA_IRQ_RX_PRIORITY		0xA0							// Low priority: TODO make this high priority
 #define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
 
@@ -195,6 +197,7 @@ extern struct acq_state_t g_acq_state;
 void _acq_irq_error_dma();
 void _acq_irq_rx_handler(void *cb);
 void _acq_reset_PL_fifo();
+void _acq_reset_trigger();
 void _acq_wait_for_ndone();
 void acq_init();
 int acq_get_next_alloc(struct acq_buffer_t *next);
@@ -206,5 +209,8 @@ int acq_force_stop();
 bool acq_is_done();
 void acq_debug_dump();
 void acq_debug_dump_wavedata();
+int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);
+void acq_debug_dump_wave(int index);
+int acq_copy_slow_mipi(int index, uint32_t *buffer);
 
 #endif // SRC_ACQUIRE_H_

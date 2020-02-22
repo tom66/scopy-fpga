@@ -76,10 +76,6 @@ public:
 
 public: // module socket-to-socket TLM interface
 
-  xtlm::xtlm_aximm_initiator_socket* M_AXI_GP0_wr_socket;
-  xtlm::xtlm_aximm_initiator_socket* M_AXI_GP0_rd_socket;
-  xtlm::xtlm_aximm_target_socket* S_AXI_HP0_wr_socket;
-  xtlm::xtlm_aximm_target_socket* S_AXI_HP0_rd_socket;
 
 protected:
 

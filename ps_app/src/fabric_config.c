@@ -76,7 +76,11 @@ void fabcfg_init()
 			d_printf(D_EXINFO, "FabCfg: DummyTest1 value: 0x%08x - OK", test);
 		} else {
 			d_printf(D_ERROR, "FabCfg: DummyTest1 value: 0x%08x - Not OK, Expect 0x%08x", test, fbcfg_dummy_tests[i]);
-			exit(-1);
+
+			// try to recover...
+			i = 0;
+			fabcfg_commit();
+			//exit(-1);
 		}
 
 		test = fabcfg_read(FAB_CFG_DUMMY2);
@@ -85,9 +89,12 @@ void fabcfg_init()
 			d_printf(D_EXINFO, "FabCfg: DummyTest2 value: 0x%08x - OK", test);
 		} else {
 			d_printf(D_ERROR, "FabCfg: DummyTest2 value: 0x%08x - Not OK, Expect 0x%08x", test, fbcfg_dummy_tests[i]);
-			exit(-1);
-		}
 
+			// try to recover...
+			i = 0;
+			fabcfg_commit();
+			//exit(-1);
+		}
 
 		fabcfg_write(FAB_CFG_DUMMY1, 0x12345678);
 		fabcfg_write(FAB_CFG_DUMMY2, 0x87654321);
@@ -117,8 +124,12 @@ void fabcfg_init()
  */
 uint32_t fabcfg_read(uint32_t reg)
 {
+	uint32_t res;
 	reg &= FAB_CFG_ADDR_MASK;
-	return Xil_In32(AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4));
+	dsb();
+	res = Xil_In32(AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4));
+	dsb();
+	return res;
 }
 
 /*
@@ -130,7 +141,9 @@ uint32_t fabcfg_read(uint32_t reg)
 void fabcfg_write(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
+	dsb();
 	Xil_Out32(AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4), data);
+	dsb();
 }
 
 /*
@@ -161,6 +174,17 @@ void fabcfg_fastcfg_start()
 	int i;
 
 	emio_fast_write(FAB_CFG_EMIO_COMMIT, 1);
+
+	// 8 NOPs means that the for loop sometimes exits on first cycle, because the signal
+	// has fallen low by now.
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
 
 	for(i = 0; i < FAB_CFG_COMMIT_TIME; i++) {
 		// if DONE signal is low then we can exit early

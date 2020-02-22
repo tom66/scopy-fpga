@@ -1,21 +1,21 @@
-15:08:24 **** Incremental Build of configuration Release for project ps_app ****
+00:22:19 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
 make --no-print-directory main-build
-'Building file: ../src/acquire.c'
+'Building file: ../src/main.c'
 'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -c -fmessage-length=0 -MT"src/acquire.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/acquire.d" -MT"src/acquire.o" -o "src/acquire.o" "../src/acquire.c"
+arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
 In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:114,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
                  from ../src/hal.h:32,
-                 from ../src/acquire.c:22:
+                 from ../src/main.c:41:
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:12:2: warning: #warning DEBUG is enabled [-Wcpp]
  #warning DEBUG is enabled
   ^~~~~~~
-In file included from ../src/acquire.c:22:
+In file included from ../src/main.c:41:
 ../src/hal.h: In function 'emio_fast_read':
 ../src/hal.h:154:12: warning: variable 'reg' set but not used [-Wunused-but-set-variable]
   uint32_t *reg;
@@ -23,49 +23,17 @@ In file included from ../src/acquire.c:22:
 ../src/hal.h:153:11: warning: unused variable 'read' [-Wunused-variable]
   uint32_t read;
            ^~~~
-../src/acquire.c: In function '_acq_irq_rx_handler':
-../src/acquire.c:202:78: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
-      error = XAxiDma_SimpleTransfer(&g_acq_state.dma, g_acq_state.acq_current->buff_acq, \
-                                                       ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
-In file included from ../src/hal.h:32,
-                 from ../src/acquire.c:22:
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:749:58: note: expected 'UINTPTR' {aka 'unsigned int'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
- u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
-                                                  ~~~~~~~~^~~~~~~~
-../src/acquire.c:290:8: warning: multi-line comment [-Wcomment]
-        //d_printf(D_EXINFO, "acquireI  : %08x NEXT:%08x BUFF:%08x", \
-        ^
-../src/acquire.c:48:6: warning: unused variable 'i' [-Wunused-variable]
-  int i;
-      ^
-../src/acquire.c: In function 'acq_start':
-../src/acquire.c:839:3: warning: multi-line comment [-Wcomment]
-   //XAxiDma_WriteReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET, \
-   ^
-../src/acquire.c: In function 'acq_debug_dump_wave':
-../src/acquire.c:1109:14: warning: assignment to 'uint32_t' {aka 'long unsigned int'} from 'uint32_t **' {aka 'long unsigned int **'} makes integer from pointer without a cast [-Wint-conversion]
-   addr_start = &wave->buff_acq; // + (wave->trigger_at * 8);
+../src/main.c: In function 'main':
+../src/main.c:49:17: warning: unused variable 'w' [-Wunused-variable]
+  int res, i, j, w;
+                 ^
+../src/main.c:49:14: warning: unused variable 'j' [-Wunused-variable]
+  int res, i, j, w;
               ^
-../src/acquire.c:1056:6: warning: unused variable 'first' [-Wunused-variable]
-  int first, i;
-      ^~~~~
-../src/acquire.c:1054:39: warning: unused variable 'offs' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs;
-                                       ^~~~
-../src/acquire.c:1054:29: warning: unused variable 'addr_end' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs;
-                             ^~~~~~~~
-../src/acquire.c:1054:11: warning: unused variable 'addr' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs;
-           ^~~~
-../src/acquire.c: In function 'acq_debug_dump':
-../src/acquire.c:1012:2: warning: 'time_delta_us' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  d_printf(D_INFO, "Debug delta           = %d us     ", (int)time_delta_us);
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/acquire.c:1018:31: warning: 'timer_value' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  g_acq_state.last_debug_timer = timer_value;
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
-'Finished building: ../src/acquire.c'
+../src/main.c:49:6: warning: variable 'res' set but not used [-Wunused-but-set-variable]
+  int res, i, j, w;
+      ^~~
+'Finished building: ../src/main.c'
 ' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
@@ -81,7 +49,7 @@ gcc version 8.2.0 (GCC)
 COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
 LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
- g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccH8uPX1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccnrDOya.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acquire.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
 'Finished building target: ps_app.elf'
 ' '
@@ -92,9 +60,9 @@ arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  92848	   3488	201405568	201501904	c02acd0	ps_app.elf
+  94272	   3488	201471104	201568864	c03b260	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-15:08:26 Build Finished (took 1s.490ms)
+00:22:20 Build Finished (took 1s.216ms)
 

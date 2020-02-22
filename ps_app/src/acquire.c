@@ -88,9 +88,11 @@ void _acq_irq_rx_handler(void *callback)
 	 *  - We have received a trigger and we should start the post-trigger phase.
 	 *  - We have finished the post-trigger phase.
 	 *
-	 * Note: we must deal with this quickly.  We have 512 word deep FIFO (~4K samples)
-	 * which means we must start the new transaction within 4us (~2,700 CPU cycles)
-	 * to avoid any sample loss.
+	 * Note: we must deal with this quickly.  We have 2048 word deep FIFO (~16K samples)
+	 * which means we must start the new transaction within 16us (~10,800 CPU cycles)
+	 * to avoid any sample loss.  Realistically, the faster the interrupt, the faster
+	 * the waveform rate of the instrument and the smaller a sample buffer that
+	 * can be used.
 	 */
 	if(status & XAXIDMA_IRQ_IOC_MASK) {
 		switch(g_acq_state.sub_state) {
@@ -116,7 +118,7 @@ void _acq_irq_rx_handler(void *callback)
 				 * If the FIFO is full, don't allow us to exit this state.  Instead, send a reset pulse
 				 * to the FIFO and revert back to PRE_TRIG_FILL.
 				 */
-				if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
+				if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
 					_acq_reset_PL_fifo();
 					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 					g_acq_state.state = ACQSTATE_PREP;
@@ -143,7 +145,7 @@ void _acq_irq_rx_handler(void *callback)
 				 * If a trigger has occurred (ACQ_EMIO_HAVE_TRIGGER is high) then jump address to the
 				 * post-trigger buffer; if not, then go back to the start.
 				 */
-				if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG)) {
+				if(emio_fast_read(ACQ_EMIO_HAVE_TRIG)) {
 					// Tell the PL that we want to use the 'B' channel acquisition depth now.
 					emio_fast_write(ACQ_EMIO_DEPTH_MUX, 1);
 
@@ -156,9 +158,7 @@ void _acq_irq_rx_handler(void *callback)
 					/*
 					 * If the FIFO is full, capture the data but set the discard flag.
 					 */
-					if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
-						//d_printf(D_ERROR, "FIFO OVERRUN!", error);
-						//_acq_reset_PL_fifo();
+					if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
@@ -167,6 +167,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * Compute the address of the next DMA transfer and set it up.
 					 */
 					addr = ((uint32_t)g_acq_state.acq_current->buff_acq) + g_acq_state.pre_buffsz;
+
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, addr, \
 							g_acq_state.post_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
@@ -176,16 +177,12 @@ void _acq_irq_rx_handler(void *callback)
 						return;
 					}
 
-					//d_printf(D_INFO, "acquire: pre=0x%08x, post=0x%08x", g_acq_state.acq_current->buff_acq, addr);
-
 					/*
 					 * The transfer is now running, so record the address that the trigger occurred at
 					 * from the fabric.
 					 */
 					fabcfg_fastcfg_wait();
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
-
-					//d_printf(D_INFO, "acquire: trigger=0x%08x", g_acq_state.acq_current->trigger_at);
 
 					// Start the AXI bus again
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
@@ -199,17 +196,16 @@ void _acq_irq_rx_handler(void *callback)
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 					_acq_wait_for_ndone();
 
-					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, g_acq_state.acq_current->buff_acq, \
-							g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
-
 					// If the FIFO is full, capture the data but set the discard flag.
 					// XXX: Since there's no trigger consider a FIFO reset instead?
-					if(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) {
-						//d_printf(D_ERROR, "FIFO OVERRUN!", error);
+					if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
 						_acq_reset_PL_fifo();
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
+
+					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, g_acq_state.acq_current->buff_acq, \
+							g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
 						_acq_irq_error_dma();
@@ -217,11 +213,12 @@ void _acq_irq_rx_handler(void *callback)
 						return;
 					}
 
+					// Reset the trigger
+					_acq_reset_trigger();
+
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 					g_acq_state.stats.num_samples_raw += g_acq_state.pre_buffsz;
 				}
-
-				//d_printf(D_INFO, "acquire: eof");
 
 				// Statistics
 				g_acq_state.stats.num_acq_total++;
@@ -235,7 +232,7 @@ void _acq_irq_rx_handler(void *callback)
 				 * Any hold-off is controlled by the trigger engine.
 				 */
 				// If DONE signal not present at end of acquisition, then there is a fault.
-				if(!XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE)) {
+				if(!emio_fast_read(ACQ_EMIO_DONE)) {
 					d_printf(D_ERROR, "acquire: PL reports not done, but DMA complete!");
 					_acq_irq_error_dma();
 					return;
@@ -244,8 +241,6 @@ void _acq_irq_rx_handler(void *callback)
 				emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
 				emio_fast_write(ACQ_EMIO_RUN, 0);
 				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
-
-				//d_printf(D_ERROR, "ACQSUBST_POST_TRIG");
 
 				g_acq_state.sub_state = ACQSUBST_DONE_WAVE;
 				g_acq_state.state = ACQSTATE_RUNNING;
@@ -258,7 +253,7 @@ void _acq_irq_rx_handler(void *callback)
 				 * acquisition restarts on the same wave.
 				 */
 				if(g_acq_state.acq_current->flags & ACQBUF_FLAG_PKT_OVERRUN) {
-					d_printf(D_ERROR, "acquire: packet overrun at done");
+					//d_printf(D_ERROR, "acquire: packet overrun at done");
 					g_acq_state.stats.num_fifo_pkt_dscd++;
 
 					// Start a new transfer, but without allocating a new buffer or increasing the waveform count
@@ -271,31 +266,17 @@ void _acq_irq_rx_handler(void *callback)
 						return;
 					}
 				} else {
-					//d_printf(D_EXINFO, "acquire: here");
-
 					// Move to the next buffer if we haven't filled the total waveform count.
 					g_acq_state.num_acq_made++;
 					g_acq_state.stats.num_samples += g_acq_state.post_buffsz;
 
 					if(g_acq_state.num_acq_made == g_acq_state.num_acq_request) {
-						//d_printf(D_EXINFO, "acquire: done all");
-
 						g_acq_state.sub_state = ACQSUBST_DONE_ALL;
 						g_acq_state.state = ACQSTATE_DONE;
 					} else {
-						//d_printf(D_EXINFO, "acquire: going for NEXT");
-
 						if(g_acq_state.acq_current->next != NULL) {
-							//d_printf(D_EXINFO, "acquire: pre sent");
-							//d_printf(D_EXINFO, "acquireI  : %08x NEXT:%08x BUFF:%08x", \
-									g_acq_state.acq_current, g_acq_state.acq_current->next, g_acq_state.acq_current->next->buff_acq);
-
 							g_acq_state.acq_current = g_acq_state.acq_current->next;
-
-							//d_printf(D_EXINFO, "acquire: DEREF");
-							//d_printf(D_ERROR, "acquire: next deref: 0x%08x", g_acq_state.acq_current);
 							error = acq_start();
-							//d_printf(D_EXINFO, "acquire: start sent");
 
 							if(error != ACQRES_OK) {
 								d_printf(D_ERROR, "acquire: unable to start next transfer, error %d", error);
@@ -353,11 +334,35 @@ void _acq_reset_PL_fifo()
 }
 
 /*
+ * Send a trigger reset signal to re-arm the trigger.  This only rearms the trigger on the
+ * acquire engine.  It doesn't rearm any actual trigger sources; if those need rearming, you
+ * need to send the required signals there, too!
+ */
+void _acq_reset_trigger()
+{
+	volatile int i;
+
+	/*
+	 * The reset signal is sampled on the ADC clock (125MHz).  As a result it is necessary to
+	 * drive the reset pulse for some cycles to ensure that the reset is received and the state
+	 * machine is in the correct state
+	 */
+	emio_fast_write(ACQ_EMIO_TRIG_RESET, 1);
+
+	for(i = 0; i < 10; i++) {
+		asm __volatile__("nop");
+	}
+
+	emio_fast_write(ACQ_EMIO_TRIG_RESET, 0);
+}
+
+
+/*
  * Blocks until the DONE signal is deasserted.
  */
 void _acq_wait_for_ndone()
 {
-	while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE)) ;
+	while(emio_fast_read(ACQ_EMIO_DONE)) ;
 }
 
 /*
@@ -497,6 +502,8 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 #endif
 
 	buf_sz = (g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN) & ~(ACQ_BUFFER_ALIGN_AMOD);
+	//d_printf(D_ERROR, "buf_sz: req:%d actual:%d (align_error: %d)", g_acq_state.total_buffsz, buf_sz, g_acq_state.total_buffsz % ACQ_BUFFER_ALIGN);
+
 	work = memalign(ACQ_BUFFER_ALIGN, buf_sz);
 
 	if(work == NULL) {
@@ -505,13 +512,17 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 		return ACQRES_MALLOC_FAIL;
 	}
 
-	d_printf(D_EXINFO, "acquire: next = 0x%08x, next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next, next->buff_acq, work);
-
 	next->idx = 0;
 	next->trigger_at = 0;
 	next->flags = ACQBUF_FLAG_ALLOC;
-	next->buff_alloc = work;
 	next->next = NULL;
+
+	// both blocks allocated aligned, so both pointers are identical.  TODO: once tested buff_alloc
+	// may be removed entirely.
+	next->buff_alloc = work;
+	next->buff_acq = work;
+
+	//d_printf(D_EXINFO, "acquire: next = 0x%08x, next->buff_acq = 0x%08x, work.buff_alloc [malloc] = 0x%08x", next, next->buff_acq, work);
 
 	g_acq_state.stats.num_alloc_total++;
 
@@ -710,6 +721,12 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 		pre_sz *= 8;
 	}
 
+	g_acq_state.pre_buffsz = pre_sz;
+	g_acq_state.post_buffsz = post_sz;
+	g_acq_state.pre_sampct = pre_sampct;
+	g_acq_state.post_sampct = post_sampct;
+	g_acq_state.total_buffsz = total_sz;
+
 	/*
 	 * Ensure that the total acquisition size doesn't exceed the available memory.  If
 	 * that's OK, then free any existing buffers and allocate the memory blocks.  Include an
@@ -747,7 +764,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	 * If at any point this fails, bail out and free memory.
 	 */
 	for(i = 0; i < num_acq; i++) {
-		d_printf(D_EXINFO, "acq_current: 0x%08x", g_acq_state.acq_current);
+		// d_printf(D_EXINFO, "acq_current: 0x%08x", g_acq_state.acq_current);
 
 		error = acq_append_next_alloc();
 		if(error != ACQRES_OK) {
@@ -758,11 +775,6 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	}
 
 	g_acq_state.acq_current = g_acq_state.acq_first;
-	g_acq_state.pre_buffsz = pre_sz;
-	g_acq_state.post_buffsz = post_sz;
-	g_acq_state.pre_sampct = pre_sampct;
-	g_acq_state.post_sampct = post_sampct;
-	g_acq_state.total_buffsz = total_sz;
 	g_acq_state.num_acq_request = num_acq;
 	g_acq_state.num_acq_made = 0;
 	g_acq_state.acq_mode_flags = mode_flags | ACQ_MODE_TRIGGERED;
@@ -827,39 +839,10 @@ int acq_start()
 #endif
 
 	if(g_acq_state.acq_mode_flags & ACQ_MODE_TRIGGERED) {
-		// Disable the interrupt then re-enable it, to reset it.
-		// TODO: Determine if this is strictly necessary!
-		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
-		//XAxiDma_IntrEnable(&g_acq_state.dma, (XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK), XAXIDMA_DEVICE_TO_DMA);
-		//XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
-		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 		XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
 
-		// Set delay and coalesce to minimum values
-		//XAxiDma_WriteReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET, \
-				(XAxiDma_ReadReg(&g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET) | (0x0001 << XAXIDMA_COALESCE_SHIFT)));
-
-		//XAxiDma_IntrDisable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-		//XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-
-		/*
-		 * We must invalidate the cache line before starting the transfer.  This
-		 * invalidation restricts us to 32-byte aligned micropages.  Then we can start
-		 * the AXI transfer.
-		 */
-		/*
-		d_printf(D_WARN, "XAxiDmaBusy=%d", XAxiDma_Busy(&g_acq_state.dma, XAXIDMA_DEVICE_TO_DMA));
-		d_printf(D_WARN, "SR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET));
-		d_printf(D_WARN, "SR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_SR_OFFSET + XAXIDMA_RX_OFFSET));
-		d_printf(D_WARN, "CR_TX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET));
-		d_printf(D_WARN, "CR_RX_Reg=0x%08x", XAxiDma_ReadReg(g_acq_state.dma.RegBase, XAXIDMA_CR_OFFSET + XAXIDMA_RX_OFFSET));
-		*/
-
-		//d_printf(D_ERROR, "acquire: start INVALIDATE range 0x%08x 0x%08x", g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
-
-		//Xil_DCacheInvalidateRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
-
-		//d_printf(D_ERROR, "acquire: Xil_DCacheInvalidateRange");
+		Xil_DCacheFlushRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
+		dsb();
 
 		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
 				g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
@@ -868,14 +851,6 @@ int acq_start()
 			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
 			return ACQRES_DMA_FAIL;
 		}
-
-		/*
-		d_printf(D_EXINFO, "align:            0x%08x", g_acq_state.dma.TxBdRing.DataWidth);
-		d_printf(D_EXINFO, "length:           0x%08x", g_acq_state.pre_buffsz);
-		d_printf(D_EXINFO, "max_length:       0x%08x", g_acq_state.dma.TxBdRing.MaxTransferLen);
-		d_printf(D_EXINFO, "current_buff_acq: 0x%08x", (INTPTR)g_acq_state.acq_current->buff_acq);
-		d_printf(D_EXINFO, "total_buffsz:     0x%08x", g_acq_state.total_buffsz);
-		*/
 
 		// Set the state machine
 		g_acq_state.state = ACQSTATE_PREP;
@@ -886,6 +861,9 @@ int acq_start()
 
 		// Empty the FIFO
 		_acq_reset_PL_fifo();
+
+		// Reset the trigger before starting acquisition.
+		_acq_reset_trigger();
 
 		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
 		emio_fast_write(ACQ_EMIO_ABORT, 0);
@@ -1044,19 +1022,22 @@ void acq_debug_dump_waveraw()
 }
 
 /*
- * Dump information from a wave N.
+ * Explore the linked list to find a waveform by an index and copy a pointer
+ * to the passed parameter `buff`.
  *
- * @param	index	Index of wave to dump. Function will explore LL to find the waveform.
+ * @param	index	Index of wave
+ * @param	buff	Pointer to a pointer for the acq_buffer_t struct
+ *
+ * @return	ACQRES_OK if waveform found (trigger state disregarded)
+ * 			ACQRES_WAVE_NOT_FOUND if... well... the waveform wasn't found
  */
-void acq_debug_dump_wave(int index)
+int acq_get_ll_pointer(int index, struct acq_buffer_t **buff)
 {
 	struct acq_buffer_t *wave = g_acq_state.acq_first;
-	uint32_t addr, addr_start, addr_end, offs;
-	uint32_t *deref;
-	int first, i;
 
 	while(wave != NULL) {
-		d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x)", wave, wave->idx, wave->buff_acq);
+		//d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x, trigger_at:0x%08x %d)", \
+				wave, wave->idx, wave->buff_acq, wave->trigger_at, wave->trigger_at);
 
 		if(wave->idx == index)
 			break;
@@ -1066,15 +1047,39 @@ void acq_debug_dump_wave(int index)
 
 	if(wave == NULL) {
 		d_printf(D_ERROR, "Unable to find waveindex %d", index);
+		return ACQRES_WAVE_NOT_FOUND;
+	}
+
+	*buff = wave;
+	return ACQRES_OK;
+}
+
+/*
+ * Dump information from a wave N.
+ *
+ * @param	index	Index of wave to dump. Function will explore LL to find the waveform.
+ */
+void acq_debug_dump_wave(int index)
+{
+	struct acq_buffer_t *wave;
+	uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+	uint32_t *addr2;
+	uint32_t *deref;
+	int first, i;
+
+	if(acq_get_ll_pointer(index, &wave) != ACQRES_OK) {
+		d_printf(D_ERROR, "Unable to dump for waveindex %d: couldn't find wave", index);
 		return;
 	}
+
+	// d_printf(D_ERROR, "Pointer: 0x%08x", wave);
 
 	// Dump info about this wave
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "** Waveinfo for index %d **", index);
 	d_printf(D_INFO, "");
-	d_printf(D_INFO, "buff_acq address      = 0x%08x", &wave->buff_acq);
-	d_printf(D_INFO, "buff_alloc address    = 0x%08x", &wave->buff_alloc);
+	d_printf(D_INFO, "buff_acq address      = 0x%08x", wave->buff_acq);
+	d_printf(D_INFO, "buff_alloc address    = 0x%08x", wave->buff_alloc);
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "idx                   = %d", wave->idx);
 	d_printf(D_INFO, "flags                 = 0x%04x", wave->flags);
@@ -1083,9 +1088,8 @@ void acq_debug_dump_wave(int index)
 	d_printf(D_INFO, "trigger_at(div16)     = 0x%08x (%d)", wave->trigger_at >> 4, wave->trigger_at >> 4);
 	d_printf(D_INFO, "");
 
-#if 1
-	// If trigger_at is valid try to print wavedata
-	if(!(wave->trigger_at & TRIGGER_INVALID_MASK)) {
+	// If waveform is completed with trigger then display it
+	if(!(wave->trigger_at & TRIGGER_INVALID_MASK) && (wave->flags & ACQBUF_FLAG_PKT_DONE)) {
 		/*
 		 * To play back the waveform:
 		 *   - Invalidate the DCache for this line (do NOT flush line back to DDR3)
@@ -1103,56 +1107,95 @@ void acq_debug_dump_wave(int index)
 		 * by two to get the address.
 		 */
 		Xil_DCacheInvalidateRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
+		dmb();
+		//Xil_L2CacheFlushRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
 		//bogo_delay(1000000);
 
 		//offs = wave->trigger_at >> 3;
-		addr_start = &wave->buff_acq; // + (wave->trigger_at * 8);
+		addr_start = wave->buff_acq; // + (wave->trigger_at * 8);
 		//addr_end = &wave->buff_acq + g_acq_state.pre_buffsz;
 
-		// Correct for fabric offset in trigger position(?)
-		wave->trigger_at += 24;
+		//addr2 = wave->buff_acq + (wave->trigger_at / 2);
+		start = (((wave->trigger_at >> 3) + 1) * 2);
+		end = g_acq_state.pre_sampct * 2;
+		//addr_start = wave->buff_acq[(wave->trigger_at >> 3)];
+		//addr_end = wave->buff_acq + (g_acq_state.pre_sampct * 2);
 
-		for(i = 0; i < 4096; i++) {
-			deref = (uint32_t*)(addr_start + (i * 8));
+		d_printf(D_INFO, "sz=%d, start=%d, end_post=%d", end, start, end_post);
 
-			if(i > (g_acq_state.pre_sampct + 2)) {
-				// post-trigger: green
-				d_printf(D_RAW, "\033[92m");
-			} else if(i > (wave->trigger_at >> 3)) {
-				// post-event: blue
-				d_printf(D_RAW, "\033[94m");
-			} else {
-				// pre-trigger: yellow
-				d_printf(D_RAW, "\033[93m");
-			}
-
-			d_printf(D_RAW, "%08x (buff + 0x%08x) (%08x / %9d) --> 0x%08x 0x%08x\033[0m\r\n", deref, (i * 8), i, i, *deref, *(deref + 1));
+		for(i = start; i < end; i += 2) {
+			d_printf(D_RAW, "\033[96m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
 
-#if 0
-		for(addr = addr_start, i = 0; addr < addr_end; addr += 8, i++) {
-			deref = addr;
-			d_printf(D_INFO, "%08x (%08x / %9d) --> 0x%08x 0x%08x", addr, i, i, *deref++, *deref);
+		for(i = 0; i < start; i += 2) {
+			d_printf(D_RAW, "\033[95m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
 
-		addr_start = wave->buff_alloc;
-		addr_end = wave->buff_alloc + (offs / 2);
-		first = 1;
+		start = g_acq_state.pre_sampct * 2;
+		end = (g_acq_state.pre_sampct + g_acq_state.post_sampct) * 2;
 
-		for(addr = addr_start, i = 0; addr < addr_end; addr += 8, i++) {
-			deref = addr;
-			if(first) {
-				d_printf(D_INFO, "%08x (%08x / %9d) --> 0x%08x 0x%08x [TRIGGER!]", addr, i, i, *deref++, *deref);
-				first = 0;
-			} else {
-				d_printf(D_INFO, "%08x (%08x / %9d) --> 0x%08x 0x%08x", addr, i, i, *deref++, *deref);
-			}
+		for(i = start; i < end; i += 2) {
+			d_printf(D_RAW, "\033[97m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
-#endif
 	} else {
-		d_printf(D_ERROR, "Trigger invalid for waveindex %d", index);
+		d_printf(D_ERROR, "Trigger invalid for waveindex %d or wave not done", index);
 	}
 
 	d_printf(D_INFO, "");
-#endif
+}
+
+/*
+ * Copy waveform data to a buffer for MIPI transmission.  The copy process is inefficient
+ * and slow, requiring processor intervention, and this should only be used for test/demonstration.
+ *
+ * @param	index	Index of wave to dump. Function will explore LL to find the waveform.
+ * @param	buffer	Buffer to place assembled waveform.  The buffer must be at least as large as the
+ * 					total_buffsz parameter or buffer overflow could occur.
+ */
+int acq_copy_slow_mipi(int index, uint32_t *buffer)
+{
+	struct acq_buffer_t *wave;
+	uint32_t start, end;
+	int res;
+
+	// Find the LL pointer to this waveindex
+	res = acq_get_ll_pointer(index, &wave);
+
+	if(res != ACQRES_OK) {
+		d_printf(D_ERROR, "Unable to dump for waveindex %d: couldn't find wave", index);
+		return res;
+	}
+
+	d_printf(D_EXINFO, "acq: trigger_at=0x%08x (sample:%d)", wave->trigger_at, wave->trigger_at >> 3);
+
+	// If waveform is completed with trigger then copy it
+	if(!(wave->trigger_at & TRIGGER_INVALID_MASK) && (wave->flags & ACQBUF_FLAG_PKT_DONE)) {
+		Xil_DCacheInvalidateRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
+		dmb();
+
+		start = (((wave->trigger_at >> 3) + 1) * 2);
+		end = g_acq_state.pre_sampct * 2;
+
+		d_printf(D_INFO, "X. pointer: 0x%08x", wave->buff_acq);
+
+		d_printf(D_INFO, "0. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
+
+		memcpy(buffer, wave->buff_acq + start, (end - start) * 4);
+		buffer += (end - start);
+
+		d_printf(D_INFO, "1. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq, 0, start * 4, start * 4);
+
+		memcpy(buffer, wave->buff_acq, start * 4);
+		buffer += start;
+
+		start = g_acq_state.pre_sampct * 2;
+		end = (g_acq_state.pre_sampct + g_acq_state.post_sampct) * 2;
+
+		d_printf(D_INFO, "2. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
+
+		memcpy(buffer, wave->buff_acq + start, (end - start) * 4);
+		buffer += start;
+	} else {
+		return ACQRES_WAVE_NOT_READY;
+	}
 }

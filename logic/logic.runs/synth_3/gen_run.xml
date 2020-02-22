@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_3" LaunchPart="xc7z014sclg400-1" LaunchTime="1581801803" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_3/main.dcp" LaunchWriteIncrSynthDcp="true">
+<GenRun Id="synth_3" LaunchPart="xc7z014sclg400-1" LaunchTime="1582326106" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_3/main.dcp" LaunchWriteIncrSynthDcp="true">
   <File Type="PA-TCL" Name="main.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="main_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="main_reports.tcl"/>
@@ -39,24 +39,8 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/main.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/new/ecc24_fast.v">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -64,28 +48,26 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/mipi_crc16_x25_x.v">
       <FileInfo SFType="VHeader">
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/mipi_csi.v">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PIPUSERFILESDIR/sine_rom.coe">
+    <File Path="$PSRCDIR/sources_1/new/mipi_csi_controller.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/axi_dma_0/axi_dma_0.xci">
+    <File Path="$PSRCDIR/sources_1/new/main.v">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -99,11 +81,25 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/clk_wiz_0/clk_wiz_0.xci">
+    <File Path="$PSRCDIR/sources_1/ip/axi_dma_0/axi_dma_0.xci">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PIPUSERFILESDIR/sine_rom.coe">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
@@ -137,10 +133,30 @@
         <Attr Name="UsedInSteps" Val="impl_3;WRITE_BITSTREAM;TCL.PRE"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/utils_1/imports/synth_3/mipi_csi_controller.dcp">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PRUNDIR/synth_3/mipi_csi_controller.dcp"/>
+        <Attr Name="ImportTime" Val="1581890718"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedInSteps" Val="synth_3"/>
+        <Attr Name="AutoDcp" Val="1"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/utils_1/imports/impl_3/mipi_csi_controller_routed.dcp">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PRUNDIR/impl_3/mipi_csi_controller_routed.dcp"/>
+        <Attr Name="ImportTime" Val="1581890614"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedInSteps" Val="impl_3"/>
+        <Attr Name="AutoDcp" Val="1"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/utils_1/imports/synth_3/main.dcp">
       <FileInfo>
         <Attr Name="ImportPath" Val="$PRUNDIR/synth_3/main.dcp"/>
-        <Attr Name="ImportTime" Val="1581801614"/>
+        <Attr Name="ImportTime" Val="1582326098"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedInSteps" Val="synth_3"/>
@@ -154,10 +170,11 @@
   <Strategy Version="1" Minor="2">
     <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Synthesis 2019"/>
     <Step Id="synth_design">
-      <Option Id="FsmExtraction">0</Option>
-      <Option Id="FlattenHierarchy">1</Option>
       <Option Id="Directive">0</Option>
+      <Option Id="FlattenHierarchy">1</Option>
+      <Option Id="FsmExtraction">0</Option>
     </Step>
   </Strategy>
   <BlockFileSet Type="BlockSrcs" Name="clk_wiz_1_idelay_refclk"/>
+  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_0"/>
 </GenRun>

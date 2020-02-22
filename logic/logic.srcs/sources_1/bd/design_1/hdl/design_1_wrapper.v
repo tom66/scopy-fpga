@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 15 21:20:20 2020
+//Date        : Fri Feb 21 23:01:42 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -34,6 +34,10 @@ module design_1_wrapper
     CFG_BRAM_ENB,
     CFG_BRAM_RSTB,
     CFG_BRAM_WEB,
+    CSI_BRAM_ADDRB,
+    CSI_BRAM_CLKB,
+    CSI_BRAM_DOUTB,
+    CSI_BRAM_ENB,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -89,6 +93,10 @@ module design_1_wrapper
   input CFG_BRAM_ENB;
   input CFG_BRAM_RSTB;
   input [3:0]CFG_BRAM_WEB;
+  input [15:0]CSI_BRAM_ADDRB;
+  input CSI_BRAM_CLKB;
+  output [63:0]CSI_BRAM_DOUTB;
+  input CSI_BRAM_ENB;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -115,7 +123,7 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  input [13:0]PL_IRQ;
+  input [3:0]PL_IRQ;
   input TRIGGER_IN;
   output TRIGGER_OUT;
   output [31:0]TRIGGER_POS;
@@ -145,6 +153,10 @@ module design_1_wrapper
   wire CFG_BRAM_ENB;
   wire CFG_BRAM_RSTB;
   wire [3:0]CFG_BRAM_WEB;
+  wire [15:0]CSI_BRAM_ADDRB;
+  wire CSI_BRAM_CLKB;
+  wire [63:0]CSI_BRAM_DOUTB;
+  wire CSI_BRAM_ENB;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -171,7 +183,7 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
-  wire [13:0]PL_IRQ;
+  wire [3:0]PL_IRQ;
   wire TRIGGER_IN;
   wire TRIGGER_OUT;
   wire [31:0]TRIGGER_POS;
@@ -202,6 +214,10 @@ module design_1_wrapper
         .CFG_BRAM_ENB(CFG_BRAM_ENB),
         .CFG_BRAM_RSTB(CFG_BRAM_RSTB),
         .CFG_BRAM_WEB(CFG_BRAM_WEB),
+        .CSI_BRAM_ADDRB(CSI_BRAM_ADDRB),
+        .CSI_BRAM_CLKB(CSI_BRAM_CLKB),
+        .CSI_BRAM_DOUTB(CSI_BRAM_DOUTB),
+        .CSI_BRAM_ENB(CSI_BRAM_ENB),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),

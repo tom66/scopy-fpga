@@ -38,13 +38,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="76"/>
-    <Option Name="WTModelSimExportSim" Val="76"/>
-    <Option Name="WTQuestaExportSim" Val="76"/>
-    <Option Name="WTIesExportSim" Val="76"/>
-    <Option Name="WTVcsExportSim" Val="76"/>
-    <Option Name="WTRivieraExportSim" Val="76"/>
-    <Option Name="WTActivehdlExportSim" Val="76"/>
+    <Option Name="WTXSimExportSim" Val="93"/>
+    <Option Name="WTModelSimExportSim" Val="93"/>
+    <Option Name="WTQuestaExportSim" Val="93"/>
+    <Option Name="WTIesExportSim" Val="93"/>
+    <Option Name="WTVcsExportSim" Val="93"/>
+    <Option Name="WTRivieraExportSim" Val="93"/>
+    <Option Name="WTActivehdlExportSim" Val="93"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -88,24 +88,8 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/main.v">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sources_1/new/ecc24_fast.v">
         <FileInfo RelPath="ecc24_fast.v">
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -113,28 +97,26 @@
       </File>
       <File Path="$PSRCDIR/sources_1/new/mipi_crc16_x25_x.v">
         <FileInfo SFType="VHeader">
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/mipi_csi.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PIPUSERFILESDIR/sine_rom.coe">
+      <File Path="$PSRCDIR/sources_1/new/mipi_csi_controller.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/axi_dma_0/axi_dma_0.xci">
+      <File Path="$PSRCDIR/sources_1/new/main.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -148,11 +130,25 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/clk_wiz_0/clk_wiz_0.xci">
+      <File Path="$PSRCDIR/sources_1/ip/axi_dma_0/axi_dma_0.xci">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/adc_bitslip.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PIPUSERFILESDIR/sine_rom.coe">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
@@ -164,14 +160,7 @@
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
       <Filter Type="Constrs"/>
-      <File Path="$PSRCDIR/constrs_1/new/constraints.xdc">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-        </FileInfo>
-      </File>
       <Config>
-        <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/new/constraints.xdc"/>
         <Option Name="ConstrsType" Val="XDC"/>
       </Config>
     </FileSet>
@@ -200,10 +189,30 @@
           <Attr Name="UsedInSteps" Val="impl_3;WRITE_BITSTREAM;TCL.PRE"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/utils_1/imports/synth_3/mipi_csi_controller.dcp">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PRUNDIR/synth_3/mipi_csi_controller.dcp"/>
+          <Attr Name="ImportTime" Val="1581890718"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedInSteps" Val="synth_3"/>
+          <Attr Name="AutoDcp" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/utils_1/imports/impl_3/mipi_csi_controller_routed.dcp">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PRUNDIR/impl_3/mipi_csi_controller_routed.dcp"/>
+          <Attr Name="ImportTime" Val="1581890614"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedInSteps" Val="impl_3"/>
+          <Attr Name="AutoDcp" Val="1"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/utils_1/imports/synth_3/main.dcp">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PRUNDIR/synth_3/main.dcp"/>
-          <Attr Name="ImportTime" Val="1581801614"/>
+          <Attr Name="ImportTime" Val="1582326098"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedInSteps" Val="synth_3"/>
@@ -237,6 +246,19 @@
       <Config>
         <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_2/new/constraints.xdc"/>
         <Option Name="ConstrsType" Val="XDC"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="clk_wiz_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/clk_wiz_0">
+      <File Path="$PSRCDIR/sources_1/ip/clk_wiz_0/clk_wiz_0.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="clk_wiz_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
   </FileSets>
@@ -294,9 +316,19 @@
         <StratHandle Name="Flow_RuntimeOptimized" Flow="Vivado Synthesis 2019"/>
         <Step Id="synth_design">
           <Option Id="FlattenHierarchy">1</Option>
-          <Option Id="FsmExtraction">0</Option>
           <Option Id="Directive">0</Option>
+          <Option Id="FsmExtraction">0</Option>
         </Step>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2019"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="clk_wiz_0_synth_1" Type="Ft3:Synth" SrcSet="clk_wiz_0" Part="xc7z014sclg400-1" ConstrsSet="clk_wiz_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/clk_wiz_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019"/>
+        <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2019"/>
@@ -361,7 +393,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_3" Type="Ft2:EntireDesign" Part="xc7z014sclg400-1" ConstrsSet="constrs_2" Description="Default settings for Implementation." AutoIncrementalCheckpoint="true" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_3" SynthRun="synth_3" IncludeInArchive="true" GenFullBitstream="true">
+    <Run Id="impl_3" Type="Ft2:EntireDesign" Part="xc7z014sclg400-1" ConstrsSet="constrs_2" Description="Default settings for Implementation." AutoIncrementalCheckpoint="true" IncrementalCheckpoint="$PSRCDIR/utils_1/imports/impl_3/mipi_csi_controller_routed.dcp" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_3" SynthRun="synth_3" IncludeInArchive="true" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2019"/>
         <Step Id="init_design"/>
@@ -375,6 +407,23 @@
         <Step Id="write_bitstream" PreStepTclHook="$PSRCDIR/utils_1/imports/logic/bitstream_pre.tcl"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2019"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="clk_wiz_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z014sclg400-1" ConstrsSet="clk_wiz_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="clk_wiz_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2019"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design" EnableStepBool="1"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2019"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>

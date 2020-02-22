@@ -189,6 +189,13 @@ void hal_init()
 
 	// Initialise the fabric configuration engine
 	fabcfg_init();
+
+	d_printf(D_INFO, "XUartPs: resetting RX FIFO");
+
+	// Read the UART FIFO until it reports empty, to initialise waitkey operations, etc.
+	while(XUartPs_IsReceiveData(STDIN_BASEADDRESS)) {
+		d_printf(D_EXINFO, "XUartPs: FIFO = 0x%02x", XUartPs_RecvByte(STDIN_BASEADDRESS));
+	}
 }
 
 /**
@@ -335,7 +342,10 @@ void d_printf(int debug_code, char *fmt, ...)
  */
 void d_waitkey()
 {
-	inbyte();
+	char res;
+	res = XUartPs_RecvByte(STDIN_BASEADDRESS);
+
+	d_printf(D_EXINFO, "XUartPs: FIFO = 0x%02x", res);
 }
 
 /**
@@ -344,6 +354,9 @@ void d_waitkey()
  */
 bool d_iskeypress()
 {
+	// clear FIFO before reading byte
+	XUartPs_WriteReg(STDIN_BASEADDRESS, XUARTPS_CR_OFFSET, ((u32)XUARTPS_CR_TXRST | (u32)XUARTPS_CR_RXRST));
+
 	return XUartPs_IsReceiveData(STDIN_BASEADDRESS);
 }
 

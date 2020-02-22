@@ -3,7 +3,7 @@
 CC := arm-none-eabi-gcc
 CC_FLAGS := -MMD -MP       -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard 
 CFLAGS := 
-LN_FLAGS :=  -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec  -lrsa -Wl,--start-group,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lxilffs,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lrsa,-lxil,-lgcc,-lc,--end-group                                  -Wl,--gc-sections
+LN_FLAGS :=  -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec  -lrsa -Wl,--start-group,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lxilffs,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lrsa,-lxil,-lgcc,-lc,--end-group                                   -Wl,--gc-sections
 
 c_SOURCES := $(wildcard *.c)
 S_SOURCES := $(wildcard *.S)
