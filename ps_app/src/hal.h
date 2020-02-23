@@ -66,6 +66,7 @@
 #define D_ASSERT(expr)				{ \
 										if(!(expr)) { \
 											d_printf(D_ERROR, "assertion failed: `%s' (file %s, line %d)", #expr, __FILE__, __LINE__);  \
+											exit(-99) ; \
 										} \
 									} \
 

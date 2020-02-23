@@ -8,6 +8,7 @@ LD_SRCS += \
 
 C_SRCS += \
 ../src/acquire.c \
+../src/dma_gearbox.c \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
@@ -16,6 +17,7 @@ C_SRCS += \
 
 OBJS += \
 ./src/acquire.o \
+./src/dma_gearbox.o \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
@@ -24,6 +26,7 @@ OBJS += \
 
 C_DEPS += \
 ./src/acquire.d \
+./src/dma_gearbox.d \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \

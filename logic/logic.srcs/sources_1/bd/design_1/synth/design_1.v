@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 22 16:19:35 2020
+//Date        : Sun Feb 23 14:39:58 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -39,6 +39,24 @@ module design_1
     CSI_BRAM_CLKB,
     CSI_BRAM_DOUTB,
     CSI_BRAM_ENB,
+    CSI_MON_CTRL_STATE_DBG,
+    CSI_MON_DATA_TYPE,
+    CSI_MON_EM_MIPI_DONE,
+    CSI_MON_EM_MIPI_END_FRAME,
+    CSI_MON_EM_MIPI_SLEEP,
+    CSI_MON_EM_MIPI_START_FRAME,
+    CSI_MON_EM_MIPI_START_LINES,
+    CSI_MON_EM_MIPI_STOP,
+    CSI_MON_LINE_BYTE_COUNT,
+    CSI_MON_LINE_COUNT,
+    CSI_MON_LPCLKN,
+    CSI_MON_LPCLKP,
+    CSI_MON_LPD0N,
+    CSI_MON_LPD0N1,
+    CSI_MON_LPD0P,
+    CSI_MON_LPD0P1,
+    CSI_MON_LPD1N,
+    CSI_MON_LPD1P,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -96,8 +114,26 @@ module design_1
   input [3:0]CFG_BRAM_WEB;
   input [15:0]CSI_BRAM_ADDRB;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CSI_BRAM_CLKB CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CSI_BRAM_CLKB, CLK_DOMAIN design_1_CSI_BRAM_CLKB, FREQ_HZ 100000000, INSERT_VIP 0, PHASE 0.000" *) input CSI_BRAM_CLKB;
-  output [63:0]CSI_BRAM_DOUTB;
+  output [31:0]CSI_BRAM_DOUTB;
   input CSI_BRAM_ENB;
+  input [5:0]CSI_MON_CTRL_STATE_DBG;
+  input CSI_MON_DATA_TYPE;
+  input CSI_MON_EM_MIPI_DONE;
+  input CSI_MON_EM_MIPI_END_FRAME;
+  input CSI_MON_EM_MIPI_SLEEP;
+  input CSI_MON_EM_MIPI_START_FRAME;
+  input CSI_MON_EM_MIPI_START_LINES;
+  input CSI_MON_EM_MIPI_STOP;
+  input CSI_MON_LINE_BYTE_COUNT;
+  input CSI_MON_LINE_COUNT;
+  input CSI_MON_LPCLKN;
+  input CSI_MON_LPCLKP;
+  input CSI_MON_LPD0N;
+  input CSI_MON_LPD0N1;
+  input CSI_MON_LPD0P;
+  input CSI_MON_LPD0P1;
+  input CSI_MON_LPD1N;
+  input CSI_MON_LPD1P;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -154,21 +190,26 @@ module design_1
   wire [15:0]CSI_BRAM_ADDRB_1;
   wire CSI_BRAM_CLKB_1;
   wire CSI_BRAM_ENB_1;
+  wire [5:0]CSI_CTRL_STATE_DBG_1;
+  wire CSI_MON_DATA_TYPE_1;
+  wire CSI_MON_EM_MIPI_DONE_1;
+  wire CSI_MON_EM_MIPI_END_FRAME_1;
+  wire CSI_MON_EM_MIPI_START_FRAME_1;
+  wire CSI_MON_EM_MIPI_START_LINES_1;
+  wire CSI_MON_EM_MIPI_STOP_1;
+  wire CSI_MON_LINE_BYTE_COUNT_1;
+  wire CSI_MON_LINE_COUNT_1;
+  wire CSI_MON_LPCLKN_1;
+  wire CSI_MON_LPCLKP_1;
+  wire CSI_MON_LPD0N_1;
+  wire CSI_MON_LPD0P_1;
+  wire CSI_MON_LPD1N_1;
+  wire CSI_MON_LPD1P_1;
   wire [63:0]EMIO_I_1;
-  wire FABCFG_COMMIT_MON_1;
-  wire FABCFG_DONE_MON_1;
   wire [3:0]PL_IRQ_1;
   wire adc_axi_streamer_acq_done;
   wire adc_axi_streamer_acq_have_trig;
   wire adc_axi_streamer_adc_fifo_full;
-  wire [31:0]adc_axi_streamer_dbg_acq_axi_downcounter;
-  wire adc_axi_streamer_dbg_acq_axi_running;
-  wire [31:0]adc_axi_streamer_dbg_acq_axi_upcounter;
-  wire [5:0]adc_axi_streamer_dbg_adcstream_state;
-  wire adc_axi_streamer_dbg_axi_rdy;
-  wire [15:0]adc_axi_streamer_dbg_rd_data_count;
-  wire adc_axi_streamer_dbg_trig_post_fifo;
-  wire [15:0]adc_axi_streamer_dbg_wr_data_count;
   wire [63:0]adc_axi_streamer_m00_axis_tdata;
   wire adc_axi_streamer_m00_axis_tlast;
   wire adc_axi_streamer_m00_axis_tvalid;
@@ -186,6 +227,7 @@ module design_1
   wire [31:0]axi_bram_ctrl_1_BRAM_PORTA_DIN;
   wire [31:0]axi_bram_ctrl_1_BRAM_PORTA_DOUT;
   wire axi_bram_ctrl_1_BRAM_PORTA_EN;
+  wire axi_bram_ctrl_1_BRAM_PORTA_RST;
   wire [3:0]axi_bram_ctrl_1_BRAM_PORTA_WE;
   wire [31:0]axi_dma_M_AXI_S2MM_AWADDR;
   wire [1:0]axi_dma_M_AXI_S2MM_AWBURST;
@@ -311,7 +353,7 @@ module design_1
   wire axi_mem_intercon_M00_AXI_WVALID;
   wire [31:0]blk_mem_gen_0_doutb;
   wire blk_mem_gen_0_rstb_busy;
-  wire [63:0]blk_mem_gen_1_doutb;
+  wire [31:0]blk_mem_gen_1_doutb;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -404,12 +446,25 @@ module design_1
   assign CFG_BRAM_WREN_1 = CFG_BRAM_ENB;
   assign CSI_BRAM_ADDRB_1 = CSI_BRAM_ADDRB[15:0];
   assign CSI_BRAM_CLKB_1 = CSI_BRAM_CLKB;
-  assign CSI_BRAM_DOUTB[63:0] = blk_mem_gen_1_doutb;
+  assign CSI_BRAM_DOUTB[31:0] = blk_mem_gen_1_doutb;
   assign CSI_BRAM_ENB_1 = CSI_BRAM_ENB;
+  assign CSI_CTRL_STATE_DBG_1 = CSI_MON_CTRL_STATE_DBG[5:0];
+  assign CSI_MON_DATA_TYPE_1 = CSI_MON_DATA_TYPE;
+  assign CSI_MON_EM_MIPI_DONE_1 = CSI_MON_EM_MIPI_DONE;
+  assign CSI_MON_EM_MIPI_END_FRAME_1 = CSI_MON_EM_MIPI_END_FRAME;
+  assign CSI_MON_EM_MIPI_START_FRAME_1 = CSI_MON_EM_MIPI_START_FRAME;
+  assign CSI_MON_EM_MIPI_START_LINES_1 = CSI_MON_EM_MIPI_START_LINES;
+  assign CSI_MON_EM_MIPI_STOP_1 = CSI_MON_EM_MIPI_STOP;
+  assign CSI_MON_LINE_BYTE_COUNT_1 = CSI_MON_LINE_BYTE_COUNT;
+  assign CSI_MON_LINE_COUNT_1 = CSI_MON_LINE_COUNT;
+  assign CSI_MON_LPCLKN_1 = CSI_MON_LPCLKN;
+  assign CSI_MON_LPCLKP_1 = CSI_MON_LPCLKP;
+  assign CSI_MON_LPD0N_1 = CSI_MON_LPD0N;
+  assign CSI_MON_LPD0P_1 = CSI_MON_LPD0P;
+  assign CSI_MON_LPD1N_1 = CSI_MON_LPD1N;
+  assign CSI_MON_LPD1P_1 = CSI_MON_LPD1P;
   assign EMIO_I_1 = EMIO_I[63:0];
   assign EMIO_O[63:0] = processing_system7_0_GPIO_O;
-  assign FABCFG_COMMIT_MON_1 = FABCFG_COMMIT_MON;
-  assign FABCFG_DONE_MON_1 = FABCFG_DONE_MON;
   assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
   assign PL_IRQ_1 = PL_IRQ[3:0];
   assign TRIGGER_OUT = adc_axi_streamer_trigger_out;
@@ -431,14 +486,6 @@ module design_1
         .adc_data_valid(ADC_DATA_VALID_1),
         .adc_eof(ADC_DATA_EOF_1),
         .adc_fifo_reset(ADC_FIFO_RESET_1),
-        .dbg_acq_axi_downcounter(adc_axi_streamer_dbg_acq_axi_downcounter),
-        .dbg_acq_axi_running(adc_axi_streamer_dbg_acq_axi_running),
-        .dbg_acq_axi_upcounter(adc_axi_streamer_dbg_acq_axi_upcounter),
-        .dbg_adcstream_state(adc_axi_streamer_dbg_adcstream_state),
-        .dbg_axi_rdy(adc_axi_streamer_dbg_axi_rdy),
-        .dbg_rd_data_count(adc_axi_streamer_dbg_rd_data_count),
-        .dbg_trig_post_fifo(adc_axi_streamer_dbg_trig_post_fifo),
-        .dbg_wr_data_count(adc_axi_streamer_dbg_wr_data_count),
         .m00_axis_aclk(processing_system7_0_FCLK_CLK0),
         .m00_axis_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .m00_axis_tdata(adc_axi_streamer_m00_axis_tdata),
@@ -504,6 +551,7 @@ module design_1
         .bram_clk_a(axi_bram_ctrl_1_BRAM_PORTA_CLK),
         .bram_en_a(axi_bram_ctrl_1_BRAM_PORTA_EN),
         .bram_rddata_a(axi_bram_ctrl_1_BRAM_PORTA_DOUT),
+        .bram_rst_a(axi_bram_ctrl_1_BRAM_PORTA_RST),
         .bram_we_a(axi_bram_ctrl_1_BRAM_PORTA_WE),
         .bram_wrdata_a(axi_bram_ctrl_1_BRAM_PORTA_DIN),
         .s_axi_aclk(processing_system7_0_FCLK_CLK0),
@@ -780,52 +828,40 @@ module design_1
         .web(CFG_BRAM_WEB_1));
   /* CSI Output BRAM */
   design_1_blk_mem_gen_1_1 blk_mem_gen_1
-       (.addra(axi_bram_ctrl_1_BRAM_PORTA_ADDR[14:0]),
-        .addrb(CSI_BRAM_ADDRB_1[13:0]),
+       (.addra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTA_ADDR}),
+        .addrb({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,CSI_BRAM_ADDRB_1}),
         .clka(axi_bram_ctrl_1_BRAM_PORTA_CLK),
         .clkb(CSI_BRAM_CLKB_1),
         .dina(axi_bram_ctrl_1_BRAM_PORTA_DIN),
-        .dinb({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b1,1'b0,1'b0,1'b0}),
+        .dinb({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b1,1'b0,1'b0,1'b0}),
         .douta(axi_bram_ctrl_1_BRAM_PORTA_DOUT),
         .doutb(blk_mem_gen_1_doutb),
         .ena(axi_bram_ctrl_1_BRAM_PORTA_EN),
         .enb(CSI_BRAM_ENB_1),
-        .wea(axi_bram_ctrl_1_BRAM_PORTA_WE[0]),
-        .web(1'b0));
-  design_1_ila_0_0 ila_0
-       (.clk(processing_system7_0_FCLK_CLK0),
-        .probe0(adc_axi_streamer_m00_axis_tdata),
-        .probe1(adc_axi_streamer_m00_axis_tlast),
-        .probe10(adc_axi_streamer_dbg_rd_data_count),
-        .probe11(adc_axi_streamer_dbg_wr_data_count),
-        .probe12(adc_axi_streamer_dbg_trig_post_fifo),
-        .probe13(adc_axi_streamer_acq_done),
-        .probe14(adc_axi_streamer_acq_have_trig),
-        .probe15(adc_axi_streamer_adc_fifo_full),
-        .probe16(adc_axi_streamer_trigger_pos),
-        .probe17(adc_axi_streamer_trigger_out),
-        .probe18(ADC_BUS_1),
-        .probe19(ADC_DATA_VALID_1),
-        .probe2(adc_axi_streamer_m00_axis_tvalid),
-        .probe20(ADC_FIFO_RESET_1),
-        .probe21(ADC_DATA_EOF_1),
-        .probe22(ACQ_RUN_1),
-        .probe23(ACQ_ABORT_1),
-        .probe24(ACQ_TRIG_MASK_1),
-        .probe25(ACQ_TRIG_RST_1),
-        .probe26(ACQ_DEPTH_MUX),
-        .probe27(FABCFG_COMMIT_MON_1),
-        .probe28(ACQ_AXI_RUN_1),
-        .probe29(ACQ_TRIGGER_IN_1),
-        .probe3(axi_dma_s_axis_s2mm_tready),
-        .probe30(rst_ps7_0_20M_peripheral_aresetn),
-        .probe31(FABCFG_DONE_MON_1),
-        .probe4(adc_axi_streamer_dbg_adcstream_state),
-        .probe5(adc_axi_streamer_dbg_axi_rdy),
-        .probe6(adc_axi_streamer_dbg_acq_axi_running),
-        .probe7(adc_axi_streamer_dbg_acq_axi_upcounter),
-        .probe8(adc_axi_streamer_dbg_acq_axi_downcounter),
-        .probe9(axi_dma_s2mm_introut));
+        .rsta(axi_bram_ctrl_1_BRAM_PORTA_RST),
+        .rstb(1'b0),
+        .wea(axi_bram_ctrl_1_BRAM_PORTA_WE),
+        .web({1'b0,1'b0,1'b0,1'b0}));
+  design_1_ila_0_1 ila_0
+       (.clk(CSI_BRAM_CLKB_1),
+        .probe0(CSI_BRAM_ENB_1),
+        .probe1({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,CSI_BRAM_ADDRB_1}),
+        .probe10(CSI_MON_EM_MIPI_START_LINES_1),
+        .probe11(CSI_MON_EM_MIPI_END_FRAME_1),
+        .probe12(CSI_MON_EM_MIPI_DONE_1),
+        .probe13(CSI_MON_EM_MIPI_STOP_1),
+        .probe14(CSI_MON_LINE_BYTE_COUNT_1),
+        .probe15(CSI_MON_LINE_COUNT_1),
+        .probe16(CSI_MON_DATA_TYPE_1),
+        .probe17(CSI_CTRL_STATE_DBG_1),
+        .probe2(blk_mem_gen_1_doutb),
+        .probe3(CSI_MON_LPD0N_1),
+        .probe4(CSI_MON_LPD0P_1),
+        .probe5(CSI_MON_LPD1P_1),
+        .probe6(CSI_MON_LPD1N_1),
+        .probe7(CSI_MON_LPCLKN_1),
+        .probe8(CSI_MON_LPCLKP_1),
+        .probe9(CSI_MON_EM_MIPI_START_FRAME_1));
   (* BMM_INFO_PROCESSOR = "arm > design_1 axi_bram_ctrl_0 design_1 axi_bram_ctrl_1" *) 
   (* KEEP_HIERARCHY = "yes" *) 
   design_1_processing_system7_0_1 processing_system7_0

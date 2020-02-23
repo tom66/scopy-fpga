@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.506318",
-   "Default View_TopLeft":"-658,891",
+   "Default View_ScaleFactor":"2.1591",
+   "Default View_TopLeft":"-396,1476",
    "ExpandedHierarchyInLayout":"",
    "comment_0":"BRAM for Fabric Configuration",
    "comment_1":"AXI BRAM Controller for Fabric Configuration",
@@ -15,66 +15,84 @@
    "font_comment_2":"13",
    "guistr":"# # String gsaved with Nlview 7.0.21  2019-05-29 bk=1.5064 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 6 -x 2280 -y 1250 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 6 -x 2280 -y 1270 -defaultsOSRD
-preplace port FCLK_CLK0 -pg 1 -lvl 6 -x 2280 -y 1390 -defaultsOSRD
-preplace port ADC_DATA_CLK -pg 1 -lvl 0 -x -20 -y 380 -defaultsOSRD
-preplace port ADC_DATA_VALID -pg 1 -lvl 0 -x -20 -y 400 -defaultsOSRD
-preplace port ADC_DATA_EOF -pg 1 -lvl 0 -x -20 -y 440 -defaultsOSRD
-preplace port ADC_FIFO_RESET -pg 1 -lvl 0 -x -20 -y 420 -defaultsOSRD
-preplace port CFG_BRAM_ENB -pg 1 -lvl 0 -x -20 -y 180 -defaultsOSRD
-preplace port CFG_BRAM_CLKB -pg 1 -lvl 0 -x -20 -y 120 -defaultsOSRD
-preplace port CFG_BRAM_RSTB -pg 1 -lvl 0 -x -20 -y 200 -defaultsOSRD
-preplace port CFG_BRAM_BUSYB -pg 1 -lvl 6 -x 2280 -y 150 -defaultsOSRD
-preplace port ACQ_RUN -pg 1 -lvl 0 -x -20 -y 460 -defaultsOSRD
-preplace port ACQ_ABORT -pg 1 -lvl 0 -x -20 -y 480 -defaultsOSRD
-preplace port ACQ_TRIG_MASK -pg 1 -lvl 0 -x -20 -y 500 -defaultsOSRD
-preplace port ACQ_TRIG_RST -pg 1 -lvl 0 -x -20 -y 520 -defaultsOSRD
-preplace port ACQ_DEPTH_MUX -pg 1 -lvl 0 -x -20 -y 540 -defaultsOSRD
-preplace port ACQ_AXI_RUN -pg 1 -lvl 0 -x -20 -y 600 -defaultsOSRD
-preplace port TRIGGER_IN -pg 1 -lvl 0 -x -20 -y 620 -defaultsOSRD
-preplace port ACQ_DONE -pg 1 -lvl 6 -x 2280 -y 620 -defaultsOSRD
-preplace port ACQ_HAVE_TRIG -pg 1 -lvl 6 -x 2280 -y 640 -defaultsOSRD
-preplace port TRIGGER_OUT -pg 1 -lvl 6 -x 2280 -y 700 -defaultsOSRD
-preplace port ACQ_DATA_LOSS -pg 1 -lvl 6 -x 2280 -y 660 -defaultsOSRD
-preplace port FABCFG_COMMIT_MON -pg 1 -lvl 0 -x -20 -y 20 -defaultsOSRD
-preplace port FABCFG_DONE_MON -pg 1 -lvl 0 -x -20 -y 40 -defaultsOSRD
-preplace port CSI_BRAM_CLKB -pg 1 -lvl 0 -x -20 -y 1360 -defaultsOSRD
-preplace port CSI_BRAM_ENB -pg 1 -lvl 0 -x -20 -y 1400 -defaultsOSRD
-preplace portBus ADC_BUS -pg 1 -lvl 0 -x -20 -y 360 -defaultsOSRD
-preplace portBus EMIO_I -pg 1 -lvl 0 -x -20 -y 1240 -defaultsOSRD
-preplace portBus EMIO_O -pg 1 -lvl 6 -x 2280 -y 1230 -defaultsOSRD
-preplace portBus CFG_BRAM_DINB -pg 1 -lvl 0 -x -20 -y 140 -defaultsOSRD
-preplace portBus CFG_BRAM_DOUTB -pg 1 -lvl 6 -x 2280 -y 280 -defaultsOSRD
-preplace portBus CFG_BRAM_WEB -pg 1 -lvl 0 -x -20 -y 220 -defaultsOSRD
-preplace portBus CFG_BRAM_ADDRB -pg 1 -lvl 0 -x -20 -y 100 -defaultsOSRD
-preplace portBus ACQ_DEPTH_A -pg 1 -lvl 0 -x -20 -y 560 -defaultsOSRD
-preplace portBus ACQ_DEPTH_B -pg 1 -lvl 0 -x -20 -y 580 -defaultsOSRD
-preplace portBus TRIGGER_SUB_WORD -pg 1 -lvl 0 -x -20 -y 640 -defaultsOSRD
-preplace portBus TRIGGER_POS -pg 1 -lvl 6 -x 2280 -y 680 -defaultsOSRD
-preplace portBus PL_IRQ -pg 1 -lvl 0 -x -20 -y 1460 -defaultsOSRD
-preplace portBus CSI_BRAM_DOUTB -pg 1 -lvl 6 -x 2280 -y 1130 -defaultsOSRD
-preplace portBus CSI_BRAM_ADDRB -pg 1 -lvl 0 -x -20 -y 1340 -defaultsOSRD
-preplace inst rst_ps7_0_20M -pg 1 -lvl 1 -x 380 -y 1030 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 5 -x 1980 -y 1300 -defaultsOSRD
-preplace inst axi_bram_ctrl_0 -pg 1 -lvl 4 -x 1580 -y 990 -defaultsOSRD
-preplace inst axi_dma -pg 1 -lvl 3 -x 1170 -y 920 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 2 -x 750 -y 910 -defaultsOSRD
-preplace inst axi_mem_intercon -pg 1 -lvl 4 -x 1580 -y 1210 -defaultsOSRD
-preplace inst blk_mem_gen_0 -pg 1 -lvl 5 -x 1980 -y 140 -defaultsOSRD
-preplace inst xlconcat_1 -pg 1 -lvl 4 -x 1580 -y 1400 -defaultsOSRD
-preplace inst axi_bram_ctrl_1 -pg 1 -lvl 2 -x 750 -y 1160 -defaultsOSRD -orient R180
-preplace inst blk_mem_gen_1 -pg 1 -lvl 2 -x 750 -y 1430 -defaultsOSRD
-preplace inst adc_axi_streamer -pg 1 -lvl 5 -x 1980 -y 520 -defaultsOSRD
-preplace inst ila_0 -pg 1 -lvl 1 -x 380 -y 1750 -defaultsOSRD
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 10 1130 570 750 920 1060 1430 1080 1750 1120 2240
+preplace port DDR -pg 1 -lvl 6 -x 2180 -y 1110 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 6 -x 2180 -y 1130 -defaultsOSRD
+preplace port FCLK_CLK0 -pg 1 -lvl 6 -x 2180 -y 1150 -defaultsOSRD
+preplace port ADC_DATA_CLK -pg 1 -lvl 0 -x 0 -y 380 -defaultsOSRD
+preplace port ADC_DATA_VALID -pg 1 -lvl 0 -x 0 -y 400 -defaultsOSRD
+preplace port ADC_DATA_EOF -pg 1 -lvl 0 -x 0 -y 440 -defaultsOSRD
+preplace port ADC_FIFO_RESET -pg 1 -lvl 0 -x 0 -y 420 -defaultsOSRD
+preplace port CFG_BRAM_ENB -pg 1 -lvl 0 -x 0 -y 180 -defaultsOSRD
+preplace port CFG_BRAM_CLKB -pg 1 -lvl 0 -x 0 -y 120 -defaultsOSRD
+preplace port CFG_BRAM_RSTB -pg 1 -lvl 0 -x 0 -y 200 -defaultsOSRD
+preplace port CFG_BRAM_BUSYB -pg 1 -lvl 6 -x 2180 -y 150 -defaultsOSRD
+preplace port ACQ_RUN -pg 1 -lvl 0 -x 0 -y 460 -defaultsOSRD
+preplace port ACQ_ABORT -pg 1 -lvl 0 -x 0 -y 480 -defaultsOSRD
+preplace port ACQ_TRIG_MASK -pg 1 -lvl 0 -x 0 -y 500 -defaultsOSRD
+preplace port ACQ_TRIG_RST -pg 1 -lvl 0 -x 0 -y 520 -defaultsOSRD
+preplace port ACQ_DEPTH_MUX -pg 1 -lvl 0 -x 0 -y 540 -defaultsOSRD
+preplace port ACQ_AXI_RUN -pg 1 -lvl 0 -x 0 -y 600 -defaultsOSRD
+preplace port TRIGGER_IN -pg 1 -lvl 0 -x 0 -y 620 -defaultsOSRD
+preplace port ACQ_DONE -pg 1 -lvl 6 -x 2180 -y 620 -defaultsOSRD
+preplace port ACQ_HAVE_TRIG -pg 1 -lvl 6 -x 2180 -y 640 -defaultsOSRD
+preplace port TRIGGER_OUT -pg 1 -lvl 6 -x 2180 -y 700 -defaultsOSRD
+preplace port ACQ_DATA_LOSS -pg 1 -lvl 6 -x 2180 -y 660 -defaultsOSRD
+preplace port FABCFG_COMMIT_MON -pg 1 -lvl 0 -x 0 -y 80 -defaultsOSRD
+preplace port FABCFG_DONE_MON -pg 1 -lvl 0 -x 0 -y 160 -defaultsOSRD
+preplace port CSI_BRAM_CLKB -pg 1 -lvl 0 -x 0 -y 1400 -defaultsOSRD
+preplace port CSI_BRAM_ENB -pg 1 -lvl 0 -x 0 -y 1440 -defaultsOSRD
+preplace port CSI_MON_LPD0N -pg 1 -lvl 0 -x 0 -y 1590 -defaultsOSRD
+preplace port CSI_MON_LPD0P -pg 1 -lvl 0 -x 0 -y 1610 -defaultsOSRD
+preplace port CSI_MON_LPD1P -pg 1 -lvl 0 -x 0 -y 1630 -defaultsOSRD
+preplace port CSI_MON_LPD1N -pg 1 -lvl 0 -x 0 -y 1650 -defaultsOSRD
+preplace port CSI_MON_LPCLKN -pg 1 -lvl 0 -x 0 -y 1670 -defaultsOSRD
+preplace port CSI_MON_LPCLKP -pg 1 -lvl 0 -x 0 -y 1690 -defaultsOSRD
+preplace port CSI_MON_LPD0N1 -pg 1 -lvl 0 -x 0 -y 40 -defaultsOSRD
+preplace port CSI_MON_LPD0P1 -pg 1 -lvl 0 -x 0 -y 60 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_SLEEP -pg 1 -lvl 0 -x 0 -y 20 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_START_LINES -pg 1 -lvl 0 -x 0 -y 1730 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_START_FRAME -pg 1 -lvl 0 -x 0 -y 1710 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_END_FRAME -pg 1 -lvl 0 -x 0 -y 1750 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_STOP -pg 1 -lvl 0 -x 0 -y 1790 -defaultsOSRD
+preplace port CSI_MON_EM_MIPI_DONE -pg 1 -lvl 0 -x 0 -y 1770 -defaultsOSRD
+preplace port CSI_MON_LINE_COUNT -pg 1 -lvl 0 -x 0 -y 1830 -defaultsOSRD
+preplace port CSI_MON_LINE_BYTE_COUNT -pg 1 -lvl 0 -x 0 -y 1810 -defaultsOSRD
+preplace port CSI_MON_DATA_TYPE -pg 1 -lvl 0 -x 0 -y 1850 -defaultsOSRD
+preplace portBus ADC_BUS -pg 1 -lvl 0 -x 0 -y 360 -defaultsOSRD
+preplace portBus EMIO_I -pg 1 -lvl 0 -x 0 -y 1280 -defaultsOSRD
+preplace portBus EMIO_O -pg 1 -lvl 6 -x 2180 -y 1090 -defaultsOSRD
+preplace portBus CFG_BRAM_DINB -pg 1 -lvl 0 -x 0 -y 140 -defaultsOSRD
+preplace portBus CFG_BRAM_DOUTB -pg 1 -lvl 6 -x 2180 -y 280 -defaultsOSRD
+preplace portBus CFG_BRAM_WEB -pg 1 -lvl 0 -x 0 -y 220 -defaultsOSRD
+preplace portBus CFG_BRAM_ADDRB -pg 1 -lvl 0 -x 0 -y 100 -defaultsOSRD
+preplace portBus ACQ_DEPTH_A -pg 1 -lvl 0 -x 0 -y 560 -defaultsOSRD
+preplace portBus ACQ_DEPTH_B -pg 1 -lvl 0 -x 0 -y 580 -defaultsOSRD
+preplace portBus TRIGGER_SUB_WORD -pg 1 -lvl 0 -x 0 -y 640 -defaultsOSRD
+preplace portBus TRIGGER_POS -pg 1 -lvl 6 -x 2180 -y 680 -defaultsOSRD
+preplace portBus PL_IRQ -pg 1 -lvl 0 -x 0 -y 1260 -defaultsOSRD
+preplace portBus CSI_BRAM_ADDRB -pg 1 -lvl 0 -x 0 -y 1380 -defaultsOSRD
+preplace portBus CSI_BRAM_DOUTB -pg 1 -lvl 6 -x 2180 -y 1450 -defaultsOSRD
+preplace portBus CSI_MON_CTRL_STATE_DBG -pg 1 -lvl 0 -x 0 -y 1870 -defaultsOSRD
+preplace inst rst_ps7_0_20M -pg 1 -lvl 1 -x 200 -y 1090 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 5 -x 1870 -y 1160 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 4 -x 1390 -y 840 -defaultsOSRD
+preplace inst axi_dma -pg 1 -lvl 3 -x 980 -y 1070 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 2 -x 560 -y 820 -defaultsOSRD
+preplace inst axi_mem_intercon -pg 1 -lvl 4 -x 1390 -y 1060 -defaultsOSRD
+preplace inst blk_mem_gen_0 -pg 1 -lvl 5 -x 1870 -y 140 -defaultsOSRD
+preplace inst xlconcat_1 -pg 1 -lvl 4 -x 1390 -y 1280 -defaultsOSRD
+preplace inst axi_bram_ctrl_1 -pg 1 -lvl 2 -x 560 -y 1120 -defaultsOSRD -orient R180
+preplace inst blk_mem_gen_1 -pg 1 -lvl 2 -x 560 -y 1390 -defaultsOSRD
+preplace inst adc_axi_streamer -pg 1 -lvl 5 -x 1870 -y 520 -defaultsOSRD
+preplace inst ila_0 -pg 1 -lvl 5 -x 1870 -y 1690 -defaultsOSRD
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 30 980 370 980 740 1220 1200 750 1570 990 2160
 preplace netloc ADC_BUS_1 1 0 5 NJ 360 NJ 360 NJ 360 NJ 360 NJ
-preplace netloc rst_ps7_0_20M_peripheral_aresetn 1 1 4 590 1080 930 1080 1410 680 N
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 6 30 1480 550J 1640 970J 1480 NJ 1480 NJ 1480 2210
-preplace netloc EMIO_I_1 1 0 6 NJ 1240 NJ 1240 NJ 1240 1370J 1330 1740J 1130 2210
-preplace netloc processing_system7_0_GPIO_O 1 5 1 NJ 1230
-preplace netloc xlconcat_1_dout 1 4 1 1740 1340n
-preplace netloc axi_dma_s2mm_introut 1 3 1 1380 940n
+preplace netloc rst_ps7_0_20M_peripheral_aresetn 1 1 4 380 990 730 1210 1180 680 N
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 6 30 1250 NJ 1250 NJ 1250 1200J 1350 NJ 1350 2100
+preplace netloc EMIO_I_1 1 0 6 20J 1270 NJ 1270 NJ 1270 1180J 1360 NJ 1360 2110
+preplace netloc processing_system7_0_GPIO_O 1 5 1 NJ 1090
+preplace netloc xlconcat_1_dout 1 4 1 1570 1200n
+preplace netloc axi_dma_s2mm_introut 1 3 1 1210 1090n
 preplace netloc ADC_DATA_CLK_2 1 0 5 NJ 380 NJ 380 NJ 380 NJ 380 NJ
 preplace netloc ADC_DATA_EOF_1 1 0 5 NJ 440 NJ 440 NJ 440 NJ 440 NJ
 preplace netloc ADC_FIFO_RESET_1 1 0 5 NJ 420 NJ 420 NJ 420 NJ 420 NJ
@@ -83,7 +101,7 @@ preplace netloc CFG_BRAM_WREN_1 1 0 5 NJ 180 NJ 180 NJ 180 NJ 180 NJ
 preplace netloc CFG_BRAM_CLKB_1 1 0 5 NJ 120 NJ 120 NJ 120 NJ 120 NJ
 preplace netloc CFG_BRAM_RSTB_1 1 0 5 NJ 200 NJ 200 NJ 200 NJ 200 NJ
 preplace netloc CFG_BRAM_DINB_1 1 0 5 NJ 140 NJ 140 NJ 140 NJ 140 NJ
-preplace netloc blk_mem_gen_0_doutb 1 4 2 1750 0 2260J
+preplace netloc blk_mem_gen_0_doutb 1 4 2 1550 280 NJ
 preplace netloc CFG_BRAM_WEB_1 1 0 5 NJ 220 NJ 220 NJ 220 NJ 220 NJ
 preplace netloc CFG_BRAM_ADDR_1 1 0 5 NJ 100 NJ 100 NJ 100 NJ 100 NJ
 preplace netloc blk_mem_gen_0_rstb_busy 1 5 1 NJ 150
@@ -101,32 +119,47 @@ preplace netloc adc_axi_streamer_acq_done 1 5 1 NJ 620
 preplace netloc adc_axi_streamer_acq_have_trig 1 5 1 NJ 640
 preplace netloc adc_axi_streamer_trigger_pos 1 5 1 NJ 680
 preplace netloc adc_axi_streamer_trigger_out 1 5 1 NJ 700
-preplace netloc axi_dma_s_axis_s2mm_tready 1 2 4 950 740 1430J 780 NJ 780 2210
-preplace netloc adc_axi_streamer_m00_axis_tdata 1 2 4 960 750 1420J 770 NJ 770 2220
-preplace netloc adc_axi_streamer_m00_axis_tlast 1 2 4 940 -10 NJ -10 NJ -10 2250
-preplace netloc adc_axi_streamer_m00_axis_tvalid 1 2 4 930 280 NJ 280 NJ 280 2240
+preplace netloc axi_dma_s_axis_s2mm_tready 1 2 4 780 1380 NJ 1380 NJ 1380 2120
+preplace netloc adc_axi_streamer_m00_axis_tdata 1 2 4 760 1370 NJ 1370 NJ 1370 2130
+preplace netloc adc_axi_streamer_m00_axis_tlast 1 2 4 750 1390 NJ 1390 NJ 1390 2150
+preplace netloc adc_axi_streamer_m00_axis_tvalid 1 2 4 770 1400 NJ 1400 NJ 1400 2140
 preplace netloc adc_axi_streamer_adc_fifo_full 1 5 1 NJ 660
-preplace netloc blk_mem_gen_1_doutb 1 0 6 40 1470 560 1630 950J 1090 NJ 1090 NJ 1090 2260J
-preplace netloc CSI_BRAM_ADDRB_1 1 0 2 10J 1340 600J
-preplace netloc CSI_BRAM_CLKB_1 1 0 2 20J 1360 590J
-preplace netloc CSI_BRAM_ENB_1 1 0 2 0J 1400 580J
-preplace netloc PL_IRQ_1 1 0 4 NJ 1460 570J 1620 960J 1410 NJ
-preplace netloc axi_dma_M_AXI_S2MM 1 3 1 1390 900n
-preplace netloc axi_interconnect_0_M01_AXI 1 2 2 900 780 1400J
-preplace netloc axi_mem_intercon_M00_AXI 1 4 1 1730 1210n
-preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 1730 60n
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 600 1070 NJ 1070 NJ 1070 NJ 1070 2220
-preplace netloc axi_interconnect_0_M00_AXI 1 2 1 910 840n
-preplace netloc processing_system7_0_DDR 1 5 1 NJ 1250
-preplace netloc processing_system7_0_FIXED_IO 1 5 1 NJ 1270
-preplace netloc adc_axi_streamer_M00_AXIS 1 2 4 970 760 NJ 760 NJ 760 2230
-preplace netloc axi_interconnect_0_M02_AXI 1 2 1 900 930n
-preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 1 1 600 1160n
+preplace netloc blk_mem_gen_1_doutb 1 1 5 390 1520 NJ 1520 NJ 1520 1570 1450 NJ
+preplace netloc CSI_BRAM_ADDRB_1 1 0 5 NJ 1380 370 1260 730J 1230 1220J 1210 1550
+preplace netloc CSI_BRAM_CLKB_1 1 0 5 NJ 1400 380 1500 NJ 1500 NJ 1500 1560
+preplace netloc CSI_BRAM_ENB_1 1 0 5 NJ 1440 370 1510 NJ 1510 NJ 1510 1540
+preplace netloc PL_IRQ_1 1 0 4 30J 1280 NJ 1280 NJ 1280 1190J
+preplace netloc CSI_MON_LPD0N_1 1 0 5 NJ 1590 NJ 1590 NJ 1590 NJ 1590 NJ
+preplace netloc CSI_MON_LPD0P_1 1 0 5 NJ 1610 NJ 1610 NJ 1610 NJ 1610 NJ
+preplace netloc CSI_MON_LPD1P_1 1 0 5 NJ 1630 NJ 1630 NJ 1630 NJ 1630 NJ
+preplace netloc CSI_MON_LPD1N_1 1 0 5 NJ 1650 NJ 1650 NJ 1650 NJ 1650 NJ
+preplace netloc CSI_MON_LPCLKN_1 1 0 5 NJ 1670 NJ 1670 NJ 1670 NJ 1670 NJ
+preplace netloc CSI_MON_LPCLKP_1 1 0 5 NJ 1690 NJ 1690 NJ 1690 NJ 1690 NJ
+preplace netloc CSI_MON_EM_MIPI_START_FRAME_1 1 0 5 NJ 1710 NJ 1710 NJ 1710 NJ 1710 NJ
+preplace netloc CSI_MON_EM_MIPI_START_LINES_1 1 0 5 NJ 1730 NJ 1730 NJ 1730 NJ 1730 NJ
+preplace netloc CSI_MON_EM_MIPI_END_FRAME_1 1 0 5 NJ 1750 NJ 1750 NJ 1750 NJ 1750 NJ
+preplace netloc CSI_MON_EM_MIPI_DONE_1 1 0 5 NJ 1770 NJ 1770 NJ 1770 NJ 1770 NJ
+preplace netloc CSI_MON_EM_MIPI_STOP_1 1 0 5 NJ 1790 NJ 1790 NJ 1790 NJ 1790 NJ
+preplace netloc CSI_MON_LINE_BYTE_COUNT_1 1 0 5 NJ 1810 NJ 1810 NJ 1810 NJ 1810 NJ
+preplace netloc CSI_MON_LINE_COUNT_1 1 0 5 NJ 1830 NJ 1830 NJ 1830 NJ 1830 NJ
+preplace netloc CSI_MON_DATA_TYPE_1 1 0 5 NJ 1850 NJ 1850 NJ 1850 NJ 1850 NJ
+preplace netloc CSI_CTRL_STATE_DBG_1 1 0 5 NJ 1870 NJ 1870 NJ 1870 NJ 1870 NJ
+preplace netloc axi_dma_M_AXI_S2MM 1 3 1 1190 1000n
+preplace netloc axi_interconnect_0_M01_AXI 1 2 2 N 820 NJ
+preplace netloc axi_mem_intercon_M00_AXI 1 4 1 1550 1060n
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 1540 60n
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 370 660 NJ 660 NJ 660 1550J 770 2100
+preplace netloc axi_interconnect_0_M00_AXI 1 2 1 770 800n
+preplace netloc processing_system7_0_DDR 1 5 1 NJ 1110
+preplace netloc processing_system7_0_FIXED_IO 1 5 1 NJ 1130
+preplace netloc adc_axi_streamer_M00_AXIS 1 2 4 780 760 NJ 760 NJ 760 2100
+preplace netloc axi_interconnect_0_M02_AXI 1 2 1 720 840n
+preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 1 1 380 1190n
 preplace cgraphic comment_2 place bot -66 14 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
 preplace cgraphic comment_1 place top -106 -32 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
 preplace cgraphic comment_0 place right 18 -72 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
-levelinfo -pg 1 -20 380 750 1170 1580 1980 2280
-pagesize -pg 1 -db -bbox -sgen -260 -40 2510 1970
+levelinfo -pg 1 0 200 560 980 1390 1870 2180
+pagesize -pg 1 -db -bbox -sgen -300 0 2410 1930
 ",
    "linecolor_comment_0":"",
    "linecolor_comment_1":"",

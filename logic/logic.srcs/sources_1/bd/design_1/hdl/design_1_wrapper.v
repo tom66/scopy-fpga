@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Feb 22 16:19:35 2020
+//Date        : Sun Feb 23 14:39:58 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -38,6 +38,24 @@ module design_1_wrapper
     CSI_BRAM_CLKB,
     CSI_BRAM_DOUTB,
     CSI_BRAM_ENB,
+    CSI_MON_CTRL_STATE_DBG,
+    CSI_MON_DATA_TYPE,
+    CSI_MON_EM_MIPI_DONE,
+    CSI_MON_EM_MIPI_END_FRAME,
+    CSI_MON_EM_MIPI_SLEEP,
+    CSI_MON_EM_MIPI_START_FRAME,
+    CSI_MON_EM_MIPI_START_LINES,
+    CSI_MON_EM_MIPI_STOP,
+    CSI_MON_LINE_BYTE_COUNT,
+    CSI_MON_LINE_COUNT,
+    CSI_MON_LPCLKN,
+    CSI_MON_LPCLKP,
+    CSI_MON_LPD0N,
+    CSI_MON_LPD0N1,
+    CSI_MON_LPD0P,
+    CSI_MON_LPD0P1,
+    CSI_MON_LPD1N,
+    CSI_MON_LPD1P,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -95,8 +113,26 @@ module design_1_wrapper
   input [3:0]CFG_BRAM_WEB;
   input [15:0]CSI_BRAM_ADDRB;
   input CSI_BRAM_CLKB;
-  output [63:0]CSI_BRAM_DOUTB;
+  output [31:0]CSI_BRAM_DOUTB;
   input CSI_BRAM_ENB;
+  input [5:0]CSI_MON_CTRL_STATE_DBG;
+  input CSI_MON_DATA_TYPE;
+  input CSI_MON_EM_MIPI_DONE;
+  input CSI_MON_EM_MIPI_END_FRAME;
+  input CSI_MON_EM_MIPI_SLEEP;
+  input CSI_MON_EM_MIPI_START_FRAME;
+  input CSI_MON_EM_MIPI_START_LINES;
+  input CSI_MON_EM_MIPI_STOP;
+  input CSI_MON_LINE_BYTE_COUNT;
+  input CSI_MON_LINE_COUNT;
+  input CSI_MON_LPCLKN;
+  input CSI_MON_LPCLKP;
+  input CSI_MON_LPD0N;
+  input CSI_MON_LPD0N1;
+  input CSI_MON_LPD0P;
+  input CSI_MON_LPD0P1;
+  input CSI_MON_LPD1N;
+  input CSI_MON_LPD1P;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -155,8 +191,26 @@ module design_1_wrapper
   wire [3:0]CFG_BRAM_WEB;
   wire [15:0]CSI_BRAM_ADDRB;
   wire CSI_BRAM_CLKB;
-  wire [63:0]CSI_BRAM_DOUTB;
+  wire [31:0]CSI_BRAM_DOUTB;
   wire CSI_BRAM_ENB;
+  wire [5:0]CSI_MON_CTRL_STATE_DBG;
+  wire CSI_MON_DATA_TYPE;
+  wire CSI_MON_EM_MIPI_DONE;
+  wire CSI_MON_EM_MIPI_END_FRAME;
+  wire CSI_MON_EM_MIPI_SLEEP;
+  wire CSI_MON_EM_MIPI_START_FRAME;
+  wire CSI_MON_EM_MIPI_START_LINES;
+  wire CSI_MON_EM_MIPI_STOP;
+  wire CSI_MON_LINE_BYTE_COUNT;
+  wire CSI_MON_LINE_COUNT;
+  wire CSI_MON_LPCLKN;
+  wire CSI_MON_LPCLKP;
+  wire CSI_MON_LPD0N;
+  wire CSI_MON_LPD0N1;
+  wire CSI_MON_LPD0P;
+  wire CSI_MON_LPD0P1;
+  wire CSI_MON_LPD1N;
+  wire CSI_MON_LPD1P;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -218,6 +272,24 @@ module design_1_wrapper
         .CSI_BRAM_CLKB(CSI_BRAM_CLKB),
         .CSI_BRAM_DOUTB(CSI_BRAM_DOUTB),
         .CSI_BRAM_ENB(CSI_BRAM_ENB),
+        .CSI_MON_CTRL_STATE_DBG(CSI_MON_CTRL_STATE_DBG),
+        .CSI_MON_DATA_TYPE(CSI_MON_DATA_TYPE),
+        .CSI_MON_EM_MIPI_DONE(CSI_MON_EM_MIPI_DONE),
+        .CSI_MON_EM_MIPI_END_FRAME(CSI_MON_EM_MIPI_END_FRAME),
+        .CSI_MON_EM_MIPI_SLEEP(CSI_MON_EM_MIPI_SLEEP),
+        .CSI_MON_EM_MIPI_START_FRAME(CSI_MON_EM_MIPI_START_FRAME),
+        .CSI_MON_EM_MIPI_START_LINES(CSI_MON_EM_MIPI_START_LINES),
+        .CSI_MON_EM_MIPI_STOP(CSI_MON_EM_MIPI_STOP),
+        .CSI_MON_LINE_BYTE_COUNT(CSI_MON_LINE_BYTE_COUNT),
+        .CSI_MON_LINE_COUNT(CSI_MON_LINE_COUNT),
+        .CSI_MON_LPCLKN(CSI_MON_LPCLKN),
+        .CSI_MON_LPCLKP(CSI_MON_LPCLKP),
+        .CSI_MON_LPD0N(CSI_MON_LPD0N),
+        .CSI_MON_LPD0N1(CSI_MON_LPD0N1),
+        .CSI_MON_LPD0P(CSI_MON_LPD0P),
+        .CSI_MON_LPD0P1(CSI_MON_LPD0P1),
+        .CSI_MON_LPD1N(CSI_MON_LPD1N),
+        .CSI_MON_LPD1P(CSI_MON_LPD1P),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),

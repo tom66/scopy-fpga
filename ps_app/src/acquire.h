@@ -89,6 +89,11 @@
 #define ADCDEMUX_12BIT				0x10
 #define ADCDEMUX_14BIT				0x20
 
+#define ADC_CH1						1
+#define ADC_CH2						2
+#define ADC_CH3						3
+#define ADC_CH4						4
+
 #define ACQ_TOTAL_MEMORY_AVAIL		(192 * 1024 * 1024)				// Configured total memory limit for general purpose acquisition.
 
 #define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID

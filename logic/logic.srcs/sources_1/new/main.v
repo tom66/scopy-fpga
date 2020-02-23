@@ -191,6 +191,7 @@ wire cfg_bram_enb;
 wire cfg_bram_busyb;
 wire [2:0] trig_sub_word;
 
+wire [5:0] csi_ctrl_state_dbg;
 wire [15:0] csi_bram_addrb;
 wire [15:0] csi_bram_doutb;
 wire csi_bram_clkb;
@@ -242,6 +243,23 @@ design_1 (
     .CSI_BRAM_ENB(csi_bram_enb),
     
     // Monitor signals for ILA
+    .CSI_MON_LPD0N(csi_lpd0_n),
+    .CSI_MON_LPD0P(csi_lpd0_p),
+    .CSI_MON_LPD1N(csi_lpd1_n),
+    .CSI_MON_LPD1P(csi_lpd1_p),
+    .CSI_MON_LPCLKN(csi_lpclk_n),
+    .CSI_MON_LPCLKP(csi_lpclk_p),
+    .CSI_MON_EM_MIPI_SLEEP(csi_sleep),
+    .CSI_MON_EM_MIPI_START_LINES(csi_start_lines),
+    .CSI_MON_EM_MIPI_START_FRAME(csi_start_frame),
+    .CSI_MON_EM_MIPI_END_FRAME(csi_end_frame),
+    .CSI_MON_EM_MIPI_STOP(csi_stop),
+    .CSI_MON_EM_MIPI_DONE(csi_done),
+    .CSI_MON_LINE_COUNT(R_csi_line_count),
+    .CSI_MON_LINE_BYTE_COUNT(R_csi_line_byte_count),
+    .CSI_MON_DATA_TYPE(R_csi_data_type),
+    .CSI_MON_CTRL_STATE_DBG(csi_ctrl_state_dbg),
+
     .FABCFG_COMMIT_MON(fabcfg_commit),
     .FABCFG_DONE_MON(fabcfg_done),
     
@@ -316,7 +334,7 @@ mipi_csi_controller (
     .R_csi_wct_frame(R_csi_wct_frame),
     //.R_clk_gating_enable(1'b0),
     
-    // csi_ctrl_state_dbg not currently used
+    .csi_ctrl_state_dbg(csi_ctrl_state_dbg),
     
     // BRAM interface
     .mipi_mem_read_clk(csi_bram_clkb),
