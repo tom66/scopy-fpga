@@ -287,4 +287,3 @@ int _mcsi_tx_memcpy_assist_bounded(void *base, void *src, size_t length, uint32_
 	return res;
 }
 
-

@@ -979,6 +979,7 @@ always @(posedge mod_clk_div4) begin
                 // send sleep signal to clock block if this is an idle packet
                 if (init_idle) begin
                     clk_sleep_go <= 1;
+                    clk_sleep_awaken <= 0;
                 end
             end
             
@@ -1231,6 +1232,7 @@ always @(posedge mod_clk_div4) begin
             // if clock gating is enabled.
             if (clock_gate_en) begin
                 clk_sleep_go <= 1;
+                clk_sleep_awaken <= 0;
                 current_state <= STATE_TX_CLK_SHUTDOWN;
             end else begin 
                 current_state <= STATE_TX_INACTIVE;

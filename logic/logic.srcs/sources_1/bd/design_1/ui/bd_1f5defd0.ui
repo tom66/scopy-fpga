@@ -173,18 +173,18 @@ preplace netloc CSI_MON_MIPI_DEBUG_STATE_TIMER2_1 1 0 5 NJ 2280 NJ 2280 NJ 2280 
 preplace netloc CSI_MON_MIPI_DEBUG_STATE_TIMER_RST_1 1 0 5 NJ 2300 NJ 2300 NJ 2300 NJ 2300 NJ
 preplace netloc CSI_MON_MIPI_DEBUG_DATA_MUX_OUT_1 1 0 5 NJ 2320 NJ 2320 NJ 2320 NJ 2320 NJ
 preplace netloc CSI_MON_MIPI_CTRL_BRAM_BASE_1 1 0 5 NJ 2340 NJ 2340 NJ 2340 NJ 2340 NJ
+preplace netloc axi_mem_intercon_M00_AXI 1 4 1 1250 1230n
+preplace netloc axi_interconnect_0_M02_AXI 1 2 1 340 1090n
+preplace netloc axi_interconnect_0_M01_AXI 1 2 2 340 790 880J
+preplace netloc axi_dma_M_AXI_S2MM 1 3 1 870 910n
+preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 1 1 30 1350n
+preplace netloc adc_axi_streamer_M00_AXIS 1 2 4 410 740 NJ 740 NJ 740 1970
 preplace netloc axi_interconnect_0_M00_AXI 1 2 1 370 850n
 preplace netloc processing_system7_0_DDR 1 5 1 NJ 1280
 preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 1220 520n
 preplace netloc axi_interconnect_0_M03_AXI 1 2 3 NJ 1110 NJ 1110 1250
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 40 780 NJ 780 890J 800 NJ 800 1960
 preplace netloc processing_system7_0_FIXED_IO 1 5 1 NJ 1300
-preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 1 1 30 1350n
-preplace netloc axi_dma_M_AXI_S2MM 1 3 1 870 910n
-preplace netloc adc_axi_streamer_M00_AXIS 1 2 4 410 740 NJ 740 NJ 740 1970
-preplace netloc axi_mem_intercon_M00_AXI 1 4 1 1250 1230n
-preplace netloc axi_interconnect_0_M02_AXI 1 2 1 340 1090n
-preplace netloc axi_interconnect_0_M01_AXI 1 2 2 340 790 880J
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 5 40 780 NJ 780 890J 800 NJ 800 1960
 preplace cgraphic comment_2 place bot -66 14 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
 preplace cgraphic comment_1 place top -106 -32 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
 preplace cgraphic comment_0 place right 18 -72 textcolor 4 linecolor 3 linewidth 2 fillcolor V,6,1
@@ -205,15 +205,15 @@ pagesize -pg 1 -db -bbox -sgen -740 0 2240 2750
    "textcolor_comment_2":""
 }
 {
-   """"""""""""""da_axi4_cnt"""""""""""""":"21",
-   """"""""""""""da_axi4_s2mm_cnt"""""""""""""":"1",
-   """"""""""""""da_board_cnt"""""""""""""":"1",
-   """"""""""""""da_bram_cntlr_cnt"""""""""""""":"2",
-   """"""""""""""da_clkrst_cnt"""""""""""""":"25",
-   """"""""""""""da_ps7_cnt"""""""""""""":"1",
-   """"""""""""da_axi4_cnt"""""""""""":"4",
-   """"""""""""da_clkrst_cnt"""""""""""":"4",
-   """""""""""da_clkrst_cnt""""""""""":"1"
+   """""""""""""""da_axi4_cnt""""""""""""""":"21",
+   """""""""""""""da_axi4_s2mm_cnt""""""""""""""":"1",
+   """""""""""""""da_board_cnt""""""""""""""":"1",
+   """""""""""""""da_bram_cntlr_cnt""""""""""""""":"2",
+   """""""""""""""da_clkrst_cnt""""""""""""""":"25",
+   """""""""""""""da_ps7_cnt""""""""""""""":"1",
+   """""""""""""da_axi4_cnt""""""""""""":"4",
+   """""""""""""da_clkrst_cnt""""""""""""":"4",
+   """"""""""""da_clkrst_cnt"""""""""""":"1"
 }
 {
    "/axi_bram_ctrl_0/comment_1":"comment_1",

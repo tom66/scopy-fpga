@@ -173,7 +173,7 @@ mipi_csi mipi_csi0 (
     //  0 - clock continues after initialisation period indefinitely
     //
     // Note that '1' seems to break the Pi's communication interface - further work required on this
-    .clock_gate_en(0),
+    .clock_gate_en(R_clk_gating_enable_regd),
     
     // BlockRAM memory interface
     .mem_read_clk(mipi_mem_read_clk),
@@ -241,6 +241,11 @@ always @(posedge clk_mipi_ref) begin
     case (csi_ctrl_state) 
     
         CSICTRL_STATE_NOT_STARTED : begin
+            // Send IDLE signal if clock gating enabled
+            if (R_clk_gating_enable) begin
+                mipi_idle_packet <= 1;
+            end
+        
             // Advance to SoF if em_mipi_start_frame goes active
             if (em_mipi_start_frame_regd) begin
                 mipi_idle_packet <= 0;
@@ -275,15 +280,20 @@ always @(posedge clk_mipi_ref) begin
         end
         
         CSICTRL_STATE_WAIT_TO_GEN_LINES : begin
+            // Send idle packet if waiting to generate lines and clock gating is enabled
+            if (R_clk_gating_enable) begin
+                mipi_idle_packet <= 1;
+            end
+                
             // go back to idle start if we receive stop command
             if (em_mipi_stop_regd) begin
                 em_mipi_done <= 0;
                 csi_ctrl_state <= CSICTRL_STATE_NOT_STARTED;
-                //mipi_idle_packet <= 1;
             end
             
             // look for rising edge of start_lines signal
             if (em_mipi_start_lines_regd && !last_start_lines) begin
+                mipi_idle_packet <= 0;
                 em_mipi_done <= 0;
                 csi_ctrl_num_lines_to_tx <= R_csi_line_count;
                 csi_ctrl_bram_base_reg <= 0;
@@ -291,6 +301,7 @@ always @(posedge clk_mipi_ref) begin
             end
             
             if (em_mipi_end_frame_regd) begin
+                mipi_idle_packet <= 0;
                 em_mipi_done <= 0;
                 csi_ctrl_state <= CSICTRL_STATE_END_FRAME;
             end

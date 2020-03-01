@@ -255,12 +255,12 @@ type mem_type is array (0 to 31) of std_logic_vector(31 downto 0);
 
 signal ram_clk_config : mem_type := (
 -- initialize memory with valid clock configuration
-   X"05F40401", 
+   X"047D0A02", 
    X"00000000",
-   X"00000008", 
+   X"00000003", 
    X"00000000",
    X"0000C350",
-   X"00000008",
+   X"00000003",
    X"00015f90",
    X"0000C350",
    X"00000001",
@@ -323,8 +323,8 @@ signal load_enable_reg_actual         :std_logic;
 signal SEN         :std_logic;
 signal Reset_axi         :std_logic;
 signal load_enable_reg           :std_logic_vector(0 to 31);
-signal clkfbout_reg           :std_logic_vector(0 to 31) := X"05F40401";
-signal clkout0_reg           :std_logic_vector(0 to 31) := X"00000008" ;
+signal clkfbout_reg           :std_logic_vector(0 to 31) := X"047D0A02";
+signal clkout0_reg           :std_logic_vector(0 to 31) := X"00000003" ;
 signal config_reg           :std_logic_vector(0 to 31);
 begin
 
@@ -374,12 +374,12 @@ begin
     if (Bus2IP_Clk'event and Bus2IP_Clk='1') then
       if(Bus2IP_Rst = RESET_ACTIVE) then
        -- reset values
-	    ram_clk_config(0)  <=    X"05F40401";
+	    ram_clk_config(0)  <=    X"047D0A02";
 	    ram_clk_config(1)  <=    X"00000000";
-	    ram_clk_config(2)  <=    X"00000008";
+	    ram_clk_config(2)  <=    X"00000003";
 	    ram_clk_config(3)  <=    X"00000000";
 	    ram_clk_config(4)  <=    X"0000C350";
-	    ram_clk_config(5)  <=    X"00000008";
+	    ram_clk_config(5)  <=    X"00000003";
 	    ram_clk_config(6)  <=    X"00015f90";
 	    ram_clk_config(7)  <=    X"0000C350";
 	    ram_clk_config(8)  <=    X"00000001";
@@ -571,19 +571,19 @@ config_reg <= load_enable_reg(0 to 30) & load_enable_reg_d;
    clk_in1 => clk_in1
  );
 mmcm_drp_inst: design_1_clk_wiz_0_0_mmcm_drp generic map (
-  S1_CLKFBOUT_MULT          =>  4,
+  S1_CLKFBOUT_MULT          =>  10,
   S1_CLKFBOUT_PHASE         =>  0,
-  S1_CLKFBOUT_FRAC          =>  1524,
+  S1_CLKFBOUT_FRAC          =>  1149,
   S1_CLKFBOUT_FRAC_EN       =>  1, 
   S1_BANDWIDTH              => "OPTIMIZED",
-  S1_DIVCLK_DIVIDE          =>  1,
-  S1_CLKOUT0_DIVIDE         =>  8,
+  S1_DIVCLK_DIVIDE          =>  2,
+  S1_CLKOUT0_DIVIDE         =>  3,
   S1_CLKOUT0_PHASE          =>  0,
   S1_CLKOUT0_DUTY           =>  50000, 
   S1_CLKOUT0_FRAC           =>  0, 
   S1_CLKOUT0_FRAC_EN        =>  0,  
   
-  S1_CLKOUT1_DIVIDE         =>  8,
+  S1_CLKOUT1_DIVIDE         =>  3,
   S1_CLKOUT1_PHASE          =>  90000,
   S1_CLKOUT1_DUTY           =>  50000,
   

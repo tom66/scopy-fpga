@@ -50,7 +50,8 @@ module cfg_bram_controller(
     output reg [1:0] R_gpio_test,
     output reg [5:0] R_csi_line_count,
     output reg [20:0] R_csi_line_byte_count,
-    output reg [7:0] R_csi_data_type
+    output reg [7:0] R_csi_data_type,
+    output reg [15:0] R_csi_control_flags
 );
 
 reg [3:0] cfg_ctrl_state = CFG_BRAM_CTRL_STATE_IDLE;
@@ -200,6 +201,12 @@ always @(posedge clk_ref_bram) begin
                     12'h00c : begin
                         cfg_bram_write_en <= 0;
                         R_csi_data_type <= cfg_bram_dout;
+                    end
+                    
+                    // csi_control_flags
+                    12'h00d : begin
+                        cfg_bram_write_en <= 0;
+                        R_csi_control_flags <= cfg_bram_dout;
                     end
                     
                     // EOF

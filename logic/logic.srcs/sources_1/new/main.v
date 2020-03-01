@@ -115,6 +115,7 @@ wire [1:0] R_gpio_test;
 wire [5:0] R_csi_line_count;
 wire [20:0] R_csi_line_byte_count;
 wire [7:0] R_csi_data_type;
+wire [15:0] R_csi_control_flags;
 
 wire clk_mipi_ref_dbg;
 
@@ -143,7 +144,8 @@ cfg_bram_controller (
     .R_gpio_test(R_gpio_test),
     .R_csi_line_count(R_csi_line_count),
     .R_csi_line_byte_count(R_csi_line_byte_count),
-    .R_csi_data_type(R_csi_data_type)
+    .R_csi_data_type(R_csi_data_type),
+    .R_csi_control_flags(R_csi_control_flags)
 );
 
 /*
@@ -338,7 +340,7 @@ mipi_csi_controller (
     .R_csi_line_byte_count(R_csi_line_byte_count),
     .R_csi_data_type(R_csi_data_type),
     .R_csi_wct_frame(R_csi_wct_frame),
-    //.R_clk_gating_enable(1'b0),
+    .R_clk_gating_enable(R_csi_control_flags[0]),   // Flag index 0 for clock gating (energy save mode, slight performance impact for segmented transfers.)
     
     .csi_ctrl_state_dbg(csi_ctrl_state_dbg),
     .clk_mipi_ref_dbg(clk_mipi_ref_dbg),
