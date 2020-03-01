@@ -113,11 +113,11 @@ int main()
 	}
 #endif
 
-	d_printf(D_INFO, "Press key");
-	d_waitkey();
+	//d_printf(D_INFO, "Press key");
+	//d_waitkey();
 
-	d_printf(D_INFO, "Press key II");
-	d_waitkey();
+	//d_printf(D_INFO, "Press key II");
+	//d_waitkey();
 
 	d_printf(D_INFO, "Starting hacks");
 	csi_hack_run();

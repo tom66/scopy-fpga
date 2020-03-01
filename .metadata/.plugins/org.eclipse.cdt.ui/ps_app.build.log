@@ -1,10 +1,80 @@
-10:29:38 **** Incremental Build of configuration Release for project ps_app ****
+16:28:04 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
 make --no-print-directory main-build
-make[1]: Nothing to be done for 'main-build'.
+'Building file: ../src/mipi_csi_hacks.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -c -fmessage-length=0 -MT"src/mipi_csi_hacks.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"src/mipi_csi_hacks.d" -MT"src/mipi_csi_hacks.o" -o "src/mipi_csi_hacks.o" "../src/mipi_csi_hacks.c"
+In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:114,
+                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
+                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
+                 from ../src/hal.h:32,
+                 from ../src/mipi_csi_hacks.c:21:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:12:2: warning: #warning DEBUG is enabled [-Wcpp]
+ #warning DEBUG is enabled
+  ^~~~~~~
+In file included from ../src/mipi_csi_hacks.c:21:
+../src/hal.h: In function 'emio_fast_read':
+../src/hal.h:168:12: warning: variable 'reg' set but not used [-Wunused-but-set-variable]
+  uint32_t *reg;
+            ^~~
+../src/hal.h:167:11: warning: unused variable 'read' [-Wunused-variable]
+  uint32_t read;
+           ^~~~
+../src/mipi_csi_hacks.c: In function 'csi_hack_run':
+../src/mipi_csi_hacks.c:46:9: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+  memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), src_buffer, 32768);
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:9,
+                 from ../src/hal.h:25,
+                 from ../src/mipi_csi_hacks.c:21:
+g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\arm-none-eabi\libc\usr\include\string.h:31:9: note: expected 'void * restrict' but argument is of type 'unsigned int'
+ void *  memcpy (void *__restrict, const void *__restrict, size_t);
+         ^~~~~~
+../src/mipi_csi_hacks.c:151:11: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+    memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), src_buffer, 32768);
+           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:9,
+                 from ../src/hal.h:25,
+                 from ../src/mipi_csi_hacks.c:21:
+g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\arm-none-eabi\libc\usr\include\string.h:31:9: note: expected 'void * restrict' but argument is of type 'unsigned int'
+ void *  memcpy (void *__restrict, const void *__restrict, size_t);
+         ^~~~~~
+../src/mipi_csi_hacks.c:29:12: warning: unused variable 'inner' [-Wunused-variable]
+  int i, j, inner;
+            ^~~~~
+'Finished building: ../src/mipi_csi_hacks.c'
+' '
+'Building target: ps_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-Map=ps_app_gen.map --verbose -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/acquire.o ./src/clkwiz_interface.o ./src/dma_gearbox.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Using built-in specs.
+Reading specs from Xilinx.spec
+COLLECT_GCC=arm-none-eabi-gcc
+COLLECT_LTO_WRAPPER=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe
+Target: arm-none-eabi
+Configured with: /proj/esdt_sdk/gnu_abe/ABE/builds/lin/arm/arm-linux/snapshots/gcc-8.2.0/configure SHELL=/bin/sh --with-bugurl=https://bugs.linaro.org --with-mpc=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32 --with-mpfr=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32 --with-gmp=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32 --with-gnu-as --with-gnu-ld --disable-libstdcxx-pch --disable-libmudflap --with-cloog=no --with-ppl=no --with-isl=no --disable-nls --enable-c99 --enable-threads=no --enable-multilib --disable-multiarch --with-multilib-list=aprofile --disable-threads --with-newlib --with-build-sysroot=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32/arm-none-eabi/libc --enable-lto --enable-plugins --enable-linker-build-id --enable-long-long --enable-shared --with-sysroot=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32/arm-none-eabi/libc --enable-languages=c,c++,lto --enable-checking=yes --disable-bootstrap --build=x86_64-unknown-linux-gnu --host=x86_64-w64-mingw32 --target=arm-none-eabi --prefix=/proj/esdt_sdk/gnu_abe/ABE/builds/win/arm/arm-none-eabi/builds/destdir/x86_64-w64-mingw32
+Thread model: single
+gcc version 8.2.0 (GCC) 
+COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
+LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
+COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccYKuFrN.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acquire.o ./src/clkwiz_interface.o ./src/dma_gearbox.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
+'Finished building target: ps_app.elf'
+' '
+make --no-print-directory post-build
+'try to produce objectdump'
+arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 369200	   3600	201441152	201813952	c076fc0	ps_app.elf
+'Finished building: ps_app.elf.size'
+' '
 
-10:29:39 Build Finished (took 381ms)
+16:28:07 Build Finished (took 2s.268ms)
 

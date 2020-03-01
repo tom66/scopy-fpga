@@ -1158,8 +1158,8 @@ always @(posedge mod_clk_div4) begin
                 crc16 = 16'hffff; // mipi_crc16_x25_imp(crc16_data, crc16);
                 
                 // Load data into output registers, increment memory pointer
-                hs_tx_byte_d0 <= (mem_data >> 8) & 8'hff;
-                hs_tx_byte_d1 <= mem_data & 8'hff;
+                hs_tx_byte_d1 <= (mem_data >> 8) & 8'hff;
+                hs_tx_byte_d0 <= mem_data & 8'hff;
                 mem_addr_reg <= mem_addr_reg + 1;
                 bytes_output_ctr <= bytes_output_ctr + 2;
             end
