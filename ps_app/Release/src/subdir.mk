@@ -8,29 +8,35 @@ LD_SRCS += \
 
 C_SRCS += \
 ../src/acquire.c \
+../src/clkwiz_interface.c \
 ../src/dma_gearbox.c \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
 ../src/mipi_csi.c \
+../src/mipi_csi_hacks.c \
 ../src/platform.c 
 
 OBJS += \
 ./src/acquire.o \
+./src/clkwiz_interface.o \
 ./src/dma_gearbox.o \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
 ./src/mipi_csi.o \
+./src/mipi_csi_hacks.o \
 ./src/platform.o 
 
 C_DEPS += \
 ./src/acquire.d \
+./src/clkwiz_interface.d \
 ./src/dma_gearbox.d \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \
 ./src/mipi_csi.d \
+./src/mipi_csi_hacks.d \
 ./src/platform.d 
 
 

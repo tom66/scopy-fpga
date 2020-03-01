@@ -20,6 +20,7 @@
 // Local application includes
 #include "hal.h"
 #include "fabric_config.h"
+#include "clkwiz_interface.h"
 #include "version_tag.h"
 
 // Xilinx includes
@@ -196,6 +197,12 @@ void hal_init()
 	while(XUartPs_IsReceiveData(STDIN_BASEADDRESS)) {
 		d_printf(D_EXINFO, "XUartPs: FIFO = 0x%02x", XUartPs_RecvByte(STDIN_BASEADDRESS));
 	}
+
+	/*
+	 * Initialise the ClockWizards.  Currently only one ClkWiz is used, which controls
+	 * the clock for the MIPI block.
+	 */
+	clkwiz_init(&g_hal.clkwiz_mipi, CLKWIZ_CFG_MIPI, CLKWIZ_CFG_MIPI_REFCLK);
 }
 
 /**

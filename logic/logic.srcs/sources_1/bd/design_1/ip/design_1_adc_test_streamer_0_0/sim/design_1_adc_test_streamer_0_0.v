@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 58
+// IP Revision: 59
 
 `timescale 1ns/1ps
 

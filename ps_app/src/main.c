@@ -20,8 +20,8 @@
 #include "mipi_csi.h"
 #include "dma_gearbox.h"
 
-uint8_t src_buffer[16384] __attribute__((aligned(32)));
-uint8_t dest_buffer[16384] __attribute__((aligned(32)));
+//uint8_t src_buffer[16384] __attribute__((aligned(32)));
+//uint8_t dest_buffer[16384] __attribute__((aligned(32)));
 
 int main()
 {
@@ -72,6 +72,7 @@ int main()
 	}
 #endif
 
+#if 0
 	for(i = 0; i < 1024; i++) {
 		src_buffer[i] = i + 0x80;
 	}
@@ -110,6 +111,17 @@ int main()
 			d_printf(D_RAW, "\r\n0x%08x: ", i);
 		}
 	}
+#endif
+
+	d_printf(D_INFO, "Press key");
+	d_waitkey();
+
+	d_printf(D_INFO, "Press key II");
+	d_waitkey();
+
+	d_printf(D_INFO, "Starting hacks");
+	csi_hack_run();
+	d_printf(D_INFO, "Done hacks");
 
     cleanup_platform();
 }

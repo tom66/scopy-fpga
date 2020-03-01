@@ -34,6 +34,8 @@
 #include "xscutimer.h"
 #include "xdebug.h"
 
+#include "clkwiz_interface.h"
+
 #define DBG_LEVEL					1
 #define DBG_BUFFSIZE				4096
 
@@ -71,8 +73,12 @@
 									} \
 
 #define BOGOCAL_ITERAMT				100000
-#define BOGOCAL_ITERCNT				2			// XXX: Bug if this is more than 2 causing shorter bogotimes than expected, to be investigated
-												// at a later date (26/01/2020)
+#define BOGOCAL_ITERCNT				2							// XXX: Bug if this is more than 2 causing shorter bogotimes than expected, to be investigated
+																// at a later date (26/01/2020)
+
+#define CLKWIZ_CFG_MIPI				(XPAR_CLK_WIZ_0_DEVICE_ID)
+#define CLKWIZ_CFG_MIPI_REFCLK		177.77777777				// Should be adjusted to meet the refclk into the ClkWiz.  Bug in XSA generation makes
+																// this otherwise invalid.
 
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))
@@ -96,6 +102,9 @@ struct hal_t {
 
 	// BogoDelay calibration
 	float bogo_cal;
+
+	// ClockWizards
+	struct clkwiz_interface_t clkwiz_mipi;
 };
 
 extern struct hal_t g_hal;

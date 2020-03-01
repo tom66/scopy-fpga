@@ -8,8 +8,8 @@
 
 module mipi_csi(
     // Master CSI clock (two phases - I/Q, 0 & 90 deg) for OSERDESE2 block
-    input mod_clk_I,
-    input mod_clk_Q,
+    input mod_clk_I_in,
+    input mod_clk_Q_in,
     
     // Output clock for other logic that needs to be synchronous to the MIPI block
     output clk_out,
@@ -65,6 +65,11 @@ module mipi_csi(
     output reg busy,
     output reg error,
     output reg [3:0] debug,
+    output [15:0] debug_tx_size,
+    output [5:0] debug_mipi_state,
+    output [15:0] debug_state_timer,
+    output [15:0] debug_state_timer2,
+    output debug_state_timer_rst,
     
     // LED debug outputs
     output reg debug_led0,
@@ -83,7 +88,7 @@ module mipi_csi(
     // which gets pretty hairy.
     output mem_read_clk,
     output reg mem_read_en,
-    output reg [11:0] mem_addr,
+    output [11:0] mem_addr,
     input [15:0] mem_data,
     
     // counter for bytes output, no reset per frame
@@ -162,6 +167,36 @@ always @(posedge mod_clk_I) begin
     mod_clk_div <= mod_clk_div + 1;
 end
 
+BUFGCE (
+    .I(mod_clk_I),
+    .O(mod_clk_div4),
+    .CE(mod_clk_div == 0)
+    //.CLR(0)
+);
+
+/*
+BUFGCE (
+    .I(mod_clk_I_in),
+    .O(mod_clk_I),
+    .CE(1),
+    .CLR(0)
+);
+
+BUFGCE (
+    .I(mod_clk_I_in),
+    .O(mod_clk_I),
+    .CE(1),
+    .CLR(0)
+);
+*/
+
+// Don't buffer the clocks
+wire mod_clk_I, mod_clk_Q;
+assign mod_clk_I = mod_clk_I_in;
+assign mod_clk_Q = mod_clk_Q_in;
+
+assign clk_out = mod_clk_div4;
+
 // ** Internal state registers **
 // Last input state - used to advance state on change
 reg [3:0] last_input_state;
@@ -201,7 +236,7 @@ reg oddr_hiz = 1;
 //  15 = TX waiting for clock;                          advances to LP idle state after clock is started
 //  16 = TX clock shutdown;                             advances to TX_INACTIVE after clock is stopped and LP11 is asserted
 //
-reg [7:0] current_state;
+reg [5:0] current_state;
 
 parameter STATE_LP_IDLE = 0;
 parameter STATE_LP_INIT = 1;
@@ -220,7 +255,9 @@ parameter STATE_TX_INACTIVE = 13;
 parameter STATE_TX_WAITING_FOR_CLOCK = 15;  // new state - out of order
 parameter STATE_TX_CLK_SHUTDOWN = 16;   
 
-reg [7:0] clk_current_state;
+assign debug_mipi_state = current_state;
+
+reg [5:0] clk_current_state;
 
 parameter STATE_CLK_SLEEP = 1;
 parameter STATE_CLK_OFF_STATE = 2;
@@ -257,6 +294,7 @@ parameter PACKET_TYPE_LONG = 1;
 
 // Number of words remaining in current transaction (as above)
 reg [15:0] tx_words_counter;
+assign debug_tx_size = tx_words_counter;
 
 // Latched copies of input registers and pre-computed ECC
 reg [1:0] vc_id_latch;
@@ -485,11 +523,13 @@ end
 
 // ** Serialising OSERDESE block **
 // This generates a 25% duty clock.  But that is not an issue for this design.
+/*
 BUFGCE bufgce_mipi_clkdiv (
     .I(mod_clk_I),
     .O(mod_clk_div4),
     .CE(mod_clk_div == 1'b11)
 );
+*/
 
 wire d0_oddr_out, d1_oddr_out;
 wire d0_t_oddr_out, d1_t_oddr_out;
@@ -859,6 +899,19 @@ always @(posedge mod_clk_div4) begin
     
 end
 
+// Memory address output
+reg [11:0] mem_addr_reg = 0;
+wire [11:0] mem_addr;
+assign mem_addr = mem_addr_reg;
+
+// Debug outputs
+wire [15:0] debug_state_timer;
+wire [15:0] debug_state_timer2;
+wire debug_state_timer_rst;
+assign debug_state_timer[15:0] = state_timer[15:0];
+assign debug_state_timer2[15:0] = state_timer_2[15:0];
+assign debug_state_timer_rst = state_timer_rst;
+
 // Main state logic
 always @(posedge mod_clk_div4) begin
     
@@ -918,6 +971,7 @@ always @(posedge mod_clk_div4) begin
                 error <= 0;
                 ready_state <= 0;
                 oddr_trail_latch <= 0;
+                mem_addr_reg <= 0;
             end else begin
                 // Set data bus state to idle
                 csi_lp_state <= LP_STATE_BUS_IDLE_11;
@@ -1038,6 +1092,15 @@ always @(posedge mod_clk_div4) begin
             // immediately advance to transmit state
             current_state <= STATE_HS_PACKET_HEADER;
             // state_timer_rst = 1; <-- removing this line breaks things, but it shouldn't... to be investigated
+            
+            // if doing a long transfer, enable memory read NOW with address of zero - ensuring that
+            // the BRAM is ready and that we don't get last cycle data
+            if (packet_type == PACKET_TYPE_LONG) begin
+                // Enable memory read NOW with address initialised to zero.  This gives us ~3 cycles before the 
+                // actual read takes place.
+                mem_read_en <= 1;
+                mem_addr_reg <= 0;
+            end
         end
         
         // HS packet header
@@ -1049,8 +1112,8 @@ always @(posedge mod_clk_div4) begin
         // This advances to the HS_PACKET_DATA_TX state if a large payload follows,  or to HS_TRAIL
         // if packet_type == 0.
         STATE_HS_PACKET_HEADER : begin
-            mem_read_en <= 0;
-            mem_addr <= 0;
+            //mem_read_en <= 0;
+            //mem_addr_reg <= 0;
             
             if (state_timer == 0) begin
                 hs_tx_byte_d0 <= ecc_byte_0;
@@ -1063,6 +1126,7 @@ always @(posedge mod_clk_div4) begin
                 // then advance state
                 if (packet_type == PACKET_TYPE_SHORT) begin
                     current_state <= STATE_HS_TRAIL;
+                    state_timer_2 <= 0;
                     state_timer_rst = 1;
                 end else if (packet_type == PACKET_TYPE_LONG) begin
                     current_state <= STATE_HS_PACKET_DATA_TX;
@@ -1096,8 +1160,7 @@ always @(posedge mod_clk_div4) begin
                 // Load data into output registers, increment memory pointer
                 hs_tx_byte_d0 <= (mem_data >> 8) & 8'hff;
                 hs_tx_byte_d1 <= mem_data & 8'hff;
-                mem_read_en <= 1;
-                mem_addr <= mem_addr + 1;
+                mem_addr_reg <= mem_addr_reg + 1;
                 bytes_output_ctr <= bytes_output_ctr + 2;
             end
         end
@@ -1132,6 +1195,7 @@ always @(posedge mod_clk_div4) begin
             state_timer_2 <= state_timer_2 + 1;
             if (state_timer_2 == 40) begin
                 current_state <= STATE_LP_RETURN_PRE;
+                state_timer_2 <= 0;
                 state_timer_rst = 1;
             end
         end

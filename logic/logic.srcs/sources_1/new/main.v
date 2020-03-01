@@ -74,14 +74,6 @@ input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk
     
 output led_PL0, led_PL1;
 
-// 177MHz clock from PS clock source
-// This is derived from a 33.33MHz clock from the PS_CLK input.
-// 
-// Clock breakdown:
-//  - 177MHz logic clock for general logic                                         [clk_master]
-//  - 300MHz QDR clocks (x3) for CSI output (in testing these are set to low-MHz)  [clk_mipi_0,90,180,270]
-//
-
 wire clk_idelay_refclk;
 wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
 
@@ -123,8 +115,10 @@ wire [1:0] R_gpio_test;
 wire [5:0] R_csi_line_count;
 wire [20:0] R_csi_line_byte_count;
 wire [7:0] R_csi_data_type;
-    
-assign led_PL0 = R_gpio_test[0];
+
+wire clk_mipi_ref_dbg;
+
+assign led_PL0 = R_gpio_test[0]; // clk_mipi_ref_dbg; 
 assign led_PL1 = R_gpio_test[1];
 
 cfg_bram_controller (
@@ -193,9 +187,20 @@ wire [2:0] trig_sub_word;
 
 wire [5:0] csi_ctrl_state_dbg;
 wire [15:0] csi_bram_addrb;
-wire [15:0] csi_bram_doutb;
+wire [31:0] csi_bram_doutb;
 wire csi_bram_clkb;
 wire csi_bram_enb;
+wire [5:0] csi_debug_mipi_state;
+
+wire clkwiz0_clkout1, clkwiz0_clkout2;
+wire csi_mipi_busy_dbg, csi_mipi_done_dbg, csi_mipi_init_short_dbg, csi_mipi_init_long_dbg, csi_mipi_init_idle_dbg;
+
+wire [15:0] csi_debug_tx_size;
+wire [15:0] csi_debug_state_timer;
+wire [15:0] csi_debug_state_timer2;
+wire csi_debug_state_timer_rst;
+wire [15:0] csi_debug_data_mux_out;
+wire [5:0] csi_debug_ctrl_bram_base;
 
 // Test trigger generator
 reg trig_gen = 0;
@@ -259,13 +264,28 @@ design_1 (
     .CSI_MON_LINE_BYTE_COUNT(R_csi_line_byte_count),
     .CSI_MON_DATA_TYPE(R_csi_data_type),
     .CSI_MON_CTRL_STATE_DBG(csi_ctrl_state_dbg),
-
+    .CSI_MON_MIPI_BUSY_DBG(csi_mipi_busy_dbg),
+    .CSI_MON_MIPI_DONE_DBG(csi_mipi_done_dbg),
+    .CSI_MON_MIPI_INIT_SHORT_DBG(csi_mipi_init_short_dbg),
+    .CSI_MON_MIPI_INIT_LONG_DBG(csi_mipi_init_long_dbg),
+    .CSI_MON_MIPI_INIT_IDLE_DBG(csi_mipi_init_idle_dbg),
+    .CSI_MON_MIPI_DEBUG_TX_SIZE(csi_debug_tx_size),
+    .CSI_MON_MIPI_DEBUG_STATE(csi_debug_mipi_state),
+    .CSI_MON_MIPI_DEBUG_STATE_TIMER(csi_debug_state_timer),
+    .CSI_MON_MIPI_DEBUG_STATE_TIMER2(csi_debug_state_timer2),
+    .CSI_MON_MIPI_DEBUG_STATE_TIMER_RST(csi_debug_state_timer_rst),
+    .CSI_MON_MIPI_DEBUG_DATA_MUX_OUT(csi_debug_data_mux_out),
+    .CSI_MON_MIPI_CTRL_BRAM_BASE(csi_debug_ctrl_bram_base),
     .FABCFG_COMMIT_MON(fabcfg_commit),
     .FABCFG_DONE_MON(fabcfg_done),
     
     // Master clock (~177MHz currently, actual value not particularly important but must be
     // set up in clock wizards correctly.)
     .FCLK_CLK0(clk_master),
+    
+    // Clock wizard output clocks for MIPI
+    .CLKWIZ0_CLKOUT1(clkwiz0_clkout1),
+    .CLKWIZ0_CLKOUT2(clkwiz0_clkout2),
     
     // EMIO 64-bit low speed signalling bus between ARM and fabric
     .EMIO_I(emio_input),            // Data into ARM
@@ -278,20 +298,6 @@ design_1 (
 /*
  * MIPI CSI Controller
  */
-reg [15:0] emio_counter;
-wire [7:0] train_data_debug;
-
-clk_wiz_0 (
-    .clk_out1_0(clk_mipi_0),
-    .clk_out1_90(clk_mipi_90), // unused
-    .clk_out1_180(clk_mipi_180),
-    .clk_out1_270(clk_mipi_270),
-    //.reset(0),
-    .power_down(0),
-    .locked(pll_locked),
-    .clk_in1(clk_master)
-);
-
 mipi_csi_controller (
     // CSI signals to toplevel
     .csi_clk_p(csi_clk_p),
@@ -313,8 +319,8 @@ mipi_csi_controller (
     .pn_swap_clk(1),
     
     // Master CSI clock
-    .mod_clk_I(clk_mipi_0),
-    .mod_clk_Q(clk_mipi_90),
+    .mod_clk_I(clkwiz0_clkout1),
+    .mod_clk_Q(clkwiz0_clkout2),
     
     // General reset
     .g_rst(g_rst_gen),
@@ -335,6 +341,19 @@ mipi_csi_controller (
     //.R_clk_gating_enable(1'b0),
     
     .csi_ctrl_state_dbg(csi_ctrl_state_dbg),
+    .clk_mipi_ref_dbg(clk_mipi_ref_dbg),
+    .csi_mipi_busy_dbg(csi_mipi_busy_dbg),
+    .csi_mipi_done_dbg(csi_mipi_done_dbg),
+    .csi_mipi_init_short_dbg(csi_mipi_init_short_dbg),
+    .csi_mipi_init_long_dbg(csi_mipi_init_long_dbg),
+    .csi_mipi_init_idle_dbg(csi_mipi_init_idle_dbg),
+    .csi_debug_tx_size(csi_debug_tx_size),
+    .csi_debug_mipi_state(csi_debug_mipi_state),
+    .csi_debug_state_timer(csi_debug_state_timer),
+    .csi_debug_state_timer2(csi_debug_state_timer2),
+    .csi_debug_state_timer_rst(csi_debug_state_timer_rst),
+    .csi_debug_data_mux_out(csi_debug_data_mux_out),
+    .csi_debug_ctrl_bram_base(csi_debug_ctrl_bram_base),
     
     // BRAM interface
     .mipi_mem_read_clk(csi_bram_clkb),
@@ -346,6 +365,8 @@ mipi_csi_controller (
 /*
  * ADC Interface & Control.
  */
+wire [7:0] train_data_debug;
+
 wire [13:0] adc_data_latched_0;
 wire [13:0] adc_data_latched_1;
 wire [13:0] adc_data_latched_2;
@@ -426,43 +447,6 @@ adc_receiver (
     // Reference clock input
     .clk_ref(clk_master)
 );
-
-/*
-wire [63:0] adc_bus;
-assign adc_bus[ 7: 0] = adc_data_latched_0[7:0];
-assign adc_bus[15: 8] = adc_data_latched_1[7:0];
-assign adc_bus[23:16] = adc_data_latched_2[7:0];
-assign adc_bus[31:24] = adc_data_latched_3[7:0];
-assign adc_bus[39:32] = adc_data_latched_4[7:0];
-assign adc_bus[47:40] = adc_data_latched_5[7:0];
-assign adc_bus[55:48] = adc_data_latched_6[7:0];
-assign adc_bus[63:56] = adc_data_latched_7[7:0];
-*/
-
-/*
-reg [31:0] adc32_counter;
-wire [15:0] adc_trigref = adc32_counter[15:0];
-
-assign adc_bus[31:0 ] = adc32_counter;
-assign adc_bus[63:32] = adc32_counter;
-
-always @(posedge adc_data_clk) begin
-
-    //rep_counter <= rep_counter + 1;
-    if (acq_run) begin
-        adc32_counter <= adc32_counter + 1;
-    end
-    
-    // trigger is 1cyc long max.
-    if (trig_gen) begin
-        trig_gen <= 0;
-    end else if ((adc_trigref == 16'h0200) && acq_run) begin
-        // generate trigger on test word
-        trig_gen <= 1;
-    end 
-    
-end
-*/
 
 reg [7:0] adc_test8;
 
