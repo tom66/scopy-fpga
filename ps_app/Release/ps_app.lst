@@ -8886,8 +8886,8 @@ void csi_hack_run()
  1004e30:	e3a0102a 	mov	r1, #42	; 0x2a
  1004e34:	e3a0000c 	mov	r0, #12
  1004e38:	ebfff99c 	bl	10034b0 <fabcfg_write>
-	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0xffffffff);
- 1004e3c:	e3e01000 	mvn	r1, #0
+	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0x01); // LSB controls clock idling mode
+ 1004e3c:	e3a01001 	mov	r1, #1
  1004e40:	e3a0000d 	mov	r0, #13
  1004e44:	ebfff999 	bl	10034b0 <fabcfg_write>
 	fabcfg_commit();

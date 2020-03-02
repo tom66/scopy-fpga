@@ -48,7 +48,7 @@ void csi_hack_run()
 	fabcfg_write(FAB_CFG_CSI_LINE_COUNT, 15);
 	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2048);
 	fabcfg_write(FAB_CFG_CSI_DATA_TYPE, 0x2a);
-	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0xffffffff);
+	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0x01); // LSB controls clock idling mode
 	fabcfg_commit();
 	fabcfg_commit();
 	fabcfg_commit();
