@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Mar 12 11:54:03 2020
+//Date        : Thu Mar 12 13:50:09 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -300,7 +300,7 @@ module design_1
   wire axi_bram_ctrl_0_BRAM_PORTA_EN;
   wire axi_bram_ctrl_0_BRAM_PORTA_RST;
   wire [3:0]axi_bram_ctrl_0_BRAM_PORTA_WE;
-  wire [12:0]axi_bram_ctrl_1_BRAM_PORTA_ADDR;
+  wire [14:0]axi_bram_ctrl_1_BRAM_PORTA_ADDR;
   wire axi_bram_ctrl_1_BRAM_PORTA_CLK;
   wire [31:0]axi_bram_ctrl_1_BRAM_PORTA_DIN;
   wire [31:0]axi_bram_ctrl_1_BRAM_PORTA_DOUT;
@@ -666,7 +666,7 @@ module design_1
         .bram_we_a(axi_bram_ctrl_1_BRAM_PORTA_WE),
         .bram_wrdata_a(axi_bram_ctrl_1_BRAM_PORTA_DIN),
         .s_axi_aclk(processing_system7_0_FCLK_CLK0),
-        .s_axi_araddr(axi_interconnect_0_M01_AXI_ARADDR[12:0]),
+        .s_axi_araddr(axi_interconnect_0_M01_AXI_ARADDR[14:0]),
         .s_axi_arburst(axi_interconnect_0_M01_AXI_ARBURST),
         .s_axi_arcache(axi_interconnect_0_M01_AXI_ARCACHE),
         .s_axi_aresetn(rst_ps7_0_20M_peripheral_aresetn),
@@ -677,7 +677,7 @@ module design_1
         .s_axi_arready(axi_interconnect_0_M01_AXI_ARREADY),
         .s_axi_arsize(axi_interconnect_0_M01_AXI_ARSIZE),
         .s_axi_arvalid(axi_interconnect_0_M01_AXI_ARVALID),
-        .s_axi_awaddr(axi_interconnect_0_M01_AXI_AWADDR[12:0]),
+        .s_axi_awaddr(axi_interconnect_0_M01_AXI_AWADDR[14:0]),
         .s_axi_awburst(axi_interconnect_0_M01_AXI_AWBURST),
         .s_axi_awcache(axi_interconnect_0_M01_AXI_AWCACHE),
         .s_axi_awid(axi_interconnect_0_M01_AXI_AWID),
@@ -1001,7 +1001,7 @@ module design_1
         .web(CFG_BRAM_WEB_1));
   /* CSI Output BRAM */
   design_1_blk_mem_gen_1_1 blk_mem_gen_1
-       (.addra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTA_ADDR}),
+       (.addra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTA_ADDR}),
         .addrb(CSI_BRAM_ADDRB_1),
         .clka(axi_bram_ctrl_1_BRAM_PORTA_CLK),
         .clkb(CSI_BRAM_CLKB_1),

@@ -70,17 +70,22 @@ void acq_hacks_run()
 			// is no strict framing requirement
 			d_printf(D_ERROR, "iter()");
 			csi_hack_start_frame(15);
-			//d_printf(D_ERROR, "csi_hack_start_frame");
+			d_printf(D_ERROR, "done: csi_hack_start_frame");
 
 			acq_copy_slow_mipi(i, (uint8_t*)buffer);
+			for(i = 0; i < sizeof(buffer); i++) {
+				buffer[i] = i & 0xff;
+			}
+
+			d_printf(D_ERROR, "done: acq_copy_slow_mipi");
 
 			for(j = 0; j < 4; j++) {
 				csi_hack_send_line_data(buffer + (j * 32768), 32768);
-				//d_printf(D_ERROR, "csi_hack_send_line_data");
+				d_printf(D_ERROR, "done: csi_hack_send_line_data");
 			}
 
 			csi_hack_stop_frame();
-			//d_printf(D_ERROR, "csi_hack_stop_frame");
+			d_printf(D_ERROR, "done: csi_hack_stop_frame");
 
 			d_printf(D_ERROR, "sent %d waves", i);
 		}

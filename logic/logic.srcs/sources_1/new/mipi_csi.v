@@ -85,7 +85,8 @@ module mipi_csi(
     //
     // Note this controller does not support the MIPI standard for an odd number of bytes.
     // The bytes transferred will always be even.  This is to avoid early line termination logic,
-    // which gets pretty hairy.
+    // which gets pretty hairy.  Odd transmit sizes or wordcounts willl result in undefined 
+    // behaviour.
     output mem_read_clk,
     output reg mem_read_en,
     output [11:0] mem_addr,
@@ -418,6 +419,10 @@ end
 
 // This block latches state of data, clock align signals according to lane byte 
 // clock signal mod_clk_div4_oserdese_ln0
+reg hs_mux_sel = 1;
+wire [7:0] d0_latch_mux = (hs_mux_sel) ? (d0_latch) : (mem_data[0]);
+wire [7:0] d1_latch_mux = (hs_mux_sel) ? (d1_latch) : (mem_data[1]);
+
 always @(posedge mod_clk_div4_oserdese_ln0) begin
     
     d0_latch <= hs_tx_byte_d0;
@@ -521,16 +526,6 @@ always @(posedge mod_clk_I_bufg_oserdese) begin
     
 end
 
-// ** Serialising OSERDESE block **
-// This generates a 25% duty clock.  But that is not an issue for this design.
-/*
-BUFGCE bufgce_mipi_clkdiv (
-    .I(mod_clk_I),
-    .O(mod_clk_div4),
-    .CE(mod_clk_div == 1'b11)
-);
-*/
-
 wire d0_oddr_out, d1_oddr_out;
 wire d0_t_oddr_out, d1_t_oddr_out;
 
@@ -559,14 +554,14 @@ OSERDESE2 #(
     .RST(oddr_rst_clkalign),
     // Bits are numbered 1-8.
     // These bits inverted if P/N swap of data is set.
-    .D1(d0_latch[0] ^ pn_swap_d0),
-    .D2(d0_latch[1] ^ pn_swap_d0),
-    .D3(d0_latch[2] ^ pn_swap_d0),
-    .D4(d0_latch[3] ^ pn_swap_d0),
-    .D5(d0_latch[4] ^ pn_swap_d0),
-    .D6(d0_latch[5] ^ pn_swap_d0),
-    .D7(d0_latch[6] ^ pn_swap_d0),
-    .D8(d0_latch[7] ^ pn_swap_d0)
+    .D1(d0_latch_mux[0] ^ pn_swap_d0),
+    .D2(d0_latch_mux[1] ^ pn_swap_d0),
+    .D3(d0_latch_mux[2] ^ pn_swap_d0),
+    .D4(d0_latch_mux[3] ^ pn_swap_d0),
+    .D5(d0_latch_mux[4] ^ pn_swap_d0),
+    .D6(d0_latch_mux[5] ^ pn_swap_d0),
+    .D7(d0_latch_mux[6] ^ pn_swap_d0),
+    .D8(d0_latch_mux[7] ^ pn_swap_d0)
 );
 
 OSERDESE2 #(
@@ -592,14 +587,14 @@ OSERDESE2 #(
     .RST(oddr_rst_clkalign),
     // Bits are numbered 1-8.
     // These bits inverted if P/N swap of data is set.
-    .D1(d1_latch[0] ^ pn_swap_d1),
-    .D2(d1_latch[1] ^ pn_swap_d1),
-    .D3(d1_latch[2] ^ pn_swap_d1),
-    .D4(d1_latch[3] ^ pn_swap_d1),
-    .D5(d1_latch[4] ^ pn_swap_d1),
-    .D6(d1_latch[5] ^ pn_swap_d1),
-    .D7(d1_latch[6] ^ pn_swap_d1),
-    .D8(d1_latch[7] ^ pn_swap_d1)
+    .D1(d1_latch_mux[0] ^ pn_swap_d1),
+    .D2(d1_latch_mux[1] ^ pn_swap_d1),
+    .D3(d1_latch_mux[2] ^ pn_swap_d1),
+    .D4(d1_latch_mux[3] ^ pn_swap_d1),
+    .D5(d1_latch_mux[4] ^ pn_swap_d1),
+    .D6(d1_latch_mux[5] ^ pn_swap_d1),
+    .D7(d1_latch_mux[6] ^ pn_swap_d1),
+    .D8(d1_latch_mux[7] ^ pn_swap_d1)
 );
 
 OBUFTDS #(

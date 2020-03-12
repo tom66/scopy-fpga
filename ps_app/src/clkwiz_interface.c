@@ -36,7 +36,7 @@ void clkwiz_init(struct clkwiz_interface_t *ifc, uint32_t device_id, float refcl
 
 	XClk_Wiz_CfgInitialize(&ifc->wiz, ifc->wiz_cfg, ifc->wiz_cfg->BaseAddr);
 
-	d_printf(D_INFO, "clkwiz: initialised configuration");
+	d_printf(D_INFO, "clkwiz: initialised configuration @ 0x%08x", ifc->wiz_cfg->BaseAddr);
 }
 
 /*

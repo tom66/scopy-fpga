@@ -38,7 +38,7 @@ void fabcfg_init()
 	int i;
 	uint32_t magic, test, version, ver_uh, ver_lh, userid;
 
-	d_printf(D_INFO, "FabCfg: Initialising");
+	d_printf(D_INFO, "FabCfg: Initialising @ 0x%08x", AXI_CFG_BRAM_BASE_ADDRESS);
 
 	// Set commit pin as output and done pin as input
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, FAB_CFG_EMIO_COMMIT, 1);
@@ -50,8 +50,6 @@ void fabcfg_init()
 	fabcfg_commit();
 	bogo_delay(100000);
 	fabcfg_commit();
-
-	d_printf(D_INFO, "FabCfg: First commit done");
 
 	// Verify that magic value is present and correct
 	magic = fabcfg_read(FAB_CFG_MAGIC1);
@@ -131,7 +129,7 @@ uint32_t fabcfg_read(uint32_t reg)
 	uint32_t res;
 	reg &= FAB_CFG_ADDR_MASK;
 
-	d_printf(D_INFO, "Read:0x%08x", AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4));
+	//d_printf(D_INFO, "Read:0x%08x", AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4));
 
 	dsb();
 	res = Xil_In32(AXI_CFG_BRAM_BASE_ADDRESS + (reg * 4));

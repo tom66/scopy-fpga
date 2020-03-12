@@ -389,9 +389,7 @@ void acq_init()
 		exit(-1);
 	}
 
-	d_printf(D_INFO, "acquire: DMA initialised");
-
-	d_printf(D_INFO, "acquire: Waiting for DMA reset to complete");
+	d_printf(D_INFO, "acquire: DMA initialised @ 0x%08x", g_acq_state.dma_config->BaseAddr);
 
 	XAxiDma_Reset(&g_acq_state.dma);
 	while(!XAxiDma_ResetIsDone(&g_acq_state.dma)) ;

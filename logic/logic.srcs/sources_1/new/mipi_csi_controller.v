@@ -118,7 +118,7 @@ assign csi_debug_ctrl_bram_base = csi_ctrl_bram_base_reg[5:0];
 // the reason is this keeps the BRAM at dual 32-bit ports, which keeps the Xilinx blockdesign happy as
 // we're using a 32-bit AXI interface to this BRAM.
 wire [15:0] mipi_mem_data_mux;
-assign mipi_mem_data_mux = (mipi_mem_addr_req[0]) ? (mipi_mem_data[15:0]) : (mipi_mem_data[31:16]);
+assign mipi_mem_data_mux = (!mipi_mem_addr_req[0]) ? (mipi_mem_data[15:0]) : (mipi_mem_data[31:16]);
 
 // Debug data path
 wire [15:0] csi_debug_data_mux_out;
