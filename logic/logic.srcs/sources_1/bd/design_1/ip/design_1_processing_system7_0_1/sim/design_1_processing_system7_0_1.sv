@@ -736,6 +736,45 @@
   M_AXI_GP0_BRESP,
   M_AXI_GP0_RRESP,
   M_AXI_GP0_RDATA,
+  M_AXI_GP1_ARVALID,
+  M_AXI_GP1_AWVALID,
+  M_AXI_GP1_BREADY,
+  M_AXI_GP1_RREADY,
+  M_AXI_GP1_WLAST,
+  M_AXI_GP1_WVALID,
+  M_AXI_GP1_ARID,
+  M_AXI_GP1_AWID,
+  M_AXI_GP1_WID,
+  M_AXI_GP1_ARBURST,
+  M_AXI_GP1_ARLOCK,
+  M_AXI_GP1_ARSIZE,
+  M_AXI_GP1_AWBURST,
+  M_AXI_GP1_AWLOCK,
+  M_AXI_GP1_AWSIZE,
+  M_AXI_GP1_ARPROT,
+  M_AXI_GP1_AWPROT,
+  M_AXI_GP1_ARADDR,
+  M_AXI_GP1_AWADDR,
+  M_AXI_GP1_WDATA,
+  M_AXI_GP1_ARCACHE,
+  M_AXI_GP1_ARLEN,
+  M_AXI_GP1_ARQOS,
+  M_AXI_GP1_AWCACHE,
+  M_AXI_GP1_AWLEN,
+  M_AXI_GP1_AWQOS,
+  M_AXI_GP1_WSTRB,
+  M_AXI_GP1_ACLK,
+  M_AXI_GP1_ARREADY,
+  M_AXI_GP1_AWREADY,
+  M_AXI_GP1_BVALID,
+  M_AXI_GP1_RLAST,
+  M_AXI_GP1_RVALID,
+  M_AXI_GP1_WREADY,
+  M_AXI_GP1_BID,
+  M_AXI_GP1_RID,
+  M_AXI_GP1_BRESP,
+  M_AXI_GP1_RRESP,
+  M_AXI_GP1_RDATA,
   S_AXI_HP0_ARREADY,
   S_AXI_HP0_AWREADY,
   S_AXI_HP0_BVALID,
@@ -849,7 +888,7 @@
       parameter C_TRACE_INTERNAL_WIDTH = 2;
       parameter C_USE_AXI_NONSECURE = 0;
       parameter C_USE_M_AXI_GP0 = 1;
-      parameter C_USE_M_AXI_GP1 = 0;
+      parameter C_USE_M_AXI_GP1 = 1;
       parameter C_USE_S_AXI_GP0 = 0;
       parameter C_USE_S_AXI_GP1 = 0;
       parameter C_USE_S_AXI_HP0 = 1;
@@ -927,6 +966,45 @@
       input  [1 : 0] M_AXI_GP0_BRESP;
       input  [1 : 0] M_AXI_GP0_RRESP;
       input  [31 : 0] M_AXI_GP0_RDATA;
+      output  M_AXI_GP1_ARVALID;
+      output  M_AXI_GP1_AWVALID;
+      output  M_AXI_GP1_BREADY;
+      output  M_AXI_GP1_RREADY;
+      output  M_AXI_GP1_WLAST;
+      output  M_AXI_GP1_WVALID;
+      output  [11 : 0] M_AXI_GP1_ARID;
+      output  [11 : 0] M_AXI_GP1_AWID;
+      output  [11 : 0] M_AXI_GP1_WID;
+      output  [1 : 0] M_AXI_GP1_ARBURST;
+      output  [1 : 0] M_AXI_GP1_ARLOCK;
+      output  [2 : 0] M_AXI_GP1_ARSIZE;
+      output  [1 : 0] M_AXI_GP1_AWBURST;
+      output  [1 : 0] M_AXI_GP1_AWLOCK;
+      output  [2 : 0] M_AXI_GP1_AWSIZE;
+      output  [2 : 0] M_AXI_GP1_ARPROT;
+      output  [2 : 0] M_AXI_GP1_AWPROT;
+      output  [31 : 0] M_AXI_GP1_ARADDR;
+      output  [31 : 0] M_AXI_GP1_AWADDR;
+      output  [31 : 0] M_AXI_GP1_WDATA;
+      output  [3 : 0] M_AXI_GP1_ARCACHE;
+      output  [3 : 0] M_AXI_GP1_ARLEN;
+      output  [3 : 0] M_AXI_GP1_ARQOS;
+      output  [3 : 0] M_AXI_GP1_AWCACHE;
+      output  [3 : 0] M_AXI_GP1_AWLEN;
+      output  [3 : 0] M_AXI_GP1_AWQOS;
+      output  [3 : 0] M_AXI_GP1_WSTRB;
+      input  M_AXI_GP1_ACLK;
+      input  M_AXI_GP1_ARREADY;
+      input  M_AXI_GP1_AWREADY;
+      input  M_AXI_GP1_BVALID;
+      input  M_AXI_GP1_RLAST;
+      input  M_AXI_GP1_RVALID;
+      input  M_AXI_GP1_WREADY;
+      input  [11 : 0] M_AXI_GP1_BID;
+      input  [11 : 0] M_AXI_GP1_RID;
+      input  [1 : 0] M_AXI_GP1_BRESP;
+      input  [1 : 0] M_AXI_GP1_RRESP;
+      input  [31 : 0] M_AXI_GP1_RDATA;
       output  S_AXI_HP0_ARREADY;
       output  S_AXI_HP0_AWREADY;
       output  S_AXI_HP0_BVALID;
@@ -1041,6 +1119,33 @@
       reg [3 : 0] M_AXI_GP0_AWLEN;
       reg [3 : 0] M_AXI_GP0_AWQOS;
       reg [3 : 0] M_AXI_GP0_WSTRB;
+      reg M_AXI_GP1_ARVALID;
+      reg M_AXI_GP1_AWVALID;
+      reg M_AXI_GP1_BREADY;
+      reg M_AXI_GP1_RREADY;
+      reg M_AXI_GP1_WLAST;
+      reg M_AXI_GP1_WVALID;
+      reg [11 : 0] M_AXI_GP1_ARID;
+      reg [11 : 0] M_AXI_GP1_AWID;
+      reg [11 : 0] M_AXI_GP1_WID;
+      reg [1 : 0] M_AXI_GP1_ARBURST;
+      reg [1 : 0] M_AXI_GP1_ARLOCK;
+      reg [2 : 0] M_AXI_GP1_ARSIZE;
+      reg [1 : 0] M_AXI_GP1_AWBURST;
+      reg [1 : 0] M_AXI_GP1_AWLOCK;
+      reg [2 : 0] M_AXI_GP1_AWSIZE;
+      reg [2 : 0] M_AXI_GP1_ARPROT;
+      reg [2 : 0] M_AXI_GP1_AWPROT;
+      reg [31 : 0] M_AXI_GP1_ARADDR;
+      reg [31 : 0] M_AXI_GP1_AWADDR;
+      reg [31 : 0] M_AXI_GP1_WDATA;
+      reg [3 : 0] M_AXI_GP1_ARCACHE;
+      reg [3 : 0] M_AXI_GP1_ARLEN;
+      reg [3 : 0] M_AXI_GP1_ARQOS;
+      reg [3 : 0] M_AXI_GP1_AWCACHE;
+      reg [3 : 0] M_AXI_GP1_AWLEN;
+      reg [3 : 0] M_AXI_GP1_AWQOS;
+      reg [3 : 0] M_AXI_GP1_WSTRB;
       reg S_AXI_HP0_ARREADY;
       reg S_AXI_HP0_AWREADY;
       reg S_AXI_HP0_BVALID;
@@ -1068,6 +1173,7 @@ import "DPI-C" function void ps7_set_int_param(input string name,input longint v
 import "DPI-C" function void ps7_init_c_model();
 import "DPI-C" function void ps7_set_input_IRQ_F2P(input int pinIdex, input int pinValue);
 import "DPI-C" function void ps7_init_m_axi_gp0(input int M_AXI_GP0_AWID_size,input int M_AXI_GP0_AWADDR_size,input int M_AXI_GP0_AWLEN_size,input int M_AXI_GP0_AWSIZE_size,input int M_AXI_GP0_AWBURST_size,input int M_AXI_GP0_AWLOCK_size,input int M_AXI_GP0_AWCACHE_size,input int M_AXI_GP0_AWPROT_size,input int M_AXI_GP0_AWQOS_size,input int M_AXI_GP0_AWVALID_size,input int M_AXI_GP0_AWREADY_size,input int M_AXI_GP0_WID_size,input int M_AXI_GP0_WDATA_size,input int M_AXI_GP0_WSTRB_size,input int M_AXI_GP0_WLAST_size,input int M_AXI_GP0_WVALID_size,input int M_AXI_GP0_WREADY_size,input int M_AXI_GP0_BID_size,input int M_AXI_GP0_BRESP_size,input int M_AXI_GP0_BVALID_size,input int M_AXI_GP0_BREADY_size,input int M_AXI_GP0_ARID_size,input int M_AXI_GP0_ARADDR_size,input int M_AXI_GP0_ARLEN_size,input int M_AXI_GP0_ARSIZE_size,input int M_AXI_GP0_ARBURST_size,input int M_AXI_GP0_ARLOCK_size,input int M_AXI_GP0_ARCACHE_size,input int M_AXI_GP0_ARPROT_size,input int M_AXI_GP0_ARQOS_size,input int M_AXI_GP0_ARVALID_size,input int M_AXI_GP0_ARREADY_size,input int M_AXI_GP0_RID_size,input int M_AXI_GP0_RDATA_size,input int M_AXI_GP0_RRESP_size,input int M_AXI_GP0_RLAST_size,input int M_AXI_GP0_RVALID_size,input int M_AXI_GP0_RREADY_size);
+import "DPI-C" function void ps7_init_m_axi_gp1(input int M_AXI_GP1_AWID_size,input int M_AXI_GP1_AWADDR_size,input int M_AXI_GP1_AWLEN_size,input int M_AXI_GP1_AWSIZE_size,input int M_AXI_GP1_AWBURST_size,input int M_AXI_GP1_AWLOCK_size,input int M_AXI_GP1_AWCACHE_size,input int M_AXI_GP1_AWPROT_size,input int M_AXI_GP1_AWQOS_size,input int M_AXI_GP1_AWVALID_size,input int M_AXI_GP1_AWREADY_size,input int M_AXI_GP1_WID_size,input int M_AXI_GP1_WDATA_size,input int M_AXI_GP1_WSTRB_size,input int M_AXI_GP1_WLAST_size,input int M_AXI_GP1_WVALID_size,input int M_AXI_GP1_WREADY_size,input int M_AXI_GP1_BID_size,input int M_AXI_GP1_BRESP_size,input int M_AXI_GP1_BVALID_size,input int M_AXI_GP1_BREADY_size,input int M_AXI_GP1_ARID_size,input int M_AXI_GP1_ARADDR_size,input int M_AXI_GP1_ARLEN_size,input int M_AXI_GP1_ARSIZE_size,input int M_AXI_GP1_ARBURST_size,input int M_AXI_GP1_ARLOCK_size,input int M_AXI_GP1_ARCACHE_size,input int M_AXI_GP1_ARPROT_size,input int M_AXI_GP1_ARQOS_size,input int M_AXI_GP1_ARVALID_size,input int M_AXI_GP1_ARREADY_size,input int M_AXI_GP1_RID_size,input int M_AXI_GP1_RDATA_size,input int M_AXI_GP1_RRESP_size,input int M_AXI_GP1_RLAST_size,input int M_AXI_GP1_RVALID_size,input int M_AXI_GP1_RREADY_size);
 import "DPI-C" function void ps7_init_s_axi_hp0(input int S_AXI_HP0_AWID_size,input int S_AXI_HP0_AWADDR_size,input int S_AXI_HP0_AWLEN_size,input int S_AXI_HP0_AWSIZE_size,input int S_AXI_HP0_AWBURST_size,input int S_AXI_HP0_AWLOCK_size,input int S_AXI_HP0_AWCACHE_size,input int S_AXI_HP0_AWPROT_size,input int S_AXI_HP0_AWQOS_size,input int S_AXI_HP0_AWVALID_size,input int S_AXI_HP0_AWREADY_size,input int S_AXI_HP0_WID_size,input int S_AXI_HP0_WDATA_size,input int S_AXI_HP0_WSTRB_size,input int S_AXI_HP0_WLAST_size,input int S_AXI_HP0_WVALID_size,input int S_AXI_HP0_WREADY_size,input int S_AXI_HP0_BID_size,input int S_AXI_HP0_BRESP_size,input int S_AXI_HP0_BVALID_size,input int S_AXI_HP0_BREADY_size,input int S_AXI_HP0_ARID_size,input int S_AXI_HP0_ARADDR_size,input int S_AXI_HP0_ARLEN_size,input int S_AXI_HP0_ARSIZE_size,input int S_AXI_HP0_ARBURST_size,input int S_AXI_HP0_ARLOCK_size,input int S_AXI_HP0_ARCACHE_size,input int S_AXI_HP0_ARPROT_size,input int S_AXI_HP0_ARQOS_size,input int S_AXI_HP0_ARVALID_size,input int S_AXI_HP0_ARREADY_size,input int S_AXI_HP0_RID_size,input int S_AXI_HP0_RDATA_size,input int S_AXI_HP0_RRESP_size,input int S_AXI_HP0_RLAST_size,input int S_AXI_HP0_RVALID_size,input int S_AXI_HP0_RREADY_size);
 import "DPI-C" function void ps7_simulate_single_cycle_FCLK_CLK0();
 import "DPI-C" function void ps7_simulate_single_cycle_M_AXI_GP0_ACLK();
@@ -1112,6 +1218,50 @@ output bit [2 : 0] M_AXI_GP0_ARPROT,
 output bit [3 : 0] M_AXI_GP0_ARQOS,
 output bit M_AXI_GP0_ARVALID,
 output bit M_AXI_GP0_RREADY
+);
+
+import "DPI-C" function void ps7_simulate_single_cycle_M_AXI_GP1_ACLK();
+import "DPI-C" function void ps7_set_inputs_m_axi_gp1_M_AXI_GP1_ACLK(
+input bit M_AXI_GP1_AWREADY,
+input bit M_AXI_GP1_WREADY,
+input bit [11 : 0] M_AXI_GP1_BID,
+input bit [1 : 0] M_AXI_GP1_BRESP,
+input bit M_AXI_GP1_BVALID,
+input bit M_AXI_GP1_ARREADY,
+input bit [11 : 0] M_AXI_GP1_RID,
+input bit [31 : 0] M_AXI_GP1_RDATA,
+input bit [1 : 0] M_AXI_GP1_RRESP,
+input bit M_AXI_GP1_RLAST,
+input bit M_AXI_GP1_RVALID
+);
+import "DPI-C" function void ps7_get_outputs_m_axi_gp1_M_AXI_GP1_ACLK(
+output bit [11 : 0] M_AXI_GP1_AWID,
+output bit [31 : 0] M_AXI_GP1_AWADDR,
+output bit [3 : 0] M_AXI_GP1_AWLEN,
+output bit [2 : 0] M_AXI_GP1_AWSIZE,
+output bit [1 : 0] M_AXI_GP1_AWBURST,
+output bit [1 : 0] M_AXI_GP1_AWLOCK,
+output bit [3 : 0] M_AXI_GP1_AWCACHE,
+output bit [2 : 0] M_AXI_GP1_AWPROT,
+output bit [3 : 0] M_AXI_GP1_AWQOS,
+output bit M_AXI_GP1_AWVALID,
+output bit [11 : 0] M_AXI_GP1_WID,
+output bit [31 : 0] M_AXI_GP1_WDATA,
+output bit [3 : 0] M_AXI_GP1_WSTRB,
+output bit M_AXI_GP1_WLAST,
+output bit M_AXI_GP1_WVALID,
+output bit M_AXI_GP1_BREADY,
+output bit [11 : 0] M_AXI_GP1_ARID,
+output bit [31 : 0] M_AXI_GP1_ARADDR,
+output bit [3 : 0] M_AXI_GP1_ARLEN,
+output bit [2 : 0] M_AXI_GP1_ARSIZE,
+output bit [1 : 0] M_AXI_GP1_ARBURST,
+output bit [1 : 0] M_AXI_GP1_ARLOCK,
+output bit [3 : 0] M_AXI_GP1_ARCACHE,
+output bit [2 : 0] M_AXI_GP1_ARPROT,
+output bit [3 : 0] M_AXI_GP1_ARQOS,
+output bit M_AXI_GP1_ARVALID,
+output bit M_AXI_GP1_RREADY
 );
 
 import "DPI-C" function void ps7_simulate_single_cycle_S_AXI_HP0_ACLK();
@@ -1254,6 +1404,8 @@ output bit S_AXI_HP0_RVALID
 
   ps7_init_m_axi_gp0($bits(M_AXI_GP0_AWID),$bits(M_AXI_GP0_AWADDR),$bits(M_AXI_GP0_AWLEN),$bits(M_AXI_GP0_AWSIZE),$bits(M_AXI_GP0_AWBURST),$bits(M_AXI_GP0_AWLOCK),$bits(M_AXI_GP0_AWCACHE),$bits(M_AXI_GP0_AWPROT),$bits(M_AXI_GP0_AWQOS),$bits(M_AXI_GP0_AWVALID),$bits(M_AXI_GP0_AWREADY),$bits(M_AXI_GP0_WID),$bits(M_AXI_GP0_WDATA),$bits(M_AXI_GP0_WSTRB),$bits(M_AXI_GP0_WLAST),$bits(M_AXI_GP0_WVALID),$bits(M_AXI_GP0_WREADY),$bits(M_AXI_GP0_BID),$bits(M_AXI_GP0_BRESP),$bits(M_AXI_GP0_BVALID),$bits(M_AXI_GP0_BREADY),$bits(M_AXI_GP0_ARID),$bits(M_AXI_GP0_ARADDR),$bits(M_AXI_GP0_ARLEN),$bits(M_AXI_GP0_ARSIZE),$bits(M_AXI_GP0_ARBURST),$bits(M_AXI_GP0_ARLOCK),$bits(M_AXI_GP0_ARCACHE),$bits(M_AXI_GP0_ARPROT),$bits(M_AXI_GP0_ARQOS),$bits(M_AXI_GP0_ARVALID),$bits(M_AXI_GP0_ARREADY),$bits(M_AXI_GP0_RID),$bits(M_AXI_GP0_RDATA),$bits(M_AXI_GP0_RRESP),$bits(M_AXI_GP0_RLAST),$bits(M_AXI_GP0_RVALID),$bits(M_AXI_GP0_RREADY));
 
+  ps7_init_m_axi_gp1($bits(M_AXI_GP1_AWID),$bits(M_AXI_GP1_AWADDR),$bits(M_AXI_GP1_AWLEN),$bits(M_AXI_GP1_AWSIZE),$bits(M_AXI_GP1_AWBURST),$bits(M_AXI_GP1_AWLOCK),$bits(M_AXI_GP1_AWCACHE),$bits(M_AXI_GP1_AWPROT),$bits(M_AXI_GP1_AWQOS),$bits(M_AXI_GP1_AWVALID),$bits(M_AXI_GP1_AWREADY),$bits(M_AXI_GP1_WID),$bits(M_AXI_GP1_WDATA),$bits(M_AXI_GP1_WSTRB),$bits(M_AXI_GP1_WLAST),$bits(M_AXI_GP1_WVALID),$bits(M_AXI_GP1_WREADY),$bits(M_AXI_GP1_BID),$bits(M_AXI_GP1_BRESP),$bits(M_AXI_GP1_BVALID),$bits(M_AXI_GP1_BREADY),$bits(M_AXI_GP1_ARID),$bits(M_AXI_GP1_ARADDR),$bits(M_AXI_GP1_ARLEN),$bits(M_AXI_GP1_ARSIZE),$bits(M_AXI_GP1_ARBURST),$bits(M_AXI_GP1_ARLOCK),$bits(M_AXI_GP1_ARCACHE),$bits(M_AXI_GP1_ARPROT),$bits(M_AXI_GP1_ARQOS),$bits(M_AXI_GP1_ARVALID),$bits(M_AXI_GP1_ARREADY),$bits(M_AXI_GP1_RID),$bits(M_AXI_GP1_RDATA),$bits(M_AXI_GP1_RRESP),$bits(M_AXI_GP1_RLAST),$bits(M_AXI_GP1_RVALID),$bits(M_AXI_GP1_RREADY));
+
   ps7_init_s_axi_hp0($bits(S_AXI_HP0_AWID),$bits(S_AXI_HP0_AWADDR),$bits(S_AXI_HP0_AWLEN),$bits(S_AXI_HP0_AWSIZE),$bits(S_AXI_HP0_AWBURST),$bits(S_AXI_HP0_AWLOCK),$bits(S_AXI_HP0_AWCACHE),$bits(S_AXI_HP0_AWPROT),$bits(S_AXI_HP0_AWQOS),$bits(S_AXI_HP0_AWVALID),$bits(S_AXI_HP0_AWREADY),$bits(S_AXI_HP0_WID),$bits(S_AXI_HP0_WDATA),$bits(S_AXI_HP0_WSTRB),$bits(S_AXI_HP0_WLAST),$bits(S_AXI_HP0_WVALID),$bits(S_AXI_HP0_WREADY),$bits(S_AXI_HP0_BID),$bits(S_AXI_HP0_BRESP),$bits(S_AXI_HP0_BVALID),$bits(S_AXI_HP0_BREADY),$bits(S_AXI_HP0_ARID),$bits(S_AXI_HP0_ARADDR),$bits(S_AXI_HP0_ARLEN),$bits(S_AXI_HP0_ARSIZE),$bits(S_AXI_HP0_ARBURST),$bits(S_AXI_HP0_ARLOCK),$bits(S_AXI_HP0_ARCACHE),$bits(S_AXI_HP0_ARPROT),$bits(S_AXI_HP0_ARQOS),$bits(S_AXI_HP0_ARVALID),$bits(S_AXI_HP0_ARREADY),$bits(S_AXI_HP0_RID),$bits(S_AXI_HP0_RDATA),$bits(S_AXI_HP0_RRESP),$bits(S_AXI_HP0_RLAST),$bits(S_AXI_HP0_RVALID),$bits(S_AXI_HP0_RREADY));
   ps7_init_c_model();
   end
@@ -1360,6 +1512,59 @@ always@(posedge M_AXI_GP0_ACLK)
     M_AXI_GP0_ARQOS,
     M_AXI_GP0_ARVALID,
     M_AXI_GP0_RREADY
+  );
+   end
+
+
+always@(posedge M_AXI_GP1_ACLK)
+  begin
+
+   ps7_set_ip_context(ip_name);
+
+   ps7_set_inputs_m_axi_gp1_M_AXI_GP1_ACLK(
+    M_AXI_GP1_AWREADY,
+    M_AXI_GP1_WREADY,
+    M_AXI_GP1_BID,
+    M_AXI_GP1_BRESP,
+    M_AXI_GP1_BVALID,
+    M_AXI_GP1_ARREADY,
+    M_AXI_GP1_RID,
+    M_AXI_GP1_RDATA,
+    M_AXI_GP1_RRESP,
+    M_AXI_GP1_RLAST,
+    M_AXI_GP1_RVALID
+  );
+
+   ps7_simulate_single_cycle_M_AXI_GP1_ACLK();
+
+   ps7_get_outputs_m_axi_gp1_M_AXI_GP1_ACLK(
+    M_AXI_GP1_AWID,
+    M_AXI_GP1_AWADDR,
+    M_AXI_GP1_AWLEN,
+    M_AXI_GP1_AWSIZE,
+    M_AXI_GP1_AWBURST,
+    M_AXI_GP1_AWLOCK,
+    M_AXI_GP1_AWCACHE,
+    M_AXI_GP1_AWPROT,
+    M_AXI_GP1_AWQOS,
+    M_AXI_GP1_AWVALID,
+    M_AXI_GP1_WID,
+    M_AXI_GP1_WDATA,
+    M_AXI_GP1_WSTRB,
+    M_AXI_GP1_WLAST,
+    M_AXI_GP1_WVALID,
+    M_AXI_GP1_BREADY,
+    M_AXI_GP1_ARID,
+    M_AXI_GP1_ARADDR,
+    M_AXI_GP1_ARLEN,
+    M_AXI_GP1_ARSIZE,
+    M_AXI_GP1_ARBURST,
+    M_AXI_GP1_ARLOCK,
+    M_AXI_GP1_ARCACHE,
+    M_AXI_GP1_ARPROT,
+    M_AXI_GP1_ARQOS,
+    M_AXI_GP1_ARVALID,
+    M_AXI_GP1_RREADY
   );
    end
 

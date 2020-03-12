@@ -90,36 +90,36 @@ Package Vendor: ARM
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.STM32F0xx_DFP.2.0.0.pack
-                Keil.Standalone::Device:STM32Cube HAL:I2S:1.7.0
+                Keil.Standalone::Device:STM32Cube HAL:GPIO:1.7.0
                 STMicroelectronics STM32F0 Series Device Support, Drivers and Examples
+   * Component: GPIO Version: 1.7.0
+   * Component: COMP Version: 1.7.0
    * Component: I2S Version: 1.7.0
    * Component: ADC Version: 1.7.0
-   * Component: IRDA Version: 1.7.0
-   * Component: CAN Version: 1.7.0
-   * Component: CORTEX Version: 1.7.0
+   * Component: CEC Version: 1.7.0
    * Component: DMA Version: 1.7.0
+   * Component: FLASH Version: 1.7.0
+   * Component: IRDA Version: 1.7.0
+   * Component: I2C Version: 1.7.0
    * Component: IWDG Version: 1.7.0
    * Component: PCD Version: 1.7.0
    * Component: PWR Version: 1.7.0
-   * Component: COMP Version: 1.7.0
-   * Component: CRC Version: 1.7.0
-   * Component: CEC Version: 1.7.0
-   * Component: GPIO Version: 1.7.0
    * Component: COMMON Version: 1.7.0
-   * Component: I2C Version: 1.7.0
    * Component: Startup Version: 1.0.0
+   * Component: CAN Version: 1.7.0
+   * Component: CORTEX Version: 1.7.0
+   * Component: CRC Version: 1.7.0
    * Component: DAC Version: 1.7.0
-   * Component: FLASH Version: 1.7.0
-   * Component: TIM Version: 1.7.0
-   * Component: TSC Version: 1.7.0
-   * Component: SMARTCARD Version: 1.7.0
-   * Component: SMBUS Version: 1.7.0
-   * Component: RTC Version: 1.7.0
    * Component: USART Version: 1.7.0
-   * Component: UART Version: 1.7.0
+   * Component: WWDG Version: 1.7.0
    * Component: RCC Version: 1.7.0
    * Component: SPI Version: 1.7.0
-   * Component: WWDG Version: 1.7.0
+   * Component: UART Version: 1.7.0
+   * Component: TIM Version: 1.7.0
+   * Component: SMBUS Version: 1.7.0
+   * Component: SMARTCARD Version: 1.7.0
+   * Component: TSC Version: 1.7.0
+   * Component: RTC Version: 1.7.0
 
 <h2>Collection of Component include folders:</h2>
   C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\mcuapp_stm32f0\RTE
@@ -134,6 +134,12 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.1.2
 
+   * Component: Keil.Standalone::Device:STM32Cube HAL:GPIO:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_gpio.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:COMP:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_comp.c
+
    * Component: Keil.Standalone::Device:STM32Cube HAL:I2S:1.7.0
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2s.c
 
@@ -141,17 +147,22 @@ Package Vendor: Keil
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc.c
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc_ex.c
 
-   * Component: Keil.Standalone::Device:STM32Cube HAL:IRDA:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_irda.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:CAN:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_can.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:CORTEX:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_cortex.c
+   * Component: Keil.Standalone::Device:STM32Cube HAL:CEC:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_cec.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:DMA:1.7.0
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dma.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:FLASH:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash_ex.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:IRDA:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_irda.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:I2C:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c_ex.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:IWDG:1.7.0
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_iwdg.c
@@ -161,37 +172,20 @@ Package Vendor: Keil
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_pcd.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:PWR:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_pwr_ex.c
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_pwr.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:COMP:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_comp.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:CRC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_crc.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_crc_ex.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:CEC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_cec.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:GPIO:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_gpio.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_pwr_ex.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:COMMON:1.7.0
-      Include file:  Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h
-      Include file:  MDK\Templates\Inc\stm32f0xx_hal_conf.h
-      Include file:  MDK\Templates\Inc\main.h
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal.c
-      Include file:  MDK\Templates\Inc\stm32f0xx_it.h
-      Include file:  Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_def.h
-      Source file:   MDK\Templates\Src\stm32f0xx_hal_msp.c
       Source file:   MDK\Templates\Src\main.c
       Include file:  Drivers\STM32F0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h
+      Include file:  MDK\Templates\Inc\stm32f0xx_it.h
+      Include file:  Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h
+      Include file:  Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_def.h
+      Source file:   MDK\Templates\Src\stm32f0xx_hal_msp.c
+      Include file:  MDK\Templates\Inc\stm32f0xx_hal_conf.h
       Source file:   MDK\Templates\Src\stm32f0xx_it.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:I2C:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c_ex.c
+      Include file:  MDK\Templates\Inc\main.h
 
    * Component: Keil.Standalone::Device:Startup:1.0.0
       Include file:  Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f0xx.h
@@ -199,49 +193,55 @@ Package Vendor: Keil
       Source file:   Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\system_stm32f0xx.c
       Source file:   Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f071xb.s
 
+   * Component: Keil.Standalone::Device:STM32Cube HAL:CAN:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_can.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:CORTEX:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_cortex.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:CRC:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_crc.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_crc_ex.c
+
    * Component: Keil.Standalone::Device:STM32Cube HAL:DAC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dac.c
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dac_ex.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:FLASH:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash_ex.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:TIM:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim_ex.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:TSC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tsc.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:SMARTCARD:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smartcard_ex.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smartcard.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:SMBUS:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smbus.c
-
-   * Component: Keil.Standalone::Device:STM32Cube HAL:RTC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rtc.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rtc_ex.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dac.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:USART:1.7.0
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_usart.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:WWDG:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_wwdg.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:RCC:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc_ex.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:SPI:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_spi_ex.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_spi.c
 
    * Component: Keil.Standalone::Device:STM32Cube HAL:UART:1.7.0
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_uart_ex.c
       Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_uart.c
 
-   * Component: Keil.Standalone::Device:STM32Cube HAL:RCC:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc_ex.c
+   * Component: Keil.Standalone::Device:STM32Cube HAL:TIM:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim_ex.c
 
-   * Component: Keil.Standalone::Device:STM32Cube HAL:SPI:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_spi.c
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_spi_ex.c
+   * Component: Keil.Standalone::Device:STM32Cube HAL:SMBUS:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smbus.c
 
-   * Component: Keil.Standalone::Device:STM32Cube HAL:WWDG:1.7.0
-      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_wwdg.c
+   * Component: Keil.Standalone::Device:STM32Cube HAL:SMARTCARD:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smartcard_ex.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_smartcard.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:TSC:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tsc.c
+
+   * Component: Keil.Standalone::Device:STM32Cube HAL:RTC:1.7.0
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rtc.c
+      Source file:   Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rtc_ex.c
 </pre>
 </body>
 </html>

@@ -1181,14 +1181,14 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 		start = (((wave->trigger_at >> 3) + 1) * 2);
 		end = g_acq_state.pre_sampct * 2;
 
-		d_printf(D_INFO, "X. pointer: 0x%08x", wave->buff_acq);
+		d_printf(D_EXINFO, "X. pointer: 0x%08x", wave->buff_acq);
 
-		d_printf(D_INFO, "0. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
+		d_printf(D_EXINFO, "0. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
 
 		memcpy(buffer, wave->buff_acq + start, (end - start) * 4);
 		buffer += (end - start);
 
-		d_printf(D_INFO, "1. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq, 0, start * 4, start * 4);
+		d_printf(D_EXINFO, "1. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq, 0, start * 4, start * 4);
 
 		memcpy(buffer, wave->buff_acq, start * 4);
 		buffer += start;
@@ -1196,7 +1196,7 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 		start = g_acq_state.pre_sampct * 2;
 		end = (g_acq_state.pre_sampct + g_acq_state.post_sampct) * 2;
 
-		d_printf(D_INFO, "2. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
+		d_printf(D_EXINFO, "2. pointer: 0x%08x, start: %6d, bytes: %6d, end: %6d", wave->buff_acq + start, start * 4, (end - start) * 4, ((start * 4) + ((end - start) * 4)));
 
 		memcpy(buffer, wave->buff_acq + start, (end - start) * 4);
 		buffer += start;

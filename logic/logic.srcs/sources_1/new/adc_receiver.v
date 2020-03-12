@@ -36,16 +36,15 @@ module adc_receiver(
     // 11 = Reserved/do not use
     input [1:0] adc_mode,
     
-    // Data output registers.  This is the latched register and data is available in this register
-    // at 1/8th the sampling clock.
-    output reg [13:0] adc_data_latched_0,
-    output reg [13:0] adc_data_latched_1,
-    output reg [13:0] adc_data_latched_2,
-    output reg [13:0] adc_data_latched_3,
-    output reg [13:0] adc_data_latched_4,
-    output reg [13:0] adc_data_latched_5,
-    output reg [13:0] adc_data_latched_6,
-    output reg [13:0] adc_data_latched_7,
+    // Data output.
+    output [13:0] adc_data_0,
+    output [13:0] adc_data_1,
+    output [13:0] adc_data_2,
+    output [13:0] adc_data_3,
+    output [13:0] adc_data_4,
+    output [13:0] adc_data_5,
+    output [13:0] adc_data_6,
+    output [13:0] adc_data_7,
     
     // Data ready/valid signal for the ADC channels
     output reg adc_data_rdy,
@@ -79,6 +78,7 @@ reg adc_data_wri_latch = 0;
 
 // Internal register set for the received data.  This is latched into adc_data_latched_N when complete.
 reg [13:0] adc_data_rx[7:0];
+wire [13:0] adc_data_0, adc_data_1, adc_data_2, adc_data_3, adc_data_4, adc_data_5, adc_data_6, adc_data_7;
 
 // Netlist set for ISERDESE2 data.
 wire [7:0] adc_iserdese2_data[7:0];
@@ -87,7 +87,8 @@ wire [7:0] adc_iserdese2_data[7:0];
  * Differential to SE blocks.  No logic is permitted between or after these blocks.  Any
  * data manipulation must be done on the parallel data side.
  */
-wire adc_d1a, adc_d1b, adc_d2a, adc_d2b, adc_d3a, adc_d3b, adc_d4a, adc_d4b, adc_fclk, adc_clk;
+wire adc_d1a, adc_d1b, adc_d2a, adc_d2b, adc_d3a, adc_d3b, adc_d4a, adc_d4b, adc_fclk;
+wire adc_clk_unbuf;
 
 IBUFDS (
     .I(adc_l1a_p),
@@ -146,21 +147,28 @@ IBUFDS (
 IBUFGDS (
     .I(adc_lclk_p),
     .IB(adc_lclk_n),
-    .O(adc_clk)
+    .O(adc_clk_unbuf)
 );
 
 /* 
  * It is not a valid configuration to use the word clock for the ADC peripheral to drive the
  * ISERDESE2. Therefore we use a BUFR instance to divide by 4 instead.  This regional clock
- * is distributed to all of our ISERDESE2 modules.  (TODO: Consider separate BUFRs for each 
- * local group; although the router might do this for us anyway?)
+ * is distributed to all of our ISERDESE2 modules.  
+ *
+ * I am also considering using an MMCM to generate the divided ADC clock signal.
  */
+wire adc_clk;
 wire adc_clk_div;
+
+BUFIO (
+    .I(adc_clk_unbuf),
+    .O(adc_clk)
+);
 
 BUFR #(
     .BUFR_DIVIDE("4")
 ) bufr_adc_ref_clkdiv (
-    .I(adc_clk),
+    .I(adc_clk_unbuf),
     .O(adc_clk_div),
     .CE(1'b1),
     .CLR(1'b0)
@@ -214,12 +222,10 @@ IDELAYCTRL (
  * Implementation of the BITSLIP generator, which measures the FCLK signal
  * from the ADC and generates BITSLIP pulses to maintain alignment.
  */
-wire bitslip_com = 0;
-wire bitslip_lock_state = 1;
+wire bitslip_com;
+wire bitslip_lock_state;
 wire [7:0] bitslip_pattern_debug;
 
-/* DISABLED TO TEST WITHOUT BITSLIP */
-/*
 adc_bitslip (
     .adc_clk_in_p(adc_clk),
     .adc_clk_div_in(adc_clk_div),
@@ -233,7 +239,6 @@ adc_bitslip (
     .clk_ref(clk_ref),
     .rst_gen(rst_gen_bitslip)
 );
-*/
 
 /*
  * Common training signals and vectors.
@@ -417,8 +422,16 @@ integer i;
 
 assign adc_data_clk = adc_clk_div;
 
-reg [7:0] test_counter;
+assign adc_data_0 = adc_iserdese2_data[0];
+assign adc_data_1 = adc_iserdese2_data[1];
+assign adc_data_2 = adc_iserdese2_data[2];
+assign adc_data_3 = adc_iserdese2_data[3];
+assign adc_data_4 = adc_iserdese2_data[4];
+assign adc_data_5 = adc_iserdese2_data[5];
+assign adc_data_6 = adc_iserdese2_data[6];
+assign adc_data_7 = adc_iserdese2_data[7];
 
+/*
 always @(posedge adc_clk_div) begin
 
     //test_iserdese2_data <= test_iserdese2_data + 1;
@@ -460,23 +473,11 @@ always @(posedge adc_clk_div) begin
         adc_data_latched_6 <= adc_data_rx[6];
         adc_data_latched_7 <= adc_data_rx[7];
         adc_data_rdy <= 1;
-        
-        /*
-        adc_data_latched_0 <= test_counter;
-        adc_data_latched_1 <= test_counter;
-        adc_data_latched_2 <= test_counter;
-        adc_data_latched_3 <= test_counter;
-        adc_data_latched_4 <= test_counter;
-        adc_data_latched_5 <= test_counter;
-        adc_data_latched_6 <= test_counter;
-        adc_data_latched_7 <= test_counter;
-        test_counter <= test_counter + 1;
-        adc_data_rdy <= 1;
-        */
     end else begin
         adc_data_rdy <= 0;
     end
 
 end
+*/
 
 endmodule

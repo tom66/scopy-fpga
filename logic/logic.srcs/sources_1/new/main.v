@@ -71,38 +71,18 @@ parameter EMIO_CSI_DONE = 25;
 output csi_clk_p, csi_clk_n, csi_d0_p, csi_d0_n, csi_d1_p, csi_d1_n, csi_lpd0_n, csi_lpd0_p, csi_lpd1_n, csi_lpd1_p, csi_lpclk_n, csi_lpclk_p;
 input adc_l1a_p, adc_l1a_n, adc_l1b_p, adc_l1b_n, adc_l2a_p, adc_l2a_n, adc_l2b_p, adc_l2b_n, adc_l3a_p, adc_l3a_n;
 input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk_p, adc_lclk_n, adc_fclk_p, adc_fclk_n;
-    
+
 output led_PL0, led_PL1;
+wire g_rst_gen;
 
-wire clk_idelay_refclk;
-wire clk_master, clk_mipi_0, clk_mipi_90, clk_mipi_180, clk_mipi_270, pll_locked;
-
-reg g_rst_gen = 0;
-reg g_rst_state = 0;
-reg [7:0] g_rst_counter = 0;
-
-wire adc_data_clk;
-
-// Reset pulse generator. Generates a one time reset pulse for the following blocks.
-// TODO:  I think this should become a global block and be driven by the PS.
-always @(posedge clk_master) begin
-
-    if (g_rst_state == 0) begin
-    
-        g_rst_counter <= g_rst_counter + 1;
-        
-        if (g_rst_counter == 3) begin
-            g_rst_gen <= 1;   
-        end
-        
-        if (g_rst_counter == 150) begin
-            g_rst_gen <= 0;
-            g_rst_state <= 1;   
-        end
-    
-    end
-    
-end
+/*
+ * Global reset generator.
+ */
+g_rst_controller (
+    .clk_master(clk_master),
+    .g_rst_trig_ps(0),          // not presently used
+    .g_rst_gen(g_rst_gen)
+);
 
 /*
  * Connection to Fabric Configurator.
@@ -364,19 +344,23 @@ mipi_csi_controller (
     .mipi_mem_data(csi_bram_doutb)
 );
 
+wire clk_idelay_refclk;
+wire clk_master, pll_locked;
+wire adc_data_clk;
+
 /*
  * ADC Interface & Control.
  */
 wire [7:0] train_data_debug;
 
-wire [13:0] adc_data_latched_0;
-wire [13:0] adc_data_latched_1;
-wire [13:0] adc_data_latched_2;
-wire [13:0] adc_data_latched_3;
-wire [13:0] adc_data_latched_4;
-wire [13:0] adc_data_latched_5;
-wire [13:0] adc_data_latched_6;
-wire [13:0] adc_data_latched_7;
+wire [13:0] adc_data_0;
+wire [13:0] adc_data_1;
+wire [13:0] adc_data_2;
+wire [13:0] adc_data_3;
+wire [13:0] adc_data_4;
+wire [13:0] adc_data_5;
+wire [13:0] adc_data_6;
+wire [13:0] adc_data_7;
 wire [7:0] debug_adc;
 reg [23:0] adc_testcntr;
 
@@ -414,14 +398,14 @@ adc_receiver (
     .adc_mode(2'b01),
     
     // 8 x 14-bit output registers
-    .adc_data_latched_0(adc_data_latched_0),
-    .adc_data_latched_1(adc_data_latched_1),
-    .adc_data_latched_2(adc_data_latched_2),
-    .adc_data_latched_3(adc_data_latched_3),
-    .adc_data_latched_4(adc_data_latched_4),
-    .adc_data_latched_5(adc_data_latched_5),
-    .adc_data_latched_6(adc_data_latched_6),
-    .adc_data_latched_7(adc_data_latched_7),
+    .adc_data_0(adc_data_0),
+    .adc_data_1(adc_data_1),
+    .adc_data_2(adc_data_2),
+    .adc_data_3(adc_data_3),
+    .adc_data_4(adc_data_4),
+    .adc_data_5(adc_data_5),
+    .adc_data_6(adc_data_6),
+    .adc_data_7(adc_data_7),
     
     // adc_data_rdy (ignored)
     .adc_data_clk(adc_data_clk),
@@ -436,9 +420,10 @@ adc_receiver (
     .train_ok(emio_input[1]),
     .train_count(emio_input[7:2]),
     .idelay_rdy(emio_input[8]),
-    .idelay_refclk(clk_idelay_refclk), // xxx MHz refclk for IDELAYE2
-    .train_data_debug(train_data_debug),
     */
+    .train_start(0),
+    .idelay_refclk(clk_idelay_refclk), // xxx MHz refclk for IDELAYE2
+    //.train_data_debug(train_data_debug),
     
     // Global reset signal: not asserted for now
     .g_rst(g_rst_gen),
@@ -452,6 +437,7 @@ adc_receiver (
 
 reg [7:0] adc_test8;
 
+/*
 assign adc_bus[ 7: 0] = adc_test8;
 assign adc_bus[15: 8] = adc_test8 + 1;
 assign adc_bus[23:16] = adc_test8 + 2;
@@ -460,6 +446,16 @@ assign adc_bus[39:32] = adc_test8 + 4;
 assign adc_bus[47:40] = adc_test8 + 5;
 assign adc_bus[55:48] = adc_test8 + 6;
 assign adc_bus[63:56] = adc_test8 + 7;
+*/
+
+assign adc_bus[ 7: 0] = adc_data_0;
+assign adc_bus[15: 8] = adc_data_1;
+assign adc_bus[23:16] = adc_data_2;
+assign adc_bus[31:24] = adc_data_3;
+assign adc_bus[39:32] = adc_data_4;
+assign adc_bus[47:40] = adc_data_5;
+assign adc_bus[55:48] = adc_data_6;
+assign adc_bus[63:56] = adc_data_7;
 
 assign trig_sub_word = trig_sub_word_test;
 reg [2:0] trig_sub_word_test = 3'b000;
@@ -467,14 +463,16 @@ reg [2:0] trig_sub_word_test = 3'b000;
 always @(posedge adc_data_clk) begin
 
     //rep_counter <= rep_counter + 1;
+    /*
     if (acq_run) begin
         adc_test8 <= adc_test8 + 8;
     end
+    */
     
     // trigger is 1cyc long max.
     if (trig_gen) begin
         trig_gen <= 0;
-    end else if ((adc_test8 == 8'h80) && acq_run) begin
+    end else if ((adc_data_0 == 8'h80) && acq_run) begin
         // generate trigger on test word
         trig_sub_word_test <= trig_sub_word_test + 1;
         trig_gen <= 1;

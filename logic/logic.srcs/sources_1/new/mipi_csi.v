@@ -954,6 +954,7 @@ always @(posedge mod_clk_div4) begin
                 // before starting transmit.
                 if (clk_is_idle || !clk_is_ready) begin
                     clk_sleep_awaken <= 1;
+                    clk_sleep_go <= 0;
                     
                     // wait for clock then start transmission in LP_IDLE state
                     current_state <= STATE_TX_WAITING_FOR_CLOCK;

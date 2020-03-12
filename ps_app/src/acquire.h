@@ -214,7 +214,7 @@ int acq_start();
 int acq_force_stop();
 bool acq_is_done();
 void acq_debug_dump();
-void acq_debug_dump_wavedata();
+void acq_debug_dump_wave();
 int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);
 void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);

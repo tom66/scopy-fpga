@@ -36,7 +36,7 @@
 
 #include "clkwiz_interface.h"
 
-#define DBG_LEVEL					1
+#define DBG_LEVEL					2
 #define DBG_BUFFSIZE				4096
 
 #define DBG_PRINT_TIMES				1		// If set to '1' then the time of the event (in seconds since SCU-timer boot) is printed with the debug event.

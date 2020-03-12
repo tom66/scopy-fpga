@@ -240,9 +240,10 @@ always @(negedge clk_ref) begin
 end
 
 reg [25:0] traintst_delay_ctr;
-reg [5:0] train_counterXXX;
+reg [5:0] train_counterXXX = 0;
 reg train_ld_genXXX;
 
+/*
 always @(posedge clk_ref) begin
 
     train_ld_genXXX <= ~train_ld_genXXX;
@@ -253,6 +254,7 @@ always @(posedge clk_ref) begin
     end
     
 end
+*/
 
 assign train_debug2 = train_counterXXX & 1;
 

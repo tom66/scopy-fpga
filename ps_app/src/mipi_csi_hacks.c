@@ -23,6 +23,62 @@
 uint8_t src_buffer[32768] __attribute__((aligned(32)));
 // uint8_t dest_buffer[2048] __attribute__((aligned(32)));
 
+void csi_hack_init()
+{
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_END_FRAME, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_END_FRAME, 1);
+	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);
+	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);
+
+	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2048);
+	fabcfg_write(FAB_CFG_CSI_DATA_TYPE, 0x2a);
+	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0x01); // LSB controls clock idling mode
+	fabcfg_commit();
+	//fabcfg_commit();
+	//fabcfg_commit();
+}
+
+void csi_hack_start_frame(uint32_t line_count)
+{
+	d_printf(D_ERROR, "write");
+	fabcfg_write(FAB_CFG_CSI_LINE_COUNT, line_count);
+	d_printf(D_ERROR, "commit");
+	fabcfg_commit();
+	d_printf(D_ERROR, "done");
+
+	// Stop frame first
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);
+	bogo_delay(1); // TODO: we need a DONE signal here -- OR a Stop-Ack signal...
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 0);
+
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 1);
+	while( XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// wait for DONE to be LOW - ack/ready
+	while(!XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// wait for DONE to go HIGH - this cmd done
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 0);
+}
+
+void csi_hack_stop_frame()
+{
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_END_FRAME, 1);
+	while( XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// wait for DONE to go LOW - ack of command
+	while(!XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_END_FRAME, 0);
+}
+
+void csi_hack_send_line_data(uint32_t *buff, uint32_t sz)
+{
+	memcpy(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR, buff, sz);
+
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
+	while( XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// wait for DONE to go LOW - ack of command
+	while(!XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// then wait for DONe to go HIGH - command done
+	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 0);
+}
+
 void csi_hack_run()
 {
 	float freq = 20.00;

@@ -134,11 +134,11 @@ void hmcad151x_init()
     hmcad151x_state.lvds_phase = 0;         // default phasing
     hmcad151x_sync_lvds_settings();
     
-    // Set default channel settings for ADC: all connected to CH1
-    hmcad151x_state.adc_input[0] = HMC_AD_INPUT1;
-    hmcad151x_state.adc_input[1] = HMC_AD_INPUT1;
-    hmcad151x_state.adc_input[2] = HMC_AD_INPUT1;
-    hmcad151x_state.adc_input[3] = HMC_AD_INPUT1;
+    // Set default channel settings for ADC: all connected to CH4
+    hmcad151x_state.adc_input[0] = HMC_AD_INPUT4;
+    hmcad151x_state.adc_input[1] = HMC_AD_INPUT4;
+    hmcad151x_state.adc_input[2] = HMC_AD_INPUT4;
+    hmcad151x_state.adc_input[3] = HMC_AD_INPUT4;
     hmcad151x_sync_channel_settings();
     
     uart_printf("hmcad151x: register write complete\r\n");

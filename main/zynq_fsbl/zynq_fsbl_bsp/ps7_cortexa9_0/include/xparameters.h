@@ -50,7 +50,7 @@
 #define XPAR_AXI_DMA_NUM_MM2S_CHANNELS 1
 #define XPAR_AXI_DMA_NUM_S2MM_CHANNELS 1
 #define XPAR_AXI_DMA_MM2S_BURST_SIZE 16
-#define XPAR_AXI_DMA_S2MM_BURST_SIZE 256
+#define XPAR_AXI_DMA_S2MM_BURST_SIZE 16
 #define XPAR_AXI_DMA_MICRO_DMA 0
 #define XPAR_AXI_DMA_ADDR_WIDTH 32
 #define XPAR_AXI_DMA_SG_LENGTH_WIDTH 24
@@ -73,7 +73,7 @@
 #define XPAR_AXIDMA_0_NUM_MM2S_CHANNELS 1
 #define XPAR_AXIDMA_0_NUM_S2MM_CHANNELS 1
 #define XPAR_AXIDMA_0_MM2S_BURST_SIZE 16
-#define XPAR_AXIDMA_0_S2MM_BURST_SIZE 256
+#define XPAR_AXIDMA_0_S2MM_BURST_SIZE 16
 #define XPAR_AXIDMA_0_MICRO_DMA 0
 #define XPAR_AXIDMA_0_c_addr_width 32
 #define XPAR_AXIDMA_0_c_sg_length_width 24
@@ -155,6 +155,33 @@
 #define XPAR_BRAM_1_HIGHADDR 0x4200FFFFU
 #define XPAR_BRAM_1_CTRL_BASEADDR 0xFFFFFFFFU  
 #define XPAR_BRAM_1_CTRL_HIGHADDR 0xFFFFFFFEU  
+
+
+/******************************************************************/
+
+/* Definitions for driver CLK_WIZ */
+#define XPAR_XCLK_WIZ_NUM_INSTANCES 1
+
+/* Definitions for peripheral CLK_WIZ_0 */
+#define XPAR_CLK_WIZ_0_DEVICE_ID 0
+#define XPAR_CLK_WIZ_0_BASEADDR 0x43C00000
+#define XPAR_CLK_WIZ_0_HIGHADDR 0x43C0FFFF
+#define XPAR_CLK_WIZ_0_ENABLE_CLOCK_MONITOR 0
+#define XPAR_CLK_WIZ_0_ENABLE_USER_CLOCK0 0
+#define XPAR_CLK_WIZ_0_ENABLE_USER_CLOCK1 0
+#define XPAR_CLK_WIZ_0_ENABLE_USER_CLOCK2 0
+#define XPAR_CLK_WIZ_0_ENABLE_USER_CLOCK3 0
+#define XPAR_CLK_WIZ_0_REF_CLK_FREQ 100.0
+#define XPAR_CLK_WIZ_0_USER_CLK_FREQ0 100.0
+#define XPAR_CLK_WIZ_0_USER_CLK_FREQ1 100.0
+#define XPAR_CLK_WIZ_0_USER_CLK_FREQ2 100.0
+#define XPAR_CLK_WIZ_0_USER_CLK_FREQ3 100.0
+#define XPAR_CLK_WIZ_0_PRECISION 1
+#define XPAR_CLK_WIZ_0_ENABLE_PLL0 0
+#define XPAR_CLK_WIZ_0_ENABLE_PLL1 0
+
+
+/******************************************************************/
 
 
 /******************************************************************/
