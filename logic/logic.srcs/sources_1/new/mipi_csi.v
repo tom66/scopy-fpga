@@ -317,20 +317,9 @@ reg oddr_ctr_reset;
 reg mem_read_clk_en = 0;
 assign mem_read_clk = mod_clk_div4;
 
-// ODDR nets for DDR halves (A = 0',  B = 180')
-wire d0_bit_a, d0_bit_b;
-wire d1_bit_a, d1_bit_b;
-
-// Set if an end of line trail is to be generated.  Two clock cycle delay implemented
-// to position trail in correct location.
-//
-// FIXME: better way to infer the two-cycle delay as it's just a pair of SR's...
-reg oddr_trail = 0;
-reg oddr_trail_dly_a = 0;
-reg oddr_trail_dly_b = 0;
-
-// for alternate trail generation mechanism
+// Trail control
 reg oddr_trail_latch = 0;
+reg hs_trail_zero_mode = 0;
 
 reg [7:0] d0_latch;
 reg [7:0] d1_latch;
@@ -418,10 +407,20 @@ initial begin
 end
 
 // This block latches state of data, clock align signals according to lane byte 
-// clock signal mod_clk_div4_oserdese_ln0
-reg hs_mux_sel = 1;
-wire [7:0] d0_latch_mux = (hs_mux_sel) ? (d0_latch) : (mem_data[0]);
-wire [7:0] d1_latch_mux = (hs_mux_sel) ? (d1_latch) : (mem_data[1]);
+// clock signal mod_clk_div4_oserdese_ln0.
+//
+// If hs_crc_sel is set, the memory bus is replaced with ffff.  CRC is not used and
+// is permanently set to all ones.  As a result trail for HS transmit is always zero.
+reg hs_mux_sel = 0; 
+reg hs_crc_sel = 0;
+
+reg [15:0] crc_dummy = 16'hffff;
+
+wire [7:0] d0_mem_crc_mux = (hs_crc_sel) ? (crc_dummy[ 7:0]) : (mem_data[ 7:0]);
+wire [7:0] d1_mem_crc_mux = (hs_crc_sel) ? (crc_dummy[15:8]) : (mem_data[15:8]);
+    
+wire [7:0] d0_latch_mux = (!hs_mux_sel) ? (d0_latch) : (d0_mem_crc_mux);
+wire [7:0] d1_latch_mux = (!hs_mux_sel) ? (d1_latch) : (d1_mem_crc_mux);
 
 always @(posedge mod_clk_div4_oserdese_ln0) begin
     
@@ -680,7 +679,7 @@ OBUFTDS #(
 ) OBUFDS_inst_lane_clk (
     .O(csi_clkp), 
     .OB(csi_clkn),
-    .I(clk_q_oserdese_out),    // inverted: p/n swap (todo: make this an input flag)
+    .I(clk_q_oserdese_out),
     .T(clk_t_oserdese_out)
 );
 
@@ -692,6 +691,7 @@ wire [7:0] ecc_result;
 reg ecc_start;
 wire ecc_ready;
 
+// This block needs to change to using Verilog vectors... too C-like!!
 assign ecc_byte_0 = (vc_id_latch >> 6) | (dt_id_latch & 8'h3f);
 assign ecc_byte_1 = wct_latch & 8'hff;
 assign ecc_byte_2 = (wct_latch >> 8) & 8'hff;
@@ -705,15 +705,6 @@ ecc24_fast ecc24_fast_x (
     // ECC output
     .ecc(ecc_result)
 );
-
-reg [7:0] temp;
-
-// CRC16 according to X25 (x^16+x^12+x^5+1);  see mipi_crc16_x25.v for implementation
-reg [15:0] crc16;
-wire [15:0] crc16_data;
-assign crc16_data = hs_tx_byte_d0 | (hs_tx_byte_d1 << 8);
-
-reg clock_exited;
 
 reg [15:0] bytes_output_ctr;
 assign bytes_output = bytes_output_ctr;
@@ -1051,9 +1042,6 @@ always @(posedge mod_clk_div4) begin
         STATE_LP_SETTLE_POST : begin
             oddr_hiz <= 0;  // Enable output driver (1-byte delay)
             //oddr_rst <= 0;  // Remove reset assertion
-            oddr_trail <= 0;
-            hs_tx_byte_d0 <= 0;
-            hs_tx_byte_d1 <= 0;
                         
             csi_lp_state <= LP_STATE_HS_DATA_ZZ;
                         
@@ -1067,8 +1055,7 @@ always @(posedge mod_clk_div4) begin
         STATE_HS_ZERO : begin
             // Enable ODDR drivers, tx byte zero
             oddr_tclk_en <= 1;
-            hs_tx_byte_d0 <= 0;
-            hs_tx_byte_d1 <= 0;
+            hs_mux_sel <= 0;
             
             if (state_timer & 4'b1000) begin
                 current_state <= STATE_HS_SYNC;
@@ -1109,18 +1096,16 @@ always @(posedge mod_clk_div4) begin
         // This advances to the HS_PACKET_DATA_TX state if a large payload follows,  or to HS_TRAIL
         // if packet_type == 0.
         STATE_HS_PACKET_HEADER : begin
-            //mem_read_en <= 0;
-            //mem_addr_reg <= 0;
-            
             if (state_timer == 0) begin
                 hs_tx_byte_d0 <= ecc_byte_0;
                 hs_tx_byte_d1 <= ecc_byte_1;
-                crc16 = 16'hffff;  // reset crc16 before HS-TX
+                hs_trail_zero_mode <= 0;
             end else if (state_timer == 1) begin
                 hs_tx_byte_d0 <= ecc_byte_2;
                 hs_tx_byte_d1 <= ecc_result;
-                
-                // then advance state
+                hs_trail_zero_mode <= 0;
+            end else if (state_timer == 2) begin
+                // advance state
                 if (packet_type == PACKET_TYPE_SHORT) begin
                     current_state <= STATE_HS_TRAIL;
                     state_timer_2 <= 0;
@@ -1134,16 +1119,18 @@ always @(posedge mod_clk_div4) begin
         
         STATE_HS_PACKET_DATA_TX : begin
             // Transmit 16-bit words on each cycle
-            // Increment memory pointer, read memory and latch into output register
-            
             // Decrement internal output word counter; two bytes per transmission cycle
-            // N.B. this is one part of the logic design that limits us to even byte lengths... headaches otherwise!
             tx_words_counter <= tx_words_counter - 2;
             
+            // clear TX registers; we use an alternate path to transmit data
+            hs_tx_byte_d0 <= 8'h00;
+            hs_tx_byte_d1 <= 8'h00;
+            
             if (tx_words_counter == 0) begin
-                // Load CRC into output registers
-                hs_tx_byte_d0 <= (crc16 >> 8) & 8'hff;
-                hs_tx_byte_d1 <= crc16 & 8'hff;
+                // Switch to CRC output (all ones as CRC16 not used)
+                hs_mux_sel <= 1;
+                hs_crc_sel <= 1;
+                hs_trail_zero_mode <= 1;  // Load 0 into trail, as CRC is all ones trail will always be zero
                 
                 // Jump state to complete trail sequence
                 current_state <= STATE_HS_TRAIL;  
@@ -1151,12 +1138,9 @@ always @(posedge mod_clk_div4) begin
                 state_timer_rst = 1;
                 mem_read_en <= 0;
             end else begin
-                // CRC16 not used currently
-                crc16 = 16'hffff; // mipi_crc16_x25_imp(crc16_data, crc16);
-                
-                // Load data into output registers, increment memory pointer
-                hs_tx_byte_d1 <= (mem_data >> 8) & 8'hff;
-                hs_tx_byte_d0 <= mem_data & 8'hff;
+                // HS transmit mode set
+                hs_mux_sel <= 1;
+                hs_crc_sel <= 0;
                 mem_addr_reg <= mem_addr_reg + 1;
                 bytes_output_ctr <= bytes_output_ctr + 2;
             end
@@ -1171,21 +1155,32 @@ always @(posedge mod_clk_div4) begin
             // therefore will leave it in for now.
             //
             // check last bit and latch the opposite bit
-            if (oddr_trail_latch == 0) begin
-                if (hs_tx_byte_d0 & 8'b10000000) begin
-                    hs_tx_byte_d0 <= 8'h00;
-                end else begin
-                    hs_tx_byte_d0 <= 8'hff;
+            
+            // If hs_trail_zero_mode is set then we generated a CRC16 of 16'hffff, which means trail can be
+            // forced to zero (simplifies logic).
+            if (hs_trail_zero_mode) begin
+                // stay in trail mode; don't exit
+                hs_tx_byte_d0 <= 8'h00;
+                hs_tx_byte_d1 <= 8'h00;
+                hs_mux_sel <= 0;
+                hs_crc_sel <= 0;
+            end else begin
+                if (oddr_trail_latch == 0) begin
+                    if (hs_tx_byte_d0 & 8'b10000000) begin
+                        hs_tx_byte_d0 <= 8'h00;
+                    end else begin
+                        hs_tx_byte_d0 <= 8'hff;
+                    end
+                    
+                    if (hs_tx_byte_d1 & 8'b10000000) begin
+                        hs_tx_byte_d1 <= 8'h00;
+                    end else begin
+                        hs_tx_byte_d1 <= 8'hff;
+                    end
+                    
+                    oddr_trail_latch <= 1;
+                    state_timer_2 <= 0;
                 end
-                
-                if (hs_tx_byte_d1 & 8'b10000000) begin
-                    hs_tx_byte_d1 <= 8'h00;
-                end else begin
-                    hs_tx_byte_d1 <= 8'hff;
-                end
-                
-                oddr_trail_latch <= 1;
-                state_timer_2 <= 0;
             end
 
             // this kinda works but not as expected - may need to be fixed

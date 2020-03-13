@@ -75,10 +75,12 @@ void clkwiz_change_mipi_freq(struct clkwiz_interface_t *ifc, float new_freq)
 	/*
 	 * Tune FBOUT to create an I and Q reference clock.
 	 *
-	 * We essentially tune FBOUT so that we can use an integer divider for the output clock frequencies.
+	 * We essentially tune FBOUT so that we can use an integer divider for the output
+	 * clock frequencies.
 	 *
-	 * This gets us pretty close to supporting all frequencies in the range of 0-800MHz with minimal error,
-	 * though the search algorithm could be substantially improved.
+	 * This gets us pretty close to supporting all frequencies in the range of 0-800MHz
+	 * with minimal error, though the search algorithm could be substantially improved
+	 * with e.g. a binary search.
 	 */
 	for(fb_mult = 0; fb_mult < 8; fb_mult++) {
 		for(fb_frac = 0; fb_frac < 1000; fb_frac++) {

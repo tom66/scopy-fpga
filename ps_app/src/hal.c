@@ -63,8 +63,8 @@ void hal_init()
 
 	/*
 	 * Get platform up. This also initialises USART, so we can start debug output immediately.
-	 * It's necessary to invalidate the instruction and data caches to ensure we start cleanly
-	 * (as per UG647 page 6).
+	 * It may be necessary to invalidate the instruction and data caches to ensure we start cleanly
+	 * (as per UG647 page 6).  However due to an unresolved bug, this is not currently implemented.
 	 */
 	init_platform();
 	Xil_AssertSetCallback(&d_xilinx_assert);

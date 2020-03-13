@@ -34,7 +34,7 @@ void csi_hack_init()
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);
 
-	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2046);
+	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2050);
 	fabcfg_write(FAB_CFG_CSI_DATA_TYPE, 0x2a);
 	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0x01); // LSB controls clock idling mode
 	fabcfg_commit();

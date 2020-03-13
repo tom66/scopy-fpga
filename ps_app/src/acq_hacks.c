@@ -29,6 +29,9 @@ void acq_hacks_run()
 
 	csi_hack_init();
 
+	// slow MIPI clock for diagnostics
+	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 200);
+
 	while(1) {
 		d_printf(D_ERROR, "starting to free acq...");
 
@@ -75,6 +78,7 @@ void acq_hacks_run()
 			acq_copy_slow_mipi(i, (uint8_t*)buffer);
 			for(i = 0; i < sizeof(buffer); i++) {
 				buffer[i] = i & 0xff;
+				//buffer[i] = 0xf0;
 			}
 
 			d_printf(D_ERROR, "done: acq_copy_slow_mipi");
