@@ -67,10 +67,10 @@ module mipi_csi_controller(
     output clk_mipi_ref_dbg,
     
     // BRAM interface
-    output mipi_mem_read_clk,
-    output mipi_mem_read_en,
-    output [17:0] mipi_mem_addr,                // 18-bit wide memory address (128KB total addressable)
-    input [31:0] mipi_mem_data                  // 32-bit wide memory interface
+    output mipi_fifo_clk,
+    output mipi_fifo_read_req,
+    input mipi_fifo_read_avail,
+    input [15:0] mipi_fifo_data                 // 16-bit wide FIFO interface
 );
 
 parameter CSICTRL_STATE_NOT_STARTED = 0;        // Everything idle (possibly including bus clock)
@@ -105,6 +105,7 @@ wire [15:0] csi_debug_tx_size;
 wire [15:0] csi_debug_state_timer, csi_debug_state_timer2;
 wire csi_debug_state_timer_rst;
 
+/*
 // BRAM memory address is half the requested address with LSB used to mux between pairs of 16-bit words
 wire [11:0] mipi_mem_addr_req;
 wire [13:0] mipi_mem_addr_req_scaled;
@@ -119,10 +120,11 @@ assign csi_debug_ctrl_bram_base = csi_ctrl_bram_base_reg[5:0];
 // we're using a 32-bit AXI interface to this BRAM.
 wire [15:0] mipi_mem_data_mux;
 assign mipi_mem_data_mux = (!mipi_mem_addr_req[0]) ? (mipi_mem_data[15:0]) : (mipi_mem_data[31:16]);
+*/
 
-// Debug data path
+// Debug data path: to be eliminated
 wire [15:0] csi_debug_data_mux_out;
-assign csi_debug_data_mux_out = mipi_mem_data_mux;
+assign csi_debug_data_mux_out = mipi_fifo_data;
 
 assign clk_mipi_ref_dbg = clk_mipi_ref;
 assign csi_mipi_busy_dbg = mipi_busy_status;
@@ -176,10 +178,10 @@ mipi_csi mipi_csi0 (
     .clock_gate_en(R_clk_gating_enable_regd),
     
     // BlockRAM memory interface
-    .mem_read_clk(mipi_mem_read_clk),
-    .mem_read_en(mipi_mem_read_en),
-    .mem_addr(mipi_mem_addr_req),           // MIPI peripheral request address, offset by this fabric
-    .mem_data(mipi_mem_data_mux),
+    .mem_read_clk(mipi_fifo_clk),
+    .mem_read_en(mipi_fifo_read_req),
+    //.mem_addr(mipi_mem_addr_req),           // Request address, not used (FIFO streams data)
+    .mem_data(mipi_fifo_data),
     
     // Virtual channel ID
     .vc_id(mipi_vc_id_regd),
@@ -313,7 +315,12 @@ always @(posedge clk_mipi_ref) begin
             mipi_dt_id_tx <= mipi_dt_id_regd;
             mipi_wct_short <= R_csi_line_byte_count << 1; 
             mipi_tx_size <= R_csi_line_byte_count;
-            csi_ctrl_state <= CSICTRL_STATE_OUTPUT_LINE;
+            
+            // We hold off here until mipi_fifo_read_avail indicates that data is ready in the FIFO,
+            // allowing us to advance.
+            if (!mipi_fifo_read_avail) begin
+                csi_ctrl_state <= CSICTRL_STATE_OUTPUT_LINE;
+            end
         end
         
         CSICTRL_STATE_OUTPUT_LINE : begin

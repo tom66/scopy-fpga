@@ -168,10 +168,8 @@ wire cfg_bram_busyb;
 wire [2:0] trig_sub_word;
 
 wire [5:0] csi_ctrl_state_dbg;
-wire [15:0] csi_bram_addrb;
-wire [31:0] csi_bram_doutb;
-wire csi_bram_clkb;
-wire csi_bram_enb;
+wire [15:0] csi_fifo_dout;
+wire csi_fifo_clk, csi_fifo_read_req, csi_fifo_read_valid;
 wire [5:0] csi_debug_mipi_state;
 
 wire clkwiz0_clkout1, clkwiz0_clkout2;
@@ -224,10 +222,10 @@ design_1 (
     .CFG_BRAM_RSTB(1'b0),
     
     // CSI output interface
-    .CSI_BRAM_ADDRB(csi_bram_addrb),
-    .CSI_BRAM_DOUTB(csi_bram_doutb),
-    .CSI_BRAM_CLKB(csi_bram_clkb),
-    .CSI_BRAM_ENB(csi_bram_enb),
+    .CSI_FIFO_DOUT(csi_fifo_dout),
+    .CSI_FIFO_CLK(csi_fifo_clk),
+    .CSI_FIFO_READ_VALID(csi_fifo_read_valid),
+    .CSI_FIFO_READ_REQ(csi_fifo_read_req),
     
     // Monitor signals for ILA
     .CSI_MON_LPD0N(csi_lpd0_n),
@@ -338,10 +336,10 @@ mipi_csi_controller (
     .csi_debug_ctrl_bram_base(csi_debug_ctrl_bram_base),
     
     // BRAM interface
-    .mipi_mem_read_clk(csi_bram_clkb),
-    .mipi_mem_read_en(csi_bram_enb),
-    .mipi_mem_addr(csi_bram_addrb),
-    .mipi_mem_data(csi_bram_doutb)
+    .mipi_fifo_clk(csi_fifo_clk),
+    .mipi_fifo_read_req(csi_fifo_read_req),
+    .mipi_fifo_read_avail(csi_fifo_read_valid),
+    .mipi_fifo_data(csi_fifo_dout)
 );
 
 wire clk_idelay_refclk;

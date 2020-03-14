@@ -96,8 +96,8 @@
 
 #define ACQ_TOTAL_MEMORY_AVAIL		(192 * 1024 * 1024)				// Configured total memory limit for general purpose acquisition.
 
-#define ACQ_DMA_ENGINE				XPAR_AXIDMA_0_DEVICE_ID
-#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_AXIDMA_0_VEC_ID
+#define ACQ_DMA_ENGINE				XPAR_ADC_DMA_DEVICE_ID
+#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_ADC_DMA_S2MM_INTROUT_INTR
 #define ACQ_DMA_IRQ_RX_PRIORITY		0xA0							// Low priority: TODO make this high priority
 #define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
 

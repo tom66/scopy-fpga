@@ -21,6 +21,7 @@ set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 8
 set_param chipscope.maxJobs 4
 set_param xicom.use_bs_reader 1
+set_msg_config -id {HDL-1065} -limit 10000
 create_project -in_memory -part xc7z014sclg400-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -33,6 +34,7 @@ set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_repo_paths {
+  c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0
   c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0
   c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_streamer_1.0
 } [current_project]
@@ -56,16 +58,13 @@ read_verilog -library xil_defaultlib {
 add_files C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/design_1.bd
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0_clocks.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_0_1/fifo_generator_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_0_1/fifo_generator_0_clocks.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_adc_streamer/fifo_generator_adc_streamer.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_adc_test_streamer_0_0/src/fifo_generator_adc_streamer/fifo_generator_adc_streamer_clocks.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_20M_1/design_1_rst_ps7_0_20M_1_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_20M_1/design_1_rst_ps7_0_20M_1.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1/design_1_processing_system7_0_1.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_bram_ctrl_0_0/design_1_axi_bram_ctrl_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_blk_mem_gen_0_1/design_1_blk_mem_gen_0_1_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_bram_ctrl_1_0/design_1_axi_bram_ctrl_1_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_blk_mem_gen_1_1/design_1_blk_mem_gen_1_1_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_xbar_5/design_1_xbar_5_ooc.xdc]
 set_property used_in_synthesis false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_ila_0_1/ila_v6_2/constraints/ila_impl.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_ila_0_1/ila_v6_2/constraints/ila_impl.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_ila_0_1/ila_v6_2/constraints/ila.xdc]
@@ -74,11 +73,17 @@ set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_xbar_6/design_1_xbar_6_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_csi_gearbox_dma_0_0/src/fifo_generator_csi_gearbox/fifo_generator_csi_gearbox.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_csi_gearbox_dma_0_0/src/fifo_generator_csi_gearbox/fifo_generator_csi_gearbox_clocks.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_xbar_7/design_1_xbar_7_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_1/design_1_axi_dma_1.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_1/design_1_axi_dma_1_clocks.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_1/design_1_axi_dma_1_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_1/design_1_auto_pc_1_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_3/design_1_auto_pc_3_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_2/design_1_auto_pc_2_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_4/design_1_auto_pc_4_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_3/design_1_auto_pc_3_ooc.xdc]
 set_property used_in_implementation false [get_files -all C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/design_1_ooc.xdc]
 
 read_ip -quiet C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk.xci

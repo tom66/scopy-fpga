@@ -60,6 +60,7 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
@@ -75,6 +76,7 @@ set rc [catch {
   set_property webtalk.parent_dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/wt [current_project]
   set_property parent.project_path C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.xpr [current_project]
   set_property ip_repo_paths {
+  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_test_streamer_2.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_streamer_1.0
 } [current_project]

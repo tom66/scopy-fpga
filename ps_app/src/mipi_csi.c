@@ -117,6 +117,7 @@ void mcsi_start()
  *
  * This should be run in the application infinite loop.
  */
+#if 0
 void mcsi_tick()
 {
 	uint32_t tot_sz, tx_sz;
@@ -219,10 +220,12 @@ void mcsi_tick()
 	d_printf(D_INFO, "mcsi_tick: state=%d, buffer_id=%d, wave->idx=%d", \
 			g_mcsi_state.state, g_mcsi_state.buffer_id, g_mcsi_state.wave->idx);
 }
+#endif
 
 /*
  * Internal helper function for memcpy transfer method.
  */
+#if 0
 void _mcsi_tx_memcpy(struct acq_buffer_t *wave, uint32_t offset_src, uint32_t bram_des, uint32_t bytes_max)
 {
 	uint32_t start, end, length;
@@ -261,6 +264,7 @@ void _mcsi_tx_memcpy(struct acq_buffer_t *wave, uint32_t offset_src, uint32_t br
 		d_printf(D_INFO, "done copy");
 	}
 }
+#endif
 
 /*
  * Bounded memcopy.  Will not overflow defined range and will return a state signal

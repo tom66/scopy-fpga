@@ -1,4 +1,4 @@
-17:04:49 **** Incremental Build of configuration Release for project ps_app ****
+21:10:14 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
@@ -23,44 +23,20 @@ In file included from ../src/mipi_csi_hacks.c:21:
 ../src/hal.h:167:11: warning: unused variable 'read' [-Wunused-variable]
   uint32_t read;
            ^~~~
-In file included from ../src/fabric_config.h:19,
-                 from ../src/mipi_csi_hacks.c:18:
 ../src/mipi_csi_hacks.c: In function 'csi_hack_send_line_data':
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h:117:45: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
- #define XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR 0x40000000U
-                                             ^~~~~~~~~~~
-../src/mipi_csi_hacks.c:79:9: note: in expansion of macro 'XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR'
-  memcpy(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR, buff, sz);
-         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:9,
-                 from ../src/hal.h:25,
+../src/mipi_csi_hacks.c:104:44: warning: passing argument 2 of 'XAxiDma_SimpleTransfer' makes integer from pointer without a cast [-Wint-conversion]
+  error = XAxiDma_SimpleTransfer(&mipi_dma, buff, sz, XAXIDMA_DMA_TO_DEVICE);
+                                            ^~~~
+In file included from ../src/hal.h:32,
                  from ../src/mipi_csi_hacks.c:21:
-g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\arm-none-eabi\libc\usr\include\string.h:31:9: note: expected 'void * restrict' but argument is of type 'unsigned int'
- void *  memcpy (void *__restrict, const void *__restrict, size_t);
-         ^~~~~~
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:749:58: note: expected 'UINTPTR' {aka 'unsigned int'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+ u32 XAxiDma_SimpleTransfer(XAxiDma *InstancePtr, UINTPTR BuffAddr, u32 Length,
+                                                  ~~~~~~~~^~~~~~~~
 ../src/mipi_csi_hacks.c: In function 'csi_hack_run':
-../src/mipi_csi_hacks.c:110:9: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
-  memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), src_buffer, 32768);
-         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:9,
-                 from ../src/hal.h:25,
-                 from ../src/mipi_csi_hacks.c:21:
-g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\arm-none-eabi\libc\usr\include\string.h:31:9: note: expected 'void * restrict' but argument is of type 'unsigned int'
- void *  memcpy (void *__restrict, const void *__restrict, size_t);
-         ^~~~~~
-../src/mipi_csi_hacks.c:178:11: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
-    memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), norway_512x512_grey + base_addr, 32768);
-           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_printf.h:9,
-                 from ../src/hal.h:25,
-                 from ../src/mipi_csi_hacks.c:21:
-g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\arm-none-eabi\libc\usr\include\string.h:31:9: note: expected 'void * restrict' but argument is of type 'unsigned int'
- void *  memcpy (void *__restrict, const void *__restrict, size_t);
-         ^~~~~~
-../src/mipi_csi_hacks.c:93:12: warning: unused variable 'inner' [-Wunused-variable]
+../src/mipi_csi_hacks.c:127:12: warning: unused variable 'inner' [-Wunused-variable]
   int i, j, inner;
             ^~~~~
-../src/mipi_csi_hacks.c:93:9: warning: unused variable 'j' [-Wunused-variable]
+../src/mipi_csi_hacks.c:127:9: warning: unused variable 'j' [-Wunused-variable]
   int i, j, inner;
          ^
 'Finished building: ../src/mipi_csi_hacks.c'
@@ -79,7 +55,7 @@ gcc version 8.2.0 (GCC)
 COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
 LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
- g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\cc2RXnAg.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/dma_gearbox.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\cc6DFiar.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/dma_gearbox.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
 'Finished building target: ps_app.elf'
 ' '
@@ -90,9 +66,9 @@ arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
- 370236	   3600	201572224	201946060	c0973cc	ps_app.elf
+ 369156	   3664	201574112	201946932	c097734	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-17:04:52 Build Finished (took 2s.996ms)
+21:10:16 Build Finished (took 2s.304ms)
 

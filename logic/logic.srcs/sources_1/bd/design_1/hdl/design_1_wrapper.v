@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Mar 12 13:50:09 2020
+//Date        : Sat Mar 14 21:12:22 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -36,10 +36,10 @@ module design_1_wrapper
     CFG_BRAM_WEB,
     CLKWIZ0_CLKOUT1,
     CLKWIZ0_CLKOUT2,
-    CSI_BRAM_ADDRB,
-    CSI_BRAM_CLKB,
-    CSI_BRAM_DOUTB,
-    CSI_BRAM_ENB,
+    CSI_FIFO_CLK,
+    CSI_FIFO_DOUT,
+    CSI_FIFO_READ_REQ,
+    CSI_FIFO_READ_VALID,
     CSI_MON_CTRL_STATE_DBG,
     CSI_MON_DATA_TYPE,
     CSI_MON_EM_MIPI_DONE,
@@ -127,10 +127,10 @@ module design_1_wrapper
   input [3:0]CFG_BRAM_WEB;
   output CLKWIZ0_CLKOUT1;
   output CLKWIZ0_CLKOUT2;
-  input [31:0]CSI_BRAM_ADDRB;
-  input CSI_BRAM_CLKB;
-  output [31:0]CSI_BRAM_DOUTB;
-  input CSI_BRAM_ENB;
+  input CSI_FIFO_CLK;
+  output [15:0]CSI_FIFO_DOUT;
+  input CSI_FIFO_READ_REQ;
+  output CSI_FIFO_READ_VALID;
   input [5:0]CSI_MON_CTRL_STATE_DBG;
   input [7:0]CSI_MON_DATA_TYPE;
   input CSI_MON_EM_MIPI_DONE;
@@ -219,10 +219,10 @@ module design_1_wrapper
   wire [3:0]CFG_BRAM_WEB;
   wire CLKWIZ0_CLKOUT1;
   wire CLKWIZ0_CLKOUT2;
-  wire [31:0]CSI_BRAM_ADDRB;
-  wire CSI_BRAM_CLKB;
-  wire [31:0]CSI_BRAM_DOUTB;
-  wire CSI_BRAM_ENB;
+  wire CSI_FIFO_CLK;
+  wire [15:0]CSI_FIFO_DOUT;
+  wire CSI_FIFO_READ_REQ;
+  wire CSI_FIFO_READ_VALID;
   wire [5:0]CSI_MON_CTRL_STATE_DBG;
   wire [7:0]CSI_MON_DATA_TYPE;
   wire CSI_MON_EM_MIPI_DONE;
@@ -312,10 +312,10 @@ module design_1_wrapper
         .CFG_BRAM_WEB(CFG_BRAM_WEB),
         .CLKWIZ0_CLKOUT1(CLKWIZ0_CLKOUT1),
         .CLKWIZ0_CLKOUT2(CLKWIZ0_CLKOUT2),
-        .CSI_BRAM_ADDRB(CSI_BRAM_ADDRB),
-        .CSI_BRAM_CLKB(CSI_BRAM_CLKB),
-        .CSI_BRAM_DOUTB(CSI_BRAM_DOUTB),
-        .CSI_BRAM_ENB(CSI_BRAM_ENB),
+        .CSI_FIFO_CLK(CSI_FIFO_CLK),
+        .CSI_FIFO_DOUT(CSI_FIFO_DOUT),
+        .CSI_FIFO_READ_REQ(CSI_FIFO_READ_REQ),
+        .CSI_FIFO_READ_VALID(CSI_FIFO_READ_VALID),
         .CSI_MON_CTRL_STATE_DBG(CSI_MON_CTRL_STATE_DBG),
         .CSI_MON_DATA_TYPE(CSI_MON_DATA_TYPE),
         .CSI_MON_EM_MIPI_DONE(CSI_MON_EM_MIPI_DONE),

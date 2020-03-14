@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x85012BCB23A6DD79",
+      "boundary_crc": "0xF2E61F4EF0E09D81",
       "device": "xc7z014sclg400-1",
       "name": "design_1",
       "synth_flow_mode": "None",
@@ -10,17 +10,15 @@
     },
     "design_tree": {
       "rst_ps7_0_20M": "",
-      "processing_system7_0": "",
+      "zynq_ps": "",
       "axi_bram_ctrl_0": "",
-      "axi_dma": "",
+      "adc_dma": "",
       "axi_interconnect_0": {
         "xbar": "",
         "s00_couplers": {
           "auto_pc": ""
         },
-        "m00_couplers": {
-          "auto_pc": ""
-        },
+        "m00_couplers": {},
         "m01_couplers": {}
       },
       "axi_mem_intercon": {
@@ -30,8 +28,6 @@
       },
       "blk_mem_gen_0": "",
       "xlconcat_1": "",
-      "axi_bram_ctrl_1": "",
-      "blk_mem_gen_1": "",
       "ila_0": "",
       "clk_wiz_0": "",
       "axi_interconnect_1": {
@@ -39,12 +35,20 @@
         "s00_couplers": {
           "auto_pc": ""
         },
+        "s01_couplers": {},
         "m00_couplers": {
           "auto_pc": ""
         },
         "m01_couplers": {}
       },
-      "adc_axi_streamer": ""
+      "mipi_dma": "",
+      "axi_interconnect_2": {
+        "s00_couplers": {
+          "auto_pc": ""
+        }
+      },
+      "adc_axi_streamer": "",
+      "csi_gearbox_dma_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -300,12 +304,7 @@
           }
         }
       },
-      "CSI_BRAM_ADDRB": {
-        "direction": "I",
-        "left": "31",
-        "right": "0"
-      },
-      "CSI_BRAM_CLKB": {
+      "CSI_FIFO_CLK": {
         "type": "clk",
         "direction": "I",
         "parameters": {
@@ -326,12 +325,12 @@
           }
         }
       },
-      "CSI_BRAM_ENB": {
+      "CSI_FIFO_READ_REQ": {
         "direction": "I"
       },
-      "CSI_BRAM_DOUTB": {
+      "CSI_FIFO_DOUT": {
         "direction": "O",
-        "left": "31",
+        "left": "15",
         "right": "0"
       },
       "CSI_MON_LPD0N": {
@@ -487,6 +486,9 @@
         "direction": "I",
         "left": "5",
         "right": "0"
+      },
+      "CSI_FIFO_READ_VALID": {
+        "direction": "O"
       }
     },
     "components": {
@@ -494,7 +496,7 @@
         "vlnv": "xilinx.com:ip:proc_sys_reset:5.0",
         "xci_name": "design_1_rst_ps7_0_20M_1"
       },
-      "processing_system7_0": {
+      "zynq_ps": {
         "vlnv": "xilinx.com:ip:processing_system7:5.5",
         "xci_name": "design_1_processing_system7_0_1",
         "parameters": {
@@ -1249,12 +1251,12 @@
             "value": "1"
           },
           "PCW_USE_S_AXI_HP1": {
-            "value": "0"
+            "value": "1"
           }
         },
         "hdl_attributes": {
           "BMM_INFO_PROCESSOR": {
-            "value": "arm > design_1 axi_bram_ctrl_1 design_1 axi_bram_ctrl_0",
+            "value": "arm > design_1 axi_bram_ctrl_0",
             "value_src": "default"
           },
           "KEEP_HIERARCHY": {
@@ -1288,7 +1290,7 @@
           }
         }
       },
-      "axi_dma": {
+      "adc_dma": {
         "vlnv": "xilinx.com:ip:axi_dma:7.1",
         "xci_name": "design_1_axi_dma_0",
         "parameters": {
@@ -1403,7 +1405,7 @@
         "components": {
           "xbar": {
             "vlnv": "xilinx.com:ip:axi_crossbar:2.1",
-            "xci_name": "design_1_xbar_5",
+            "xci_name": "design_1_xbar_7",
             "parameters": {
               "NUM_MI": {
                 "value": "2"
@@ -1464,10 +1466,10 @@
             "components": {
               "auto_pc": {
                 "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
-                "xci_name": "design_1_auto_pc_1",
+                "xci_name": "design_1_auto_pc_0",
                 "parameters": {
                   "MI_PROTOCOL": {
-                    "value": "AXI4"
+                    "value": "AXI4LITE"
                   },
                   "SI_PROTOCOL": {
                     "value": "AXI3"
@@ -1549,45 +1551,11 @@
                 "direction": "I"
               }
             },
-            "components": {
-              "auto_pc": {
-                "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
-                "xci_name": "design_1_auto_pc_0",
-                "parameters": {
-                  "MI_PROTOCOL": {
-                    "value": "AXI4LITE"
-                  },
-                  "SI_PROTOCOL": {
-                    "value": "AXI4"
-                  }
-                }
-              }
-            },
             "interface_nets": {
-              "m00_couplers_to_auto_pc": {
+              "m00_couplers_to_m00_couplers": {
                 "interface_ports": [
                   "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
-              "auto_pc_to_m00_couplers": {
-                "interface_ports": [
-                  "M_AXI",
-                  "auto_pc/M_AXI"
-                ]
-              }
-            },
-            "nets": {
-              "S_ACLK_1": {
-                "ports": [
-                  "S_ACLK",
-                  "auto_pc/aclk"
-                ]
-              },
-              "S_ARESETN_1": {
-                "ports": [
-                  "S_ARESETN",
-                  "auto_pc/aresetn"
+                  "M_AXI"
                 ]
               }
             }
@@ -1660,10 +1628,10 @@
               "m00_couplers/M_AXI"
             ]
           },
-          "m01_couplers_to_axi_interconnect_0": {
+          "s00_couplers_to_xbar": {
             "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
+              "s00_couplers/M_AXI",
+              "xbar/S00_AXI"
             ]
           },
           "xbar_to_m00_couplers": {
@@ -1672,16 +1640,16 @@
               "m00_couplers/S_AXI"
             ]
           },
+          "m01_couplers_to_axi_interconnect_0": {
+            "interface_ports": [
+              "M01_AXI",
+              "m01_couplers/M_AXI"
+            ]
+          },
           "xbar_to_m01_couplers": {
             "interface_ports": [
               "xbar/M01_AXI",
               "m01_couplers/S_AXI"
-            ]
-          },
-          "s00_couplers_to_xbar": {
-            "interface_ports": [
-              "s00_couplers/M_AXI",
-              "xbar/S00_AXI"
             ]
           }
         },
@@ -1832,7 +1800,7 @@
             "components": {
               "auto_pc": {
                 "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
-                "xci_name": "design_1_auto_pc_2",
+                "xci_name": "design_1_auto_pc_1",
                 "parameters": {
                   "MI_PROTOCOL": {
                     "value": "AXI3"
@@ -1844,16 +1812,16 @@
               }
             },
             "interface_nets": {
-              "s00_couplers_to_auto_pc": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
               "auto_pc_to_s00_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
+                ]
+              },
+              "s00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -1980,100 +1948,6 @@
           }
         }
       },
-      "axi_bram_ctrl_1": {
-        "vlnv": "xilinx.com:ip:axi_bram_ctrl:4.1",
-        "xci_name": "design_1_axi_bram_ctrl_1_0",
-        "parameters": {
-          "DATA_WIDTH": {
-            "value": "32"
-          },
-          "SINGLE_PORT_BRAM": {
-            "value": "1"
-          }
-        },
-        "hdl_attributes": {
-          "BMM_INFO_ADDRESS_SPACE": {
-            "value": "byte  0x40000000 32 > design_1 blk_mem_gen_1",
-            "value_src": "default"
-          },
-          "KEEP_HIERARCHY": {
-            "value": "yes",
-            "value_src": "default"
-          }
-        }
-      },
-      "blk_mem_gen_1": {
-        "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
-        "xci_name": "design_1_blk_mem_gen_1_1",
-        "parameters": {
-          "Additional_Inputs_for_Power_Estimation": {
-            "value": "true"
-          },
-          "EN_SAFETY_CKT": {
-            "value": "true"
-          },
-          "Enable_32bit_Address": {
-            "value": "true"
-          },
-          "Enable_B": {
-            "value": "Use_ENB_Pin"
-          },
-          "Memory_Type": {
-            "value": "True_Dual_Port_RAM"
-          },
-          "Operating_Mode_A": {
-            "value": "WRITE_FIRST"
-          },
-          "Operating_Mode_B": {
-            "value": "WRITE_FIRST"
-          },
-          "Port_A_Clock": {
-            "value": "177"
-          },
-          "Port_A_Write_Rate": {
-            "value": "75"
-          },
-          "Port_B_Clock": {
-            "value": "177"
-          },
-          "Port_B_Enable_Rate": {
-            "value": "100"
-          },
-          "Port_B_Write_Rate": {
-            "value": "0"
-          },
-          "Read_Width_A": {
-            "value": "32"
-          },
-          "Read_Width_B": {
-            "value": "32"
-          },
-          "Register_PortA_Output_of_Memory_Primitives": {
-            "value": "true"
-          },
-          "Register_PortB_Output_of_Memory_Primitives": {
-            "value": "true"
-          },
-          "Use_RSTA_Pin": {
-            "value": "true"
-          },
-          "Use_RSTB_Pin": {
-            "value": "true"
-          },
-          "Write_Depth_A": {
-            "value": "32768"
-          },
-          "Write_Width_A": {
-            "value": "32"
-          },
-          "Write_Width_B": {
-            "value": "32"
-          },
-          "use_bram_block": {
-            "value": "Stand_Alone"
-          }
-        }
-      },
       "ila_0": {
         "vlnv": "xilinx.com:ip:ila:6.2",
         "xci_name": "design_1_ila_0_1",
@@ -2088,7 +1962,7 @@
             "value": "Native"
           },
           "C_NUM_OF_PROBES": {
-            "value": "30"
+            "value": "32"
           }
         }
       },
@@ -2146,6 +2020,11 @@
       "axi_interconnect_1": {
         "vlnv": "xilinx.com:ip:axi_interconnect:2.1",
         "xci_name": "design_1_axi_interconnect_1_0",
+        "parameters": {
+          "NUM_SI": {
+            "value": "2"
+          }
+        },
         "interface_ports": {
           "S00_AXI": {
             "mode": "Slave",
@@ -2157,6 +2036,10 @@
           },
           "M01_AXI": {
             "mode": "Master",
+            "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+          },
+          "S01_AXI": {
+            "mode": "Slave",
             "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
           }
         },
@@ -2221,6 +2104,22 @@
           "M01_ARESETN": {
             "type": "rst",
             "direction": "I"
+          },
+          "S01_ACLK": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_BUSIF": {
+                "value": "S01_AXI"
+              },
+              "ASSOCIATED_RESET": {
+                "value": "S01_ARESETN"
+              }
+            }
+          },
+          "S01_ARESETN": {
+            "type": "rst",
+            "direction": "I"
           }
         },
         "components": {
@@ -2232,7 +2131,7 @@
                 "value": "2"
               },
               "NUM_SI": {
-                "value": "1"
+                "value": "2"
               },
               "STRATEGY": {
                 "value": "0"
@@ -2287,7 +2186,7 @@
             "components": {
               "auto_pc": {
                 "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
-                "xci_name": "design_1_auto_pc_4",
+                "xci_name": "design_1_auto_pc_3",
                 "parameters": {
                   "MI_PROTOCOL": {
                     "value": "AXI4"
@@ -2299,16 +2198,16 @@
               }
             },
             "interface_nets": {
-              "auto_pc_to_s00_couplers": {
-                "interface_ports": [
-                  "M_AXI",
-                  "auto_pc/M_AXI"
-                ]
-              },
               "s00_couplers_to_auto_pc": {
                 "interface_ports": [
                   "S_AXI",
                   "auto_pc/S_AXI"
+                ]
+              },
+              "auto_pc_to_s00_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "auto_pc/M_AXI"
                 ]
               }
             },
@@ -2323,6 +2222,60 @@
                 "ports": [
                   "S_ARESETN",
                   "auto_pc/aresetn"
+                ]
+              }
+            }
+          },
+          "s01_couplers": {
+            "interface_ports": {
+              "M_AXI": {
+                "mode": "Master",
+                "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+              },
+              "S_AXI": {
+                "mode": "Slave",
+                "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+              }
+            },
+            "ports": {
+              "M_ACLK": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "ASSOCIATED_BUSIF": {
+                    "value": "M_AXI"
+                  },
+                  "ASSOCIATED_RESET": {
+                    "value": "M_ARESETN"
+                  }
+                }
+              },
+              "M_ARESETN": {
+                "type": "rst",
+                "direction": "I"
+              },
+              "S_ACLK": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "ASSOCIATED_BUSIF": {
+                    "value": "S_AXI"
+                  },
+                  "ASSOCIATED_RESET": {
+                    "value": "S_ARESETN"
+                  }
+                }
+              },
+              "S_ARESETN": {
+                "type": "rst",
+                "direction": "I"
+              }
+            },
+            "interface_nets": {
+              "s01_couplers_to_s01_couplers": {
+                "interface_ports": [
+                  "S_AXI",
+                  "M_AXI"
                 ]
               }
             }
@@ -2375,7 +2328,7 @@
             "components": {
               "auto_pc": {
                 "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
-                "xci_name": "design_1_auto_pc_3",
+                "xci_name": "design_1_auto_pc_2",
                 "parameters": {
                   "MI_PROTOCOL": {
                     "value": "AXI4LITE"
@@ -2387,16 +2340,16 @@
               }
             },
             "interface_nets": {
-              "m00_couplers_to_auto_pc": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
               "auto_pc_to_m00_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
+                ]
+              },
+              "m00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -2483,6 +2436,18 @@
               "xbar/S00_AXI"
             ]
           },
+          "axi_interconnect_1_to_s01_couplers": {
+            "interface_ports": [
+              "S01_AXI",
+              "s01_couplers/S_AXI"
+            ]
+          },
+          "s01_couplers_to_xbar": {
+            "interface_ports": [
+              "s01_couplers/M_AXI",
+              "xbar/S01_AXI"
+            ]
+          },
           "m00_couplers_to_axi_interconnect_1": {
             "interface_ports": [
               "M00_AXI",
@@ -2514,7 +2479,9 @@
               "ACLK",
               "xbar/aclk",
               "s00_couplers/S_ACLK",
+              "s01_couplers/S_ACLK",
               "s00_couplers/M_ACLK",
+              "s01_couplers/M_ACLK",
               "m00_couplers/M_ACLK",
               "m01_couplers/M_ACLK",
               "m00_couplers/S_ACLK",
@@ -2526,7 +2493,9 @@
               "ARESETN",
               "xbar/aresetn",
               "s00_couplers/S_ARESETN",
+              "s01_couplers/S_ARESETN",
               "s00_couplers/M_ARESETN",
+              "s01_couplers/M_ARESETN",
               "m00_couplers/M_ARESETN",
               "m01_couplers/M_ARESETN",
               "m00_couplers/S_ARESETN",
@@ -2535,52 +2504,270 @@
           }
         }
       },
+      "mipi_dma": {
+        "vlnv": "xilinx.com:ip:axi_dma:7.1",
+        "xci_name": "design_1_axi_dma_1",
+        "parameters": {
+          "c_include_mm2s": {
+            "value": "1"
+          },
+          "c_include_mm2s_dre": {
+            "value": "0"
+          },
+          "c_include_s2mm": {
+            "value": "0"
+          },
+          "c_include_sg": {
+            "value": "0"
+          },
+          "c_m_axi_mm2s_data_width": {
+            "value": "64"
+          },
+          "c_m_axis_mm2s_tdata_width": {
+            "value": "64"
+          },
+          "c_mm2s_burst_size": {
+            "value": "32"
+          },
+          "c_sg_length_width": {
+            "value": "24"
+          }
+        }
+      },
+      "axi_interconnect_2": {
+        "vlnv": "xilinx.com:ip:axi_interconnect:2.1",
+        "xci_name": "design_1_axi_interconnect_2_0",
+        "parameters": {
+          "NUM_MI": {
+            "value": "1"
+          }
+        },
+        "interface_ports": {
+          "S00_AXI": {
+            "mode": "Slave",
+            "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+          },
+          "M00_AXI": {
+            "mode": "Master",
+            "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+          }
+        },
+        "ports": {
+          "ACLK": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "ARESETN"
+              }
+            }
+          },
+          "ARESETN": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "S00_ACLK": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_BUSIF": {
+                "value": "S00_AXI"
+              },
+              "ASSOCIATED_RESET": {
+                "value": "S00_ARESETN"
+              }
+            }
+          },
+          "S00_ARESETN": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "M00_ACLK": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_BUSIF": {
+                "value": "M00_AXI"
+              },
+              "ASSOCIATED_RESET": {
+                "value": "M00_ARESETN"
+              }
+            }
+          },
+          "M00_ARESETN": {
+            "type": "rst",
+            "direction": "I"
+          }
+        },
+        "components": {
+          "s00_couplers": {
+            "interface_ports": {
+              "M_AXI": {
+                "mode": "Master",
+                "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+              },
+              "S_AXI": {
+                "mode": "Slave",
+                "vlnv": "xilinx.com:interface:aximm_rtl:1.0"
+              }
+            },
+            "ports": {
+              "M_ACLK": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "ASSOCIATED_BUSIF": {
+                    "value": "M_AXI"
+                  },
+                  "ASSOCIATED_RESET": {
+                    "value": "M_ARESETN"
+                  }
+                }
+              },
+              "M_ARESETN": {
+                "type": "rst",
+                "direction": "I"
+              },
+              "S_ACLK": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "ASSOCIATED_BUSIF": {
+                    "value": "S_AXI"
+                  },
+                  "ASSOCIATED_RESET": {
+                    "value": "S_ARESETN"
+                  }
+                }
+              },
+              "S_ARESETN": {
+                "type": "rst",
+                "direction": "I"
+              }
+            },
+            "components": {
+              "auto_pc": {
+                "vlnv": "xilinx.com:ip:axi_protocol_converter:2.1",
+                "xci_name": "design_1_auto_pc_4",
+                "parameters": {
+                  "MI_PROTOCOL": {
+                    "value": "AXI3"
+                  },
+                  "SI_PROTOCOL": {
+                    "value": "AXI4"
+                  }
+                }
+              }
+            },
+            "interface_nets": {
+              "s00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
+                ]
+              },
+              "auto_pc_to_s00_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "auto_pc/M_AXI"
+                ]
+              }
+            },
+            "nets": {
+              "S_ACLK_1": {
+                "ports": [
+                  "S_ACLK",
+                  "auto_pc/aclk"
+                ]
+              },
+              "S_ARESETN_1": {
+                "ports": [
+                  "S_ARESETN",
+                  "auto_pc/aresetn"
+                ]
+              }
+            }
+          }
+        },
+        "interface_nets": {
+          "s00_couplers_to_axi_interconnect_2": {
+            "interface_ports": [
+              "M00_AXI",
+              "s00_couplers/M_AXI"
+            ]
+          },
+          "axi_interconnect_2_to_s00_couplers": {
+            "interface_ports": [
+              "S00_AXI",
+              "s00_couplers/S_AXI"
+            ]
+          }
+        },
+        "nets": {
+          "axi_interconnect_2_ACLK_net": {
+            "ports": [
+              "M00_ACLK",
+              "s00_couplers/M_ACLK"
+            ]
+          },
+          "axi_interconnect_2_ARESETN_net": {
+            "ports": [
+              "M00_ARESETN",
+              "s00_couplers/M_ARESETN"
+            ]
+          },
+          "S00_ACLK_1": {
+            "ports": [
+              "S00_ACLK",
+              "s00_couplers/S_ACLK"
+            ]
+          },
+          "S00_ARESETN_1": {
+            "ports": [
+              "S00_ARESETN",
+              "s00_couplers/S_ARESETN"
+            ]
+          }
+        }
+      },
       "adc_axi_streamer": {
         "vlnv": "xilinx.com:user:adc_streamer:2.0",
         "xci_name": "design_1_adc_test_streamer_0_0"
+      },
+      "csi_gearbox_dma_0": {
+        "vlnv": "xilinx.com:user:csi_gearbox_dma:1.0",
+        "xci_name": "design_1_csi_gearbox_dma_0_0"
       }
     },
     "interface_nets": {
       "axi_dma_M_AXI_S2MM": {
         "interface_ports": [
-          "axi_dma/M_AXI_S2MM",
+          "adc_dma/M_AXI_S2MM",
           "axi_mem_intercon/S00_AXI"
         ]
       },
       "processing_system7_0_DDR": {
         "interface_ports": [
           "DDR",
-          "processing_system7_0/DDR"
-        ]
-      },
-      "axi_bram_ctrl_1_BRAM_PORTA": {
-        "interface_ports": [
-          "axi_bram_ctrl_1/BRAM_PORTA",
-          "blk_mem_gen_1/BRAM_PORTA"
+          "zynq_ps/DDR"
         ]
       },
       "processing_system7_0_FIXED_IO": {
         "interface_ports": [
           "FIXED_IO",
-          "processing_system7_0/FIXED_IO"
+          "zynq_ps/FIXED_IO"
         ]
       },
-      "adc_axi_streamer_M00_AXIS": {
+      "axi_interconnect_0_M00_AXI": {
         "interface_ports": [
-          "adc_axi_streamer/M00_AXIS",
-          "axi_dma/S_AXIS_S2MM"
+          "adc_dma/S_AXI_LITE",
+          "axi_interconnect_0/M00_AXI"
         ]
       },
-      "axi_mem_intercon_M00_AXI": {
+      "S00_AXI_1": {
         "interface_ports": [
-          "processing_system7_0/S_AXI_HP0",
-          "axi_mem_intercon/M00_AXI"
-        ]
-      },
-      "axi_interconnect_1_M00_AXI": {
-        "interface_ports": [
-          "axi_interconnect_1/M00_AXI",
-          "clk_wiz_0/s_axi_lite"
+          "axi_interconnect_1/S00_AXI",
+          "zynq_ps/M_AXI_GP1"
         ]
       },
       "axi_bram_ctrl_0_BRAM_PORTA": {
@@ -2589,16 +2776,28 @@
           "axi_bram_ctrl_0/BRAM_PORTA"
         ]
       },
+      "axi_interconnect_1_M00_AXI": {
+        "interface_ports": [
+          "axi_interconnect_1/M00_AXI",
+          "clk_wiz_0/s_axi_lite"
+        ]
+      },
       "processing_system7_0_M_AXI_GP0": {
         "interface_ports": [
           "axi_interconnect_0/S00_AXI",
-          "processing_system7_0/M_AXI_GP0"
+          "zynq_ps/M_AXI_GP0"
         ]
       },
-      "S00_AXI_1": {
+      "adc_axi_streamer_M00_AXIS": {
         "interface_ports": [
-          "axi_interconnect_1/S00_AXI",
-          "processing_system7_0/M_AXI_GP1"
+          "adc_axi_streamer/M00_AXIS",
+          "adc_dma/S_AXIS_S2MM"
+        ]
+      },
+      "axi_mem_intercon_M00_AXI": {
+        "interface_ports": [
+          "zynq_ps/S_AXI_HP0",
+          "axi_mem_intercon/M00_AXI"
         ]
       },
       "axi_interconnect_1_M01_AXI": {
@@ -2607,46 +2806,65 @@
           "axi_interconnect_1/M01_AXI"
         ]
       },
+      "axi_interconnect_2_M00_AXI": {
+        "interface_ports": [
+          "axi_interconnect_2/M00_AXI",
+          "zynq_ps/S_AXI_HP1"
+        ]
+      },
+      "axi_dma1_M_AXIS_MM2S": {
+        "interface_ports": [
+          "csi_gearbox_dma_0/S00_AXIS",
+          "mipi_dma/M_AXIS_MM2S"
+        ]
+      },
       "axi_interconnect_0_M01_AXI": {
         "interface_ports": [
           "axi_interconnect_0/M01_AXI",
-          "axi_bram_ctrl_1/S_AXI"
+          "mipi_dma/S_AXI_LITE"
         ]
       },
-      "axi_interconnect_0_M00_AXI": {
+      "S00_AXI_2": {
         "interface_ports": [
-          "axi_dma/S_AXI_LITE",
-          "axi_interconnect_0/M00_AXI"
+          "axi_interconnect_2/S00_AXI",
+          "mipi_dma/M_AXI_MM2S"
         ]
       }
     },
     "nets": {
       "processing_system7_0_FCLK_CLK0": {
         "ports": [
-          "processing_system7_0/FCLK_CLK0",
+          "zynq_ps/FCLK_CLK0",
           "FCLK_CLK0",
           "rst_ps7_0_20M/slowest_sync_clk",
-          "processing_system7_0/S_AXI_HP0_ACLK",
+          "zynq_ps/S_AXI_HP0_ACLK",
           "axi_bram_ctrl_0/s_axi_aclk",
-          "axi_dma/s_axi_lite_aclk",
-          "axi_dma/m_axi_s2mm_aclk",
+          "adc_dma/s_axi_lite_aclk",
+          "adc_dma/m_axi_s2mm_aclk",
           "axi_interconnect_0/ACLK",
           "axi_interconnect_0/S00_ACLK",
           "axi_interconnect_0/M00_ACLK",
           "axi_mem_intercon/ACLK",
           "axi_mem_intercon/S00_ACLK",
           "axi_mem_intercon/M00_ACLK",
-          "axi_bram_ctrl_1/s_axi_aclk",
-          "processing_system7_0/M_AXI_GP0_ACLK",
-          "axi_interconnect_0/M01_ACLK",
+          "zynq_ps/M_AXI_GP0_ACLK",
           "clk_wiz_0/s_axi_aclk",
           "clk_wiz_0/clk_in1",
           "axi_interconnect_1/M01_ACLK",
           "axi_interconnect_1/M00_ACLK",
           "axi_interconnect_1/S00_ACLK",
           "axi_interconnect_1/ACLK",
-          "processing_system7_0/M_AXI_GP1_ACLK",
-          "adc_axi_streamer/m00_axis_aclk"
+          "zynq_ps/M_AXI_GP1_ACLK",
+          "mipi_dma/m_axi_mm2s_aclk",
+          "axi_interconnect_2/S00_ACLK",
+          "axi_interconnect_1/S01_ACLK",
+          "mipi_dma/s_axi_lite_aclk",
+          "axi_interconnect_0/M01_ACLK",
+          "axi_interconnect_2/ACLK",
+          "axi_interconnect_2/M00_ACLK",
+          "zynq_ps/S_AXI_HP1_ACLK",
+          "adc_axi_streamer/m00_axis_aclk",
+          "csi_gearbox_dma_0/s00_axis_aclk"
         ]
       },
       "ADC_BUS_1": {
@@ -2659,50 +2877,55 @@
         "ports": [
           "rst_ps7_0_20M/peripheral_aresetn",
           "axi_bram_ctrl_0/s_axi_aresetn",
-          "axi_dma/axi_resetn",
+          "adc_dma/axi_resetn",
           "axi_interconnect_0/ARESETN",
           "axi_interconnect_0/S00_ARESETN",
           "axi_interconnect_0/M00_ARESETN",
           "axi_mem_intercon/ARESETN",
           "axi_mem_intercon/S00_ARESETN",
           "axi_mem_intercon/M00_ARESETN",
-          "axi_bram_ctrl_1/s_axi_aresetn",
-          "axi_interconnect_0/M01_ARESETN",
           "clk_wiz_0/s_axi_aresetn",
           "axi_interconnect_1/M00_ARESETN",
           "axi_interconnect_1/M01_ARESETN",
           "axi_interconnect_1/S00_ARESETN",
           "axi_interconnect_1/ARESETN",
-          "adc_axi_streamer/m00_axis_aresetn"
+          "axi_interconnect_2/S00_ARESETN",
+          "axi_interconnect_1/S01_ARESETN",
+          "mipi_dma/axi_resetn",
+          "axi_interconnect_0/M01_ARESETN",
+          "axi_interconnect_2/ARESETN",
+          "axi_interconnect_2/M00_ARESETN",
+          "adc_axi_streamer/m00_axis_aresetn",
+          "csi_gearbox_dma_0/s00_axis_aresetn"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
         "ports": [
-          "processing_system7_0/FCLK_RESET0_N",
+          "zynq_ps/FCLK_RESET0_N",
           "rst_ps7_0_20M/ext_reset_in"
         ]
       },
       "EMIO_I_1": {
         "ports": [
           "EMIO_I",
-          "processing_system7_0/GPIO_I"
+          "zynq_ps/GPIO_I"
         ]
       },
       "processing_system7_0_GPIO_O": {
         "ports": [
-          "processing_system7_0/GPIO_O",
+          "zynq_ps/GPIO_O",
           "EMIO_O"
         ]
       },
       "xlconcat_1_dout": {
         "ports": [
           "xlconcat_1/dout",
-          "processing_system7_0/IRQ_F2P"
+          "zynq_ps/IRQ_F2P"
         ]
       },
       "axi_dma_s2mm_introut": {
         "ports": [
-          "axi_dma/s2mm_introut",
+          "adc_dma/s2mm_introut",
           "xlconcat_1/In0"
         ]
       },
@@ -2864,26 +3087,26 @@
       },
       "axi_dma_s_axis_s2mm_tready": {
         "ports": [
-          "axi_dma/s_axis_s2mm_tready",
+          "adc_dma/s_axis_s2mm_tready",
           "adc_axi_streamer/m00_axis_tready"
         ]
       },
       "adc_axi_streamer_m00_axis_tdata": {
         "ports": [
           "adc_axi_streamer/m00_axis_tdata",
-          "axi_dma/s_axis_s2mm_tdata"
+          "adc_dma/s_axis_s2mm_tdata"
         ]
       },
       "adc_axi_streamer_m00_axis_tlast": {
         "ports": [
           "adc_axi_streamer/m00_axis_tlast",
-          "axi_dma/s_axis_s2mm_tlast"
+          "adc_dma/s_axis_s2mm_tlast"
         ]
       },
       "adc_axi_streamer_m00_axis_tvalid": {
         "ports": [
           "adc_axi_streamer/m00_axis_tvalid",
-          "axi_dma/s_axis_s2mm_tvalid"
+          "adc_dma/s_axis_s2mm_tvalid"
         ]
       },
       "adc_axi_streamer_adc_fifo_full": {
@@ -2892,32 +3115,19 @@
           "ACQ_DATA_LOSS"
         ]
       },
-      "blk_mem_gen_1_doutb": {
-        "ports": [
-          "blk_mem_gen_1/doutb",
-          "ila_0/probe2",
-          "CSI_BRAM_DOUTB"
-        ]
-      },
-      "CSI_BRAM_ADDRB_1": {
-        "ports": [
-          "CSI_BRAM_ADDRB",
-          "blk_mem_gen_1/addrb",
-          "ila_0/probe1"
-        ]
-      },
       "CSI_BRAM_CLKB_1": {
         "ports": [
-          "CSI_BRAM_CLKB",
-          "blk_mem_gen_1/clkb",
-          "ila_0/clk"
+          "CSI_FIFO_CLK",
+          "ila_0/clk",
+          "csi_gearbox_dma_0/mipi_mx_clk"
         ]
       },
       "CSI_BRAM_ENB_1": {
         "ports": [
-          "CSI_BRAM_ENB",
-          "blk_mem_gen_1/enb",
-          "ila_0/probe0"
+          "CSI_FIFO_READ_REQ",
+          "ila_0/probe0",
+          "ila_0/probe31",
+          "csi_gearbox_dma_0/mipi_read_req"
         ]
       },
       "PL_IRQ_1": {
@@ -3099,6 +3309,26 @@
           "CSI_MON_MIPI_CTRL_BRAM_BASE",
           "ila_0/probe29"
         ]
+      },
+      "csi_gearbox_dma_0_mipi_read_valid": {
+        "ports": [
+          "csi_gearbox_dma_0/mipi_read_valid",
+          "CSI_FIFO_READ_VALID",
+          "ila_0/probe30"
+        ]
+      },
+      "csi_gearbox_dma_0_mipi_data": {
+        "ports": [
+          "csi_gearbox_dma_0/mipi_data",
+          "CSI_FIFO_DOUT",
+          "ila_0/probe1"
+        ]
+      },
+      "csi_gearbox_dma_0_dbg_fifo_data_ct": {
+        "ports": [
+          "csi_gearbox_dma_0/dbg_fifo_data_ct",
+          "ila_0/probe2"
+        ]
       }
     },
     "comments": {
@@ -3107,13 +3337,10 @@
       },
       "/blk_mem_gen_0": {
         "comment_0": "BRAM for Fabric Configuration"
-      },
-      "/blk_mem_gen_1": {
-        "comment_4": "CSI Output BRAM"
       }
     },
     "addressing": {
-      "/processing_system7_0": {
+      "/zynq_ps": {
         "address_spaces": {
           "Data": {
             "range": "4G",
@@ -3124,13 +3351,13 @@
                 "offset": "0x80000000",
                 "range": "8K"
               },
-              "SEG_axi_bram_ctrl_1_Mem0": {
-                "address_block": "/axi_bram_ctrl_1/S_AXI/Mem0",
-                "offset": "0x40000000",
-                "range": "32K"
+              "SEG_axi_dma1_Reg": {
+                "address_block": "/mipi_dma/S_AXI_LITE/Reg",
+                "offset": "0x40410000",
+                "range": "64K"
               },
               "SEG_axi_dma_Reg": {
-                "address_block": "/axi_dma/S_AXI_LITE/Reg",
+                "address_block": "/adc_dma/S_AXI_LITE/Reg",
                 "offset": "0x40400000",
                 "range": "64K"
               },
@@ -3143,14 +3370,29 @@
           }
         }
       },
-      "/axi_dma": {
+      "/adc_dma": {
         "address_spaces": {
           "Data_S2MM": {
             "range": "4G",
             "width": "32",
             "segments": {
               "SEG_processing_system7_0_HP0_DDR_LOWOCM": {
-                "address_block": "/processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM",
+                "address_block": "/zynq_ps/S_AXI_HP0/HP0_DDR_LOWOCM",
+                "offset": "0x00000000",
+                "range": "256M"
+              }
+            }
+          }
+        }
+      },
+      "/mipi_dma": {
+        "address_spaces": {
+          "Data_MM2S": {
+            "range": "4G",
+            "width": "32",
+            "segments": {
+              "SEG_processing_system7_0_HP1_DDR_LOWOCM": {
+                "address_block": "/zynq_ps/S_AXI_HP1/HP1_DDR_LOWOCM",
                 "offset": "0x00000000",
                 "range": "256M"
               }

@@ -52,10 +52,6 @@
 #define MCSI_RES_WAVE_ERROR			-1
 #define MCSI_RES_MEMCPY_BOUND		-2
 
-#define MCSI_BRAM_BASE				(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR)
-#define MCSI_BRAM_BASE_1_OFFSET		(MCSI_MAX_BUFFER_BRAM_SIZE)
-#define MCSI_BRAM_END				XPAR_AXI_BRAM_CTRL_1_S_AXI_HIGHADDR
-
 struct mcsi_state_t {
 	int state;
 	uint32_t flags;

@@ -23,8 +23,28 @@
 uint8_t src_buffer[32768] __attribute__((aligned(32)));
 // uint8_t dest_buffer[2048] __attribute__((aligned(32)));
 
+XAxiDma mipi_dma;
+XAxiDma_Config *mipi_dma_config;
+
 void csi_hack_init()
 {
+	int error;
+
+	mipi_dma_config = XAxiDma_LookupConfig(XPAR_MIPI_DMA_DEVICE_ID);
+	error = XAxiDma_CfgInitialize(&mipi_dma, mipi_dma_config);
+
+	if(error != XST_SUCCESS) {
+		d_printf(D_ERROR, "mipihacks: fatal: unable to initialise DMA engine! (error=%d)", error);
+		exit(-1);
+	}
+
+	d_printf(D_INFO, "mipihacks: DMA initialised @ 0x%08x", mipi_dma_config->BaseAddr);
+
+	XAxiDma_Reset(&mipi_dma);
+	while(!XAxiDma_ResetIsDone(&mipi_dma)) ;
+
+	d_printf(D_INFO, "mipihacks: DMA reset OK");
+
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, CSI_EMIO_START_FRAME, 1);
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
@@ -75,9 +95,23 @@ void csi_hack_stop_frame()
 
 void csi_hack_send_line_data(uint32_t *buff, uint32_t sz)
 {
-	d_printf(D_ERROR, "start copying into BRAM: src=0x%08x, dest=0x%08x, sz=%d", buff, XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR, sz);
-	memcpy(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR, buff, sz);
-	d_printf(D_ERROR, "done copying into BRAM, wait for startline");
+	int error;
+
+	d_printf(D_INFO, "mipihacks: start copying via DMA: src=0x%08x, sz=%d", buff, sz);
+	//memcpy(XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR, buff, sz);
+	//d_printf(D_ERROR, "done copying into BRAM, wait for startline");
+
+	error = XAxiDma_SimpleTransfer(&mipi_dma, buff, sz, XAXIDMA_DMA_TO_DEVICE);
+
+	if(error != XST_SUCCESS) {
+		d_printf(D_ERROR, "mipihacks: unable to start transfer, error %d", error);
+		return;
+	}
+
+	// wait for xfer to complete
+	while(XAxiDma_Busy(&mipi_dma, XAXIDMA_DMA_TO_DEVICE)) ;
+
+	d_printf(D_INFO, "mipihacks: done, initiating line xfer");
 
 	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
 	while( XGpioPs_ReadPin(&g_hal.xgpio_ps, CSI_EMIO_DONE)) ;	// wait for DONE to go LOW - ack of command
@@ -107,7 +141,7 @@ void csi_hack_run()
 		src_buffer[i] = norway_512x512_grey[i];
 	}
 
-	memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), src_buffer, 32768);
+	//memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), src_buffer, 32768);
 
 	fabcfg_write(FAB_CFG_CSI_LINE_COUNT, 15);
 	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2048);
@@ -175,7 +209,7 @@ void csi_hack_run()
 			}
 			*/
 
-			memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), norway_512x512_grey + base_addr, 32768);
+			//memcpy((XPAR_AXI_BRAM_CTRL_1_S_AXI_BASEADDR), norway_512x512_grey + base_addr, 32768);
 			base_addr += 32768;
 
 			XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_START_LINES, 1);
