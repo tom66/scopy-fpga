@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date             : Sat Mar 14 21:25:51 2020
+| Date             : Mon Mar 16 22:48:19 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 2.084        |
+| Total On-Chip Power (W)  | 2.105        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.920        |
-| Device Static (W)        | 0.165        |
+| Dynamic (W)              | 1.939        |
+| Device Static (W)        | 0.166        |
 | Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 61.0         |
-| Junction Temperature (C) | 49.0         |
+| Max Ambient (C)          | 60.7         |
+| Junction Temperature (C) | 49.3         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,23 +52,23 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.124 |       14 |       --- |             --- |
-| Slice Logic              |     0.020 |    25329 |       --- |             --- |
-|   LUT as Logic           |     0.017 |     8752 |     40600 |           21.56 |
-|   CARRY4                 |     0.001 |      429 |     13300 |            3.23 |
-|   Register               |     0.001 |    11893 |     81200 |           14.65 |
-|   LUT as Shift Register  |    <0.001 |      612 |     17400 |            3.52 |
-|   F7/F8 Muxes            |    <0.001 |      325 |     53200 |            0.61 |
+| Clocks                   |     0.131 |       14 |       --- |             --- |
+| Slice Logic              |     0.022 |    25383 |       --- |             --- |
+|   LUT as Logic           |     0.018 |     8728 |     40600 |           21.50 |
+|   CARRY4                 |     0.002 |      434 |     13300 |            3.26 |
+|   Register               |     0.001 |    11923 |     81200 |           14.68 |
+|   LUT as Shift Register  |    <0.001 |      637 |     17400 |            3.66 |
+|   F7/F8 Muxes            |    <0.001 |      290 |     53200 |            0.55 |
 |   LUT as Distributed RAM |    <0.001 |       42 |     17400 |            0.24 |
-|   Others                 |     0.000 |     1397 |       --- |             --- |
-| Signals                  |     0.035 |    18549 |       --- |             --- |
-| Block RAM                |     0.083 |     58.5 |       107 |           54.67 |
+|   Others                 |     0.000 |     1406 |       --- |             --- |
+| Signals                  |     0.041 |    18658 |       --- |             --- |
+| Block RAM                |     0.088 |       66 |       107 |           61.68 |
 | MMCM                     |     0.229 |        2 |         4 |           50.00 |
 | DSPs                     |    <0.001 |        1 |       170 |            0.59 |
-| I/O                      |     0.134 |       34 |       125 |           27.20 |
+| I/O                      |     0.135 |       34 |       125 |           27.20 |
 | PS7                      |     1.294 |        1 |       --- |             --- |
-| Static Power             |     0.165 |          |           |                 |
-| Total                    |     2.084 |          |           |                 |
+| Static Power             |     0.166 |          |           |                 |
+| Total                    |     2.105 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -78,7 +78,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.294 |       0.274 |      0.020 |
+| Vccint    |       1.000 |     0.314 |       0.293 |      0.021 |
 | Vccaux    |       1.800 |     0.188 |       0.171 |      0.017 |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
 | Vcco25    |       2.500 |     0.013 |       0.012 |      0.001 |
@@ -87,7 +87,7 @@ Table of Contents
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccbram   |       1.000 |     0.012 |       0.006 |      0.005 |
+| Vccbram   |       1.000 |     0.013 |       0.007 |      0.006 |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
 | MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |
@@ -164,23 +164,23 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| main                       |     1.919 |
+| main                       |     1.939 |
 |   dbg_hub                  |     0.007 |
 |     inst                   |     0.007 |
 |       BSCANID.u_xsdbm_id   |     0.007 |
 |   nolabel_line105          |     0.003 |
-|   nolabel_line188          |     1.639 |
-|     adc_axi_streamer       |     0.047 |
-|       inst                 |     0.047 |
+|   nolabel_line188          |     1.656 |
+|     adc_axi_streamer       |     0.049 |
+|       inst                 |     0.049 |
 |     adc_dma                |     0.018 |
 |       U0                   |     0.018 |
 |     axi_bram_ctrl_0        |     0.004 |
 |       U0                   |     0.004 |
-|     axi_interconnect_0     |     0.007 |
+|     axi_interconnect_0     |     0.008 |
 |       s00_couplers         |     0.006 |
 |       xbar                 |     0.001 |
 |     axi_interconnect_1     |     0.018 |
-|       m00_couplers         |     0.008 |
+|       m00_couplers         |     0.009 |
 |       xbar                 |     0.009 |
 |     axi_interconnect_2     |     0.001 |
 |       s00_couplers         |     0.001 |
@@ -188,18 +188,18 @@ Table of Contents
 |       s00_couplers         |     0.002 |
 |     blk_mem_gen_0          |     0.006 |
 |       U0                   |     0.006 |
-|     clk_wiz_0              |     0.129 |
-|       inst                 |     0.129 |
-|     csi_gearbox_dma_0      |     0.002 |
-|       inst                 |     0.002 |
-|     ila_0                  |     0.098 |
-|       inst                 |     0.098 |
-|     mipi_dma               |     0.010 |
-|       U0                   |     0.010 |
+|     clk_wiz_0              |     0.130 |
+|       inst                 |     0.130 |
+|     csi_gearbox_dma_0      |     0.005 |
+|       inst                 |     0.005 |
+|     ila_0                  |     0.111 |
+|       inst                 |     0.111 |
+|     mipi_dma               |     0.007 |
+|       U0                   |     0.007 |
 |     zynq_ps                |     1.298 |
 |       inst                 |     1.298 |
-|   nolabel_line281          |     0.025 |
-|     mipi_csi0              |     0.024 |
+|   nolabel_line281          |     0.027 |
+|     mipi_csi0              |     0.026 |
 |       OBUFDS_inst_lane0    |     0.002 |
 |       OBUFDS_inst_lane1    |     0.002 |
 |       OBUFDS_inst_lane_clk |     0.003 |
@@ -214,7 +214,7 @@ Table of Contents
 |     asi2_mod_inst5         |     0.008 |
 |     asi2_mod_inst6         |     0.008 |
 |     asi2_mod_inst7         |     0.008 |
-|     nolabel_line229        |     0.002 |
+|     nolabel_line229        |     0.001 |
 +----------------------------+-----------+
 
 

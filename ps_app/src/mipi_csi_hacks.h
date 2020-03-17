@@ -28,7 +28,7 @@
 void csi_hack_init();
 void csi_hack_start_frame(uint32_t line_count);
 void csi_hack_stop_frame();
-void csi_hack_send_line_data(uint32_t *buff, uint32_t sz);
+void csi_hack_send_line_data(uint8_t *buff, uint32_t sz);
 void csi_hack_run();
 
 #endif // SRC_MIPI_CSI_HACKS_H_

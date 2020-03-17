@@ -87,7 +87,8 @@ void hal_init()
 	 * TODO:  Sending invalidate here causes a processor lockup; to be investigated.
 	 */
 	Xil_ICacheEnable();
-	Xil_DCacheEnable();
+	//Xil_DCacheEnable();
+	Xil_DCacheDisable();
 	d_printf(D_INFO, "boot: enabled D- and I-cache");
 
 	/*

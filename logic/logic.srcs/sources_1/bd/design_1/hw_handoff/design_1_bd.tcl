@@ -332,6 +332,9 @@ proc create_root_design { parentCell } {
 
   # Create instance: csi_gearbox_dma_0, and set properties
   set csi_gearbox_dma_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:csi_gearbox_dma:1.0 csi_gearbox_dma_0 ]
+  set_property -dict [ list \
+   CONFIG.C_S00_AXIS_TDATA_WIDTH {64} \
+ ] $csi_gearbox_dma_0
 
   # Create instance: ila_0, and set properties
   set ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:ila:6.2 ila_0 ]
@@ -339,7 +342,7 @@ proc create_root_design { parentCell } {
    CONFIG.C_DATA_DEPTH {8192} \
    CONFIG.C_ENABLE_ILA_AXI_MON {false} \
    CONFIG.C_MONITOR_TYPE {Native} \
-   CONFIG.C_NUM_OF_PROBES {32} \
+   CONFIG.C_NUM_OF_PROBES {29} \
  ] $ila_0
 
   # Create instance: mipi_dma, and set properties
@@ -800,9 +803,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CFG_BRAM_WEB_1 [get_bd_ports CFG_BRAM_WEB] [get_bd_pins blk_mem_gen_0/web]
   connect_bd_net -net CFG_BRAM_WREN_1 [get_bd_ports CFG_BRAM_ENB] [get_bd_pins blk_mem_gen_0/enb]
   connect_bd_net -net CSI_BRAM_CLKB_1 [get_bd_ports CSI_FIFO_CLK] [get_bd_pins csi_gearbox_dma_0/mipi_mx_clk] [get_bd_pins ila_0/clk]
-  connect_bd_net -net CSI_BRAM_ENB_1 [get_bd_ports CSI_FIFO_READ_REQ] [get_bd_pins csi_gearbox_dma_0/mipi_read_req] [get_bd_pins ila_0/probe0] [get_bd_pins ila_0/probe31]
+  connect_bd_net -net CSI_BRAM_ENB_1 [get_bd_ports CSI_FIFO_READ_REQ] [get_bd_pins csi_gearbox_dma_0/mipi_read_req] [get_bd_pins ila_0/probe0] [get_bd_pins ila_0/probe8]
   connect_bd_net -net CSI_CTRL_STATE_DBG_1 [get_bd_ports CSI_MON_CTRL_STATE_DBG] [get_bd_pins ila_0/probe17]
-  connect_bd_net -net CSI_MON_DATA_TYPE_1 [get_bd_ports CSI_MON_DATA_TYPE] [get_bd_pins ila_0/probe15]
   connect_bd_net -net CSI_MON_EM_MIPI_DONE_1 [get_bd_ports CSI_MON_EM_MIPI_DONE] [get_bd_pins ila_0/probe12]
   connect_bd_net -net CSI_MON_EM_MIPI_END_FRAME_1 [get_bd_ports CSI_MON_EM_MIPI_END_FRAME] [get_bd_pins ila_0/probe11]
   connect_bd_net -net CSI_MON_EM_MIPI_START_FRAME_1 [get_bd_ports CSI_MON_EM_MIPI_START_FRAME] [get_bd_pins ila_0/probe9]
@@ -810,25 +812,22 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CSI_MON_EM_MIPI_STOP_1 [get_bd_ports CSI_MON_EM_MIPI_STOP] [get_bd_pins ila_0/probe13]
   connect_bd_net -net CSI_MON_LINE_BYTE_COUNT_1 [get_bd_ports CSI_MON_LINE_BYTE_COUNT] [get_bd_pins ila_0/probe16]
   connect_bd_net -net CSI_MON_LINE_COUNT_1 [get_bd_ports CSI_MON_LINE_COUNT] [get_bd_pins ila_0/probe14]
-  connect_bd_net -net CSI_MON_LPCLKN_1 [get_bd_ports CSI_MON_LPCLKN] [get_bd_pins ila_0/probe7]
-  connect_bd_net -net CSI_MON_LPCLKP_1 [get_bd_ports CSI_MON_LPCLKP] [get_bd_pins ila_0/probe8]
+  connect_bd_net -net CSI_MON_LPCLKN_1 [get_bd_ports CSI_MON_LPCLKN] [get_bd_pins ila_0/probe27]
+  connect_bd_net -net CSI_MON_LPCLKP_1 [get_bd_ports CSI_MON_LPCLKP] [get_bd_pins ila_0/probe28]
   connect_bd_net -net CSI_MON_LPD0N_1 [get_bd_ports CSI_MON_LPD0N] [get_bd_pins ila_0/probe3]
   connect_bd_net -net CSI_MON_LPD0P_1 [get_bd_ports CSI_MON_LPD0P] [get_bd_pins ila_0/probe4]
-  connect_bd_net -net CSI_MON_LPD1N_1 [get_bd_ports CSI_MON_LPD1N] [get_bd_pins ila_0/probe6]
-  connect_bd_net -net CSI_MON_LPD1P_1 [get_bd_ports CSI_MON_LPD1P] [get_bd_pins ila_0/probe5]
   connect_bd_net -net CSI_MON_MIPI_BUSY_DBG_1 [get_bd_ports CSI_MON_MIPI_BUSY_DBG] [get_bd_pins ila_0/probe18]
-  connect_bd_net -net CSI_MON_MIPI_CTRL_BRAM_BASE_1 [get_bd_ports CSI_MON_MIPI_CTRL_BRAM_BASE] [get_bd_pins ila_0/probe29]
-  connect_bd_net -net CSI_MON_MIPI_DEBUG_DATA_MUX_OUT_1 [get_bd_ports CSI_MON_MIPI_DEBUG_DATA_MUX_OUT] [get_bd_pins ila_0/probe28]
   connect_bd_net -net CSI_MON_MIPI_DEBUG_STATE_1 [get_bd_ports CSI_MON_MIPI_DEBUG_STATE] [get_bd_pins ila_0/probe24]
   connect_bd_net -net CSI_MON_MIPI_DEBUG_STATE_TIMER2_1 [get_bd_ports CSI_MON_MIPI_DEBUG_STATE_TIMER2] [get_bd_pins ila_0/probe26]
   connect_bd_net -net CSI_MON_MIPI_DEBUG_STATE_TIMER_1 [get_bd_ports CSI_MON_MIPI_DEBUG_STATE_TIMER] [get_bd_pins ila_0/probe25]
-  connect_bd_net -net CSI_MON_MIPI_DEBUG_STATE_TIMER_RST_1 [get_bd_ports CSI_MON_MIPI_DEBUG_STATE_TIMER_RST] [get_bd_pins ila_0/probe27]
   connect_bd_net -net CSI_MON_MIPI_DEBUG_TX_SIZE_1 [get_bd_ports CSI_MON_MIPI_DEBUG_TX_SIZE] [get_bd_pins ila_0/probe23]
   connect_bd_net -net CSI_MON_MIPI_DONE_DBG_1 [get_bd_ports CSI_MON_MIPI_DONE_DBG] [get_bd_pins ila_0/probe19]
   connect_bd_net -net CSI_MON_MIPI_INIT_IDLE_DBG_1 [get_bd_ports CSI_MON_MIPI_INIT_IDLE_DBG] [get_bd_pins ila_0/probe22]
   connect_bd_net -net CSI_MON_MIPI_INIT_LONG_DBG_1 [get_bd_ports CSI_MON_MIPI_INIT_LONG_DBG] [get_bd_pins ila_0/probe21]
   connect_bd_net -net CSI_MON_MIPI_INIT_SHORT_DBG_1 [get_bd_ports CSI_MON_MIPI_INIT_SHORT_DBG] [get_bd_pins ila_0/probe20]
   connect_bd_net -net EMIO_I_1 [get_bd_ports EMIO_I] [get_bd_pins zynq_ps/GPIO_I]
+  connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins ila_0/probe5] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
+  connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins ila_0/probe6] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
   connect_bd_net -net PL_IRQ_1 [get_bd_ports PL_IRQ] [get_bd_pins xlconcat_1/In1]
   connect_bd_net -net adc_axi_streamer_acq_done [get_bd_ports ACQ_DONE] [get_bd_pins adc_axi_streamer/acq_done]
   connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_ports ACQ_HAVE_TRIG] [get_bd_pins adc_axi_streamer/acq_have_trig]
@@ -846,7 +845,9 @@ proc create_root_design { parentCell } {
   connect_bd_net -net clk_wiz_0_clk_out2 [get_bd_ports CLKWIZ0_CLKOUT2] [get_bd_pins clk_wiz_0/clk_out2]
   connect_bd_net -net csi_gearbox_dma_0_dbg_fifo_data_ct [get_bd_pins csi_gearbox_dma_0/dbg_fifo_data_ct] [get_bd_pins ila_0/probe2]
   connect_bd_net -net csi_gearbox_dma_0_mipi_data [get_bd_ports CSI_FIFO_DOUT] [get_bd_pins csi_gearbox_dma_0/mipi_data] [get_bd_pins ila_0/probe1]
-  connect_bd_net -net csi_gearbox_dma_0_mipi_read_valid [get_bd_ports CSI_FIFO_READ_VALID] [get_bd_pins csi_gearbox_dma_0/mipi_read_valid] [get_bd_pins ila_0/probe30]
+  connect_bd_net -net csi_gearbox_dma_0_mipi_read_valid [get_bd_ports CSI_FIFO_READ_VALID] [get_bd_pins csi_gearbox_dma_0/mipi_read_valid] [get_bd_pins ila_0/probe15]
+  connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins ila_0/probe7] [get_bd_pins mipi_dma/m_axis_mm2s_tready]
+  connect_bd_net -net mipi_dma_m_axis_mm2s_tlast [get_bd_pins csi_gearbox_dma_0/s00_axis_tlast] [get_bd_pins mipi_dma/m_axis_mm2s_tlast]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins axi_bram_ctrl_0/s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_1/S01_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/M_AXI_GP1_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP1_ACLK]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins rst_ps7_0_20M/ext_reset_in] [get_bd_pins zynq_ps/FCLK_RESET0_N]
   connect_bd_net -net processing_system7_0_GPIO_O [get_bd_ports EMIO_O] [get_bd_pins zynq_ps/GPIO_O]

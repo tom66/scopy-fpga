@@ -127,15 +127,12 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/design_1/ip/design_1_xbar_6/sim/design_1_xbar_6.v" \
   "../../../bd/design_1/ip/design_1_csi_gearbox_dma_0_0/src/fifo_generator_csi_gearbox/sim/fifo_generator_csi_gearbox.v" \
-  "../../../bd/design_1/ipshared/0ccb/hdl/csi_gearbox_dma_v1_0.v" \
+  "../../../bd/design_1/ipshared/1b57/hdl/csi_gearbox_dma_v1_0.v" \
   "../../../bd/design_1/ip/design_1_csi_gearbox_dma_0_0/sim/design_1_csi_gearbox_dma_0_0.v" \
   "../../../bd/design_1/ip/design_1_xbar_7/sim/design_1_xbar_7.v" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/design_1/ip/design_1_axi_dma_1/sim/design_1_axi_dma_1.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/design_1/sim/design_1.v" \
 -endlib
 -makelib xcelium_lib/axi_protocol_converter_v2_1_20 \
   "../../../../logic.srcs/sources_1/bd/design_1/ipshared/c4a6/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
@@ -146,6 +143,7 @@
   "../../../bd/design_1/ip/design_1_auto_pc_3/sim/design_1_auto_pc_3.v" \
   "../../../bd/design_1/ip/design_1_auto_pc_2/sim/design_1_auto_pc_2.v" \
   "../../../bd/design_1/ip/design_1_auto_pc_4/sim/design_1_auto_pc_4.v" \
+  "../../../bd/design_1/sim/design_1.v" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   glbl.v

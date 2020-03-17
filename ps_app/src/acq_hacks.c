@@ -11,11 +11,13 @@
 #include "acquire.h"
 #include "mipi_csi_hacks.h"
 
+extern uint8_t norway_512x512_grey[];
+
 /*
  * Acquistion hacks.  Ties together the acquisition engine and CSI transmitter
  * for some initial testing.  Not intended for final project.
  */
-uint8_t buffer[131072];
+uint8_t buffer[262144] __attribute__((aligned(8)));
 
 void acq_hacks_init()
 {
@@ -23,16 +25,25 @@ void acq_hacks_init()
 
 void acq_hacks_run()
 {
-	int res, i, j, n_waves;
+	int res, i, j, n_waves, line = 0;
+	int test_tx = 100, bytes;
+	float microsec;
 
 	n_waves = 2;
 
 	csi_hack_init();
 
+	memset(buffer, 0, 32);
+
+	for(i = 0; i < (sizeof(buffer) - 32); i++) {
+		buffer[i + 30] = norway_512x512_grey[i - 2];
+	}
+
 	// slow MIPI clock for diagnostics
-	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 200);
+	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450 /*177.7777777*/);
 
 	while(1) {
+		/*
 		d_printf(D_ERROR, "starting to free acq...");
 
 		// Setup the acquisition
@@ -64,36 +75,40 @@ void acq_hacks_run()
 		//acq_debug_dump_wave(0);
 
 		d_printf(D_INFO, "press key to stream to Pi...");
-		d_waitkey();
+		//d_waitkey();
+		*/
 
-		d_printf(D_ERROR, "acq is done... starting CSI xfer");
+		//d_printf(D_INFO, "acq is done... starting CSI xfer");
 
-		for(i = 0; i < n_waves; i++) {
-			// transfer in 4 blocks, 128KB total.  Each frame is a new waveform, though there
-			// is no strict framing requirement
-			d_printf(D_ERROR, "iter()");
+		//d_printf(D_INFO, "Start sending %d packets", test_tx);
+
+		bytes = 0;
+		d_start_timing(2);
+
+		//for(i = 0; i < 1 /*n_waves*/; i++) {
+		for(i = 0; i < 100; i++) {
 			csi_hack_start_frame(15);
-			d_printf(D_ERROR, "done: csi_hack_start_frame");
 
-			acq_copy_slow_mipi(i, (uint8_t*)buffer);
-			for(i = 0; i < sizeof(buffer); i++) {
-				buffer[i] = i & 0xff;
-				//buffer[i] = 0xf0;
-			}
+			//Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
+			//dsb();
 
-			d_printf(D_ERROR, "done: acq_copy_slow_mipi");
+			//acq_copy_slow_mipi(i, (uint8_t*)buffer);
 
-			for(j = 0; j < 4; j++) {
+			for(j = 0; j < 8; j++) {
+				//Xil_DCacheFlushRange(buffer, sizeof(buffer));
+				//dsb();
+
 				csi_hack_send_line_data(buffer + (j * 32768), 32768);
-				d_printf(D_ERROR, "done: csi_hack_send_line_data");
+				bytes += 32768;
 			}
 
 			csi_hack_stop_frame();
-			d_printf(D_ERROR, "done: csi_hack_stop_frame");
-
-			d_printf(D_ERROR, "sent %d waves", i);
 		}
 
-		d_printf(D_ERROR, "done sending n_waves=%d", n_waves);
+		d_stop_timing(2);
+		microsec = d_read_timing_us(2);
+
+		d_printf(D_INFO, "Done sending %d packets (%d KB) -- took %.4f microseconds", test_tx, microsec, bytes / 1024);
+		d_printf(D_INFO, "Transfer rate: %.4f MB/s", bytes / microsec);
 	}
 }

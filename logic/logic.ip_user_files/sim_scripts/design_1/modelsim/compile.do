@@ -178,15 +178,12 @@ vlog -work axi_crossbar_v2_1_21 -64 -incr "+incdir+../../../../logic.srcs/source
 vlog -work xil_defaultlib -64 -incr "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/2d50/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/4fba" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/1b7e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/122e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/b205/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/8f82/hdl/verilog" "+incdir+G:/Xilinx/Vivado/2019.2/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_xbar_6/sim/design_1_xbar_6.v" \
 "../../../bd/design_1/ip/design_1_csi_gearbox_dma_0_0/src/fifo_generator_csi_gearbox/sim/fifo_generator_csi_gearbox.v" \
-"../../../bd/design_1/ipshared/0ccb/hdl/csi_gearbox_dma_v1_0.v" \
+"../../../bd/design_1/ipshared/1b57/hdl/csi_gearbox_dma_v1_0.v" \
 "../../../bd/design_1/ip/design_1_csi_gearbox_dma_0_0/sim/design_1_csi_gearbox_dma_0_0.v" \
 "../../../bd/design_1/ip/design_1_xbar_7/sim/design_1_xbar_7.v" \
 
 vcom -work xil_defaultlib -64 -93 \
 "../../../bd/design_1/ip/design_1_axi_dma_1/sim/design_1_axi_dma_1.vhd" \
-
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/2d50/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/4fba" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/1b7e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/122e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/b205/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/8f82/hdl/verilog" "+incdir+G:/Xilinx/Vivado/2019.2/data/xilinx_vip/include" \
-"../../../bd/design_1/sim/design_1.v" \
 
 vlog -work axi_protocol_converter_v2_1_20 -64 -incr "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/2d50/hdl" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/4fba" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_1" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/1b7e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/122e/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/b205/hdl/verilog" "+incdir+../../../../logic.srcs/sources_1/bd/design_1/ipshared/8f82/hdl/verilog" "+incdir+G:/Xilinx/Vivado/2019.2/data/xilinx_vip/include" \
 "../../../../logic.srcs/sources_1/bd/design_1/ipshared/c4a6/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
@@ -197,6 +194,7 @@ vlog -work xil_defaultlib -64 -incr "+incdir+../../../../logic.srcs/sources_1/bd
 "../../../bd/design_1/ip/design_1_auto_pc_3/sim/design_1_auto_pc_3.v" \
 "../../../bd/design_1/ip/design_1_auto_pc_2/sim/design_1_auto_pc_2.v" \
 "../../../bd/design_1/ip/design_1_auto_pc_4/sim/design_1_auto_pc_4.v" \
+"../../../bd/design_1/sim/design_1.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"

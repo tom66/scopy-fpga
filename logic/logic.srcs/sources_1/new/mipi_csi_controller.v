@@ -314,11 +314,11 @@ always @(posedge clk_mipi_ref) begin
             // signal to make these registrable by the MIPI controller logic (possible bug).
             mipi_dt_id_tx <= mipi_dt_id_regd;
             mipi_wct_short <= R_csi_line_byte_count << 1; 
-            mipi_tx_size <= R_csi_line_byte_count;
+            mipi_tx_size <= R_csi_line_byte_count & 20'hffffe;  // Clear last bit ensuring even value
             
             // We hold off here until mipi_fifo_read_avail indicates that data is ready in the FIFO,
             // allowing us to advance.
-            if (!mipi_fifo_read_avail) begin
+            if (mipi_fifo_read_avail) begin
                 csi_ctrl_state <= CSICTRL_STATE_OUTPUT_LINE;
             end
         end

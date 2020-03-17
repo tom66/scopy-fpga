@@ -959,6 +959,7 @@ always @(posedge mod_clk_div4) begin
                 ready_state <= 0;
                 oddr_trail_latch <= 0;
                 mem_addr_reg <= 0;
+                mem_read_en <= 0;
             end else begin
                 // Set data bus state to idle
                 csi_lp_state <= LP_STATE_BUS_IDLE_11;
@@ -1031,7 +1032,7 @@ always @(posedge mod_clk_div4) begin
             hs_tx_byte_d1 <= 0;
             
             if (state_timer & 3'b100) begin
-                current_state <= STATE_LP_SETTLE_POST;
+                current_state <= STATE_HS_ZERO; // STATE_LP_SETTLE_POST;
                 state_timer_rst = 1;
             end
         end
@@ -1054,6 +1055,7 @@ always @(posedge mod_clk_div4) begin
         // Then advances to HS_SYNC.
         STATE_HS_ZERO : begin
             // Enable ODDR drivers, tx byte zero
+            oddr_hiz <= 0;
             oddr_tclk_en <= 1;
             hs_mux_sel <= 0;
             
@@ -1077,14 +1079,16 @@ always @(posedge mod_clk_div4) begin
             current_state <= STATE_HS_PACKET_HEADER;
             // state_timer_rst = 1; <-- removing this line breaks things, but it shouldn't... to be investigated
             
+            /*
             // if doing a long transfer, enable memory read NOW with address of zero - ensuring that
             // the BRAM is ready and that we don't get last cycle data
             if (packet_type == PACKET_TYPE_LONG) begin
                 // Enable memory read NOW with address initialised to zero.  This gives us ~3 cycles before the 
                 // actual read takes place.
-                mem_read_en <= 1;
+                mem_read_en <= 1
                 mem_addr_reg <= 0;
             end
+            */
         end
         
         // HS packet header
@@ -1103,7 +1107,7 @@ always @(posedge mod_clk_div4) begin
             end else if (state_timer == 1) begin
                 hs_tx_byte_d0 <= ecc_byte_2;
                 hs_tx_byte_d1 <= ecc_result;
-                hs_trail_zero_mode <= 0;
+                hs_trail_zero_mode <= 0; 
             end else if (state_timer == 2) begin
                 // advance state
                 if (packet_type == PACKET_TYPE_SHORT) begin
@@ -1112,6 +1116,7 @@ always @(posedge mod_clk_div4) begin
                     state_timer_rst = 1;
                 end else if (packet_type == PACKET_TYPE_LONG) begin
                     current_state <= STATE_HS_PACKET_DATA_TX;
+                    mem_read_en <= 1; // Enable FIFO ops here - 1 cycle delay to valid.
                     state_timer_rst = 1;
                 end
             end
@@ -1126,16 +1131,15 @@ always @(posedge mod_clk_div4) begin
             hs_tx_byte_d0 <= 8'h00;
             hs_tx_byte_d1 <= 8'h00;
             
+            // disable FIFO read at the last word output
+            /*
+            if (tx_words_counter == 2) begin
+            end
+            */
+            
             if (tx_words_counter == 0) begin
-                // Switch to CRC output (all ones as CRC16 not used)
-                hs_mux_sel <= 1;
-                hs_crc_sel <= 1;
-                hs_trail_zero_mode <= 1;  // Load 0 into trail, as CRC is all ones trail will always be zero
-                
-                // Jump state to complete trail sequence
-                current_state <= STATE_HS_TRAIL;  
-                state_timer_2 <= 0;
-                state_timer_rst = 1;
+                // Jump state to pack CRC (fake: 16'hffff) after this word is output
+                current_state <= STATE_HS_PACKET_CRC;
                 mem_read_en <= 0;
             end else begin
                 // HS transmit mode set
@@ -1144,6 +1148,16 @@ always @(posedge mod_clk_div4) begin
                 mem_addr_reg <= mem_addr_reg + 1;
                 bytes_output_ctr <= bytes_output_ctr + 2;
             end
+        end
+        
+        STATE_HS_PACKET_CRC : begin
+            // Adds fake CRC to end of every packet.  
+            hs_mux_sel <= 1;
+            hs_crc_sel <= 1;
+            hs_trail_zero_mode <= 1;  // Load 0 into trail, as CRC is all ones trail will always be zero
+            state_timer_2 <= 0;
+            state_timer_rst = 1;
+            current_state <= STATE_HS_TRAIL;  
         end
         
         STATE_HS_TRAIL : begin
