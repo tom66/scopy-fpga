@@ -84,24 +84,13 @@ g_rst_controller (
     .g_rst_gen(g_rst_gen)
 );
 
-/*
- * Connection to Fabric Configurator.
- */
-wire [31:0] R_acq_size_a;
-wire [31:0] R_acq_size_b;
-wire [31:0] R_acq_trigger_ptr;
-wire [2:0] R_acq_demux_mode;
 wire [1:0] R_gpio_test;
-wire [5:0] R_csi_line_count;
-wire [20:0] R_csi_line_byte_count;
-wire [7:0] R_csi_data_type;
-wire [15:0] R_csi_control_flags;
-
 wire clk_mipi_ref_dbg;
 
 assign led_PL0 = R_gpio_test[0]; // clk_mipi_ref_dbg; 
 assign led_PL1 = R_gpio_test[1];
 
+/*
 cfg_bram_controller (
     // BRAM, EMIO, Clock interface
     .cfg_bram_addr(cfg_bram_addrb),
@@ -127,6 +116,7 @@ cfg_bram_controller (
     .R_csi_data_type(R_csi_data_type),
     .R_csi_control_flags(R_csi_control_flags)
 );
+*/
 
 /*
  * Connection to Block Design.
@@ -193,153 +183,54 @@ design_1 (
     .ADC_FIFO_RESET(acq_fifo_reset),
     .ADC_DATA_EOF(1'b0),            // for now, data never ends
     
-    // Acquisition/control bus
-    // TODO: EMIO constant indexes to be parameterised
+    // Acquisition/control bus - controlled via EMIO
     .ACQ_RUN(acq_run),
     .ACQ_ABORT(acq_abort),
     .ACQ_TRIG_MASK(acq_trig_mask),
     .ACQ_TRIG_RST(acq_trig_rst),
     .ACQ_DEPTH_MUX(acq_depth_mux),
-    .ACQ_DEPTH_A(R_acq_size_a),
-    .ACQ_DEPTH_B(R_acq_size_b),
     .ACQ_AXI_RUN(acq_axi_run),
     .ACQ_DONE(acq_done),
     .ACQ_HAVE_TRIG(acq_have_trig),
     .ACQ_DATA_LOSS(acq_data_loss),      // Data loss signal to PS indicating that FIFO data may be stale due to read delay
     .TRIGGER_IN(trig_gen),              // Level sensitive trigger input from trigger block
     .TRIGGER_SUB_WORD(trig_sub_word),   // 3 LSBs of trigger position
-    .TRIGGER_POS(R_acq_trigger_ptr),    // Registered trigger output position for FabCfg
     .TRIGGER_OUT(trig_out),             // Trigger output to GP output multiplexer
     
-    // FabCfg interface to AXI BRAM
-    .CFG_BRAM_ADDRB(cfg_bram_addrb),
-    .CFG_BRAM_DOUTB(cfg_bram_doutb),
-    .CFG_BRAM_DINB(cfg_bram_dinb),
-    .CFG_BRAM_CLKB(cfg_bram_clkb),
-    .CFG_BRAM_ENB(cfg_bram_enb),
-    .CFG_BRAM_WEB(cfg_bram_web),
-    .CFG_BRAM_BUSYB(cfg_bram_busyb),
-    .CFG_BRAM_RSTB(1'b0),
+    // CSI output port
+    .CSI_CLK_P(csi_clk_p),
+    .CSI_CLK_N(csi_clk_n),
+    .CSI_D0_P(csi_d0_p),
+    .CSI_D0_N(csi_d0_n),
+    .CSI_D1_P(csi_d1_p),
+    .CSI_D1_N(csi_d1_n),
+    .CSI_LPD0_P(csi_lpd0_p),
+    .CSI_LPD0_N(csi_lpd0_n),
+    .CSI_LPD1_P(csi_lpd1_p),
+    .CSI_LPD1_N(csi_lpd1_n),
+    .CSI_LPCLK_P(csi_lpclk_p),
+    .CSI_LPCLK_N(csi_lpclk_n),
     
-    // CSI output interface
-    .CSI_FIFO_DOUT(csi_fifo_dout),
-    .CSI_FIFO_CLK(csi_fifo_clk),
-    .CSI_FIFO_READ_VALID(csi_fifo_read_valid),
-    .CSI_FIFO_READ_REQ(csi_fifo_read_req),
+    // CSI control signals via EMIO
+    .CSI_SLEEP(csi_sleep),
+    .CSI_START_LINES(csi_start_lines),
+    .CSI_START_FRAME(csi_start_frame),
+    .CSI_END_FRAME(csi_end_frame),
+    .CSI_STOP(csi_stop),
+    .CSI_DONE(csi_done),
     
-    // Monitor signals for ILA
-    .CSI_MON_LPD0N(csi_lpd0_n),
-    .CSI_MON_LPD0P(csi_lpd0_p),
-    .CSI_MON_LPD1N(csi_lpd1_n),
-    .CSI_MON_LPD1P(csi_lpd1_p),
-    .CSI_MON_LPCLKN(csi_lpclk_n),
-    .CSI_MON_LPCLKP(csi_lpclk_p),
-    .CSI_MON_EM_MIPI_SLEEP(csi_sleep),
-    .CSI_MON_EM_MIPI_START_LINES(csi_start_lines),
-    .CSI_MON_EM_MIPI_START_FRAME(csi_start_frame),
-    .CSI_MON_EM_MIPI_END_FRAME(csi_end_frame),
-    .CSI_MON_EM_MIPI_STOP(csi_stop),
-    .CSI_MON_EM_MIPI_DONE(csi_done),
-    .CSI_MON_LINE_COUNT(R_csi_line_count),
-    .CSI_MON_LINE_BYTE_COUNT(R_csi_line_byte_count),
-    .CSI_MON_DATA_TYPE(R_csi_data_type),
-    .CSI_MON_CTRL_STATE_DBG(csi_ctrl_state_dbg),
-    .CSI_MON_MIPI_BUSY_DBG(csi_mipi_busy_dbg),
-    .CSI_MON_MIPI_DONE_DBG(csi_mipi_done_dbg),
-    .CSI_MON_MIPI_INIT_SHORT_DBG(csi_mipi_init_short_dbg),
-    .CSI_MON_MIPI_INIT_LONG_DBG(csi_mipi_init_long_dbg),
-    .CSI_MON_MIPI_INIT_IDLE_DBG(csi_mipi_init_idle_dbg),
-    .CSI_MON_MIPI_DEBUG_TX_SIZE(csi_debug_tx_size),
-    .CSI_MON_MIPI_DEBUG_STATE(csi_debug_mipi_state),
-    .CSI_MON_MIPI_DEBUG_STATE_TIMER(csi_debug_state_timer),
-    .CSI_MON_MIPI_DEBUG_STATE_TIMER2(csi_debug_state_timer2),
-    .CSI_MON_MIPI_DEBUG_STATE_TIMER_RST(csi_debug_state_timer_rst),
-    .CSI_MON_MIPI_DEBUG_DATA_MUX_OUT(csi_debug_data_mux_out),
-    .CSI_MON_MIPI_CTRL_BRAM_BASE(csi_debug_ctrl_bram_base),
-    .FABCFG_COMMIT_MON(fabcfg_commit),
-    .FABCFG_DONE_MON(fabcfg_done),
-    
-    // Master clock (~177MHz currently, actual value not particularly important but must be
-    // set up in clock wizards correctly.)
-    .FCLK_CLK0(clk_master),
-    
-    // Clock wizard output clocks for MIPI
-    .CLKWIZ0_CLKOUT1(clkwiz0_clkout1),
-    .CLKWIZ0_CLKOUT2(clkwiz0_clkout2),
+    // GPIO LED outputs - in future the LEDs will be multiplexable between functions for debugging
+    .GPIO_TEST(R_gpio_test),
     
     // EMIO 64-bit low speed signalling bus between ARM and fabric
     .EMIO_I(emio_input),            // Data into ARM
     .EMIO_O(emio_output),           // Data from ARM
     
+    // Master clock (nom. 177MHz)
+    .FCLK_CLK0(clk_master),
+    
     // IRQ outputs from fabric
     .PL_IRQ(pl_irq)
-);
-
-/*
- * MIPI CSI Controller
- */
-mipi_csi_controller (
-    // CSI signals to toplevel
-    .csi_clk_p(csi_clk_p),
-    .csi_clk_n(csi_clk_n),
-    .csi_d0_p(csi_d0_p),
-    .csi_d0_n(csi_d0_n), 
-    .csi_d1_p(csi_d1_p),
-    .csi_d1_n(csi_d1_n), 
-    .csi_lpd0_n(csi_lpd0_n),
-    .csi_lpd0_p(csi_lpd0_p),
-    .csi_lpd1_n(csi_lpd1_n),
-    .csi_lpd1_p(csi_lpd1_p),
-    .csi_lpclk_n(csi_lpclk_n),
-    .csi_lpclk_p(csi_lpclk_p),
-    
-    // All P/N pairs swapped on Scopy MVP hardware
-    .pn_swap_d0(1),
-    .pn_swap_d1(1),
-    .pn_swap_clk(1),
-    
-    // Master CSI clock
-    .mod_clk_I(clkwiz0_clkout1),
-    .mod_clk_Q(clkwiz0_clkout2),
-    
-    // General reset
-    .g_rst(g_rst_gen),
-    
-    // EMIO interface signals (on PS clock domain)
-    .em_mipi_sleep(csi_sleep),
-    .em_mipi_start_lines(csi_start_lines),
-    .em_mipi_start_frame(csi_start_frame),
-    .em_mipi_end_frame(csi_end_frame),
-    .em_mipi_stop(csi_stop),
-    .em_mipi_done(csi_done),
-    
-    // Fabric config interface signals
-    .R_csi_line_count(R_csi_line_count),
-    .R_csi_line_byte_count(R_csi_line_byte_count),
-    .R_csi_data_type(R_csi_data_type),
-    .R_csi_wct_frame(R_csi_wct_frame),
-    .R_clk_gating_enable(R_csi_control_flags[0]),   // Flag index 0 for clock gating (energy save mode, slight performance impact for segmented transfers.)
-    
-    .csi_ctrl_state_dbg(csi_ctrl_state_dbg),
-    .clk_mipi_ref_dbg(clk_mipi_ref_dbg),
-    .csi_mipi_busy_dbg(csi_mipi_busy_dbg),
-    .csi_mipi_done_dbg(csi_mipi_done_dbg),
-    .csi_mipi_init_short_dbg(csi_mipi_init_short_dbg),
-    .csi_mipi_init_long_dbg(csi_mipi_init_long_dbg),
-    .csi_mipi_init_idle_dbg(csi_mipi_init_idle_dbg),
-    .csi_debug_tx_size(csi_debug_tx_size),
-    .csi_debug_mipi_state(csi_debug_mipi_state),
-    .csi_debug_state_timer(csi_debug_state_timer),
-    .csi_debug_state_timer2(csi_debug_state_timer2),
-    .csi_debug_state_timer_rst(csi_debug_state_timer_rst),
-    .csi_debug_data_mux_out(csi_debug_data_mux_out),
-    .csi_debug_ctrl_bram_base(csi_debug_ctrl_bram_base),
-    
-    // BRAM interface
-    .mipi_fifo_clk(csi_fifo_clk),
-    .mipi_fifo_read_req(csi_fifo_read_req),
-    .mipi_fifo_read_avail(csi_fifo_read_valid),
-    .mipi_fifo_data(csi_fifo_dout)
 );
 
 wire clk_idelay_refclk;

@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Mon Mar 16 19:21:18 2020
+//Date        : Tue Mar 17 23:44:34 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -13,8 +13,6 @@ module design_1_wrapper
    (ACQ_ABORT,
     ACQ_AXI_RUN,
     ACQ_DATA_LOSS,
-    ACQ_DEPTH_A,
-    ACQ_DEPTH_B,
     ACQ_DEPTH_MUX,
     ACQ_DONE,
     ACQ_HAVE_TRIG,
@@ -26,50 +24,26 @@ module design_1_wrapper
     ADC_DATA_EOF,
     ADC_DATA_VALID,
     ADC_FIFO_RESET,
-    CFG_BRAM_ADDRB,
-    CFG_BRAM_BUSYB,
-    CFG_BRAM_CLKB,
-    CFG_BRAM_DINB,
-    CFG_BRAM_DOUTB,
-    CFG_BRAM_ENB,
-    CFG_BRAM_RSTB,
-    CFG_BRAM_WEB,
     CLKWIZ0_CLKOUT1,
     CLKWIZ0_CLKOUT2,
-    CSI_FIFO_CLK,
-    CSI_FIFO_DOUT,
-    CSI_FIFO_READ_REQ,
-    CSI_FIFO_READ_VALID,
-    CSI_MON_CTRL_STATE_DBG,
-    CSI_MON_DATA_TYPE,
-    CSI_MON_EM_MIPI_DONE,
-    CSI_MON_EM_MIPI_END_FRAME,
-    CSI_MON_EM_MIPI_SLEEP,
-    CSI_MON_EM_MIPI_START_FRAME,
-    CSI_MON_EM_MIPI_START_LINES,
-    CSI_MON_EM_MIPI_STOP,
-    CSI_MON_LINE_BYTE_COUNT,
-    CSI_MON_LINE_COUNT,
-    CSI_MON_LPCLKN,
-    CSI_MON_LPCLKP,
-    CSI_MON_LPD0N,
-    CSI_MON_LPD0N1,
-    CSI_MON_LPD0P,
-    CSI_MON_LPD0P1,
-    CSI_MON_LPD1N,
-    CSI_MON_LPD1P,
-    CSI_MON_MIPI_BUSY_DBG,
-    CSI_MON_MIPI_CTRL_BRAM_BASE,
-    CSI_MON_MIPI_DEBUG_DATA_MUX_OUT,
-    CSI_MON_MIPI_DEBUG_STATE,
-    CSI_MON_MIPI_DEBUG_STATE_TIMER,
-    CSI_MON_MIPI_DEBUG_STATE_TIMER2,
-    CSI_MON_MIPI_DEBUG_STATE_TIMER_RST,
-    CSI_MON_MIPI_DEBUG_TX_SIZE,
-    CSI_MON_MIPI_DONE_DBG,
-    CSI_MON_MIPI_INIT_IDLE_DBG,
-    CSI_MON_MIPI_INIT_LONG_DBG,
-    CSI_MON_MIPI_INIT_SHORT_DBG,
+    CSI_CLK_N,
+    CSI_CLK_P,
+    CSI_D0_N,
+    CSI_D0_P,
+    CSI_D1_N,
+    CSI_D1_P,
+    CSI_DONE,
+    CSI_END_FRAME,
+    CSI_LPCLK_N,
+    CSI_LPCLK_P,
+    CSI_LPD0_N,
+    CSI_LPD0_P,
+    CSI_LPD1_N,
+    CSI_LPD1_P,
+    CSI_SLEEP,
+    CSI_START_FRAME,
+    CSI_START_LINES,
+    CSI_STOP,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -87,8 +61,6 @@ module design_1_wrapper
     DDR_we_n,
     EMIO_I,
     EMIO_O,
-    FABCFG_COMMIT_MON,
-    FABCFG_DONE_MON,
     FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
@@ -96,16 +68,15 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
+    GPIO_TEST,
+    G_RST,
     PL_IRQ,
     TRIGGER_IN,
     TRIGGER_OUT,
-    TRIGGER_POS,
     TRIGGER_SUB_WORD);
   input ACQ_ABORT;
   input ACQ_AXI_RUN;
   output ACQ_DATA_LOSS;
-  input [28:0]ACQ_DEPTH_A;
-  input [28:0]ACQ_DEPTH_B;
   input ACQ_DEPTH_MUX;
   output ACQ_DONE;
   output ACQ_HAVE_TRIG;
@@ -117,50 +88,26 @@ module design_1_wrapper
   input ADC_DATA_EOF;
   input ADC_DATA_VALID;
   input ADC_FIFO_RESET;
-  input [31:0]CFG_BRAM_ADDRB;
-  output CFG_BRAM_BUSYB;
-  input CFG_BRAM_CLKB;
-  input [31:0]CFG_BRAM_DINB;
-  output [31:0]CFG_BRAM_DOUTB;
-  input CFG_BRAM_ENB;
-  input CFG_BRAM_RSTB;
-  input [3:0]CFG_BRAM_WEB;
   output CLKWIZ0_CLKOUT1;
   output CLKWIZ0_CLKOUT2;
-  input CSI_FIFO_CLK;
-  output [15:0]CSI_FIFO_DOUT;
-  input CSI_FIFO_READ_REQ;
-  output CSI_FIFO_READ_VALID;
-  input [5:0]CSI_MON_CTRL_STATE_DBG;
-  input [7:0]CSI_MON_DATA_TYPE;
-  input CSI_MON_EM_MIPI_DONE;
-  input CSI_MON_EM_MIPI_END_FRAME;
-  input CSI_MON_EM_MIPI_SLEEP;
-  input CSI_MON_EM_MIPI_START_FRAME;
-  input CSI_MON_EM_MIPI_START_LINES;
-  input CSI_MON_EM_MIPI_STOP;
-  input [20:0]CSI_MON_LINE_BYTE_COUNT;
-  input [5:0]CSI_MON_LINE_COUNT;
-  input CSI_MON_LPCLKN;
-  input CSI_MON_LPCLKP;
-  input CSI_MON_LPD0N;
-  input CSI_MON_LPD0N1;
-  input CSI_MON_LPD0P;
-  input CSI_MON_LPD0P1;
-  input CSI_MON_LPD1N;
-  input CSI_MON_LPD1P;
-  input CSI_MON_MIPI_BUSY_DBG;
-  input [5:0]CSI_MON_MIPI_CTRL_BRAM_BASE;
-  input [15:0]CSI_MON_MIPI_DEBUG_DATA_MUX_OUT;
-  input [5:0]CSI_MON_MIPI_DEBUG_STATE;
-  input [15:0]CSI_MON_MIPI_DEBUG_STATE_TIMER;
-  input [15:0]CSI_MON_MIPI_DEBUG_STATE_TIMER2;
-  input CSI_MON_MIPI_DEBUG_STATE_TIMER_RST;
-  input [15:0]CSI_MON_MIPI_DEBUG_TX_SIZE;
-  input CSI_MON_MIPI_DONE_DBG;
-  input CSI_MON_MIPI_INIT_IDLE_DBG;
-  input CSI_MON_MIPI_INIT_LONG_DBG;
-  input CSI_MON_MIPI_INIT_SHORT_DBG;
+  output CSI_CLK_N;
+  output CSI_CLK_P;
+  output CSI_D0_N;
+  output CSI_D0_P;
+  output CSI_D1_N;
+  output CSI_D1_P;
+  output CSI_DONE;
+  input CSI_END_FRAME;
+  output CSI_LPCLK_N;
+  output CSI_LPCLK_P;
+  output CSI_LPD0_N;
+  output CSI_LPD0_P;
+  output CSI_LPD1_N;
+  output CSI_LPD1_P;
+  input CSI_SLEEP;
+  input CSI_START_FRAME;
+  input CSI_START_LINES;
+  input CSI_STOP;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -178,8 +125,6 @@ module design_1_wrapper
   inout DDR_we_n;
   input [63:0]EMIO_I;
   output [63:0]EMIO_O;
-  input FABCFG_COMMIT_MON;
-  input FABCFG_DONE_MON;
   output FCLK_CLK0;
   inout FIXED_IO_ddr_vrn;
   inout FIXED_IO_ddr_vrp;
@@ -187,17 +132,16 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
+  output [1:0]GPIO_TEST;
+  input G_RST;
   input [3:0]PL_IRQ;
   input TRIGGER_IN;
   output TRIGGER_OUT;
-  output [31:0]TRIGGER_POS;
   input [2:0]TRIGGER_SUB_WORD;
 
   wire ACQ_ABORT;
   wire ACQ_AXI_RUN;
   wire ACQ_DATA_LOSS;
-  wire [28:0]ACQ_DEPTH_A;
-  wire [28:0]ACQ_DEPTH_B;
   wire ACQ_DEPTH_MUX;
   wire ACQ_DONE;
   wire ACQ_HAVE_TRIG;
@@ -209,50 +153,26 @@ module design_1_wrapper
   wire ADC_DATA_EOF;
   wire ADC_DATA_VALID;
   wire ADC_FIFO_RESET;
-  wire [31:0]CFG_BRAM_ADDRB;
-  wire CFG_BRAM_BUSYB;
-  wire CFG_BRAM_CLKB;
-  wire [31:0]CFG_BRAM_DINB;
-  wire [31:0]CFG_BRAM_DOUTB;
-  wire CFG_BRAM_ENB;
-  wire CFG_BRAM_RSTB;
-  wire [3:0]CFG_BRAM_WEB;
   wire CLKWIZ0_CLKOUT1;
   wire CLKWIZ0_CLKOUT2;
-  wire CSI_FIFO_CLK;
-  wire [15:0]CSI_FIFO_DOUT;
-  wire CSI_FIFO_READ_REQ;
-  wire CSI_FIFO_READ_VALID;
-  wire [5:0]CSI_MON_CTRL_STATE_DBG;
-  wire [7:0]CSI_MON_DATA_TYPE;
-  wire CSI_MON_EM_MIPI_DONE;
-  wire CSI_MON_EM_MIPI_END_FRAME;
-  wire CSI_MON_EM_MIPI_SLEEP;
-  wire CSI_MON_EM_MIPI_START_FRAME;
-  wire CSI_MON_EM_MIPI_START_LINES;
-  wire CSI_MON_EM_MIPI_STOP;
-  wire [20:0]CSI_MON_LINE_BYTE_COUNT;
-  wire [5:0]CSI_MON_LINE_COUNT;
-  wire CSI_MON_LPCLKN;
-  wire CSI_MON_LPCLKP;
-  wire CSI_MON_LPD0N;
-  wire CSI_MON_LPD0N1;
-  wire CSI_MON_LPD0P;
-  wire CSI_MON_LPD0P1;
-  wire CSI_MON_LPD1N;
-  wire CSI_MON_LPD1P;
-  wire CSI_MON_MIPI_BUSY_DBG;
-  wire [5:0]CSI_MON_MIPI_CTRL_BRAM_BASE;
-  wire [15:0]CSI_MON_MIPI_DEBUG_DATA_MUX_OUT;
-  wire [5:0]CSI_MON_MIPI_DEBUG_STATE;
-  wire [15:0]CSI_MON_MIPI_DEBUG_STATE_TIMER;
-  wire [15:0]CSI_MON_MIPI_DEBUG_STATE_TIMER2;
-  wire CSI_MON_MIPI_DEBUG_STATE_TIMER_RST;
-  wire [15:0]CSI_MON_MIPI_DEBUG_TX_SIZE;
-  wire CSI_MON_MIPI_DONE_DBG;
-  wire CSI_MON_MIPI_INIT_IDLE_DBG;
-  wire CSI_MON_MIPI_INIT_LONG_DBG;
-  wire CSI_MON_MIPI_INIT_SHORT_DBG;
+  wire CSI_CLK_N;
+  wire CSI_CLK_P;
+  wire CSI_D0_N;
+  wire CSI_D0_P;
+  wire CSI_D1_N;
+  wire CSI_D1_P;
+  wire CSI_DONE;
+  wire CSI_END_FRAME;
+  wire CSI_LPCLK_N;
+  wire CSI_LPCLK_P;
+  wire CSI_LPD0_N;
+  wire CSI_LPD0_P;
+  wire CSI_LPD1_N;
+  wire CSI_LPD1_P;
+  wire CSI_SLEEP;
+  wire CSI_START_FRAME;
+  wire CSI_START_LINES;
+  wire CSI_STOP;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -270,8 +190,6 @@ module design_1_wrapper
   wire DDR_we_n;
   wire [63:0]EMIO_I;
   wire [63:0]EMIO_O;
-  wire FABCFG_COMMIT_MON;
-  wire FABCFG_DONE_MON;
   wire FCLK_CLK0;
   wire FIXED_IO_ddr_vrn;
   wire FIXED_IO_ddr_vrp;
@@ -279,18 +197,17 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
+  wire [1:0]GPIO_TEST;
+  wire G_RST;
   wire [3:0]PL_IRQ;
   wire TRIGGER_IN;
   wire TRIGGER_OUT;
-  wire [31:0]TRIGGER_POS;
   wire [2:0]TRIGGER_SUB_WORD;
 
   design_1 design_1_i
        (.ACQ_ABORT(ACQ_ABORT),
         .ACQ_AXI_RUN(ACQ_AXI_RUN),
         .ACQ_DATA_LOSS(ACQ_DATA_LOSS),
-        .ACQ_DEPTH_A(ACQ_DEPTH_A),
-        .ACQ_DEPTH_B(ACQ_DEPTH_B),
         .ACQ_DEPTH_MUX(ACQ_DEPTH_MUX),
         .ACQ_DONE(ACQ_DONE),
         .ACQ_HAVE_TRIG(ACQ_HAVE_TRIG),
@@ -302,50 +219,26 @@ module design_1_wrapper
         .ADC_DATA_EOF(ADC_DATA_EOF),
         .ADC_DATA_VALID(ADC_DATA_VALID),
         .ADC_FIFO_RESET(ADC_FIFO_RESET),
-        .CFG_BRAM_ADDRB(CFG_BRAM_ADDRB),
-        .CFG_BRAM_BUSYB(CFG_BRAM_BUSYB),
-        .CFG_BRAM_CLKB(CFG_BRAM_CLKB),
-        .CFG_BRAM_DINB(CFG_BRAM_DINB),
-        .CFG_BRAM_DOUTB(CFG_BRAM_DOUTB),
-        .CFG_BRAM_ENB(CFG_BRAM_ENB),
-        .CFG_BRAM_RSTB(CFG_BRAM_RSTB),
-        .CFG_BRAM_WEB(CFG_BRAM_WEB),
         .CLKWIZ0_CLKOUT1(CLKWIZ0_CLKOUT1),
         .CLKWIZ0_CLKOUT2(CLKWIZ0_CLKOUT2),
-        .CSI_FIFO_CLK(CSI_FIFO_CLK),
-        .CSI_FIFO_DOUT(CSI_FIFO_DOUT),
-        .CSI_FIFO_READ_REQ(CSI_FIFO_READ_REQ),
-        .CSI_FIFO_READ_VALID(CSI_FIFO_READ_VALID),
-        .CSI_MON_CTRL_STATE_DBG(CSI_MON_CTRL_STATE_DBG),
-        .CSI_MON_DATA_TYPE(CSI_MON_DATA_TYPE),
-        .CSI_MON_EM_MIPI_DONE(CSI_MON_EM_MIPI_DONE),
-        .CSI_MON_EM_MIPI_END_FRAME(CSI_MON_EM_MIPI_END_FRAME),
-        .CSI_MON_EM_MIPI_SLEEP(CSI_MON_EM_MIPI_SLEEP),
-        .CSI_MON_EM_MIPI_START_FRAME(CSI_MON_EM_MIPI_START_FRAME),
-        .CSI_MON_EM_MIPI_START_LINES(CSI_MON_EM_MIPI_START_LINES),
-        .CSI_MON_EM_MIPI_STOP(CSI_MON_EM_MIPI_STOP),
-        .CSI_MON_LINE_BYTE_COUNT(CSI_MON_LINE_BYTE_COUNT),
-        .CSI_MON_LINE_COUNT(CSI_MON_LINE_COUNT),
-        .CSI_MON_LPCLKN(CSI_MON_LPCLKN),
-        .CSI_MON_LPCLKP(CSI_MON_LPCLKP),
-        .CSI_MON_LPD0N(CSI_MON_LPD0N),
-        .CSI_MON_LPD0N1(CSI_MON_LPD0N1),
-        .CSI_MON_LPD0P(CSI_MON_LPD0P),
-        .CSI_MON_LPD0P1(CSI_MON_LPD0P1),
-        .CSI_MON_LPD1N(CSI_MON_LPD1N),
-        .CSI_MON_LPD1P(CSI_MON_LPD1P),
-        .CSI_MON_MIPI_BUSY_DBG(CSI_MON_MIPI_BUSY_DBG),
-        .CSI_MON_MIPI_CTRL_BRAM_BASE(CSI_MON_MIPI_CTRL_BRAM_BASE),
-        .CSI_MON_MIPI_DEBUG_DATA_MUX_OUT(CSI_MON_MIPI_DEBUG_DATA_MUX_OUT),
-        .CSI_MON_MIPI_DEBUG_STATE(CSI_MON_MIPI_DEBUG_STATE),
-        .CSI_MON_MIPI_DEBUG_STATE_TIMER(CSI_MON_MIPI_DEBUG_STATE_TIMER),
-        .CSI_MON_MIPI_DEBUG_STATE_TIMER2(CSI_MON_MIPI_DEBUG_STATE_TIMER2),
-        .CSI_MON_MIPI_DEBUG_STATE_TIMER_RST(CSI_MON_MIPI_DEBUG_STATE_TIMER_RST),
-        .CSI_MON_MIPI_DEBUG_TX_SIZE(CSI_MON_MIPI_DEBUG_TX_SIZE),
-        .CSI_MON_MIPI_DONE_DBG(CSI_MON_MIPI_DONE_DBG),
-        .CSI_MON_MIPI_INIT_IDLE_DBG(CSI_MON_MIPI_INIT_IDLE_DBG),
-        .CSI_MON_MIPI_INIT_LONG_DBG(CSI_MON_MIPI_INIT_LONG_DBG),
-        .CSI_MON_MIPI_INIT_SHORT_DBG(CSI_MON_MIPI_INIT_SHORT_DBG),
+        .CSI_CLK_N(CSI_CLK_N),
+        .CSI_CLK_P(CSI_CLK_P),
+        .CSI_D0_N(CSI_D0_N),
+        .CSI_D0_P(CSI_D0_P),
+        .CSI_D1_N(CSI_D1_N),
+        .CSI_D1_P(CSI_D1_P),
+        .CSI_DONE(CSI_DONE),
+        .CSI_END_FRAME(CSI_END_FRAME),
+        .CSI_LPCLK_N(CSI_LPCLK_N),
+        .CSI_LPCLK_P(CSI_LPCLK_P),
+        .CSI_LPD0_N(CSI_LPD0_N),
+        .CSI_LPD0_P(CSI_LPD0_P),
+        .CSI_LPD1_N(CSI_LPD1_N),
+        .CSI_LPD1_P(CSI_LPD1_P),
+        .CSI_SLEEP(CSI_SLEEP),
+        .CSI_START_FRAME(CSI_START_FRAME),
+        .CSI_START_LINES(CSI_START_LINES),
+        .CSI_STOP(CSI_STOP),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),
@@ -363,8 +256,6 @@ module design_1_wrapper
         .DDR_we_n(DDR_we_n),
         .EMIO_I(EMIO_I),
         .EMIO_O(EMIO_O),
-        .FABCFG_COMMIT_MON(FABCFG_COMMIT_MON),
-        .FABCFG_DONE_MON(FABCFG_DONE_MON),
         .FCLK_CLK0(FCLK_CLK0),
         .FIXED_IO_ddr_vrn(FIXED_IO_ddr_vrn),
         .FIXED_IO_ddr_vrp(FIXED_IO_ddr_vrp),
@@ -372,9 +263,10 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+        .GPIO_TEST(GPIO_TEST),
+        .G_RST(G_RST),
         .PL_IRQ(PL_IRQ),
         .TRIGGER_IN(TRIGGER_IN),
         .TRIGGER_OUT(TRIGGER_OUT),
-        .TRIGGER_POS(TRIGGER_POS),
         .TRIGGER_SUB_WORD(TRIGGER_SUB_WORD));
 endmodule
