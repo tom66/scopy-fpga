@@ -31,6 +31,17 @@
  
  
 /******************************************************************/
+/* Definitions for driver FABCFG_NEXTGEN */
+#define XPAR_FABCFG_NEXTGEN_NUM_INSTANCES 1
+
+/* Definitions for peripheral FABCFG_NEXTGEN_0 */
+#define XPAR_FABCFG_NEXTGEN_0_DEVICE_ID 0
+#define XPAR_FABCFG_NEXTGEN_0_S00_AXI_BASEADDR 0x83C10000
+#define XPAR_FABCFG_NEXTGEN_0_S00_AXI_HIGHADDR 0x83C1FFFF
+
+
+/******************************************************************/
+
 /* Definitions for driver AXIDMA */
 #define XPAR_XAXIDMA_NUM_INSTANCES 2
 
@@ -119,49 +130,6 @@
 #define XPAR_AXIDMA_1_MICRO_DMA 0
 #define XPAR_AXIDMA_1_c_addr_width 32
 #define XPAR_AXIDMA_1_c_sg_length_width 24
-
-
-/******************************************************************/
-
-/* Definitions for driver BRAM */
-#define XPAR_XBRAM_NUM_INSTANCES 1U
-
-/* Definitions for peripheral AXI_BRAM_CTRL_0 */
-#define XPAR_AXI_BRAM_CTRL_0_DEVICE_ID 0U
-#define XPAR_AXI_BRAM_CTRL_0_DATA_WIDTH 32U
-#define XPAR_AXI_BRAM_CTRL_0_ECC 0U
-#define XPAR_AXI_BRAM_CTRL_0_FAULT_INJECT 0U
-#define XPAR_AXI_BRAM_CTRL_0_CE_FAILING_REGISTERS 0U
-#define XPAR_AXI_BRAM_CTRL_0_UE_FAILING_REGISTERS 0U
-#define XPAR_AXI_BRAM_CTRL_0_ECC_STATUS_REGISTERS 0U
-#define XPAR_AXI_BRAM_CTRL_0_CE_COUNTER_WIDTH 0U
-#define XPAR_AXI_BRAM_CTRL_0_ECC_ONOFF_REGISTER 0U
-#define XPAR_AXI_BRAM_CTRL_0_ECC_ONOFF_RESET_VALUE 0U
-#define XPAR_AXI_BRAM_CTRL_0_WRITE_ACCESS 0U
-#define XPAR_AXI_BRAM_CTRL_0_S_AXI_BASEADDR 0x80000000U
-#define XPAR_AXI_BRAM_CTRL_0_S_AXI_HIGHADDR 0x80001FFFU
-#define XPAR_AXI_BRAM_CTRL_0_S_AXI_CTRL_BASEADDR 0xFFFFFFFFU  
-#define XPAR_AXI_BRAM_CTRL_0_S_AXI_CTRL_HIGHADDR 0xFFFFFFFFU  
-
-
-/******************************************************************/
-
-/* Canonical definitions for peripheral AXI_BRAM_CTRL_0 */
-#define XPAR_BRAM_0_DEVICE_ID XPAR_AXI_BRAM_CTRL_0_DEVICE_ID
-#define XPAR_BRAM_0_DATA_WIDTH 32U
-#define XPAR_BRAM_0_ECC 0U
-#define XPAR_BRAM_0_FAULT_INJECT 0U
-#define XPAR_BRAM_0_CE_FAILING_REGISTERS 0U
-#define XPAR_BRAM_0_UE_FAILING_REGISTERS 0U
-#define XPAR_BRAM_0_ECC_STATUS_REGISTERS 0U
-#define XPAR_BRAM_0_CE_COUNTER_WIDTH 0U
-#define XPAR_BRAM_0_ECC_ONOFF_REGISTER 0U
-#define XPAR_BRAM_0_ECC_ONOFF_RESET_VALUE 0U
-#define XPAR_BRAM_0_WRITE_ACCESS 0U
-#define XPAR_BRAM_0_BASEADDR 0x80000000U
-#define XPAR_BRAM_0_HIGHADDR 0x80001FFFU
-#define XPAR_BRAM_0_CTRL_BASEADDR 0xFFFFFFFFU  
-#define XPAR_BRAM_0_CTRL_HIGHADDR 0xFFFFFFFEU  
 
 
 /******************************************************************/

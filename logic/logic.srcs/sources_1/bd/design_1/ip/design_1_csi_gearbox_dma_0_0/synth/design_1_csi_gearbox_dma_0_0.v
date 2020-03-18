@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:csi_gearbox_dma:1.0
-// IP Revision: 21
+// IP Revision: 25
 
 (* X_CORE_INFO = "csi_gearbox_dma_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=21,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=1,C_PN_SWAP_D1=1,C_PN_SWAP_CLK=1}" *)
+(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=25,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_csi_gearbox_dma_0_0 (
   csi_clk_p,
@@ -92,10 +92,11 @@ module design_1_csi_gearbox_dma_0_0 (
   csi_debug_state_timer2,
   csi_debug_state_timer_rst,
   csi_debug_data_mux_out,
-  csi_debug_ctrl_bram_base,
   csi_debug_fifo_read_valid,
   csi_debug_fifo_space_available,
+  csi_debug_mipi_read_req,
   dbg_fifo_data_ct,
+  dbg_ref_clk,
   g_rst,
   s00_axis_aclk,
   s00_axis_aresetn,
@@ -149,10 +150,13 @@ output wire [15 : 0] csi_debug_state_timer2;
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 csi_debug_state_timer_rst RST" *)
 output wire csi_debug_state_timer_rst;
 output wire [15 : 0] csi_debug_data_mux_out;
-output wire [5 : 0] csi_debug_ctrl_bram_base;
 output wire csi_debug_fifo_read_valid;
 output wire csi_debug_fifo_space_available;
+output wire csi_debug_mipi_read_req;
 output wire [11 : 0] dbg_fifo_data_ct;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dbg_ref_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_csi_gearbox_dma_0_0_dbg_ref_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dbg_ref_clk CLK" *)
+output wire dbg_ref_clk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME g_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 g_rst RST" *)
 input wire g_rst;
@@ -176,9 +180,9 @@ input wire s00_axis_tvalid;
 
   csi_gearbox_dma_v1_0 #(
     .C_S00_AXIS_TDATA_WIDTH(64),  // AXI4Stream sink: Data Width
-    .C_PN_SWAP_D0(1),
-    .C_PN_SWAP_D1(1),
-    .C_PN_SWAP_CLK(1)
+    .C_PN_SWAP_D0(1'B1),
+    .C_PN_SWAP_D1(1'B1),
+    .C_PN_SWAP_CLK(1'B1)
   ) inst (
     .csi_clk_p(csi_clk_p),
     .csi_clk_n(csi_clk_n),
@@ -217,10 +221,11 @@ input wire s00_axis_tvalid;
     .csi_debug_state_timer2(csi_debug_state_timer2),
     .csi_debug_state_timer_rst(csi_debug_state_timer_rst),
     .csi_debug_data_mux_out(csi_debug_data_mux_out),
-    .csi_debug_ctrl_bram_base(csi_debug_ctrl_bram_base),
     .csi_debug_fifo_read_valid(csi_debug_fifo_read_valid),
     .csi_debug_fifo_space_available(csi_debug_fifo_space_available),
+    .csi_debug_mipi_read_req(csi_debug_mipi_read_req),
     .dbg_fifo_data_ct(dbg_fifo_data_ct),
+    .dbg_ref_clk(dbg_ref_clk),
     .g_rst(g_rst),
     .s00_axis_aclk(s00_axis_aclk),
     .s00_axis_aresetn(s00_axis_aresetn),

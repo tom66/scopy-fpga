@@ -258,19 +258,19 @@ proc create_root_design { parentCell } {
   # Create instance: clk_wiz_0, and set properties
   set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0 ]
   set_property -dict [ list \
-   CONFIG.CLKOUT1_JITTER {114.524} \
-   CONFIG.CLKOUT1_PHASE_ERROR {106.965} \
-   CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {300.000} \
-   CONFIG.CLKOUT2_JITTER {114.524} \
-   CONFIG.CLKOUT2_PHASE_ERROR {106.965} \
-   CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {300.000} \
+   CONFIG.CLKOUT1_JITTER {87.564} \
+   CONFIG.CLKOUT1_PHASE_ERROR {97.786} \
+   CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {400.000} \
+   CONFIG.CLKOUT2_JITTER {87.564} \
+   CONFIG.CLKOUT2_PHASE_ERROR {97.786} \
+   CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {400.000} \
    CONFIG.CLKOUT2_REQUESTED_PHASE {90} \
    CONFIG.CLKOUT2_USED {true} \
-   CONFIG.MMCM_CLKFBOUT_MULT_F {10.125} \
-   CONFIG.MMCM_CLKOUT0_DIVIDE_F {3.000} \
-   CONFIG.MMCM_CLKOUT1_DIVIDE {3} \
+   CONFIG.MMCM_CLKFBOUT_MULT_F {4.500} \
+   CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} \
+   CONFIG.MMCM_CLKOUT1_DIVIDE {2} \
    CONFIG.MMCM_CLKOUT1_PHASE {90.000} \
-   CONFIG.MMCM_DIVCLK_DIVIDE {2} \
+   CONFIG.MMCM_DIVCLK_DIVIDE {1} \
    CONFIG.NUM_OUT_CLKS {2} \
    CONFIG.USE_DYN_RECONFIG {true} \
  ] $clk_wiz_0
@@ -278,6 +278,9 @@ proc create_root_design { parentCell } {
   # Create instance: csi_gearbox_dma_0, and set properties
   set csi_gearbox_dma_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:csi_gearbox_dma:1.0 csi_gearbox_dma_0 ]
   set_property -dict [ list \
+   CONFIG.C_PN_SWAP_CLK {true} \
+   CONFIG.C_PN_SWAP_D0 {true} \
+   CONFIG.C_PN_SWAP_D1 {true} \
    CONFIG.C_S00_AXIS_TDATA_WIDTH {64} \
  ] $csi_gearbox_dma_0
 
@@ -305,8 +308,9 @@ proc create_root_design { parentCell } {
   # Create instance: system_ila_0, and set properties
   set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
   set_property -dict [ list \
-   CONFIG.C_BRAM_CNT {7} \
-   CONFIG.C_MON_TYPE {MIX} \
+   CONFIG.C_BRAM_CNT {4} \
+   CONFIG.C_DATA_DEPTH {4096} \
+   CONFIG.C_MON_TYPE {NATIVE} \
    CONFIG.C_NUM_OF_PROBES {32} \
  ] $system_ila_0
 
@@ -731,7 +735,6 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_interconnect_0/M01_AXI] [get_bd_intf_pins mipi_dma/S_AXI_LITE]
   connect_bd_intf_net -intf_net axi_interconnect_1_M00_AXI [get_bd_intf_pins axi_interconnect_1/M00_AXI] [get_bd_intf_pins clk_wiz_0/s_axi_lite]
   connect_bd_intf_net -intf_net axi_interconnect_1_M01_AXI [get_bd_intf_pins FabCfg_NextGen_0/S00_AXI] [get_bd_intf_pins axi_interconnect_1/M01_AXI]
-connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_1_M01_AXI] [get_bd_intf_pins axi_interconnect_1/M01_AXI] [get_bd_intf_pins system_ila_0/SLOT_0_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_2_M00_AXI [get_bd_intf_pins axi_interconnect_2/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP1]
   connect_bd_intf_net -intf_net axi_mem_intercon_M00_AXI [get_bd_intf_pins axi_mem_intercon/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP0]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins zynq_ps/DDR]
@@ -766,8 +769,8 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_1_M01_AXI] [get
   connect_bd_net -net FabCfg_NextGen_0_R_csi_line_count [get_bd_pins FabCfg_NextGen_0/R_csi_line_count] [get_bd_pins csi_gearbox_dma_0/R_csi_line_count] [get_bd_pins system_ila_0/probe21]
   connect_bd_net -net FabCfg_NextGen_0_R_gpio_test [get_bd_ports GPIO_TEST] [get_bd_pins FabCfg_NextGen_0/R_gpio_test]
   connect_bd_net -net G_RST_1 [get_bd_ports G_RST] [get_bd_pins csi_gearbox_dma_0/g_rst]
-  connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
-  connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
+  connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata] [get_bd_pins system_ila_0/probe24]
+  connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid] [get_bd_pins system_ila_0/probe26]
   connect_bd_net -net PL_IRQ_1 [get_bd_ports PL_IRQ] [get_bd_pins xlconcat_1/In1]
   connect_bd_net -net adc_axi_streamer_acq_done [get_bd_ports ACQ_DONE] [get_bd_pins adc_axi_streamer/acq_done]
   connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_ports ACQ_HAVE_TRIG] [get_bd_pins adc_axi_streamer/acq_have_trig]
@@ -788,10 +791,10 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_1_M01_AXI] [get
   connect_bd_net -net csi_gearbox_dma_0_csi_d0_p [get_bd_ports CSI_D0_P] [get_bd_pins csi_gearbox_dma_0/csi_d0_p]
   connect_bd_net -net csi_gearbox_dma_0_csi_d1_n [get_bd_ports CSI_D1_N] [get_bd_pins csi_gearbox_dma_0/csi_d1_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_d1_p [get_bd_ports CSI_D1_P] [get_bd_pins csi_gearbox_dma_0/csi_d1_p]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_ctrl_bram_base [get_bd_pins csi_gearbox_dma_0/csi_debug_ctrl_bram_base] [get_bd_pins system_ila_0/probe12]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_data_mux_out [get_bd_pins csi_gearbox_dma_0/csi_debug_data_mux_out] [get_bd_pins system_ila_0/probe11]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_fifo_read_valid [get_bd_pins csi_gearbox_dma_0/csi_debug_fifo_read_valid] [get_bd_pins system_ila_0/probe13]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_fifo_space_available [get_bd_pins csi_gearbox_dma_0/csi_debug_fifo_space_available] [get_bd_pins system_ila_0/probe14]
+  connect_bd_net -net csi_gearbox_dma_0_csi_debug_mipi_read_req [get_bd_pins csi_gearbox_dma_0/csi_debug_mipi_read_req] [get_bd_pins system_ila_0/probe12]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_mipi_state [get_bd_pins csi_gearbox_dma_0/csi_debug_mipi_state] [get_bd_pins system_ila_0/probe7]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_state_timer [get_bd_pins csi_gearbox_dma_0/csi_debug_state_timer] [get_bd_pins system_ila_0/probe8]
   connect_bd_net -net csi_gearbox_dma_0_csi_debug_state_timer2 [get_bd_pins csi_gearbox_dma_0/csi_debug_state_timer2] [get_bd_pins system_ila_0/probe9]
@@ -810,12 +813,13 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_1_M01_AXI] [get
   connect_bd_net -net csi_gearbox_dma_0_csi_mipi_init_long_dbg [get_bd_pins csi_gearbox_dma_0/csi_mipi_init_long_dbg] [get_bd_pins system_ila_0/probe4]
   connect_bd_net -net csi_gearbox_dma_0_csi_mipi_init_short_dbg [get_bd_pins csi_gearbox_dma_0/csi_mipi_init_short_dbg] [get_bd_pins system_ila_0/probe3]
   connect_bd_net -net csi_gearbox_dma_0_dbg_fifo_data_ct [get_bd_pins csi_gearbox_dma_0/dbg_fifo_data_ct] [get_bd_pins system_ila_0/probe15]
-  connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins mipi_dma/m_axis_mm2s_tready]
+  connect_bd_net -net csi_gearbox_dma_0_dbg_ref_clk [get_bd_pins csi_gearbox_dma_0/dbg_ref_clk] [get_bd_pins system_ila_0/clk]
+  connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins mipi_dma/m_axis_mm2s_tready] [get_bd_pins system_ila_0/probe27]
   connect_bd_net -net mipi_dma_m_axis_mm2s_tlast [get_bd_pins csi_gearbox_dma_0/s00_axis_tlast] [get_bd_pins mipi_dma/m_axis_mm2s_tlast]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins FabCfg_NextGen_0/s00_axi_aclk] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_1/S01_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins system_ila_0/clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/M_AXI_GP1_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP1_ACLK]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins FabCfg_NextGen_0/s00_axi_aclk] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_1/S01_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/M_AXI_GP1_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP1_ACLK]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins rst_ps7_0_20M/ext_reset_in] [get_bd_pins zynq_ps/FCLK_RESET0_N]
   connect_bd_net -net processing_system7_0_GPIO_O [get_bd_ports EMIO_O] [get_bd_pins zynq_ps/GPIO_O]
-  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_1/S01_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins axi_mem_intercon/ARESETN] [get_bd_pins axi_mem_intercon/M00_ARESETN] [get_bd_pins axi_mem_intercon/S00_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn] [get_bd_pins system_ila_0/resetn]
+  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_1/S01_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins axi_mem_intercon/ARESETN] [get_bd_pins axi_mem_intercon/M00_ARESETN] [get_bd_pins axi_mem_intercon/S00_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn]
   connect_bd_net -net xlconcat_1_dout [get_bd_pins xlconcat_1/dout] [get_bd_pins zynq_ps/IRQ_F2P]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins FabCfg_NextGen_0/K_in_bitstream_version] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlconstant_1_dout [get_bd_pins csi_gearbox_dma_0/R_csi_wct_frame] [get_bd_pins xlconstant_1/dout]

@@ -56,18 +56,11 @@ void csi_hack_init()
 	fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, 2046);
 	fabcfg_write(FAB_CFG_CSI_DATA_TYPE, 0x2a);
 	fabcfg_write(FAB_CFG_CSI_CTRL_FLAGS, 0x01); // LSB controls clock idling mode
-	fabcfg_commit();
-	//fabcfg_commit();
-	//fabcfg_commit();
 }
 
 void csi_hack_start_frame(uint32_t line_count)
 {
-	//d_printf(D_ERROR, "write");
 	fabcfg_write(FAB_CFG_CSI_LINE_COUNT, line_count);
-	//d_printf(D_ERROR, "commit");
-	fabcfg_commit();
-	//d_printf(D_ERROR, "done");
 
 	// Stop frame first
 	XGpioPs_WritePin(&g_hal.xgpio_ps, CSI_EMIO_STOP, 1);

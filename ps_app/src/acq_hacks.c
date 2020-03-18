@@ -29,18 +29,18 @@ void acq_hacks_run()
 	int test_tx = 100, bytes;
 	float microsec;
 
-	n_waves = 2;
+	n_waves = 1;
 
 	csi_hack_init();
 
 	memset(buffer, 0, 32);
 
 	for(i = 0; i < (sizeof(buffer) - 32); i++) {
-		buffer[i + 30] = norway_512x512_grey[i - 2];
+		buffer[i + 30] = norway_512x512_grey[i];
 	}
 
 	// slow MIPI clock for diagnostics
-	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450 /*177.7777777*/);
+	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
 
 	while(1) {
 		/*
@@ -51,8 +51,8 @@ void acq_hacks_run()
 
 		d_printf(D_ERROR, "starting to prepare acq...");
 
-		// 16k sampct, 128k bytes (128k samples)
-		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 16384, n_waves);
+		// 32k sampct, 256k bytes (256k samples)
+		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 32768, n_waves);
 
 		if(res != ACQRES_OK) {
 			d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);
@@ -74,18 +74,18 @@ void acq_hacks_run()
 
 		//acq_debug_dump_wave(0);
 
-		d_printf(D_INFO, "press key to stream to Pi...");
+		//d_printf(D_INFO, "press key to stream to Pi...");
 		//d_waitkey();
-		*/
 
 		//d_printf(D_INFO, "acq is done... starting CSI xfer");
 
 		//d_printf(D_INFO, "Start sending %d packets", test_tx);
+		*/
 
 		bytes = 0;
 		d_start_timing(2);
 
-		//for(i = 0; i < 1 /*n_waves*/; i++) {
+		//for(i = 0; i < n_waves; i++) {
 		for(i = 0; i < 100; i++) {
 			csi_hack_start_frame(15);
 

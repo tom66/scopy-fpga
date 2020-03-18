@@ -72,24 +72,6 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c || ORIG
 # IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/bd_f60c_ila_lib_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_ila_lib_0 || ORIG_REF_NAME==bd_f60c_ila_lib_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_1/bd_f60c_g_inst_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_g_inst_0 || ORIG_REF_NAME==bd_f60c_g_inst_0} -quiet] -quiet
-
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_2/bd_f60c_slot_0_aw_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_slot_0_aw_0 || ORIG_REF_NAME==bd_f60c_slot_0_aw_0} -quiet] -quiet
-
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_3/bd_f60c_slot_0_w_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_slot_0_w_0 || ORIG_REF_NAME==bd_f60c_slot_0_w_0} -quiet] -quiet
-
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_4/bd_f60c_slot_0_b_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_slot_0_b_0 || ORIG_REF_NAME==bd_f60c_slot_0_b_0} -quiet] -quiet
-
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_5/bd_f60c_slot_0_ar_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_slot_0_ar_0 || ORIG_REF_NAME==bd_f60c_slot_0_ar_0} -quiet] -quiet
-
-# IP: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_6/bd_f60c_slot_0_r_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==bd_f60c_slot_0_r_0 || ORIG_REF_NAME==bd_f60c_slot_0_r_0} -quiet] -quiet
-
 # IP: bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_auto_pc_0 || ORIG_REF_NAME==design_1_auto_pc_0} -quiet] -quiet
 
