@@ -1152,7 +1152,7 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 		return res;
 	}
 
-	d_printf(D_INFO, "acq: trigger_at=0x%08x (sample:%d, sub_index:%d)", wave->trigger_at, wave->trigger_at >> 3, wave->trigger_at & 0x07);
+	//d_printf(D_INFO, "acq: trigger_at=0x%08x (sample:%d, sub_index:%d)", wave->trigger_at, wave->trigger_at >> 3, wave->trigger_at & 0x07);
 
 	// If waveform is completed with trigger then copy it
 	if(!(wave->trigger_at & TRIGGER_INVALID_MASK) && (wave->flags & ACQBUF_FLAG_PKT_DONE)) {
