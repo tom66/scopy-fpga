@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date             : Wed Mar 18 20:03:01 2020
+| Date             : Thu Mar 19 20:09:22 2020
 | Host             : TomsDesktop running 64-bit major release  (build 9200)
 | Command          : report_power -file main_power_routed.rpt -pb main_power_summary_routed.pb -rpx main_power_routed.rpx
 | Design           : main
@@ -52,16 +52,16 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.151 |       13 |       --- |             --- |
-| Slice Logic              |     0.019 |    24081 |       --- |             --- |
-|   LUT as Logic           |     0.016 |     8160 |     40600 |           20.10 |
+| Clocks                   |     0.152 |       13 |       --- |             --- |
+| Slice Logic              |     0.020 |    24121 |       --- |             --- |
+|   LUT as Logic           |     0.016 |     8163 |     40600 |           20.11 |
 |   CARRY4                 |     0.002 |      394 |     13300 |            2.96 |
-|   Register               |     0.001 |    11549 |     81200 |           14.22 |
+|   Register               |     0.001 |    11541 |     81200 |           14.21 |
 |   LUT as Shift Register  |    <0.001 |      655 |     17400 |            3.76 |
 |   LUT as Distributed RAM |    <0.001 |       42 |     17400 |            0.24 |
 |   F7/F8 Muxes            |    <0.001 |      371 |     53200 |            0.70 |
 |   Others                 |     0.000 |     1329 |       --- |             --- |
-| Signals                  |     0.039 |    17565 |       --- |             --- |
+| Signals                  |     0.037 |    17611 |       --- |             --- |
 | Block RAM                |     0.106 |       45 |       107 |           42.06 |
 | MMCM                     |     0.223 |        2 |         4 |           50.00 |
 | DSPs                     |    <0.001 |        1 |       170 |            0.59 |
@@ -141,14 +141,14 @@ Table of Contents
 +--------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------+-----------------+
 | Clock                                                                                      | Domain                                                                               | Constraint (ns) |
 +--------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------+-----------------+
-| adc_data_clk                                                                               | nolabel_line263/adc_data_clk                                                         |             4.0 |
+| adc_data_clk                                                                               | nolabel_line256/adc_data_clk                                                         |             4.0 |
 | adc_lvds_clk                                                                               | adc_lclk_p                                                                           |             1.0 |
 | clk_fpga_0                                                                                 | nolabel_line178/zynq_ps/inst/FCLK_CLK0                                               |             5.6 |
 | clk_fpga_0                                                                                 | nolabel_line178/zynq_ps/inst/FCLK_CLK_unbuffered[0]                                  |             5.6 |
-| clk_out1_clk_wiz_1_idelay_refclk_1                                                         | nolabel_line257/inst/clk_out1_clk_wiz_1_idelay_refclk                                |             5.0 |
+| clk_out1_clk_wiz_1_idelay_refclk_1                                                         | nolabel_line250/inst/clk_out1_clk_wiz_1_idelay_refclk                                |             5.0 |
 | clk_out1_design_1_clk_wiz_0_0                                                              | nolabel_line178/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_design_1_clk_wiz_0_0 |             2.5 |
 | clk_out2_design_1_clk_wiz_0_0                                                              | nolabel_line178/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out2_design_1_clk_wiz_0_0 |             2.5 |
-| clkfbout_clk_wiz_1_idelay_refclk_1                                                         | nolabel_line257/inst/clkfbout_clk_wiz_1_idelay_refclk                                |            67.8 |
+| clkfbout_clk_wiz_1_idelay_refclk_1                                                         | nolabel_line250/inst/clkfbout_clk_wiz_1_idelay_refclk                                |            67.8 |
 | clkfbout_design_1_clk_wiz_0_0                                                              | nolabel_line178/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkfbout_design_1_clk_wiz_0_0 |             5.6 |
 | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK | dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/tck_bs                 |            33.0 |
 +--------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------+-----------------+
@@ -164,39 +164,37 @@ Table of Contents
 | Name                     | Power (W) |
 +--------------------------+-----------+
 | main                     |     1.968 |
-|   dbg_hub                |     0.008 |
-|     inst                 |     0.008 |
-|       BSCANID.u_xsdbm_id |     0.008 |
-|   nolabel_line178        |     1.716 |
-|     FabCfg_NextGen_0     |     0.006 |
-|       inst               |     0.006 |
+|   dbg_hub                |     0.009 |
+|     inst                 |     0.009 |
+|       BSCANID.u_xsdbm_id |     0.009 |
+|   nolabel_line178        |     1.714 |
+|     FabCfg_NextGen_0     |     0.005 |
+|       inst               |     0.005 |
 |     adc_axi_streamer     |     0.046 |
 |       inst               |     0.046 |
-|     adc_dma              |     0.018 |
-|       U0                 |     0.018 |
+|     adc_dma              |     0.017 |
+|       U0                 |     0.017 |
 |     axi_interconnect_0   |     0.007 |
 |       s00_couplers       |     0.006 |
 |       xbar               |     0.001 |
 |     axi_interconnect_1   |     0.007 |
 |       s00_couplers       |     0.006 |
 |       xbar               |     0.001 |
-|     axi_interconnect_2   |     0.001 |
-|       s00_couplers       |     0.001 |
 |     axi_mem_intercon     |     0.002 |
 |       s00_couplers       |     0.002 |
 |     clk_wiz_0            |     0.124 |
 |       inst               |     0.124 |
-|     csi_gearbox_dma_0    |     0.043 |
-|       inst               |     0.042 |
+|     csi_gearbox_dma_0    |     0.042 |
+|       inst               |     0.041 |
 |     mipi_dma             |     0.007 |
 |       U0                 |     0.007 |
-|     system_ila_0         |     0.155 |
-|       inst               |     0.155 |
-|     zynq_ps              |     1.300 |
-|       inst               |     1.300 |
-|   nolabel_line257        |     0.112 |
+|     system_ila_0         |     0.157 |
+|       inst               |     0.157 |
+|     zynq_ps              |     1.299 |
+|       inst               |     1.299 |
+|   nolabel_line250        |     0.112 |
 |     inst                 |     0.112 |
-|   nolabel_line263        |     0.132 |
+|   nolabel_line256        |     0.132 |
 |     asi2_mod_inst0       |     0.008 |
 |     asi2_mod_inst1       |     0.008 |
 |     asi2_mod_inst2       |     0.008 |

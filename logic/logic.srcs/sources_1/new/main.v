@@ -242,14 +242,7 @@ wire adc_data_clk;
  */
 wire [7:0] train_data_debug;
 
-wire [13:0] adc_data_0;
-wire [13:0] adc_data_1;
-wire [13:0] adc_data_2;
-wire [13:0] adc_data_3;
-wire [13:0] adc_data_4;
-wire [13:0] adc_data_5;
-wire [13:0] adc_data_6;
-wire [13:0] adc_data_7;
+wire [13:0] adc_data[7:0];
 wire [7:0] debug_adc;
 reg [23:0] adc_testcntr;
 
@@ -287,14 +280,14 @@ adc_receiver (
     .adc_mode(2'b01),
     
     // 8 x 14-bit output registers
-    .adc_data_0(adc_data_0),
-    .adc_data_1(adc_data_1),
-    .adc_data_2(adc_data_2),
-    .adc_data_3(adc_data_3),
-    .adc_data_4(adc_data_4),
-    .adc_data_5(adc_data_5),
-    .adc_data_6(adc_data_6),
-    .adc_data_7(adc_data_7),
+    .adc_data_0(adc_data[0]),
+    .adc_data_1(adc_data[1]),
+    .adc_data_2(adc_data[2]),
+    .adc_data_3(adc_data[3]),
+    .adc_data_4(adc_data[4]),
+    .adc_data_5(adc_data[5]),
+    .adc_data_6(adc_data[6]),
+    .adc_data_7(adc_data[7]),
     
     // adc_data_rdy (ignored)
     .adc_data_clk(adc_data_clk),
@@ -337,17 +330,23 @@ assign adc_bus[55:48] = adc_test8 + 6;
 assign adc_bus[63:56] = adc_test8 + 7;
 */
 
-assign adc_bus[ 7: 0] = adc_data_0;
-assign adc_bus[15: 8] = adc_data_1;
-assign adc_bus[23:16] = adc_data_2;
-assign adc_bus[31:24] = adc_data_3;
-assign adc_bus[39:32] = adc_data_4;
-assign adc_bus[47:40] = adc_data_5;
-assign adc_bus[55:48] = adc_data_6;
-assign adc_bus[63:56] = adc_data_7;
+assign adc_bus[ 7: 0] = adc_data[0];
+assign adc_bus[15: 8] = adc_data[1];
+assign adc_bus[23:16] = adc_data[2];
+assign adc_bus[31:24] = adc_data[3];
+assign adc_bus[39:32] = adc_data[4];
+assign adc_bus[47:40] = adc_data[5];
+assign adc_bus[55:48] = adc_data[6];
+assign adc_bus[63:56] = adc_data[7];
 
 assign trig_sub_word = trig_sub_word_test;
+
+reg trig_state = 0; // 0 = rising, 1 = falling
 reg [2:0] trig_sub_word_test = 3'b000;
+
+integer adc_trig_level_high = 8'h88;
+integer adc_trig_level_low  = 8'h78;
+integer i;
 
 always @(posedge adc_data_clk) begin
 
@@ -359,12 +358,37 @@ always @(posedge adc_data_clk) begin
     */
     
     // trigger is 1cyc long max.
+    /*
     if (trig_gen) begin
         trig_gen <= 0;
     end else if ((adc_data_0 == 8'h80) && acq_run) begin
         // generate trigger on test word
         trig_sub_word_test <= trig_sub_word_test + 1;
         trig_gen <= 1;
+    end
+    */
+    
+    if (trig_gen) begin
+        trig_gen <= 0;
+    end else begin
+        for (i = 0; i < 8; i = i + 1) begin
+            if ((adc_data[i] > adc_trig_level_high) && (trig_state == 0)) begin
+                trig_gen <= 1;
+                trig_state <= 1;
+                trig_sub_word_test <= i;
+            end else if ((adc_data[i] < adc_trig_level_low) && (trig_state == 1)) begin
+                trig_state <= 0;
+            end
+        end
+    
+        /*
+        if ((adc_data_0 > 8'h90) && (trig_state == 0)) begin
+            trig_gen <= 1;
+            trig_state <= 1;
+        end else if ((adc_data_0 < 8'h70) && (trig_state == 1)) begin
+            trig_state <= 0;
+        end
+        */
     end
     
 end

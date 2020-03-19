@@ -17,8 +17,6 @@
 
 #include "hal.h"
 #include "acquire.h"
-#include "mipi_csi.h"
-#include "dma_gearbox.h"
 
 //uint8_t src_buffer[16384] __attribute__((aligned(32)));
 //uint8_t dest_buffer[16384] __attribute__((aligned(32)));

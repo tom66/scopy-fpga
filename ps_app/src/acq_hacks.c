@@ -39,11 +39,9 @@ void acq_hacks_run()
 		buffer[i + 30] = norway_512x512_grey[i];
 	}
 
-	// slow MIPI clock for diagnostics
 	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
 
 	while(1) {
-		/*
 		d_printf(D_ERROR, "starting to free acq...");
 
 		// Setup the acquisition
@@ -77,38 +75,34 @@ void acq_hacks_run()
 		//d_printf(D_INFO, "press key to stream to Pi...");
 		//d_waitkey();
 
-		//d_printf(D_INFO, "acq is done... starting CSI xfer");
-
-		//d_printf(D_INFO, "Start sending %d packets", test_tx);
-		*/
-
 		bytes = 0;
-		d_start_timing(2);
+		microsec = 0;
 
-		//for(i = 0; i < n_waves; i++) {
-		for(i = 0; i < 100; i++) {
+		for(i = 0; i < n_waves; i++) {
+			Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
+			dsb();
+
+			acq_copy_slow_mipi(i, (uint8_t*)buffer);
+
+			d_start_timing(2);
 			csi_hack_start_frame(15);
 
-			//Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
-			//dsb();
-
-			//acq_copy_slow_mipi(i, (uint8_t*)buffer);
-
 			for(j = 0; j < 8; j++) {
-				//Xil_DCacheFlushRange(buffer, sizeof(buffer));
-				//dsb();
+				Xil_DCacheFlushRange(buffer, sizeof(buffer));
+				dsb();
 
 				csi_hack_send_line_data(buffer + (j * 32768), 32768);
 				bytes += 32768;
 			}
 
 			csi_hack_stop_frame();
+
+			d_stop_timing(2);
+			microsec += d_read_timing_us(2);
 		}
 
-		d_stop_timing(2);
-		microsec = d_read_timing_us(2);
 
-		d_printf(D_INFO, "Done sending %d packets (%d KB) -- took %.4f microseconds", test_tx, microsec, bytes / 1024);
+		d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
 		d_printf(D_INFO, "Transfer rate: %.4f MB/s", bytes / microsec);
 	}
 }

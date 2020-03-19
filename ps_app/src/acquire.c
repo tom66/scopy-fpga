@@ -55,22 +55,6 @@ void _acq_irq_rx_handler(void *callback)
 	XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 	XAxiDma_BdRingAckIrq(bd_ring, status);
 
-	//d_printf(D_INFO, "L:%08x", XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET));
-
-#if 0
-	if(test_sizeptr < 1000) {
-		test_sizes[test_sizeptr++] = XAxiDma_ReadReg(bd_ring->ChanBase, XAXIDMA_BUFFLEN_OFFSET);
-	} else {
-		d_printf(D_INFO, "** OVERFLOW of SUCCESS **");
-
-		for(i = 0; i < test_sizeptr; i++) {
-			d_printf(D_INFO, "L%4d:%08x(%d)", i, test_sizes[i], test_sizes[i]);
-		}
-
-		test_sizeptr = 0;
-	}
-#endif
-
 	/*
 	 * Check for a DMA Error.  Error conditions force an increase of the error
 	 * statistic counter and a reset of the state machine and DMA.
@@ -152,9 +136,6 @@ void _acq_irq_rx_handler(void *callback)
 					// Stop the AXI bus momentarily (TVALID will go low)
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
-					// Start the fabric sync process (background task)
-					fabcfg_fastcfg_start();
-
 					/*
 					 * If the FIFO is full, capture the data but set the discard flag.
 					 */
@@ -181,7 +162,6 @@ void _acq_irq_rx_handler(void *callback)
 					 * The transfer is now running, so record the address that the trigger occurred at
 					 * from the fabric.
 					 */
-					fabcfg_fastcfg_wait();
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 
 					// Start the AXI bus again
@@ -811,7 +791,6 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 
 	g_acq_state.demux_reg = demux;
 	fabcfg_write(FAB_CFG_ACQ_DEMUX_MODE, demux);
-	fabcfg_commit();
 
 	return ACQRES_OK;
 }
@@ -1169,7 +1148,7 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 		return res;
 	}
 
-	d_printf(D_EXINFO, "acq: trigger_at=0x%08x (sample:%d)", wave->trigger_at, wave->trigger_at >> 3);
+	d_printf(D_INFO, "acq: trigger_at=0x%08x (sample:%d, sub_index:%d)", wave->trigger_at, wave->trigger_at >> 3, wave->trigger_at & 0x07);
 
 	// If waveform is completed with trigger then copy it
 	if(!(wave->trigger_at & TRIGGER_INVALID_MASK) && (wave->flags & ACQBUF_FLAG_PKT_DONE)) {

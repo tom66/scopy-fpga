@@ -2,8 +2,8 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Wed Mar 18 19:53:40 2020
-# Process ID: 3732
+# Start of session at: Thu Mar 19 19:26:37 2020
+# Process ID: 15764
 # Current directory: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3
 # Command line: vivado.exe -log main.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source main.tcl
 # Log file: C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.vds
@@ -30,7 +30,7 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z014
 INFO: [Device 21-403] Loading part xc7z014sclg400-1
 WARNING: [Designutils 20-4072] Reference run did not run incremental synthesis because the design is too small; reverting to default synthesis
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 18784 
+INFO: Helper process launched with PID 19108 
 WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_bitslip.v:17]
 WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_bitslip.v:18]
 WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_bitslip.v:21]
@@ -76,7 +76,7 @@ WARNING: [Synth 8-6901] identifier 'emio_output' is used before its declaration 
 WARNING: [Synth 8-6901] identifier 'emio_output' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:142]
 WARNING: [Synth 8-6901] identifier 'emio_output' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:143]
 WARNING: [Synth 8-6901] identifier 'emio_input' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:144]
-WARNING: [Synth 8-6901] identifier 'trig_sub_word_test' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:349]
+WARNING: [Synth 8-6901] identifier 'trig_sub_word_test' is used before its declaration [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:342]
 WARNING: [Synth 8-2507] parameter declaration becomes local in adc_test_streamer_v2_0_M00_AXIS with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/e9fb/hdl/adc_test_streamer_v2_0_M00_AXIS.v:67]
 WARNING: [Synth 8-2507] parameter declaration becomes local in adc_test_streamer_v2_0_M00_AXIS with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/e9fb/hdl/adc_test_streamer_v2_0_M00_AXIS.v:68]
 WARNING: [Synth 8-2507] parameter declaration becomes local in adc_test_streamer_v2_0_M00_AXIS with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/e9fb/hdl/adc_test_streamer_v2_0_M00_AXIS.v:69]
@@ -120,7 +120,7 @@ WARNING: [Synth 8-2507] parameter declaration becomes local in csi_gearbox_dma_v
 WARNING: [Synth 8-2507] parameter declaration becomes local in csi_gearbox_dma_v1_0 with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/8a47/hdl/csi_gearbox_dma_v1_0.v:79]
 WARNING: [Synth 8-2507] parameter declaration becomes local in csi_gearbox_dma_v1_0 with formal parameter declaration list [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/8a47/hdl/csi_gearbox_dma_v1_0.v:80]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 961.973 ; gain = 268.254
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 961.637 ; gain = 267.504
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 	Parameter EMIO_ACQ_RUN bound to: 0 - type: integer 
@@ -4387,7 +4387,7 @@ INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "no" *) on RAM ge
 INFO: [Synth 8-5772] Detected attribute (* ram_optimization = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 WARNING: [Synth 8-689] width (15) of port connection 'PL_IRQ' does not match port width (4) of module 'design_1' [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:233]
 WARNING: [Synth 8-7023] instance 'nolabel_line178' of module 'design_1' has 64 connections declared, but only 40 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:178]
-WARNING: [Synth 8-7023] instance 'nolabel_line257' of module 'clk_wiz_1_idelay_refclk' has 5 connections declared, but only 3 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:257]
+WARNING: [Synth 8-7023] instance 'nolabel_line250' of module 'clk_wiz_1_idelay_refclk' has 5 connections declared, but only 3 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:250]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter DIFF_TERM bound to: FALSE - type: string 
 	Parameter DQS_BIAS bound to: FALSE - type: string 
@@ -4474,7 +4474,7 @@ WARNING: [Synth 8-689] width (8) of port connection 'train_count_out' does not m
 WARNING: [Synth 8-324] index 7 out of range [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_receiver.v:402]
 WARNING: [Synth 8-7023] instance 'asi2_mod_inst7' of module 'adc_iserdese2_mod' has 16 connections declared, but only 13 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_receiver.v:390]
 WARNING: [Synth 8-3848] Net adc_data_rdy in module/entity adc_receiver does not have driver. [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/adc_receiver.v:50]
-WARNING: [Synth 8-7023] instance 'nolabel_line263' of module 'adc_receiver' has 42 connections declared, but only 36 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:263]
+WARNING: [Synth 8-7023] instance 'nolabel_line256' of module 'adc_receiver' has 42 connections declared, but only 36 given [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:256]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-5772] Detected attribute (* ram_optimization = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "no" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
@@ -4585,7 +4585,7 @@ WARNING: [Synth 8-3331] design xlconcat_v2_1_3_xlconcat has unconnected port In1
 WARNING: [Synth 8-3331] design xlconcat_v2_1_3_xlconcat has unconnected port In12[0]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:01:36 ; elapsed = 00:01:38 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished RTL Elaboration : Time (s): cpu = 00:01:36 ; elapsed = 00:01:39 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -4598,12 +4598,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:37 ; elapsed = 00:01:40 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:38 ; elapsed = 00:01:41 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:01:37 ; elapsed = 00:01:40 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:01:38 ; elapsed = 00:01:41 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1697.715 ; gain = 0.000
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/BUFGCE_mipi_oserderse_clk' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/bufgce_mipi_clkout_div' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/nolabel_line171' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
@@ -4611,13 +4611,13 @@ INFO: [Netlist 29-17] Analyzing 542 Unisim elements for replacement
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/BUFGCE_mipi_oserderse_clk' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/bufgce_mipi_clkout_div' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/nolabel_line171' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
-INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk_in_context.xdc] for cell 'nolabel_line257'
-Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk_in_context.xdc] for cell 'nolabel_line257'
+Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk_in_context.xdc] for cell 'nolabel_line250'
+Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk_in_context.xdc] for cell 'nolabel_line250'
 Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0.xdc] for cell 'nolabel_line178/adc_dma/U0'
 Finished Parsing XDC File [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0.xdc] for cell 'nolabel_line178/adc_dma/U0'
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ip/design_1_axi_dma_0/design_1_axi_dma_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/main_propImpl.xdc].
@@ -4913,7 +4913,7 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/main_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1697.715 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 325 instances were transformed.
   BUFGCE => BUFGCTRL: 3 instances
@@ -4925,17 +4925,17 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   OBUFTDS => OBUFTDS_DUAL_BUF (INV, OBUFTDS(x2)): 3 instances
   SRL16 => SRL16E: 1 instance 
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.547 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.546 . Memory (MB): peak = 1697.715 ; gain = 0.000
 WARNING: [Designutils 20-4072] Reference run did not run incremental synthesis because the design is too small; reverting to default synthesis
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:02:05 ; elapsed = 00:02:05 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Constraint Validation : Time (s): cpu = 00:02:05 ; elapsed = 00:02:05 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z014sclg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:02:05 ; elapsed = 00:02:05 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Loading Part and Timing Information : Time (s): cpu = 00:02:05 ; elapsed = 00:02:05 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -4975,7 +4975,7 @@ Applied set_property DONT_TOUCH = true for nolabel_line178/axi_interconnect_0/s0
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_mem_intercon/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_interconnect_1/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_interconnect_2/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for nolabel_line257. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for nolabel_line250. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_interconnect_2/s00_couplers/auto_pc/inst/\gen_axi4_axi3.axi3_conv_inst /\USE_READ.USE_SPLIT_R.read_addr_inst /\USE_R_CHANNEL.cmd_queue /inst/fifo_gen_inst/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_mem_intercon/s00_couplers/auto_pc/inst/\gen_axi4_axi3.axi3_conv_inst /\USE_WRITE.write_addr_inst /\USE_BURSTS.cmd_queue /inst/fifo_gen_inst/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/axi_mem_intercon/s00_couplers/auto_pc/inst/\gen_axi4_axi3.axi3_conv_inst /\USE_WRITE.write_addr_inst /\USE_B_CHANNEL.cmd_b_queue /inst/fifo_gen_inst/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst . (constraint file  auto generated constraint, line ).
@@ -4995,7 +4995,7 @@ Applied set_property DONT_TOUCH = true for nolabel_line178/adc_dma/U0/I_PRMRY_DA
 Applied set_property DONT_TOUCH = true for nolabel_line178/adc_dma/U0/I_PRMRY_DATAMOVER/\GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER /\GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT /I_DATA_FIFO/\BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for nolabel_line178/mipi_dma/U0/I_PRMRY_DATAMOVER/\GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER /\GEN_INCLUDE_MM2S_SF.I_RD_SF /I_DATA_FIFO/\BLK_MEM.I_SYNC_FIFOGEN_FIFO /\xpm_fifo_instance.xpm_fifo_sync_inst . (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:06 ; elapsed = 00:02:05 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:06 ; elapsed = 00:02:06 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-4471] merging register 'GEN_SYNC_WRITE.rst_wvalid_re_reg' into 'GEN_SYNC_WRITE.bvalid_i_reg' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/ec2a/hdl/axi_dma_v7_1_vh_rfs.vhd:2193]
 INFO: [Synth 8-4471] merging register 'GEN_SYNC_READ.rst_rvalid_re_reg' into 'GEN_SYNC_READ.s_axi_lite_rvalid_i_reg' [c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/ipshared/ec2a/hdl/axi_dma_v7_1_vh_rfs.vhd:2965]
@@ -5057,7 +5057,7 @@ INFO: [Synth 8-4471] merging register 'seq_cnt_en_reg' into 'from_sys_reg' [c:/U
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:20 ; elapsed = 00:02:21 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:19 ; elapsed = 00:02:21 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
@@ -5078,7 +5078,7 @@ Report RTL Partitions:
 |10    |design_1__GCB0                                 |           1|     27340|
 |11    |design_1__GCB1                                 |           1|     22996|
 |12    |adc_receiver__GC0                              |           1|      4585|
-|13    |main__GC0                                      |           1|        84|
+|13    |main__GC0                                      |           1|       345|
 +------+-----------------------------------------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -5111,7 +5111,7 @@ Detailed RTL Component Info :
 	   2 Input      4 Bit       Adders := 55    
 	   3 Input      4 Bit       Adders := 6     
 	   4 Input      4 Bit       Adders := 5     
-	   2 Input      3 Bit       Adders := 8     
+	   2 Input      3 Bit       Adders := 7     
 	   3 Input      3 Bit       Adders := 6     
 	   2 Input      2 Bit       Adders := 5     
 	   4 Input      2 Bit       Adders := 3     
@@ -5165,7 +5165,7 @@ Detailed RTL Component Info :
 	                4 Bit    Registers := 139   
 	                3 Bit    Registers := 50    
 	                2 Bit    Registers := 72    
-	                1 Bit    Registers := 1251  
+	                1 Bit    Registers := 1252  
 +---Multipliers : 
 	                 4x32  Multipliers := 1     
 	                 6x32  Multipliers := 1     
@@ -5239,7 +5239,7 @@ Detailed RTL Component Info :
 	  16 Input      3 Bit        Muxes := 1     
 	  11 Input      3 Bit        Muxes := 2     
 	   3 Input      3 Bit        Muxes := 2     
-	   8 Input      3 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 2     
 	  10 Input      3 Bit        Muxes := 1     
 	   4 Input      3 Bit        Muxes := 1     
 	   7 Input      2 Bit        Muxes := 3     
@@ -5249,13 +5249,13 @@ Detailed RTL Component Info :
 	   3 Input      2 Bit        Muxes := 2     
 	   4 Input      2 Bit        Muxes := 2     
 	  10 Input      1 Bit        Muxes := 18    
-	   2 Input      1 Bit        Muxes := 887   
+	   2 Input      1 Bit        Muxes := 893   
 	   5 Input      1 Bit        Muxes := 109   
 	   4 Input      1 Bit        Muxes := 47    
 	  16 Input      1 Bit        Muxes := 19    
 	  11 Input      1 Bit        Muxes := 9     
-	   8 Input      1 Bit        Muxes := 23    
-	  15 Input      1 Bit        Muxes := 3     
+	   8 Input      1 Bit        Muxes := 25    
+	  15 Input      1 Bit        Muxes := 4     
 	   6 Input      1 Bit        Muxes := 5     
 	   3 Input      1 Bit        Muxes := 56    
 	   9 Input      1 Bit        Muxes := 1     
@@ -5269,13 +5269,14 @@ Start RTL Hierarchical Component Statistics
 Hierarchical RTL Component report 
 Module main 
 Detailed RTL Component Info : 
-+---Adders : 
-	   2 Input      3 Bit       Adders := 1     
 +---Registers : 
 	                3 Bit    Registers := 1     
-	                1 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
 +---Muxes : 
-	   2 Input      1 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 1     
+	  15 Input      1 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 7     
+	   8 Input      1 Bit        Muxes := 2     
 Module design_1_clk_wiz_0_0_mmcm_drp 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -9738,7 +9739,7 @@ INFO: [Synth 8-3332] Sequential element (GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS
 INFO: [Synth 8-3332] Sequential element (GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module cdc_sync.
 INFO: [Synth 8-3332] Sequential element (GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module cdc_sync.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:09 ; elapsed = 00:03:12 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:09 ; elapsed = 00:03:13 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
 INFO: [Synth 8-5775] Found 'rw_addr_collision' attribute set to 'no' on SDP RAM gen_wr_a.gen_word_narrow.mem_reg. Setting write mode to NO_CHANGE 
@@ -9795,7 +9796,7 @@ Report RTL Partitions:
 |10    |design_1__GCB0                                 |           1|     16391|
 |11    |design_1__GCB1                                 |           1|     14231|
 |12    |adc_receiver__GC0                              |           1|       205|
-|13    |main__GC0                                      |           1|        63|
+|13    |main__GC0                                      |           1|       183|
 +------+-----------------------------------------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
@@ -9803,7 +9804,7 @@ Start Applying XDC Timing Constraints
 INFO: [Synth 8-5578] Moved timing constraint from pin 'nolabel_line178/clk_wiz_0/inst/clk_in1' to pin 'zynq_ps/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O'
 INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:24 ; elapsed = 00:03:27 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:24 ; elapsed = 00:03:28 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -9848,13 +9849,13 @@ Report RTL Partitions:
 |10    |design_1__GCB0                                 |           1|     16391|
 |11    |design_1__GCB1                                 |           1|     14231|
 |12    |adc_receiver__GC0                              |           1|       205|
-|13    |main__GC0                                      |           1|        63|
+|13    |main__GC0                                      |           1|       183|
 +------+-----------------------------------------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:03:51 ; elapsed = 00:03:57 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Technology Mapping : Time (s): cpu = 00:03:50 ; elapsed = 00:03:57 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -9972,19 +9973,19 @@ WARNING: [Synth 8-3295] tying undriven pin nolabel_line178:EMIO_I[8] to constant
 WARNING: [Synth 8-3295] tying undriven pin nolabel_line178:EMIO_I[6] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin nolabel_line178:EMIO_I[5] to constant 0
 INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
-CRITICAL WARNING: [Synth 8-4442] BlackBox module nolabel_line257 has unconnected pin reset
+CRITICAL WARNING: [Synth 8-4442] BlackBox module nolabel_line250 has unconnected pin reset
 CRITICAL WARNING: [Synth 8-5744] Inout buffer is not created at top module main for the pin csi_lpd0_n, other connections may not have buffer connection [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 CRITICAL WARNING: [Synth 8-5744] Inout buffer is not created at top module main for the pin csi_lpd0_p, other connections may not have buffer connection [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 CRITICAL WARNING: [Synth 8-5744] Inout buffer is not created at top module main for the pin csi_lpd1_n, other connections may not have buffer connection [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 CRITICAL WARNING: [Synth 8-5744] Inout buffer is not created at top module main for the pin csi_lpd1_p, other connections may not have buffer connection [C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/new/main.v:9]
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:03:55 ; elapsed = 00:04:01 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished IO Insertion : Time (s): cpu = 00:03:54 ; elapsed = 00:04:00 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:03:55 ; elapsed = 00:04:01 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Renaming Generated Instances : Time (s): cpu = 00:03:54 ; elapsed = 00:04:01 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -10003,7 +10004,7 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:03:55 ; elapsed = 00:04:01 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:54 ; elapsed = 00:04:01 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -10072,11 +10073,11 @@ Report Cell Usage:
 |12    |IDELAYE2                |     8|
 |13    |ISERDESE2               |     9|
 |14    |LUT1                    |   515|
-|15    |LUT2                    |  1538|
-|16    |LUT3                    |  2073|
-|17    |LUT4                    |  1431|
-|18    |LUT5                    |  1167|
-|19    |LUT6                    |  2799|
+|15    |LUT2                    |  1543|
+|16    |LUT3                    |  2079|
+|17    |LUT4                    |  1438|
+|18    |LUT5                    |  1178|
+|19    |LUT6                    |  2817|
 |20    |MMCME2_ADV              |     1|
 |21    |MUXCY                   |    50|
 |22    |MUXF7                   |   325|
@@ -10100,7 +10101,7 @@ Report Cell Usage:
 |40    |FDCE                    |    69|
 |41    |FDPE                    |    33|
 |42    |FDR                     |    24|
-|43    |FDRE                    | 10764|
+|43    |FDRE                    | 10765|
 |44    |FDSE                    |   269|
 |45    |IBUF                    |     1|
 |46    |IBUFDS                  |     9|
@@ -10114,7 +10115,7 @@ Report Instance Areas:
 +------+--------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+------+
 |      |Instance                                                                                                |Module                                                                   |Cells |
 +------+--------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+------+
-|1     |top                                                                                                     |                                                                         | 22610|
+|1     |top                                                                                                     |                                                                         | 22658|
 |2     |  nolabel_line178                                                                                       |design_1                                                                 | 22413|
 |3     |    clk_wiz_0                                                                                           |design_1_clk_wiz_0_0                                                     |  3203|
 |4     |      inst                                                                                              |design_1_clk_wiz_0_0_axi_clk_config                                      |  3203|
@@ -10934,7 +10935,7 @@ Report Instance Areas:
 |818   |    FabCfg_NextGen_0                                                                                    |design_1_FabCfg_NextGen_0_0                                              |   691|
 |819   |      inst                                                                                              |FabCfg_NextGen_v1_0                                                      |   691|
 |820   |        FabCfg_NextGen_v1_0_S00_AXI_inst                                                                |FabCfg_NextGen_v1_0_S00_AXI                                              |   691|
-|821   |  nolabel_line263                                                                                       |adc_receiver                                                             |   157|
+|821   |  nolabel_line256                                                                                       |adc_receiver                                                             |   157|
 |822   |    nolabel_line229                                                                                     |adc_bitslip                                                              |    62|
 |823   |    asi2_mod_inst0                                                                                      |adc_iserdese2_mod__1                                                     |    11|
 |824   |    asi2_mod_inst1                                                                                      |adc_iserdese2_mod__2                                                     |    11|
@@ -10947,13 +10948,13 @@ Report Instance Areas:
 |831   |  nolabel_line81                                                                                        |g_rst_controller                                                         |    23|
 +------+--------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:03:55 ; elapsed = 00:04:01 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:54 ; elapsed = 00:04:01 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 5 critical warnings and 111 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:54 ; elapsed = 00:03:41 . Memory (MB): peak = 1709.523 ; gain = 1015.805
-Synthesis Optimization Complete : Time (s): cpu = 00:03:55 ; elapsed = 00:04:02 . Memory (MB): peak = 1709.523 ; gain = 1015.805
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:54 ; elapsed = 00:03:41 . Memory (MB): peak = 1697.715 ; gain = 1003.582
+Synthesis Optimization Complete : Time (s): cpu = 00:03:55 ; elapsed = 00:04:01 . Memory (MB): peak = 1697.715 ; gain = 1003.582
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.830 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.807 . Memory (MB): peak = 1697.715 ; gain = 0.000
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/BUFGCE_mipi_oserderse_clk' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/bufgce_mipi_clkout_div' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
 WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'nolabel_line178/csi_gearbox_dma_0/inst/nolabel_line146/mipi_csi0/nolabel_line171' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
@@ -10967,7 +10968,7 @@ WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a t
 Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
 INFO: [Chipscope 16-324] Core: nolabel_line178/system_ila_0/inst/ila_lib UUID: 33172d84-a60c-57da-9df2-8fe9331c4e68 
 INFO: [Opt 31-138] Pushed 9 inverter(s) to 9 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1703.457 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 317 instances were transformed.
   (MUXCY,XORCY) => CARRY4: 16 instances
@@ -10984,12 +10985,12 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 979 Infos, 471 Warnings, 105 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:04:11 ; elapsed = 00:04:18 . Memory (MB): peak = 1709.523 ; gain = 1311.703
+synth_design: Time (s): cpu = 00:04:10 ; elapsed = 00:04:17 . Memory (MB): peak = 1703.457 ; gain = 1305.527
 INFO: [Common 17-600] The following parameters have non-default value.
 tcl.collectionResultDisplayLimit, general.maxThreads
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1709.523 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1703.457 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Wed Mar 18 19:58:09 2020...
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 19 19:31:05 2020...

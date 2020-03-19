@@ -21,7 +21,6 @@ set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 8
 set_param chipscope.maxJobs 4
 set_param xicom.use_bs_reader 1
-set_msg_config -id {HDL-1065} -limit 10000
 create_project -in_memory -part xc7z014sclg400-1
 
 set_param project.singleFileAddWarning.threshold 0

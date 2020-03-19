@@ -35,9 +35,7 @@ src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
  ../src/clkwiz_interface.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xclk_wiz.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xclk_wiz_hw.h \
- ../src/acquire.h ../src/mipi_csi.h ../src/dma_gearbox.h \
- C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdmaps.h \
- C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdmaps_hw.h
+ ../src/acquire.h
 
 ../src/hal.h:
 
@@ -116,11 +114,3 @@ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/s
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xclk_wiz_hw.h:
 
 ../src/acquire.h:
-
-../src/mipi_csi.h:
-
-../src/dma_gearbox.h:
-
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdmaps.h:
-
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdmaps_hw.h:
