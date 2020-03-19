@@ -112,6 +112,9 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.state = ACQSTATE_WAIT_TRIG;
 				}
 
+				// Reset the trigger, preparing for acquiring a triggered wave
+				_acq_reset_trigger();
+
 				// Demask triggers; start AXI bus transactions again.
 				emio_fast_write(ACQ_EMIO_TRIG_MASK, 0);
 				emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
@@ -164,7 +167,8 @@ void _acq_irq_rx_handler(void *callback)
 					 */
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 
-					// Start the AXI bus again
+					// Start the AXI bus again with triggers masked as we are no longer interested in triggers
+					emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
 					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 					g_acq_state.sub_state = ACQSUBST_POST_TRIG;

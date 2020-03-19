@@ -48,17 +48,20 @@
 
 
 // IP VLNV: xilinx.com:user:FabCfg_NextGen:1.0
-// IP Revision: 4
+// IP Revision: 6
 
 `timescale 1ns/1ps
 
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_FabCfg_NextGen_0_0 (
+  R_gpio_test,
   R_acq_size_a,
   R_acq_size_b,
   R_acq_trigger_ptr,
   R_acq_demux_mode,
-  R_gpio_test,
+  R_trig_a_high_low_packed,
+  R_trig_b_high_low_packed,
+  R_trig_config_0,
   R_csi_line_count,
   R_csi_line_byte_count,
   R_csi_data_type,
@@ -87,11 +90,14 @@ module design_1_FabCfg_NextGen_0_0 (
   s00_axi_rready
 );
 
+output wire [1 : 0] R_gpio_test;
 output wire [28 : 0] R_acq_size_a;
 output wire [28 : 0] R_acq_size_b;
 input wire [31 : 0] R_acq_trigger_ptr;
 output wire [6 : 0] R_acq_demux_mode;
-output wire [1 : 0] R_gpio_test;
+output wire [31 : 0] R_trig_a_high_low_packed;
+output wire [31 : 0] R_trig_b_high_low_packed;
+output wire [31 : 0] R_trig_config_0;
 output wire [5 : 0] R_csi_line_count;
 output wire [20 : 0] R_csi_line_byte_count;
 output wire [7 : 0] R_csi_data_type;
@@ -148,11 +154,14 @@ input wire s00_axi_rready;
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
     .C_S00_AXI_ADDR_WIDTH(10)  // Width of S_AXI address bus
   ) inst (
+    .R_gpio_test(R_gpio_test),
     .R_acq_size_a(R_acq_size_a),
     .R_acq_size_b(R_acq_size_b),
     .R_acq_trigger_ptr(R_acq_trigger_ptr),
     .R_acq_demux_mode(R_acq_demux_mode),
-    .R_gpio_test(R_gpio_test),
+    .R_trig_a_high_low_packed(R_trig_a_high_low_packed),
+    .R_trig_b_high_low_packed(R_trig_b_high_low_packed),
+    .R_trig_config_0(R_trig_config_0),
     .R_csi_line_count(R_csi_line_count),
     .R_csi_line_byte_count(R_csi_line_byte_count),
     .R_csi_data_type(R_csi_data_type),

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Mar 18 19:53:35 2020" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Mar 19 21:19:26 2020" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -12,11 +12,13 @@
     <PORT DIR="I" LEFT="63" NAME="ADC_BUS" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_bus"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe18"/>
       </CONNECTIONS>
     </PORT>
     <PORT CLKFREQUENCY="125000000" DIR="I" NAME="ADC_DATA_CLK" SIGIS="clk" SIGNAME="External_Ports_ADC_DATA_CLK">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_clk"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe19"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="63" NAME="EMIO_I" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_EMIO_I">
@@ -32,56 +34,67 @@
     <PORT DIR="I" NAME="ADC_DATA_VALID" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_valid"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe20"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ADC_DATA_EOF" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_EOF">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_eof"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe22"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ADC_FIFO_RESET" SIGIS="undef" SIGNAME="External_Ports_ADC_FIFO_RESET">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_fifo_reset"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe21"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_RUN" SIGIS="undef" SIGNAME="External_Ports_ACQ_RUN">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_run"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe23"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_ABORT" SIGIS="undef" SIGNAME="External_Ports_ACQ_ABORT">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_abort"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe24"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_TRIG_MASK" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_MASK">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_mask"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe25"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_TRIG_RST" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_RST">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_rst"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe26"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_DEPTH_MUX" SIGIS="undef" SIGNAME="External_Ports_ACQ_DEPTH_MUX">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_depth_mux"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe27"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_AXI_RUN" SIGIS="undef" SIGNAME="External_Ports_ACQ_AXI_RUN">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_axi_run"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe28"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="TRIGGER_IN" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_in"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe29"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="2" NAME="TRIGGER_SUB_WORD" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_SUB_WORD">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_sub_word"/>
+        <CONNECTION INSTANCE="system_ila_0" PORT="probe30"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="ACQ_DONE" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_done">
@@ -126,31 +139,26 @@
     </PORT>
     <PORT DIR="I" NAME="CSI_SLEEP" SIGIS="undef" SIGNAME="External_Ports_CSI_SLEEP">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe20"/>
         <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_sleep"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="CSI_START_LINES" SIGIS="undef" SIGNAME="External_Ports_CSI_START_LINES">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe19"/>
         <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_start_lines"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="CSI_START_FRAME" SIGIS="undef" SIGNAME="External_Ports_CSI_START_FRAME">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe18"/>
         <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_start_frame"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="CSI_STOP" SIGIS="undef" SIGNAME="External_Ports_CSI_STOP">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe16"/>
         <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_stop"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="CSI_END_FRAME" SIGIS="undef" SIGNAME="External_Ports_CSI_END_FRAME">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe17"/>
         <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_end_frame"/>
       </CONNECTIONS>
     </PORT>
@@ -379,7 +387,7 @@
   </EXTERNALINTERFACES>
 
   <MODULES>
-    <MODULE COREREVISION="4" FULLNAME="/FabCfg_NextGen_0" HWVERSION="1.0" INSTANCE="FabCfg_NextGen_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="FabCfg_NextGen" VLNV="xilinx.com:user:FabCfg_NextGen:1.0">
+    <MODULE COREREVISION="6" FULLNAME="/FabCfg_NextGen_0" HWVERSION="1.0" INSTANCE="FabCfg_NextGen_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="FabCfg_NextGen" VLNV="xilinx.com:user:FabCfg_NextGen:1.0">
       <DOCUMENTS/>
       <ADDRESSBLOCKS>
         <ADDRESSBLOCK ACCESS="" INTERFACE="S00_AXI" NAME="S00_AXI_reg" RANGE="4096" USAGE="register"/>
@@ -393,6 +401,11 @@
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x83C1FFFF"/>
       </PARAMETERS>
       <PORTS>
+        <PORT DIR="O" LEFT="1" NAME="R_gpio_test" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_gpio_test">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="GPIO_TEST"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" LEFT="28" NAME="R_acq_size_a" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_acq_size_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_depth_a"/>
@@ -409,32 +422,26 @@
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="6" NAME="R_acq_demux_mode" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="1" NAME="R_gpio_test" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_gpio_test">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="GPIO_TEST"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="R_trig_a_high_low_packed" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="R_trig_b_high_low_packed" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="R_trig_config_0" RIGHT="0" SIGIS="undef"/>
         <PORT DIR="O" LEFT="5" NAME="R_csi_line_count" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_line_count">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe21"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="R_csi_line_count"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="20" NAME="R_csi_line_byte_count" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_line_byte_count">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe22"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="R_csi_line_byte_count"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="7" NAME="R_csi_data_type" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_data_type">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe23"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="R_csi_data_type"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="15" NAME="R_csi_control_flags" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_control_flags">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe25"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="R_csi_control_flags"/>
           </CONNECTIONS>
         </PORT>
@@ -642,15 +649,51 @@
             <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_EOF"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="5" NAME="dbg_adcstream_state" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" NAME="dbg_axi_rdy" SIGIS="undef"/>
-        <PORT DIR="O" NAME="dbg_acq_axi_running" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="31" NAME="dbg_acq_axi_upcounter" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="31" NAME="dbg_acq_axi_downcounter" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="10" NAME="dbg_acq_trigger_out_ctr" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="15" NAME="dbg_rd_data_count" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="15" NAME="dbg_wr_data_count" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" NAME="dbg_trig_post_fifo" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="5" NAME="dbg_adcstream_state" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_adcstream_state">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="dbg_axi_rdy" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_axi_rdy">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="dbg_acq_axi_running" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_running">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="dbg_acq_axi_upcounter" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_upcounter">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe3"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="dbg_acq_axi_downcounter" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_downcounter">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe4"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="10" NAME="dbg_acq_trigger_out_ctr" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_trigger_out_ctr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe5"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="15" NAME="dbg_rd_data_count" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_rd_data_count">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe6"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="15" NAME="dbg_wr_data_count" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_wr_data_count">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe7"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="dbg_trig_post_fifo" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_trig_post_fifo">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe8"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" NAME="acq_run" SIGIS="undef" SIGNAME="External_Ports_ACQ_RUN">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="ACQ_RUN"/>
@@ -689,11 +732,13 @@
         <PORT DIR="O" NAME="acq_done" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_done">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="ACQ_DONE"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe9"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="acq_have_trig" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_have_trig">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="ACQ_HAVE_TRIG"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe10"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="acq_axi_run" SIGIS="undef" SIGNAME="External_Ports_ACQ_AXI_RUN">
@@ -704,6 +749,7 @@
         <PORT DIR="O" NAME="acq_full_data_loss" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_full_data_loss">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="ACQ_DATA_LOSS"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe11"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="trigger_in" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
@@ -719,11 +765,13 @@
         <PORT DIR="O" LEFT="31" NAME="trigger_pos" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_pos">
           <CONNECTIONS>
             <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_acq_trigger_ptr"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe12"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="trigger_out" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_out">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_OUT"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe13"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="177777771" DIR="I" NAME="m00_axis_aclk" SIGIS="clk" SIGNAME="zynq_ps_FCLK_CLK0">
@@ -739,6 +787,7 @@
         <PORT DIR="O" NAME="m00_axis_tvalid" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tvalid">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tvalid"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe16"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tvalid"/>
@@ -747,6 +796,7 @@
         <PORT DIR="O" LEFT="63" NAME="m00_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tdata"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe14"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tdata"/>
@@ -756,6 +806,7 @@
         <PORT DIR="O" NAME="m00_axis_tlast" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tlast"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe15"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tlast"/>
@@ -1875,6 +1926,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe17"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s_axis_s2mm_tlast" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
@@ -1888,6 +1940,7 @@
         <PORT DIR="O" NAME="s2mm_introut" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="adc_dma_s2mm_introut">
           <CONNECTIONS>
             <CONNECTION INSTANCE="xlconcat_1" PORT="In0"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe31"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -5713,91 +5766,23 @@
             <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_csi_control_flags"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="5" NAME="csi_ctrl_state_dbg" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_ctrl_state_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe0"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_mipi_busy_dbg" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_busy_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe1"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_mipi_done_dbg" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_done_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe2"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_mipi_init_short_dbg" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_short_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe3"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_mipi_init_long_dbg" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_long_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe4"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_mipi_init_idle_dbg" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_idle_dbg">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe5"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="15" NAME="csi_debug_tx_size" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_tx_size">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe6"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="5" NAME="csi_debug_mipi_state" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_mipi_state">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe7"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="15" NAME="csi_debug_state_timer" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe8"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="15" NAME="csi_debug_state_timer2" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer2">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe9"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_debug_state_timer_rst" SIGIS="rst" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer_rst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe10"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="15" NAME="csi_debug_data_mux_out" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_data_mux_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe11"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_debug_fifo_read_valid" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_fifo_read_valid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe13"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_debug_fifo_space_available" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_fifo_space_available">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe14"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="csi_debug_mipi_read_req" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_mipi_read_req">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe12"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="11" NAME="dbg_fifo_data_ct" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_dbg_fifo_data_ct">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe15"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="dbg_ref_clk" SIGIS="clk" SIGNAME="csi_gearbox_dma_0_dbg_ref_clk">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="system_ila_0" PORT="clk"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="O" LEFT="5" NAME="csi_ctrl_state_dbg" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_mipi_busy_dbg" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_mipi_done_dbg" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_mipi_init_short_dbg" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_mipi_init_long_dbg" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_mipi_init_idle_dbg" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="15" NAME="csi_debug_tx_size" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="5" NAME="csi_debug_mipi_state" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="15" NAME="csi_debug_state_timer" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="15" NAME="csi_debug_state_timer2" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_debug_state_timer_rst" SIGIS="rst"/>
+        <PORT DIR="O" LEFT="15" NAME="csi_debug_data_mux_out" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_debug_fifo_read_valid" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_debug_fifo_space_available" SIGIS="undef"/>
+        <PORT DIR="O" NAME="csi_debug_mipi_read_req" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="11" NAME="dbg_fifo_data_ct" RIGHT="0" SIGIS="undef"/>
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="dbg_ref_clk" SIGIS="clk"/>
         <PORT DIR="I" NAME="g_rst" SIGIS="rst" SIGNAME="External_Ports_G_RST">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="G_RST"/>
@@ -5816,7 +5801,6 @@
         <PORT DIR="O" NAME="s00_axis_tready" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_s00_axis_tready">
           <CONNECTIONS>
             <CONNECTION INSTANCE="mipi_dma" PORT="m_axis_mm2s_tready"/>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe27"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="mipi_dma" PORT="m_axis_mm2s_tready"/>
@@ -6916,7 +6900,6 @@
         <PORT DIR="O" LEFT="63" NAME="m_axis_mm2s_tdata" RIGHT="0" SIGIS="undef" SIGNAME="mipi_dma_m_axis_mm2s_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_tdata"/>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe24"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
@@ -6924,7 +6907,6 @@
         <PORT DIR="O" NAME="m_axis_mm2s_tvalid" SIGIS="undef" SIGNAME="mipi_dma_m_axis_mm2s_tvalid">
           <CONNECTIONS>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_tvalid"/>
-            <CONNECTION INSTANCE="system_ila_0" PORT="probe26"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
@@ -7134,8 +7116,8 @@
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="ARESETN"/>
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="M00_ARESETN"/>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aresetn"/>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aresetn"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_aresetn"/>
+            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aresetn"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -7389,7 +7371,7 @@
         <PARAMETER NAME="C_SLOT_15_APC_MAX_WLAST_TO_AWVALID_WAITS" VALUE="0"/>
         <PARAMETER NAME="C_SLOT_15_APC_MAX_WRITE_TO_BVALID_WAITS" VALUE="0"/>
         <PARAMETER NAME="C_SLOT_15_APC_MAX_CONTINUOUS_RTRANSFERS_WAITS" VALUE="0"/>
-        <PARAMETER NAME="C_BRAM_CNT" VALUE="4"/>
+        <PARAMETER NAME="C_BRAM_CNT" VALUE="7.5"/>
         <PARAMETER NAME="C_SLOT_0_AXI_AW_SEL_DATA" VALUE="1"/>
         <PARAMETER NAME="C_SLOT_0_AXI_W_SEL_DATA" VALUE="1"/>
         <PARAMETER NAME="C_SLOT_0_AXI_B_SEL_DATA" VALUE="1"/>
@@ -9709,7 +9691,7 @@
         <PARAMETER NAME="C_PROBE2_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE1_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE0_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="C_DATA_DEPTH" VALUE="4096"/>
+        <PARAMETER NAME="C_DATA_DEPTH" VALUE="8192"/>
         <PARAMETER NAME="C_NUM_OF_PROBES" VALUE="32"/>
         <PARAMETER NAME="C_XLNX_HW_PROBE_INFO" VALUE="DEFAULT"/>
         <PARAMETER NAME="Component_Name" VALUE="design_1_system_ila_0_0"/>
@@ -10978,155 +10960,171 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="csi_gearbox_dma_0_dbg_ref_clk">
+        <PORT CLKFREQUENCY="177777771" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="zynq_ps_FCLK_CLK0">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="dbg_ref_clk"/>
+            <CONNECTION INSTANCE="zynq_ps" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="5" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_ctrl_state_dbg">
+        <PORT DIR="I" LEFT="5" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_adcstream_state">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_ctrl_state_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_adcstream_state"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe1" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_busy_dbg">
+        <PORT DIR="I" LEFT="0" NAME="probe1" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_axi_rdy">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_mipi_busy_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_axi_rdy"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe2" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_done_dbg">
+        <PORT DIR="I" LEFT="0" NAME="probe2" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_running">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_mipi_done_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_acq_axi_running"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe3" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_short_dbg">
+        <PORT DIR="I" LEFT="31" NAME="probe3" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_upcounter">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_mipi_init_short_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_acq_axi_upcounter"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe4" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_long_dbg">
+        <PORT DIR="I" LEFT="31" NAME="probe4" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_axi_downcounter">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_mipi_init_long_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_acq_axi_downcounter"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe5" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_mipi_init_idle_dbg">
+        <PORT DIR="I" LEFT="10" NAME="probe5" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_acq_trigger_out_ctr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_mipi_init_idle_dbg"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_acq_trigger_out_ctr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="15" NAME="probe6" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_tx_size">
+        <PORT DIR="I" LEFT="15" NAME="probe6" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_rd_data_count">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_tx_size"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_rd_data_count"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="5" NAME="probe7" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_mipi_state">
+        <PORT DIR="I" LEFT="15" NAME="probe7" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_wr_data_count">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_mipi_state"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_wr_data_count"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="15" NAME="probe8" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer">
+        <PORT DIR="I" LEFT="0" NAME="probe8" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_dbg_trig_post_fifo">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_state_timer"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="dbg_trig_post_fifo"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="15" NAME="probe9" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer2">
+        <PORT DIR="I" LEFT="0" NAME="probe9" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_done">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_state_timer2"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_done"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe10" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_state_timer_rst">
+        <PORT DIR="I" LEFT="0" NAME="probe10" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_have_trig">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_state_timer_rst"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_have_trig"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="15" NAME="probe11" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_data_mux_out">
+        <PORT DIR="I" LEFT="0" NAME="probe11" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_full_data_loss">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_data_mux_out"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_full_data_loss"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="5" NAME="probe12" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_mipi_read_req">
+        <PORT DIR="I" LEFT="31" NAME="probe12" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_pos">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_mipi_read_req"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_pos"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe13" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_fifo_read_valid">
+        <PORT DIR="I" LEFT="0" NAME="probe13" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_fifo_read_valid"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_out"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe14" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_csi_debug_fifo_space_available">
+        <PORT DIR="I" LEFT="63" NAME="probe14" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="csi_debug_fifo_space_available"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="11" NAME="probe15" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_dbg_fifo_data_ct">
+        <PORT DIR="I" LEFT="0" NAME="probe15" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="dbg_fifo_data_ct"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe16" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_CSI_STOP">
+        <PORT DIR="I" LEFT="0" NAME="probe16" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CSI_STOP"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe17" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_CSI_END_FRAME">
+        <PORT DIR="I" LEFT="0" NAME="probe17" RIGHT="0" SIGIS="undef" SIGNAME="adc_dma_s_axis_s2mm_tready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CSI_END_FRAME"/>
+            <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe18" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_CSI_START_FRAME">
+        <PORT DIR="I" LEFT="63" NAME="probe18" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CSI_START_FRAME"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_BUS"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe19" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_CSI_START_LINES">
+        <PORT DIR="I" LEFT="0" NAME="probe19" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_CLK">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CSI_START_LINES"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe20" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_CSI_SLEEP">
+        <PORT DIR="I" LEFT="0" NAME="probe20" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CSI_SLEEP"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_VALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="5" NAME="probe21" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_line_count">
+        <PORT DIR="I" LEFT="0" NAME="probe21" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_FIFO_RESET">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_csi_line_count"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_FIFO_RESET"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="20" NAME="probe22" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_line_byte_count">
+        <PORT DIR="I" LEFT="0" NAME="probe22" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_EOF">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_csi_line_byte_count"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_EOF"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="7" NAME="probe23" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_data_type">
+        <PORT DIR="I" LEFT="0" NAME="probe23" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_RUN">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_csi_data_type"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_RUN"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="63" NAME="probe24" RIGHT="0" SIGIS="undef" SIGNAME="mipi_dma_m_axis_mm2s_tdata">
+        <PORT DIR="I" LEFT="0" NAME="probe24" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_ABORT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="mipi_dma" PORT="m_axis_mm2s_tdata"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_ABORT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="15" NAME="probe25" RIGHT="0" SIGIS="undef" SIGNAME="FabCfg_NextGen_0_R_csi_control_flags">
+        <PORT DIR="I" LEFT="0" NAME="probe25" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_MASK">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="R_csi_control_flags"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_TRIG_MASK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe26" RIGHT="0" SIGIS="undef" SIGNAME="mipi_dma_m_axis_mm2s_tvalid">
+        <PORT DIR="I" LEFT="0" NAME="probe26" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_RST">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="mipi_dma" PORT="m_axis_mm2s_tvalid"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_TRIG_RST"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe27" RIGHT="0" SIGIS="undef" SIGNAME="csi_gearbox_dma_0_s00_axis_tready">
+        <PORT DIR="I" LEFT="0" NAME="probe27" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_DEPTH_MUX">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_tready"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_DEPTH_MUX"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe28" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="0" NAME="probe29" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="0" NAME="probe30" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="0" NAME="probe31" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="0" NAME="probe28" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ACQ_AXI_RUN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ACQ_AXI_RUN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="probe29" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_IN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="2" NAME="probe30" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_SUB_WORD">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_SUB_WORD"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="probe31" RIGHT="0" SIGIS="undef" SIGNAME="adc_dma_s2mm_introut">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="adc_dma" PORT="s2mm_introut"/>
+          </CONNECTIONS>
+        </PORT>
       </PORTS>
       <BUSINTERFACES/>
     </MODULE>
@@ -12850,8 +12848,9 @@
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="zynq_ps" PORT="S_AXI_HP1_ACLK"/>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aclk"/>
-            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aclk"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_aclk"/>
+            <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aclk"/>
+            <CONNECTION INSTANCE="system_ila_0" PORT="clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst" SIGNAME="zynq_ps_FCLK_RESET0_N">

@@ -60,6 +60,7 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
@@ -69,8 +70,9 @@ set rc [catch {
   set_param general.maxThreads 8
   set_param chipscope.maxJobs 4
   set_param xicom.use_bs_reader 1
-  reset_param project.defaultXPMLibraries 
-  open_checkpoint C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_3/main.dcp
+  create_project -in_memory -part xc7z014sclg400-1
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
   set_property webtalk.parent_dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/wt [current_project]
   set_property parent.project_path C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.xpr [current_project]
   set_property ip_repo_paths {
@@ -83,6 +85,17 @@ set rc [catch {
   set_property ip_output_repo C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
+  add_files -quiet C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.dcp
+  set_msg_config -source 4 -id {BD 41-1661} -limit 0
+  set_param project.isImplRun true
+  add_files C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/design_1.bd
+  read_ip -quiet C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/ip/clk_wiz_1_idelay_refclk/clk_wiz_1_idelay_refclk.xci
+  set_param project.isImplRun false
+  read_xdc C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_2/new/constraints.xdc
+  set_param project.isImplRun true
+  link_design -top main -part xc7z014sclg400-1
+  set_param project.isImplRun false
+  write_hwdef -force -file main.hwdef
   close_msg_db -file init_design.pb
 } RESULT]
 if {$rc} {

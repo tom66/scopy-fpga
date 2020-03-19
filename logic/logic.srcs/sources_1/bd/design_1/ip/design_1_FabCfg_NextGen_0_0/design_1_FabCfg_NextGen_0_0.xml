@@ -581,11 +581,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Mar 18 14:09:38 UTC 2020</spirit:value>
+            <spirit:value>Thu Mar 19 21:19:24 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c6923d45</spirit:value>
+            <spirit:value>9:f9516740</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -596,7 +596,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c6923d45</spirit:value>
+            <spirit:value>9:f9516740</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -612,11 +612,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Mar 18 14:09:38 UTC 2020</spirit:value>
+            <spirit:value>Thu Mar 19 21:19:24 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c6923d45</spirit:value>
+            <spirit:value>9:f9516740</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -632,11 +632,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Mar 18 14:09:38 UTC 2020</spirit:value>
+            <spirit:value>Thu Mar 19 21:19:24 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c9238b77</spirit:value>
+            <spirit:value>9:8b269e6c</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -652,16 +652,33 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Mar 18 14:09:38 UTC 2020</spirit:value>
+            <spirit:value>Thu Mar 19 21:19:24 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:c9238b77</spirit:value>
+            <spirit:value>9:8b269e6c</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
     </spirit:views>
     <spirit:ports>
+      <spirit:port>
+        <spirit:name>R_gpio_test</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">1</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
       <spirit:port>
         <spirit:name>R_acq_size_a</spirit:name>
         <spirit:wire>
@@ -731,11 +748,45 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>R_gpio_test</spirit:name>
+        <spirit:name>R_trig_a_high_low_packed</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long">1</spirit:left>
+            <spirit:left spirit:format="long">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>R_trig_b_high_low_packed</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>R_trig_config_0</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">31</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -1177,11 +1228,11 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/14bc/hdl/FabCfg_NextGen_v1_0_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/175e/hdl/FabCfg_NextGen_v1_0_S00_AXI.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/14bc/hdl/FabCfg_NextGen_v1_0.v</spirit:name>
+        <spirit:name>../../ipshared/175e/hdl/FabCfg_NextGen_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1196,11 +1247,11 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/14bc/hdl/FabCfg_NextGen_v1_0_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/175e/hdl/FabCfg_NextGen_v1_0_S00_AXI.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/14bc/hdl/FabCfg_NextGen_v1_0.v</spirit:name>
+        <spirit:name>../../ipshared/175e/hdl/FabCfg_NextGen_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1273,7 +1324,7 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:displayName>FabCfg_NextGen_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>4</xilinx:coreRevision>
+      <xilinx:coreRevision>6</xilinx:coreRevision>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@73a4a058_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@5ddf0cbc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
@@ -1308,6 +1359,29 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@217641e1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4698ed3b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@28d47bc1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61867de8_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e0987b_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a4df156_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a0d66bb_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ebe52fa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6cd5a387_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b506ccc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@406d55cc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a80af96_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7569cdfc_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65415183_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69d47471_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@fc7429c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@621efb4e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@362601fa_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2687aef9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59bbf470_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ba9db93_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3fd3b787_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d7f74c6_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@41c89e49_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@77e082ea_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5a69650d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0</xilinx:tag>
       </xilinx:tags>
       <xilinx:configElementInfos>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ADDR_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -1354,8 +1428,8 @@
       <xilinx:xilinxVersion>2019.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="43fc2fad"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d6243a62"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="a3243b63"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="40d8fdef"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="1b304c5c"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="0ca20ac0"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="57e997b6"/>
     </xilinx:packagingInfo>

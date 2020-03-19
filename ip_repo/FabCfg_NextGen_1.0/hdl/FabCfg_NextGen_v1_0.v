@@ -14,17 +14,27 @@
 		parameter integer C_S00_AXI_ADDR_WIDTH	= 10
 	)
 	(
-		// Users to add ports here
+	    // General purpose registers
+		output [1:0] R_gpio_test,
+		
+		// Acquisition registers:
 		output [28:0] R_acq_size_a,
 		output [28:0] R_acq_size_b,
 		input [31:0] R_acq_trigger_ptr,
 		output [6:0] R_acq_demux_mode,
-		output [1:0] R_gpio_test,
+		
+		// Trigger registers
+		output [31:0] R_trig_a_high_low_packed,   // 12-bit high and low values packed for 'A' trigger
+		output [31:0] R_trig_b_high_low_packed,   // 12-bit high and low values packed for 'B' trigger
+		output [31:0] R_trig_config_0,            // Trigger configuration (type, edge, coupling, mode, etc.)
+		
+		// CSI registers:
 		output [5:0] R_csi_line_count,
 		output [20:0] R_csi_line_byte_count,
 		output [7:0] R_csi_data_type,
 		output [15:0] R_csi_control_flags,
 		
+		// Constant inputs for permanent configuration
 		input [31:0] K_in_bitstream_version,
 
 		// User ports ends
@@ -63,6 +73,11 @@
 	    .R_acq_size_b(R_acq_size_b),
 	    .R_acq_trigger_ptr(R_acq_trigger_ptr),
 	    .R_acq_demux_mode(R_acq_demux_mode),
+	    
+	    .R_trig_a_high_low_packed(R_trig_a_high_low_packed),
+	    .R_trig_b_high_low_packed(R_trig_b_high_low_packed),
+	    .R_trig_config_0(R_trig_config_0),
+	    
 	    .R_gpio_test(R_gpio_test),
 	    .R_csi_line_count(R_csi_line_count),
 	    .R_csi_line_byte_count(R_csi_line_byte_count),

@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Wed Mar 18 19:53:33 2020
+//Date        : Thu Mar 19 21:19:23 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=31,numReposBlks=18,numNonXlnxBlks=0,numHierBlks=13,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=21,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_s2mm_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_board_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_bram_cntlr_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=2,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=25,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_ps7_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"=5,\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"=6,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=31,numReposBlks=18,numNonXlnxBlks=0,numHierBlks=13,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=21,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_s2mm_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_board_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_bram_cntlr_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=2,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=25,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_ps7_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"=5,\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"=6,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (ACQ_ABORT,
     ACQ_AXI_RUN,
@@ -167,8 +167,8 @@ module design_1
   wire [5:0]FabCfg_NextGen_0_R_csi_line_count;
   wire [1:0]FabCfg_NextGen_0_R_gpio_test;
   wire G_RST_1;
-  (* CONN_BUS_INFO = "axi_dma1_M_AXIS_MM2S xilinx.com:interface:axis:1.0 None TDATA" *) (* DONT_TOUCH *) wire [63:0]Net;
-  (* CONN_BUS_INFO = "axi_dma1_M_AXIS_MM2S xilinx.com:interface:axis:1.0 None TVALID" *) (* DONT_TOUCH *) wire Net1;
+  wire [63:0]Net;
+  wire Net1;
   wire [3:0]PL_IRQ_1;
   wire [31:0]S00_AXI_1_ARADDR;
   wire [1:0]S00_AXI_1_ARBURST;
@@ -224,9 +224,18 @@ module design_1
   wire adc_axi_streamer_acq_done;
   wire adc_axi_streamer_acq_have_trig;
   wire adc_axi_streamer_adc_fifo_full;
-  wire [63:0]adc_axi_streamer_m00_axis_tdata;
-  wire adc_axi_streamer_m00_axis_tlast;
-  wire adc_axi_streamer_m00_axis_tvalid;
+  wire [31:0]adc_axi_streamer_dbg_acq_axi_downcounter;
+  wire adc_axi_streamer_dbg_acq_axi_running;
+  wire [31:0]adc_axi_streamer_dbg_acq_axi_upcounter;
+  wire [10:0]adc_axi_streamer_dbg_acq_trigger_out_ctr;
+  wire [5:0]adc_axi_streamer_dbg_adcstream_state;
+  wire adc_axi_streamer_dbg_axi_rdy;
+  wire [15:0]adc_axi_streamer_dbg_rd_data_count;
+  wire adc_axi_streamer_dbg_trig_post_fifo;
+  wire [15:0]adc_axi_streamer_dbg_wr_data_count;
+  (* CONN_BUS_INFO = "adc_axi_streamer_M00_AXIS xilinx.com:interface:axis:1.0 None TDATA" *) (* DONT_TOUCH *) wire [63:0]adc_axi_streamer_m00_axis_tdata;
+  (* CONN_BUS_INFO = "adc_axi_streamer_M00_AXIS xilinx.com:interface:axis:1.0 None TLAST" *) (* DONT_TOUCH *) wire adc_axi_streamer_m00_axis_tlast;
+  (* CONN_BUS_INFO = "adc_axi_streamer_M00_AXIS xilinx.com:interface:axis:1.0 None TVALID" *) (* DONT_TOUCH *) wire adc_axi_streamer_m00_axis_tvalid;
   wire adc_axi_streamer_trigger_out;
   wire [31:0]adc_axi_streamer_trigger_pos;
   wire [31:0]axi_dma_M_AXI_S2MM_AWADDR;
@@ -246,7 +255,7 @@ module design_1
   wire [7:0]axi_dma_M_AXI_S2MM_WSTRB;
   wire axi_dma_M_AXI_S2MM_WVALID;
   wire axi_dma_s2mm_introut;
-  wire axi_dma_s_axis_s2mm_tready;
+  (* CONN_BUS_INFO = "adc_axi_streamer_M00_AXIS xilinx.com:interface:axis:1.0 None TREADY" *) (* DONT_TOUCH *) wire axi_dma_s_axis_s2mm_tready;
   wire [31:0]axi_interconnect_0_M00_AXI_ARADDR;
   wire axi_interconnect_0_M00_AXI_ARREADY;
   wire [0:0]axi_interconnect_0_M00_AXI_ARVALID;
@@ -352,20 +361,10 @@ module design_1
   wire clk_wiz_0_clk_out2;
   wire csi_gearbox_dma_0_csi_clk_n;
   wire csi_gearbox_dma_0_csi_clk_p;
-  wire [5:0]csi_gearbox_dma_0_csi_ctrl_state_dbg;
   wire csi_gearbox_dma_0_csi_d0_n;
   wire csi_gearbox_dma_0_csi_d0_p;
   wire csi_gearbox_dma_0_csi_d1_n;
   wire csi_gearbox_dma_0_csi_d1_p;
-  wire [15:0]csi_gearbox_dma_0_csi_debug_data_mux_out;
-  wire csi_gearbox_dma_0_csi_debug_fifo_read_valid;
-  wire csi_gearbox_dma_0_csi_debug_fifo_space_available;
-  wire csi_gearbox_dma_0_csi_debug_mipi_read_req;
-  wire [5:0]csi_gearbox_dma_0_csi_debug_mipi_state;
-  wire [15:0]csi_gearbox_dma_0_csi_debug_state_timer;
-  wire [15:0]csi_gearbox_dma_0_csi_debug_state_timer2;
-  wire csi_gearbox_dma_0_csi_debug_state_timer_rst;
-  wire [15:0]csi_gearbox_dma_0_csi_debug_tx_size;
   wire csi_gearbox_dma_0_csi_done;
   wire csi_gearbox_dma_0_csi_lpclk_n;
   wire csi_gearbox_dma_0_csi_lpclk_p;
@@ -373,14 +372,7 @@ module design_1
   wire csi_gearbox_dma_0_csi_lpd0_p;
   wire csi_gearbox_dma_0_csi_lpd1_n;
   wire csi_gearbox_dma_0_csi_lpd1_p;
-  wire csi_gearbox_dma_0_csi_mipi_busy_dbg;
-  wire csi_gearbox_dma_0_csi_mipi_done_dbg;
-  wire csi_gearbox_dma_0_csi_mipi_init_idle_dbg;
-  wire csi_gearbox_dma_0_csi_mipi_init_long_dbg;
-  wire csi_gearbox_dma_0_csi_mipi_init_short_dbg;
-  wire [11:0]csi_gearbox_dma_0_dbg_fifo_data_ct;
-  wire csi_gearbox_dma_0_dbg_ref_clk;
-  (* CONN_BUS_INFO = "axi_dma1_M_AXIS_MM2S xilinx.com:interface:axis:1.0 None TREADY" *) (* DONT_TOUCH *) wire csi_gearbox_dma_0_s00_axis_tready;
+  wire csi_gearbox_dma_0_s00_axis_tready;
   wire mipi_dma_m_axis_mm2s_tlast;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
@@ -539,6 +531,15 @@ module design_1
         .adc_data_valid(ADC_DATA_VALID_1),
         .adc_eof(ADC_DATA_EOF_1),
         .adc_fifo_reset(ADC_FIFO_RESET_1),
+        .dbg_acq_axi_downcounter(adc_axi_streamer_dbg_acq_axi_downcounter),
+        .dbg_acq_axi_running(adc_axi_streamer_dbg_acq_axi_running),
+        .dbg_acq_axi_upcounter(adc_axi_streamer_dbg_acq_axi_upcounter),
+        .dbg_acq_trigger_out_ctr(adc_axi_streamer_dbg_acq_trigger_out_ctr),
+        .dbg_adcstream_state(adc_axi_streamer_dbg_adcstream_state),
+        .dbg_axi_rdy(adc_axi_streamer_dbg_axi_rdy),
+        .dbg_rd_data_count(adc_axi_streamer_dbg_rd_data_count),
+        .dbg_trig_post_fifo(adc_axi_streamer_dbg_trig_post_fifo),
+        .dbg_wr_data_count(adc_axi_streamer_dbg_wr_data_count),
         .m00_axis_aclk(processing_system7_0_FCLK_CLK0),
         .m00_axis_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .m00_axis_tdata(adc_axi_streamer_m00_axis_tdata),
@@ -873,20 +874,10 @@ module design_1
         .R_csi_wct_frame(xlconstant_1_dout),
         .csi_clk_n(csi_gearbox_dma_0_csi_clk_n),
         .csi_clk_p(csi_gearbox_dma_0_csi_clk_p),
-        .csi_ctrl_state_dbg(csi_gearbox_dma_0_csi_ctrl_state_dbg),
         .csi_d0_n(csi_gearbox_dma_0_csi_d0_n),
         .csi_d0_p(csi_gearbox_dma_0_csi_d0_p),
         .csi_d1_n(csi_gearbox_dma_0_csi_d1_n),
         .csi_d1_p(csi_gearbox_dma_0_csi_d1_p),
-        .csi_debug_data_mux_out(csi_gearbox_dma_0_csi_debug_data_mux_out),
-        .csi_debug_fifo_read_valid(csi_gearbox_dma_0_csi_debug_fifo_read_valid),
-        .csi_debug_fifo_space_available(csi_gearbox_dma_0_csi_debug_fifo_space_available),
-        .csi_debug_mipi_read_req(csi_gearbox_dma_0_csi_debug_mipi_read_req),
-        .csi_debug_mipi_state(csi_gearbox_dma_0_csi_debug_mipi_state),
-        .csi_debug_state_timer(csi_gearbox_dma_0_csi_debug_state_timer),
-        .csi_debug_state_timer2(csi_gearbox_dma_0_csi_debug_state_timer2),
-        .csi_debug_state_timer_rst(csi_gearbox_dma_0_csi_debug_state_timer_rst),
-        .csi_debug_tx_size(csi_gearbox_dma_0_csi_debug_tx_size),
         .csi_done(csi_gearbox_dma_0_csi_done),
         .csi_end_frame(CSI_END_FRAME_1),
         .csi_lpclk_n(csi_gearbox_dma_0_csi_lpclk_n),
@@ -895,17 +886,10 @@ module design_1
         .csi_lpd0_p(csi_gearbox_dma_0_csi_lpd0_p),
         .csi_lpd1_n(csi_gearbox_dma_0_csi_lpd1_n),
         .csi_lpd1_p(csi_gearbox_dma_0_csi_lpd1_p),
-        .csi_mipi_busy_dbg(csi_gearbox_dma_0_csi_mipi_busy_dbg),
-        .csi_mipi_done_dbg(csi_gearbox_dma_0_csi_mipi_done_dbg),
-        .csi_mipi_init_idle_dbg(csi_gearbox_dma_0_csi_mipi_init_idle_dbg),
-        .csi_mipi_init_long_dbg(csi_gearbox_dma_0_csi_mipi_init_long_dbg),
-        .csi_mipi_init_short_dbg(csi_gearbox_dma_0_csi_mipi_init_short_dbg),
         .csi_sleep(CSI_SLEEP_1),
         .csi_start_frame(CSI_START_FRAME_1),
         .csi_start_lines(CSI_START_LINES_1),
         .csi_stop(CSI_STOP_1),
-        .dbg_fifo_data_ct(csi_gearbox_dma_0_dbg_fifo_data_ct),
-        .dbg_ref_clk(csi_gearbox_dma_0_dbg_ref_clk),
         .g_rst(G_RST_1),
         .mod_clk_I(clk_wiz_0_clk_out1),
         .mod_clk_Q(clk_wiz_0_clk_out2),
@@ -961,39 +945,39 @@ module design_1
         .peripheral_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
   design_1_system_ila_0_0 system_ila_0
-       (.clk(csi_gearbox_dma_0_dbg_ref_clk),
-        .probe0(csi_gearbox_dma_0_csi_ctrl_state_dbg),
-        .probe1(csi_gearbox_dma_0_csi_mipi_busy_dbg),
-        .probe10(csi_gearbox_dma_0_csi_debug_state_timer_rst),
-        .probe11(csi_gearbox_dma_0_csi_debug_data_mux_out),
-        .probe12({csi_gearbox_dma_0_csi_debug_mipi_read_req,csi_gearbox_dma_0_csi_debug_mipi_read_req,csi_gearbox_dma_0_csi_debug_mipi_read_req,csi_gearbox_dma_0_csi_debug_mipi_read_req,csi_gearbox_dma_0_csi_debug_mipi_read_req,csi_gearbox_dma_0_csi_debug_mipi_read_req}),
-        .probe13(csi_gearbox_dma_0_csi_debug_fifo_read_valid),
-        .probe14(csi_gearbox_dma_0_csi_debug_fifo_space_available),
-        .probe15(csi_gearbox_dma_0_dbg_fifo_data_ct),
-        .probe16(CSI_STOP_1),
-        .probe17(CSI_END_FRAME_1),
-        .probe18(CSI_START_FRAME_1),
-        .probe19(CSI_START_LINES_1),
-        .probe2(csi_gearbox_dma_0_csi_mipi_done_dbg),
-        .probe20(CSI_SLEEP_1),
-        .probe21(FabCfg_NextGen_0_R_csi_line_count),
-        .probe22(FabCfg_NextGen_0_R_csi_line_byte_count),
-        .probe23(FabCfg_NextGen_0_R_csi_data_type),
-        .probe24(Net),
-        .probe25(FabCfg_NextGen_0_R_csi_control_flags),
-        .probe26(Net1),
-        .probe27(csi_gearbox_dma_0_s00_axis_tready),
-        .probe28(1'b0),
-        .probe29(1'b0),
-        .probe3(csi_gearbox_dma_0_csi_mipi_init_short_dbg),
-        .probe30(1'b0),
-        .probe31(1'b0),
-        .probe4(csi_gearbox_dma_0_csi_mipi_init_long_dbg),
-        .probe5(csi_gearbox_dma_0_csi_mipi_init_idle_dbg),
-        .probe6(csi_gearbox_dma_0_csi_debug_tx_size),
-        .probe7(csi_gearbox_dma_0_csi_debug_mipi_state),
-        .probe8(csi_gearbox_dma_0_csi_debug_state_timer),
-        .probe9(csi_gearbox_dma_0_csi_debug_state_timer2));
+       (.clk(processing_system7_0_FCLK_CLK0),
+        .probe0(adc_axi_streamer_dbg_adcstream_state),
+        .probe1(adc_axi_streamer_dbg_axi_rdy),
+        .probe10(adc_axi_streamer_acq_have_trig),
+        .probe11(adc_axi_streamer_adc_fifo_full),
+        .probe12(adc_axi_streamer_trigger_pos),
+        .probe13(adc_axi_streamer_trigger_out),
+        .probe14(adc_axi_streamer_m00_axis_tdata),
+        .probe15(adc_axi_streamer_m00_axis_tlast),
+        .probe16(adc_axi_streamer_m00_axis_tvalid),
+        .probe17(axi_dma_s_axis_s2mm_tready),
+        .probe18(ADC_BUS_1),
+        .probe19(ADC_DATA_CLK_2),
+        .probe2(adc_axi_streamer_dbg_acq_axi_running),
+        .probe20(ADC_DATA_VALID_1),
+        .probe21(ADC_FIFO_RESET_1),
+        .probe22(ADC_DATA_EOF_1),
+        .probe23(ACQ_RUN_1),
+        .probe24(ACQ_ABORT_1),
+        .probe25(ACQ_TRIG_MASK_1),
+        .probe26(ACQ_TRIG_RST_1),
+        .probe27(ACQ_DEPTH_MUX),
+        .probe28(ACQ_AXI_RUN_1),
+        .probe29(ACQ_TRIGGER_IN_1),
+        .probe3(adc_axi_streamer_dbg_acq_axi_upcounter),
+        .probe30(ACQ_TRIG_WORD_1),
+        .probe31(axi_dma_s2mm_introut),
+        .probe4(adc_axi_streamer_dbg_acq_axi_downcounter),
+        .probe5(adc_axi_streamer_dbg_acq_trigger_out_ctr),
+        .probe6(adc_axi_streamer_dbg_rd_data_count),
+        .probe7(adc_axi_streamer_dbg_wr_data_count),
+        .probe8(adc_axi_streamer_dbg_trig_post_fifo),
+        .probe9(adc_axi_streamer_acq_done));
   design_1_xlconcat_1_0 xlconcat_1
        (.In0(axi_dma_s2mm_introut),
         .In1(PL_IRQ_1),

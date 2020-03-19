@@ -50,7 +50,10 @@ void acq_hacks_run()
 		d_printf(D_ERROR, "starting to prepare acq...");
 
 		// 32k sampct, 256k bytes (256k samples)
-		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 32768, n_waves);
+		//res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 32768, n_waves);
+
+		// 2k sampct, 8k bytes (8k samples)
+		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 1024, n_waves);
 
 		if(res != ACQRES_OK) {
 			d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);

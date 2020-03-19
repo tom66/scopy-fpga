@@ -161,34 +161,34 @@ proc create_root_design { parentCell } {
   set probe0 [ create_bd_port -dir I -from 5 -to 0 probe0 ]
   set probe1 [ create_bd_port -dir I -from 0 -to 0 probe1 ]
   set probe2 [ create_bd_port -dir I -from 0 -to 0 probe2 ]
-  set probe3 [ create_bd_port -dir I -from 0 -to 0 probe3 ]
-  set probe4 [ create_bd_port -dir I -from 0 -to 0 probe4 ]
-  set probe5 [ create_bd_port -dir I -from 0 -to 0 probe5 ]
+  set probe3 [ create_bd_port -dir I -from 31 -to 0 probe3 ]
+  set probe4 [ create_bd_port -dir I -from 31 -to 0 probe4 ]
+  set probe5 [ create_bd_port -dir I -from 10 -to 0 probe5 ]
   set probe6 [ create_bd_port -dir I -from 15 -to 0 probe6 ]
-  set probe7 [ create_bd_port -dir I -from 5 -to 0 probe7 ]
-  set probe8 [ create_bd_port -dir I -from 15 -to 0 probe8 ]
-  set probe9 [ create_bd_port -dir I -from 15 -to 0 probe9 ]
+  set probe7 [ create_bd_port -dir I -from 15 -to 0 probe7 ]
+  set probe8 [ create_bd_port -dir I -from 0 -to 0 probe8 ]
+  set probe9 [ create_bd_port -dir I -from 0 -to 0 probe9 ]
   set probe10 [ create_bd_port -dir I -from 0 -to 0 probe10 ]
-  set probe11 [ create_bd_port -dir I -from 15 -to 0 probe11 ]
-  set probe12 [ create_bd_port -dir I -from 5 -to 0 probe12 ]
+  set probe11 [ create_bd_port -dir I -from 0 -to 0 probe11 ]
+  set probe12 [ create_bd_port -dir I -from 31 -to 0 probe12 ]
   set probe13 [ create_bd_port -dir I -from 0 -to 0 probe13 ]
-  set probe14 [ create_bd_port -dir I -from 0 -to 0 probe14 ]
-  set probe15 [ create_bd_port -dir I -from 11 -to 0 probe15 ]
+  set probe14 [ create_bd_port -dir I -from 63 -to 0 probe14 ]
+  set probe15 [ create_bd_port -dir I -from 0 -to 0 probe15 ]
   set probe16 [ create_bd_port -dir I -from 0 -to 0 probe16 ]
   set probe17 [ create_bd_port -dir I -from 0 -to 0 probe17 ]
-  set probe18 [ create_bd_port -dir I -from 0 -to 0 probe18 ]
+  set probe18 [ create_bd_port -dir I -from 63 -to 0 probe18 ]
   set probe19 [ create_bd_port -dir I -from 0 -to 0 probe19 ]
   set probe20 [ create_bd_port -dir I -from 0 -to 0 probe20 ]
-  set probe21 [ create_bd_port -dir I -from 5 -to 0 probe21 ]
-  set probe22 [ create_bd_port -dir I -from 20 -to 0 probe22 ]
-  set probe23 [ create_bd_port -dir I -from 7 -to 0 probe23 ]
-  set probe24 [ create_bd_port -dir I -from 63 -to 0 probe24 ]
-  set probe25 [ create_bd_port -dir I -from 15 -to 0 probe25 ]
+  set probe21 [ create_bd_port -dir I -from 0 -to 0 probe21 ]
+  set probe22 [ create_bd_port -dir I -from 0 -to 0 probe22 ]
+  set probe23 [ create_bd_port -dir I -from 0 -to 0 probe23 ]
+  set probe24 [ create_bd_port -dir I -from 0 -to 0 probe24 ]
+  set probe25 [ create_bd_port -dir I -from 0 -to 0 probe25 ]
   set probe26 [ create_bd_port -dir I -from 0 -to 0 probe26 ]
   set probe27 [ create_bd_port -dir I -from 0 -to 0 probe27 ]
   set probe28 [ create_bd_port -dir I -from 0 -to 0 probe28 ]
   set probe29 [ create_bd_port -dir I -from 0 -to 0 probe29 ]
-  set probe30 [ create_bd_port -dir I -from 0 -to 0 probe30 ]
+  set probe30 [ create_bd_port -dir I -from 2 -to 0 probe30 ]
   set probe31 [ create_bd_port -dir I -from 0 -to 0 probe31 ]
 
   # Create instance: ila_lib, and set properties
@@ -197,10 +197,10 @@ proc create_root_design { parentCell } {
    CONFIG.ALL_PROBE_SAME_MU {TRUE} \
    CONFIG.ALL_PROBE_SAME_MU_CNT {1} \
    CONFIG.C_ADV_TRIGGER {FALSE} \
-   CONFIG.C_DATA_DEPTH {4096} \
+   CONFIG.C_DATA_DEPTH {8192} \
    CONFIG.C_EN_STRG_QUAL {0} \
    CONFIG.C_EN_TIME_TAG {0} \
-   CONFIG.C_ILA_CLK_FREQ {100000000} \
+   CONFIG.C_ILA_CLK_FREQ {177777771} \
    CONFIG.C_INPUT_PIPE_STAGES {0} \
    CONFIG.C_MONITOR_TYPE {Native} \
    CONFIG.C_NUM_OF_PROBES {32} \
@@ -212,19 +212,19 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE10_WIDTH {1} \
    CONFIG.C_PROBE11_MU_CNT {1} \
    CONFIG.C_PROBE11_TYPE {0} \
-   CONFIG.C_PROBE11_WIDTH {16} \
+   CONFIG.C_PROBE11_WIDTH {1} \
    CONFIG.C_PROBE12_MU_CNT {1} \
    CONFIG.C_PROBE12_TYPE {0} \
-   CONFIG.C_PROBE12_WIDTH {6} \
+   CONFIG.C_PROBE12_WIDTH {32} \
    CONFIG.C_PROBE13_MU_CNT {1} \
    CONFIG.C_PROBE13_TYPE {0} \
    CONFIG.C_PROBE13_WIDTH {1} \
    CONFIG.C_PROBE14_MU_CNT {1} \
    CONFIG.C_PROBE14_TYPE {0} \
-   CONFIG.C_PROBE14_WIDTH {1} \
+   CONFIG.C_PROBE14_WIDTH {64} \
    CONFIG.C_PROBE15_MU_CNT {1} \
    CONFIG.C_PROBE15_TYPE {0} \
-   CONFIG.C_PROBE15_WIDTH {12} \
+   CONFIG.C_PROBE15_WIDTH {1} \
    CONFIG.C_PROBE16_MU_CNT {1} \
    CONFIG.C_PROBE16_TYPE {0} \
    CONFIG.C_PROBE16_WIDTH {1} \
@@ -233,7 +233,7 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE17_WIDTH {1} \
    CONFIG.C_PROBE18_MU_CNT {1} \
    CONFIG.C_PROBE18_TYPE {0} \
-   CONFIG.C_PROBE18_WIDTH {1} \
+   CONFIG.C_PROBE18_WIDTH {64} \
    CONFIG.C_PROBE19_MU_CNT {1} \
    CONFIG.C_PROBE19_TYPE {0} \
    CONFIG.C_PROBE19_WIDTH {1} \
@@ -245,19 +245,19 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE20_WIDTH {1} \
    CONFIG.C_PROBE21_MU_CNT {1} \
    CONFIG.C_PROBE21_TYPE {0} \
-   CONFIG.C_PROBE21_WIDTH {6} \
+   CONFIG.C_PROBE21_WIDTH {1} \
    CONFIG.C_PROBE22_MU_CNT {1} \
    CONFIG.C_PROBE22_TYPE {0} \
-   CONFIG.C_PROBE22_WIDTH {21} \
+   CONFIG.C_PROBE22_WIDTH {1} \
    CONFIG.C_PROBE23_MU_CNT {1} \
    CONFIG.C_PROBE23_TYPE {0} \
-   CONFIG.C_PROBE23_WIDTH {8} \
+   CONFIG.C_PROBE23_WIDTH {1} \
    CONFIG.C_PROBE24_MU_CNT {1} \
    CONFIG.C_PROBE24_TYPE {0} \
-   CONFIG.C_PROBE24_WIDTH {64} \
+   CONFIG.C_PROBE24_WIDTH {1} \
    CONFIG.C_PROBE25_MU_CNT {1} \
    CONFIG.C_PROBE25_TYPE {0} \
-   CONFIG.C_PROBE25_WIDTH {16} \
+   CONFIG.C_PROBE25_WIDTH {1} \
    CONFIG.C_PROBE26_MU_CNT {1} \
    CONFIG.C_PROBE26_TYPE {0} \
    CONFIG.C_PROBE26_WIDTH {1} \
@@ -275,31 +275,31 @@ proc create_root_design { parentCell } {
    CONFIG.C_PROBE2_WIDTH {1} \
    CONFIG.C_PROBE30_MU_CNT {1} \
    CONFIG.C_PROBE30_TYPE {0} \
-   CONFIG.C_PROBE30_WIDTH {1} \
+   CONFIG.C_PROBE30_WIDTH {3} \
    CONFIG.C_PROBE31_MU_CNT {1} \
    CONFIG.C_PROBE31_TYPE {0} \
    CONFIG.C_PROBE31_WIDTH {1} \
    CONFIG.C_PROBE3_MU_CNT {1} \
    CONFIG.C_PROBE3_TYPE {0} \
-   CONFIG.C_PROBE3_WIDTH {1} \
+   CONFIG.C_PROBE3_WIDTH {32} \
    CONFIG.C_PROBE4_MU_CNT {1} \
    CONFIG.C_PROBE4_TYPE {0} \
-   CONFIG.C_PROBE4_WIDTH {1} \
+   CONFIG.C_PROBE4_WIDTH {32} \
    CONFIG.C_PROBE5_MU_CNT {1} \
    CONFIG.C_PROBE5_TYPE {0} \
-   CONFIG.C_PROBE5_WIDTH {1} \
+   CONFIG.C_PROBE5_WIDTH {11} \
    CONFIG.C_PROBE6_MU_CNT {1} \
    CONFIG.C_PROBE6_TYPE {0} \
    CONFIG.C_PROBE6_WIDTH {16} \
    CONFIG.C_PROBE7_MU_CNT {1} \
    CONFIG.C_PROBE7_TYPE {0} \
-   CONFIG.C_PROBE7_WIDTH {6} \
+   CONFIG.C_PROBE7_WIDTH {16} \
    CONFIG.C_PROBE8_MU_CNT {1} \
    CONFIG.C_PROBE8_TYPE {0} \
-   CONFIG.C_PROBE8_WIDTH {16} \
+   CONFIG.C_PROBE8_WIDTH {1} \
    CONFIG.C_PROBE9_MU_CNT {1} \
    CONFIG.C_PROBE9_TYPE {0} \
-   CONFIG.C_PROBE9_WIDTH {16} \
+   CONFIG.C_PROBE9_WIDTH {1} \
    CONFIG.C_TIME_TAG_WIDTH {32} \
    CONFIG.C_TRIGIN_EN {false} \
    CONFIG.C_TRIGOUT_EN {false} \

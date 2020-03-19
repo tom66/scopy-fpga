@@ -344,6 +344,8 @@ assign trig_sub_word = trig_sub_word_test;
 reg trig_state = 0; // 0 = rising, 1 = falling
 reg [2:0] trig_sub_word_test = 3'b000;
 
+reg [7:0] trig_prio = 8'b00000000;
+
 integer adc_trig_level_high = 8'h88;
 integer adc_trig_level_low  = 8'h78;
 integer i;
@@ -375,12 +377,22 @@ always @(posedge adc_data_clk) begin
             if ((adc_data[i] > adc_trig_level_high) && (trig_state == 0)) begin
                 trig_gen <= 1;
                 trig_state <= 1;
-                trig_sub_word_test <= i;
+                trig_prio <= trig_prio | (1 << i);
             end else if ((adc_data[i] < adc_trig_level_low) && (trig_state == 1)) begin
                 trig_state <= 0;
             end
         end
-    
+        
+        if (trig_prio != 0) begin
+            // Priority encoder.  Verilog implements in order: we want the first set bit in the trigger matrix
+            // to produce the corresponding trigger index 
+            for (i = 7; i >= 0; i = i - 1) begin
+                if (trig_prio[i]) begin
+                    trig_sub_word_test <= i;
+                end
+            end
+        end
+            
         /*
         if ((adc_data_0 > 8'h90) && (trig_state == 0)) begin
             trig_gen <= 1;
