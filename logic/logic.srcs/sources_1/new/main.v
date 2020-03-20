@@ -6,7 +6,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-module main(  // ### CSI interface ###
+module main(  
+    // ### CSI interface ###
     csi_clk_p,      // clock lane positive
     csi_clk_n,      // clock lane negative
     csi_d0_p,       // data lane positive 0
@@ -91,34 +92,6 @@ assign led_PL0 = R_gpio_test[0]; // clk_mipi_ref_dbg;
 assign led_PL1 = R_gpio_test[1];
 
 /*
-cfg_bram_controller (
-    // BRAM, EMIO, Clock interface
-    .cfg_bram_addr(cfg_bram_addrb),
-    .cfg_bram_dout(cfg_bram_doutb),
-    .cfg_bram_din(cfg_bram_dinb),
-    .cfg_bram_clk(cfg_bram_clkb),
-    .cfg_bram_en(cfg_bram_enb),
-    .cfg_bram_we(cfg_bram_web),
-    .cfg_bram_busy(cfg_bram_busyb),
-    .cfg_commit(fabcfg_commit),
-    .cfg_commit_done(fabcfg_done),
-    .g_rst(g_rst_gen),
-    .clk_ref(clk_master),
-    
-    // Register interface
-    .R_acq_size_a(R_acq_size_a),
-    .R_acq_size_b(R_acq_size_b),
-    .R_acq_trigger_ptr(R_acq_trigger_ptr),
-    .R_acq_demux_mode(R_acq_demux_mode),
-    .R_gpio_test(R_gpio_test),
-    .R_csi_line_count(R_csi_line_count),
-    .R_csi_line_byte_count(R_csi_line_byte_count),
-    .R_csi_data_type(R_csi_data_type),
-    .R_csi_control_flags(R_csi_control_flags)
-);
-*/
-
-/*
  * Connection to Block Design.
  */
 wire acq_done, acq_have_trig, acq_data_loss, fabcfg_done;
@@ -176,14 +149,33 @@ wire [5:0] csi_debug_ctrl_bram_base;
 reg trig_gen = 0;
 
 design_1 (
-    // 64-bit ADC bus
-    .ADC_BUS(adc_bus),
-    .ADC_DATA_CLK(adc_data_clk),
+    // ADC LVDS interface
+    .ADC_L1A_P(adc_l1a_p),
+    .ADC_L1A_N(adc_l1a_n),
+    .ADC_L1B_P(adc_l1b_p),
+    .ADC_L1B_N(adc_l1b_n),
+    .ADC_L2A_P(adc_l2a_p),
+    .ADC_L2A_N(adc_l2a_n),
+    .ADC_L2B_P(adc_l2b_p),
+    .ADC_L2B_N(adc_l2b_n),
+    .ADC_L3A_P(adc_l3a_p),
+    .ADC_L3A_N(adc_l3a_n),
+    .ADC_L3B_P(adc_l3b_p),
+    .ADC_L3B_N(adc_l3b_n),
+    .ADC_L4A_P(adc_l4a_p),
+    .ADC_L4A_N(adc_l4a_n),
+    .ADC_L4B_P(adc_l4b_p),
+    .ADC_L4B_N(adc_l4b_n),
+    .ADC_LCLK_P(adc_lclk_p),
+    .ADC_LCLK_N(adc_lclk_n),
+    .ADC_FCLK_P(adc_fclk_p),
+    .ADC_FCLK_N(adc_fclk_n),
+    
     .ADC_DATA_VALID(1'b1),          // TODO: this should be coming from the PS
     .ADC_FIFO_RESET(acq_fifo_reset),
     .ADC_DATA_EOF(1'b0),            // for now, data never ends
     
-    // Acquisition/control bus - controlled via EMIO
+    // Acquisition/control bus - controlled via EMIO [To be moved to AXI register control]
     .ACQ_RUN(acq_run),
     .ACQ_ABORT(acq_abort),
     .ACQ_TRIG_MASK(acq_trig_mask),
@@ -193,9 +185,6 @@ design_1 (
     .ACQ_DONE(acq_done),
     .ACQ_HAVE_TRIG(acq_have_trig),
     .ACQ_DATA_LOSS(acq_data_loss),      // Data loss signal to PS indicating that FIFO data may be stale due to read delay
-    .TRIGGER_IN(trig_gen),              // Level sensitive trigger input from trigger block
-    .TRIGGER_SUB_WORD(trig_sub_word),   // 3 LSBs of trigger position
-    .TRIGGER_OUT(trig_out),             // Trigger output to GP output multiplexer
     
     // CSI output port
     .CSI_CLK_P(csi_clk_p),
@@ -233,26 +222,33 @@ design_1 (
     .PL_IRQ(pl_irq)
 );
 
+/*
 wire clk_idelay_refclk;
 wire clk_master, pll_locked;
 wire adc_data_clk;
+*/
 
 /*
  * ADC Interface & Control.
  */
+/*
 wire [7:0] train_data_debug;
 
 wire [13:0] adc_data[7:0];
 wire [7:0] debug_adc;
 reg [23:0] adc_testcntr;
+*/
 
 // IDELAYE2 refclk block
+/*
 clk_wiz_1_idelay_refclk (
     .clk_out1(clk_idelay_refclk),
     .power_down(0),
     .clk_in1(clk_master)
 );
+*/
 
+/*
 adc_receiver (
     // ADC interface
     .adc_l1a_p(adc_l1a_p),
@@ -296,13 +292,6 @@ adc_receiver (
     .debug(debug_adc),
     
     // Training state & control
-    /*
-    .train_start(emio_output[0]),
-    .train_done(emio_input[0]),
-    .train_ok(emio_input[1]),
-    .train_count(emio_input[7:2]),
-    .idelay_rdy(emio_input[8]),
-    */
     .train_start(0),
     .idelay_refclk(clk_idelay_refclk), // xxx MHz refclk for IDELAYE2
     //.train_data_debug(train_data_debug),
@@ -316,20 +305,9 @@ adc_receiver (
     // Reference clock input
     .clk_ref(clk_master)
 );
-
-reg [7:0] adc_test8;
-
-/*
-assign adc_bus[ 7: 0] = adc_test8;
-assign adc_bus[15: 8] = adc_test8 + 1;
-assign adc_bus[23:16] = adc_test8 + 2;
-assign adc_bus[31:24] = adc_test8 + 3;
-assign adc_bus[39:32] = adc_test8 + 4;
-assign adc_bus[47:40] = adc_test8 + 5;
-assign adc_bus[55:48] = adc_test8 + 6;
-assign adc_bus[63:56] = adc_test8 + 7;
 */
 
+/*
 assign adc_bus[ 7: 0] = adc_data[0];
 assign adc_bus[15: 8] = adc_data[1];
 assign adc_bus[23:16] = adc_data[2];
@@ -351,24 +329,6 @@ integer adc_trig_level_low  = 8'h78;
 integer i;
 
 always @(posedge adc_data_clk) begin
-
-    //rep_counter <= rep_counter + 1;
-    /*
-    if (acq_run) begin
-        adc_test8 <= adc_test8 + 8;
-    end
-    */
-    
-    // trigger is 1cyc long max.
-    /*
-    if (trig_gen) begin
-        trig_gen <= 0;
-    end else if ((adc_data_0 == 8'h80) && acq_run) begin
-        // generate trigger on test word
-        trig_sub_word_test <= trig_sub_word_test + 1;
-        trig_gen <= 1;
-    end
-    */
     
     if (trig_gen) begin
         trig_gen <= 0;
@@ -392,16 +352,9 @@ always @(posedge adc_data_clk) begin
                 end
             end
         end
-            
-        /*
-        if ((adc_data_0 > 8'h90) && (trig_state == 0)) begin
-            trig_gen <= 1;
-            trig_state <= 1;
-        end else if ((adc_data_0 < 8'h70) && (trig_state == 1)) begin
-            trig_state <= 0;
-        end
-        */
     end
     
 end
+*/
+    
 endmodule

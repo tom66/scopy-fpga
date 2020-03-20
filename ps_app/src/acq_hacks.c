@@ -13,6 +13,8 @@
 
 extern uint8_t norway_512x512_grey[];
 
+// #define PRETTY_DEBUG
+
 /*
  * Acquistion hacks.  Ties together the acquisition engine and CSI transmitter
  * for some initial testing.  Not intended for final project.
@@ -27,6 +29,7 @@ void acq_hacks_run()
 {
 	int res, i, j, n_waves, line = 0, wave_size_bytes, wave_size_counts;
 	int test_tx = 100, bytes;
+	int iter = 0;
 	float microsec;
 
 	wave_size_bytes = 16384;
@@ -44,8 +47,19 @@ void acq_hacks_run()
 
 	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
 
+#ifdef PRETTY_DEBUG
+	d_printf(D_RAW, "\033[2J");
+#endif
+
 	while(1) {
-		d_printf(D_WARN, "Iteration");
+#ifdef PRETTY_DEBUG
+		if(iter > 10) {
+			d_printf(D_RAW, "\033[2J");
+			iter = 0;
+		}
+#endif
+
+		//d_printf(D_WARN, "Iteration");
 
 		// Setup the acquisition
 		acq_free_all_alloc();
@@ -71,7 +85,12 @@ void acq_hacks_run()
 		}
 
 		// Wait for acq to be done
-		while(!acq_is_done()) ;
+		while(!acq_is_done()) {
+#ifdef PRETTY_DEBUG
+			d_printf(D_RAW, "\033[;H");
+			acq_debug_dump();
+#endif
+		}
 
 		d_stop_timing(4);
 		microsec = d_read_timing_us(4);
@@ -113,5 +132,7 @@ void acq_hacks_run()
 
 		d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
 		d_printf(D_INFO, "Transfer rate: %.4f MB/s", bytes / microsec);
+
+		iter++;
 	}
 }

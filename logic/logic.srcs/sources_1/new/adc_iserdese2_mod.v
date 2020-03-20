@@ -9,7 +9,7 @@
  *
  * The module deserialises received LVDS data into 4 data bits.
  */
-module adc_iserdese2_mod (
+    module adc_iserdese2_mod (
     // ADC clock input
     input adc_clk_in_p,
     

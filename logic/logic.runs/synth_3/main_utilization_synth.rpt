@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Thu Mar 19 21:28:40 2020
+| Date         : Fri Mar 20 14:24:18 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,13 +30,13 @@ Table of Contents
 +----------------------------+-------+-------+-----------+-------+
 |          Site Type         |  Used | Fixed | Available | Util% |
 +----------------------------+-------+-------+-----------+-------+
-| Slice LUTs*                |  9703 |     0 |     40600 | 23.90 |
-|   LUT as Logic             |  8700 |     0 |     40600 | 21.43 |
+| Slice LUTs*                |  9688 |     0 |     40600 | 23.86 |
+|   LUT as Logic             |  8685 |     0 |     40600 | 21.39 |
 |   LUT as Memory            |  1003 |     0 |     17400 |  5.76 |
 |     LUT as Distributed RAM |    18 |     0 |           |       |
 |     LUT as Shift Register  |   985 |     0 |           |       |
-| Slice Registers            | 11559 |     0 |     81200 | 14.24 |
-|   Register as Flip Flop    | 11559 |     0 |     81200 | 14.24 |
+| Slice Registers            | 11557 |     0 |     81200 | 14.23 |
+|   Register as Flip Flop    | 11557 |     0 |     81200 | 14.23 |
 |   Register as Latch        |     0 |     0 |     81200 |  0.00 |
 | F7 Muxes                   |   325 |     0 |     26600 |  1.22 |
 | F8 Muxes                   |    48 |     0 |     13300 |  0.36 |
@@ -59,7 +59,7 @@ Table of Contents
 | 33    |          Yes |           - |          Set |
 | 69    |          Yes |           - |        Reset |
 | 269   |          Yes |         Set |            - |
-| 11188 |          Yes |       Reset |            - |
+| 11186 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -121,10 +121,10 @@ Table of Contents
 +--------------+------+-------+-----------+-------+
 |   Site Type  | Used | Fixed | Available | Util% |
 +--------------+------+-------+-----------+-------+
-| BUFGCTRL     |    7 |     0 |        32 | 21.88 |
+| BUFGCTRL     |    9 |     0 |        32 | 28.13 |
 | BUFIO        |    1 |     0 |        16 |  6.25 |
 |   BUFIO only |    1 |     0 |           |       |
-| MMCME2_ADV   |    1 |     0 |         4 | 25.00 |
+| MMCME2_ADV   |    2 |     0 |         4 | 50.00 |
 | PLLE2_ADV    |    0 |     0 |         4 |  0.00 |
 | BUFMRCE      |    0 |     0 |         8 |  0.00 |
 | BUFHCE       |    0 |     0 |        72 |  0.00 |
@@ -155,12 +155,12 @@ Table of Contents
 +--------------+-------+----------------------+
 |   Ref Name   |  Used |  Functional Category |
 +--------------+-------+----------------------+
-| FDRE         | 11188 |         Flop & Latch |
-| LUT6         |  2917 |                  LUT |
-| LUT3         |  2387 |                  LUT |
-| LUT2         |  1631 |                  LUT |
-| LUT4         |  1438 |                  LUT |
-| LUT5         |  1170 |                  LUT |
+| FDRE         | 11186 |         Flop & Latch |
+| LUT6         |  2909 |                  LUT |
+| LUT3         |  2389 |                  LUT |
+| LUT2         |  1630 |                  LUT |
+| LUT4         |  1436 |                  LUT |
+| LUT5         |  1181 |                  LUT |
 | SRL16E       |   836 |   Distributed Memory |
 | LUT1         |   505 |                  LUT |
 | CARRY4       |   422 |           CarryLogic |
@@ -179,17 +179,17 @@ Table of Contents
 | IDELAYE2     |     8 |                   IO |
 | OBUFTDS      |     6 |                   IO |
 | OBUFT        |     6 |                   IO |
+| BUFG         |     6 |                Clock |
 | RAMB18E1     |     4 |         Block Memory |
 | BUFR         |     4 |                Clock |
-| BUFG         |     4 |                Clock |
 | OSERDESE2    |     3 |                   IO |
 | INV          |     3 |                  LUT |
 | BUFGCTRL     |     3 |                Clock |
 | SRLC16E      |     2 |   Distributed Memory |
 | OBUF         |     2 |                   IO |
+| MMCME2_ADV   |     2 |                Clock |
 | USR_ACCESSE2 |     1 |               Others |
 | PS7          |     1 | Specialized Resource |
-| MMCME2_ADV   |     1 |                Clock |
 | IDELAYCTRL   |     1 |                   IO |
 | DSP48E1      |     1 |     Block Arithmetic |
 | BUFIO        |     1 |                Clock |
@@ -199,12 +199,11 @@ Table of Contents
 8. Black Boxes
 --------------
 
-+-------------------------+------+
-|         Ref Name        | Used |
-+-------------------------+------+
-| dbg_hub_CV              |    1 |
-| clk_wiz_1_idelay_refclk |    1 |
-+-------------------------+------+
++------------+------+
+|  Ref Name  | Used |
++------------+------+
+| dbg_hub_CV |    1 |
++------------+------+
 
 
 9. Instantiated Netlists

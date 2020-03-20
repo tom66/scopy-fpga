@@ -89,40 +89,40 @@ module design_1_system_ila_0_0 (
   probe31
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_csi_gearbox_dma_0_0_dbg_ref_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.clk CLK" *)
 input wire clk;
 input wire [5 : 0] probe0;
 input wire [0 : 0] probe1;
 input wire [0 : 0] probe2;
-input wire [0 : 0] probe3;
-input wire [0 : 0] probe4;
-input wire [0 : 0] probe5;
+input wire [31 : 0] probe3;
+input wire [31 : 0] probe4;
+input wire [10 : 0] probe5;
 input wire [15 : 0] probe6;
-input wire [5 : 0] probe7;
-input wire [15 : 0] probe8;
-input wire [15 : 0] probe9;
+input wire [15 : 0] probe7;
+input wire [0 : 0] probe8;
+input wire [0 : 0] probe9;
 input wire [0 : 0] probe10;
-input wire [15 : 0] probe11;
-input wire [5 : 0] probe12;
+input wire [0 : 0] probe11;
+input wire [31 : 0] probe12;
 input wire [0 : 0] probe13;
-input wire [0 : 0] probe14;
-input wire [11 : 0] probe15;
+input wire [63 : 0] probe14;
+input wire [0 : 0] probe15;
 input wire [0 : 0] probe16;
 input wire [0 : 0] probe17;
-input wire [0 : 0] probe18;
+input wire [63 : 0] probe18;
 input wire [0 : 0] probe19;
 input wire [0 : 0] probe20;
-input wire [5 : 0] probe21;
-input wire [20 : 0] probe22;
-input wire [7 : 0] probe23;
-input wire [63 : 0] probe24;
-input wire [15 : 0] probe25;
+input wire [0 : 0] probe21;
+input wire [0 : 0] probe22;
+input wire [0 : 0] probe23;
+input wire [0 : 0] probe24;
+input wire [0 : 0] probe25;
 input wire [0 : 0] probe26;
 input wire [0 : 0] probe27;
 input wire [0 : 0] probe28;
 input wire [0 : 0] probe29;
-input wire [0 : 0] probe30;
+input wire [2 : 0] probe30;
 input wire [0 : 0] probe31;
 
   bd_f60c inst (

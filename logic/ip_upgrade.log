@@ -1,6 +1,268 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Mar 20 14:07:37 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_streamer:2.0) from (Rev. 65) to (Rev. 67)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Mar 20 14:06:10 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_test_streamer_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_adc_test_streamer_0_0 (xilinx.com:user:adc_streamer:2.0) from (Rev. 64) to (Rev. 65)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Mar 20 13:25:30 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_receiver_core_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_receiver_core_0_0 (xilinx.com:user:adc_receiver_core:1.0) from (Rev. 1) to (Rev. 3)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Interface Information
+------------------------
+
+Detected external interface differences while upgrading 'design_1_adc_receiver_core_0_0'.
+
+
+-Upgrade has removed interface 'S00_AXIS'
+
+-Upgrade has removed interface 'S00_AXIS_CLK'
+
+-Upgrade has removed interface 'S00_AXIS_RST'
+
+-Upgrade has added interface 'adc_data_clk' (xilinx.com:signal:clock:1.0)
+
+-Upgrade has added interface 'g_rst' (xilinx.com:signal:reset:1.0)
+
+
+3. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_adc_receiver_core_0_0'. These changes may impact your design.
+
+
+-Upgrade has removed port 's00_axis_aclk'
+
+-Upgrade has removed port 's00_axis_aresetn'
+
+-Upgrade has removed port 's00_axis_tdata'
+
+-Upgrade has removed port 's00_axis_tlast'
+
+-Upgrade has removed port 's00_axis_tready'
+
+-Upgrade has removed port 's00_axis_tstrb'
+
+-Upgrade has removed port 's00_axis_tvalid'
+
+-Upgrade has added port 'adc_bus'
+
+-Upgrade has added port 'adc_data_clk'
+
+-Upgrade has added port 'adc_fclk_n'
+
+-Upgrade has added port 'adc_fclk_p'
+
+-Upgrade has added port 'adc_l1a_n'
+
+-Upgrade has added port 'adc_l1a_p'
+
+-Upgrade has added port 'adc_l1b_n'
+
+-Upgrade has added port 'adc_l1b_p'
+
+-Upgrade has added port 'adc_l2a_n'
+
+-Upgrade has added port 'adc_l2a_p'
+
+-Upgrade has added port 'adc_l2b_n'
+
+-Upgrade has added port 'adc_l2b_p'
+
+-Upgrade has added port 'adc_l3a_n'
+
+-Upgrade has added port 'adc_l3a_p'
+
+-Upgrade has added port 'adc_l3b_n'
+
+-Upgrade has added port 'adc_l3b_p'
+
+-Upgrade has added port 'adc_l4a_n'
+
+-Upgrade has added port 'adc_l4a_p'
+
+-Upgrade has added port 'adc_l4b_n'
+
+-Upgrade has added port 'adc_l4b_p'
+
+-Upgrade has added port 'adc_lclk_n'
+
+-Upgrade has added port 'adc_lclk_p'
+
+-Upgrade has added port 'clk_idelay_refclk'
+
+-Upgrade has added port 'clk_master'
+
+-Upgrade has added port 'g_rst'
+
+-Upgrade has added port 'trigger_out'
+
+-Upgrade has added port 'trigger_sub_word'
+
+-Upgrade has added port 'trigger_unit_in'
+
+
+4. Customization warnings
+-------------------------
+
+Parameter 'C_S00_AXIS_TDATA_WIDTH' is no longer present on the upgraded IP 'design_1_adc_receiver_core_0_0', and cannot be set to '32'
+
+
+5. Debug Commands
+-----------------
+
+  The following debug information can be passed to Vivado as Tcl commands,
+in order to validate or debug the output of the upgrade flow.
+  You may consult any warnings from within this upgrade, and alter or remove
+the configuration parameter(s) which caused the warning; then execute the Tcl
+commands, and use the IP Customization GUI to verify the IP configuration.
+
+create_ip -vlnv xilinx.com:user:adc_receiver_core:1.0 -user_name design_1_adc_receiver_core_0_0
+set_property -dict "\
+  CONFIG.Component_Name {design_1_adc_receiver_core_0_0} " [get_ips design_1_adc_receiver_core_0_0]
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Mar 20 13:02:23 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_simple_reset_control_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_simple_reset_control_0_0 (xilinx.com:user:simple_reset_controller:1.0) from (Rev. 1) to (Rev. 2)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Interface Information
+------------------------
+
+Detected external interface differences while upgrading 'design_1_simple_reset_control_0_0'.
+
+
+-Upgrade has removed interface 'S00_AXIS'
+
+-Upgrade has removed interface 'S00_AXIS_CLK'
+
+-Upgrade has removed interface 'S00_AXIS_RST'
+
+
+3. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_simple_reset_control_0_0'. These changes may impact your design.
+
+
+-Upgrade has removed port 's00_axis_aclk'
+
+-Upgrade has removed port 's00_axis_aresetn'
+
+-Upgrade has removed port 's00_axis_tdata'
+
+-Upgrade has removed port 's00_axis_tlast'
+
+-Upgrade has removed port 's00_axis_tready'
+
+-Upgrade has removed port 's00_axis_tstrb'
+
+-Upgrade has removed port 's00_axis_tvalid'
+
+-Upgrade has added port 'clk_master'
+
+-Upgrade has added port 'g_rst_gen'
+
+-Upgrade has added port 'g_rst_trig_ps'
+
+
+4. Customization warnings
+-------------------------
+
+Parameter 'C_S00_AXIS_TDATA_WIDTH' is no longer present on the upgraded IP 'design_1_simple_reset_control_0_0', and cannot be set to '32'
+
+
+5. Debug Commands
+-----------------
+
+  The following debug information can be passed to Vivado as Tcl commands,
+in order to validate or debug the output of the upgrade flow.
+  You may consult any warnings from within this upgrade, and alter or remove
+the configuration parameter(s) which caused the warning; then execute the Tcl
+commands, and use the IP Customization GUI to verify the IP configuration.
+
+create_ip -vlnv xilinx.com:user:simple_reset_controller:1.0 -user_name design_1_simple_reset_control_0_0
+set_property -dict "\
+  CONFIG.Component_Name {design_1_simple_reset_control_0_0} " [get_ips design_1_simple_reset_control_0_0]
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
 | Date         : Thu Mar 19 21:05:23 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : upgrade_ip

@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 64
+// IP Revision: 67
 
 (* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=64,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
+(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=67,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_adc_test_streamer_0_0 (
   adc_bus,
@@ -94,7 +94,7 @@ module design_1_adc_test_streamer_0_0 (
 );
 
 input wire [63 : 0] adc_bus;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_data_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN design_1_ADC_DATA_CLK, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_adc_receiver_core_0_0_adc_data_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_data_clk CLK" *)
 input wire adc_data_clk;
 input wire adc_data_valid;

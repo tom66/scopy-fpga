@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-module adc_test_streamer_v2_0_M00_AXIS #
+module adc_streamer_v2_0_M00_AXIS #
 (
     // Users to add parameters here
 

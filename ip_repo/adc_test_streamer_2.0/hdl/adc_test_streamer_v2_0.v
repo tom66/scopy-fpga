@@ -1,11 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-// This module could probably be eliminated and merged in with the actual logic module,
-// but this is how it was done in the template from Xilinx that's been heavily modified, 
-// so it'll stay this way for now.   9/2/2020 TGO.
-
-module adc_test_streamer_v2_0 #
+module adc_streamer #
 (
     // Parameters of Axi Master Bus Interface M00_AXIS
     parameter integer C_M00_AXIS_TDATA_WIDTH	= 64,
@@ -30,7 +26,10 @@ module adc_test_streamer_v2_0 #
     output wire [15:0] dbg_wr_data_count,
     output wire dbg_trig_post_fifo,
     
-    // Control signals
+    // Control register and status register
+    input wire [10:0] acq_ctrl,
+    input wire [10:0] acq_status,
+    
     input acq_run,
     input acq_abort,
     input acq_trig_mask,
@@ -60,10 +59,10 @@ module adc_test_streamer_v2_0 #
 );
 
 // Instantiation of Axi Bus Interface M00_AXIS
-adc_test_streamer_v2_0_M00_AXIS # ( 
+adc_streamer_v2_0_M00_AXIS # ( 
     .C_M_AXIS_TDATA_WIDTH(C_M00_AXIS_TDATA_WIDTH),
     .C_M_START_COUNT(C_M00_AXIS_START_COUNT)
-) adc_test_streamer_v2_0_M00_AXIS_inst (
+) adc_streamer_v2_0_M00_AXIS_inst (
     .ADC_BUS(adc_bus),
     .ADC_DATA_CLK(adc_data_clk),
     .ADC_DATA_VALID(adc_data_valid),

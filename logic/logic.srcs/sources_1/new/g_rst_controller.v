@@ -19,7 +19,6 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module g_rst_controller(
         input clk_master,           // Master clock reference
         input g_rst_trig_ps,        // PS controlled reset signal

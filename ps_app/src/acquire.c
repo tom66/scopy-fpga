@@ -838,6 +838,10 @@ int acq_start()
 			return ACQRES_DMA_FAIL;
 		}
 
+		// Ensure we clear the overrun flag as this is a new packet.  If this is not cleared
+		// we cannot recover from overrun.
+		g_acq_state.acq_current->flags &= ~ACQBUF_FLAG_PKT_OVERRUN;
+
 		// Set the state machine
 		g_acq_state.state = ACQSTATE_PREP;
 		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
@@ -934,48 +938,52 @@ void acq_debug_dump()
 		}
 	}
 
-	d_printf(D_INFO, "** Acquisition State (g_acq_state: 0x%08x) **", &g_acq_state);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "I think the stack is at 0x%08x or thereabouts", (void*)&sp);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "acq_mode_flags        = 0x%08x", g_acq_state.acq_mode_flags);
-	d_printf(D_INFO, "state                 = %d [%s]", g_acq_state.state, acq_state_to_str[g_acq_state.state]);
-	d_printf(D_INFO, "sub_state             = %d [%s]", g_acq_state.sub_state, acq_substate_to_str[g_acq_state.sub_state]);
-	d_printf(D_INFO, "acq_current           = 0x%08x", g_acq_state.acq_current);
-	d_printf(D_INFO, "acq_first             = 0x%08x", g_acq_state.acq_first);
-	d_printf(D_INFO, "dma                   = 0x%08x", g_acq_state.dma);
-	d_printf(D_INFO, "dma_config            = 0x%08x", g_acq_state.dma_config);
-	d_printf(D_INFO, "demux_reg             = 0x%02x", g_acq_state.demux_reg);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
-	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
-	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
-	d_printf(D_INFO, "pre_sampct            = %d wavewords", g_acq_state.pre_sampct);
-	d_printf(D_INFO, "post_sampct           = %d wavewords", g_acq_state.post_sampct);
-	d_printf(D_INFO, "num_acq_request       = %d waves", g_acq_state.num_acq_request);
-	d_printf(D_INFO, "num_acq_made          = %d waves", g_acq_state.num_acq_made);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "acq_current->flags    = 0x%04x", g_acq_state.acq_current->flags);
-	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "s.num_acq_total       = %llu", g_acq_state.stats.num_acq_total);
-	d_printf(D_INFO, "s.num_alloc_err_total = %llu", g_acq_state.stats.num_alloc_err_total);
-	d_printf(D_INFO, "s.num_alloc_total     = %llu", g_acq_state.stats.num_alloc_total);
-	d_printf(D_INFO, "s.num_err_total       = %llu", g_acq_state.stats.num_err_total);
-	d_printf(D_INFO, "s.num_post_total      = %llu", g_acq_state.stats.num_post_total);
-	d_printf(D_INFO, "s.num_pre_total       = %llu", g_acq_state.stats.num_pre_total);
-	d_printf(D_INFO, "s.num_pre_fill_total  = %llu", g_acq_state.stats.num_pre_fill_total);
-	d_printf(D_INFO, "s.num_samples         = %llu", g_acq_state.stats.num_samples);
-	d_printf(D_INFO, "s.num_samples_raw     = %llu", g_acq_state.stats.num_samples_raw);
-	d_printf(D_INFO, "s.num_irqs            = %llu", g_acq_state.stats.num_irqs);
-	d_printf(D_INFO, "s.num_fifo_full       = %llu", g_acq_state.stats.num_fifo_full);
-	d_printf(D_INFO, "s.num_fifo_pkt_dscd   = %llu", g_acq_state.stats.num_fifo_pkt_dscd);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "Approx acq. rate      = %d acq/s     ", (int)acq_rate);
-	d_printf(D_INFO, "Approx sample rate    = %d Ksa/s     ", (int)sample_rate);
-	d_printf(D_INFO, "Debug delta           = %d us     ", (int)time_delta_us);
-	d_printf(D_INFO, "");
-	d_printf(D_INFO, "** End **");
+	d_printf(D_INFO, "** Acquisition State (g_acq_state: 0x%08x) **                  ", &g_acq_state);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "I think the stack is at 0x%08x or thereabouts                  ", (void*)&sp);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "acq_mode_flags        = 0x%08x                  ", g_acq_state.acq_mode_flags);
+	d_printf(D_INFO, "state                 = %d [%s]                 ", g_acq_state.state, acq_state_to_str[g_acq_state.state]);
+	d_printf(D_INFO, "sub_state             = %d [%s]                 ", g_acq_state.sub_state, acq_substate_to_str[g_acq_state.sub_state]);
+	d_printf(D_INFO, "acq_current           = 0x%08x                  ", g_acq_state.acq_current);
+	d_printf(D_INFO, "acq_first             = 0x%08x                  ", g_acq_state.acq_first);
+	d_printf(D_INFO, "dma                   = 0x%08x                  ", g_acq_state.dma);
+	d_printf(D_INFO, "dma_config            = 0x%08x                  ", g_acq_state.dma_config);
+	d_printf(D_INFO, "demux_reg             = 0x%02x                  ", g_acq_state.demux_reg);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)       ", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
+	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)       ", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
+	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)       ", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
+	d_printf(D_INFO, "pre_sampct            = %d wavewords            ", g_acq_state.pre_sampct);
+	d_printf(D_INFO, "post_sampct           = %d wavewords            ", g_acq_state.post_sampct);
+	d_printf(D_INFO, "num_acq_request       = %d waves                ", g_acq_state.num_acq_request);
+	d_printf(D_INFO, "num_acq_made          = %d waves                ", g_acq_state.num_acq_made);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "acq_current->flags    = 0x%04x                  ", g_acq_state.acq_current->flags);
+	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)             ", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "s.num_acq_total       = %llu                    ", g_acq_state.stats.num_acq_total);
+	d_printf(D_INFO, "s.num_alloc_err_total = %llu                    ", g_acq_state.stats.num_alloc_err_total);
+	d_printf(D_INFO, "s.num_alloc_total     = %llu                    ", g_acq_state.stats.num_alloc_total);
+	d_printf(D_INFO, "s.num_err_total       = %llu                    ", g_acq_state.stats.num_err_total);
+	d_printf(D_INFO, "s.num_post_total      = %llu                    ", g_acq_state.stats.num_post_total);
+	d_printf(D_INFO, "s.num_pre_total       = %llu                    ", g_acq_state.stats.num_pre_total);
+	d_printf(D_INFO, "s.num_pre_fill_total  = %llu                    ", g_acq_state.stats.num_pre_fill_total);
+	d_printf(D_INFO, "s.num_samples         = %llu                    ", g_acq_state.stats.num_samples);
+	d_printf(D_INFO, "s.num_samples_raw     = %llu                    ", g_acq_state.stats.num_samples_raw);
+	d_printf(D_INFO, "s.num_irqs            = %llu                    ", g_acq_state.stats.num_irqs);
+	d_printf(D_INFO, "s.num_fifo_full       = %llu                    ", g_acq_state.stats.num_fifo_full);
+	d_printf(D_INFO, "s.num_fifo_pkt_dscd   = %llu                    ", g_acq_state.stats.num_fifo_pkt_dscd);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "Approx acq. rate      = %d acq/s                ", (int)acq_rate);
+	d_printf(D_INFO, "Approx sample rate    = %d Ksa/s                ", (int)sample_rate);
+	d_printf(D_INFO, "Debug delta           = %d us                   ", (int)time_delta_us);
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "** End **                  ");
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                  ");
 
 	// Save last state...
 	g_acq_state.stat_last = g_acq_state.stats;

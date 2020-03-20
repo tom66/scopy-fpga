@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Mar 19 21:19:26 2020" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Mar 20 14:19:16 2020" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -7,18 +7,6 @@
     <PORT CLKFREQUENCY="177777771" DIR="O" NAME="FCLK_CLK0" SIGIS="clk" SIGNAME="zynq_ps_FCLK_CLK0">
       <CONNECTIONS>
         <CONNECTION INSTANCE="zynq_ps" PORT="FCLK_CLK0"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="63" NAME="ADC_BUS" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_bus"/>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe18"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT CLKFREQUENCY="125000000" DIR="I" NAME="ADC_DATA_CLK" SIGIS="clk" SIGNAME="External_Ports_ADC_DATA_CLK">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_clk"/>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe19"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="63" NAME="EMIO_I" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_EMIO_I">
@@ -33,68 +21,56 @@
     </PORT>
     <PORT DIR="I" NAME="ADC_DATA_VALID" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_valid"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe20"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_valid"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ADC_DATA_EOF" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_EOF">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_eof"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe22"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_eof"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ADC_FIFO_RESET" SIGIS="undef" SIGNAME="External_Ports_ADC_FIFO_RESET">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_fifo_reset"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe21"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_fifo_reset"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_RUN" SIGIS="undef" SIGNAME="External_Ports_ACQ_RUN">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_run"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe23"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_run"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_ABORT" SIGIS="undef" SIGNAME="External_Ports_ACQ_ABORT">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_abort"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe24"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_abort"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_TRIG_MASK" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_MASK">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_mask"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe25"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_mask"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_TRIG_RST" SIGIS="undef" SIGNAME="External_Ports_ACQ_TRIG_RST">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_rst"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe26"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_trig_rst"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_DEPTH_MUX" SIGIS="undef" SIGNAME="External_Ports_ACQ_DEPTH_MUX">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_depth_mux"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe27"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_depth_mux"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="ACQ_AXI_RUN" SIGIS="undef" SIGNAME="External_Ports_ACQ_AXI_RUN">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_axi_run"/>
         <CONNECTION INSTANCE="system_ila_0" PORT="probe28"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="TRIGGER_IN" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_in"/>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe29"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="2" NAME="TRIGGER_SUB_WORD" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_SUB_WORD">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_sub_word"/>
-        <CONNECTION INSTANCE="system_ila_0" PORT="probe30"/>
+        <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_axi_run"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="ACQ_DONE" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_done">
@@ -130,11 +106,6 @@
     <PORT CLKFREQUENCY="400000500" DIR="O" NAME="CLKWIZ0_CLKOUT2" SIGIS="clk" SIGNAME="clk_wiz_0_clk_out2">
       <CONNECTIONS>
         <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_out2"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="G_RST" SIGIS="undef" SIGNAME="External_Ports_G_RST">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="g_rst"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="CSI_SLEEP" SIGIS="undef" SIGNAME="External_Ports_CSI_SLEEP">
@@ -335,6 +306,106 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="zynq_ps_PS_PORB">
       <CONNECTIONS>
         <CONNECTION INSTANCE="zynq_ps" PORT="PS_PORB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L1A_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L1A_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l1a_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L1A_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L1A_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l1a_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L1B_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L1B_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l1b_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L1B_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L1B_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l1b_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L2A_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L2A_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l2a_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L2B_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L2B_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l2b_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L2A_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L2A_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l2a_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L2B_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L2B_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l2b_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L3A_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L3A_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l3a_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L3A_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L3A_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l3a_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L3B_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L3B_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l3b_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L3B_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L3B_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l3b_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L4A_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L4A_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l4a_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L4B_P" SIGIS="undef" SIGNAME="External_Ports_ADC_L4B_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l4b_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L4A_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L4A_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l4a_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_L4B_N" SIGIS="undef" SIGNAME="External_Ports_ADC_L4B_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_l4b_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_LCLK_P" SIGIS="undef" SIGNAME="External_Ports_ADC_LCLK_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_lclk_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_LCLK_N" SIGIS="undef" SIGNAME="External_Ports_ADC_LCLK_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_lclk_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_FCLK_P" SIGIS="undef" SIGNAME="External_Ports_ADC_FCLK_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_fclk_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="ADC_FCLK_N" SIGIS="undef" SIGNAME="External_Ports_ADC_FCLK_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_fclk_n"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -615,7 +686,7 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="64" FULLNAME="/adc_axi_streamer" HWVERSION="2.0" INSTANCE="adc_axi_streamer" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_streamer" VLNV="xilinx.com:user:adc_streamer:2.0">
+    <MODULE COREREVISION="67" FULLNAME="/adc_axi_streamer" HWVERSION="2.0" INSTANCE="adc_axi_streamer" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_streamer" VLNV="xilinx.com:user:adc_streamer:2.0">
       <DOCUMENTS/>
       <PARAMETERS>
         <PARAMETER NAME="C_M00_AXIS_TDATA_WIDTH" VALUE="64"/>
@@ -624,14 +695,14 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" LEFT="63" NAME="adc_bus" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
+        <PORT DIR="I" LEFT="63" NAME="adc_bus" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_adc_bus">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ADC_BUS"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_bus"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="adc_data_clk" SIGIS="clk" SIGNAME="External_Ports_ADC_DATA_CLK">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="adc_data_clk" SIGIS="clk" SIGNAME="adc_receiver_core_0_adc_data_clk">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_CLK"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_data_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="adc_data_valid" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
@@ -752,14 +823,14 @@
             <CONNECTION INSTANCE="system_ila_0" PORT="probe11"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="trigger_in" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
+        <PORT DIR="I" NAME="trigger_in" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_IN"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="trigger_out"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="2" NAME="trigger_sub_word" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_SUB_WORD">
+        <PORT DIR="I" LEFT="2" NAME="trigger_sub_word" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_sub_word">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_SUB_WORD"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="trigger_sub_word"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="trigger_pos" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_pos">
@@ -1925,8 +1996,8 @@
         <PORT DIR="O" NAME="s_axis_s2mm_tready" SIGIS="undef" SIGNAME="adc_dma_s_axis_s2mm_tready">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
-            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
             <CONNECTION INSTANCE="system_ila_0" PORT="probe17"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_tready"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s_axis_s2mm_tlast" SIGIS="undef" SIGNAME="adc_axi_streamer_m00_axis_tlast">
@@ -2076,6 +2147,156 @@
       <PERIPHERALS>
         <PERIPHERAL INSTANCE="zynq_ps"/>
       </PERIPHERALS>
+    </MODULE>
+    <MODULE COREREVISION="3" FULLNAME="/adc_receiver_core_0" HWVERSION="1.0" INSTANCE="adc_receiver_core_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="adc_receiver_core" VLNV="xilinx.com:user:adc_receiver_core:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_adc_receiver_core_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="adc_l1a_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L1A_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L1A_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l1a_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L1A_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L1A_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l1b_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L1B_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L1B_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l1b_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L1B_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L1B_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l2a_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L2A_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L2A_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l2a_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L2A_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L2A_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l2b_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L2B_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L2B_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l2b_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L2B_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L2B_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l3a_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L3A_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L3A_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l3a_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L3A_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L3A_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l3b_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L3B_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L3B_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l3b_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L3B_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L3B_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l4a_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L4A_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L4A_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l4a_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L4A_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L4A_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l4b_p" SIGIS="undef" SIGNAME="External_Ports_ADC_L4B_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L4B_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_l4b_n" SIGIS="undef" SIGNAME="External_Ports_ADC_L4B_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_L4B_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_lclk_p" SIGIS="undef" SIGNAME="External_Ports_ADC_LCLK_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_LCLK_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_lclk_n" SIGIS="undef" SIGNAME="External_Ports_ADC_LCLK_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_LCLK_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_fclk_p" SIGIS="undef" SIGNAME="External_Ports_ADC_FCLK_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_FCLK_P"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="adc_fclk_n" SIGIS="undef" SIGNAME="External_Ports_ADC_FCLK_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ADC_FCLK_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="g_rst" SIGIS="rst" SIGNAME="simple_reset_control_0_g_rst_gen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="simple_reset_control_0" PORT="g_rst_gen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="63" NAME="adc_bus" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_adc_bus">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe18"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_bus"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="adc_data_clk" SIGIS="clk" SIGNAME="adc_receiver_core_0_adc_data_clk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe19"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="adc_data_clk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="trigger_unit_in" SIGIS="undef"/>
+        <PORT DIR="O" NAME="trigger_out" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe29"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="trigger_sub_word" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_sub_word">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="system_ila_0" PORT="probe30"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_sub_word"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="clk_master" SIGIS="undef" SIGNAME="zynq_ps_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="zynq_ps" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="clk_idelay_refclk" SIGIS="undef" SIGNAME="clk_wiz_1_clk_out1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="clk_wiz_1" PORT="clk_out1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
     </MODULE>
     <MODULE COREREVISION="21" FULLNAME="/axi_interconnect_0" HWVERSION="2.1" INSTANCE="axi_interconnect_0" IPTYPE="BUS" IS_ENABLE="1" MODCLASS="BUS" MODTYPE="axi_interconnect" VLNV="xilinx.com:ip:axi_interconnect:2.1">
       <DOCUMENTS>
@@ -5630,6 +5851,603 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
+    <MODULE COREREVISION="4" FULLNAME="/clk_wiz_1" HWVERSION="6.0" INSTANCE="clk_wiz_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="clk_wiz" VLNV="xilinx.com:ip:clk_wiz:6.0">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=clk_wiz;v=v6_0;d=pg065-clk-wiz.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="C_CLKOUT2_USED" VALUE="0"/>
+        <PARAMETER NAME="C_USER_CLK_FREQ0" VALUE="100.0"/>
+        <PARAMETER NAME="C_AUTO_PRIMITIVE" VALUE="MMCM"/>
+        <PARAMETER NAME="C_USER_CLK_FREQ1" VALUE="100.0"/>
+        <PARAMETER NAME="C_USER_CLK_FREQ2" VALUE="100.0"/>
+        <PARAMETER NAME="C_USER_CLK_FREQ3" VALUE="100.0"/>
+        <PARAMETER NAME="C_ENABLE_CLOCK_MONITOR" VALUE="0"/>
+        <PARAMETER NAME="C_ENABLE_USER_CLOCK0" VALUE="0"/>
+        <PARAMETER NAME="C_ENABLE_USER_CLOCK1" VALUE="0"/>
+        <PARAMETER NAME="C_ENABLE_USER_CLOCK2" VALUE="0"/>
+        <PARAMETER NAME="C_ENABLE_USER_CLOCK3" VALUE="0"/>
+        <PARAMETER NAME="C_Enable_PLL0" VALUE="0"/>
+        <PARAMETER NAME="C_Enable_PLL1" VALUE="0"/>
+        <PARAMETER NAME="C_REF_CLK_FREQ" VALUE="100.0"/>
+        <PARAMETER NAME="C_PRECISION" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT3_USED" VALUE="0"/>
+        <PARAMETER NAME="C_CLKOUT4_USED" VALUE="0"/>
+        <PARAMETER NAME="C_CLKOUT5_USED" VALUE="0"/>
+        <PARAMETER NAME="C_CLKOUT6_USED" VALUE="0"/>
+        <PARAMETER NAME="C_CLKOUT7_USED" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLKOUT1_BAR" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLKOUT2_BAR" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLKOUT3_BAR" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLKOUT4_BAR" VALUE="0"/>
+        <PARAMETER NAME="c_component_name" VALUE="design_1_clk_wiz_1_0"/>
+        <PARAMETER NAME="C_PLATFORM" VALUE="UNKNOWN"/>
+        <PARAMETER NAME="C_USE_FREQ_SYNTH" VALUE="1"/>
+        <PARAMETER NAME="C_USE_PHASE_ALIGNMENT" VALUE="1"/>
+        <PARAMETER NAME="C_PRIM_IN_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="C_SECONDARY_IN_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="C_JITTER_SEL" VALUE="No_Jitter"/>
+        <PARAMETER NAME="C_USE_MIN_POWER" VALUE="0"/>
+        <PARAMETER NAME="C_USE_MIN_O_JITTER" VALUE="0"/>
+        <PARAMETER NAME="C_USE_MAX_I_JITTER" VALUE="0"/>
+        <PARAMETER NAME="C_USE_DYN_PHASE_SHIFT" VALUE="0"/>
+        <PARAMETER NAME="C_USE_INCLK_SWITCHOVER" VALUE="0"/>
+        <PARAMETER NAME="C_USE_DYN_RECONFIG" VALUE="0"/>
+        <PARAMETER NAME="C_USE_SPREAD_SPECTRUM" VALUE="0"/>
+        <PARAMETER NAME="C_USE_FAST_SIMULATION" VALUE="0"/>
+        <PARAMETER NAME="C_PRIMTYPE_SEL" VALUE="AUTO"/>
+        <PARAMETER NAME="C_USE_CLK_VALID" VALUE="0"/>
+        <PARAMETER NAME="C_PRIM_IN_FREQ" VALUE="177.778"/>
+        <PARAMETER NAME="C_PRIM_IN_TIMEPERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="C_IN_FREQ_UNITS" VALUE="Units_MHz"/>
+        <PARAMETER NAME="C_SECONDARY_IN_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_SECONDARY_IN_TIMEPERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="C_FEEDBACK_SOURCE" VALUE="FDBK_AUTO"/>
+        <PARAMETER NAME="C_PRIM_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
+        <PARAMETER NAME="C_PHASESHIFT_MODE" VALUE="WAVEFORM"/>
+        <PARAMETER NAME="C_SECONDARY_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
+        <PARAMETER NAME="C_CLKFB_IN_SIGNALING" VALUE="SINGLE"/>
+        <PARAMETER NAME="C_USE_RESET" VALUE="1"/>
+        <PARAMETER NAME="C_RESET_LOW" VALUE="0"/>
+        <PARAMETER NAME="C_USE_LOCKED" VALUE="1"/>
+        <PARAMETER NAME="C_USE_INCLK_STOPPED" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLKFB_STOPPED" VALUE="0"/>
+        <PARAMETER NAME="C_USE_POWER_DOWN" VALUE="0"/>
+        <PARAMETER NAME="C_USE_STATUS" VALUE="0"/>
+        <PARAMETER NAME="C_USE_FREEZE" VALUE="0"/>
+        <PARAMETER NAME="C_NUM_OUT_CLKS" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT1_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT2_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT3_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT4_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT5_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT6_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_CLKOUT7_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="C_INCLK_SUM_ROW0" VALUE="Input Clock   Freq (MHz)    Input Jitter (UI)"/>
+        <PARAMETER NAME="C_INCLK_SUM_ROW1" VALUE="__primary_________177.778____________0.010"/>
+        <PARAMETER NAME="C_INCLK_SUM_ROW2" VALUE="no_secondary_input_clock"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW0A" VALUE="Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW0B" VALUE="Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW1" VALUE="clk_out1__200.00025______0.000______50.0______100.156_____97.786"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW2" VALUE="no_CLK_OUT2_output"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW3" VALUE="no_CLK_OUT3_output"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW4" VALUE="no_CLK_OUT4_output"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW5" VALUE="no_CLK_OUT5_output"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW6" VALUE="no_CLK_OUT6_output"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW7" VALUE="no_CLK_OUT7_output"/>
+        <PARAMETER NAME="C_CLKOUT1_REQUESTED_OUT_FREQ" VALUE="200.000"/>
+        <PARAMETER NAME="C_CLKOUT2_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT3_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT4_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT5_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT6_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT7_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT1_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT2_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT3_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT4_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT5_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT6_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT7_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT1_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT2_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT3_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT4_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT5_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT6_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT7_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT1_OUT_FREQ" VALUE="200.00025"/>
+        <PARAMETER NAME="C_CLKOUT2_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT3_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT4_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT5_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT6_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT7_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT1_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT2_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT3_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT4_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT5_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT6_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT7_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLKOUT1_DUTY_CYCLE" VALUE="50.0"/>
+        <PARAMETER NAME="C_CLKOUT2_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT3_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT4_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT5_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT6_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_CLKOUT7_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="C_USE_SAFE_CLOCK_STARTUP" VALUE="0"/>
+        <PARAMETER NAME="C_USE_CLOCK_SEQUENCING" VALUE="0"/>
+        <PARAMETER NAME="C_CLKOUT1_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT2_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT3_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT4_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT5_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT6_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_CLKOUT7_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_NOTES" VALUE="None"/>
+        <PARAMETER NAME="C_MMCM_BANDWIDTH" VALUE="OPTIMIZED"/>
+        <PARAMETER NAME="C_MMCM_CLKFBOUT_MULT_F" VALUE="4.500"/>
+        <PARAMETER NAME="C_MMCM_CLKIN1_PERIOD" VALUE="5.625"/>
+        <PARAMETER NAME="C_MMCM_CLKIN2_PERIOD" VALUE="10.0"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT4_CASCADE" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLOCK_HOLD" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_COMPENSATION" VALUE="ZHOLD"/>
+        <PARAMETER NAME="C_MMCM_DIVCLK_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_REF_JITTER1" VALUE="0.010"/>
+        <PARAMETER NAME="C_MMCM_REF_JITTER2" VALUE="0.010"/>
+        <PARAMETER NAME="C_MMCM_STARTUP_WAIT" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT0_DIVIDE_F" VALUE="4.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT1_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT2_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT3_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT4_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT5_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT6_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT1_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT2_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT3_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT4_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT5_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT6_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_MMCM_CLKFBOUT_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT0_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT1_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT2_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT3_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT4_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT5_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT6_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_MMCM_CLKFBOUT_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT0_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT1_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT2_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT3_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT4_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT5_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT6_USE_FINE_PS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_PLL_NOTES" VALUE="No notes"/>
+        <PARAMETER NAME="C_PLL_BANDWIDTH" VALUE="OPTIMIZED"/>
+        <PARAMETER NAME="C_PLL_CLK_FEEDBACK" VALUE="CLKFBOUT"/>
+        <PARAMETER NAME="C_PLL_CLKFBOUT_MULT" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKIN_PERIOD" VALUE="1.000"/>
+        <PARAMETER NAME="C_PLL_COMPENSATION" VALUE="SYSTEM_SYNCHRONOUS"/>
+        <PARAMETER NAME="C_PLL_DIVCLK_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_REF_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="C_PLL_CLKOUT0_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT1_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT2_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT3_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT4_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT5_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="C_PLL_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKOUT1_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKOUT2_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKOUT3_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKOUT4_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKOUT5_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="C_PLL_CLKFBOUT_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT0_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT1_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT2_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT3_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT4_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_PLL_CLKOUT5_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="C_CLOCK_MGR_TYPE" VALUE="NA"/>
+        <PARAMETER NAME="C_OVERRIDE_MMCM" VALUE="0"/>
+        <PARAMETER NAME="C_OVERRIDE_PLL" VALUE="0"/>
+        <PARAMETER NAME="C_PRIMARY_PORT" VALUE="clk_in1"/>
+        <PARAMETER NAME="C_SECONDARY_PORT" VALUE="clk_in2"/>
+        <PARAMETER NAME="C_CLK_OUT1_PORT" VALUE="clk_out1"/>
+        <PARAMETER NAME="C_CLK_OUT2_PORT" VALUE="clk_out2"/>
+        <PARAMETER NAME="C_CLK_OUT3_PORT" VALUE="clk_out3"/>
+        <PARAMETER NAME="C_CLK_OUT4_PORT" VALUE="clk_out4"/>
+        <PARAMETER NAME="C_CLK_OUT5_PORT" VALUE="clk_out5"/>
+        <PARAMETER NAME="C_CLK_OUT6_PORT" VALUE="clk_out6"/>
+        <PARAMETER NAME="C_CLK_OUT7_PORT" VALUE="clk_out7"/>
+        <PARAMETER NAME="C_RESET_PORT" VALUE="reset"/>
+        <PARAMETER NAME="C_LOCKED_PORT" VALUE="locked"/>
+        <PARAMETER NAME="C_CLKFB_IN_PORT" VALUE="clkfb_in"/>
+        <PARAMETER NAME="C_CLKFB_IN_P_PORT" VALUE="clkfb_in_p"/>
+        <PARAMETER NAME="C_CLKFB_IN_N_PORT" VALUE="clkfb_in_n"/>
+        <PARAMETER NAME="C_CLKFB_OUT_PORT" VALUE="clkfb_out"/>
+        <PARAMETER NAME="C_CLKFB_OUT_P_PORT" VALUE="clkfb_out_p"/>
+        <PARAMETER NAME="C_CLKFB_OUT_N_PORT" VALUE="clkfb_out_n"/>
+        <PARAMETER NAME="C_POWER_DOWN_PORT" VALUE="power_down"/>
+        <PARAMETER NAME="C_DADDR_PORT" VALUE="daddr"/>
+        <PARAMETER NAME="C_DCLK_PORT" VALUE="dclk"/>
+        <PARAMETER NAME="C_DRDY_PORT" VALUE="drdy"/>
+        <PARAMETER NAME="C_DWE_PORT" VALUE="dwe"/>
+        <PARAMETER NAME="C_DIN_PORT" VALUE="din"/>
+        <PARAMETER NAME="C_DOUT_PORT" VALUE="dout"/>
+        <PARAMETER NAME="C_DEN_PORT" VALUE="den"/>
+        <PARAMETER NAME="C_PSCLK_PORT" VALUE="psclk"/>
+        <PARAMETER NAME="C_PSEN_PORT" VALUE="psen"/>
+        <PARAMETER NAME="C_PSINCDEC_PORT" VALUE="psincdec"/>
+        <PARAMETER NAME="C_PSDONE_PORT" VALUE="psdone"/>
+        <PARAMETER NAME="C_CLK_VALID_PORT" VALUE="CLK_VALID"/>
+        <PARAMETER NAME="C_STATUS_PORT" VALUE="STATUS"/>
+        <PARAMETER NAME="C_CLK_IN_SEL_PORT" VALUE="clk_in_sel"/>
+        <PARAMETER NAME="C_INPUT_CLK_STOPPED_PORT" VALUE="input_clk_stopped"/>
+        <PARAMETER NAME="C_CLKFB_STOPPED_PORT" VALUE="clkfb_stopped"/>
+        <PARAMETER NAME="C_CLKIN1_JITTER_PS" VALUE="56.239999999999995"/>
+        <PARAMETER NAME="C_CLKIN2_JITTER_PS" VALUE="100.0"/>
+        <PARAMETER NAME="C_PRIMITIVE" VALUE="MMCM"/>
+        <PARAMETER NAME="C_SS_MODE" VALUE="CENTER_HIGH"/>
+        <PARAMETER NAME="C_SS_MOD_PERIOD" VALUE="4000"/>
+        <PARAMETER NAME="C_SS_MOD_TIME" VALUE="0.004"/>
+        <PARAMETER NAME="C_HAS_CDDC" VALUE="0"/>
+        <PARAMETER NAME="C_CDDCDONE_PORT" VALUE="cddcdone"/>
+        <PARAMETER NAME="C_CDDCREQ_PORT" VALUE="cddcreq"/>
+        <PARAMETER NAME="C_CLKOUTPHY_MODE" VALUE="VCO"/>
+        <PARAMETER NAME="C_ENABLE_CLKOUTPHY" VALUE="0"/>
+        <PARAMETER NAME="C_INTERFACE_SELECTION" VALUE="0"/>
+        <PARAMETER NAME="C_S_AXI_ADDR_WIDTH" VALUE="11"/>
+        <PARAMETER NAME="C_S_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_POWER_REG" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT0_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT0_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT1_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT1_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT2_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT2_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT3_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT3_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT4_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT4_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT5_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT5_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT6_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKOUT6_2" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKFBOUT_1" VALUE="0000"/>
+        <PARAMETER NAME="C_CLKFBOUT_2" VALUE="0000"/>
+        <PARAMETER NAME="C_DIVCLK" VALUE="0000"/>
+        <PARAMETER NAME="C_LOCK_1" VALUE="0000"/>
+        <PARAMETER NAME="C_LOCK_2" VALUE="0000"/>
+        <PARAMETER NAME="C_LOCK_3" VALUE="0000"/>
+        <PARAMETER NAME="C_FILTER_1" VALUE="0000"/>
+        <PARAMETER NAME="C_FILTER_2" VALUE="0000"/>
+        <PARAMETER NAME="C_DIVIDE1_AUTO" VALUE="1"/>
+        <PARAMETER NAME="C_DIVIDE2_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_DIVIDE3_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_DIVIDE4_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_DIVIDE5_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_DIVIDE6_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_DIVIDE7_AUTO" VALUE="2.0"/>
+        <PARAMETER NAME="C_PLLBUFGCEDIV" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV" VALUE="false"/>
+        <PARAMETER NAME="C_PLLBUFGCEDIV1" VALUE="false"/>
+        <PARAMETER NAME="C_PLLBUFGCEDIV2" VALUE="false"/>
+        <PARAMETER NAME="C_PLLBUFGCEDIV3" VALUE="false"/>
+        <PARAMETER NAME="C_PLLBUFGCEDIV4" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV1" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV2" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV3" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV4" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV5" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV6" VALUE="false"/>
+        <PARAMETER NAME="C_MMCMBUFGCEDIV7" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT1_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT2_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT3_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT4_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT5_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT6_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT7_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="C_CLKOUT0_ACTUAL_FREQ" VALUE="200.00025"/>
+        <PARAMETER NAME="C_CLKOUT1_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT2_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT3_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT4_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT5_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT6_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_M_MAX" VALUE="64.000"/>
+        <PARAMETER NAME="C_M_MIN" VALUE="2.000"/>
+        <PARAMETER NAME="C_D_MAX" VALUE="80.000"/>
+        <PARAMETER NAME="C_D_MIN" VALUE="1.000"/>
+        <PARAMETER NAME="C_O_MAX" VALUE="128.000"/>
+        <PARAMETER NAME="C_O_MIN" VALUE="1.000"/>
+        <PARAMETER NAME="C_VCO_MIN" VALUE="600.000"/>
+        <PARAMETER NAME="C_VCO_MAX" VALUE="1200.000"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_clk_wiz_1_0"/>
+        <PARAMETER NAME="USER_CLK_FREQ0" VALUE="100.0"/>
+        <PARAMETER NAME="USER_CLK_FREQ1" VALUE="100.0"/>
+        <PARAMETER NAME="USER_CLK_FREQ2" VALUE="100.0"/>
+        <PARAMETER NAME="USER_CLK_FREQ3" VALUE="100.0"/>
+        <PARAMETER NAME="ENABLE_CLOCK_MONITOR" VALUE="false"/>
+        <PARAMETER NAME="ENABLE_USER_CLOCK0" VALUE="false"/>
+        <PARAMETER NAME="ENABLE_USER_CLOCK1" VALUE="false"/>
+        <PARAMETER NAME="ENABLE_USER_CLOCK2" VALUE="false"/>
+        <PARAMETER NAME="ENABLE_USER_CLOCK3" VALUE="false"/>
+        <PARAMETER NAME="Enable_PLL0" VALUE="false"/>
+        <PARAMETER NAME="Enable_PLL1" VALUE="false"/>
+        <PARAMETER NAME="REF_CLK_FREQ" VALUE="100.0"/>
+        <PARAMETER NAME="PRECISION" VALUE="1"/>
+        <PARAMETER NAME="PRIMITIVE" VALUE="MMCM"/>
+        <PARAMETER NAME="PRIMTYPE_SEL" VALUE="mmcm_adv"/>
+        <PARAMETER NAME="CLOCK_MGR_TYPE" VALUE="auto"/>
+        <PARAMETER NAME="USE_FREQ_SYNTH" VALUE="true"/>
+        <PARAMETER NAME="USE_SPREAD_SPECTRUM" VALUE="false"/>
+        <PARAMETER NAME="USE_PHASE_ALIGNMENT" VALUE="true"/>
+        <PARAMETER NAME="USE_MIN_POWER" VALUE="false"/>
+        <PARAMETER NAME="USE_DYN_PHASE_SHIFT" VALUE="false"/>
+        <PARAMETER NAME="USE_DYN_RECONFIG" VALUE="false"/>
+        <PARAMETER NAME="JITTER_SEL" VALUE="No_Jitter"/>
+        <PARAMETER NAME="PRIM_IN_FREQ" VALUE="177.778"/>
+        <PARAMETER NAME="PRIM_IN_TIMEPERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="IN_FREQ_UNITS" VALUE="Units_MHz"/>
+        <PARAMETER NAME="PHASESHIFT_MODE" VALUE="WAVEFORM"/>
+        <PARAMETER NAME="IN_JITTER_UNITS" VALUE="Units_UI"/>
+        <PARAMETER NAME="RELATIVE_INCLK" VALUE="REL_PRIMARY"/>
+        <PARAMETER NAME="USE_INCLK_SWITCHOVER" VALUE="false"/>
+        <PARAMETER NAME="SECONDARY_IN_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="SECONDARY_IN_TIMEPERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="SECONDARY_PORT" VALUE="clk_in2"/>
+        <PARAMETER NAME="SECONDARY_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
+        <PARAMETER NAME="JITTER_OPTIONS" VALUE="UI"/>
+        <PARAMETER NAME="CLKIN1_UI_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="CLKIN2_UI_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="PRIM_IN_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="SECONDARY_IN_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="CLKIN1_JITTER_PS" VALUE="56.239999999999995"/>
+        <PARAMETER NAME="CLKIN2_JITTER_PS" VALUE="100.0"/>
+        <PARAMETER NAME="CLKOUT1_USED" VALUE="true"/>
+        <PARAMETER NAME="CLKOUT2_USED" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT3_USED" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT4_USED" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT5_USED" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT6_USED" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT7_USED" VALUE="false"/>
+        <PARAMETER NAME="NUM_OUT_CLKS" VALUE="1"/>
+        <PARAMETER NAME="CLK_OUT1_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT2_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT3_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT4_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT5_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT6_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="CLK_OUT7_USE_FINE_PS_GUI" VALUE="false"/>
+        <PARAMETER NAME="PRIMARY_PORT" VALUE="clk_in1"/>
+        <PARAMETER NAME="CLK_OUT1_PORT" VALUE="clk_out1"/>
+        <PARAMETER NAME="CLK_OUT2_PORT" VALUE="clk_out2"/>
+        <PARAMETER NAME="CLK_OUT3_PORT" VALUE="clk_out3"/>
+        <PARAMETER NAME="CLK_OUT4_PORT" VALUE="clk_out4"/>
+        <PARAMETER NAME="CLK_OUT5_PORT" VALUE="clk_out5"/>
+        <PARAMETER NAME="CLK_OUT6_PORT" VALUE="clk_out6"/>
+        <PARAMETER NAME="CLK_OUT7_PORT" VALUE="clk_out7"/>
+        <PARAMETER NAME="DADDR_PORT" VALUE="daddr"/>
+        <PARAMETER NAME="DCLK_PORT" VALUE="dclk"/>
+        <PARAMETER NAME="DRDY_PORT" VALUE="drdy"/>
+        <PARAMETER NAME="DWE_PORT" VALUE="dwe"/>
+        <PARAMETER NAME="DIN_PORT" VALUE="din"/>
+        <PARAMETER NAME="DOUT_PORT" VALUE="dout"/>
+        <PARAMETER NAME="DEN_PORT" VALUE="den"/>
+        <PARAMETER NAME="PSCLK_PORT" VALUE="psclk"/>
+        <PARAMETER NAME="PSEN_PORT" VALUE="psen"/>
+        <PARAMETER NAME="PSINCDEC_PORT" VALUE="psincdec"/>
+        <PARAMETER NAME="PSDONE_PORT" VALUE="psdone"/>
+        <PARAMETER NAME="CLKOUT1_REQUESTED_OUT_FREQ" VALUE="200.000"/>
+        <PARAMETER NAME="CLKOUT1_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT1_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT2_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT2_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT2_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT3_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT3_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT3_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT4_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT4_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT4_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT5_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT5_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT5_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT6_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT6_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT6_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="CLKOUT7_REQUESTED_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="CLKOUT7_REQUESTED_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="CLKOUT7_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
+        <PARAMETER NAME="USE_MAX_I_JITTER" VALUE="false"/>
+        <PARAMETER NAME="USE_MIN_O_JITTER" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT1_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT2_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT3_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT4_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT5_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT6_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT7_MATCHED_ROUTING" VALUE="false"/>
+        <PARAMETER NAME="PRIM_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
+        <PARAMETER NAME="CLKOUT1_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT2_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT3_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT4_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT5_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT6_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="CLKOUT7_DRIVES" VALUE="BUFG"/>
+        <PARAMETER NAME="FEEDBACK_SOURCE" VALUE="FDBK_AUTO"/>
+        <PARAMETER NAME="CLKFB_IN_SIGNALING" VALUE="SINGLE"/>
+        <PARAMETER NAME="CLKFB_IN_PORT" VALUE="clkfb_in"/>
+        <PARAMETER NAME="CLKFB_IN_P_PORT" VALUE="clkfb_in_p"/>
+        <PARAMETER NAME="CLKFB_IN_N_PORT" VALUE="clkfb_in_n"/>
+        <PARAMETER NAME="CLKFB_OUT_PORT" VALUE="clkfb_out"/>
+        <PARAMETER NAME="CLKFB_OUT_P_PORT" VALUE="clkfb_out_p"/>
+        <PARAMETER NAME="CLKFB_OUT_N_PORT" VALUE="clkfb_out_n"/>
+        <PARAMETER NAME="PLATFORM" VALUE="UNKNOWN"/>
+        <PARAMETER NAME="SUMMARY_STRINGS" VALUE="empty"/>
+        <PARAMETER NAME="USE_LOCKED" VALUE="true"/>
+        <PARAMETER NAME="CALC_DONE" VALUE="empty"/>
+        <PARAMETER NAME="USE_RESET" VALUE="true"/>
+        <PARAMETER NAME="USE_POWER_DOWN" VALUE="false"/>
+        <PARAMETER NAME="USE_STATUS" VALUE="false"/>
+        <PARAMETER NAME="USE_FREEZE" VALUE="false"/>
+        <PARAMETER NAME="USE_CLK_VALID" VALUE="false"/>
+        <PARAMETER NAME="USE_INCLK_STOPPED" VALUE="false"/>
+        <PARAMETER NAME="USE_CLKFB_STOPPED" VALUE="false"/>
+        <PARAMETER NAME="RESET_PORT" VALUE="reset"/>
+        <PARAMETER NAME="LOCKED_PORT" VALUE="locked"/>
+        <PARAMETER NAME="POWER_DOWN_PORT" VALUE="power_down"/>
+        <PARAMETER NAME="CLK_VALID_PORT" VALUE="CLK_VALID"/>
+        <PARAMETER NAME="STATUS_PORT" VALUE="STATUS"/>
+        <PARAMETER NAME="CLK_IN_SEL_PORT" VALUE="clk_in_sel"/>
+        <PARAMETER NAME="INPUT_CLK_STOPPED_PORT" VALUE="input_clk_stopped"/>
+        <PARAMETER NAME="CLKFB_STOPPED_PORT" VALUE="clkfb_stopped"/>
+        <PARAMETER NAME="SS_MODE" VALUE="CENTER_HIGH"/>
+        <PARAMETER NAME="SS_MOD_FREQ" VALUE="250"/>
+        <PARAMETER NAME="SS_MOD_TIME" VALUE="0.004"/>
+        <PARAMETER NAME="OVERRIDE_MMCM" VALUE="false"/>
+        <PARAMETER NAME="MMCM_NOTES" VALUE="None"/>
+        <PARAMETER NAME="MMCM_DIVCLK_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_BANDWIDTH" VALUE="OPTIMIZED"/>
+        <PARAMETER NAME="MMCM_CLKFBOUT_MULT_F" VALUE="4.500"/>
+        <PARAMETER NAME="MMCM_CLKFBOUT_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKFBOUT_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKIN1_PERIOD" VALUE="5.625"/>
+        <PARAMETER NAME="MMCM_CLKIN2_PERIOD" VALUE="10.0"/>
+        <PARAMETER NAME="MMCM_CLKOUT4_CASCADE" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLOCK_HOLD" VALUE="false"/>
+        <PARAMETER NAME="MMCM_COMPENSATION" VALUE="ZHOLD"/>
+        <PARAMETER NAME="MMCM_REF_JITTER1" VALUE="0.010"/>
+        <PARAMETER NAME="MMCM_REF_JITTER2" VALUE="0.010"/>
+        <PARAMETER NAME="MMCM_STARTUP_WAIT" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT0_DIVIDE_F" VALUE="4.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT0_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT0_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT1_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT1_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT1_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT1_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT2_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT2_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT2_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT2_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT3_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT3_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT3_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT3_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT4_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT4_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT4_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT4_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT5_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT5_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT5_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT5_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="MMCM_CLKOUT6_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="MMCM_CLKOUT6_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="MMCM_CLKOUT6_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT6_USE_FINE_PS" VALUE="false"/>
+        <PARAMETER NAME="OVERRIDE_PLL" VALUE="false"/>
+        <PARAMETER NAME="PLL_NOTES" VALUE="None"/>
+        <PARAMETER NAME="PLL_BANDWIDTH" VALUE="OPTIMIZED"/>
+        <PARAMETER NAME="PLL_CLKFBOUT_MULT" VALUE="4"/>
+        <PARAMETER NAME="PLL_CLKFBOUT_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLK_FEEDBACK" VALUE="CLKFBOUT"/>
+        <PARAMETER NAME="PLL_DIVCLK_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKIN_PERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="PLL_COMPENSATION" VALUE="SYSTEM_SYNCHRONOUS"/>
+        <PARAMETER NAME="PLL_REF_JITTER" VALUE="0.010"/>
+        <PARAMETER NAME="PLL_CLKOUT0_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT0_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLKOUT1_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT1_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT1_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLKOUT2_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT2_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT2_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLKOUT3_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT3_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT3_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLKOUT4_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT4_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT4_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="PLL_CLKOUT5_DIVIDE" VALUE="1"/>
+        <PARAMETER NAME="PLL_CLKOUT5_DUTY_CYCLE" VALUE="0.500"/>
+        <PARAMETER NAME="PLL_CLKOUT5_PHASE" VALUE="0.000"/>
+        <PARAMETER NAME="RESET_TYPE" VALUE="ACTIVE_HIGH"/>
+        <PARAMETER NAME="USE_SAFE_CLOCK_STARTUP" VALUE="false"/>
+        <PARAMETER NAME="USE_CLOCK_SEQUENCING" VALUE="false"/>
+        <PARAMETER NAME="CLKOUT1_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT2_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT3_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT4_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT5_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT6_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="CLKOUT7_SEQUENCE_NUMBER" VALUE="1"/>
+        <PARAMETER NAME="USE_BOARD_FLOW" VALUE="false"/>
+        <PARAMETER NAME="CLK_IN1_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="CLK_IN2_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="DIFF_CLK_IN1_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="DIFF_CLK_IN2_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="AUTO_PRIMITIVE" VALUE="MMCM"/>
+        <PARAMETER NAME="RESET_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="ENABLE_CDDC" VALUE="false"/>
+        <PARAMETER NAME="CDDCDONE_PORT" VALUE="cddcdone"/>
+        <PARAMETER NAME="CDDCREQ_PORT" VALUE="cddcreq"/>
+        <PARAMETER NAME="ENABLE_CLKOUTPHY" VALUE="false"/>
+        <PARAMETER NAME="CLKOUTPHY_REQUESTED_FREQ" VALUE="600.000"/>
+        <PARAMETER NAME="CLKOUT1_JITTER" VALUE="100.156"/>
+        <PARAMETER NAME="CLKOUT1_PHASE_ERROR" VALUE="97.786"/>
+        <PARAMETER NAME="CLKOUT2_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT2_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT3_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT3_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT4_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT4_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT5_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT5_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT6_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT6_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT7_JITTER" VALUE="0.0"/>
+        <PARAMETER NAME="CLKOUT7_PHASE_ERROR" VALUE="0.0"/>
+        <PARAMETER NAME="INPUT_MODE" VALUE="frequency"/>
+        <PARAMETER NAME="INTERFACE_SELECTION" VALUE="Enable_AXI"/>
+        <PARAMETER NAME="AXI_DRP" VALUE="false"/>
+        <PARAMETER NAME="PHASE_DUTY_CONFIG" VALUE="false"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="reset" SIGIS="rst" SIGNAME="simple_reset_control_0_g_rst_gen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="simple_reset_control_0" PORT="g_rst_gen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="177777771" DIR="I" NAME="clk_in1" SIGIS="clk" SIGNAME="zynq_ps_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="zynq_ps" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="200000250" DIR="O" NAME="clk_out1" SIGIS="clk" SIGNAME="clk_wiz_1_clk_out1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="clk_idelay_refclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="locked" SIGIS="undef"/>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
     <MODULE COREREVISION="25" FULLNAME="/csi_gearbox_dma_0" HWVERSION="1.0" INSTANCE="csi_gearbox_dma_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="csi_gearbox_dma" VLNV="xilinx.com:user:csi_gearbox_dma:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -5783,9 +6601,9 @@
         <PORT DIR="O" NAME="csi_debug_mipi_read_req" SIGIS="undef"/>
         <PORT DIR="O" LEFT="11" NAME="dbg_fifo_data_ct" RIGHT="0" SIGIS="undef"/>
         <PORT CLKFREQUENCY="100000000" DIR="O" NAME="dbg_ref_clk" SIGIS="clk"/>
-        <PORT DIR="I" NAME="g_rst" SIGIS="rst" SIGNAME="External_Ports_G_RST">
+        <PORT DIR="I" NAME="g_rst" SIGIS="rst" SIGNAME="simple_reset_control_0_g_rst_gen">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="G_RST"/>
+            <CONNECTION INSTANCE="simple_reset_control_0" PORT="g_rst_gen"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="177777771" DIR="I" NAME="s00_axis_aclk" SIGIS="clk" SIGNAME="zynq_ps_FCLK_CLK0">
@@ -7115,9 +7933,38 @@
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="M01_ARESETN"/>
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="ARESETN"/>
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="M00_ARESETN"/>
-            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aresetn"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_aresetn"/>
             <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aresetn"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/simple_reset_control_0" HWVERSION="1.0" INSTANCE="simple_reset_control_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="simple_reset_controller" VLNV="xilinx.com:user:simple_reset_controller:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="G_RST_START" VALUE="4"/>
+        <PARAMETER NAME="G_RST_PULSE_WIDTH" VALUE="128"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_simple_reset_control_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="clk_master" SIGIS="undef" SIGNAME="zynq_ps_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="zynq_ps" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="g_rst_trig_ps" SIGIS="undef" SIGNAME="xlconstant_2_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xlconstant_2" PORT="dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="g_rst_gen" SIGIS="undef" SIGNAME="simple_reset_control_0_g_rst_gen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="g_rst"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="g_rst"/>
+            <CONNECTION INSTANCE="clk_wiz_1" PORT="reset"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -11055,14 +11902,14 @@
             <CONNECTION INSTANCE="adc_dma" PORT="s_axis_s2mm_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="63" NAME="probe18" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_BUS">
+        <PORT DIR="I" LEFT="63" NAME="probe18" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_adc_bus">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ADC_BUS"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_bus"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe19" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_CLK">
+        <PORT DIR="I" LEFT="0" NAME="probe19" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_adc_data_clk">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ADC_DATA_CLK"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="adc_data_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="0" NAME="probe20" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_ADC_DATA_VALID">
@@ -11110,14 +11957,14 @@
             <CONNECTION INSTANCE="External_Ports" PORT="ACQ_AXI_RUN"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="probe29" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_IN">
+        <PORT DIR="I" LEFT="0" NAME="probe29" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_IN"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="trigger_out"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="2" NAME="probe30" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_TRIGGER_SUB_WORD">
+        <PORT DIR="I" LEFT="2" NAME="probe30" RIGHT="0" SIGIS="undef" SIGNAME="adc_receiver_core_0_trigger_sub_word">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="TRIGGER_SUB_WORD"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="trigger_sub_word"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="0" NAME="probe31" RIGHT="0" SIGIS="undef" SIGNAME="adc_dma_s2mm_introut">
@@ -11216,6 +12063,23 @@
         <PORT DIR="O" LEFT="15" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="R_csi_wct_frame"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="6" FULLNAME="/xlconstant_2" HWVERSION="1.1" INSTANCE="xlconstant_2" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="CONST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="CONST_VAL" VALUE="0x0"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xlconstant_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_2_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="simple_reset_control_0" PORT="g_rst_trig_ps"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -12847,10 +13711,13 @@
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="ACLK"/>
             <CONNECTION INSTANCE="axi_interconnect_2" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="zynq_ps" PORT="S_AXI_HP1_ACLK"/>
-            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aclk"/>
             <CONNECTION INSTANCE="csi_gearbox_dma_0" PORT="s00_axis_aclk"/>
             <CONNECTION INSTANCE="FabCfg_NextGen_0" PORT="s00_axi_aclk"/>
             <CONNECTION INSTANCE="system_ila_0" PORT="clk"/>
+            <CONNECTION INSTANCE="simple_reset_control_0" PORT="clk_master"/>
+            <CONNECTION INSTANCE="adc_receiver_core_0" PORT="clk_master"/>
+            <CONNECTION INSTANCE="clk_wiz_1" PORT="clk_in1"/>
+            <CONNECTION INSTANCE="adc_axi_streamer" PORT="m00_axis_aclk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst" SIGNAME="zynq_ps_FCLK_RESET0_N">

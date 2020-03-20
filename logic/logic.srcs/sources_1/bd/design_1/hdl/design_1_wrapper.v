@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Mar 19 21:19:24 2020
+//Date        : Fri Mar 20 14:19:11 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -19,11 +19,29 @@ module design_1_wrapper
     ACQ_RUN,
     ACQ_TRIG_MASK,
     ACQ_TRIG_RST,
-    ADC_BUS,
-    ADC_DATA_CLK,
     ADC_DATA_EOF,
     ADC_DATA_VALID,
+    ADC_FCLK_N,
+    ADC_FCLK_P,
     ADC_FIFO_RESET,
+    ADC_L1A_N,
+    ADC_L1A_P,
+    ADC_L1B_N,
+    ADC_L1B_P,
+    ADC_L2A_N,
+    ADC_L2A_P,
+    ADC_L2B_N,
+    ADC_L2B_P,
+    ADC_L3A_N,
+    ADC_L3A_P,
+    ADC_L3B_N,
+    ADC_L3B_P,
+    ADC_L4A_N,
+    ADC_L4A_P,
+    ADC_L4B_N,
+    ADC_L4B_P,
+    ADC_LCLK_N,
+    ADC_LCLK_P,
     CLKWIZ0_CLKOUT1,
     CLKWIZ0_CLKOUT2,
     CSI_CLK_N,
@@ -69,11 +87,8 @@ module design_1_wrapper
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
     GPIO_TEST,
-    G_RST,
     PL_IRQ,
-    TRIGGER_IN,
-    TRIGGER_OUT,
-    TRIGGER_SUB_WORD);
+    TRIGGER_OUT);
   input ACQ_ABORT;
   input ACQ_AXI_RUN;
   output ACQ_DATA_LOSS;
@@ -83,11 +98,29 @@ module design_1_wrapper
   input ACQ_RUN;
   input ACQ_TRIG_MASK;
   input ACQ_TRIG_RST;
-  input [63:0]ADC_BUS;
-  input ADC_DATA_CLK;
   input ADC_DATA_EOF;
   input ADC_DATA_VALID;
+  input ADC_FCLK_N;
+  input ADC_FCLK_P;
   input ADC_FIFO_RESET;
+  input ADC_L1A_N;
+  input ADC_L1A_P;
+  input ADC_L1B_N;
+  input ADC_L1B_P;
+  input ADC_L2A_N;
+  input ADC_L2A_P;
+  input ADC_L2B_N;
+  input ADC_L2B_P;
+  input ADC_L3A_N;
+  input ADC_L3A_P;
+  input ADC_L3B_N;
+  input ADC_L3B_P;
+  input ADC_L4A_N;
+  input ADC_L4A_P;
+  input ADC_L4B_N;
+  input ADC_L4B_P;
+  input ADC_LCLK_N;
+  input ADC_LCLK_P;
   output CLKWIZ0_CLKOUT1;
   output CLKWIZ0_CLKOUT2;
   output CSI_CLK_N;
@@ -133,11 +166,8 @@ module design_1_wrapper
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
   output [1:0]GPIO_TEST;
-  input G_RST;
   input [3:0]PL_IRQ;
-  input TRIGGER_IN;
   output TRIGGER_OUT;
-  input [2:0]TRIGGER_SUB_WORD;
 
   wire ACQ_ABORT;
   wire ACQ_AXI_RUN;
@@ -148,11 +178,29 @@ module design_1_wrapper
   wire ACQ_RUN;
   wire ACQ_TRIG_MASK;
   wire ACQ_TRIG_RST;
-  wire [63:0]ADC_BUS;
-  wire ADC_DATA_CLK;
   wire ADC_DATA_EOF;
   wire ADC_DATA_VALID;
+  wire ADC_FCLK_N;
+  wire ADC_FCLK_P;
   wire ADC_FIFO_RESET;
+  wire ADC_L1A_N;
+  wire ADC_L1A_P;
+  wire ADC_L1B_N;
+  wire ADC_L1B_P;
+  wire ADC_L2A_N;
+  wire ADC_L2A_P;
+  wire ADC_L2B_N;
+  wire ADC_L2B_P;
+  wire ADC_L3A_N;
+  wire ADC_L3A_P;
+  wire ADC_L3B_N;
+  wire ADC_L3B_P;
+  wire ADC_L4A_N;
+  wire ADC_L4A_P;
+  wire ADC_L4B_N;
+  wire ADC_L4B_P;
+  wire ADC_LCLK_N;
+  wire ADC_LCLK_P;
   wire CLKWIZ0_CLKOUT1;
   wire CLKWIZ0_CLKOUT2;
   wire CSI_CLK_N;
@@ -198,11 +246,8 @@ module design_1_wrapper
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
   wire [1:0]GPIO_TEST;
-  wire G_RST;
   wire [3:0]PL_IRQ;
-  wire TRIGGER_IN;
   wire TRIGGER_OUT;
-  wire [2:0]TRIGGER_SUB_WORD;
 
   design_1 design_1_i
        (.ACQ_ABORT(ACQ_ABORT),
@@ -214,11 +259,29 @@ module design_1_wrapper
         .ACQ_RUN(ACQ_RUN),
         .ACQ_TRIG_MASK(ACQ_TRIG_MASK),
         .ACQ_TRIG_RST(ACQ_TRIG_RST),
-        .ADC_BUS(ADC_BUS),
-        .ADC_DATA_CLK(ADC_DATA_CLK),
         .ADC_DATA_EOF(ADC_DATA_EOF),
         .ADC_DATA_VALID(ADC_DATA_VALID),
+        .ADC_FCLK_N(ADC_FCLK_N),
+        .ADC_FCLK_P(ADC_FCLK_P),
         .ADC_FIFO_RESET(ADC_FIFO_RESET),
+        .ADC_L1A_N(ADC_L1A_N),
+        .ADC_L1A_P(ADC_L1A_P),
+        .ADC_L1B_N(ADC_L1B_N),
+        .ADC_L1B_P(ADC_L1B_P),
+        .ADC_L2A_N(ADC_L2A_N),
+        .ADC_L2A_P(ADC_L2A_P),
+        .ADC_L2B_N(ADC_L2B_N),
+        .ADC_L2B_P(ADC_L2B_P),
+        .ADC_L3A_N(ADC_L3A_N),
+        .ADC_L3A_P(ADC_L3A_P),
+        .ADC_L3B_N(ADC_L3B_N),
+        .ADC_L3B_P(ADC_L3B_P),
+        .ADC_L4A_N(ADC_L4A_N),
+        .ADC_L4A_P(ADC_L4A_P),
+        .ADC_L4B_N(ADC_L4B_N),
+        .ADC_L4B_P(ADC_L4B_P),
+        .ADC_LCLK_N(ADC_LCLK_N),
+        .ADC_LCLK_P(ADC_LCLK_P),
         .CLKWIZ0_CLKOUT1(CLKWIZ0_CLKOUT1),
         .CLKWIZ0_CLKOUT2(CLKWIZ0_CLKOUT2),
         .CSI_CLK_N(CSI_CLK_N),
@@ -264,9 +327,6 @@ module design_1_wrapper
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
         .GPIO_TEST(GPIO_TEST),
-        .G_RST(G_RST),
         .PL_IRQ(PL_IRQ),
-        .TRIGGER_IN(TRIGGER_IN),
-        .TRIGGER_OUT(TRIGGER_OUT),
-        .TRIGGER_SUB_WORD(TRIGGER_SUB_WORD));
+        .TRIGGER_OUT(TRIGGER_OUT));
 endmodule

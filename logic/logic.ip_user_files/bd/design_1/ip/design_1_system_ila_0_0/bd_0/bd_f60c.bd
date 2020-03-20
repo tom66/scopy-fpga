@@ -1,13 +1,14 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xF94582703CE8EA07",
+      "boundary_crc": "0x44B8D5D16C9E6C36",
       "design_src": "SBD",
       "device": "xc7z014sclg400-1",
       "name": "bd_f60c",
       "scoped": "true",
       "synth_flow_mode": "None",
-      "tool_version": "2019.2"
+      "tool_version": "2019.2",
+      "validated": "true"
     },
     "design_tree": {
       "ila_lib": ""
@@ -15,7 +16,25 @@
     "ports": {
       "clk": {
         "type": "clk",
-        "direction": "I"
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_processing_system7_0_1_FCLK_CLK0",
+            "value_src": "default_prop"
+          },
+          "FREQ_HZ": {
+            "value": "177777771",
+            "value_src": "default_prop"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
       },
       "probe0": {
         "direction": "I",
@@ -34,17 +53,17 @@
       },
       "probe3": {
         "direction": "I",
-        "left": "0",
+        "left": "31",
         "right": "0"
       },
       "probe4": {
         "direction": "I",
-        "left": "0",
+        "left": "31",
         "right": "0"
       },
       "probe5": {
         "direction": "I",
-        "left": "0",
+        "left": "10",
         "right": "0"
       },
       "probe6": {
@@ -54,17 +73,17 @@
       },
       "probe7": {
         "direction": "I",
-        "left": "5",
+        "left": "15",
         "right": "0"
       },
       "probe8": {
         "direction": "I",
-        "left": "15",
+        "left": "0",
         "right": "0"
       },
       "probe9": {
         "direction": "I",
-        "left": "15",
+        "left": "0",
         "right": "0"
       },
       "probe10": {
@@ -74,12 +93,12 @@
       },
       "probe11": {
         "direction": "I",
-        "left": "15",
+        "left": "0",
         "right": "0"
       },
       "probe12": {
         "direction": "I",
-        "left": "5",
+        "left": "31",
         "right": "0"
       },
       "probe13": {
@@ -89,12 +108,12 @@
       },
       "probe14": {
         "direction": "I",
-        "left": "0",
+        "left": "63",
         "right": "0"
       },
       "probe15": {
         "direction": "I",
-        "left": "11",
+        "left": "0",
         "right": "0"
       },
       "probe16": {
@@ -109,7 +128,7 @@
       },
       "probe18": {
         "direction": "I",
-        "left": "0",
+        "left": "63",
         "right": "0"
       },
       "probe19": {
@@ -124,27 +143,27 @@
       },
       "probe21": {
         "direction": "I",
-        "left": "5",
+        "left": "0",
         "right": "0"
       },
       "probe22": {
         "direction": "I",
-        "left": "20",
+        "left": "0",
         "right": "0"
       },
       "probe23": {
         "direction": "I",
-        "left": "7",
+        "left": "0",
         "right": "0"
       },
       "probe24": {
         "direction": "I",
-        "left": "63",
+        "left": "0",
         "right": "0"
       },
       "probe25": {
         "direction": "I",
-        "left": "15",
+        "left": "0",
         "right": "0"
       },
       "probe26": {
@@ -169,7 +188,7 @@
       },
       "probe30": {
         "direction": "I",
-        "left": "0",
+        "left": "2",
         "right": "0"
       },
       "probe31": {
@@ -193,7 +212,7 @@
             "value": "FALSE"
           },
           "C_DATA_DEPTH": {
-            "value": "4096"
+            "value": "8192"
           },
           "C_EN_STRG_QUAL": {
             "value": "0"
@@ -202,7 +221,7 @@
             "value": "0"
           },
           "C_ILA_CLK_FREQ": {
-            "value": "100000000"
+            "value": "177777771"
           },
           "C_INPUT_PIPE_STAGES": {
             "value": "0"
@@ -238,7 +257,7 @@
             "value": "0"
           },
           "C_PROBE11_WIDTH": {
-            "value": "16"
+            "value": "1"
           },
           "C_PROBE12_MU_CNT": {
             "value": "1"
@@ -247,7 +266,7 @@
             "value": "0"
           },
           "C_PROBE12_WIDTH": {
-            "value": "6"
+            "value": "32"
           },
           "C_PROBE13_MU_CNT": {
             "value": "1"
@@ -265,7 +284,7 @@
             "value": "0"
           },
           "C_PROBE14_WIDTH": {
-            "value": "1"
+            "value": "64"
           },
           "C_PROBE15_MU_CNT": {
             "value": "1"
@@ -274,7 +293,7 @@
             "value": "0"
           },
           "C_PROBE15_WIDTH": {
-            "value": "12"
+            "value": "1"
           },
           "C_PROBE16_MU_CNT": {
             "value": "1"
@@ -301,7 +320,7 @@
             "value": "0"
           },
           "C_PROBE18_WIDTH": {
-            "value": "1"
+            "value": "64"
           },
           "C_PROBE19_MU_CNT": {
             "value": "1"
@@ -337,7 +356,7 @@
             "value": "0"
           },
           "C_PROBE21_WIDTH": {
-            "value": "6"
+            "value": "1"
           },
           "C_PROBE22_MU_CNT": {
             "value": "1"
@@ -346,7 +365,7 @@
             "value": "0"
           },
           "C_PROBE22_WIDTH": {
-            "value": "21"
+            "value": "1"
           },
           "C_PROBE23_MU_CNT": {
             "value": "1"
@@ -355,7 +374,7 @@
             "value": "0"
           },
           "C_PROBE23_WIDTH": {
-            "value": "8"
+            "value": "1"
           },
           "C_PROBE24_MU_CNT": {
             "value": "1"
@@ -364,7 +383,7 @@
             "value": "0"
           },
           "C_PROBE24_WIDTH": {
-            "value": "64"
+            "value": "1"
           },
           "C_PROBE25_MU_CNT": {
             "value": "1"
@@ -373,7 +392,7 @@
             "value": "0"
           },
           "C_PROBE25_WIDTH": {
-            "value": "16"
+            "value": "1"
           },
           "C_PROBE26_MU_CNT": {
             "value": "1"
@@ -427,7 +446,7 @@
             "value": "0"
           },
           "C_PROBE30_WIDTH": {
-            "value": "1"
+            "value": "3"
           },
           "C_PROBE31_MU_CNT": {
             "value": "1"
@@ -445,7 +464,7 @@
             "value": "0"
           },
           "C_PROBE3_WIDTH": {
-            "value": "1"
+            "value": "32"
           },
           "C_PROBE4_MU_CNT": {
             "value": "1"
@@ -454,7 +473,7 @@
             "value": "0"
           },
           "C_PROBE4_WIDTH": {
-            "value": "1"
+            "value": "32"
           },
           "C_PROBE5_MU_CNT": {
             "value": "1"
@@ -463,7 +482,7 @@
             "value": "0"
           },
           "C_PROBE5_WIDTH": {
-            "value": "1"
+            "value": "11"
           },
           "C_PROBE6_MU_CNT": {
             "value": "1"
@@ -481,7 +500,7 @@
             "value": "0"
           },
           "C_PROBE7_WIDTH": {
-            "value": "6"
+            "value": "16"
           },
           "C_PROBE8_MU_CNT": {
             "value": "1"
@@ -490,7 +509,7 @@
             "value": "0"
           },
           "C_PROBE8_WIDTH": {
-            "value": "16"
+            "value": "1"
           },
           "C_PROBE9_MU_CNT": {
             "value": "1"
@@ -499,7 +518,7 @@
             "value": "0"
           },
           "C_PROBE9_WIDTH": {
-            "value": "16"
+            "value": "1"
           },
           "C_TIME_TAG_WIDTH": {
             "value": "32"

@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Mar 19 21:19:23 2020
+//Date        : Fri Mar 20 14:19:11 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=31,numReposBlks=18,numNonXlnxBlks=0,numHierBlks=13,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=21,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_s2mm_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_board_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_bram_cntlr_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=2,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=25,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_ps7_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"=5,\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"=6,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=35,numReposBlks=22,numNonXlnxBlks=0,numHierBlks=13,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=21,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_s2mm_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_board_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_bram_cntlr_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=2,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=25,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_ps7_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=4,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"\"\"\"\"=5,\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"=6,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (ACQ_ABORT,
     ACQ_AXI_RUN,
@@ -20,11 +20,29 @@ module design_1
     ACQ_RUN,
     ACQ_TRIG_MASK,
     ACQ_TRIG_RST,
-    ADC_BUS,
-    ADC_DATA_CLK,
     ADC_DATA_EOF,
     ADC_DATA_VALID,
+    ADC_FCLK_N,
+    ADC_FCLK_P,
     ADC_FIFO_RESET,
+    ADC_L1A_N,
+    ADC_L1A_P,
+    ADC_L1B_N,
+    ADC_L1B_P,
+    ADC_L2A_N,
+    ADC_L2A_P,
+    ADC_L2B_N,
+    ADC_L2B_P,
+    ADC_L3A_N,
+    ADC_L3A_P,
+    ADC_L3B_N,
+    ADC_L3B_P,
+    ADC_L4A_N,
+    ADC_L4A_P,
+    ADC_L4B_N,
+    ADC_L4B_P,
+    ADC_LCLK_N,
+    ADC_LCLK_P,
     CLKWIZ0_CLKOUT1,
     CLKWIZ0_CLKOUT2,
     CSI_CLK_N,
@@ -70,11 +88,8 @@ module design_1
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
     GPIO_TEST,
-    G_RST,
     PL_IRQ,
-    TRIGGER_IN,
-    TRIGGER_OUT,
-    TRIGGER_SUB_WORD);
+    TRIGGER_OUT);
   input ACQ_ABORT;
   input ACQ_AXI_RUN;
   output ACQ_DATA_LOSS;
@@ -84,11 +99,29 @@ module design_1
   input ACQ_RUN;
   input ACQ_TRIG_MASK;
   input ACQ_TRIG_RST;
-  input [63:0]ADC_BUS;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.ADC_DATA_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.ADC_DATA_CLK, CLK_DOMAIN design_1_ADC_DATA_CLK, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.000" *) input ADC_DATA_CLK;
   input ADC_DATA_EOF;
   input ADC_DATA_VALID;
+  input ADC_FCLK_N;
+  input ADC_FCLK_P;
   input ADC_FIFO_RESET;
+  input ADC_L1A_N;
+  input ADC_L1A_P;
+  input ADC_L1B_N;
+  input ADC_L1B_P;
+  input ADC_L2A_N;
+  input ADC_L2A_P;
+  input ADC_L2B_N;
+  input ADC_L2B_P;
+  input ADC_L3A_N;
+  input ADC_L3A_P;
+  input ADC_L3B_N;
+  input ADC_L3B_P;
+  input ADC_L4A_N;
+  input ADC_L4A_P;
+  input ADC_L4B_N;
+  input ADC_L4B_P;
+  input ADC_LCLK_N;
+  input ADC_LCLK_P;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLKWIZ0_CLKOUT1 CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLKWIZ0_CLKOUT1, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 400000500, INSERT_VIP 0, PHASE 0.0" *) output CLKWIZ0_CLKOUT1;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLKWIZ0_CLKOUT2 CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLKWIZ0_CLKOUT2, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 400000500, INSERT_VIP 0, PHASE 90.0" *) output CLKWIZ0_CLKOUT2;
   output CSI_CLK_N;
@@ -134,11 +167,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
   output [1:0]GPIO_TEST;
-  input G_RST;
   input [3:0]PL_IRQ;
-  input TRIGGER_IN;
   output TRIGGER_OUT;
-  input [2:0]TRIGGER_SUB_WORD;
 
   wire ACQ_ABORT_1;
   wire ACQ_AXI_RUN_1;
@@ -152,7 +182,27 @@ module design_1
   wire ADC_DATA_CLK_2;
   wire ADC_DATA_EOF_1;
   wire ADC_DATA_VALID_1;
+  wire ADC_FCLK_N_1;
+  wire ADC_FCLK_P_1;
   wire ADC_FIFO_RESET_1;
+  wire ADC_L1A_N_1;
+  wire ADC_L1A_P_1;
+  wire ADC_L1B_N_1;
+  wire ADC_L1B_P_1;
+  wire ADC_L2A_N_1;
+  wire ADC_L2A_P_1;
+  wire ADC_L2B_N_1;
+  wire ADC_L2B_P_1;
+  wire ADC_L3A_N_1;
+  wire ADC_L3A_P_1;
+  wire ADC_L3B_N_1;
+  wire ADC_L3B_P_1;
+  wire ADC_L4A_N_1;
+  wire ADC_L4A_P_1;
+  wire ADC_L4B_N_1;
+  wire ADC_L4B_P_1;
+  wire ADC_LCLK_N_1;
+  wire ADC_LCLK_P_1;
   wire CSI_END_FRAME_1;
   wire CSI_SLEEP_1;
   wire CSI_START_FRAME_1;
@@ -166,7 +216,6 @@ module design_1
   wire [20:0]FabCfg_NextGen_0_R_csi_line_byte_count;
   wire [5:0]FabCfg_NextGen_0_R_csi_line_count;
   wire [1:0]FabCfg_NextGen_0_R_gpio_test;
-  wire G_RST_1;
   wire [63:0]Net;
   wire Net1;
   wire [3:0]PL_IRQ_1;
@@ -359,6 +408,7 @@ module design_1
   wire axi_mem_intercon_M00_AXI_WVALID;
   wire clk_wiz_0_clk_out1;
   wire clk_wiz_0_clk_out2;
+  wire clk_wiz_1_clk_out1;
   wire csi_gearbox_dma_0_csi_clk_n;
   wire csi_gearbox_dma_0_csi_clk_p;
   wire csi_gearbox_dma_0_csi_d0_n;
@@ -437,9 +487,11 @@ module design_1
   wire [3:0]processing_system7_0_M_AXI_GP0_WSTRB;
   wire processing_system7_0_M_AXI_GP0_WVALID;
   wire [0:0]rst_ps7_0_20M_peripheral_aresetn;
+  wire simple_reset_control_0_g_rst_gen;
   wire [4:0]xlconcat_1_dout;
   wire [31:0]xlconstant_0_dout;
   wire [15:0]xlconstant_1_dout;
+  wire [0:0]xlconstant_2_dout;
 
   assign ACQ_ABORT_1 = ACQ_ABORT;
   assign ACQ_AXI_RUN_1 = ACQ_AXI_RUN;
@@ -447,15 +499,31 @@ module design_1
   assign ACQ_DONE = adc_axi_streamer_acq_done;
   assign ACQ_HAVE_TRIG = adc_axi_streamer_acq_have_trig;
   assign ACQ_RUN_1 = ACQ_RUN;
-  assign ACQ_TRIGGER_IN_1 = TRIGGER_IN;
   assign ACQ_TRIG_MASK_1 = ACQ_TRIG_MASK;
   assign ACQ_TRIG_RST_1 = ACQ_TRIG_RST;
-  assign ACQ_TRIG_WORD_1 = TRIGGER_SUB_WORD[2:0];
-  assign ADC_BUS_1 = ADC_BUS[63:0];
-  assign ADC_DATA_CLK_2 = ADC_DATA_CLK;
   assign ADC_DATA_EOF_1 = ADC_DATA_EOF;
   assign ADC_DATA_VALID_1 = ADC_DATA_VALID;
+  assign ADC_FCLK_N_1 = ADC_FCLK_N;
+  assign ADC_FCLK_P_1 = ADC_FCLK_P;
   assign ADC_FIFO_RESET_1 = ADC_FIFO_RESET;
+  assign ADC_L1A_N_1 = ADC_L1A_N;
+  assign ADC_L1A_P_1 = ADC_L1A_P;
+  assign ADC_L1B_N_1 = ADC_L1B_N;
+  assign ADC_L1B_P_1 = ADC_L1B_P;
+  assign ADC_L2A_N_1 = ADC_L2A_N;
+  assign ADC_L2A_P_1 = ADC_L2A_P;
+  assign ADC_L2B_N_1 = ADC_L2B_N;
+  assign ADC_L2B_P_1 = ADC_L2B_P;
+  assign ADC_L3A_N_1 = ADC_L3A_N;
+  assign ADC_L3A_P_1 = ADC_L3A_P;
+  assign ADC_L3B_N_1 = ADC_L3B_N;
+  assign ADC_L3B_P_1 = ADC_L3B_P;
+  assign ADC_L4A_N_1 = ADC_L4A_N;
+  assign ADC_L4A_P_1 = ADC_L4A_P;
+  assign ADC_L4B_N_1 = ADC_L4B_N;
+  assign ADC_L4B_P_1 = ADC_L4B_P;
+  assign ADC_LCLK_N_1 = ADC_LCLK_N;
+  assign ADC_LCLK_P_1 = ADC_LCLK_P;
   assign CLKWIZ0_CLKOUT1 = clk_wiz_0_clk_out1;
   assign CLKWIZ0_CLKOUT2 = clk_wiz_0_clk_out2;
   assign CSI_CLK_N = csi_gearbox_dma_0_csi_clk_n;
@@ -480,7 +548,6 @@ module design_1
   assign EMIO_O[63:0] = processing_system7_0_GPIO_O;
   assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
   assign GPIO_TEST[1:0] = FabCfg_NextGen_0_R_gpio_test;
-  assign G_RST_1 = G_RST;
   assign PL_IRQ_1 = PL_IRQ[3:0];
   assign TRIGGER_OUT = adc_axi_streamer_trigger_out;
   design_1_FabCfg_NextGen_0_0 FabCfg_NextGen_0
@@ -592,6 +659,35 @@ module design_1
         .s_axis_s2mm_tlast(adc_axi_streamer_m00_axis_tlast),
         .s_axis_s2mm_tready(axi_dma_s_axis_s2mm_tready),
         .s_axis_s2mm_tvalid(adc_axi_streamer_m00_axis_tvalid));
+  design_1_adc_receiver_core_0_0 adc_receiver_core_0
+       (.adc_bus(ADC_BUS_1),
+        .adc_data_clk(ADC_DATA_CLK_2),
+        .adc_fclk_n(ADC_FCLK_N_1),
+        .adc_fclk_p(ADC_FCLK_P_1),
+        .adc_l1a_n(ADC_L1A_N_1),
+        .adc_l1a_p(ADC_L1A_P_1),
+        .adc_l1b_n(ADC_L1B_N_1),
+        .adc_l1b_p(ADC_L1B_P_1),
+        .adc_l2a_n(ADC_L2A_N_1),
+        .adc_l2a_p(ADC_L2A_P_1),
+        .adc_l2b_n(ADC_L2B_N_1),
+        .adc_l2b_p(ADC_L2B_P_1),
+        .adc_l3a_n(ADC_L3A_N_1),
+        .adc_l3a_p(ADC_L3A_P_1),
+        .adc_l3b_n(ADC_L3B_N_1),
+        .adc_l3b_p(ADC_L3B_P_1),
+        .adc_l4a_n(ADC_L4A_N_1),
+        .adc_l4a_p(ADC_L4A_P_1),
+        .adc_l4b_n(ADC_L4B_N_1),
+        .adc_l4b_p(ADC_L4B_P_1),
+        .adc_lclk_n(ADC_LCLK_N_1),
+        .adc_lclk_p(ADC_LCLK_P_1),
+        .clk_idelay_refclk(clk_wiz_1_clk_out1),
+        .clk_master(processing_system7_0_FCLK_CLK0),
+        .g_rst(simple_reset_control_0_g_rst_gen),
+        .trigger_out(ACQ_TRIGGER_IN_1),
+        .trigger_sub_word(ACQ_TRIG_WORD_1),
+        .trigger_unit_in(1'b0));
   design_1_axi_interconnect_0_0 axi_interconnect_0
        (.ACLK(processing_system7_0_FCLK_CLK0),
         .ARESETN(rst_ps7_0_20M_peripheral_aresetn),
@@ -866,6 +962,11 @@ module design_1
         .s_axi_wready(axi_interconnect_1_M00_AXI_WREADY),
         .s_axi_wstrb(axi_interconnect_1_M00_AXI_WSTRB),
         .s_axi_wvalid(axi_interconnect_1_M00_AXI_WVALID));
+  /* Clock source for IDELAYE2 blocks */
+  design_1_clk_wiz_1_0 clk_wiz_1
+       (.clk_in1(processing_system7_0_FCLK_CLK0),
+        .clk_out1(clk_wiz_1_clk_out1),
+        .reset(simple_reset_control_0_g_rst_gen));
   design_1_csi_gearbox_dma_0_0 csi_gearbox_dma_0
        (.R_csi_control_flags(FabCfg_NextGen_0_R_csi_control_flags),
         .R_csi_data_type(FabCfg_NextGen_0_R_csi_data_type),
@@ -890,7 +991,7 @@ module design_1
         .csi_start_frame(CSI_START_FRAME_1),
         .csi_start_lines(CSI_START_LINES_1),
         .csi_stop(CSI_STOP_1),
-        .g_rst(G_RST_1),
+        .g_rst(simple_reset_control_0_g_rst_gen),
         .mod_clk_I(clk_wiz_0_clk_out1),
         .mod_clk_Q(clk_wiz_0_clk_out2),
         .s00_axis_aclk(processing_system7_0_FCLK_CLK0),
@@ -944,6 +1045,10 @@ module design_1
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_20M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
+  design_1_simple_reset_control_0_0 simple_reset_control_0
+       (.clk_master(processing_system7_0_FCLK_CLK0),
+        .g_rst_gen(simple_reset_control_0_g_rst_gen),
+        .g_rst_trig_ps(xlconstant_2_dout));
   design_1_system_ila_0_0 system_ila_0
        (.clk(processing_system7_0_FCLK_CLK0),
         .probe0(adc_axi_streamer_dbg_adcstream_state),
@@ -986,6 +1091,8 @@ module design_1
        (.dout(xlconstant_0_dout));
   design_1_xlconstant_1_0 xlconstant_1
        (.dout(xlconstant_1_dout));
+  design_1_xlconstant_0_1 xlconstant_2
+       (.dout(xlconstant_2_dout));
   (* BMM_INFO_PROCESSOR = "arm > design_1 axi_bram_ctrl_0" *) 
   (* KEEP_HIERARCHY = "yes" *) 
   design_1_processing_system7_0_1 zynq_ps
