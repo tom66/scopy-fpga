@@ -94,20 +94,6 @@ assign led_PL1 = R_gpio_test[1];
 /*
  * Connection to Block Design.
  */
-wire acq_done, acq_have_trig, acq_data_loss, fabcfg_done;
-assign emio_input[EMIO_CFG_DONE] = fabcfg_done;
-wire fabcfg_commit = emio_output[EMIO_CFG_COMMIT];
-wire acq_run = emio_output[EMIO_ACQ_RUN];
-wire acq_abort = emio_output[EMIO_ACQ_ABORT];
-assign emio_input[EMIO_ACQ_DONE] = acq_done;
-wire acq_trig_mask = emio_output[EMIO_ACQ_TRIG_MASK];
-wire acq_trig_rst = emio_output[EMIO_ACQ_TRIG_RST];
-wire acq_depth_mux = emio_output[EMIO_ACQ_DEPTH_MUX];
-wire acq_axi_run = emio_output[EMIO_ACQ_AXI_RUN];
-wire acq_fifo_reset = emio_output[EMIO_ACQ_FIFO_RESET];
-assign emio_input[EMIO_ACQ_HAVE_TRIG] = acq_have_trig;
-assign emio_input[EMIO_ACQ_DATA_LOSS] = acq_data_loss;
-
 wire csi_done;
 wire csi_start_lines = emio_output[EMIO_CSI_START_LINES];
 wire csi_start_frame = emio_output[EMIO_CSI_START_FRAME];
@@ -170,22 +156,7 @@ design_1 (
     .ADC_LCLK_N(adc_lclk_n),
     .ADC_FCLK_P(adc_fclk_p),
     .ADC_FCLK_N(adc_fclk_n),
-    
-    .ADC_DATA_VALID(1'b1),          // TODO: this should be coming from the PS
-    .ADC_FIFO_RESET(acq_fifo_reset),
-    .ADC_DATA_EOF(1'b0),            // for now, data never ends
-    
-    // Acquisition/control bus - controlled via EMIO [To be moved to AXI register control]
-    .ACQ_RUN(acq_run),
-    .ACQ_ABORT(acq_abort),
-    .ACQ_TRIG_MASK(acq_trig_mask),
-    .ACQ_TRIG_RST(acq_trig_rst),
-    .ACQ_DEPTH_MUX(acq_depth_mux),
-    .ACQ_AXI_RUN(acq_axi_run),
-    .ACQ_DONE(acq_done),
-    .ACQ_HAVE_TRIG(acq_have_trig),
-    .ACQ_DATA_LOSS(acq_data_loss),      // Data loss signal to PS indicating that FIFO data may be stale due to read delay
-    
+   
     // CSI output port
     .CSI_CLK_P(csi_clk_p),
     .CSI_CLK_N(csi_clk_n),

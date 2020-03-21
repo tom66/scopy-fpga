@@ -76,12 +76,31 @@
 #define ACQRES_MALLOC_FAIL			-1
 #define ACQRES_OK					0
 
+// Control signals for ACQ_CTRL_A
+#define ACQ_CTRL_A_RUN				0x00000001
+#define ACQ_CTRL_A_AXI_RUN			0x00000002
+#define ACQ_CTRL_A_TRIG_MASK		0x00000004
+#define ACQ_CTRL_A_TRIG_RST			0x00000008
+#define ACQ_CTRL_A_DEPTH_MUX		0x00000010
+#define ACQ_CTRL_A_FIFO_RESET		0x00000020
+#define ACQ_CTRL_A_ABORT			0x00000040
+#define ACQ_CTRL_A_EOF				0x00000080
+#define ACQ_CTRL_A_DATA_VALID		0x00000100
+
+#define ACQ_STATUS_A_DONE			0x00000001
+#define ACQ_STATUS_A_HAVE_TRIG		0x00000002
+#define ACQ_STATUS_A_DATA_LOSS		0x00000004
+
+#define ACQ_STATUS_B_DBG_AXI_RDY	0x00000001
+#define ACQ_STATUS_B_DBG_INT_RDY	0x00000002
+#define ACQ_STATUS_B_DBG_TRIG_PF	0x00000004						// Trigger post-FIFO
+
 // Flags for acq_buffer_t
 #define ACQBUF_FLAG_PKT_DONE		0x0001							// Packet is done
 #define ACQBUF_FLAG_PKT_OVERRUN		0x0002							// Packet contains bad data due to FIFO overrun and will be discarded
 #define ACQBUF_FLAG_ALLOC			0x0080							// Marker flag set when memory allocated for this buffer
 
-// Demux register on PL.  6-bits wide
+// Demux register on PL.  6-bits wide  [to be implemented]
 #define ADCDEMUX_1CH				0x01
 #define ADCDEMUX_2CH				0x02
 #define ADCDEMUX_4CH				0x04
@@ -100,19 +119,6 @@
 #define ACQ_DMA_IRQ_RX				XPAR_FABRIC_ADC_DMA_S2MM_INTROUT_INTR
 #define ACQ_DMA_IRQ_RX_PRIORITY		0xA0							// Low priority: TODO make this high priority
 #define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
-
-// Fabric EMIO pin definitions.  54 is the EMIO offset for bank2.
-#define ACQ_EMIO_RUN				(54 + 0)
-#define ACQ_EMIO_ABORT				(54 + 1)
-#define ACQ_EMIO_DONE				(54 + 2)
-#define ACQ_EMIO_TRIG_MASK			(54 + 5)						// Mask to ignore trigger events (1 = ignore, 0 = pass trigger)
-#define ACQ_EMIO_FIFO_RESET			(54 + 6)						// Reset signal to clear FIFO
-#define ACQ_EMIO_HAVE_TRIG			(54 + 7)						// Signal to indicate a trigger occurred
-#define ACQ_EMIO_TRIG_RESET			(54 + 8)						// Reset signal to re-arm trigger engine
-#define ACQ_EMIO_DEPTH_MUX			(54 + 9)						// Depth multiplex signal: '0' to use A counter, '1' to use B counter (pre and post trigger sizes)
-#define ACQ_EMIO_AXI_RUN			(54 + 10)						// AXI Bus pause/run control
-#define ACQ_EMIO_ADC_VALID			(54 + 11)						// ADC Valid signal (indicates ADC data should be used)
-#define ACQ_EMIO_FIFO_OVERRUN		(54 + 12)						// Overrun signal from fabric indicating FIFO data loss.  FIFO reset required.
 
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
@@ -185,6 +191,10 @@ struct acq_state_t {
 
 	// Demux register for PL - debug use only, writing to this has no effect.
 	uint32_t demux_reg;
+
+	// Debug state: ISR recorded values for PL state
+	uint32_t dbg_isr_acq_ctrl_a;
+	uint32_t dbg_isr_acq_status_a, dbg_isr_acq_status_b, dbg_isr_acq_trig_ptr;
 
 	// Statistics counters
 	struct acq_stat_t stats;

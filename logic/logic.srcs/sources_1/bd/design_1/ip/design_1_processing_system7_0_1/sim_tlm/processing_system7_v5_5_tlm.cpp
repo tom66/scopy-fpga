@@ -165,7 +165,6 @@ processing_system7_v5_5_tlm :: processing_system7_v5_5_tlm (sc_core::sc_module_n
         ,TTC0_WAVE1_OUT("TTC0_WAVE1_OUT")
         ,TTC0_WAVE2_OUT("TTC0_WAVE2_OUT")
         ,M_AXI_GP0_ACLK("M_AXI_GP0_ACLK")
-        ,M_AXI_GP1_ACLK("M_AXI_GP1_ACLK")
         ,S_AXI_HP0_RCOUNT("S_AXI_HP0_RCOUNT")
         ,S_AXI_HP0_WCOUNT("S_AXI_HP0_WCOUNT")
         ,S_AXI_HP0_RACOUNT("S_AXI_HP0_RACOUNT")
@@ -207,7 +206,6 @@ processing_system7_v5_5_tlm :: processing_system7_v5_5_tlm (sc_core::sc_module_n
     ,S_AXI_HP0_xtlm_brdg("S_AXI_HP0_xtlm_brdg")
     ,S_AXI_HP1_xtlm_brdg("S_AXI_HP1_xtlm_brdg")
     ,m_rp_bridge_M_AXI_GP0("m_rp_bridge_M_AXI_GP0")     
-    ,m_rp_bridge_M_AXI_GP1("m_rp_bridge_M_AXI_GP1")     
         ,FCLK_CLK0_clk("FCLK_CLK0_clk", sc_time(5625.000214453133,sc_core::SC_PS))//clock period in picoseconds = 1000000/freq(in MZ)
     ,prop(_prop)
     {
@@ -219,8 +217,6 @@ processing_system7_v5_5_tlm :: processing_system7_v5_5_tlm (sc_core::sc_module_n
         //creating instances of xtlm master sockets
         M_AXI_GP0_wr_socket = new xtlm::xtlm_aximm_initiator_socket("M_AXI_GP0_wr_socket", 32);
         M_AXI_GP0_rd_socket = new xtlm::xtlm_aximm_initiator_socket("M_AXI_GP0_rd_socket", 32);
-        M_AXI_GP1_wr_socket = new xtlm::xtlm_aximm_initiator_socket("M_AXI_GP1_wr_socket", 32);
-        M_AXI_GP1_rd_socket = new xtlm::xtlm_aximm_initiator_socket("M_AXI_GP1_rd_socket", 32);
 
 	    char* unix_path = getenv("COSIM_MACHINE_PATH");
 	    char* tcpip_addr = getenv("COSIM_MACHINE_TCPIP_ADDRESS");
@@ -267,12 +263,6 @@ processing_system7_v5_5_tlm :: processing_system7_v5_5_tlm (sc_core::sc_module_n
         m_rp_bridge_M_AXI_GP0.rd_socket->bind(*M_AXI_GP0_rd_socket);
         m_rp_bridge_M_AXI_GP0.target_socket.bind(*m_zynq_tlm_model->m_axi_gp[0]);
 
-        //instantiating TLM2XTLM bridge and stiching it between 
-        //s_axi_gp[1] initiator socket of zynq Qemu tlm wrapper to M_AXI_GP1_wr_socket/rd_socket sockets 
-        m_rp_bridge_M_AXI_GP1.wr_socket->bind(*M_AXI_GP1_wr_socket);
-        m_rp_bridge_M_AXI_GP1.rd_socket->bind(*M_AXI_GP1_rd_socket);
-        m_rp_bridge_M_AXI_GP1.target_socket.bind(*m_zynq_tlm_model->m_axi_gp[1]);
-
         m_zynq_tlm_model->tie_off();
         
  
@@ -286,7 +276,6 @@ processing_system7_v5_5_tlm :: processing_system7_v5_5_tlm (sc_core::sc_module_n
         S_AXI_HP0_xtlm_brdg.registerUserExtensionHandlerCallback(&add_extensions_to_tlm);
         S_AXI_HP1_xtlm_brdg.registerUserExtensionHandlerCallback(&add_extensions_to_tlm);
         m_rp_bridge_M_AXI_GP0.registerUserExtensionHandlerCallback(&get_extensions_from_tlm);
-        m_rp_bridge_M_AXI_GP1.registerUserExtensionHandlerCallback(&get_extensions_from_tlm);
         m_zynq_tlm_model->rst(qemu_rst);
     }
 processing_system7_v5_5_tlm :: ~processing_system7_v5_5_tlm() {
@@ -297,8 +286,6 @@ processing_system7_v5_5_tlm :: ~processing_system7_v5_5_tlm() {
         delete S_AXI_HP1_rd_socket;
         delete M_AXI_GP0_wr_socket;
         delete M_AXI_GP0_rd_socket;
-        delete M_AXI_GP1_wr_socket;
-        delete M_AXI_GP1_rd_socket;
     }
     
     //Method which is sentive to FCLK_CLK0_clk sc_clock object

@@ -35,6 +35,9 @@ module bd_f60c
     probe3,
     probe30,
     probe31,
+    probe32,
+    probe33,
+    probe34,
     probe4,
     probe5,
     probe6,
@@ -68,6 +71,9 @@ module bd_f60c
   input [31:0]probe3;
   input [2:0]probe30;
   input [0:0]probe31;
+  input [31:0]probe32;
+  input [31:0]probe33;
+  input [31:0]probe34;
   input [31:0]probe4;
   input [10:0]probe5;
   input [15:0]probe6;
@@ -101,6 +107,9 @@ module bd_f60c
   wire [0:0]probe2_1;
   wire [2:0]probe30_1;
   wire [0:0]probe31_1;
+  wire [31:0]probe32_1;
+  wire [31:0]probe33_1;
+  wire [31:0]probe34_1;
   wire [31:0]probe3_1;
   wire [31:0]probe4_1;
   wire [10:0]probe5_1;
@@ -135,6 +144,9 @@ module bd_f60c
   assign probe2_1 = probe2[0];
   assign probe30_1 = probe30[2:0];
   assign probe31_1 = probe31[0];
+  assign probe32_1 = probe32[31:0];
+  assign probe33_1 = probe33[31:0];
+  assign probe34_1 = probe34[31:0];
   assign probe3_1 = probe3[31:0];
   assign probe4_1 = probe4[31:0];
   assign probe5_1 = probe5[10:0];
@@ -170,6 +182,9 @@ module bd_f60c
         .probe3(probe3_1),
         .probe30(probe30_1),
         .probe31(probe31_1),
+        .probe32(probe32_1),
+        .probe33(probe33_1),
+        .probe34(probe34_1),
         .probe4(probe4_1),
         .probe5(probe5_1),
         .probe6(probe6_1),

@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:csi_gearbox_dma:1.0
-// IP Revision: 25
+// IP Revision: 26
 
 (* X_CORE_INFO = "csi_gearbox_dma_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=25,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
+(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=26,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_csi_gearbox_dma_0_0 (
   csi_clk_p,
@@ -131,7 +131,7 @@ input wire csi_start_frame;
 input wire csi_end_frame;
 input wire csi_stop;
 output wire csi_done;
-input wire [5 : 0] R_csi_line_count;
+input wire [15 : 0] R_csi_line_count;
 input wire [20 : 0] R_csi_line_byte_count;
 input wire [7 : 0] R_csi_data_type;
 input wire [15 : 0] R_csi_wct_frame;
@@ -160,7 +160,7 @@ output wire dbg_ref_clk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME g_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 g_rst RST" *)
 input wire g_rst;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXIS_CLK, ASSOCIATED_BUSIF S00_AXIS, ASSOCIATED_RESET s00_axis_aresetn, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXIS_CLK, ASSOCIATED_BUSIF S00_AXIS, ASSOCIATED_RESET s00_axis_aresetn, FREQ_HZ 1.77778e+08, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 S00_AXIS_CLK CLK" *)
 input wire s00_axis_aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
@@ -174,7 +174,7 @@ input wire [63 : 0] s00_axis_tdata;
 input wire [7 : 0] s00_axis_tstrb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S00_AXIS TLAST" *)
 input wire s00_axis_tlast;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 1.77778e+08, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S00_AXIS TVALID" *)
 input wire s00_axis_tvalid;
 

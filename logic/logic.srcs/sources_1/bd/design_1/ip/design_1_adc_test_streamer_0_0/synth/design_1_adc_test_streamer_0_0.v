@@ -48,18 +48,15 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 67
+// IP Revision: 92
 
-(* X_CORE_INFO = "adc_test_streamer_v2_0,Vivado 2019.2" *)
-(* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_test_streamer_v2_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=67,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
+(* X_CORE_INFO = "adc_streamer,Vivado 2019.2" *)
+(* CHECK_LICENSE_TYPE = "design_1_adc_test_streamer_0_0,adc_streamer,{}" *)
+(* CORE_GENERATION_INFO = "design_1_adc_test_streamer_0_0,adc_streamer,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=92,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_adc_test_streamer_0_0 (
   adc_bus,
   adc_data_clk,
-  adc_data_valid,
-  adc_fifo_reset,
-  adc_eof,
   dbg_adcstream_state,
   dbg_axi_rdy,
   dbg_acq_axi_running,
@@ -68,18 +65,25 @@ module design_1_adc_test_streamer_0_0 (
   dbg_acq_trigger_out_ctr,
   dbg_rd_data_count,
   dbg_wr_data_count,
+  dbg_acq_run,
+  dbg_acq_axi_run,
+  dbg_acq_trig_mask,
+  dbg_acq_trig_rst,
+  dbg_acq_depth_mux,
+  dbg_acq_fifo_reset,
+  dbg_acq_abort,
+  dbg_acq_eof,
+  dbg_acq_data_valid,
   dbg_trig_post_fifo,
-  acq_run,
-  acq_abort,
-  acq_trig_mask,
-  acq_trig_rst,
-  acq_depth_mux,
+  dbg_acq_have_trig,
+  dbg_acq_tvalid_mask,
+  acq_ctrl_a,
+  acq_status_a,
+  acq_status_b,
   acq_depth_a,
   acq_depth_b,
-  acq_done,
-  acq_have_trig,
-  acq_axi_run,
-  acq_full_data_loss,
+  acq_reset_irq_gen,
+  pll_lock_idelaye2_clkref,
   trigger_in,
   trigger_sub_word,
   trigger_pos,
@@ -97,11 +101,6 @@ input wire [63 : 0] adc_bus;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_adc_receiver_core_0_0_adc_data_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_data_clk CLK" *)
 input wire adc_data_clk;
-input wire adc_data_valid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_fifo_reset, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 adc_fifo_reset RST" *)
-input wire adc_fifo_reset;
-input wire adc_eof;
 output wire [5 : 0] dbg_adcstream_state;
 output wire dbg_axi_rdy;
 output wire dbg_acq_axi_running;
@@ -110,25 +109,34 @@ output wire [31 : 0] dbg_acq_axi_downcounter;
 output wire [10 : 0] dbg_acq_trigger_out_ctr;
 output wire [15 : 0] dbg_rd_data_count;
 output wire [15 : 0] dbg_wr_data_count;
+output wire dbg_acq_run;
+output wire dbg_acq_axi_run;
+output wire dbg_acq_trig_mask;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dbg_acq_trig_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dbg_acq_trig_rst RST" *)
+output wire dbg_acq_trig_rst;
+output wire dbg_acq_depth_mux;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dbg_acq_fifo_reset, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dbg_acq_fifo_reset RST" *)
+output wire dbg_acq_fifo_reset;
+output wire dbg_acq_abort;
+output wire dbg_acq_eof;
+output wire dbg_acq_data_valid;
 output wire dbg_trig_post_fifo;
-input wire acq_run;
-input wire acq_abort;
-input wire acq_trig_mask;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME acq_trig_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 acq_trig_rst RST" *)
-input wire acq_trig_rst;
-input wire acq_depth_mux;
+output wire dbg_acq_have_trig;
+output wire dbg_acq_tvalid_mask;
+input wire [31 : 0] acq_ctrl_a;
+output wire [31 : 0] acq_status_a;
+output wire [31 : 0] acq_status_b;
 input wire [28 : 0] acq_depth_a;
 input wire [28 : 0] acq_depth_b;
-output wire acq_done;
-output wire acq_have_trig;
-input wire acq_axi_run;
-output wire acq_full_data_loss;
+output wire acq_reset_irq_gen;
+input wire pll_lock_idelaye2_clkref;
 input wire trigger_in;
 input wire [2 : 0] trigger_sub_word;
 output wire [31 : 0] trigger_pos;
 output wire trigger_out;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_CLK, ASSOCIATED_BUSIF M00_AXIS, ASSOCIATED_RESET m00_axis_aresetn, FREQ_HZ 1.77778e+08, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 M00_AXIS_CLK CLK" *)
 input wire m00_axis_aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
@@ -142,19 +150,16 @@ output wire [63 : 0] m00_axis_tdata;
 output wire [7 : 0] m00_axis_tstrb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TLAST" *)
 output wire m00_axis_tlast;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, WIZ_DATA_WIDTH 32, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 1, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 1.77778e+08, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TREADY" *)
 input wire m00_axis_tready;
 
-  adc_test_streamer_v2_0 #(
+  adc_streamer #(
     .C_M00_AXIS_TDATA_WIDTH(64),  // Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
     .C_M00_AXIS_START_COUNT(32)  // Start count is the number of clock cycles the master will wait before initiating/issuing any transaction.
   ) inst (
     .adc_bus(adc_bus),
     .adc_data_clk(adc_data_clk),
-    .adc_data_valid(adc_data_valid),
-    .adc_fifo_reset(adc_fifo_reset),
-    .adc_eof(adc_eof),
     .dbg_adcstream_state(dbg_adcstream_state),
     .dbg_axi_rdy(dbg_axi_rdy),
     .dbg_acq_axi_running(dbg_acq_axi_running),
@@ -163,18 +168,25 @@ input wire m00_axis_tready;
     .dbg_acq_trigger_out_ctr(dbg_acq_trigger_out_ctr),
     .dbg_rd_data_count(dbg_rd_data_count),
     .dbg_wr_data_count(dbg_wr_data_count),
+    .dbg_acq_run(dbg_acq_run),
+    .dbg_acq_axi_run(dbg_acq_axi_run),
+    .dbg_acq_trig_mask(dbg_acq_trig_mask),
+    .dbg_acq_trig_rst(dbg_acq_trig_rst),
+    .dbg_acq_depth_mux(dbg_acq_depth_mux),
+    .dbg_acq_fifo_reset(dbg_acq_fifo_reset),
+    .dbg_acq_abort(dbg_acq_abort),
+    .dbg_acq_eof(dbg_acq_eof),
+    .dbg_acq_data_valid(dbg_acq_data_valid),
     .dbg_trig_post_fifo(dbg_trig_post_fifo),
-    .acq_run(acq_run),
-    .acq_abort(acq_abort),
-    .acq_trig_mask(acq_trig_mask),
-    .acq_trig_rst(acq_trig_rst),
-    .acq_depth_mux(acq_depth_mux),
+    .dbg_acq_have_trig(dbg_acq_have_trig),
+    .dbg_acq_tvalid_mask(dbg_acq_tvalid_mask),
+    .acq_ctrl_a(acq_ctrl_a),
+    .acq_status_a(acq_status_a),
+    .acq_status_b(acq_status_b),
     .acq_depth_a(acq_depth_a),
     .acq_depth_b(acq_depth_b),
-    .acq_done(acq_done),
-    .acq_have_trig(acq_have_trig),
-    .acq_axi_run(acq_axi_run),
-    .acq_full_data_loss(acq_full_data_loss),
+    .acq_reset_irq_gen(acq_reset_irq_gen),
+    .pll_lock_idelaye2_clkref(pll_lock_idelaye2_clkref),
     .trigger_in(trigger_in),
     .trigger_sub_word(trigger_sub_word),
     .trigger_pos(trigger_pos),

@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x44B8D5D16C9E6C36",
+      "boundary_crc": "0xD50256F385796617",
       "design_src": "SBD",
       "device": "xc7z014sclg400-1",
       "name": "bd_f60c",
@@ -195,6 +195,21 @@
         "direction": "I",
         "left": "0",
         "right": "0"
+      },
+      "probe32": {
+        "direction": "I",
+        "left": "31",
+        "right": "0"
+      },
+      "probe33": {
+        "direction": "I",
+        "left": "31",
+        "right": "0"
+      },
+      "probe34": {
+        "direction": "I",
+        "left": "31",
+        "right": "0"
       }
     },
     "components": {
@@ -212,7 +227,7 @@
             "value": "FALSE"
           },
           "C_DATA_DEPTH": {
-            "value": "8192"
+            "value": "4096"
           },
           "C_EN_STRG_QUAL": {
             "value": "0"
@@ -230,7 +245,7 @@
             "value": "Native"
           },
           "C_NUM_OF_PROBES": {
-            "value": "32"
+            "value": "35"
           },
           "C_PROBE0_MU_CNT": {
             "value": "1"
@@ -456,6 +471,33 @@
           },
           "C_PROBE31_WIDTH": {
             "value": "1"
+          },
+          "C_PROBE32_MU_CNT": {
+            "value": "1"
+          },
+          "C_PROBE32_TYPE": {
+            "value": "0"
+          },
+          "C_PROBE32_WIDTH": {
+            "value": "32"
+          },
+          "C_PROBE33_MU_CNT": {
+            "value": "1"
+          },
+          "C_PROBE33_TYPE": {
+            "value": "0"
+          },
+          "C_PROBE33_WIDTH": {
+            "value": "32"
+          },
+          "C_PROBE34_MU_CNT": {
+            "value": "1"
+          },
+          "C_PROBE34_TYPE": {
+            "value": "0"
+          },
+          "C_PROBE34_WIDTH": {
+            "value": "32"
           },
           "C_PROBE3_MU_CNT": {
             "value": "1"
@@ -732,6 +774,24 @@
         "ports": [
           "probe31",
           "ila_lib/probe31"
+        ]
+      },
+      "probe32_1": {
+        "ports": [
+          "probe32",
+          "ila_lib/probe32"
+        ]
+      },
+      "probe33_1": {
+        "ports": [
+          "probe33",
+          "ila_lib/probe33"
+        ]
+      },
+      "probe34_1": {
+        "ports": [
+          "probe34",
+          "ila_lib/probe34"
         ]
       }
     }

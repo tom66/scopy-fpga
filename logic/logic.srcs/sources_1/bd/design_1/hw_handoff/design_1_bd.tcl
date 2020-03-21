@@ -161,20 +161,8 @@ proc create_root_design { parentCell } {
 
 
   # Create ports
-  set ACQ_ABORT [ create_bd_port -dir I ACQ_ABORT ]
-  set ACQ_AXI_RUN [ create_bd_port -dir I ACQ_AXI_RUN ]
-  set ACQ_DATA_LOSS [ create_bd_port -dir O ACQ_DATA_LOSS ]
-  set ACQ_DEPTH_MUX [ create_bd_port -dir I ACQ_DEPTH_MUX ]
-  set ACQ_DONE [ create_bd_port -dir O ACQ_DONE ]
-  set ACQ_HAVE_TRIG [ create_bd_port -dir O ACQ_HAVE_TRIG ]
-  set ACQ_RUN [ create_bd_port -dir I ACQ_RUN ]
-  set ACQ_TRIG_MASK [ create_bd_port -dir I ACQ_TRIG_MASK ]
-  set ACQ_TRIG_RST [ create_bd_port -dir I ACQ_TRIG_RST ]
-  set ADC_DATA_EOF [ create_bd_port -dir I ADC_DATA_EOF ]
-  set ADC_DATA_VALID [ create_bd_port -dir I ADC_DATA_VALID ]
   set ADC_FCLK_N [ create_bd_port -dir I ADC_FCLK_N ]
   set ADC_FCLK_P [ create_bd_port -dir I ADC_FCLK_P ]
-  set ADC_FIFO_RESET [ create_bd_port -dir I ADC_FIFO_RESET ]
   set ADC_L1A_N [ create_bd_port -dir I ADC_L1A_N ]
   set ADC_L1A_P [ create_bd_port -dir I ADC_L1A_P ]
   set ADC_L1B_N [ create_bd_port -dir I ADC_L1B_N ]
@@ -250,13 +238,14 @@ proc create_root_design { parentCell } {
   # Create instance: axi_interconnect_0, and set properties
   set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
   set_property -dict [ list \
-   CONFIG.NUM_MI {2} \
+   CONFIG.NUM_MI {1} \
  ] $axi_interconnect_0
 
   # Create instance: axi_interconnect_1, and set properties
   set axi_interconnect_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_1 ]
   set_property -dict [ list \
-   CONFIG.NUM_SI {2} \
+   CONFIG.NUM_MI {4} \
+   CONFIG.NUM_SI {1} \
  ] $axi_interconnect_1
 
   # Create instance: axi_interconnect_2, and set properties
@@ -264,14 +253,6 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.NUM_MI {1} \
  ] $axi_interconnect_2
-
-  # Create instance: axi_mem_intercon, and set properties
-  set axi_mem_intercon [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_mem_intercon ]
-  set_property -dict [ list \
-   CONFIG.ENABLE_ADVANCED_OPTIONS {0} \
-   CONFIG.NUM_MI {1} \
-   CONFIG.NUM_SI {1} \
- ] $axi_mem_intercon
 
   # Create instance: clk_wiz_0, and set properties
   set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0 ]
@@ -338,10 +319,10 @@ proc create_root_design { parentCell } {
   # Create instance: system_ila_0, and set properties
   set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
   set_property -dict [ list \
-   CONFIG.C_BRAM_CNT {7.5} \
-   CONFIG.C_DATA_DEPTH {8192} \
+   CONFIG.C_BRAM_CNT {4} \
+   CONFIG.C_DATA_DEPTH {4096} \
    CONFIG.C_MON_TYPE {NATIVE} \
-   CONFIG.C_NUM_OF_PROBES {32} \
+   CONFIG.C_NUM_OF_PROBES {35} \
  ] $system_ila_0
 
   # Create instance: xlconcat_1, and set properties
@@ -351,7 +332,7 @@ proc create_root_design { parentCell } {
    CONFIG.IN1_WIDTH {4} \
    CONFIG.IN2_WIDTH {1} \
    CONFIG.IN3_WIDTH {4} \
-   CONFIG.NUM_PORTS {2} \
+   CONFIG.NUM_PORTS {3} \
  ] $xlconcat_1
 
   # Create instance: xlconstant_0, and set properties
@@ -756,44 +737,34 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_USE_DEBUG {0} \
    CONFIG.PCW_USE_FABRIC_INTERRUPT {1} \
    CONFIG.PCW_USE_M_AXI_GP0 {1} \
-   CONFIG.PCW_USE_M_AXI_GP1 {1} \
+   CONFIG.PCW_USE_M_AXI_GP1 {0} \
    CONFIG.PCW_USE_S_AXI_GP0 {0} \
    CONFIG.PCW_USE_S_AXI_HP0 {1} \
    CONFIG.PCW_USE_S_AXI_HP1 {1} \
  ] $zynq_ps
 
   # Create interface connections
-  connect_bd_intf_net -intf_net S00_AXI_1 [get_bd_intf_pins axi_interconnect_1/S00_AXI] [get_bd_intf_pins zynq_ps/M_AXI_GP1]
+  connect_bd_intf_net -intf_net S00_AXI_1 [get_bd_intf_pins axi_interconnect_1/S00_AXI] [get_bd_intf_pins zynq_ps/M_AXI_GP0]
   connect_bd_intf_net -intf_net S00_AXI_2 [get_bd_intf_pins axi_interconnect_2/S00_AXI] [get_bd_intf_pins mipi_dma/M_AXI_MM2S]
+  connect_bd_intf_net -intf_net S00_AXI_3 [get_bd_intf_pins adc_dma/M_AXI_S2MM] [get_bd_intf_pins axi_interconnect_0/S00_AXI]
   connect_bd_intf_net -intf_net adc_axi_streamer_M00_AXIS [get_bd_intf_pins adc_axi_streamer/M00_AXIS] [get_bd_intf_pins adc_dma/S_AXIS_S2MM]
   connect_bd_intf_net -intf_net axi_dma1_M_AXIS_MM2S [get_bd_intf_pins csi_gearbox_dma_0/S00_AXIS] [get_bd_intf_pins mipi_dma/M_AXIS_MM2S]
-  connect_bd_intf_net -intf_net axi_dma_M_AXI_S2MM [get_bd_intf_pins adc_dma/M_AXI_S2MM] [get_bd_intf_pins axi_mem_intercon/S00_AXI]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins adc_dma/S_AXI_LITE] [get_bd_intf_pins axi_interconnect_0/M00_AXI]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_interconnect_0/M01_AXI] [get_bd_intf_pins mipi_dma/S_AXI_LITE]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP0]
   connect_bd_intf_net -intf_net axi_interconnect_1_M00_AXI [get_bd_intf_pins axi_interconnect_1/M00_AXI] [get_bd_intf_pins clk_wiz_0/s_axi_lite]
   connect_bd_intf_net -intf_net axi_interconnect_1_M01_AXI [get_bd_intf_pins FabCfg_NextGen_0/S00_AXI] [get_bd_intf_pins axi_interconnect_1/M01_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_1_M02_AXI [get_bd_intf_pins axi_interconnect_1/M02_AXI] [get_bd_intf_pins mipi_dma/S_AXI_LITE]
+  connect_bd_intf_net -intf_net axi_interconnect_1_M03_AXI [get_bd_intf_pins adc_dma/S_AXI_LITE] [get_bd_intf_pins axi_interconnect_1/M03_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_2_M00_AXI [get_bd_intf_pins axi_interconnect_2/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP1]
-  connect_bd_intf_net -intf_net axi_mem_intercon_M00_AXI [get_bd_intf_pins axi_mem_intercon/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP0]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins zynq_ps/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins zynq_ps/FIXED_IO]
-  connect_bd_intf_net -intf_net processing_system7_0_M_AXI_GP0 [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins zynq_ps/M_AXI_GP0]
 
   # Create port connections
-  connect_bd_net -net ACQ_ABORT_1 [get_bd_ports ACQ_ABORT] [get_bd_pins adc_axi_streamer/acq_abort] [get_bd_pins system_ila_0/probe24]
-  connect_bd_net -net ACQ_AXI_RUN_1 [get_bd_ports ACQ_AXI_RUN] [get_bd_pins adc_axi_streamer/acq_axi_run] [get_bd_pins system_ila_0/probe28]
-  connect_bd_net -net ACQ_DEPTH_MUX [get_bd_ports ACQ_DEPTH_MUX] [get_bd_pins adc_axi_streamer/acq_depth_mux] [get_bd_pins system_ila_0/probe27]
-  connect_bd_net -net ACQ_RUN_1 [get_bd_ports ACQ_RUN] [get_bd_pins adc_axi_streamer/acq_run] [get_bd_pins system_ila_0/probe23]
   connect_bd_net -net ACQ_TRIGGER_IN_1 [get_bd_pins adc_axi_streamer/trigger_in] [get_bd_pins adc_receiver_core_0/trigger_out] [get_bd_pins system_ila_0/probe29]
-  connect_bd_net -net ACQ_TRIG_MASK_1 [get_bd_ports ACQ_TRIG_MASK] [get_bd_pins adc_axi_streamer/acq_trig_mask] [get_bd_pins system_ila_0/probe25]
-  connect_bd_net -net ACQ_TRIG_RST_1 [get_bd_ports ACQ_TRIG_RST] [get_bd_pins adc_axi_streamer/acq_trig_rst] [get_bd_pins system_ila_0/probe26]
   connect_bd_net -net ACQ_TRIG_WORD_1 [get_bd_pins adc_axi_streamer/trigger_sub_word] [get_bd_pins adc_receiver_core_0/trigger_sub_word] [get_bd_pins system_ila_0/probe30]
   connect_bd_net -net ADC_BUS_1 [get_bd_pins adc_axi_streamer/adc_bus] [get_bd_pins adc_receiver_core_0/adc_bus] [get_bd_pins system_ila_0/probe18]
   connect_bd_net -net ADC_DATA_CLK_2 [get_bd_pins adc_axi_streamer/adc_data_clk] [get_bd_pins adc_receiver_core_0/adc_data_clk] [get_bd_pins system_ila_0/probe19]
-  connect_bd_net -net ADC_DATA_EOF_1 [get_bd_ports ADC_DATA_EOF] [get_bd_pins adc_axi_streamer/adc_eof] [get_bd_pins system_ila_0/probe22]
-  connect_bd_net -net ADC_DATA_VALID_1 [get_bd_ports ADC_DATA_VALID] [get_bd_pins adc_axi_streamer/adc_data_valid] [get_bd_pins system_ila_0/probe20]
   connect_bd_net -net ADC_FCLK_N_1 [get_bd_ports ADC_FCLK_N] [get_bd_pins adc_receiver_core_0/adc_fclk_n]
   connect_bd_net -net ADC_FCLK_P_1 [get_bd_ports ADC_FCLK_P] [get_bd_pins adc_receiver_core_0/adc_fclk_p]
-  connect_bd_net -net ADC_FIFO_RESET_1 [get_bd_ports ADC_FIFO_RESET] [get_bd_pins adc_axi_streamer/adc_fifo_reset] [get_bd_pins system_ila_0/probe21]
   connect_bd_net -net ADC_L1A_N_1 [get_bd_ports ADC_L1A_N] [get_bd_pins adc_receiver_core_0/adc_l1a_n]
   connect_bd_net -net ADC_L1A_P_1 [get_bd_ports ADC_L1A_P] [get_bd_pins adc_receiver_core_0/adc_l1a_p]
   connect_bd_net -net ADC_L1B_N_1 [get_bd_ports ADC_L1B_N] [get_bd_pins adc_receiver_core_0/adc_l1b_n]
@@ -818,6 +789,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CSI_START_LINES_1 [get_bd_ports CSI_START_LINES] [get_bd_pins csi_gearbox_dma_0/csi_start_lines]
   connect_bd_net -net CSI_STOP_1 [get_bd_ports CSI_STOP] [get_bd_pins csi_gearbox_dma_0/csi_stop]
   connect_bd_net -net EMIO_I_1 [get_bd_ports EMIO_I] [get_bd_pins zynq_ps/GPIO_I]
+  connect_bd_net -net FabCfg_NextGen_0_R_acq_ctrl_a [get_bd_pins FabCfg_NextGen_0/R_acq_ctrl_a] [get_bd_pins adc_axi_streamer/acq_ctrl_a] [get_bd_pins system_ila_0/probe34]
   connect_bd_net -net FabCfg_NextGen_0_R_acq_size_a [get_bd_pins FabCfg_NextGen_0/R_acq_size_a] [get_bd_pins adc_axi_streamer/acq_depth_a]
   connect_bd_net -net FabCfg_NextGen_0_R_acq_size_b [get_bd_pins FabCfg_NextGen_0/R_acq_size_b] [get_bd_pins adc_axi_streamer/acq_depth_b]
   connect_bd_net -net FabCfg_NextGen_0_R_csi_control_flags [get_bd_pins FabCfg_NextGen_0/R_csi_control_flags] [get_bd_pins csi_gearbox_dma_0/R_csi_control_flags]
@@ -828,13 +800,24 @@ proc create_root_design { parentCell } {
   connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
   connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
   connect_bd_net -net PL_IRQ_1 [get_bd_ports PL_IRQ] [get_bd_pins xlconcat_1/In1]
-  connect_bd_net -net adc_axi_streamer_acq_done [get_bd_ports ACQ_DONE] [get_bd_pins adc_axi_streamer/acq_done] [get_bd_pins system_ila_0/probe9]
-  connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_ports ACQ_HAVE_TRIG] [get_bd_pins adc_axi_streamer/acq_have_trig] [get_bd_pins system_ila_0/probe10]
-  connect_bd_net -net adc_axi_streamer_adc_fifo_full [get_bd_ports ACQ_DATA_LOSS] [get_bd_pins adc_axi_streamer/acq_full_data_loss] [get_bd_pins system_ila_0/probe11]
+  connect_bd_net -net adc_axi_streamer_acq_reset_irq_gen [get_bd_pins adc_axi_streamer/acq_reset_irq_gen] [get_bd_pins system_ila_0/probe11] [get_bd_pins xlconcat_1/In2]
+  connect_bd_net -net adc_axi_streamer_acq_status_a [get_bd_pins FabCfg_NextGen_0/R_acq_status_a] [get_bd_pins adc_axi_streamer/acq_status_a] [get_bd_pins system_ila_0/probe32]
+  connect_bd_net -net adc_axi_streamer_acq_status_b [get_bd_pins FabCfg_NextGen_0/R_acq_status_b] [get_bd_pins adc_axi_streamer/acq_status_b] [get_bd_pins system_ila_0/probe33]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_abort [get_bd_pins adc_axi_streamer/dbg_acq_abort] [get_bd_pins system_ila_0/probe26]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_downcounter [get_bd_pins adc_axi_streamer/dbg_acq_axi_downcounter] [get_bd_pins system_ila_0/probe4]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_axi_run [get_bd_pins adc_axi_streamer/dbg_acq_axi_run] [get_bd_pins system_ila_0/probe21]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_running [get_bd_pins adc_axi_streamer/dbg_acq_axi_running] [get_bd_pins system_ila_0/probe2]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_upcounter [get_bd_pins adc_axi_streamer/dbg_acq_axi_upcounter] [get_bd_pins system_ila_0/probe3]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_data_valid [get_bd_pins adc_axi_streamer/dbg_acq_data_valid] [get_bd_pins system_ila_0/probe28]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_depth_mux [get_bd_pins adc_axi_streamer/dbg_acq_depth_mux] [get_bd_pins system_ila_0/probe24]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_eof [get_bd_pins adc_axi_streamer/dbg_acq_eof] [get_bd_pins system_ila_0/probe27]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_fifo_reset [get_bd_pins adc_axi_streamer/dbg_acq_fifo_reset] [get_bd_pins system_ila_0/probe25]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_have_trig [get_bd_pins adc_axi_streamer/dbg_acq_have_trig] [get_bd_pins system_ila_0/probe9]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_run [get_bd_pins adc_axi_streamer/dbg_acq_run] [get_bd_pins system_ila_0/probe20]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_trig_mask [get_bd_pins adc_axi_streamer/dbg_acq_trig_mask] [get_bd_pins system_ila_0/probe22]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_trig_rst [get_bd_pins adc_axi_streamer/dbg_acq_trig_rst] [get_bd_pins system_ila_0/probe23]
   connect_bd_net -net adc_axi_streamer_dbg_acq_trigger_out_ctr [get_bd_pins adc_axi_streamer/dbg_acq_trigger_out_ctr] [get_bd_pins system_ila_0/probe5]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_tvalid_mask [get_bd_pins adc_axi_streamer/dbg_acq_tvalid_mask] [get_bd_pins system_ila_0/probe10]
   connect_bd_net -net adc_axi_streamer_dbg_adcstream_state [get_bd_pins adc_axi_streamer/dbg_adcstream_state] [get_bd_pins system_ila_0/probe0]
   connect_bd_net -net adc_axi_streamer_dbg_axi_rdy [get_bd_pins adc_axi_streamer/dbg_axi_rdy] [get_bd_pins system_ila_0/probe1]
   connect_bd_net -net adc_axi_streamer_dbg_rd_data_count [get_bd_pins adc_axi_streamer/dbg_rd_data_count] [get_bd_pins system_ila_0/probe6]
@@ -850,6 +833,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_ports CLKWIZ0_CLKOUT1] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins csi_gearbox_dma_0/mod_clk_I]
   connect_bd_net -net clk_wiz_0_clk_out2 [get_bd_ports CLKWIZ0_CLKOUT2] [get_bd_pins clk_wiz_0/clk_out2] [get_bd_pins csi_gearbox_dma_0/mod_clk_Q]
   connect_bd_net -net clk_wiz_1_clk_out1 [get_bd_pins adc_receiver_core_0/clk_idelay_refclk] [get_bd_pins clk_wiz_1/clk_out1]
+  connect_bd_net -net clk_wiz_1_locked [get_bd_pins adc_axi_streamer/pll_lock_idelaye2_clkref] [get_bd_pins clk_wiz_1/locked]
   connect_bd_net -net csi_gearbox_dma_0_csi_clk_n [get_bd_ports CSI_CLK_N] [get_bd_pins csi_gearbox_dma_0/csi_clk_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_clk_p [get_bd_ports CSI_CLK_P] [get_bd_pins csi_gearbox_dma_0/csi_clk_p]
   connect_bd_net -net csi_gearbox_dma_0_csi_d0_n [get_bd_ports CSI_D0_N] [get_bd_pins csi_gearbox_dma_0/csi_d0_n]
@@ -865,10 +849,10 @@ proc create_root_design { parentCell } {
   connect_bd_net -net csi_gearbox_dma_0_csi_lpd1_p [get_bd_ports CSI_LPD1_P] [get_bd_pins csi_gearbox_dma_0/csi_lpd1_p]
   connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins mipi_dma/m_axis_mm2s_tready]
   connect_bd_net -net mipi_dma_m_axis_mm2s_tlast [get_bd_pins csi_gearbox_dma_0/s00_axis_tlast] [get_bd_pins mipi_dma/m_axis_mm2s_tlast]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins FabCfg_NextGen_0/s00_axi_aclk] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins adc_receiver_core_0/clk_master] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_1/S01_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_in1] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins simple_reset_control_0/clk_master] [get_bd_pins system_ila_0/clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/M_AXI_GP1_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP1_ACLK]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins FabCfg_NextGen_0/s00_axi_aclk] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins adc_receiver_core_0/clk_master] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/M02_ACLK] [get_bd_pins axi_interconnect_1/M03_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_in1] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins simple_reset_control_0/clk_master] [get_bd_pins system_ila_0/clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP1_ACLK]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins rst_ps7_0_20M/ext_reset_in] [get_bd_pins zynq_ps/FCLK_RESET0_N]
   connect_bd_net -net processing_system7_0_GPIO_O [get_bd_ports EMIO_O] [get_bd_pins zynq_ps/GPIO_O]
-  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_1/S01_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins axi_mem_intercon/ARESETN] [get_bd_pins axi_mem_intercon/M00_ARESETN] [get_bd_pins axi_mem_intercon/S00_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn]
+  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/M02_ARESETN] [get_bd_pins axi_interconnect_1/M03_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn]
   connect_bd_net -net simple_reset_control_0_g_rst_gen [get_bd_pins adc_receiver_core_0/g_rst] [get_bd_pins clk_wiz_1/reset] [get_bd_pins csi_gearbox_dma_0/g_rst] [get_bd_pins simple_reset_control_0/g_rst_gen]
   connect_bd_net -net xlconcat_1_dout [get_bd_pins xlconcat_1/dout] [get_bd_pins zynq_ps/IRQ_F2P]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins FabCfg_NextGen_0/K_in_bitstream_version] [get_bd_pins xlconstant_0/dout]
@@ -878,10 +862,10 @@ proc create_root_design { parentCell } {
   # Create address segments
   assign_bd_address -offset 0x00000000 -range 0x10000000 -target_address_space [get_bd_addr_spaces adc_dma/Data_S2MM] [get_bd_addr_segs zynq_ps/S_AXI_HP0/HP0_DDR_LOWOCM] -force
   assign_bd_address -offset 0x00000000 -range 0x10000000 -target_address_space [get_bd_addr_spaces mipi_dma/Data_MM2S] [get_bd_addr_segs zynq_ps/S_AXI_HP1/HP1_DDR_LOWOCM] -force
-  assign_bd_address -offset 0x83C10000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs FabCfg_NextGen_0/S00_AXI/S00_AXI_reg] -force
-  assign_bd_address -offset 0x40410000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs mipi_dma/S_AXI_LITE/Reg] -force
+  assign_bd_address -offset 0x40010000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs FabCfg_NextGen_0/S00_AXI/S00_AXI_reg] -force
   assign_bd_address -offset 0x40400000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs adc_dma/S_AXI_LITE/Reg] -force
-  assign_bd_address -offset 0x83C00000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs clk_wiz_0/s_axi_lite/Reg] -force
+  assign_bd_address -offset 0x40000000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs clk_wiz_0/s_axi_lite/Reg] -force
+  assign_bd_address -offset 0x40410000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ps/Data] [get_bd_addr_segs mipi_dma/S_AXI_LITE/Reg] -force
 
 
   # Restore current instance

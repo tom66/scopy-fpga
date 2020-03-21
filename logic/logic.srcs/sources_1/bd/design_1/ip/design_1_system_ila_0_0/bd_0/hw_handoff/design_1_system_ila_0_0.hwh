@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Mar 20 14:19:14 2020" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sat Mar 21 17:12:24 2020" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="bd_f60c" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -169,6 +169,21 @@
         <CONNECTION INSTANCE="ila_lib" PORT="probe31"/>
       </CONNECTIONS>
     </PORT>
+    <PORT DIR="I" LEFT="31" NAME="probe32" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe32">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="ila_lib" PORT="probe32"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="probe33" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe33">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="ila_lib" PORT="probe33"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="probe34" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe34">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="ila_lib" PORT="probe34"/>
+      </CONNECTIONS>
+    </PORT>
   </EXTERNALPORTS>
 
   <EXTERNALINTERFACES/>
@@ -194,8 +209,8 @@
         <PARAMETER NAME="C_SLOT_0_AXI_PROTOCOL" VALUE="AXI4"/>
         <PARAMETER NAME="C_NUM_MONITOR_SLOTS" VALUE="1"/>
         <PARAMETER NAME="C_ENABLE_ILA_AXI_MON" VALUE="0"/>
-        <PARAMETER NAME="C_NUM_OF_PROBES" VALUE="32"/>
-        <PARAMETER NAME="C_DATA_DEPTH" VALUE="8192"/>
+        <PARAMETER NAME="C_NUM_OF_PROBES" VALUE="35"/>
+        <PARAMETER NAME="C_DATA_DEPTH" VALUE="4096"/>
         <PARAMETER NAME="C_MAJOR_VERSION" VALUE="2019"/>
         <PARAMETER NAME="C_MINOR_VERSION" VALUE="2"/>
         <PARAMETER NAME="C_BUILD_REVISION" VALUE="0"/>
@@ -250,9 +265,9 @@
         <PARAMETER NAME="C_PROBE29_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE30_WIDTH" VALUE="3"/>
         <PARAMETER NAME="C_PROBE31_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="C_PROBE32_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="C_PROBE33_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="C_PROBE34_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_PROBE32_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_PROBE33_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_PROBE34_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_PROBE35_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE36_WIDTH" VALUE="1"/>
         <PARAMETER NAME="C_PROBE37_WIDTH" VALUE="1"/>
@@ -3477,6 +3492,21 @@
         <PORT DIR="I" LEFT="0" NAME="probe31" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe31">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="probe31"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="probe32" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe32">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="probe32"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="probe33" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe33">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="probe33"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="probe34" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe34">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="probe34"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

@@ -34,6 +34,9 @@ module bd_f60c_wrapper
     probe3,
     probe30,
     probe31,
+    probe32,
+    probe33,
+    probe34,
     probe4,
     probe5,
     probe6,
@@ -67,6 +70,9 @@ module bd_f60c_wrapper
   input [31:0]probe3;
   input [2:0]probe30;
   input [0:0]probe31;
+  input [31:0]probe32;
+  input [31:0]probe33;
+  input [31:0]probe34;
   input [31:0]probe4;
   input [10:0]probe5;
   input [15:0]probe6;
@@ -101,6 +107,9 @@ module bd_f60c_wrapper
   wire [31:0]probe3;
   wire [2:0]probe30;
   wire [0:0]probe31;
+  wire [31:0]probe32;
+  wire [31:0]probe33;
+  wire [31:0]probe34;
   wire [31:0]probe4;
   wire [10:0]probe5;
   wire [15:0]probe6;
@@ -136,6 +145,9 @@ module bd_f60c_wrapper
         .probe3(probe3),
         .probe30(probe30),
         .probe31(probe31),
+        .probe32(probe32),
+        .probe33(probe33),
+        .probe34(probe34),
         .probe4(probe4),
         .probe5(probe5),
         .probe6(probe6),

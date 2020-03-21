@@ -13,13 +13,13 @@
 
 extern uint8_t norway_512x512_grey[];
 
-// #define PRETTY_DEBUG
+//#define PRETTY_DEBUG
 
 /*
  * Acquistion hacks.  Ties together the acquisition engine and CSI transmitter
  * for some initial testing.  Not intended for final project.
  */
-uint8_t buffer[262144] __attribute__((aligned(8)));
+uint8_t buffer[2048 * 256] __attribute__((aligned(8)));
 
 void acq_hacks_init()
 {
@@ -34,7 +34,7 @@ void acq_hacks_run()
 
 	wave_size_bytes = 16384;
 	wave_size_counts = wave_size_bytes / 8;
-	n_waves = 16;
+	n_waves = 32;
 
 	csi_hack_init();
 	memset(buffer, 0, 32);
@@ -58,6 +58,9 @@ void acq_hacks_run()
 			iter = 0;
 		}
 #endif
+
+		//d_printf(D_WARN, "Press key");
+		//d_waitkey();
 
 		//d_printf(D_WARN, "Iteration");
 
@@ -95,7 +98,7 @@ void acq_hacks_run()
 		d_stop_timing(4);
 		microsec = d_read_timing_us(4);
 
-		d_printf(D_INFO, "Acquiring %d waves took %.4f microseconds", n_waves, microsec);
+		//d_printf(D_INFO, "Acquiring %d waves took %.4f microseconds", n_waves, microsec);
 
 		Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
 		dsb();
@@ -109,29 +112,41 @@ void acq_hacks_run()
 		d_stop_timing(3);
 		microsec = d_read_timing_us(3);
 
-		d_printf(D_INFO, "Preparing %d waves took %.4f microseconds", n_waves, microsec);
+		//d_printf(D_INFO, "Preparing %d waves took %.4f microseconds", n_waves, microsec);
 
 		bytes = 0;
 		microsec = 0;
 
 		d_start_timing(2);
-		csi_hack_start_frame(15);
+		csi_hack_start_frame(31);
 
 		for(j = 0; j < 8; j++) {
+			Xil_DCacheFlushRange(buffer, sizeof(buffer));
+			dsb();
+
+			csi_hack_send_line_data(buffer + (j * 65536), 65536);
+			bytes += 65536;
+		}
+
+		/*
+		csi_hack_start_frame(15);
+
+		for(j = 0; j < 16; j++) {
 			Xil_DCacheFlushRange(buffer, sizeof(buffer));
 			dsb();
 
 			csi_hack_send_line_data(buffer + (j * 32768), 32768);
 			bytes += 32768;
 		}
+		*/
 
 		csi_hack_stop_frame();
 
 		d_stop_timing(2);
 		microsec += d_read_timing_us(2);
 
-		d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
-		d_printf(D_INFO, "Transfer rate: %.4f MB/s", bytes / microsec);
+		//d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
+		d_printf(D_INFO, "%.4f MB/s", bytes / microsec);
 
 		iter++;
 	}

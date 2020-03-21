@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Fri Mar 20 14:19:11 2020
+//Date        : Sat Mar 21 17:12:23 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -10,20 +10,8 @@
 `timescale 1 ps / 1 ps
 
 module design_1_wrapper
-   (ACQ_ABORT,
-    ACQ_AXI_RUN,
-    ACQ_DATA_LOSS,
-    ACQ_DEPTH_MUX,
-    ACQ_DONE,
-    ACQ_HAVE_TRIG,
-    ACQ_RUN,
-    ACQ_TRIG_MASK,
-    ACQ_TRIG_RST,
-    ADC_DATA_EOF,
-    ADC_DATA_VALID,
-    ADC_FCLK_N,
+   (ADC_FCLK_N,
     ADC_FCLK_P,
-    ADC_FIFO_RESET,
     ADC_L1A_N,
     ADC_L1A_P,
     ADC_L1B_N,
@@ -89,20 +77,8 @@ module design_1_wrapper
     GPIO_TEST,
     PL_IRQ,
     TRIGGER_OUT);
-  input ACQ_ABORT;
-  input ACQ_AXI_RUN;
-  output ACQ_DATA_LOSS;
-  input ACQ_DEPTH_MUX;
-  output ACQ_DONE;
-  output ACQ_HAVE_TRIG;
-  input ACQ_RUN;
-  input ACQ_TRIG_MASK;
-  input ACQ_TRIG_RST;
-  input ADC_DATA_EOF;
-  input ADC_DATA_VALID;
   input ADC_FCLK_N;
   input ADC_FCLK_P;
-  input ADC_FIFO_RESET;
   input ADC_L1A_N;
   input ADC_L1A_P;
   input ADC_L1B_N;
@@ -169,20 +145,8 @@ module design_1_wrapper
   input [3:0]PL_IRQ;
   output TRIGGER_OUT;
 
-  wire ACQ_ABORT;
-  wire ACQ_AXI_RUN;
-  wire ACQ_DATA_LOSS;
-  wire ACQ_DEPTH_MUX;
-  wire ACQ_DONE;
-  wire ACQ_HAVE_TRIG;
-  wire ACQ_RUN;
-  wire ACQ_TRIG_MASK;
-  wire ACQ_TRIG_RST;
-  wire ADC_DATA_EOF;
-  wire ADC_DATA_VALID;
   wire ADC_FCLK_N;
   wire ADC_FCLK_P;
-  wire ADC_FIFO_RESET;
   wire ADC_L1A_N;
   wire ADC_L1A_P;
   wire ADC_L1B_N;
@@ -250,20 +214,8 @@ module design_1_wrapper
   wire TRIGGER_OUT;
 
   design_1 design_1_i
-       (.ACQ_ABORT(ACQ_ABORT),
-        .ACQ_AXI_RUN(ACQ_AXI_RUN),
-        .ACQ_DATA_LOSS(ACQ_DATA_LOSS),
-        .ACQ_DEPTH_MUX(ACQ_DEPTH_MUX),
-        .ACQ_DONE(ACQ_DONE),
-        .ACQ_HAVE_TRIG(ACQ_HAVE_TRIG),
-        .ACQ_RUN(ACQ_RUN),
-        .ACQ_TRIG_MASK(ACQ_TRIG_MASK),
-        .ACQ_TRIG_RST(ACQ_TRIG_RST),
-        .ADC_DATA_EOF(ADC_DATA_EOF),
-        .ADC_DATA_VALID(ADC_DATA_VALID),
-        .ADC_FCLK_N(ADC_FCLK_N),
+       (.ADC_FCLK_N(ADC_FCLK_N),
         .ADC_FCLK_P(ADC_FCLK_P),
-        .ADC_FIFO_RESET(ADC_FIFO_RESET),
         .ADC_L1A_N(ADC_L1A_N),
         .ADC_L1A_P(ADC_L1A_P),
         .ADC_L1B_N(ADC_L1B_N),

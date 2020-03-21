@@ -41,11 +41,17 @@
 #define FAB_CFG_MAGIC1					0x0008
 #define FAB_CFG_VERSION					0x000c
 #define FAB_CFG_USRACCESS				0x0010
+
 #define FAB_CFG_ACQ_SIZE_A				0x0040
 #define FAB_CFG_ACQ_SIZE_B				0x0044
 #define FAB_CFG_ACQ_TRIGGER_PTR			0x0048
-#define FAB_CFG_ACQ_DEMUX_MODE			0x004c
-#define FAB_CFG_GPIO_TEST				0x0050	// move this?
+//#define FAB_CFG_ACQ_DEMUX_MODE		0x004c	// Deprecated
+#define FAB_CFG_ACQ_CTRL_A				0x0050
+//#define FAB_CFG_ACQ_CTRL_B			0x0054	// Reserved slot
+#define FAB_CFG_ACQ_STATUS_A			0x0058
+#define FAB_CFG_ACQ_STATUS_B			0x005c
+
+//#define FAB_CFG_GPIO_TEST				0x0050	// Deprecated, to be moved
 #define FAB_CFG_CSI_LINE_COUNT			0x0100
 #define FAB_CFG_CSI_LINE_BYTE_COUNT		0x0104
 #define FAB_CFG_CSI_DATA_TYPE			0x0108
@@ -87,7 +93,29 @@ static inline uint32_t fabcfg_read(uint32_t reg)
 }
 
 /*
- * Write data to fabric BRAM at a specified address.
+ * Test data from fabric at a specified address.
+ *
+ * @param	reg		Register index
+ * @param	mask	Mask to test against
+ *
+ * @return	data	Data returned is AND of register data and mask (i.e. bit test)
+ */
+static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
+{
+	uint32_t res;
+
+	reg &= FAB_CFG_ADDR_MASK;
+
+	// Wrapped in dsb to ensure synchronous read
+	dsb();
+	res = _FAB_CFG_ACCESS(reg);
+	dsb();
+
+	return res & mask;
+}
+
+/*
+ * Write data in fabric at a specified address.
  *
  * @param	reg		Register index
  * @param	data	Data to write
@@ -99,6 +127,54 @@ static inline void fabcfg_write(uint32_t reg, uint32_t data)
 	// Wrapped in dsb to ensure synchronous write
 	dsb();
 	_FAB_CFG_ACCESS(reg) = data;
+	dsb();
+}
+
+/*
+ * OR (set) data in fabric at a specified address.
+ *
+ * @param	reg		Register index
+ * @param	data	Data to OR
+ */
+static inline void fabcfg_set(uint32_t reg, uint32_t data)
+{
+	reg &= FAB_CFG_ADDR_MASK;
+
+	// Wrapped in dsb to ensure synchronous write
+	dsb();
+	_FAB_CFG_ACCESS(reg) |= data;
+	dsb();
+}
+
+/*
+ * AND-NOT (clear) data in fabric  at a specified address.
+ *
+ * @param	reg		Register index
+ * @param	data	Data to AND-NOT
+ */
+static inline void fabcfg_clear(uint32_t reg, uint32_t data)
+{
+	reg &= FAB_CFG_ADDR_MASK;
+
+	// Wrapped in dsb to ensure synchronous write
+	dsb();
+	_FAB_CFG_ACCESS(reg) &= ~data;
+	dsb();
+}
+
+/*
+ * XOR (toggle) data in fabric at a specified address.
+ *
+ * @param	reg		Register index
+ * @param	data	Data to XOR
+ */
+static inline void fabcfg_toggle(uint32_t reg, uint32_t data)
+{
+	reg &= FAB_CFG_ADDR_MASK;
+
+	// Wrapped in dsb to ensure synchronous write
+	dsb();
+	_FAB_CFG_ACCESS(reg) ^= data;
 	dsb();
 }
 

@@ -47,8 +47,11 @@ void _acq_irq_rx_handler(void *callback)
 	int error;
 	int i;
 
-	//d_printf(D_WARN, "_acq_irq_rx_handler");
 	g_acq_state.stats.num_irqs++;
+	g_acq_state.dbg_isr_acq_ctrl_a = fabcfg_read(FAB_CFG_ACQ_CTRL_A);
+	g_acq_state.dbg_isr_acq_status_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
+	g_acq_state.dbg_isr_acq_status_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
+	g_acq_state.dbg_isr_acq_trig_ptr = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 
 	// Get status and ACK the interrupt.
 	status = XAxiDma_BdRingGetIrq(bd_ring);
@@ -82,11 +85,10 @@ void _acq_irq_rx_handler(void *callback)
 		switch(g_acq_state.sub_state) {
 			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
 			case ACQSUBST_PRE_TRIG_FILL:
-				// Force depth 'A'
-				emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
-
-				// Stop the AXI bus momentarily (TVALID will go low, TLAST will go high)
-				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+				// Force depth 'A', stop the AXI bus momentarily (TVALID will go low, TLAST will go high)
+				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_AXI_RUN);
+				//emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
+				//emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
 				// Start the next transfer.
 				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
@@ -102,7 +104,7 @@ void _acq_irq_rx_handler(void *callback)
 				 * If the FIFO is full, don't allow us to exit this state.  Instead, send a reset pulse
 				 * to the FIFO and revert back to PRE_TRIG_FILL.
 				 */
-				if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
+				if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
 					_acq_reset_PL_fifo();
 					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 					g_acq_state.state = ACQSTATE_PREP;
@@ -116,8 +118,8 @@ void _acq_irq_rx_handler(void *callback)
 				_acq_reset_trigger();
 
 				// Demask triggers; start AXI bus transactions again.
-				emio_fast_write(ACQ_EMIO_TRIG_MASK, 0);
-				emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK);
+				fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
 
 				// Statistics
 				g_acq_state.stats.num_samples += g_acq_state.pre_buffsz;
@@ -129,20 +131,19 @@ void _acq_irq_rx_handler(void *callback)
 
 			case ACQSUBST_PRE_TRIG_WAIT:
 				/*
-				 * If a trigger has occurred (ACQ_EMIO_HAVE_TRIGGER is high) then jump address to the
+				 * If a trigger has occurred (flag HAVE_TRIG is high) then jump address to the
 				 * post-trigger buffer; if not, then go back to the start.
 				 */
-				if(emio_fast_read(ACQ_EMIO_HAVE_TRIG)) {
+				if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_HAVE_TRIG)) {
 					// Tell the PL that we want to use the 'B' channel acquisition depth now.
-					emio_fast_write(ACQ_EMIO_DEPTH_MUX, 1);
-
 					// Stop the AXI bus momentarily (TVALID will go low)
-					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+					fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
+					fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
 
 					/*
-					 * If the FIFO is full, capture the data but set the discard flag.
+					 * If the FIFO is full (DATA_LOSS flag set), capture the data but set the discard flag.
 					 */
-					if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
+					if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
@@ -168,8 +169,10 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 
 					// Start the AXI bus again with triggers masked as we are no longer interested in triggers
-					emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
-					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+					fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
+
+					//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
+					//emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 					g_acq_state.sub_state = ACQSUBST_POST_TRIG;
 					g_acq_state.stats.num_samples_raw += g_acq_state.acq_current->trigger_at;
@@ -177,12 +180,13 @@ void _acq_irq_rx_handler(void *callback)
 				} else {
 					// No trigger. So just re-arm the pre-trigger, starting from the beginning of
 					// the acquisition buffer.
-					emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+					fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
+
+					//emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 					_acq_wait_for_ndone();
 
 					// If the FIFO is full, capture the data but set the discard flag.
-					// XXX: Since there's no trigger consider a FIFO reset instead?
-					if(emio_fast_read(ACQ_EMIO_FIFO_OVERRUN)) {
+					if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
 						_acq_reset_PL_fifo();
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
@@ -200,7 +204,8 @@ void _acq_irq_rx_handler(void *callback)
 					// Reset the trigger
 					_acq_reset_trigger();
 
-					emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+					fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
+					//emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 					g_acq_state.stats.num_samples_raw += g_acq_state.pre_buffsz;
 				}
 
@@ -216,15 +221,19 @@ void _acq_irq_rx_handler(void *callback)
 				 * Any hold-off is controlled by the trigger engine.
 				 */
 				// If DONE signal not present at end of acquisition, then there is a fault.
-				if(!emio_fast_read(ACQ_EMIO_DONE)) {
-					d_printf(D_ERROR, "acquire: PL reports not done, but DMA complete!");
+				if(!fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DONE)) {
+					d_printf(D_ERROR, "acquire: PL reports not done, but DMA complete! (0x%08x)", fabcfg_read(FAB_CFG_ACQ_STATUS_A));
+					//while(1) ;
 					_acq_irq_error_dma();
 					return;
 				}
 
-				emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
-				emio_fast_write(ACQ_EMIO_RUN, 0);
-				emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
+				fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK);
+				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN);
+
+				//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
+				//emio_fast_write(ACQ_EMIO_RUN, 0);
+				//emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
 				g_acq_state.sub_state = ACQSUBST_DONE_WAVE;
 				g_acq_state.state = ACQSTATE_RUNNING;
@@ -305,16 +314,19 @@ void _acq_reset_PL_fifo()
 	 * drive the reset pulse for some cycles to ensure that the reset is received and the state
 	 * machine is in the correct state
 	 */
-	emio_fast_write(ACQ_EMIO_FIFO_RESET, 1);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
+	//emio_fast_write(ACQ_EMIO_FIFO_RESET, 1);
 
 	for(i = 0; i < 20; i++) {
 		asm __volatile__("nop");
 	}
 
-	emio_fast_write(ACQ_EMIO_FIFO_RESET, 0);
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
+	//emio_fast_write(ACQ_EMIO_FIFO_RESET, 0);
 
 	// Test the FIFO full signal; wait for it to deassert before handing control back over
-	while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) ;
+	//while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) ;  // fabcfg_read(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
+	while(fabcfg_test(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET)) ;
 }
 
 /*
@@ -331,13 +343,15 @@ void _acq_reset_trigger()
 	 * drive the reset pulse for some cycles to ensure that the reset is received and the state
 	 * machine is in the correct state
 	 */
-	emio_fast_write(ACQ_EMIO_TRIG_RESET, 1);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_RST);
+	//emio_fast_write(ACQ_EMIO_TRIG_RESET, 1);
 
 	for(i = 0; i < 10; i++) {
 		asm __volatile__("nop");
 	}
 
-	emio_fast_write(ACQ_EMIO_TRIG_RESET, 0);
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_RST);
+	//emio_fast_write(ACQ_EMIO_TRIG_RESET, 0);
 }
 
 
@@ -346,7 +360,8 @@ void _acq_reset_trigger()
  */
 void _acq_wait_for_ndone()
 {
-	while(emio_fast_read(ACQ_EMIO_DONE)) ;
+	while(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DONE)) ;
+	//while(emio_fast_read(ACQ_EMIO_DONE)) ;
 }
 
 /*
@@ -415,6 +430,7 @@ void acq_init()
 	 *   - ACQ_EMIO_FIFO_OVERRUN:	Signal to PS to indicate that acquisition has overrun the FIFO and a FIFO reset is
 	 *   							required.
 	 */
+	/*
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
 	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
@@ -444,6 +460,7 @@ void acq_init()
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
 	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ADC_VALID, 0);
+	 */
 
 	d_printf(D_INFO, "acquire: engine initialised");
 }
@@ -794,7 +811,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	}
 
 	g_acq_state.demux_reg = demux;
-	fabcfg_write(FAB_CFG_ACQ_DEMUX_MODE, demux);
+	//fabcfg_write(FAB_CFG_ACQ_DEMUX_MODE, demux);
 
 	return ACQRES_OK;
 }
@@ -847,7 +864,8 @@ int acq_start()
 		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 
 		// Start on 'A' mux: pre-trigger
-		emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
+		//emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
 
 		// Empty the FIFO
 		_acq_reset_PL_fifo();
@@ -856,10 +874,14 @@ int acq_start()
 		_acq_reset_trigger();
 
 		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
-		emio_fast_write(ACQ_EMIO_ABORT, 0);
-		emio_fast_write(ACQ_EMIO_RUN, 1);
-		emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
-		emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT);
+		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
+
+		//emio_fast_write(ACQ_EMIO_ABORT, 0);
+		//emio_fast_write(ACQ_EMIO_RUN, 1);
+		//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
+		//emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 		return ACQRES_OK;
 	} else {
@@ -888,15 +910,18 @@ int acq_force_stop()
 	int error;
 
 	error = XAxiDma_Pause(&g_acq_state.dma);
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
 
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);		// AXI bus activity stopped
+	//XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);		// AXI bus activity stopped
 
 	if(error != XST_SUCCESS) {
-		d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
+		d_printf(D_ERROR, "acquire: unable to pause transfer, error %d", error);
 		return ACQRES_DMA_FAIL;
 	}
 
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT);
+	//XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
+
 	g_acq_state.state = ACQSTATE_STOPPED;
 
 	return ACQRES_OK;
@@ -938,10 +963,10 @@ void acq_debug_dump()
 		}
 	}
 
-	d_printf(D_INFO, "** Acquisition State (g_acq_state: 0x%08x) **                  ", &g_acq_state);
-	d_printf(D_INFO, "                  ");
-	d_printf(D_INFO, "I think the stack is at 0x%08x or thereabouts                  ", (void*)&sp);
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "** Acquisition State (g_acq_state: 0x%08x) **   ", &g_acq_state);
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "I think the stack is at 0x%08x or thereabouts   ", (void*)&sp);
+	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "acq_mode_flags        = 0x%08x                  ", g_acq_state.acq_mode_flags);
 	d_printf(D_INFO, "state                 = %d [%s]                 ", g_acq_state.state, acq_state_to_str[g_acq_state.state]);
 	d_printf(D_INFO, "sub_state             = %d [%s]                 ", g_acq_state.sub_state, acq_substate_to_str[g_acq_state.sub_state]);
@@ -950,7 +975,12 @@ void acq_debug_dump()
 	d_printf(D_INFO, "dma                   = 0x%08x                  ", g_acq_state.dma);
 	d_printf(D_INFO, "dma_config            = 0x%08x                  ", g_acq_state.dma_config);
 	d_printf(D_INFO, "demux_reg             = 0x%02x                  ", g_acq_state.demux_reg);
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "R_acq_ctrl_a          = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_CTRL_A), g_acq_state.dbg_isr_acq_ctrl_a);
+	d_printf(D_INFO, "R_acq_status_a        = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_STATUS_A), g_acq_state.dbg_isr_acq_status_a);
+	d_printf(D_INFO, "R_acq_status_b        = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_STATUS_B), g_acq_state.dbg_isr_acq_status_b);
+	d_printf(D_INFO, "R_acq_trigger_ptr     = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR), g_acq_state.dbg_isr_acq_trig_ptr);
+	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)       ", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
 	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)       ", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
 	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)       ", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
@@ -958,10 +988,10 @@ void acq_debug_dump()
 	d_printf(D_INFO, "post_sampct           = %d wavewords            ", g_acq_state.post_sampct);
 	d_printf(D_INFO, "num_acq_request       = %d waves                ", g_acq_state.num_acq_request);
 	d_printf(D_INFO, "num_acq_made          = %d waves                ", g_acq_state.num_acq_made);
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "acq_current->flags    = 0x%04x                  ", g_acq_state.acq_current->flags);
 	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)             ", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "s.num_acq_total       = %llu                    ", g_acq_state.stats.num_acq_total);
 	d_printf(D_INFO, "s.num_alloc_err_total = %llu                    ", g_acq_state.stats.num_alloc_err_total);
 	d_printf(D_INFO, "s.num_alloc_total     = %llu                    ", g_acq_state.stats.num_alloc_total);
@@ -974,16 +1004,17 @@ void acq_debug_dump()
 	d_printf(D_INFO, "s.num_irqs            = %llu                    ", g_acq_state.stats.num_irqs);
 	d_printf(D_INFO, "s.num_fifo_full       = %llu                    ", g_acq_state.stats.num_fifo_full);
 	d_printf(D_INFO, "s.num_fifo_pkt_dscd   = %llu                    ", g_acq_state.stats.num_fifo_pkt_dscd);
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "Approx acq. rate      = %d acq/s                ", (int)acq_rate);
 	d_printf(D_INFO, "Approx sample rate    = %d Ksa/s                ", (int)sample_rate);
 	d_printf(D_INFO, "Debug delta           = %d us                   ", (int)time_delta_us);
-	d_printf(D_INFO, "                  ");
-	d_printf(D_INFO, "** End **                  ");
-	d_printf(D_INFO, "                  ");
-	d_printf(D_INFO, "                  ");
-	d_printf(D_INFO, "                  ");
-	d_printf(D_INFO, "                  ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "** End **                                       ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "                                                ");
+	d_printf(D_INFO, "                                                ");
 
 	// Save last state...
 	g_acq_state.stat_last = g_acq_state.stats;

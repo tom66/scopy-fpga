@@ -93,5 +93,19 @@ void fabcfg_init()
 
 	d_printf(D_INFO, "FabCfg: Bitstream version %d.%02d, code 0x%04x, userid 0x%08x", \
 			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
+
+	/*
+	 * Dump boot register state for diagnostics.
+	 */
+	d_printf(D_INFO, "");
+	d_printf(D_INFO, "FabCfg: Boot memory map (including unimplemented registers)");
+	d_printf(D_INFO, "                 0          4          8          c");
+
+	for(i = 0; i < 1023; i += 16) {
+		d_printf(D_INFO, "0x%04x: 0x%08x 0x%08x 0x%08x 0x%08x", i, \
+				fabcfg_read(i), fabcfg_read(i + 4), fabcfg_read(i + 8), fabcfg_read(i + 12));
+	}
+
+	d_printf(D_INFO, "");
 }
 
