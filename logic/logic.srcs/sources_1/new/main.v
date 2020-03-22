@@ -187,10 +187,7 @@ design_1 (
     .EMIO_O(emio_output),           // Data from ARM
     
     // Master clock (nom. 177MHz)
-    .FCLK_CLK0(clk_master),
-    
-    // IRQ outputs from fabric
-    .PL_IRQ(pl_irq)
+    .FCLK_CLK0(clk_master)
 );
 
 /*

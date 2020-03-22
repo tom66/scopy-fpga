@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sat Mar 21 17:12:25 2020" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Mar 22 09:39:55 2020" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z014s" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -22,11 +22,6 @@
     <PORT DIR="O" NAME="TRIGGER_OUT" SIGIS="undef" SIGNAME="adc_axi_streamer_trigger_out">
       <CONNECTIONS>
         <CONNECTION INSTANCE="adc_axi_streamer" PORT="trigger_out"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="3" NAME="PL_IRQ" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_PL_IRQ">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="xlconcat_1" PORT="In1"/>
       </CONNECTIONS>
     </PORT>
     <PORT CLKFREQUENCY="400000500" DIR="O" NAME="CLKWIZ0_CLKOUT1" SIGIS="clk" SIGNAME="clk_wiz_0_clk_out1">
@@ -781,7 +776,7 @@
         <PORT DIR="O" NAME="acq_reset_irq_gen" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_reset_irq_gen">
           <CONNECTIONS>
             <CONNECTION INSTANCE="system_ila_0" PORT="probe11"/>
-            <CONNECTION INSTANCE="xlconcat_1" PORT="In2"/>
+            <CONNECTION INSTANCE="xlconcat_1" PORT="In1"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="pll_lock_idelaye2_clkref" SIGIS="undef" SIGNAME="clk_wiz_1_locked">
@@ -11452,7 +11447,7 @@
       <DOCUMENTS/>
       <PARAMETERS>
         <PARAMETER NAME="IN0_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="IN1_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="IN1_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN2_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN3_WIDTH" VALUE="4"/>
         <PARAMETER NAME="IN4_WIDTH" VALUE="1"/>
@@ -11483,8 +11478,8 @@
         <PARAMETER NAME="IN29_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN30_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN31_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="dout_width" VALUE="6"/>
-        <PARAMETER NAME="NUM_PORTS" VALUE="3"/>
+        <PARAMETER NAME="dout_width" VALUE="2"/>
+        <PARAMETER NAME="NUM_PORTS" VALUE="2"/>
         <PARAMETER NAME="Component_Name" VALUE="design_1_xlconcat_1_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
@@ -11494,17 +11489,12 @@
             <CONNECTION INSTANCE="adc_dma" PORT="s2mm_introut"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="In1" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_PL_IRQ">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="PL_IRQ"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="0" NAME="In2" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_reset_irq_gen">
+        <PORT DIR="I" LEFT="0" NAME="In1" RIGHT="0" SIGIS="undef" SIGNAME="adc_axi_streamer_acq_reset_irq_gen">
           <CONNECTIONS>
             <CONNECTION INSTANCE="adc_axi_streamer" PORT="acq_reset_irq_gen"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="5" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconcat_1_dout">
+        <PORT DIR="O" LEFT="1" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconcat_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="zynq_ps" PORT="IRQ_F2P"/>
           </CONNECTIONS>
@@ -11599,7 +11589,7 @@
         <PARAMETER NAME="C_S_AXI_HP3_DATA_WIDTH" VALUE="64"/>
         <PARAMETER NAME="C_M_AXI_GP0_THREAD_ID_WIDTH" VALUE="12"/>
         <PARAMETER NAME="C_M_AXI_GP1_THREAD_ID_WIDTH" VALUE="12"/>
-        <PARAMETER NAME="C_NUM_F2P_INTR_INPUTS" VALUE="6"/>
+        <PARAMETER NAME="C_NUM_F2P_INTR_INPUTS" VALUE="2"/>
         <PARAMETER NAME="C_IRQ_F2P_MODE" VALUE="DIRECT"/>
         <PARAMETER NAME="C_DQ_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_DQS_WIDTH" VALUE="4"/>
@@ -11942,7 +11932,7 @@
         <PARAMETER NAME="PCW_S_AXI_HP2_DATA_WIDTH" VALUE="64"/>
         <PARAMETER NAME="PCW_S_AXI_HP3_ID_WIDTH" VALUE="6"/>
         <PARAMETER NAME="PCW_S_AXI_HP3_DATA_WIDTH" VALUE="64"/>
-        <PARAMETER NAME="PCW_NUM_F2P_INTR_INPUTS" VALUE="6"/>
+        <PARAMETER NAME="PCW_NUM_F2P_INTR_INPUTS" VALUE="2"/>
         <PARAMETER NAME="PCW_EN_DDR" VALUE="1"/>
         <PARAMETER NAME="PCW_EN_SMC" VALUE="0"/>
         <PARAMETER NAME="PCW_EN_QSPI" VALUE="0"/>
@@ -13020,7 +13010,7 @@
         <PORT DIR="I" LEFT="5" NAME="S_AXI_HP1_WID" RIGHT="0" SIGIS="undef"/>
         <PORT DIR="I" LEFT="63" NAME="S_AXI_HP1_WDATA" RIGHT="0" SIGIS="undef"/>
         <PORT DIR="I" LEFT="7" NAME="S_AXI_HP1_WSTRB" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="5" NAME="IRQ_F2P" RIGHT="0" SENSITIVITY="NULL:NULL:LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="xlconcat_1_dout">
+        <PORT DIR="I" LEFT="1" NAME="IRQ_F2P" RIGHT="0" SENSITIVITY="NULL:LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="xlconcat_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="xlconcat_1" PORT="dout"/>
           </CONNECTIONS>

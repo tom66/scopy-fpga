@@ -4,7 +4,7 @@
 	<MODE Name="Pre-Synthesis"/>
 	<SYSTEMINFO BOARD="" PART="xc7z014sclg400-1" ARCH="zynq" PACKAGE="clg400" DEVICE="7z014s" SPEED="-1" LUT="40600" FF="81200" BRAM="107" DSP="170"/>
 	<HIERARCHY Name="main"/>
-	<File Type="HW_HANDOFF" Name="design_1.hwh" DESIGN_HIERARCHY="nolabel_line188" BD_TYPE="DEFAULT_BD">
+	<File Type="HW_HANDOFF" Name="design_1.hwh" DESIGN_HIERARCHY="nolabel_line137" BD_TYPE="DEFAULT_BD">
 	</File>
 	<File Type="BD_TCL" Name="design_1_bd.tcl">
 	</File>
@@ -20,6 +20,20 @@
 	</File>
 	<File Type="PS_XMD_INIT" Name="ps7_init.tcl">
 	</File>
-	<USEDRESOURCES LUT="10110" FF="13219" BRAM="58" DSP="1"/>
+	<File Type="HW_HANDOFF" Name="design_1_system_ila_0_0.hwh" DESIGN_HIERARCHY="nolabel_line137/system_ila_0/inst" BD_TYPE="SCOPED_BD">
+	</File>
+	<File Type="BD_TCL" Name="design_1_system_ila_0_0_bd.tcl">
+	</File>
+	<DRIVERS>
+		<DRIVER IP_VLNV="xilinx.com:user:FabCfg_NextGen:1.0">
+			<File PATH="drivers/FabCfg_NextGen_v1_0/data/FabCfg_NextGen.mdd"/>
+			<File PATH="drivers/FabCfg_NextGen_v1_0/data/FabCfg_NextGen.tcl"/>
+			<File PATH="drivers/FabCfg_NextGen_v1_0/src/Makefile"/>
+			<File PATH="drivers/FabCfg_NextGen_v1_0/src/FabCfg_NextGen.h"/>
+			<File PATH="drivers/FabCfg_NextGen_v1_0/src/FabCfg_NextGen.c"/>
+			<File PATH="drivers/FabCfg_NextGen_v1_0/src/FabCfg_NextGen_selftest.c"/>
+		</DRIVER>
+	</DRIVERS>
+	<USEDRESOURCES LUT="9207" FF="11344" BRAM="63" DSP="1"/>
 </Project>
 

@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x26FF1511A5EB700E",
+      "boundary_crc": "0x810E13B21A8F3CE8",
       "device": "xc7z014sclg400-1",
       "name": "design_1",
       "synth_flow_mode": "None",
@@ -147,11 +147,6 @@
       },
       "TRIGGER_OUT": {
         "direction": "O"
-      },
-      "PL_IRQ": {
-        "direction": "I",
-        "left": "3",
-        "right": "0"
       },
       "CLKWIZ0_CLKOUT1": {
         "type": "clk",
@@ -1154,7 +1149,7 @@
             "value": "1"
           },
           "IN1_WIDTH": {
-            "value": "4"
+            "value": "1"
           },
           "IN2_WIDTH": {
             "value": "1"
@@ -1163,10 +1158,10 @@
             "value": "4"
           },
           "NUM_PORTS": {
-            "value": "3"
+            "value": "2"
           },
           "dout_width": {
-            "value": "6"
+            "value": "2"
           }
         }
       },
@@ -1671,18 +1666,6 @@
           }
         },
         "interface_nets": {
-          "xbar_to_m00_couplers": {
-            "interface_ports": [
-              "xbar/M00_AXI",
-              "m00_couplers/S_AXI"
-            ]
-          },
-          "m01_couplers_to_axi_interconnect_1": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
-            ]
-          },
           "axi_interconnect_1_to_s00_couplers": {
             "interface_ports": [
               "S00_AXI",
@@ -1701,10 +1684,16 @@
               "m00_couplers/M_AXI"
             ]
           },
-          "m02_couplers_to_axi_interconnect_1": {
+          "xbar_to_m00_couplers": {
             "interface_ports": [
-              "M02_AXI",
-              "m02_couplers/M_AXI"
+              "xbar/M00_AXI",
+              "m00_couplers/S_AXI"
+            ]
+          },
+          "m01_couplers_to_axi_interconnect_1": {
+            "interface_ports": [
+              "M01_AXI",
+              "m01_couplers/M_AXI"
             ]
           },
           "xbar_to_m01_couplers": {
@@ -1713,16 +1702,22 @@
               "m01_couplers/S_AXI"
             ]
           },
-          "xbar_to_m02_couplers": {
+          "m02_couplers_to_axi_interconnect_1": {
             "interface_ports": [
-              "xbar/M02_AXI",
-              "m02_couplers/S_AXI"
+              "M02_AXI",
+              "m02_couplers/M_AXI"
             ]
           },
           "m03_couplers_to_axi_interconnect_1": {
             "interface_ports": [
               "M03_AXI",
               "m03_couplers/M_AXI"
+            ]
+          },
+          "xbar_to_m02_couplers": {
+            "interface_ports": [
+              "xbar/M02_AXI",
+              "m02_couplers/S_AXI"
             ]
           },
           "xbar_to_m03_couplers": {
@@ -2216,16 +2211,16 @@
               }
             },
             "interface_nets": {
-              "s00_couplers_to_auto_pc": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
               "auto_pc_to_s00_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
+                ]
+              },
+              "s00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -2511,12 +2506,6 @@
           "adc_axi_streamer/m00_axis_tvalid",
           "adc_dma/s_axis_s2mm_tvalid",
           "system_ila_0/probe16"
-        ]
-      },
-      "PL_IRQ_1": {
-        "ports": [
-          "PL_IRQ",
-          "xlconcat_1/In1"
         ]
       },
       "clk_wiz_0_clk_out1": {
@@ -3018,7 +3007,7 @@
         "ports": [
           "adc_axi_streamer/acq_reset_irq_gen",
           "system_ila_0/probe11",
-          "xlconcat_1/In2"
+          "xlconcat_1/In1"
         ]
       },
       "clk_wiz_1_locked": {

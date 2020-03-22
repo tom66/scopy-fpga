@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sat Mar 21 17:12:23 2020
+//Date        : Sun Mar 22 09:39:28 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -76,7 +76,6 @@ module design_1
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
     GPIO_TEST,
-    PL_IRQ,
     TRIGGER_OUT);
   input ADC_FCLK_N;
   input ADC_FCLK_P;
@@ -143,7 +142,6 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
   output [1:0]GPIO_TEST;
-  input [3:0]PL_IRQ;
   output TRIGGER_OUT;
 
   wire ACQ_TRIGGER_IN_1;
@@ -186,7 +184,6 @@ module design_1
   wire [1:0]FabCfg_NextGen_0_R_gpio_test;
   wire [63:0]Net;
   wire Net1;
-  wire [3:0]PL_IRQ_1;
   wire [31:0]S00_AXI_1_ARADDR;
   wire [1:0]S00_AXI_1_ARBURST;
   wire [3:0]S00_AXI_1_ARCACHE;
@@ -430,7 +427,7 @@ module design_1
   wire [63:0]processing_system7_0_GPIO_O;
   wire [0:0]rst_ps7_0_20M_peripheral_aresetn;
   wire simple_reset_control_0_g_rst_gen;
-  wire [5:0]xlconcat_1_dout;
+  wire [1:0]xlconcat_1_dout;
   wire [31:0]xlconstant_0_dout;
   wire [15:0]xlconstant_1_dout;
   wire [0:0]xlconstant_2_dout;
@@ -479,7 +476,6 @@ module design_1
   assign EMIO_O[63:0] = processing_system7_0_GPIO_O;
   assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
   assign GPIO_TEST[1:0] = FabCfg_NextGen_0_R_gpio_test;
-  assign PL_IRQ_1 = PL_IRQ[3:0];
   assign TRIGGER_OUT = adc_axi_streamer_trigger_out;
   design_1_FabCfg_NextGen_0_0 FabCfg_NextGen_0
        (.K_in_bitstream_version(xlconstant_0_dout),
@@ -971,8 +967,7 @@ module design_1
         .probe9(adc_axi_streamer_dbg_acq_have_trig));
   design_1_xlconcat_1_0 xlconcat_1
        (.In0(axi_dma_s2mm_introut),
-        .In1(PL_IRQ_1),
-        .In2(adc_axi_streamer_acq_reset_irq_gen),
+        .In1(adc_axi_streamer_acq_reset_irq_gen),
         .dout(xlconcat_1_dout));
   design_1_xlconstant_0_0 xlconstant_0
        (.dout(xlconstant_0_dout));

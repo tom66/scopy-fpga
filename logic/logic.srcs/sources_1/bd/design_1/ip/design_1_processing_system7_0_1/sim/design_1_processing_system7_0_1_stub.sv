@@ -213,7 +213,7 @@ module design_1_processing_system7_0_1 (
   input bit [5 : 0] S_AXI_HP1_WID,
   input bit [63 : 0] S_AXI_HP1_WDATA,
   input bit [7 : 0] S_AXI_HP1_WSTRB,
-  input bit [5 : 0] IRQ_F2P,
+  input bit [1 : 0] IRQ_F2P,
   output bit_as_bool FCLK_CLK0,
   output bit_as_bool FCLK_RESET0_N,
   output bit [53 : 0] MIO,
@@ -395,7 +395,7 @@ module design_1_processing_system7_0_1 (GPIO_I,GPIO_O,GPIO_T,SPI0_SCLK_I,SPI0_SC
   input bit [5 : 0] S_AXI_HP1_WID;
   input bit [63 : 0] S_AXI_HP1_WDATA;
   input bit [7 : 0] S_AXI_HP1_WSTRB;
-  input bit [5 : 0] IRQ_F2P;
+  input bit [1 : 0] IRQ_F2P;
   output wire FCLK_CLK0;
   output wire FCLK_RESET0_N;
   inout wire [53 : 0] MIO;
@@ -574,7 +574,7 @@ module design_1_processing_system7_0_1 (GPIO_I,GPIO_O,GPIO_T,SPI0_SCLK_I,SPI0_SC
   input bit [5 : 0] S_AXI_HP1_WID;
   input bit [63 : 0] S_AXI_HP1_WDATA;
   input bit [7 : 0] S_AXI_HP1_WSTRB;
-  input bit [5 : 0] IRQ_F2P;
+  input bit [1 : 0] IRQ_F2P;
   output wire FCLK_CLK0;
   output wire FCLK_RESET0_N;
   inout wire [53 : 0] MIO;
