@@ -1,6 +1,360 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Wed Mar 25 12:34:35 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_trigger_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_trigger_0_0 (xilinx.com:user:adc_trigger:1.0) from (Rev. 5) to (Rev. 6)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_adc_trigger_0_0'. These changes may impact your design.
+
+
+-Upgrade has added port 'dbg_comp_state_1_0123a'
+
+-Upgrade has added port 'dbg_comp_state_1_0123b'
+
+-Upgrade has added port 'dbg_comp_state_1_4567a'
+
+-Upgrade has added port 'dbg_comp_state_1_4567b'
+
+-Upgrade has added port 'dbg_comp_state_2_0123a'
+
+-Upgrade has added port 'dbg_comp_state_2_0123b'
+
+-Upgrade has added port 'dbg_comp_state_2_4567a'
+
+-Upgrade has added port 'dbg_comp_state_2_4567b'
+
+-Upgrade has added port 'dbg_ev_counter_1_0123a'
+
+-Upgrade has added port 'dbg_ev_counter_1_0123b'
+
+-Upgrade has added port 'dbg_ev_counter_1_4567a'
+
+-Upgrade has added port 'dbg_ev_counter_1_4567b'
+
+-Upgrade has added port 'dbg_ev_counter_2_0123a'
+
+-Upgrade has added port 'dbg_ev_counter_2_0123b'
+
+-Upgrade has added port 'dbg_ev_counter_2_4567a'
+
+-Upgrade has added port 'dbg_ev_counter_2_4567b'
+
+-Upgrade has added port 'dbg_trig_sig_a'
+
+-Upgrade has added port 'dbg_trig_sig_b'
+
+-Upgrade has added port 'trig_input_ac'
+
+-Upgrade has added port 'trig_input_external'
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Mar 22 22:11:35 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_trigger_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of design_1_adc_trigger_0_0 (xilinx.com:user:adc_trigger:1.0 (Rev. 5)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Mar 22 22:08:56 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_trigger_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_trigger_0_0 (xilinx.com:user:adc_trigger:1.0) from (Rev. 3) to (Rev. 5)
+
+After upgrade, an IP may have parameter differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality.
+
+2. Customization warnings
+-------------------------
+
+Parameter 'C_S00_AXI_BASEADDR' is no longer present on the upgraded IP 'design_1_adc_trigger_0_0', and cannot be set to '0xFFFFFFFF'
+
+Parameter 'C_S00_AXI_HIGHADDR' is no longer present on the upgraded IP 'design_1_adc_trigger_0_0', and cannot be set to '0x00000000'
+
+
+3. Debug Commands
+-----------------
+
+  The following debug information can be passed to Vivado as Tcl commands,
+in order to validate or debug the output of the upgrade flow.
+  You may consult any warnings from within this upgrade, and alter or remove
+the configuration parameter(s) which caused the warning; then execute the Tcl
+commands, and use the IP Customization GUI to verify the IP configuration.
+
+create_ip -vlnv xilinx.com:user:adc_trigger:1.0 -user_name design_1_adc_trigger_0_0
+set_property -dict "\
+  CONFIG.Component_Name {design_1_adc_trigger_0_0} \
+  CONFIG.adc_data_clk.ASSOCIATED_BUSIF {} \
+  CONFIG.adc_data_clk.ASSOCIATED_RESET {} \
+  CONFIG.adc_data_clk.CLK_DOMAIN {design_1_adc_receiver_core_0_0_adc_data_clk} \
+  CONFIG.adc_data_clk.FREQ_HZ {100000000} \
+  CONFIG.adc_data_clk.INSERT_VIP {0} \
+  CONFIG.adc_data_clk.PHASE {0.000} " [get_ips design_1_adc_trigger_0_0]
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Mar 22 22:01:05 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_FabCfg_NextGen_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_FabCfg_NextGen_0_0 (xilinx.com:user:FabCfg_NextGen:1.0) from (Rev. 13) to (Rev. 14)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_FabCfg_NextGen_0_0'. These changes may impact your design.
+
+
+-Upgrade has removed port 'R_trig_a_high_low_packed'
+
+-Upgrade has removed port 'R_trig_b_high_low_packed'
+
+-Upgrade has removed port 'R_trig_config_0'
+
+-Upgrade has added port 'R_trig_config_a'
+
+-Upgrade has added port 'R_trig_level_0'
+
+-Upgrade has added port 'R_trig_level_1'
+
+-Upgrade has added port 'R_trig_level_2'
+
+-Upgrade has added port 'R_trig_level_3'
+
+-Upgrade has added port 'R_trig_level_4'
+
+-Upgrade has added port 'R_trig_level_5'
+
+-Upgrade has added port 'R_trig_level_6'
+
+-Upgrade has added port 'R_trig_level_7'
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Mar 22 21:35:18 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_trigger_0_0'
+
+1. Summary
+----------
+
+CAUTION (success, with warnings) in the upgrade of design_1_adc_trigger_0_0 (xilinx.com:user:adc_trigger:1.0) from (Rev. 1) to (Rev. 3)
+
+After upgrade, an IP may have parameter and port differences compared to the original customization. Please review the parameters within the IP customization GUI to ensure proper functionality. Also, please review the updated IP instantiation template to ensure proper connectivity, and update your design if required.
+
+2. Interface Information
+------------------------
+
+Detected external interface differences while upgrading 'design_1_adc_trigger_0_0'.
+
+
+-Upgrade has removed interface 'S00_AXI'
+
+-Upgrade has removed interface 'S00_AXI_CLK'
+
+-Upgrade has removed interface 'S00_AXI_RST'
+
+-Upgrade has added interface 'adc_data_clk' (xilinx.com:signal:clock:1.0)
+
+
+3. Connection Warnings
+----------------------
+
+Detected external port differences while upgrading 'design_1_adc_trigger_0_0'. These changes may impact your design.
+
+
+-Upgrade has removed port 's00_axi_aclk'
+
+-Upgrade has removed port 's00_axi_araddr'
+
+-Upgrade has removed port 's00_axi_aresetn'
+
+-Upgrade has removed port 's00_axi_arprot'
+
+-Upgrade has removed port 's00_axi_arready'
+
+-Upgrade has removed port 's00_axi_arvalid'
+
+-Upgrade has removed port 's00_axi_awaddr'
+
+-Upgrade has removed port 's00_axi_awprot'
+
+-Upgrade has removed port 's00_axi_awready'
+
+-Upgrade has removed port 's00_axi_awvalid'
+
+-Upgrade has removed port 's00_axi_bready'
+
+-Upgrade has removed port 's00_axi_bresp'
+
+-Upgrade has removed port 's00_axi_bvalid'
+
+-Upgrade has removed port 's00_axi_rdata'
+
+-Upgrade has removed port 's00_axi_rready'
+
+-Upgrade has removed port 's00_axi_rresp'
+
+-Upgrade has removed port 's00_axi_rvalid'
+
+-Upgrade has removed port 's00_axi_wdata'
+
+-Upgrade has removed port 's00_axi_wready'
+
+-Upgrade has removed port 's00_axi_wstrb'
+
+-Upgrade has removed port 's00_axi_wvalid'
+
+-Upgrade has added port 'adc_bus'
+
+-Upgrade has added port 'adc_data_clk'
+
+-Upgrade has added port 'trig_config_a'
+
+-Upgrade has added port 'trig_level_0'
+
+-Upgrade has added port 'trig_level_1'
+
+-Upgrade has added port 'trig_level_2'
+
+-Upgrade has added port 'trig_level_3'
+
+-Upgrade has added port 'trig_level_4'
+
+-Upgrade has added port 'trig_level_5'
+
+-Upgrade has added port 'trig_level_6'
+
+-Upgrade has added port 'trig_level_7'
+
+-Upgrade has added port 'trigger_out'
+
+-Upgrade has added port 'trigger_sub_word'
+
+
+4. Customization warnings
+-------------------------
+
+Parameter 'C_S00_AXI_DATA_WIDTH' is no longer present on the upgraded IP 'design_1_adc_trigger_0_0', and cannot be set to '32'
+
+Parameter 'C_S00_AXI_ADDR_WIDTH' is no longer present on the upgraded IP 'design_1_adc_trigger_0_0', and cannot be set to '4'
+
+
+5. Debug Commands
+-----------------
+
+  The following debug information can be passed to Vivado as Tcl commands,
+in order to validate or debug the output of the upgrade flow.
+  You may consult any warnings from within this upgrade, and alter or remove
+the configuration parameter(s) which caused the warning; then execute the Tcl
+commands, and use the IP Customization GUI to verify the IP configuration.
+
+create_ip -vlnv xilinx.com:user:adc_trigger:1.0 -user_name design_1_adc_trigger_0_0
+set_property -dict "\
+  CONFIG.C_S00_AXI_BASEADDR {0xFFFFFFFF} \
+  CONFIG.C_S00_AXI_HIGHADDR {0x00000000} \
+  CONFIG.Component_Name {design_1_adc_trigger_0_0} " [get_ips design_1_adc_trigger_0_0]
+
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Mar 22 21:34:31 2020
+| Host         : TomsDesktop running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z014sclg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_adc_trigger_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of design_1_adc_trigger_0_0 (xilinx.com:user:adc_trigger:1.0 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
 | Date         : Sat Mar 21 16:51:04 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : upgrade_ip

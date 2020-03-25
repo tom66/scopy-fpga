@@ -107,6 +107,13 @@ void hal_init()
 		exit(-1);
 	}
 
+	error = XScuGic_SelfTest(&g_hal.xscu_gic);
+
+	if(error != XST_SUCCESS) {
+		d_printf(D_ERROR, "XScuGic: self test failed error %d", error);
+		exit(-1);
+	}
+
 	Xil_ExceptionInit();
 	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, &g_hal.xscu_gic);
 	Xil_ExceptionEnable();

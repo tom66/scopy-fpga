@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:FabCfg_NextGen:1.0
-// IP Revision: 13
+// IP Revision: 14
 
 (* X_CORE_INFO = "FabCfg_NextGen_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=FabCfg_NextGen,x_ipVersion=1.0,x_ipCoreRevision=13,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=10}" *)
+(* CORE_GENERATION_INFO = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=FabCfg_NextGen,x_ipVersion=1.0,x_ipCoreRevision=14,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=10}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_FabCfg_NextGen_0_0 (
   R_gpio_test,
@@ -62,9 +62,15 @@ module design_1_FabCfg_NextGen_0_0 (
   R_acq_ctrl_a,
   R_acq_status_a,
   R_acq_status_b,
-  R_trig_a_high_low_packed,
-  R_trig_b_high_low_packed,
-  R_trig_config_0,
+  R_trig_level_0,
+  R_trig_level_1,
+  R_trig_level_2,
+  R_trig_level_3,
+  R_trig_level_4,
+  R_trig_level_5,
+  R_trig_level_6,
+  R_trig_level_7,
+  R_trig_config_a,
   R_csi_line_count,
   R_csi_line_byte_count,
   R_csi_data_type,
@@ -100,9 +106,15 @@ input wire [31 : 0] R_acq_trigger_ptr;
 output wire [31 : 0] R_acq_ctrl_a;
 input wire [31 : 0] R_acq_status_a;
 input wire [31 : 0] R_acq_status_b;
-output wire [31 : 0] R_trig_a_high_low_packed;
-output wire [31 : 0] R_trig_b_high_low_packed;
-output wire [31 : 0] R_trig_config_0;
+output wire [31 : 0] R_trig_level_0;
+output wire [31 : 0] R_trig_level_1;
+output wire [31 : 0] R_trig_level_2;
+output wire [31 : 0] R_trig_level_3;
+output wire [31 : 0] R_trig_level_4;
+output wire [31 : 0] R_trig_level_5;
+output wire [31 : 0] R_trig_level_6;
+output wire [31 : 0] R_trig_level_7;
+output wire [31 : 0] R_trig_config_a;
 output wire [15 : 0] R_csi_line_count;
 output wire [20 : 0] R_csi_line_byte_count;
 output wire [7 : 0] R_csi_data_type;
@@ -166,9 +178,15 @@ input wire s00_axi_rready;
     .R_acq_ctrl_a(R_acq_ctrl_a),
     .R_acq_status_a(R_acq_status_a),
     .R_acq_status_b(R_acq_status_b),
-    .R_trig_a_high_low_packed(R_trig_a_high_low_packed),
-    .R_trig_b_high_low_packed(R_trig_b_high_low_packed),
-    .R_trig_config_0(R_trig_config_0),
+    .R_trig_level_0(R_trig_level_0),
+    .R_trig_level_1(R_trig_level_1),
+    .R_trig_level_2(R_trig_level_2),
+    .R_trig_level_3(R_trig_level_3),
+    .R_trig_level_4(R_trig_level_4),
+    .R_trig_level_5(R_trig_level_5),
+    .R_trig_level_6(R_trig_level_6),
+    .R_trig_level_7(R_trig_level_7),
+    .R_trig_config_a(R_trig_config_a),
     .R_csi_line_count(R_csi_line_count),
     .R_csi_line_byte_count(R_csi_line_byte_count),
     .R_csi_data_type(R_csi_data_type),

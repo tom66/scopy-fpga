@@ -47,6 +47,11 @@ void _acq_irq_rx_handler(void *callback)
 	int error;
 	int i;
 
+	//d_printf(D_INFO, "irq_start (%d)", g_acq_state.sub_state);
+
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x11100000);
+
 	g_acq_state.stats.num_irqs++;
 	g_acq_state.dbg_isr_acq_ctrl_a = fabcfg_read(FAB_CFG_ACQ_CTRL_A);
 	g_acq_state.dbg_isr_acq_status_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
@@ -263,7 +268,9 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.num_acq_made++;
 					g_acq_state.stats.num_samples += g_acq_state.post_buffsz;
 
-					if(g_acq_state.num_acq_made == g_acq_state.num_acq_request) {
+					// XXX: Changed this to a >= which fixes a null deref error, but this really shouldn't be
+					// necessary.  Need to see what could cause num_acq_made to exceed num_acq_request.
+					if(g_acq_state.num_acq_made >= g_acq_state.num_acq_request) {
 						g_acq_state.sub_state = ACQSUBST_DONE_ALL;
 						g_acq_state.state = ACQSTATE_DONE;
 					} else {
@@ -277,7 +284,9 @@ void _acq_irq_rx_handler(void *callback)
 								return;
 							}
 						} else {
-							d_printf(D_ERROR, "acquire: NULL deref trying to move to next wavebuffer; something's wrong!");
+							d_printf(D_ERROR, "acquire: NULL deref trying to move to next wavebuffer; something's wrong! (%d acq made, %d requested)", \
+									g_acq_state.num_acq_made, g_acq_state.num_acq_request);
+							acq_debug_dump();
 						}
 					}
 				}
@@ -287,7 +296,81 @@ void _acq_irq_rx_handler(void *callback)
 		}
 	}
 
-	// d_printf(D_INFO, "irq_end (%d)", g_acq_state.sub_state);
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x22200000);
+
+	//d_printf(D_INFO, "irq_end (%d)", g_acq_state.sub_state);
+}
+
+/*
+ * Interrupt handler for the FIFO Stall condition.
+ *
+ * In some cases, the state machine can stall because the FIFO overflowed during a
+ * trigger event.  If this should occur, the state machine will be reset to recover,
+ * and the current acquisition will be reset and restarted (discarding the last waveform.)
+ *
+ * This interrupt generally only fires on very fast acquisitions where the interrupt
+ * storm does not get correctly managed.  There is probably a better way to solve this
+ * problem...
+ *
+ * @param	Argument passed from SCUGIC.  Not used.
+ */
+void _acq_irq_fifo_gen_rst(void *none)
+{
+	volatile uint32_t stat_a, stat_b;
+	int i;
+
+	//d_printf(D_ERROR, "acquire: FIFO stall, recovering");
+
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x55500000);
+
+	if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_RG_FIFO_STALL)) {
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN);
+		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
+
+		// Wait until both FIFO level readouts report 0x0000
+		while(((fabcfg_read_no_dsb(FAB_CFG_ACQ_STATUS_A) & ACQ_STATUS_A_FIFO_MASK) != 0) && \
+			  ((fabcfg_read_no_dsb(FAB_CFG_ACQ_STATUS_B) & ACQ_STATUS_B_FIFO_MASK) != 0)) ;
+
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
+
+		// Reset the current acquisition and try again.  Set a tracking flag for diagnostics/debug.
+		g_acq_state.acq_current->flags |= ACQBUF_FLAG_NOTE_FIFOSTALL;
+		g_acq_state.acq_current->trigger_at = 0;
+		g_acq_state.state = ACQSTATE_WAIT_TRIG; // TODO: maybe need another state here
+		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL; // TODO: maybe need another state here
+
+		XAxiDma_Reset(&g_acq_state.dma);
+		while(!XAxiDma_ResetIsDone(&g_acq_state.dma));
+		XAxiDma_IntrEnable(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+
+		if(_acq_core_dma_start(g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz) != ACQRES_OK) {
+			d_printf(D_ERROR, "acquire: FIFO stall not recovered");
+			return;
+		}
+
+		stat_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
+		stat_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
+
+		// Start on 'A' mux: pre-trigger
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
+		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
+
+		//d_printf(D_ERROR, "acquire: FIFO stall recovery (0x%08x, 0x%08x)", stat_a, stat_b);
+
+		//stat_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
+		//stat_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
+
+		//d_printf(D_ERROR, "acquire: FIFO stall recovery (0x%08x, 0x%08x)", stat_a, stat_b);
+		//acq_debug_dump();
+		g_acq_state.stats.num_fifo_stall_total++;
+	} else {
+		d_printf(D_ERROR, "acquire: FIFO stall interrupt without FIFO stall signal!");
+	}
+
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x66600000);
 }
 
 /*
@@ -295,10 +378,19 @@ void _acq_irq_rx_handler(void *callback)
  */
 void _acq_irq_error_dma()
 {
+	//d_printf(D_ERROR, "acquire: DMA DataMover error");
+
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x33300000);
+
 	g_acq_state.stats.num_err_total++;
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.sub_state = ACQSUBST_NONE;
 	XAxiDma_Reset(&g_acq_state.dma);
+
+	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
+	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x44400000);
+
 	return;
 }
 
@@ -315,17 +407,14 @@ void _acq_reset_PL_fifo()
 	 * machine is in the correct state
 	 */
 	fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
-	//emio_fast_write(ACQ_EMIO_FIFO_RESET, 1);
 
 	for(i = 0; i < 20; i++) {
 		asm __volatile__("nop");
 	}
 
 	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
-	//emio_fast_write(ACQ_EMIO_FIFO_RESET, 0);
 
 	// Test the FIFO full signal; wait for it to deassert before handing control back over
-	//while(XGpioPs_ReadPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN)) ;  // fabcfg_read(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET);
 	while(fabcfg_test(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET)) ;
 }
 
@@ -365,6 +454,26 @@ void _acq_wait_for_ndone()
 }
 
 /*
+ * Core acquisition DMA setup.  Sets up DMA transfer only.
+ *
+ * @return	ACQRES_DMA_FAIL if DMA task could not be started;
+ * 			ACQRES_OK if DMA task started successfully.
+ */
+int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
+{
+	int error;
+
+	error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)buff_ptr, buff_sz, XAXIDMA_DEVICE_TO_DMA);
+
+	if(error != XST_SUCCESS) {
+		d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
+		return ACQRES_DMA_FAIL;
+	}
+
+	return ACQRES_OK;
+}
+
+/*
  * Initialise the acquisitions engine.  Sets up default values in the structs.
  */
 void acq_init()
@@ -396,11 +505,11 @@ void acq_init()
 	d_printf(D_INFO, "acquire: DMA reset OK");
 
 	/*
-	 * Setup the SCUGIC interrupt controller.  Fail terribly if this can't be done.
+	 * Setup the SCUGIC interrupt controller for the DMA transfer.
 	 */
-	XScuGic_SetPriorityTriggerType(&g_hal.xscu_gic, ACQ_DMA_IRQ_RX, ACQ_DMA_IRQ_RX_PRIORITY, ACQ_DMA_IRQ_RX_TRIGGER);
+	XScuGic_SetPriorityTriggerType(&g_hal.xscu_gic, ACQ_DMA_RX_IRQ, ACQ_DMA_RX_IRQ_PRIO, ACQ_DMA_RX_IRQ_TRIG);
 
-	error = XScuGic_Connect(&g_hal.xscu_gic, ACQ_DMA_IRQ_RX, \
+	error = XScuGic_Connect(&g_hal.xscu_gic, ACQ_DMA_RX_IRQ, \
 				(Xil_InterruptHandler)_acq_irq_rx_handler, XAxiDma_GetRxRing(&g_acq_state.dma));
 
 	if(error != XST_SUCCESS) {
@@ -408,61 +517,30 @@ void acq_init()
 		exit(-1);
 	}
 
-	XScuGic_Enable(&g_hal.xscu_gic, ACQ_DMA_IRQ_RX);
+	d_printf(D_INFO, "acquire: SCUGIC connected for DMA IRQ");
 
+	/*
+	 * Setup the SCUGIC interrupt controller for the FIFO stall interrupt.
+	 */
+	XScuGic_SetPriorityTriggerType(&g_hal.xscu_gic, ACQ_FIFO_STALL_IRQ, ACQ_FIFO_STALL_IRQ_PRIO, \
+			ACQ_FIFO_STALL_IRQ_TRIG);
+
+	error = XScuGic_Connect(&g_hal.xscu_gic, ACQ_FIFO_STALL_IRQ, \
+				(Xil_InterruptHandler)_acq_irq_fifo_gen_rst, NULL);
+
+	if(error != XST_SUCCESS) {
+		d_printf(D_ERROR, "acquire: fatal: unable to initialise FIFO stall IRQ! (error=%d)", error);
+		exit(-1);
+	}
+
+	d_printf(D_INFO, "acquire: SCUGIC connected for FIFO stall IRQ");
+
+	/*
+	 * Enable the SCUGIC.
+	 */
+	XScuGic_Enable(&g_hal.xscu_gic, ACQ_DMA_RX_IRQ);
+	XScuGic_Enable(&g_hal.xscu_gic, ACQ_FIFO_STALL_IRQ);
 	d_printf(D_INFO, "acquire: SCUGIC configured");
-
-	/*
-	 * Setup the required EMIOs between the PS and PL.
-	 *
-	 *   - ACQ_EMIO_RUN:			Signal to PL to indicate acquisition should run
-	 *   - ACQ_EMIO_ABORT:			Signal to PL to stop acquisition (send TLAST)
-	 *   - ACQ_EMIO_DONE:			Signal to PS to indicate acquisition is done (TLAST sent)
-	 *   - ACQ_EMIO_TRIG_MASK:		Signal to PL to ignore trigger and only generate TLAST after #sample count is reached
-	 *   - ACQ_EMIO_FIFO_RESET:		Signal to PL to reset FIFO contents
-	 *   - ACQ_EMIO_HAVE_TRIG:		Signal to PS to indicate a trigger was received and this was cause of TLAST generation
-	 *   - ACQ_EMIO_TRIG_RESET:		Signal to PL to reset and rearm trigger
-	 *   - ACQ_EMIO_DEPTH_MUX:		Signal to PL to indicate which acq. counter to use ('A' = 0, 'B' = 1)
-	 *   - ACQ_EMIO_AXI_RUN:		Signal to PL that is AND'ed to create read_en for mux (from AXI TREADY and !empty);
-	 *   							this is useful to pause AXI data generation until all parameters are configured.
-	 *   - ACQ_EMIO_ADC_VALID:		Signal to PL, currently ignored, that will control write_en of FIFO, pausing data
-	 *   							reception into FIFO until acquisition is ready (e.g. if ADC not yet initialised.)
-	 *   - ACQ_EMIO_FIFO_OVERRUN:	Signal to PS to indicate that acquisition has overrun the FIFO and a FIFO reset is
-	 *   							required.
-	 */
-	/*
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 1);
-	XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, ACQ_EMIO_ADC_VALID, 1);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_ADC_VALID, 1);
-
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_HAVE_TRIG, 0);
-	XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_OVERRUN, 0);
-
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_RUN, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DONE, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_MASK, 1);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_FIFO_RESET, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_TRIG_RESET, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_DEPTH_MUX, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_AXI_RUN, 0);
-	XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ADC_VALID, 0);
-	 */
-
-	d_printf(D_INFO, "acquire: engine initialised");
 }
 
 /*
@@ -823,7 +901,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
  * 			ACQRES_NOT_STOPPED if acquisition is currently running (must stop before starting);
  * 			ACQRES_NOT_IMPLEMENTED if the mode is not presently supported;
  * 			ACQRES_DMA_FAIL if DMA task could not be started;
- * 			ACQRES_SUCCESS if stop signal sent.
+ * 			ACQRES_OK if acquisition task started successfully.
  */
 int acq_start()
 {
@@ -864,7 +942,6 @@ int acq_start()
 		g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
 
 		// Start on 'A' mux: pre-trigger
-		//emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
 		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
 
 		// Empty the FIFO
@@ -873,15 +950,8 @@ int acq_start()
 		// Reset the trigger before starting acquisition.
 		_acq_reset_trigger();
 
-		// Send the EMIO signal to start the acquisition, with trigger masked.  Then we wait for an IRQ.
-
 		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT);
 		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
-
-		//emio_fast_write(ACQ_EMIO_ABORT, 0);
-		//emio_fast_write(ACQ_EMIO_RUN, 1);
-		//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
-		//emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
 
 		return ACQRES_OK;
 	} else {

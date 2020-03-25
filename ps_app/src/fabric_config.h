@@ -93,6 +93,23 @@ static inline uint32_t fabcfg_read(uint32_t reg)
 }
 
 /*
+ * Read data from fabric at a specified address with sync barrier.
+ *
+ * @param	reg		Register index
+ *
+ * @return	data	Data returned
+ */
+static inline uint32_t fabcfg_read_no_dsb(uint32_t reg)
+{
+	uint32_t res;
+
+	reg &= FAB_CFG_ADDR_MASK;
+	res = _FAB_CFG_ACCESS(reg);
+
+	return res;
+}
+
+/*
  * Test data from fabric at a specified address.
  *
  * @param	reg		Register index
@@ -105,8 +122,6 @@ static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
 	uint32_t res;
 
 	reg &= FAB_CFG_ADDR_MASK;
-
-	// Wrapped in dsb to ensure synchronous read
 	dsb();
 	res = _FAB_CFG_ACCESS(reg);
 	dsb();
@@ -123,8 +138,6 @@ static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
 static inline void fabcfg_write(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-
-	// Wrapped in dsb to ensure synchronous write
 	dsb();
 	_FAB_CFG_ACCESS(reg) = data;
 	dsb();
@@ -139,8 +152,6 @@ static inline void fabcfg_write(uint32_t reg, uint32_t data)
 static inline void fabcfg_set(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-
-	// Wrapped in dsb to ensure synchronous write
 	dsb();
 	_FAB_CFG_ACCESS(reg) |= data;
 	dsb();
@@ -155,8 +166,6 @@ static inline void fabcfg_set(uint32_t reg, uint32_t data)
 static inline void fabcfg_clear(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-
-	// Wrapped in dsb to ensure synchronous write
 	dsb();
 	_FAB_CFG_ACCESS(reg) &= ~data;
 	dsb();
@@ -171,8 +180,6 @@ static inline void fabcfg_clear(uint32_t reg, uint32_t data)
 static inline void fabcfg_toggle(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-
-	// Wrapped in dsb to ensure synchronous write
 	dsb();
 	_FAB_CFG_ACCESS(reg) ^= data;
 	dsb();

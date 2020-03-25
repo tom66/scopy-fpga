@@ -205,7 +205,6 @@ proc create_root_design { parentCell } {
   set EMIO_O [ create_bd_port -dir O -from 63 -to 0 EMIO_O ]
   set FCLK_CLK0 [ create_bd_port -dir O -type clk FCLK_CLK0 ]
   set GPIO_TEST [ create_bd_port -dir O -from 1 -to 0 GPIO_TEST ]
-  set PL_IRQ [ create_bd_port -dir I -from 3 -to 0 PL_IRQ ]
   set TRIGGER_OUT [ create_bd_port -dir O TRIGGER_OUT ]
 
   # Create instance: FabCfg_NextGen_0, and set properties
@@ -329,10 +328,11 @@ proc create_root_design { parentCell } {
   set xlconcat_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_1 ]
   set_property -dict [ list \
    CONFIG.IN0_WIDTH {1} \
-   CONFIG.IN1_WIDTH {4} \
+   CONFIG.IN1_WIDTH {1} \
    CONFIG.IN2_WIDTH {1} \
    CONFIG.IN3_WIDTH {4} \
-   CONFIG.NUM_PORTS {3} \
+   CONFIG.NUM_PORTS {2} \
+   CONFIG.dout_width {2} \
  ] $xlconcat_1
 
   # Create instance: xlconstant_0, and set properties
@@ -799,8 +799,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net FabCfg_NextGen_0_R_gpio_test [get_bd_ports GPIO_TEST] [get_bd_pins FabCfg_NextGen_0/R_gpio_test]
   connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
   connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
-  connect_bd_net -net PL_IRQ_1 [get_bd_ports PL_IRQ] [get_bd_pins xlconcat_1/In1]
-  connect_bd_net -net adc_axi_streamer_acq_reset_irq_gen [get_bd_pins adc_axi_streamer/acq_reset_irq_gen] [get_bd_pins system_ila_0/probe11] [get_bd_pins xlconcat_1/In2]
+  connect_bd_net -net adc_axi_streamer_acq_reset_irq_gen [get_bd_pins adc_axi_streamer/acq_reset_irq_gen] [get_bd_pins system_ila_0/probe11] [get_bd_pins xlconcat_1/In1]
   connect_bd_net -net adc_axi_streamer_acq_status_a [get_bd_pins FabCfg_NextGen_0/R_acq_status_a] [get_bd_pins adc_axi_streamer/acq_status_a] [get_bd_pins system_ila_0/probe32]
   connect_bd_net -net adc_axi_streamer_acq_status_b [get_bd_pins FabCfg_NextGen_0/R_acq_status_b] [get_bd_pins adc_axi_streamer/acq_status_b] [get_bd_pins system_ila_0/probe33]
   connect_bd_net -net adc_axi_streamer_dbg_acq_abort [get_bd_pins adc_axi_streamer/dbg_acq_abort] [get_bd_pins system_ila_0/probe26]

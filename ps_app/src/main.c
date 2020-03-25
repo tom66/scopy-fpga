@@ -30,6 +30,9 @@ int main()
 	hal_init();
 	acq_init();
 
+	d_printf(D_INFO, "Press key to start...");
+	d_waitkey();
+
 	acq_hacks_init();
 	acq_hacks_run();
 

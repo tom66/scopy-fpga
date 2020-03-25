@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Sun Mar 22 09:46:39 2020
+| Date         : Sun Mar 22 22:16:45 2020
 | Host         : TomsDesktop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,13 +30,13 @@ Table of Contents
 +----------------------------+-------+-------+-----------+-------+
 |          Site Type         |  Used | Fixed | Available | Util% |
 +----------------------------+-------+-------+-----------+-------+
-| Slice LUTs*                |  9207 |     0 |     40600 | 22.68 |
-|   LUT as Logic             |  8118 |     0 |     40600 | 20.00 |
+| Slice LUTs*                |  9479 |     0 |     40600 | 23.35 |
+|   LUT as Logic             |  8390 |     0 |     40600 | 20.67 |
 |   LUT as Memory            |  1089 |     0 |     17400 |  6.26 |
 |     LUT as Distributed RAM |    18 |     0 |           |       |
 |     LUT as Shift Register  |  1071 |     0 |           |       |
-| Slice Registers            | 11344 |     0 |     81200 | 13.97 |
-|   Register as Flip Flop    | 11344 |     0 |     81200 | 13.97 |
+| Slice Registers            | 11558 |     0 |     81200 | 14.23 |
+|   Register as Flip Flop    | 11558 |     0 |     81200 | 14.23 |
 |   Register as Latch        |     0 |     0 |     81200 |  0.00 |
 | F7 Muxes                   |   399 |     0 |     26600 |  1.50 |
 | F8 Muxes                   |    47 |     0 |     13300 |  0.35 |
@@ -59,7 +59,7 @@ Table of Contents
 | 33    |          Yes |           - |          Set |
 | 69    |          Yes |           - |        Reset |
 | 250   |          Yes |         Set |            - |
-| 10992 |          Yes |       Reset |            - |
+| 11206 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -155,16 +155,16 @@ Table of Contents
 +--------------+-------+----------------------+
 |   Ref Name   |  Used |  Functional Category |
 +--------------+-------+----------------------+
-| FDRE         | 10992 |         Flop & Latch |
-| LUT6         |  2890 |                  LUT |
-| LUT3         |  1783 |                  LUT |
-| LUT2         |  1611 |                  LUT |
-| LUT4         |  1231 |                  LUT |
-| LUT5         |  1176 |                  LUT |
+| FDRE         | 11206 |         Flop & Latch |
+| LUT6         |  2940 |                  LUT |
+| LUT3         |  1817 |                  LUT |
+| LUT2         |  1677 |                  LUT |
+| LUT5         |  1305 |                  LUT |
+| LUT4         |  1235 |                  LUT |
 | SRL16E       |   966 |   Distributed Memory |
 | LUT1         |   514 |                  LUT |
+| CARRY4       |   438 |           CarryLogic |
 | SRLC32E      |   427 |   Distributed Memory |
-| CARRY4       |   422 |           CarryLogic |
 | MUXF7        |   399 |                MuxFx |
 | FDSE         |   250 |         Flop & Latch |
 | BIBUF        |   130 |                   IO |

@@ -60,19 +60,22 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
+  set_param tcl.collectionResultDisplayLimit 0
   set_param general.maxThreads 8
   set_param chipscope.maxJobs 4
-  create_project -in_memory -part xc7z014sclg400-1
-  set_property design_mode GateLvl [current_fileset]
-  set_param project.singleFileAddWarning.threshold 0
+  set_param xicom.use_bs_reader 1
+  reset_param project.defaultXPMLibraries 
+  open_checkpoint C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/impl_3/main.dcp
   set_property webtalk.parent_dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/wt [current_project]
   set_property parent.project_path C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.xpr [current_project]
   set_property ip_repo_paths {
+  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_trigger_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_receiver_core_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/simple_reset_controller_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/FabCfg_NextGen_1.0
@@ -84,16 +87,6 @@ set rc [catch {
   set_property ip_output_repo C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
-  add_files -quiet C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.runs/synth_3/main.dcp
-  set_msg_config -source 4 -id {BD 41-1661} -limit 0
-  set_param project.isImplRun true
-  add_files C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/sources_1/bd/design_1/design_1.bd
-  set_param project.isImplRun false
-  read_xdc C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/constrs_2/new/constraints.xdc
-  set_param project.isImplRun true
-  link_design -top main -part xc7z014sclg400-1
-  set_param project.isImplRun false
-  write_hwdef -force -file main.hwdef
   close_msg_db -file init_design.pb
 } RESULT]
 if {$rc} {
@@ -183,34 +176,6 @@ if {$rc} {
   return -code error $RESULT
 } else {
   end_step route_design
-  unset ACTIVE_STEP 
-}
-
-start_step write_bitstream
-set ACTIVE_STEP write_bitstream
-set rc [catch {
-  create_msg_db write_bitstream.pb
-  set src_rc [catch { 
-    puts "source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/logic/bitstream_pre.tcl"
-    source C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/logic/bitstream_pre.tcl
-  } _RESULT] 
-  if {$src_rc} { 
-    send_msg_id runtcl-1 error "$_RESULT"
-    send_msg_id runtcl-2 error "sourcing script C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.srcs/utils_1/imports/logic/bitstream_pre.tcl failed"
-    return -code error
-  }
-  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
-  catch { write_mem_info -force main.mmi }
-  write_bitstream -force main.bit 
-  catch {write_debug_probes -quiet -force main}
-  catch {file copy -force main.ltx debug_nets.ltx}
-  close_msg_db -file write_bitstream.pb
-} RESULT]
-if {$rc} {
-  step_failed write_bitstream
-  return -code error $RESULT
-} else {
-  end_step write_bitstream
   unset ACTIVE_STEP 
 }
 

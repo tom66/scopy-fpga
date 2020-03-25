@@ -20,13 +20,13 @@ extern uint8_t norway_512x512_grey[];
 #define BUFFER_SIZE		(N_WAVES * N_WAVESIZE)
 #define N_CSI_LINES		(BUFFER_SIZE / LINE_SIZE)
 
-#define PRETTY_DEBUG
+//#define PRETTY_DEBUG
 
 /*
  * Acquistion hacks.  Ties together the acquisition engine and CSI transmitter
  * for some initial testing.  Not intended for final project.
  */
-uint8_t buffer[BUFFER_SIZE] __attribute__((aligned(8)));
+uint8_t buffer[BUFFER_SIZE] __attribute__((aligned(32)));
 
 void acq_hacks_init()
 {
@@ -37,6 +37,7 @@ void acq_hacks_run()
 	int res, i, j, n_waves, line = 0, wave_size_bytes, wave_size_counts;
 	int test_tx = 100, bytes;
 	int iter = 0;
+	int acqd_waves = 0;
 	float microsec, last_frame_time = 1e6;
 
 	wave_size_bytes = N_WAVESIZE;
@@ -154,8 +155,12 @@ void acq_hacks_run()
 		d_stop_timing(2);
 		microsec += d_read_timing_us(2);
 
+		acqd_waves += g_acq_state.num_acq_made;
+
 		//d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
-		d_printf(D_INFO, "%.4f MB/s (%.4f fps)", bytes / microsec, 1e6 / last_frame_time);
+		d_printf(D_INFO, "%.4f MB/s (%.4f fps, %d stalls, %d waves, %.4f%% stall rate)", \
+				bytes / microsec, 1e6 / last_frame_time, (uint32_t)g_acq_state.stats.num_fifo_stall_total, \
+				acqd_waves, ((float)(g_acq_state.stats.num_fifo_stall_total) / acqd_waves) * 100);
 
 		//bogo_delay(10000);
 

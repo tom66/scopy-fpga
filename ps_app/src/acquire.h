@@ -90,14 +90,22 @@
 #define ACQ_STATUS_A_DONE			0x00000001
 #define ACQ_STATUS_A_HAVE_TRIG		0x00000002
 #define ACQ_STATUS_A_DATA_LOSS		0x00000004
+#define ACQ_STATUS_A_IDLYPLL_LOCK	0x00000008
+#define ACQ_STATUS_A_RG_FIFO_STALL	0x00000010
 
 #define ACQ_STATUS_B_DBG_AXI_RDY	0x00000001
 #define ACQ_STATUS_B_DBG_INT_RDY	0x00000002
 #define ACQ_STATUS_B_DBG_TRIG_PF	0x00000004						// Trigger post-FIFO
 
+#define ACQ_STATUS_A_FIFO_MASK		0xffff0000
+#define ACQ_STATUS_A_FIFO_SHIFT		16
+#define ACQ_STATUS_B_FIFO_MASK		0xffff0000
+#define ACQ_STATUS_B_FIFO_SHIFT		16
+
 // Flags for acq_buffer_t
 #define ACQBUF_FLAG_PKT_DONE		0x0001							// Packet is done
 #define ACQBUF_FLAG_PKT_OVERRUN		0x0002							// Packet contains bad data due to FIFO overrun and will be discarded
+#define ACQBUF_FLAG_NOTE_FIFOSTALL	0x0004							// "Note" flag to indicate that this packet was recovered from a FIFO stall condition
 #define ACQBUF_FLAG_ALLOC			0x0080							// Marker flag set when memory allocated for this buffer
 
 // Demux register on PL.  6-bits wide  [to be implemented]
@@ -116,9 +124,13 @@
 #define ACQ_TOTAL_MEMORY_AVAIL		(192 * 1024 * 1024)				// Configured total memory limit for general purpose acquisition.
 
 #define ACQ_DMA_ENGINE				XPAR_ADC_DMA_DEVICE_ID
-#define ACQ_DMA_IRQ_RX				XPAR_FABRIC_ADC_DMA_S2MM_INTROUT_INTR
-#define ACQ_DMA_IRQ_RX_PRIORITY		0xA0							// Low priority: TODO make this high priority
-#define ACQ_DMA_IRQ_RX_TRIGGER		0x03							// Rising edge trigger
+#define ACQ_DMA_RX_IRQ				XPAR_FABRIC_ADC_DMA_S2MM_INTROUT_INTR
+#define ACQ_DMA_RX_IRQ_PRIO			0x20							// High priority
+#define ACQ_DMA_RX_IRQ_TRIG			0x03							// Rising edge trigger
+
+#define ACQ_FIFO_STALL_IRQ			XPS_FPGA1_INT_ID
+#define ACQ_FIFO_STALL_IRQ_PRIO		0x40							// Low priority
+#define ACQ_FIFO_STALL_IRQ_TRIG		0x03							// ???
 
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
@@ -134,6 +146,7 @@ struct acq_stat_t {
 	uint64_t num_pre_fill_total;		// Total number of pre-trigger fill acq. completed
 	uint64_t num_post_total;			// Total number of post-trigger acq. completed
 	uint64_t num_err_total;				// Total number of errors during transfer
+	uint64_t num_fifo_stall_total;		// Total number of FIFO stall events handled
 	uint64_t num_samples;				// Total number of samples acquired into memory (excluding pre-trig fill)
 	uint64_t num_samples_raw;			// Total number of samples acquired into memory (including pre-trig fill); not entirely correct!
 	uint64_t num_alloc_err_total;		// Total number of errors while allocating buffers
@@ -212,9 +225,11 @@ extern struct acq_state_t g_acq_state;
 
 void _acq_irq_error_dma();
 void _acq_irq_rx_handler(void *cb);
+void _acq_irq_fifo_gen_rst(void *none);
 void _acq_reset_PL_fifo();
 void _acq_reset_trigger();
 void _acq_wait_for_ndone();
+int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz);
 void acq_init();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();

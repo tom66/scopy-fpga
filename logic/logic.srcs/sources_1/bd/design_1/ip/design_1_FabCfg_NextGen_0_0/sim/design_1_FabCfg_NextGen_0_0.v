@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:FabCfg_NextGen:1.0
-// IP Revision: 13
+// IP Revision: 14
 
 `timescale 1ns/1ps
 
@@ -61,9 +61,15 @@ module design_1_FabCfg_NextGen_0_0 (
   R_acq_ctrl_a,
   R_acq_status_a,
   R_acq_status_b,
-  R_trig_a_high_low_packed,
-  R_trig_b_high_low_packed,
-  R_trig_config_0,
+  R_trig_level_0,
+  R_trig_level_1,
+  R_trig_level_2,
+  R_trig_level_3,
+  R_trig_level_4,
+  R_trig_level_5,
+  R_trig_level_6,
+  R_trig_level_7,
+  R_trig_config_a,
   R_csi_line_count,
   R_csi_line_byte_count,
   R_csi_data_type,
@@ -99,9 +105,15 @@ input wire [31 : 0] R_acq_trigger_ptr;
 output wire [31 : 0] R_acq_ctrl_a;
 input wire [31 : 0] R_acq_status_a;
 input wire [31 : 0] R_acq_status_b;
-output wire [31 : 0] R_trig_a_high_low_packed;
-output wire [31 : 0] R_trig_b_high_low_packed;
-output wire [31 : 0] R_trig_config_0;
+output wire [31 : 0] R_trig_level_0;
+output wire [31 : 0] R_trig_level_1;
+output wire [31 : 0] R_trig_level_2;
+output wire [31 : 0] R_trig_level_3;
+output wire [31 : 0] R_trig_level_4;
+output wire [31 : 0] R_trig_level_5;
+output wire [31 : 0] R_trig_level_6;
+output wire [31 : 0] R_trig_level_7;
+output wire [31 : 0] R_trig_config_a;
 output wire [15 : 0] R_csi_line_count;
 output wire [20 : 0] R_csi_line_byte_count;
 output wire [7 : 0] R_csi_data_type;
@@ -165,9 +177,15 @@ input wire s00_axi_rready;
     .R_acq_ctrl_a(R_acq_ctrl_a),
     .R_acq_status_a(R_acq_status_a),
     .R_acq_status_b(R_acq_status_b),
-    .R_trig_a_high_low_packed(R_trig_a_high_low_packed),
-    .R_trig_b_high_low_packed(R_trig_b_high_low_packed),
-    .R_trig_config_0(R_trig_config_0),
+    .R_trig_level_0(R_trig_level_0),
+    .R_trig_level_1(R_trig_level_1),
+    .R_trig_level_2(R_trig_level_2),
+    .R_trig_level_3(R_trig_level_3),
+    .R_trig_level_4(R_trig_level_4),
+    .R_trig_level_5(R_trig_level_5),
+    .R_trig_level_6(R_trig_level_6),
+    .R_trig_level_7(R_trig_level_7),
+    .R_trig_config_a(R_trig_config_a),
     .R_csi_line_count(R_csi_line_count),
     .R_csi_line_byte_count(R_csi_line_byte_count),
     .R_csi_data_type(R_csi_data_type),
