@@ -51,6 +51,23 @@
 #define FAB_CFG_ACQ_STATUS_A			0x0058
 #define FAB_CFG_ACQ_STATUS_B			0x005c
 
+#define FAB_CFG_TRIG_LEVEL0				0x0090
+#define FAB_CFG_TRIG_LEVEL1				0x0094
+#define FAB_CFG_TRIG_LEVEL2				0x0098
+#define FAB_CFG_TRIG_LEVEL3				0x009c
+#define FAB_CFG_TRIG_LEVEL4				0x00a0
+#define FAB_CFG_TRIG_LEVEL5				0x00a4
+#define FAB_CFG_TRIG_LEVEL6				0x00a8
+#define FAB_CFG_TRIG_LEVEL7				0x00ac
+#define FAB_CFG_TRIG_LEVEL_A_BASE		FAB_CFG_TRIG_LEVEL0
+#define FAB_CFG_TRIG_LEVEL_B_BASE		FAB_CFG_TRIG_LEVEL4
+#define FAB_CFG_TRIG_CONFIG_A			0x00b0
+#define FAB_CFG_TRIG_STATE_A			0x00b8
+#define FAB_CFG_TRIG_HOLDOFF			0x00c0
+#define FAB_CFG_TRIG_AUTO_TIMERS		0x00c4
+#define FAB_CFG_TRIG_DELAY_REG0			0x00c8
+#define FAB_CFG_TRIG_DELAY_REG1			0x00cc
+
 //#define FAB_CFG_GPIO_TEST				0x0050	// Deprecated, to be moved
 #define FAB_CFG_CSI_LINE_COUNT			0x0100
 #define FAB_CFG_CSI_LINE_BYTE_COUNT		0x0104
@@ -67,9 +84,7 @@
 #define FAB_CFG_EMIO_DONE				(54 + 4)
 
 void fabcfg_init();
-void fabcfg_commit();
-void fabcfg_fastcfg_start();
-void fabcfg_fastcfg_wait();
+void fabcfg_dump_state();
 
 /*
  * Read data from fabric at a specified address.

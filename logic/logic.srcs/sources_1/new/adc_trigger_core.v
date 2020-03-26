@@ -2,9 +2,9 @@
 
 module adc_trigger_core (
     // Four ADC words.  Normally these come from a twin pair of ADC LVDS channels 
-	// (ex: LVDS1A-LVDS1B, LVDS2A-LVDS2B) which is guaranteed to be routed to data 
-	// from one channel.  But it might be a time-multiplexed slice for that channel.  
-	// Also, it could be routed from a filter engine. 
+	// (ex: LVDS1A-LVDS1B, LVDS2A-LVDS2B) each of which is guaranteed to be routed 
+	// to data from one channel.  But it might be a time-multiplexed slice for that
+	// channel. Or, it could be routed from a filter engine. 
 	// 
 	// A pair of ADC inputs is used to implement this block using a DSP48E1 in future.
     input [7:0] adc_1a,
@@ -32,7 +32,6 @@ module adc_trigger_core (
     // Enable input, active high.  Inhibiting this disables the whole block.
     input comp_ena_1,
     input comp_ena_2,
-    input g_comp_ena,
     
     // Output signals:  Comparator signal (pulses guaranteed at least 3 ADCCLK wide), 
 	// and channel indicators  for priority encoder.
@@ -42,6 +41,16 @@ module adc_trigger_core (
     output comp_ch_1b,
     output comp_ch_2a,
     output comp_ch_2b,
+    
+	// Comparator debug outputs - not all used
+	output wire dbg_adc_1a_hi_x,
+	output wire dbg_adc_1a_lo_x,
+	output wire dbg_adc_1b_hi_x,
+	output wire dbg_adc_1b_lo_x,
+	output wire dbg_adc_2a_hi_x,
+	output wire dbg_adc_2a_lo_x,
+	output wire dbg_adc_2b_hi_x,
+	output wire dbg_adc_2b_lo_x,
 	
 	// Debug signals
 	output [1:0] dbg_comp_state_1,
@@ -65,6 +74,15 @@ wire adc_2a_hi = adc_2a > lvl_hi_local_2;
 wire adc_2a_lo = adc_2a < lvl_lo_local_2;
 wire adc_2b_hi = adc_2b > lvl_hi_local_2;
 wire adc_2b_lo = adc_2b < lvl_lo_local_2;
+
+assign dbg_adc_1a_hi_x = adc_1a_hi;
+assign dbg_adc_1a_lo_x = adc_1a_lo;
+assign dbg_adc_1b_hi_x = adc_1b_hi;
+assign dbg_adc_1b_lo_x = adc_1b_lo;
+assign dbg_adc_2a_hi_x = adc_2a_hi;
+assign dbg_adc_2a_lo_x = adc_2a_lo;
+assign dbg_adc_2b_hi_x = adc_2b_hi;
+assign dbg_adc_2b_lo_x = adc_2b_lo;
 
 /*
  * Comparators 1A/1B logic block.

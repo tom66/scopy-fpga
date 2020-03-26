@@ -89,7 +89,27 @@ module design_1_system_ila_0_0 (
   probe31,
   probe32,
   probe33,
-  probe34
+  probe34,
+  probe35,
+  probe36,
+  probe37,
+  probe38,
+  probe39,
+  probe40,
+  probe41,
+  probe42,
+  probe43,
+  probe44,
+  probe45,
+  probe46,
+  probe47,
+  probe48,
+  probe49,
+  probe50,
+  probe51,
+  probe52,
+  probe53,
+  probe54
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
@@ -113,7 +133,7 @@ input wire [63 : 0] probe14;
 input wire [0 : 0] probe15;
 input wire [0 : 0] probe16;
 input wire [0 : 0] probe17;
-input wire [63 : 0] probe18;
+input wire [0 : 0] probe18;
 input wire [0 : 0] probe19;
 input wire [0 : 0] probe20;
 input wire [0 : 0] probe21;
@@ -130,6 +150,26 @@ input wire [0 : 0] probe31;
 input wire [31 : 0] probe32;
 input wire [31 : 0] probe33;
 input wire [31 : 0] probe34;
+input wire [3 : 0] probe35;
+input wire [1 : 0] probe36;
+input wire [1 : 0] probe37;
+input wire [1 : 0] probe38;
+input wire [1 : 0] probe39;
+input wire [1 : 0] probe40;
+input wire [1 : 0] probe41;
+input wire [1 : 0] probe42;
+input wire [1 : 0] probe43;
+input wire [31 : 0] probe44;
+input wire [0 : 0] probe45;
+input wire [0 : 0] probe46;
+input wire [0 : 0] probe47;
+input wire [0 : 0] probe48;
+input wire [0 : 0] probe49;
+input wire [0 : 0] probe50;
+input wire [0 : 0] probe51;
+input wire [0 : 0] probe52;
+input wire [0 : 0] probe53;
+input wire [0 : 0] probe54;
 
   bd_f60c inst (
     .clk(clk),
@@ -167,6 +207,26 @@ input wire [31 : 0] probe34;
     .probe31(probe31),
     .probe32(probe32),
     .probe33(probe33),
-    .probe34(probe34)
+    .probe34(probe34),
+    .probe35(probe35),
+    .probe36(probe36),
+    .probe37(probe37),
+    .probe38(probe38),
+    .probe39(probe39),
+    .probe40(probe40),
+    .probe41(probe41),
+    .probe42(probe42),
+    .probe43(probe43),
+    .probe44(probe44),
+    .probe45(probe45),
+    .probe46(probe46),
+    .probe47(probe47),
+    .probe48(probe48),
+    .probe49(probe49),
+    .probe50(probe50),
+    .probe51(probe51),
+    .probe52(probe52),
+    .probe53(probe53),
+    .probe54(probe54)
   );
 endmodule

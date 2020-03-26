@@ -15,7 +15,8 @@ C_SRCS += \
 ../src/hal.c \
 ../src/main.c \
 ../src/mipi_csi_hacks.c \
-../src/platform.c 
+../src/platform.c \
+../src/trigger.c 
 
 OBJS += \
 ./src/acq_hacks.o \
@@ -26,7 +27,8 @@ OBJS += \
 ./src/hal.o \
 ./src/main.o \
 ./src/mipi_csi_hacks.o \
-./src/platform.o 
+./src/platform.o \
+./src/trigger.o 
 
 C_DEPS += \
 ./src/acq_hacks.d \
@@ -37,7 +39,8 @@ C_DEPS += \
 ./src/hal.d \
 ./src/main.d \
 ./src/mipi_csi_hacks.d \
-./src/platform.d 
+./src/platform.d \
+./src/trigger.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

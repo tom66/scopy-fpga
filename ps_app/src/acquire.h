@@ -202,7 +202,7 @@ struct acq_state_t {
 	uint32_t pre_sampct;
 	uint32_t post_sampct;
 
-	// Demux register for PL - debug use only, writing to this has no effect.
+	// Demux configuration - used by trigger engine.
 	uint32_t demux_reg;
 
 	// Debug state: ISR recorded values for PL state

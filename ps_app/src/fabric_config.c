@@ -94,11 +94,19 @@ void fabcfg_init()
 	d_printf(D_INFO, "FabCfg: Bitstream version %d.%02d, code 0x%04x, userid 0x%08x", \
 			(ver_lh & 0xff00) >> 8, ver_lh & 0xff, ver_uh, userid);
 
-	/*
-	 * Dump boot register state for diagnostics.
-	 */
+	// Dump state of FabCfg memory map
+	fabcfg_dump_state();
+}
+
+/*
+ * Dump fabric configuration state.
+ */
+void fabcfg_dump_state()
+{
+	int i;
+
 	d_printf(D_INFO, "");
-	d_printf(D_INFO, "FabCfg: Boot memory map (including unimplemented registers)");
+	d_printf(D_INFO, "FabCfg: Memory map (including unimplemented registers)");
 	d_printf(D_INFO, "                 0          4          8          c");
 
 	for(i = 0; i < 1023; i += 16) {
@@ -108,4 +116,3 @@ void fabcfg_init()
 
 	d_printf(D_INFO, "");
 }
-

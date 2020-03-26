@@ -70,14 +70,14 @@ always @(posedge adc_data_clk) begin
                         comp_ev_counter <= 0;
                         comp_ch_a <= 1;
                         comp_ch_b <= 0;
-                        comp_sig <= 1;
+                        comp_sig <= ~comp_sig;
                     end else if (adc_b_hi_comp ^ comp_pol) begin
                         comp_state <= COMP_STATE_PULSE_OUT;
                         comp_state_next <= COMP_STATE_LOW_EDGE;
                         comp_ev_counter <= 0;
                         comp_ch_a <= 0;
                         comp_ch_b <= 1;
-                        comp_sig <= 1;
+                        comp_sig <= ~comp_sig;
                     end
                 end
             end
@@ -91,21 +91,21 @@ always @(posedge adc_data_clk) begin
                         comp_ev_counter <= 0;
                         comp_ch_a <= 1;
                         comp_ch_b <= 0;
-                        comp_sig <= 1;
+                        comp_sig <= ~comp_sig;
                     end else if (adc_b_lo_comp ^ comp_pol) begin
                         comp_state <= COMP_STATE_PULSE_OUT;
                         comp_state_next <= COMP_STATE_HIGH_EDGE;
                         comp_ev_counter <= 0;
                         comp_ch_a <= 0;
                         comp_ch_b <= 1;
-                        comp_sig <= 1;
+                        comp_sig <= ~comp_sig;
                     end
                 end
             end
             
             COMP_STATE_PULSE_OUT : begin
                 if (comp_ev_counter == 2) begin
-                    comp_sig <= 0;
+                    //comp_sig <= 0;
                     comp_state <= comp_state_next; 
                 end
                 

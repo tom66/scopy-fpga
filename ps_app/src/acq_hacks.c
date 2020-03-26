@@ -11,6 +11,7 @@
 #include "acquire.h"
 #include "mipi_csi_hacks.h"
 #include "fabric_config.h"
+#include "trigger.h"
 
 extern uint8_t norway_512x512_grey[];
 
@@ -39,6 +40,7 @@ void acq_hacks_run()
 	int iter = 0;
 	int acqd_waves = 0;
 	float microsec, last_frame_time = 1e6;
+	int trig_level = 0x40;
 
 	wave_size_bytes = N_WAVESIZE;
 	wave_size_counts = wave_size_bytes / 8;
@@ -54,6 +56,8 @@ void acq_hacks_run()
 	*/
 
 	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
+
+	trig_init();
 
 #ifdef PRETTY_DEBUG
 	d_printf(D_RAW, "\033[2J");
@@ -86,6 +90,17 @@ void acq_hacks_run()
 			d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);
 			exit(-1);
 		}
+
+		// Setup the trigger
+		trig_level = 0xb0;
+		trig_configure_edge(TRIG_ADCSRC1, trig_level, 0x04, TRIG_EDGE_RISING);
+		/*
+		trig_level += 1;
+
+		if(trig_level > 0xc0) {
+			trig_level = 0x40;
+		}
+		*/
 
 		// Start the acquisition
 		d_start_timing(4);

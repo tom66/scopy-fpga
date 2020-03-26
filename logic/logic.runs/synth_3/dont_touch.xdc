@@ -119,8 +119,6 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 
 # XDC: bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_ooc.xdc
 
-# XDC: bd/design_1/ip/design_1_xbar_6/design_1_xbar_6_ooc.xdc
-
 # XDC: bd/design_1/ip/design_1_csi_gearbox_dma_0_0/src/fifo_generator_csi_gearbox/fifo_generator_csi_gearbox.xdc
 set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==fifo_generator_csi_gearbox || ORIG_REF_NAME==fifo_generator_csi_gearbox} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
 
@@ -133,8 +131,6 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 # XDC: bd/design_1/ip/design_1_axi_dma_1/design_1_axi_dma_1_clocks.xdc
 #dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==design_1_axi_dma_1 || ORIG_REF_NAME==design_1_axi_dma_1} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
 
-# XDC: bd/design_1/ip/design_1_axi_dma_1/design_1_axi_dma_1_ooc.xdc
-
 # XDC: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc
 set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==bd_f60c_ila_lib_0 || ORIG_REF_NAME==bd_f60c_ila_lib_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
 
@@ -144,8 +140,6 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 # XDC: bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/bd_f60c_ila_lib_0_ooc.xdc
 
 # XDC: bd/design_1/ip/design_1_system_ila_0_0/bd_0/bd_f60c_ooc.xdc
-
-# XDC: bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0_ooc.xdc
 
 # XDC: bd/design_1/ip/design_1_clk_wiz_1_0/design_1_clk_wiz_1_0_board.xdc
 set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==design_1_clk_wiz_1_0 || ORIG_REF_NAME==design_1_clk_wiz_1_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
