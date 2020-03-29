@@ -187,6 +187,87 @@ proc validate_PARAM_VALUE.TRIG_EDGE_RISING { PARAM_VALUE.TRIG_EDGE_RISING } {
 	return true
 }
 
+proc update_PARAM_VALUE.TRIG_MODE_AUTO { PARAM_VALUE.TRIG_MODE_AUTO } {
+	# Procedure called to update TRIG_MODE_AUTO when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_MODE_AUTO { PARAM_VALUE.TRIG_MODE_AUTO } {
+	# Procedure called to validate TRIG_MODE_AUTO
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_MODE_NORMAL { PARAM_VALUE.TRIG_MODE_NORMAL } {
+	# Procedure called to update TRIG_MODE_NORMAL when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_MODE_NORMAL { PARAM_VALUE.TRIG_MODE_NORMAL } {
+	# Procedure called to validate TRIG_MODE_NORMAL
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_ARMED_WAITING { PARAM_VALUE.TRIG_STATE_ARMED_WAITING } {
+	# Procedure called to update TRIG_STATE_ARMED_WAITING when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_ARMED_WAITING { PARAM_VALUE.TRIG_STATE_ARMED_WAITING } {
+	# Procedure called to validate TRIG_STATE_ARMED_WAITING
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL { PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL } {
+	# Procedure called to update TRIG_STATE_TRIGD_AUTO_INITIAL when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL { PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL } {
+	# Procedure called to validate TRIG_STATE_TRIGD_AUTO_INITIAL
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT { PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT } {
+	# Procedure called to update TRIG_STATE_TRIGD_AUTO_REPEAT when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT { PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT } {
+	# Procedure called to validate TRIG_STATE_TRIGD_AUTO_REPEAT
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO { PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO } {
+	# Procedure called to update TRIG_STATE_TRIGD_FORCE_AUTO when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO { PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO } {
+	# Procedure called to validate TRIG_STATE_TRIGD_FORCE_AUTO
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF } {
+	# Procedure called to update TRIG_STATE_TRIGD_HOLDOFF when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF } {
+	# Procedure called to validate TRIG_STATE_TRIGD_HOLDOFF
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD } {
+	# Procedure called to update TRIG_STATE_TRIGD_HOLDOFF_LOAD when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD } {
+	# Procedure called to validate TRIG_STATE_TRIGD_HOLDOFF_LOAD
+	return true
+}
+
+proc update_PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM { PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM } {
+	# Procedure called to update TRIG_STATE_WAIT_FOR_ARM when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM { PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM } {
+	# Procedure called to validate TRIG_STATE_WAIT_FOR_ARM
+	return true
+}
+
 proc update_PARAM_VALUE.TRIG_TYPE_ALWAYS { PARAM_VALUE.TRIG_TYPE_ALWAYS } {
 	# Procedure called to update TRIG_TYPE_ALWAYS when any of the dependent parameters in the arguments change
 }
@@ -328,5 +409,50 @@ proc update_MODELPARAM_VALUE.TRCHAN_3B { MODELPARAM_VALUE.TRCHAN_3B PARAM_VALUE.
 proc update_MODELPARAM_VALUE.TRCHAN_4B { MODELPARAM_VALUE.TRCHAN_4B PARAM_VALUE.TRCHAN_4B } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.TRCHAN_4B}] ${MODELPARAM_VALUE.TRCHAN_4B}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_MODE_NORMAL { MODELPARAM_VALUE.TRIG_MODE_NORMAL PARAM_VALUE.TRIG_MODE_NORMAL } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_MODE_NORMAL}] ${MODELPARAM_VALUE.TRIG_MODE_NORMAL}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_MODE_AUTO { MODELPARAM_VALUE.TRIG_MODE_AUTO PARAM_VALUE.TRIG_MODE_AUTO } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_MODE_AUTO}] ${MODELPARAM_VALUE.TRIG_MODE_AUTO}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM { MODELPARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM}] ${MODELPARAM_VALUE.TRIG_STATE_WAIT_FOR_ARM}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_ARMED_WAITING { MODELPARAM_VALUE.TRIG_STATE_ARMED_WAITING PARAM_VALUE.TRIG_STATE_ARMED_WAITING } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_ARMED_WAITING}] ${MODELPARAM_VALUE.TRIG_STATE_ARMED_WAITING}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD { MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF { MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL { MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_INITIAL}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT { MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO { MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO}
 }
 

@@ -109,10 +109,15 @@ module design_1_system_ila_0_0 (
   probe51,
   probe52,
   probe53,
-  probe54
+  probe54,
+  probe55,
+  probe56,
+  probe57,
+  probe58,
+  probe59
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_zynq_ps_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.clk CLK" *)
 input wire clk;
 input wire [5 : 0] probe0;
@@ -159,17 +164,22 @@ input wire [1 : 0] probe40;
 input wire [1 : 0] probe41;
 input wire [1 : 0] probe42;
 input wire [1 : 0] probe43;
-input wire [31 : 0] probe44;
+input wire [0 : 0] probe44;
 input wire [0 : 0] probe45;
 input wire [0 : 0] probe46;
 input wire [0 : 0] probe47;
 input wire [0 : 0] probe48;
-input wire [0 : 0] probe49;
+input wire [31 : 0] probe49;
 input wire [0 : 0] probe50;
 input wire [0 : 0] probe51;
 input wire [0 : 0] probe52;
 input wire [0 : 0] probe53;
 input wire [0 : 0] probe54;
+input wire [0 : 0] probe55;
+input wire [31 : 0] probe56;
+input wire [0 : 0] probe57;
+input wire [0 : 0] probe58;
+input wire [0 : 0] probe59;
 
   bd_f60c inst (
     .clk(clk),
@@ -227,6 +237,11 @@ input wire [0 : 0] probe54;
     .probe51(probe51),
     .probe52(probe52),
     .probe53(probe53),
-    .probe54(probe54)
+    .probe54(probe54),
+    .probe55(probe55),
+    .probe56(probe56),
+    .probe57(probe57),
+    .probe58(probe58),
+    .probe59(probe59)
   );
 endmodule

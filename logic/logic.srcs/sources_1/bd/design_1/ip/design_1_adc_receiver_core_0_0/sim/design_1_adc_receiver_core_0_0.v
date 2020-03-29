@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_receiver_core:1.0
-// IP Revision: 3
+// IP Revision: 10
 
 `timescale 1ns/1ps
 
@@ -77,11 +77,20 @@ module design_1_adc_receiver_core_0_0 (
   g_rst,
   adc_bus,
   adc_data_clk,
-  trigger_unit_in,
-  trigger_out,
-  trigger_sub_word,
   clk_master,
-  clk_idelay_refclk
+  bitslip_locked,
+  train_l1a,
+  train_l1b,
+  train_l2a,
+  train_l2b,
+  train_l3a,
+  train_l3b,
+  train_l4a,
+  train_l4b,
+  delay_load,
+  train_done_load,
+  clk_idelay_refclk,
+  idelay_rdy
 );
 
 input wire adc_l1a_p;
@@ -111,11 +120,20 @@ output wire [63 : 0] adc_bus;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME adc_data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_adc_receiver_core_0_0_adc_data_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 adc_data_clk CLK" *)
 output wire adc_data_clk;
-input wire trigger_unit_in;
-output wire trigger_out;
-output wire [2 : 0] trigger_sub_word;
 input wire clk_master;
+output wire bitslip_locked;
+input wire [5 : 0] train_l1a;
+input wire [5 : 0] train_l1b;
+input wire [5 : 0] train_l2a;
+input wire [5 : 0] train_l2b;
+input wire [5 : 0] train_l3a;
+input wire [5 : 0] train_l3b;
+input wire [5 : 0] train_l4a;
+input wire [5 : 0] train_l4b;
+input wire delay_load;
+output wire train_done_load;
 input wire clk_idelay_refclk;
+output wire idelay_rdy;
 
   adc_receiver_core_v1_0 inst (
     .adc_l1a_p(adc_l1a_p),
@@ -141,10 +159,19 @@ input wire clk_idelay_refclk;
     .g_rst(g_rst),
     .adc_bus(adc_bus),
     .adc_data_clk(adc_data_clk),
-    .trigger_unit_in(trigger_unit_in),
-    .trigger_out(trigger_out),
-    .trigger_sub_word(trigger_sub_word),
     .clk_master(clk_master),
-    .clk_idelay_refclk(clk_idelay_refclk)
+    .bitslip_locked(bitslip_locked),
+    .train_l1a(train_l1a),
+    .train_l1b(train_l1b),
+    .train_l2a(train_l2a),
+    .train_l2b(train_l2b),
+    .train_l3a(train_l3a),
+    .train_l3b(train_l3b),
+    .train_l4a(train_l4a),
+    .train_l4b(train_l4b),
+    .delay_load(delay_load),
+    .train_done_load(train_done_load),
+    .clk_idelay_refclk(clk_idelay_refclk),
+    .idelay_rdy(idelay_rdy)
   );
 endmodule

@@ -212,9 +212,6 @@ proc create_root_design { parentCell } {
 
   # Create instance: adc_axi_streamer, and set properties
   set adc_axi_streamer [ create_bd_cell -type ip -vlnv xilinx.com:user:adc_streamer:2.0 adc_axi_streamer ]
-  set_property -dict [ list \
-   CONFIG.C_M00_AXIS_TDATA_WIDTH {64} \
- ] $adc_axi_streamer
 
   # Create instance: adc_dma, and set properties
   set adc_dma [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_dma:7.1 adc_dma ]
@@ -223,11 +220,8 @@ proc create_root_design { parentCell } {
    CONFIG.c_include_s2mm {1} \
    CONFIG.c_include_s2mm_dre {1} \
    CONFIG.c_include_sg {0} \
-   CONFIG.c_m_axi_mm2s_data_width {64} \
    CONFIG.c_m_axi_s2mm_data_width {64} \
-   CONFIG.c_mm2s_burst_size {16} \
    CONFIG.c_s2mm_burst_size {16} \
-   CONFIG.c_sg_include_stscntrl_strm {0} \
    CONFIG.c_sg_length_width {24} \
  ] $adc_dma
 
@@ -291,24 +285,18 @@ proc create_root_design { parentCell } {
    CONFIG.C_PN_SWAP_CLK {true} \
    CONFIG.C_PN_SWAP_D0 {true} \
    CONFIG.C_PN_SWAP_D1 {true} \
-   CONFIG.C_S00_AXIS_TDATA_WIDTH {64} \
  ] $csi_gearbox_dma_0
 
   # Create instance: mipi_dma, and set properties
   set mipi_dma [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_dma:7.1 mipi_dma ]
   set_property -dict [ list \
-   CONFIG.c_enable_multi_channel {0} \
    CONFIG.c_include_mm2s {1} \
    CONFIG.c_include_mm2s_dre {0} \
    CONFIG.c_include_s2mm {0} \
-   CONFIG.c_include_s2mm_dre {0} \
    CONFIG.c_include_sg {0} \
    CONFIG.c_m_axi_mm2s_data_width {64} \
-   CONFIG.c_m_axi_s2mm_data_width {64} \
    CONFIG.c_m_axis_mm2s_tdata_width {64} \
    CONFIG.c_mm2s_burst_size {32} \
-   CONFIG.c_s2mm_burst_size {16} \
-   CONFIG.c_sg_include_stscntrl_strm {0} \
    CONFIG.c_sg_length_width {24} \
  ] $mipi_dma
 
@@ -321,10 +309,10 @@ proc create_root_design { parentCell } {
   # Create instance: system_ila_0, and set properties
   set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
   set_property -dict [ list \
-   CONFIG.C_BRAM_CNT {6.5} \
+   CONFIG.C_BRAM_CNT {7} \
    CONFIG.C_DATA_DEPTH {4096} \
    CONFIG.C_MON_TYPE {NATIVE} \
-   CONFIG.C_NUM_OF_PROBES {55} \
+   CONFIG.C_NUM_OF_PROBES {60} \
  ] $system_ila_0
 
   # Create instance: xlconcat_1, and set properties
@@ -357,6 +345,20 @@ proc create_root_design { parentCell } {
    CONFIG.CONST_VAL {0} \
    CONFIG.CONST_WIDTH {1} \
  ] $xlconstant_2
+
+  # Create instance: xlconstant_3, and set properties
+  set xlconstant_3 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_3 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {1} \
+ ] $xlconstant_3
+
+  # Create instance: xlconstant_4, and set properties
+  set xlconstant_4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_4 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {1} \
+ ] $xlconstant_4
 
   # Create instance: zynq_ps, and set properties
   set zynq_ps [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 zynq_ps ]
@@ -761,8 +763,8 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins zynq_ps/FIXED_IO]
 
   # Create port connections
-  connect_bd_net -net ACQ_TRIGGER_IN_1 [get_bd_pins adc_axi_streamer/trigger_in] [get_bd_pins adc_trigger_0/trigger_out] [get_bd_pins system_ila_0/probe29]
-  connect_bd_net -net ACQ_TRIG_WORD_1 [get_bd_pins adc_axi_streamer/trigger_sub_word] [get_bd_pins adc_trigger_0/trigger_sub_word] [get_bd_pins system_ila_0/probe30]
+  connect_bd_net -net ACQ_TRIGGER_IN_1 [get_bd_pins adc_axi_streamer/trigger_in] [get_bd_pins adc_trigger_0/trig_out] [get_bd_pins system_ila_0/probe29]
+  connect_bd_net -net ACQ_TRIG_WORD_1 [get_bd_pins adc_axi_streamer/trigger_sub_word] [get_bd_pins adc_trigger_0/trig_sub_word] [get_bd_pins system_ila_0/probe30]
   connect_bd_net -net ADC_BUS_1 [get_bd_pins adc_axi_streamer/adc_bus] [get_bd_pins adc_receiver_core_0/adc_bus] [get_bd_pins adc_trigger_0/adc_bus]
   connect_bd_net -net ADC_DATA_CLK_2 [get_bd_pins adc_axi_streamer/adc_data_clk] [get_bd_pins adc_receiver_core_0/adc_data_clk] [get_bd_pins adc_trigger_0/adc_data_clk] [get_bd_pins system_ila_0/probe19]
   connect_bd_net -net ADC_FCLK_N_1 [get_bd_ports ADC_FCLK_N] [get_bd_pins adc_receiver_core_0/adc_fclk_n]
@@ -791,15 +793,21 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CSI_START_LINES_1 [get_bd_ports CSI_START_LINES] [get_bd_pins csi_gearbox_dma_0/csi_start_lines]
   connect_bd_net -net CSI_STOP_1 [get_bd_ports CSI_STOP] [get_bd_pins csi_gearbox_dma_0/csi_stop]
   connect_bd_net -net EMIO_I_1 [get_bd_ports EMIO_I] [get_bd_pins zynq_ps/GPIO_I]
-  connect_bd_net -net FabCfg_NextGen_0_R_acq_ctrl_a [get_bd_pins FabCfg_NextGen_0/R_acq_ctrl_a] [get_bd_pins adc_axi_streamer/acq_ctrl_a] [get_bd_pins system_ila_0/probe34]
+  connect_bd_net -net FabCfg_NextGen_0_R_acq_ctrl_a [get_bd_pins FabCfg_NextGen_0/R_acq_ctrl_a] [get_bd_pins adc_axi_streamer/acq_ctrl_a]
   connect_bd_net -net FabCfg_NextGen_0_R_acq_size_a [get_bd_pins FabCfg_NextGen_0/R_acq_size_a] [get_bd_pins adc_axi_streamer/acq_depth_a]
   connect_bd_net -net FabCfg_NextGen_0_R_acq_size_b [get_bd_pins FabCfg_NextGen_0/R_acq_size_b] [get_bd_pins adc_axi_streamer/acq_depth_b]
+  connect_bd_net -net FabCfg_NextGen_0_R_acq_train_a [get_bd_pins FabCfg_NextGen_0/R_acq_train_a] [get_bd_pins adc_axi_streamer/acq_train_a]
+  connect_bd_net -net FabCfg_NextGen_0_R_acq_train_b [get_bd_pins FabCfg_NextGen_0/R_acq_train_b] [get_bd_pins adc_axi_streamer/acq_train_b]
   connect_bd_net -net FabCfg_NextGen_0_R_csi_control_flags [get_bd_pins FabCfg_NextGen_0/R_csi_control_flags] [get_bd_pins csi_gearbox_dma_0/R_csi_control_flags]
   connect_bd_net -net FabCfg_NextGen_0_R_csi_data_type [get_bd_pins FabCfg_NextGen_0/R_csi_data_type] [get_bd_pins csi_gearbox_dma_0/R_csi_data_type]
   connect_bd_net -net FabCfg_NextGen_0_R_csi_line_byte_count [get_bd_pins FabCfg_NextGen_0/R_csi_line_byte_count] [get_bd_pins csi_gearbox_dma_0/R_csi_line_byte_count]
   connect_bd_net -net FabCfg_NextGen_0_R_csi_line_count [get_bd_pins FabCfg_NextGen_0/R_csi_line_count] [get_bd_pins csi_gearbox_dma_0/R_csi_line_count]
   connect_bd_net -net FabCfg_NextGen_0_R_gpio_test [get_bd_ports GPIO_TEST] [get_bd_pins FabCfg_NextGen_0/R_gpio_test]
-  connect_bd_net -net FabCfg_NextGen_0_R_trig_config_a [get_bd_pins FabCfg_NextGen_0/R_trig_config_a] [get_bd_pins adc_trigger_0/trig_config_a] [get_bd_pins system_ila_0/probe44]
+  connect_bd_net -net FabCfg_NextGen_0_R_trig_auto_timers [get_bd_pins FabCfg_NextGen_0/R_trig_auto_timers] [get_bd_pins adc_trigger_0/trig_auto_timers]
+  connect_bd_net -net FabCfg_NextGen_0_R_trig_config_a [get_bd_pins FabCfg_NextGen_0/R_trig_config_a] [get_bd_pins adc_trigger_0/trig_config_a]
+  connect_bd_net -net FabCfg_NextGen_0_R_trig_delay_reg0 [get_bd_pins FabCfg_NextGen_0/R_trig_delay_reg0] [get_bd_pins adc_trigger_0/trig_delay_reg0]
+  connect_bd_net -net FabCfg_NextGen_0_R_trig_delay_reg1 [get_bd_pins FabCfg_NextGen_0/R_trig_delay_reg1] [get_bd_pins adc_trigger_0/trig_delay_reg1]
+  connect_bd_net -net FabCfg_NextGen_0_R_trig_holdoff [get_bd_pins FabCfg_NextGen_0/R_trig_holdoff] [get_bd_pins adc_trigger_0/trig_holdoff]
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_0 [get_bd_pins FabCfg_NextGen_0/R_trig_level_0] [get_bd_pins adc_trigger_0/trig_level_0]
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_1 [get_bd_pins FabCfg_NextGen_0/R_trig_level_1] [get_bd_pins adc_trigger_0/trig_level_1]
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_2 [get_bd_pins FabCfg_NextGen_0/R_trig_level_2] [get_bd_pins adc_trigger_0/trig_level_2]
@@ -810,43 +818,60 @@ proc create_root_design { parentCell } {
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_7 [get_bd_pins FabCfg_NextGen_0/R_trig_level_7] [get_bd_pins adc_trigger_0/trig_level_7]
   connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
   connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
-  connect_bd_net -net adc_axi_streamer_acq_armed [get_bd_pins adc_axi_streamer/acq_armed] [get_bd_pins adc_trigger_0/acq_armed] [get_bd_pins system_ila_0/probe18]
+  connect_bd_net -net adc_axi_streamer_acq_armed_waiting_trig [get_bd_pins adc_axi_streamer/acq_armed_waiting_trig] [get_bd_pins adc_trigger_0/acq_armed_waiting_trig] [get_bd_pins system_ila_0/probe55]
+  connect_bd_net -net adc_axi_streamer_acq_done [get_bd_pins adc_axi_streamer/acq_done] [get_bd_pins adc_trigger_0/acq_done] [get_bd_pins system_ila_0/probe54]
+  connect_bd_net -net adc_axi_streamer_acq_done_post [get_bd_pins adc_axi_streamer/acq_done_post] [get_bd_pins adc_trigger_0/acq_done_post] [get_bd_pins system_ila_0/probe53]
+  connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_pins adc_axi_streamer/acq_have_trig] [get_bd_pins adc_trigger_0/acq_have_trig] [get_bd_pins system_ila_0/probe59]
   connect_bd_net -net adc_axi_streamer_acq_reset_irq_gen [get_bd_pins adc_axi_streamer/acq_reset_irq_gen] [get_bd_pins system_ila_0/probe11] [get_bd_pins xlconcat_1/In1]
-  connect_bd_net -net adc_axi_streamer_acq_status_a [get_bd_pins FabCfg_NextGen_0/R_acq_status_a] [get_bd_pins adc_axi_streamer/acq_status_a] [get_bd_pins system_ila_0/probe32]
-  connect_bd_net -net adc_axi_streamer_acq_status_b [get_bd_pins FabCfg_NextGen_0/R_acq_status_b] [get_bd_pins adc_axi_streamer/acq_status_b] [get_bd_pins system_ila_0/probe33]
+  connect_bd_net -net adc_axi_streamer_acq_status_a [get_bd_pins FabCfg_NextGen_0/R_acq_status_a] [get_bd_pins adc_axi_streamer/acq_status_a]
+  connect_bd_net -net adc_axi_streamer_acq_status_b [get_bd_pins FabCfg_NextGen_0/R_acq_status_b] [get_bd_pins adc_axi_streamer/acq_status_b]
+  connect_bd_net -net adc_axi_streamer_acq_status_c [get_bd_pins FabCfg_NextGen_0/R_acq_status_c] [get_bd_pins adc_axi_streamer/acq_status_c]
   connect_bd_net -net adc_axi_streamer_dbg_acq_abort [get_bd_pins adc_axi_streamer/dbg_acq_abort] [get_bd_pins system_ila_0/probe26]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_downcounter [get_bd_pins adc_axi_streamer/dbg_acq_axi_downcounter] [get_bd_pins system_ila_0/probe4]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_run [get_bd_pins adc_axi_streamer/dbg_acq_axi_run] [get_bd_pins system_ila_0/probe21]
   connect_bd_net -net adc_axi_streamer_dbg_acq_axi_running [get_bd_pins adc_axi_streamer/dbg_acq_axi_running] [get_bd_pins system_ila_0/probe2]
-  connect_bd_net -net adc_axi_streamer_dbg_acq_axi_upcounter [get_bd_pins adc_axi_streamer/dbg_acq_axi_upcounter] [get_bd_pins system_ila_0/probe3]
   connect_bd_net -net adc_axi_streamer_dbg_acq_data_valid [get_bd_pins adc_axi_streamer/dbg_acq_data_valid] [get_bd_pins system_ila_0/probe28]
   connect_bd_net -net adc_axi_streamer_dbg_acq_depth_mux [get_bd_pins adc_axi_streamer/dbg_acq_depth_mux] [get_bd_pins system_ila_0/probe24]
   connect_bd_net -net adc_axi_streamer_dbg_acq_eof [get_bd_pins adc_axi_streamer/dbg_acq_eof] [get_bd_pins system_ila_0/probe27]
   connect_bd_net -net adc_axi_streamer_dbg_acq_fifo_reset [get_bd_pins adc_axi_streamer/dbg_acq_fifo_reset] [get_bd_pins system_ila_0/probe25]
   connect_bd_net -net adc_axi_streamer_dbg_acq_have_trig [get_bd_pins adc_axi_streamer/dbg_acq_have_trig] [get_bd_pins system_ila_0/probe9]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_holdoff_regd [get_bd_pins adc_axi_streamer/dbg_acq_holdoff_regd] [get_bd_pins system_ila_0/probe51]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_post_trigger [get_bd_pins adc_axi_streamer/dbg_acq_post_trigger] [get_bd_pins system_ila_0/probe58]
   connect_bd_net -net adc_axi_streamer_dbg_acq_run [get_bd_pins adc_axi_streamer/dbg_acq_run] [get_bd_pins system_ila_0/probe20]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_suspend [get_bd_pins adc_axi_streamer/dbg_acq_suspend] [get_bd_pins system_ila_0/probe57]
   connect_bd_net -net adc_axi_streamer_dbg_acq_trig_mask [get_bd_pins adc_axi_streamer/dbg_acq_trig_mask] [get_bd_pins system_ila_0/probe22]
   connect_bd_net -net adc_axi_streamer_dbg_acq_trig_rst [get_bd_pins adc_axi_streamer/dbg_acq_trig_rst] [get_bd_pins system_ila_0/probe23]
   connect_bd_net -net adc_axi_streamer_dbg_acq_trigger_out_ctr [get_bd_pins adc_axi_streamer/dbg_acq_trigger_out_ctr] [get_bd_pins system_ila_0/probe5]
   connect_bd_net -net adc_axi_streamer_dbg_acq_tvalid_mask [get_bd_pins adc_axi_streamer/dbg_acq_tvalid_mask] [get_bd_pins system_ila_0/probe10]
+  connect_bd_net -net adc_axi_streamer_dbg_adc_fifo_gated_clk [get_bd_pins adc_axi_streamer/dbg_adc_fifo_gated_clk] [get_bd_pins system_ila_0/probe52]
   connect_bd_net -net adc_axi_streamer_dbg_adcstream_state [get_bd_pins adc_axi_streamer/dbg_adcstream_state] [get_bd_pins system_ila_0/probe0]
   connect_bd_net -net adc_axi_streamer_dbg_axi_rdy [get_bd_pins adc_axi_streamer/dbg_axi_rdy] [get_bd_pins system_ila_0/probe1]
+  connect_bd_net -net adc_axi_streamer_dbg_fifo_rd_en [get_bd_pins adc_axi_streamer/dbg_fifo_rd_en] [get_bd_pins system_ila_0/probe46]
+  connect_bd_net -net adc_axi_streamer_dbg_fifo_rd_rst_busy [get_bd_pins adc_axi_streamer/dbg_fifo_rd_rst_busy] [get_bd_pins system_ila_0/probe48]
+  connect_bd_net -net adc_axi_streamer_dbg_fifo_rst_holdoff [get_bd_pins adc_axi_streamer/dbg_fifo_rst_holdoff] [get_bd_pins system_ila_0/probe50]
+  connect_bd_net -net adc_axi_streamer_dbg_fifo_wr_en [get_bd_pins adc_axi_streamer/dbg_fifo_wr_en] [get_bd_pins system_ila_0/probe45]
+  connect_bd_net -net adc_axi_streamer_dbg_fifo_wr_rst_busy [get_bd_pins adc_axi_streamer/dbg_fifo_wr_rst_busy] [get_bd_pins system_ila_0/probe47]
   connect_bd_net -net adc_axi_streamer_dbg_rd_data_count [get_bd_pins adc_axi_streamer/dbg_rd_data_count] [get_bd_pins system_ila_0/probe6]
   connect_bd_net -net adc_axi_streamer_dbg_trig_post_fifo [get_bd_pins adc_axi_streamer/dbg_trig_post_fifo] [get_bd_pins system_ila_0/probe8]
   connect_bd_net -net adc_axi_streamer_dbg_wr_data_count [get_bd_pins adc_axi_streamer/dbg_wr_data_count] [get_bd_pins system_ila_0/probe7]
+  connect_bd_net -net adc_axi_streamer_delay_l1a [get_bd_pins adc_axi_streamer/delay_l1a] [get_bd_pins adc_receiver_core_0/train_l1a]
+  connect_bd_net -net adc_axi_streamer_delay_l1b [get_bd_pins adc_axi_streamer/delay_l1b] [get_bd_pins adc_receiver_core_0/train_l1b]
+  connect_bd_net -net adc_axi_streamer_delay_l2a [get_bd_pins adc_axi_streamer/delay_l2a] [get_bd_pins adc_receiver_core_0/train_l2a]
+  connect_bd_net -net adc_axi_streamer_delay_l2b [get_bd_pins adc_axi_streamer/delay_l2b] [get_bd_pins adc_receiver_core_0/train_l2b]
+  connect_bd_net -net adc_axi_streamer_delay_l3a [get_bd_pins adc_axi_streamer/delay_l3a] [get_bd_pins adc_receiver_core_0/train_l3a]
+  connect_bd_net -net adc_axi_streamer_delay_l3b [get_bd_pins adc_axi_streamer/delay_l3b] [get_bd_pins adc_receiver_core_0/train_l3b]
+  connect_bd_net -net adc_axi_streamer_delay_l4a [get_bd_pins adc_axi_streamer/delay_l4a] [get_bd_pins adc_receiver_core_0/train_l4a]
+  connect_bd_net -net adc_axi_streamer_delay_l4b [get_bd_pins adc_axi_streamer/delay_l4b] [get_bd_pins adc_receiver_core_0/train_l4b]
+  connect_bd_net -net adc_axi_streamer_delay_load [get_bd_pins adc_axi_streamer/delay_load] [get_bd_pins adc_receiver_core_0/delay_load]
   connect_bd_net -net adc_axi_streamer_m00_axis_tdata [get_bd_pins adc_axi_streamer/m00_axis_tdata] [get_bd_pins adc_dma/s_axis_s2mm_tdata] [get_bd_pins system_ila_0/probe14]
   connect_bd_net -net adc_axi_streamer_m00_axis_tlast [get_bd_pins adc_axi_streamer/m00_axis_tlast] [get_bd_pins adc_dma/s_axis_s2mm_tlast] [get_bd_pins system_ila_0/probe15]
   connect_bd_net -net adc_axi_streamer_m00_axis_tvalid [get_bd_pins adc_axi_streamer/m00_axis_tvalid] [get_bd_pins adc_dma/s_axis_s2mm_tvalid] [get_bd_pins system_ila_0/probe16]
   connect_bd_net -net adc_axi_streamer_trigger_out [get_bd_ports TRIGGER_OUT] [get_bd_pins adc_axi_streamer/trigger_out] [get_bd_pins system_ila_0/probe13]
   connect_bd_net -net adc_axi_streamer_trigger_pos [get_bd_pins FabCfg_NextGen_0/R_acq_trigger_ptr] [get_bd_pins adc_axi_streamer/trigger_pos] [get_bd_pins system_ila_0/probe12]
-  connect_bd_net -net adc_trigger_0_dbg_adc_1a_hi_0123a [get_bd_pins adc_trigger_0/dbg_adc_1a_hi_0123a] [get_bd_pins system_ila_0/probe45]
-  connect_bd_net -net adc_trigger_0_dbg_adc_1a_lo_0123a [get_bd_pins adc_trigger_0/dbg_adc_1a_lo_0123a] [get_bd_pins system_ila_0/probe46]
-  connect_bd_net -net adc_trigger_0_dbg_adc_1b_hi_0123a [get_bd_pins adc_trigger_0/dbg_adc_1b_hi_0123a] [get_bd_pins system_ila_0/probe47]
-  connect_bd_net -net adc_trigger_0_dbg_adc_1b_lo_0123a [get_bd_pins adc_trigger_0/dbg_adc_1b_lo_0123a] [get_bd_pins system_ila_0/probe48]
-  connect_bd_net -net adc_trigger_0_dbg_adc_2a_hi_0123a [get_bd_pins adc_trigger_0/dbg_adc_2a_hi_0123a] [get_bd_pins system_ila_0/probe49]
-  connect_bd_net -net adc_trigger_0_dbg_adc_2a_lo_0123a [get_bd_pins adc_trigger_0/dbg_adc_2a_lo_0123a] [get_bd_pins system_ila_0/probe50]
-  connect_bd_net -net adc_trigger_0_dbg_adc_2b_hi_0123a [get_bd_pins adc_trigger_0/dbg_adc_2b_hi_0123a] [get_bd_pins system_ila_0/probe51]
-  connect_bd_net -net adc_trigger_0_dbg_adc_2b_lo_0123a [get_bd_pins adc_trigger_0/dbg_adc_2b_lo_0123a] [get_bd_pins system_ila_0/probe52]
+  connect_bd_net -net adc_receiver_core_0_bitslip_locked [get_bd_pins adc_axi_streamer/train_bitslip_locked] [get_bd_pins adc_receiver_core_0/bitslip_locked]
+  connect_bd_net -net adc_receiver_core_0_idelay_rdy [get_bd_pins adc_axi_streamer/train_idelaye2_ready] [get_bd_pins adc_receiver_core_0/idelay_rdy]
+  connect_bd_net -net adc_receiver_core_0_train_done_load [get_bd_pins adc_axi_streamer/train_delay_loaded] [get_bd_pins adc_receiver_core_0/train_done_load]
+  connect_bd_net -net adc_trigger_0_acq_holdoff [get_bd_pins adc_axi_streamer/acq_holdoff] [get_bd_pins adc_trigger_0/acq_holdoff] [get_bd_pins system_ila_0/probe44]
   connect_bd_net -net adc_trigger_0_dbg_comp_state_1_0123a [get_bd_pins adc_trigger_0/dbg_comp_state_1_0123a] [get_bd_pins system_ila_0/probe36]
   connect_bd_net -net adc_trigger_0_dbg_comp_state_1_4567a [get_bd_pins adc_trigger_0/dbg_comp_state_1_4567a] [get_bd_pins system_ila_0/probe38]
   connect_bd_net -net adc_trigger_0_dbg_comp_state_2_0123a [get_bd_pins adc_trigger_0/dbg_comp_state_2_0123a] [get_bd_pins system_ila_0/probe37]
@@ -856,6 +881,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net adc_trigger_0_dbg_ev_counter_2_0123a [get_bd_pins adc_trigger_0/dbg_ev_counter_2_0123a] [get_bd_pins system_ila_0/probe41]
   connect_bd_net -net adc_trigger_0_dbg_ev_counter_2_4567a [get_bd_pins adc_trigger_0/dbg_ev_counter_2_4567a] [get_bd_pins system_ila_0/probe43]
   connect_bd_net -net adc_trigger_0_dbg_trig_sig_a [get_bd_pins adc_trigger_0/dbg_trig_sig_a] [get_bd_pins system_ila_0/probe35]
+  connect_bd_net -net adc_trigger_0_trig_holdoff_debug [get_bd_pins FabCfg_NextGen_0/R_trig_holdoff_debug] [get_bd_pins adc_trigger_0/trig_holdoff_debug] [get_bd_pins system_ila_0/probe56]
+  connect_bd_net -net adc_trigger_0_trig_state_a [get_bd_pins FabCfg_NextGen_0/R_trig_state_a] [get_bd_pins adc_trigger_0/trig_state_a] [get_bd_pins system_ila_0/probe49]
   connect_bd_net -net axi_dma_s2mm_introut [get_bd_pins adc_dma/s2mm_introut] [get_bd_pins system_ila_0/probe31] [get_bd_pins xlconcat_1/In0]
   connect_bd_net -net axi_dma_s_axis_s2mm_tready [get_bd_pins adc_axi_streamer/m00_axis_tready] [get_bd_pins adc_dma/s_axis_s2mm_tready] [get_bd_pins system_ila_0/probe17]
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_ports CLKWIZ0_CLKOUT1] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins csi_gearbox_dma_0/mod_clk_I]
@@ -886,6 +913,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net xlconstant_0_dout [get_bd_pins FabCfg_NextGen_0/K_in_bitstream_version] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlconstant_1_dout [get_bd_pins csi_gearbox_dma_0/R_csi_wct_frame] [get_bd_pins xlconstant_1/dout]
   connect_bd_net -net xlconstant_2_dout [get_bd_pins simple_reset_control_0/g_rst_trig_ps] [get_bd_pins xlconstant_2/dout]
+  connect_bd_net -net xlconstant_3_dout [get_bd_pins adc_trigger_0/trig_input_external] [get_bd_pins xlconstant_3/dout]
+  connect_bd_net -net xlconstant_4_dout [get_bd_pins adc_trigger_0/trig_input_ac] [get_bd_pins xlconstant_4/dout]
 
   # Create address segments
   assign_bd_address -offset 0x00000000 -range 0x10000000 -target_address_space [get_bd_addr_spaces adc_dma/Data_S2MM] [get_bd_addr_segs zynq_ps/S_AXI_HP0/HP0_DDR_LOWOCM] -force

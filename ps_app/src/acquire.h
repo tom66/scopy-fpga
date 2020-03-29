@@ -86,6 +86,9 @@
 #define ACQ_CTRL_A_ABORT			0x00000040
 #define ACQ_CTRL_A_EOF				0x00000080
 #define ACQ_CTRL_A_DATA_VALID		0x00000100
+#define ACQ_CTRL_A_EARLY_TLAST		0x00000800
+#define ACQ_CTRL_A_ACQ_SUSPEND		0x00010000
+#define ACQ_CTRL_A_POST_TRIG_MODE	0x00020000
 
 #define ACQ_STATUS_A_DONE			0x00000001
 #define ACQ_STATUS_A_HAVE_TRIG		0x00000002
@@ -101,6 +104,16 @@
 #define ACQ_STATUS_A_FIFO_SHIFT		16
 #define ACQ_STATUS_B_FIFO_MASK		0xffff0000
 #define ACQ_STATUS_B_FIFO_SHIFT		16
+
+#define ACQ_STATUS_C_WSEL_VALID		0x00008000
+#define ACQ_STATUS_C_BITSLIP_LOCK	0x00004000
+#define ACQ_STATUS_C_DELAY_LOADED	0x00002000
+#define ACQ_STATUS_C_MATCH_55		0x00001000
+#define ACQ_STATUS_C_IDLYCTL_RDY	0x00080000
+#define ACQ_STATUS_C_ADC_WORD_MASK	0xff000000
+#define ACQ_STATUS_C_ADC_WORD_SHFT	24
+
+#define ACQ_TRAIN_A_LOAD			0x00000001
 
 // Flags for acq_buffer_t
 #define ACQBUF_FLAG_PKT_DONE		0x0001							// Packet is done
@@ -125,17 +138,27 @@
 
 #define ACQ_DMA_ENGINE				XPAR_ADC_DMA_DEVICE_ID
 #define ACQ_DMA_RX_IRQ				XPAR_FABRIC_ADC_DMA_S2MM_INTROUT_INTR
-#define ACQ_DMA_RX_IRQ_PRIO			0x20							// High priority
+#define ACQ_DMA_RX_IRQ_PRIO			0x40							// High priority
 #define ACQ_DMA_RX_IRQ_TRIG			0x03							// Rising edge trigger
 
 #define ACQ_FIFO_STALL_IRQ			XPS_FPGA1_INT_ID
-#define ACQ_FIFO_STALL_IRQ_PRIO		0x40							// Low priority
+#define ACQ_FIFO_STALL_IRQ_PRIO		0x60							// Mid priority
 #define ACQ_FIFO_STALL_IRQ_TRIG		0x03							// ???
 
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
 #define TRIGGER_INVALID_NO_TRIG		0xffffffff						// Trigger position invalid as no trigger occurred within window
 #define TRIGGER_INVALID_MASK		0x80000000						// This bit set indicates invalid trigger pointer
+
+// Line training data configuration
+#define ADC_LANE_L1A				0
+#define ADC_LANE_L1B				1
+#define ADC_LANE_L2A				2
+#define ADC_LANE_L2B				3
+#define ADC_LANE_L3A				4
+#define ADC_LANE_L3B				5
+#define ADC_LANE_L4A				6
+#define ADC_LANE_L4B				7
 
 /*
  * Statistics counters for acquisition engine.
@@ -219,6 +242,12 @@ struct acq_state_t {
 	// Pointer to the first and current acquisiton buffers.
 	struct acq_buffer_t *acq_first;
 	struct acq_buffer_t *acq_current;
+
+	/*
+	 * Line training data.  These are computed during line training which will be
+	 * performed on restart of the acquistion engine (e.g. resume from standby state.)
+	 */
+	uint8_t line_train[8];
 };
 
 extern struct acq_state_t g_acq_state;
@@ -231,6 +260,7 @@ void _acq_reset_trigger();
 void _acq_wait_for_ndone();
 int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz);
 void acq_init();
+void acq_write_training();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();

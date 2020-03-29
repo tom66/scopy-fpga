@@ -34,6 +34,8 @@ void trig_init()
 	// All levels start at zero, enables all disabled.
 	trig_zero_levels();
 
+	// XXX: Change the below loads into functions to load 31-bit timer registers
+
 	// Load holdoff of zero.  Drive load flag.
 	fabcfg_write(FAB_CFG_TRIG_HOLDOFF,  	0x00000001);
 	fabcfg_write(FAB_CFG_TRIG_HOLDOFF,  	0x00000000);
@@ -47,6 +49,9 @@ void trig_init()
 	fabcfg_write(FAB_CFG_TRIG_DELAY_REG0,   0x00000000);
 	fabcfg_write(FAB_CFG_TRIG_DELAY_REG1, 	0x00000001);
 	fabcfg_write(FAB_CFG_TRIG_DELAY_REG1,   0x00000000);
+
+	// Load holdoff with lowest holdoff possible
+	trig_configure_holdoff(0);
 
 	d_printf(D_INFO, "trigger: defaults loaded");
 	trig_dump_state();
@@ -113,13 +118,13 @@ int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode,
 
 	reg_write = (trig_lvl_low << TRIG_LVL_REG_LO_SHIFT) | (trig_lvl_high << TRIG_LVL_REG_HI_SHIFT) | TRIG_LVL_CH_ENABLE;
 
-	if(comp_pol == TRIG_COMP_POL_INVERT) {
+	if(comp_pol == TRIG_COMP_POL_NORMAL) {
 		reg_write |= TRIG_LVL_CH_POLARITY;
-	} else if(comp_pol != TRIG_COMP_POL_NORMAL) {
+	} else if(comp_pol != TRIG_COMP_POL_INVERT) {
 		return TRIGRES_PARAM_FAIL;
 	}
 
-	d_printf(D_INFO, "trigger: reg_write: 0x%08x", reg_write);
+	//d_printf(D_INFO, "trigger: reg_write: 0x%08x", reg_write);
 
 	/*
 	 * Depending on the demux mode, the chan_idx has different behaviours.
@@ -167,9 +172,9 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 {
 	uint16_t trig_lo, trig_hi;
 
-	d_printf(D_INFO, "trigger: edge trigger starting (trig_lvl=0x%02x)", trig_lvl);
+	//d_printf(D_INFO, "trigger: edge trigger starting (trig_lvl=0x%02x)", trig_lvl);
 
-	D_ASSERT(g_acq_state.state != ACQSTATE_UNINIT) ;
+	//D_ASSERT(g_acq_state.state != ACQSTATE_UNINIT) ;
 
 	if(!(edge_type == TRIG_EDGE_FALLING || edge_type == TRIG_EDGE_RISING || edge_type == TRIG_EDGE_BOTH)) {
 		return TRIGRES_PARAM_FAIL;
@@ -185,6 +190,11 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 
 	trig_lo = trig_lvl - (trig_hyst / 2);
 	trig_hi = trig_lvl + (trig_hyst / 2);
+
+	//d_printf(D_INFO, "trigger: edge trigger zeroing");
+
+	// Disable interrupts while writing state
+	asm("cpsid I");
 
 	// Clear and disable all trigger comparators.
 	trig_zero_levels();
@@ -204,16 +214,51 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 		fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_EDGEA_BOTH);
 	}
 
+	//d_printf(D_INFO, "trigger: edge trigger writing levels");
+
 	// Write the levels for COMP_A (COMP_B is unused) and enable the trigger channels.
 	trig_write_levels(TRIG_COMP_A, chan_idx, g_acq_state.demux_reg, TRIG_COMP_POL_NORMAL, trig_hi, trig_lo);
 
 	// Remove the resets, enable the trigger engine.
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET);
-	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_GLOBAL_ENABLE);
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_GLOBAL_ENABLE | TRIG_CTRL_TRIGGER_ARM);
 
-	d_printf(D_INFO, "trigger: edge trigger initialised");
+	// Enable interrupts again
+	asm("cpsie I");
 
-	trig_dump_state();
+	//d_printf(D_INFO, "trigger: edge trigger initialised");
+
+	//trig_dump_state();
+}
+
+/*
+ * Configure the holdoff.  Holdoff time in nanoseconds should be provided,
+ * a minimum of HOLDOFF_NS_MINIMUM and maximum of HOLDOFF_NS_MAXIMUM.  Out of
+ * range values are clipped to either limit.
+ *
+ * A holdoff value of zero disables holdoff completely.
+ */
+void trig_configure_holdoff(uint64_t holdoff_time_ns)
+{
+	uint32_t holdoff_reg;
+
+	if(holdoff_time_ns == 0) {
+		fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_HOLDOFF_ENABLE);
+		fabcfg_write(FAB_CFG_TRIG_HOLDOFF, 0x00000000);
+		return;
+	}
+
+	if(holdoff_time_ns < HOLDOFF_NS_MINIMUM) {
+		holdoff_time_ns = HOLDOFF_NS_MINIMUM;
+	}
+
+	if(holdoff_time_ns > HOLDOFF_NS_MAXIMUM) {
+		holdoff_time_ns = HOLDOFF_NS_MAXIMUM;
+	}
+
+	holdoff_reg = holdoff_time_ns / HOLDOFF_NS_PER_COUNT;
+	fabcfg_write(FAB_CFG_TRIG_HOLDOFF, holdoff_reg);
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_HOLDOFF_ENABLE);
 }
 
 /*
@@ -221,21 +266,41 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
  */
 void trig_dump_state()
 {
+	uint32_t state_a;
 	int i;
+
 	d_printf(D_INFO, "");
 
 	d_printf(D_INFO, "** Trigger State (Fabric) **");
 	d_printf(D_INFO, "");
-	d_printf(D_INFO, "trig_config_a     = 0x%08x", fabcfg_read(FAB_CFG_TRIG_CONFIG_A));
+	d_printf(D_INFO, "trig_config_a      = 0x%08x", fabcfg_read(FAB_CFG_TRIG_CONFIG_A));
 
 	for(i = 0; i < 8; i++) {
-		d_printf(D_INFO, "trig_level%d       = 0x%08x", i, fabcfg_read(FAB_CFG_TRIG_LEVEL0 + (i * 4)));
+		d_printf(D_INFO, "trig_level%d        = 0x%08x", i, fabcfg_read(FAB_CFG_TRIG_LEVEL0 + (i * 4)));
 	}
 
-	d_printf(D_INFO, "trig_holdoff      = 0x%08x", fabcfg_read(FAB_CFG_TRIG_HOLDOFF));
-	d_printf(D_INFO, "trig_auto_timers  = 0x%08x", fabcfg_read(FAB_CFG_TRIG_AUTO_TIMERS));
-	d_printf(D_INFO, "trig_delay_reg0   = 0x%08x", fabcfg_read(FAB_CFG_TRIG_DELAY_REG0));
-	d_printf(D_INFO, "trig_delay_reg1   = 0x%08x", fabcfg_read(FAB_CFG_TRIG_DELAY_REG1));
+	d_printf(D_INFO, "trig_holdoff       = 0x%08x", fabcfg_read(FAB_CFG_TRIG_HOLDOFF));
+	d_printf(D_INFO, "trig_auto_timers   = 0x%08x", fabcfg_read(FAB_CFG_TRIG_AUTO_TIMERS));
+	d_printf(D_INFO, "trig_delay_reg0    = 0x%08x", fabcfg_read(FAB_CFG_TRIG_DELAY_REG0));
+	d_printf(D_INFO, "trig_delay_reg1    = 0x%08x", fabcfg_read(FAB_CFG_TRIG_DELAY_REG1));
+
+	state_a = fabcfg_read(FAB_CFG_TRIG_STATE_A);
+
+	d_printf(D_INFO, "trig_state_a       = 0x%08x [%c%c%c%c%c%c%c%c] [auto:%d] [trig:%d]",
+														 state_a, \
+														(state_a & TRIG_STATE_A_TRIGD) 				? 'T' : ' ', \
+														(state_a & TRIG_STATE_A_AUTO_TRIGD) 		? 'A' : ' ', \
+														(state_a & TRIG_STATE_A_AUTO_TRIG_REPD) 	? 'a' : ' ', \
+														(state_a & TRIG_STATE_A_ARMED_SW) 			? 's' : ' ', \
+														(state_a & TRIG_STATE_A_ARMED_TRUE) 		? 'r' : ' ', \
+														(state_a & TRIG_STATE_A_HOLDOFF_ACTIVE)		? 'H' : ' ', \
+														(state_a & TRIG_STATE_A_ACQ_WAIT_HOLDOFF) 	? 'W' : ' ', \
+														(state_a & TRIG_STATE_A_INT_ARM) 			? 'I' : ' ', \
+														(state_a & TRIG_STATE_A_DBG_AU_STATE_MASK) >> TRIG_STATE_A_DBG_AU_STATE_SHIFT, \
+														(state_a & TRIG_STATE_A_DBG_TRIG_STATE_MASK) >> TRIG_STATE_A_DBG_TRIG_STATE_SHIFT);
+
+	d_printf(D_INFO, "trig_holdoff_debug = 0x%08x", fabcfg_read(FAB_CFG_TRIG_HOLDOFF_DEBUG));
+
 	d_printf(D_INFO, "");
 
 	//fabcfg_dump_state();

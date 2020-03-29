@@ -40,7 +40,11 @@ void acq_hacks_run()
 	int iter = 0;
 	int acqd_waves = 0;
 	float microsec, last_frame_time = 1e6;
-	int trig_level = 0x40;
+	int trig_level = 0x80;
+	int trig_hyst = 0x04;
+	int trig_edge = TRIG_EDGE_RISING;
+	int64_t trig_holdoff = 0;
+	int no_key;
 
 	wave_size_bytes = N_WAVESIZE;
 	wave_size_counts = wave_size_bytes / 8;
@@ -57,7 +61,10 @@ void acq_hacks_run()
 
 	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
 
+	d_printf(D_WARN, "starting trigger engine...");
 	trig_init();
+
+	d_printf(D_WARN, "starting acquisition hacks...");
 
 #ifdef PRETTY_DEBUG
 	d_printf(D_RAW, "\033[2J");
@@ -80,9 +87,6 @@ void acq_hacks_run()
 		d_start_timing(5);
 		acq_free_all_alloc();
 
-		// 32k sampct, 256k bytes (256k samples)
-		//res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, 32768, n_waves);
-
 		// possible to go as low as 1k sampcount, 8k bytes.
 		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, wave_size_counts, n_waves);
 
@@ -90,17 +94,6 @@ void acq_hacks_run()
 			d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);
 			exit(-1);
 		}
-
-		// Setup the trigger
-		trig_level = 0xb0;
-		trig_configure_edge(TRIG_ADCSRC1, trig_level, 0x04, TRIG_EDGE_RISING);
-		/*
-		trig_level += 1;
-
-		if(trig_level > 0xc0) {
-			trig_level = 0x40;
-		}
-		*/
 
 		// Start the acquisition
 		d_start_timing(4);
@@ -111,13 +104,62 @@ void acq_hacks_run()
 			exit(-1);
 		}
 
+		// Setup the trigger
+		trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+		trig_configure_holdoff(trig_holdoff);
+
 		// Wait for acq to be done
-		while(!acq_is_done()) {
+		do {
 #ifdef PRETTY_DEBUG
 			d_printf(D_RAW, "\033[;H");
 			acq_debug_dump();
 #endif
-		}
+
+			//outbyte('X');
+
+			// Check key input, if any
+			no_key = 0;
+
+			switch(toupper(d_getkey())) {
+				case 'T': trig_level += 1; break;
+				case 'G': trig_level -= 1; break;
+				case 'E': trig_edge = TRIG_EDGE_BOTH; break;
+				case 'R': trig_edge = TRIG_EDGE_RISING; break;
+				case 'F': trig_edge = TRIG_EDGE_FALLING; break;
+				case 'Y': trig_hyst += 1; break;
+				case 'H': trig_hyst -= 1; break;
+				case 'O': trig_holdoff += 100000L; break;  // Add 0.1ms holdoff
+				case 'P': trig_holdoff -= 100000L; break;  // Remove 0.1ms holdoff
+				default : no_key = 1; break;
+			}
+
+			if(trig_level > 255) {
+				trig_level = 255;
+			} else if(trig_level < 0) {
+				trig_level = 0;
+			}
+
+			if(trig_hyst > 63) {
+				trig_hyst = 63;
+			} else if(trig_hyst < 0) {
+				trig_hyst = 0;
+			}
+
+			if(trig_holdoff < 0L) {
+				trig_holdoff = 0L;
+			}
+
+			if(trig_holdoff > 30000000000L) {
+				trig_holdoff = 30000000000L;
+			}
+
+			if(!no_key) {
+				trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+				trig_configure_holdoff(trig_holdoff);
+				d_printf(D_INFO, "level:0x%02x, hyst:0x%02x, edge:0x%02x, hold:0x%08x", (uint8_t)trig_level, (uint8_t)trig_hyst, (uint8_t)trig_edge, fabcfg_read(FAB_CFG_TRIG_HOLDOFF));
+				//trig_dump_state();
+			}
+		} while(!acq_is_done());
 
 		d_stop_timing(4);
 		microsec = d_read_timing_us(4);

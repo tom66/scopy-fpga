@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:FabCfg_NextGen:1.0
-// IP Revision: 14
+// IP Revision: 17
 
 (* X_CORE_INFO = "FabCfg_NextGen_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=FabCfg_NextGen,x_ipVersion=1.0,x_ipCoreRevision=14,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=10}" *)
+(* CORE_GENERATION_INFO = "design_1_FabCfg_NextGen_0_0,FabCfg_NextGen_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=FabCfg_NextGen,x_ipVersion=1.0,x_ipCoreRevision=17,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=10}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_FabCfg_NextGen_0_0 (
   R_gpio_test,
@@ -62,6 +62,9 @@ module design_1_FabCfg_NextGen_0_0 (
   R_acq_ctrl_a,
   R_acq_status_a,
   R_acq_status_b,
+  R_acq_status_c,
+  R_acq_train_a,
+  R_acq_train_b,
   R_trig_level_0,
   R_trig_level_1,
   R_trig_level_2,
@@ -71,6 +74,12 @@ module design_1_FabCfg_NextGen_0_0 (
   R_trig_level_6,
   R_trig_level_7,
   R_trig_config_a,
+  R_trig_state_a,
+  R_trig_holdoff,
+  R_trig_auto_timers,
+  R_trig_delay_reg0,
+  R_trig_delay_reg1,
+  R_trig_holdoff_debug,
   R_csi_line_count,
   R_csi_line_byte_count,
   R_csi_data_type,
@@ -106,6 +115,9 @@ input wire [31 : 0] R_acq_trigger_ptr;
 output wire [31 : 0] R_acq_ctrl_a;
 input wire [31 : 0] R_acq_status_a;
 input wire [31 : 0] R_acq_status_b;
+input wire [31 : 0] R_acq_status_c;
+output wire [31 : 0] R_acq_train_a;
+output wire [31 : 0] R_acq_train_b;
 output wire [31 : 0] R_trig_level_0;
 output wire [31 : 0] R_trig_level_1;
 output wire [31 : 0] R_trig_level_2;
@@ -115,12 +127,18 @@ output wire [31 : 0] R_trig_level_5;
 output wire [31 : 0] R_trig_level_6;
 output wire [31 : 0] R_trig_level_7;
 output wire [31 : 0] R_trig_config_a;
+input wire [31 : 0] R_trig_state_a;
+output wire [31 : 0] R_trig_holdoff;
+output wire [31 : 0] R_trig_auto_timers;
+output wire [31 : 0] R_trig_delay_reg0;
+output wire [31 : 0] R_trig_delay_reg1;
+input wire [31 : 0] R_trig_holdoff_debug;
 output wire [15 : 0] R_csi_line_count;
 output wire [20 : 0] R_csi_line_byte_count;
 output wire [7 : 0] R_csi_data_type;
 output wire [15 : 0] R_csi_control_flags;
 input wire [31 : 0] K_in_bitstream_version;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 177777771, PHASE 0.000, CLK_DOMAIN design_1_zynq_ps_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 S00_AXI_CLK CLK" *)
 input wire s00_axi_aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
@@ -162,8 +180,8 @@ output wire [31 : 0] s00_axi_rdata;
 output wire [1 : 0] s00_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RVALID" *)
 output wire s00_axi_rvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 256, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 177777771, ID_WIDTH 0, ADDR_WIDTH 10, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN design_1_processing_\
-system7_0_1_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 256, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 177777771, ID_WIDTH 0, ADDR_WIDTH 10, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN design_1_zynq_ps_0_F\
+CLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RREADY" *)
 input wire s00_axi_rready;
 
@@ -178,6 +196,9 @@ input wire s00_axi_rready;
     .R_acq_ctrl_a(R_acq_ctrl_a),
     .R_acq_status_a(R_acq_status_a),
     .R_acq_status_b(R_acq_status_b),
+    .R_acq_status_c(R_acq_status_c),
+    .R_acq_train_a(R_acq_train_a),
+    .R_acq_train_b(R_acq_train_b),
     .R_trig_level_0(R_trig_level_0),
     .R_trig_level_1(R_trig_level_1),
     .R_trig_level_2(R_trig_level_2),
@@ -187,6 +208,12 @@ input wire s00_axi_rready;
     .R_trig_level_6(R_trig_level_6),
     .R_trig_level_7(R_trig_level_7),
     .R_trig_config_a(R_trig_config_a),
+    .R_trig_state_a(R_trig_state_a),
+    .R_trig_holdoff(R_trig_holdoff),
+    .R_trig_auto_timers(R_trig_auto_timers),
+    .R_trig_delay_reg0(R_trig_delay_reg0),
+    .R_trig_delay_reg1(R_trig_delay_reg1),
+    .R_trig_holdoff_debug(R_trig_holdoff_debug),
     .R_csi_line_count(R_csi_line_count),
     .R_csi_line_byte_count(R_csi_line_byte_count),
     .R_csi_data_type(R_csi_data_type),

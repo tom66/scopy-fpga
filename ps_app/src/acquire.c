@@ -48,7 +48,7 @@ void _acq_irq_rx_handler(void *callback)
 	int i;
 
 	//d_printf(D_INFO, "irq_start (%d)", g_acq_state.sub_state);
-
+	/*
 	fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
 	fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x11100000);
 
@@ -57,6 +57,7 @@ void _acq_irq_rx_handler(void *callback)
 	g_acq_state.dbg_isr_acq_status_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
 	g_acq_state.dbg_isr_acq_status_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
 	g_acq_state.dbg_isr_acq_trig_ptr = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
+	 */
 
 	// Get status and ACK the interrupt.
 	status = XAxiDma_BdRingGetIrq(bd_ring);
@@ -91,7 +92,7 @@ void _acq_irq_rx_handler(void *callback)
 			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
 			case ACQSUBST_PRE_TRIG_FILL:
 				// Force depth 'A', stop the AXI bus momentarily (TVALID will go low, TLAST will go high)
-				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_AXI_RUN);
+				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_AXI_RUN | ACQ_CTRL_A_POST_TRIG_MODE);
 				//emio_fast_write(ACQ_EMIO_DEPTH_MUX, 0);
 				//emio_fast_write(ACQ_EMIO_AXI_RUN, 0);
 
@@ -173,11 +174,13 @@ void _acq_irq_rx_handler(void *callback)
 					 */
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
 
-					// Start the AXI bus again with triggers masked as we are no longer interested in triggers
-					fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
-
-					//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
-					//emio_fast_write(ACQ_EMIO_AXI_RUN, 1);
+					/*
+					 * Start the AXI bus again with triggers masked as we are no longer interested in triggers
+					 *
+				 	 * POST_TRIG_MODE flag is set to indicate that we can generate a post-trigger done flag at the
+				 	 * end of this acquisition, to trigger hold-off and other hardware blocks.
+				 	 */
+					fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN | ACQ_CTRL_A_POST_TRIG_MODE);
 
 					g_acq_state.sub_state = ACQSUBST_POST_TRIG;
 					g_acq_state.stats.num_samples_raw += g_acq_state.acq_current->trigger_at;
@@ -234,7 +237,7 @@ void _acq_irq_rx_handler(void *callback)
 				}
 
 				fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_TRIG_MASK);
-				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN);
+				fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN | ACQ_CTRL_A_POST_TRIG_MODE);
 
 				//emio_fast_write(ACQ_EMIO_TRIG_MASK, 1);
 				//emio_fast_write(ACQ_EMIO_RUN, 0);
@@ -354,7 +357,7 @@ void _acq_irq_fifo_gen_rst(void *none)
 		stat_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
 
 		// Start on 'A' mux: pre-trigger
-		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE);
 		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
 
 		//d_printf(D_ERROR, "acquire: FIFO stall recovery (0x%08x, 0x%08x)", stat_a, stat_b);
@@ -478,7 +481,7 @@ int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
  */
 void acq_init()
 {
-	int error;
+	int i, error;
 
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.state = ACQSTATE_UNINIT;
@@ -541,6 +544,54 @@ void acq_init()
 	XScuGic_Enable(&g_hal.xscu_gic, ACQ_DMA_RX_IRQ);
 	XScuGic_Enable(&g_hal.xscu_gic, ACQ_FIFO_STALL_IRQ);
 	d_printf(D_INFO, "acquire: SCUGIC configured");
+
+	/*
+	 * Set all line training data to zero and write it to the acquisition engine.
+	 */
+	for(i = 0; i < 8; i++) {
+		g_acq_state.line_train[i] = 0;
+	}
+
+	acq_write_training();
+}
+
+/*
+ * Write training data to the acquisition engine.
+ */
+void acq_write_training()
+{
+	int i;
+	uint32_t train_regA = 0, train_regB = 0;
+
+	d_printf(D_INFO, "acquire: start loading train values");
+
+	// 5 LSBs from each line train value are stored into A and B registers
+	for(i = 0; i < 4; i++) {
+		train_regA |= (g_acq_state.line_train[i + 0] & 31) << (3 + (8 * i));
+	}
+
+	for(i = 0; i < 4; i++) {
+		train_regB |= (g_acq_state.line_train[i + 4] & 31) << (3 + (8 * i));
+	}
+
+	fabcfg_write(FAB_CFG_ACQ_TRAIN_A, train_regA | ACQ_TRAIN_A_LOAD);
+	fabcfg_write(FAB_CFG_ACQ_TRAIN_B, train_regB);
+
+	// Verify "DL" bit is clear
+	while(fabcfg_test(FAB_CFG_ACQ_STATUS_C, ACQ_STATUS_C_DELAY_LOADED)) ;
+
+	// Clear train_load flag
+	fabcfg_clear(FAB_CFG_ACQ_TRAIN_A, ACQ_TRAIN_A_LOAD);
+
+	// XXX: Finish this... this hangs here, it shouldn't!
+#if 0
+	// Wait for "DL" bit to be set
+	while(!fabcfg_test(FAB_CFG_ACQ_STATUS_C, ACQ_STATUS_C_DELAY_LOADED)) {
+		//outbyte('C');
+	}
+#endif
+
+	d_printf(D_INFO, "acquire: training values loaded");
 }
 
 /*
@@ -909,6 +960,19 @@ int acq_start()
 
 	//d_printf(D_ERROR, "acquire: starts");
 
+	// Test of FabCfg performance
+	/*
+	while(1) {
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE);
+		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE);
+	}
+
+	while(1) {
+		fabcfg_write(FAB_CFG_ACQ_CTRL_A,  (ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE));
+		fabcfg_write(FAB_CFG_ACQ_CTRL_A, ~(ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE));
+	}
+	*/
+
 	if(g_acq_state.state == ACQSTATE_UNINIT) {
 		return ACQRES_NOT_INITIALISED;
 	}
@@ -950,7 +1014,8 @@ int acq_start()
 		// Reset the trigger before starting acquisition.
 		_acq_reset_trigger();
 
-		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT);
+		// Start the transaction: initially with triggers masked and not in POST_TRIG mode
+		fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT | ACQ_CTRL_A_POST_TRIG_MODE);
 		fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
 
 		return ACQRES_OK;

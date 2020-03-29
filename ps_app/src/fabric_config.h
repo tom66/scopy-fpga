@@ -42,6 +42,8 @@
 #define FAB_CFG_VERSION					0x000c
 #define FAB_CFG_USRACCESS				0x0010
 
+#define FAB_CFG_CLOCK_CTRL				0x0030	// Not presently used, will gate clocks for power consumption
+
 #define FAB_CFG_ACQ_SIZE_A				0x0040
 #define FAB_CFG_ACQ_SIZE_B				0x0044
 #define FAB_CFG_ACQ_TRIGGER_PTR			0x0048
@@ -50,6 +52,9 @@
 //#define FAB_CFG_ACQ_CTRL_B			0x0054	// Reserved slot
 #define FAB_CFG_ACQ_STATUS_A			0x0058
 #define FAB_CFG_ACQ_STATUS_B			0x005c
+#define FAB_CFG_ACQ_STATUS_C			0x0060
+#define FAB_CFG_ACQ_TRAIN_A				0x0064
+#define FAB_CFG_ACQ_TRAIN_B				0x0068
 
 #define FAB_CFG_TRIG_LEVEL0				0x0090
 #define FAB_CFG_TRIG_LEVEL1				0x0094
@@ -67,6 +72,8 @@
 #define FAB_CFG_TRIG_AUTO_TIMERS		0x00c4
 #define FAB_CFG_TRIG_DELAY_REG0			0x00c8
 #define FAB_CFG_TRIG_DELAY_REG1			0x00cc
+
+#define FAB_CFG_TRIG_HOLDOFF_DEBUG		0x00d4
 
 //#define FAB_CFG_GPIO_TEST				0x0050	// Deprecated, to be moved
 #define FAB_CFG_CSI_LINE_COUNT			0x0100
@@ -100,9 +107,9 @@ static inline uint32_t fabcfg_read(uint32_t reg)
 	reg &= FAB_CFG_ADDR_MASK;
 
 	// Wrapped in dsb to ensure synchronous read
-	dsb();
+	//dsb();
 	res = _FAB_CFG_ACCESS(reg);
-	dsb();
+	//dsb();
 
 	return res;
 }
@@ -137,9 +144,9 @@ static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
 	uint32_t res;
 
 	reg &= FAB_CFG_ADDR_MASK;
-	dsb();
+	//dsb();
 	res = _FAB_CFG_ACCESS(reg);
-	dsb();
+	//dsb();
 
 	return res & mask;
 }
@@ -153,9 +160,9 @@ static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
 static inline void fabcfg_write(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-	dsb();
+	//dsb();
 	_FAB_CFG_ACCESS(reg) = data;
-	dsb();
+	//dsb();
 }
 
 /*
@@ -167,23 +174,23 @@ static inline void fabcfg_write(uint32_t reg, uint32_t data)
 static inline void fabcfg_set(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-	dsb();
+	//dsb();
 	_FAB_CFG_ACCESS(reg) |= data;
-	dsb();
+	//dsb();
 }
 
 /*
  * AND-NOT (clear) data in fabric  at a specified address.
  *
  * @param	reg		Register index
- * @param	data	Data to AND-NOT
+ * @param	data	Data to AND-NOTS
  */
 static inline void fabcfg_clear(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-	dsb();
+	//dsb();
 	_FAB_CFG_ACCESS(reg) &= ~data;
-	dsb();
+	//dsb();
 }
 
 /*
@@ -195,9 +202,9 @@ static inline void fabcfg_clear(uint32_t reg, uint32_t data)
 static inline void fabcfg_toggle(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
-	dsb();
+	//dsb();
 	_FAB_CFG_ACCESS(reg) ^= data;
-	dsb();
+	//dsb();
 }
 
 #endif /* SRC_FABRIC_CONFIG_H_ */

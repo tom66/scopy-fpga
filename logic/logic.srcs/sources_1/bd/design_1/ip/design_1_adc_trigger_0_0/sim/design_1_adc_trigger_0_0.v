@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_trigger:1.0
-// IP Revision: 26
+// IP Revision: 48
 
 `timescale 1ns/1ps
 
@@ -65,9 +65,20 @@ module design_1_adc_trigger_0_0 (
   trig_level_6,
   trig_level_7,
   trig_config_a,
+  trig_config_b,
+  trig_state_a,
+  trig_holdoff,
+  trig_auto_timers,
+  trig_delay_reg0,
+  trig_delay_reg1,
+  trig_holdoff_debug,
   trig_input_external,
   trig_input_ac,
-  acq_armed,
+  acq_armed_waiting_trig,
+  acq_holdoff,
+  acq_done,
+  acq_done_post,
+  acq_have_trig,
   dbg_trig_sig_a,
   dbg_trig_sig_b,
   dbg_comp_state_1_0123a,
@@ -102,8 +113,8 @@ module design_1_adc_trigger_0_0 (
   dbg_adc_2a_lo_4567a,
   dbg_adc_2b_hi_4567a,
   dbg_adc_2b_lo_4567a,
-  trigger_out,
-  trigger_sub_word
+  trig_out,
+  trig_sub_word
 );
 
 input wire [63 : 0] adc_bus;
@@ -119,9 +130,20 @@ input wire [31 : 0] trig_level_5;
 input wire [31 : 0] trig_level_6;
 input wire [31 : 0] trig_level_7;
 input wire [31 : 0] trig_config_a;
+input wire [31 : 0] trig_config_b;
+output wire [31 : 0] trig_state_a;
+input wire [31 : 0] trig_holdoff;
+input wire [31 : 0] trig_auto_timers;
+input wire [31 : 0] trig_delay_reg0;
+input wire [31 : 0] trig_delay_reg1;
+output wire [31 : 0] trig_holdoff_debug;
 input wire trig_input_external;
 input wire trig_input_ac;
-input wire acq_armed;
+input wire acq_armed_waiting_trig;
+output wire acq_holdoff;
+input wire acq_done;
+input wire acq_done_post;
+input wire acq_have_trig;
 output wire [3 : 0] dbg_trig_sig_a;
 output wire [3 : 0] dbg_trig_sig_b;
 output wire [1 : 0] dbg_comp_state_1_0123a;
@@ -156,8 +178,8 @@ output wire dbg_adc_2a_hi_4567a;
 output wire dbg_adc_2a_lo_4567a;
 output wire dbg_adc_2b_hi_4567a;
 output wire dbg_adc_2b_lo_4567a;
-output wire trigger_out;
-output wire [2 : 0] trigger_sub_word;
+output wire trig_out;
+output wire [2 : 0] trig_sub_word;
 
   adc_trigger_v1_0 #(
     .TRIG_TYPE_NEVER(0),
@@ -182,7 +204,16 @@ output wire [2 : 0] trigger_sub_word;
     .TRCHAN_1B(4),
     .TRCHAN_2B(5),
     .TRCHAN_3B(6),
-    .TRCHAN_4B(7)
+    .TRCHAN_4B(7),
+    .TRIG_MODE_NORMAL('B0),
+    .TRIG_MODE_AUTO('B1),
+    .TRIG_STATE_WAIT_FOR_ARM(1),
+    .TRIG_STATE_ARMED_WAITING(2),
+    .TRIG_STATE_TRIGD_HOLDOFF_LOAD(3),
+    .TRIG_STATE_TRIGD_HOLDOFF(4),
+    .TRIG_STATE_TRIGD_AUTO_INITIAL(5),
+    .TRIG_STATE_TRIGD_AUTO_REPEAT(6),
+    .TRIG_STATE_TRIGD_FORCE_AUTO(7)
   ) inst (
     .adc_bus(adc_bus),
     .adc_data_clk(adc_data_clk),
@@ -195,9 +226,20 @@ output wire [2 : 0] trigger_sub_word;
     .trig_level_6(trig_level_6),
     .trig_level_7(trig_level_7),
     .trig_config_a(trig_config_a),
+    .trig_config_b(trig_config_b),
+    .trig_state_a(trig_state_a),
+    .trig_holdoff(trig_holdoff),
+    .trig_auto_timers(trig_auto_timers),
+    .trig_delay_reg0(trig_delay_reg0),
+    .trig_delay_reg1(trig_delay_reg1),
+    .trig_holdoff_debug(trig_holdoff_debug),
     .trig_input_external(trig_input_external),
     .trig_input_ac(trig_input_ac),
-    .acq_armed(acq_armed),
+    .acq_armed_waiting_trig(acq_armed_waiting_trig),
+    .acq_holdoff(acq_holdoff),
+    .acq_done(acq_done),
+    .acq_done_post(acq_done_post),
+    .acq_have_trig(acq_have_trig),
     .dbg_trig_sig_a(dbg_trig_sig_a),
     .dbg_trig_sig_b(dbg_trig_sig_b),
     .dbg_comp_state_1_0123a(dbg_comp_state_1_0123a),
@@ -232,7 +274,7 @@ output wire [2 : 0] trigger_sub_word;
     .dbg_adc_2a_lo_4567a(dbg_adc_2a_lo_4567a),
     .dbg_adc_2b_hi_4567a(dbg_adc_2b_hi_4567a),
     .dbg_adc_2b_lo_4567a(dbg_adc_2b_lo_4567a),
-    .trigger_out(trigger_out),
-    .trigger_sub_word(trigger_sub_word)
+    .trig_out(trig_out),
+    .trig_sub_word(trig_sub_word)
   );
 endmodule

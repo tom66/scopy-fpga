@@ -115,6 +115,7 @@ void gpio_led_write(int index, int enable);
 void d_printf(int debug_code, char *fmt, ...);
 void d_waitkey();
 bool d_iskeypress();
+char d_getkey();
 void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret);
 void d_start_timing(int index);
 void d_stop_timing(int index);

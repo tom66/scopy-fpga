@@ -59,6 +59,11 @@ module bd_f60c_wrapper
     probe52,
     probe53,
     probe54,
+    probe55,
+    probe56,
+    probe57,
+    probe58,
+    probe59,
     probe6,
     probe7,
     probe8,
@@ -103,18 +108,23 @@ module bd_f60c_wrapper
   input [1:0]probe41;
   input [1:0]probe42;
   input [1:0]probe43;
-  input [31:0]probe44;
+  input [0:0]probe44;
   input [0:0]probe45;
   input [0:0]probe46;
   input [0:0]probe47;
   input [0:0]probe48;
-  input [0:0]probe49;
+  input [31:0]probe49;
   input [10:0]probe5;
   input [0:0]probe50;
   input [0:0]probe51;
   input [0:0]probe52;
   input [0:0]probe53;
   input [0:0]probe54;
+  input [0:0]probe55;
+  input [31:0]probe56;
+  input [0:0]probe57;
+  input [0:0]probe58;
+  input [0:0]probe59;
   input [15:0]probe6;
   input [15:0]probe7;
   input [0:0]probe8;
@@ -160,18 +170,23 @@ module bd_f60c_wrapper
   wire [1:0]probe41;
   wire [1:0]probe42;
   wire [1:0]probe43;
-  wire [31:0]probe44;
+  wire [0:0]probe44;
   wire [0:0]probe45;
   wire [0:0]probe46;
   wire [0:0]probe47;
   wire [0:0]probe48;
-  wire [0:0]probe49;
+  wire [31:0]probe49;
   wire [10:0]probe5;
   wire [0:0]probe50;
   wire [0:0]probe51;
   wire [0:0]probe52;
   wire [0:0]probe53;
   wire [0:0]probe54;
+  wire [0:0]probe55;
+  wire [31:0]probe56;
+  wire [0:0]probe57;
+  wire [0:0]probe58;
+  wire [0:0]probe59;
   wire [15:0]probe6;
   wire [15:0]probe7;
   wire [0:0]probe8;
@@ -230,6 +245,11 @@ module bd_f60c_wrapper
         .probe52(probe52),
         .probe53(probe53),
         .probe54(probe54),
+        .probe55(probe55),
+        .probe56(probe56),
+        .probe57(probe57),
+        .probe58(probe58),
+        .probe59(probe59),
         .probe6(probe6),
         .probe7(probe7),
         .probe8(probe8),

@@ -376,6 +376,18 @@ bool d_iskeypress()
 }
 
 /**
+ * Return a keypress from UART if one is available.  If one is not available, zero is returned.
+ */
+char d_getkey()
+{
+	if(XUartPs_IsReceiveData(STDIN_BASEADDRESS)) {
+		return XUartPs_RecvByte(STDIN_BASEADDRESS);
+	} else {
+		return 0;
+	}
+}
+
+/**
  * Read the timer value as an MSB, LSB pair.  The values are returned by reference.
  *
  * This function attempts to safely read the registers and avoids overflow errors

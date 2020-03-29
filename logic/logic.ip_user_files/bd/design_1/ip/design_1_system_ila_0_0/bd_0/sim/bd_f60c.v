@@ -6,7 +6,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=1,numReposBlks=1,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=Global}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
+(* CORE_GENERATION_INFO = "bd_f60c,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=bd_f60c,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=1,numReposBlks=1,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=SBD,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1_system_ila_0_0.hwdef" *) 
 module bd_f60c
    (clk,
     probe0,
@@ -60,11 +60,16 @@ module bd_f60c
     probe52,
     probe53,
     probe54,
+    probe55,
+    probe56,
+    probe57,
+    probe58,
+    probe59,
     probe6,
     probe7,
     probe8,
     probe9);
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, CLK_DOMAIN design_1_processing_system7_0_1_FCLK_CLK0, FREQ_HZ 177777771, INSERT_VIP 0, PHASE 0.000" *) input clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, CLK_DOMAIN design_1_zynq_ps_0_FCLK_CLK0, FREQ_HZ 177777771, INSERT_VIP 0, PHASE 0.000" *) input clk;
   input [5:0]probe0;
   input [0:0]probe1;
   input [0:0]probe10;
@@ -104,18 +109,23 @@ module bd_f60c
   input [1:0]probe41;
   input [1:0]probe42;
   input [1:0]probe43;
-  input [31:0]probe44;
+  input [0:0]probe44;
   input [0:0]probe45;
   input [0:0]probe46;
   input [0:0]probe47;
   input [0:0]probe48;
-  input [0:0]probe49;
+  input [31:0]probe49;
   input [10:0]probe5;
   input [0:0]probe50;
   input [0:0]probe51;
   input [0:0]probe52;
   input [0:0]probe53;
   input [0:0]probe54;
+  input [0:0]probe55;
+  input [31:0]probe56;
+  input [0:0]probe57;
+  input [0:0]probe58;
+  input [0:0]probe59;
   input [15:0]probe6;
   input [15:0]probe7;
   input [0:0]probe8;
@@ -160,18 +170,23 @@ module bd_f60c
   wire [1:0]probe41_1;
   wire [1:0]probe42_1;
   wire [1:0]probe43_1;
-  wire [31:0]probe44_1;
+  wire [0:0]probe44_1;
   wire [0:0]probe45_1;
   wire [0:0]probe46_1;
   wire [0:0]probe47_1;
   wire [0:0]probe48_1;
-  wire [0:0]probe49_1;
+  wire [31:0]probe49_1;
   wire [31:0]probe4_1;
   wire [0:0]probe50_1;
   wire [0:0]probe51_1;
   wire [0:0]probe52_1;
   wire [0:0]probe53_1;
   wire [0:0]probe54_1;
+  wire [0:0]probe55_1;
+  wire [31:0]probe56_1;
+  wire [0:0]probe57_1;
+  wire [0:0]probe58_1;
+  wire [0:0]probe59_1;
   wire [10:0]probe5_1;
   wire [15:0]probe6_1;
   wire [15:0]probe7_1;
@@ -217,18 +232,23 @@ module bd_f60c
   assign probe41_1 = probe41[1:0];
   assign probe42_1 = probe42[1:0];
   assign probe43_1 = probe43[1:0];
-  assign probe44_1 = probe44[31:0];
+  assign probe44_1 = probe44[0];
   assign probe45_1 = probe45[0];
   assign probe46_1 = probe46[0];
   assign probe47_1 = probe47[0];
   assign probe48_1 = probe48[0];
-  assign probe49_1 = probe49[0];
+  assign probe49_1 = probe49[31:0];
   assign probe4_1 = probe4[31:0];
   assign probe50_1 = probe50[0];
   assign probe51_1 = probe51[0];
   assign probe52_1 = probe52[0];
   assign probe53_1 = probe53[0];
   assign probe54_1 = probe54[0];
+  assign probe55_1 = probe55[0];
+  assign probe56_1 = probe56[31:0];
+  assign probe57_1 = probe57[0];
+  assign probe58_1 = probe58[0];
+  assign probe59_1 = probe59[0];
   assign probe5_1 = probe5[10:0];
   assign probe6_1 = probe6[15:0];
   assign probe7_1 = probe7[15:0];
@@ -259,12 +279,12 @@ module bd_f60c
         .probe27(probe27_1),
         .probe28(probe28_1),
         .probe29(probe29_1),
-        .probe3(probe3_1),
+        .probe3(probe3_1[0]),
         .probe30(probe30_1),
         .probe31(probe31_1),
-        .probe32(probe32_1),
-        .probe33(probe33_1),
-        .probe34(probe34_1),
+        .probe32(probe32_1[0]),
+        .probe33(probe33_1[0]),
+        .probe34(probe34_1[0]),
         .probe35(probe35_1),
         .probe36(probe36_1),
         .probe37(probe37_1),
@@ -287,6 +307,11 @@ module bd_f60c
         .probe52(probe52_1),
         .probe53(probe53_1),
         .probe54(probe54_1),
+        .probe55(probe55_1),
+        .probe56(probe56_1),
+        .probe57(probe57_1),
+        .probe58(probe58_1),
+        .probe59(probe59_1),
         .probe6(probe6_1),
         .probe7(probe7_1),
         .probe8(probe8_1),
