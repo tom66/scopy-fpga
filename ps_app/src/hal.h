@@ -77,7 +77,7 @@
 																// at a later date (26/01/2020)
 
 #define CLKWIZ_CFG_MIPI				(XPAR_CLK_WIZ_0_DEVICE_ID)
-#define CLKWIZ_CFG_MIPI_REFCLK		177.77777777				// Should be adjusted to meet the refclk into the ClkWiz.  Bug in XSA generation makes
+#define CLKWIZ_CFG_MIPI_REFCLK		200							// Should be adjusted to meet the refclk into the ClkWiz.  Bug in XSA generation makes
 																// this otherwise invalid.
 
 // TODO:  Move to common utils file

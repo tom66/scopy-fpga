@@ -10,15 +10,15 @@ set_property SRC_FILE_INFO {cfile:G:/Xilinx/Vivado/2019.2/data/ip/xpm/xpm_cdc/tc
 set_property SRC_FILE_INFO {cfile:G:/Xilinx/Vivado/2019.2/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl rfile:G:/Xilinx/Vivado/2019.2/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl id:10 order:LATE scoped_inst:nolabel_line134/csi_gearbox_dma_0/inst/nolabel_line128/U0/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_cdc_inst unmanaged:yes} [current_design]
 current_instance nolabel_line134/clk_wiz_0/inst
 set_property src_info {type:SCOPED_XDC file:1 line:57 export:INPUT save:INPUT read:READ} [current_design]
-set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.05624
+set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.05
 current_instance
 current_instance nolabel_line134/clk_wiz_1/inst
 set_property src_info {type:SCOPED_XDC file:2 line:57 export:INPUT save:INPUT read:READ} [current_design]
-set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.05624
+set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.05
 current_instance
 current_instance nolabel_line134/zynq_ps/inst
 set_property src_info {type:SCOPED_XDC file:3 line:21 export:INPUT save:INPUT read:READ} [current_design]
-set_input_jitter clk_fpga_0 0.16875
+set_input_jitter clk_fpga_0 0.15
 set_property src_info {type:SCOPED_XDC file:3 line:30 export:INPUT save:INPUT read:READ} [current_design]
 set_property iostandard "LVCMOS33" [get_ports "MIO[53]"]
 set_property src_info {type:SCOPED_XDC file:3 line:31 export:INPUT save:INPUT read:READ} [current_design]

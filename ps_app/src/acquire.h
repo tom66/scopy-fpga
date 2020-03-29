@@ -25,6 +25,8 @@
 #include "xaxidma.h"
 #include "xscugic.h"
 
+#include "fabric_config.h"
+
 #define ACQSTATE_UNINIT				0								// Not ready: not initialised (memory or other)
 #define ACQSTATE_STOPPED			1								// Stopped but ready to start
 #define ACQSTATE_PREP				2								// Started but not acquiring data yet
@@ -217,6 +219,9 @@ struct acq_state_t {
 	uint32_t num_acq_request;	// Number of acquisitions requested
 	uint32_t num_acq_made;		// Number of acquisitions made so far
 
+	// Local state of acq_ctrl_a register used to reduce number of RMW operations made
+	uint32_t acq_ctrl_a;
+
 	/*
 	 * Sizes (in words) of the acquisition data;  the counts are given in 64-bit words
 	 * so there is an 8x or 4x relationship to the sample counts. This maximises the depth of
@@ -265,7 +270,7 @@ int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();
 int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
-int acq_start();
+int acq_start(int reset_fifo);
 int acq_force_stop();
 bool acq_is_done();
 void acq_debug_dump();
@@ -273,5 +278,30 @@ void acq_debug_dump_wave();
 int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);
 void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
+
+/*
+ * Inlined functions that reduce RMW AXI pressure by keeping
+ * track of the internal state of R_acq_ctrl_a on the PL.  It is
+ * vital that *only* these functions be used to set and clear bits
+ * in this register.
+ */
+static inline void _acq_set_ctrl_a(uint32_t bitmask)
+{
+	g_acq_state.acq_ctrl_a |= bitmask;
+	fabcfg_write(FAB_CFG_ACQ_CTRL_A, g_acq_state.acq_ctrl_a);
+}
+
+static inline void _acq_clear_ctrl_a(uint32_t bitmask)
+{
+	g_acq_state.acq_ctrl_a &= ~bitmask;
+	fabcfg_write(FAB_CFG_ACQ_CTRL_A, g_acq_state.acq_ctrl_a);
+}
+
+static inline void _acq_clear_and_set_ctrl_a(uint32_t bitmask_clear, uint32_t bitmask_set)
+{
+	g_acq_state.acq_ctrl_a &= ~bitmask_clear;
+	g_acq_state.acq_ctrl_a |= bitmask_set;
+	fabcfg_write(FAB_CFG_ACQ_CTRL_A, g_acq_state.acq_ctrl_a);
+}
 
 #endif // SRC_ACQUIRE_H_

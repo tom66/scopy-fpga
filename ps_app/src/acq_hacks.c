@@ -39,7 +39,7 @@ void acq_hacks_run()
 	int test_tx = 100, bytes;
 	int iter = 0;
 	int acqd_waves = 0;
-	float microsec, last_frame_time = 1e6;
+	float microsec, last_frame_time = 1e6, wave_time = 0, wave_raw_time = 0;
 	int trig_level = 0x80;
 	int trig_hyst = 0x04;
 	int trig_edge = TRIG_EDGE_RISING;
@@ -52,6 +52,15 @@ void acq_hacks_run()
 
 	csi_hack_init();
 	memset(buffer, 0, 32);
+
+	/*
+	while(1) {
+		fabcfg_write(FAB_CFG_TRIG_LEVEL0, 0x55555555);
+		fabcfg_write(FAB_CFG_TRIG_LEVEL1, 0x55555555);
+		fabcfg_write(FAB_CFG_TRIG_LEVEL0, 0x00000000);
+		fabcfg_write(FAB_CFG_TRIG_LEVEL1, 0x00000000);
+	}
+	*/
 
 	/*
 	for(i = 0; i < (sizeof(buffer) - 32); i++) {
@@ -83,6 +92,9 @@ void acq_hacks_run()
 
 		//d_printf(D_WARN, "Iteration");
 
+		// Start overall timer
+		d_start_timing(7);
+
 		// Setup the acquisition
 		d_start_timing(5);
 		acq_free_all_alloc();
@@ -97,7 +109,7 @@ void acq_hacks_run()
 
 		// Start the acquisition
 		d_start_timing(4);
-		res = acq_start();
+		res = acq_start(1);
 
 		if(res != ACQRES_OK) {
 			d_printf(D_ERROR, "acq_start error: %d", res);
@@ -105,8 +117,8 @@ void acq_hacks_run()
 		}
 
 		// Setup the trigger
-		//trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
-		trig_configure_always();
+		trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+		//trig_configure_always();
 		trig_configure_holdoff(trig_holdoff);
 
 		// Wait for acq to be done
@@ -155,8 +167,8 @@ void acq_hacks_run()
 			}
 
 			if(!no_key) {
-				//trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
-				trig_configure_always();
+				trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+				//trig_configure_always();
 				trig_configure_holdoff(trig_holdoff);
 				d_printf(D_INFO, "level:0x%02x, hyst:0x%02x, edge:0x%02x, hold:0x%08x (%d us)", \
 						(uint8_t)trig_level, (uint8_t)trig_hyst, (uint8_t)trig_edge, fabcfg_read(FAB_CFG_TRIG_HOLDOFF), \
@@ -166,7 +178,8 @@ void acq_hacks_run()
 		} while(!acq_is_done());
 
 		d_stop_timing(4);
-		microsec = d_read_timing_us(4);
+		wave_raw_time = d_read_timing_us(4);
+		microsec = wave_raw_time;
 
 		//d_printf(D_INFO, "Acquiring %d waves took %.4f microseconds", n_waves, microsec);
 
@@ -214,14 +227,17 @@ void acq_hacks_run()
 		csi_hack_stop_frame();
 
 		d_stop_timing(2);
-		microsec += d_read_timing_us(2);
+		d_stop_timing(7);
 
+		wave_time = d_read_timing_us(7);
+		microsec += d_read_timing_us(2);
 		acqd_waves += g_acq_state.num_acq_made;
 
 		//d_printf(D_INFO, "Done sending %d waves (%d KB) -- took %.4f microseconds", n_waves, bytes / 1024, microsec);
-		d_printf(D_INFO, "%.4f MB/s (%.4f fps, %d stalls, %d waves, %.4f%% stall rate)", \
-				bytes / microsec, 1e6 / last_frame_time, (uint32_t)g_acq_state.stats.num_fifo_stall_total, \
-				acqd_waves, ((float)(g_acq_state.stats.num_fifo_stall_total) / acqd_waves) * 100);
+		d_printf(D_INFO, "%.4f MB/s (%.4f fps, %d stalls, %d waves, %.1f waves/sec (%.1f waves/sec raw), %.4f%% stall rate)", \
+				bytes / microsec, 1e6 / last_frame_time, (uint32_t)g_acq_state.stats.num_fifo_stall_total, acqd_waves, \
+				(g_acq_state.num_acq_made * 1e6) / wave_time, (g_acq_state.num_acq_made * 1e6) / wave_raw_time, \
+				((float)(g_acq_state.stats.num_fifo_stall_total) / acqd_waves) * 100);
 
 		//bogo_delay(10000);
 

@@ -7,251 +7,399 @@
 `timescale 1 ps / 1 ps
 
 module bd_f60c_wrapper
-   (clk,
+   (SLOT_0_AXI_araddr,
+    SLOT_0_AXI_arburst,
+    SLOT_0_AXI_arcache,
+    SLOT_0_AXI_arid,
+    SLOT_0_AXI_arlen,
+    SLOT_0_AXI_arlock,
+    SLOT_0_AXI_arprot,
+    SLOT_0_AXI_arqos,
+    SLOT_0_AXI_arready,
+    SLOT_0_AXI_arsize,
+    SLOT_0_AXI_arvalid,
+    SLOT_0_AXI_awaddr,
+    SLOT_0_AXI_awburst,
+    SLOT_0_AXI_awcache,
+    SLOT_0_AXI_awid,
+    SLOT_0_AXI_awlen,
+    SLOT_0_AXI_awlock,
+    SLOT_0_AXI_awprot,
+    SLOT_0_AXI_awqos,
+    SLOT_0_AXI_awready,
+    SLOT_0_AXI_awsize,
+    SLOT_0_AXI_awvalid,
+    SLOT_0_AXI_bid,
+    SLOT_0_AXI_bready,
+    SLOT_0_AXI_bresp,
+    SLOT_0_AXI_bvalid,
+    SLOT_0_AXI_rdata,
+    SLOT_0_AXI_rid,
+    SLOT_0_AXI_rlast,
+    SLOT_0_AXI_rready,
+    SLOT_0_AXI_rresp,
+    SLOT_0_AXI_rvalid,
+    SLOT_0_AXI_wdata,
+    SLOT_0_AXI_wid,
+    SLOT_0_AXI_wlast,
+    SLOT_0_AXI_wready,
+    SLOT_0_AXI_wstrb,
+    SLOT_0_AXI_wvalid,
+    SLOT_1_AXI_araddr,
+    SLOT_1_AXI_arburst,
+    SLOT_1_AXI_arcache,
+    SLOT_1_AXI_arid,
+    SLOT_1_AXI_arlen,
+    SLOT_1_AXI_arlock,
+    SLOT_1_AXI_arprot,
+    SLOT_1_AXI_arqos,
+    SLOT_1_AXI_arready,
+    SLOT_1_AXI_arsize,
+    SLOT_1_AXI_arvalid,
+    SLOT_1_AXI_awaddr,
+    SLOT_1_AXI_awburst,
+    SLOT_1_AXI_awcache,
+    SLOT_1_AXI_awid,
+    SLOT_1_AXI_awlen,
+    SLOT_1_AXI_awlock,
+    SLOT_1_AXI_awprot,
+    SLOT_1_AXI_awqos,
+    SLOT_1_AXI_awready,
+    SLOT_1_AXI_awsize,
+    SLOT_1_AXI_awvalid,
+    SLOT_1_AXI_bid,
+    SLOT_1_AXI_bready,
+    SLOT_1_AXI_bresp,
+    SLOT_1_AXI_bvalid,
+    SLOT_1_AXI_rdata,
+    SLOT_1_AXI_rid,
+    SLOT_1_AXI_rlast,
+    SLOT_1_AXI_rready,
+    SLOT_1_AXI_rresp,
+    SLOT_1_AXI_rvalid,
+    SLOT_1_AXI_wdata,
+    SLOT_1_AXI_wid,
+    SLOT_1_AXI_wlast,
+    SLOT_1_AXI_wready,
+    SLOT_1_AXI_wstrb,
+    SLOT_1_AXI_wvalid,
+    SLOT_2_AXI_araddr,
+    SLOT_2_AXI_arprot,
+    SLOT_2_AXI_arready,
+    SLOT_2_AXI_arvalid,
+    SLOT_2_AXI_awaddr,
+    SLOT_2_AXI_awprot,
+    SLOT_2_AXI_awready,
+    SLOT_2_AXI_awvalid,
+    SLOT_2_AXI_bready,
+    SLOT_2_AXI_bresp,
+    SLOT_2_AXI_bvalid,
+    SLOT_2_AXI_rdata,
+    SLOT_2_AXI_rready,
+    SLOT_2_AXI_rresp,
+    SLOT_2_AXI_rvalid,
+    SLOT_2_AXI_wdata,
+    SLOT_2_AXI_wready,
+    SLOT_2_AXI_wstrb,
+    SLOT_2_AXI_wvalid,
+    clk,
     probe0,
-    probe1,
-    probe10,
-    probe11,
-    probe12,
-    probe13,
-    probe14,
-    probe15,
-    probe16,
-    probe17,
-    probe18,
-    probe19,
-    probe2,
-    probe20,
-    probe21,
-    probe22,
-    probe23,
-    probe24,
-    probe25,
-    probe26,
-    probe27,
-    probe28,
-    probe29,
-    probe3,
-    probe30,
-    probe31,
-    probe32,
-    probe33,
-    probe34,
-    probe35,
-    probe36,
-    probe37,
-    probe38,
-    probe39,
-    probe4,
-    probe40,
-    probe41,
-    probe42,
-    probe43,
-    probe44,
-    probe45,
-    probe46,
-    probe47,
-    probe48,
-    probe49,
-    probe5,
-    probe50,
-    probe51,
-    probe52,
-    probe53,
-    probe54,
-    probe55,
-    probe56,
-    probe57,
-    probe58,
-    probe59,
-    probe6,
-    probe7,
-    probe8,
-    probe9);
+    resetn);
+  input [31:0]SLOT_0_AXI_araddr;
+  input [1:0]SLOT_0_AXI_arburst;
+  input [3:0]SLOT_0_AXI_arcache;
+  input [11:0]SLOT_0_AXI_arid;
+  input [3:0]SLOT_0_AXI_arlen;
+  input [1:0]SLOT_0_AXI_arlock;
+  input [2:0]SLOT_0_AXI_arprot;
+  input [3:0]SLOT_0_AXI_arqos;
+  input SLOT_0_AXI_arready;
+  input [2:0]SLOT_0_AXI_arsize;
+  input SLOT_0_AXI_arvalid;
+  input [31:0]SLOT_0_AXI_awaddr;
+  input [1:0]SLOT_0_AXI_awburst;
+  input [3:0]SLOT_0_AXI_awcache;
+  input [11:0]SLOT_0_AXI_awid;
+  input [3:0]SLOT_0_AXI_awlen;
+  input [1:0]SLOT_0_AXI_awlock;
+  input [2:0]SLOT_0_AXI_awprot;
+  input [3:0]SLOT_0_AXI_awqos;
+  input SLOT_0_AXI_awready;
+  input [2:0]SLOT_0_AXI_awsize;
+  input SLOT_0_AXI_awvalid;
+  input [11:0]SLOT_0_AXI_bid;
+  input SLOT_0_AXI_bready;
+  input [1:0]SLOT_0_AXI_bresp;
+  input SLOT_0_AXI_bvalid;
+  input [31:0]SLOT_0_AXI_rdata;
+  input [11:0]SLOT_0_AXI_rid;
+  input SLOT_0_AXI_rlast;
+  input SLOT_0_AXI_rready;
+  input [1:0]SLOT_0_AXI_rresp;
+  input SLOT_0_AXI_rvalid;
+  input [31:0]SLOT_0_AXI_wdata;
+  input [11:0]SLOT_0_AXI_wid;
+  input SLOT_0_AXI_wlast;
+  input SLOT_0_AXI_wready;
+  input [3:0]SLOT_0_AXI_wstrb;
+  input SLOT_0_AXI_wvalid;
+  input [31:0]SLOT_1_AXI_araddr;
+  input [1:0]SLOT_1_AXI_arburst;
+  input [3:0]SLOT_1_AXI_arcache;
+  input [11:0]SLOT_1_AXI_arid;
+  input [3:0]SLOT_1_AXI_arlen;
+  input [1:0]SLOT_1_AXI_arlock;
+  input [2:0]SLOT_1_AXI_arprot;
+  input [3:0]SLOT_1_AXI_arqos;
+  input SLOT_1_AXI_arready;
+  input [2:0]SLOT_1_AXI_arsize;
+  input SLOT_1_AXI_arvalid;
+  input [31:0]SLOT_1_AXI_awaddr;
+  input [1:0]SLOT_1_AXI_awburst;
+  input [3:0]SLOT_1_AXI_awcache;
+  input [11:0]SLOT_1_AXI_awid;
+  input [3:0]SLOT_1_AXI_awlen;
+  input [1:0]SLOT_1_AXI_awlock;
+  input [2:0]SLOT_1_AXI_awprot;
+  input [3:0]SLOT_1_AXI_awqos;
+  input SLOT_1_AXI_awready;
+  input [2:0]SLOT_1_AXI_awsize;
+  input SLOT_1_AXI_awvalid;
+  input [11:0]SLOT_1_AXI_bid;
+  input SLOT_1_AXI_bready;
+  input [1:0]SLOT_1_AXI_bresp;
+  input SLOT_1_AXI_bvalid;
+  input [31:0]SLOT_1_AXI_rdata;
+  input [11:0]SLOT_1_AXI_rid;
+  input SLOT_1_AXI_rlast;
+  input SLOT_1_AXI_rready;
+  input [1:0]SLOT_1_AXI_rresp;
+  input SLOT_1_AXI_rvalid;
+  input [31:0]SLOT_1_AXI_wdata;
+  input [11:0]SLOT_1_AXI_wid;
+  input SLOT_1_AXI_wlast;
+  input SLOT_1_AXI_wready;
+  input [3:0]SLOT_1_AXI_wstrb;
+  input SLOT_1_AXI_wvalid;
+  input [9:0]SLOT_2_AXI_araddr;
+  input [2:0]SLOT_2_AXI_arprot;
+  input SLOT_2_AXI_arready;
+  input SLOT_2_AXI_arvalid;
+  input [9:0]SLOT_2_AXI_awaddr;
+  input [2:0]SLOT_2_AXI_awprot;
+  input SLOT_2_AXI_awready;
+  input SLOT_2_AXI_awvalid;
+  input SLOT_2_AXI_bready;
+  input [1:0]SLOT_2_AXI_bresp;
+  input SLOT_2_AXI_bvalid;
+  input [31:0]SLOT_2_AXI_rdata;
+  input SLOT_2_AXI_rready;
+  input [1:0]SLOT_2_AXI_rresp;
+  input SLOT_2_AXI_rvalid;
+  input [31:0]SLOT_2_AXI_wdata;
+  input SLOT_2_AXI_wready;
+  input [3:0]SLOT_2_AXI_wstrb;
+  input SLOT_2_AXI_wvalid;
   input clk;
-  input [5:0]probe0;
-  input [0:0]probe1;
-  input [0:0]probe10;
-  input [0:0]probe11;
-  input [31:0]probe12;
-  input [0:0]probe13;
-  input [63:0]probe14;
-  input [0:0]probe15;
-  input [0:0]probe16;
-  input [0:0]probe17;
-  input [0:0]probe18;
-  input [0:0]probe19;
-  input [0:0]probe2;
-  input [0:0]probe20;
-  input [0:0]probe21;
-  input [0:0]probe22;
-  input [0:0]probe23;
-  input [0:0]probe24;
-  input [0:0]probe25;
-  input [0:0]probe26;
-  input [0:0]probe27;
-  input [0:0]probe28;
-  input [0:0]probe29;
-  input [31:0]probe3;
-  input [2:0]probe30;
-  input [0:0]probe31;
-  input [31:0]probe32;
-  input [31:0]probe33;
-  input [31:0]probe34;
-  input [3:0]probe35;
-  input [1:0]probe36;
-  input [1:0]probe37;
-  input [1:0]probe38;
-  input [1:0]probe39;
-  input [31:0]probe4;
-  input [1:0]probe40;
-  input [1:0]probe41;
-  input [1:0]probe42;
-  input [1:0]probe43;
-  input [0:0]probe44;
-  input [0:0]probe45;
-  input [0:0]probe46;
-  input [0:0]probe47;
-  input [0:0]probe48;
-  input [31:0]probe49;
-  input [10:0]probe5;
-  input [0:0]probe50;
-  input [0:0]probe51;
-  input [0:0]probe52;
-  input [0:0]probe53;
-  input [0:0]probe54;
-  input [0:0]probe55;
-  input [31:0]probe56;
-  input [0:0]probe57;
-  input [0:0]probe58;
-  input [0:0]probe59;
-  input [15:0]probe6;
-  input [15:0]probe7;
-  input [0:0]probe8;
-  input [0:0]probe9;
+  input [31:0]probe0;
+  input resetn;
 
+  wire [31:0]SLOT_0_AXI_araddr;
+  wire [1:0]SLOT_0_AXI_arburst;
+  wire [3:0]SLOT_0_AXI_arcache;
+  wire [11:0]SLOT_0_AXI_arid;
+  wire [3:0]SLOT_0_AXI_arlen;
+  wire [1:0]SLOT_0_AXI_arlock;
+  wire [2:0]SLOT_0_AXI_arprot;
+  wire [3:0]SLOT_0_AXI_arqos;
+  wire SLOT_0_AXI_arready;
+  wire [2:0]SLOT_0_AXI_arsize;
+  wire SLOT_0_AXI_arvalid;
+  wire [31:0]SLOT_0_AXI_awaddr;
+  wire [1:0]SLOT_0_AXI_awburst;
+  wire [3:0]SLOT_0_AXI_awcache;
+  wire [11:0]SLOT_0_AXI_awid;
+  wire [3:0]SLOT_0_AXI_awlen;
+  wire [1:0]SLOT_0_AXI_awlock;
+  wire [2:0]SLOT_0_AXI_awprot;
+  wire [3:0]SLOT_0_AXI_awqos;
+  wire SLOT_0_AXI_awready;
+  wire [2:0]SLOT_0_AXI_awsize;
+  wire SLOT_0_AXI_awvalid;
+  wire [11:0]SLOT_0_AXI_bid;
+  wire SLOT_0_AXI_bready;
+  wire [1:0]SLOT_0_AXI_bresp;
+  wire SLOT_0_AXI_bvalid;
+  wire [31:0]SLOT_0_AXI_rdata;
+  wire [11:0]SLOT_0_AXI_rid;
+  wire SLOT_0_AXI_rlast;
+  wire SLOT_0_AXI_rready;
+  wire [1:0]SLOT_0_AXI_rresp;
+  wire SLOT_0_AXI_rvalid;
+  wire [31:0]SLOT_0_AXI_wdata;
+  wire [11:0]SLOT_0_AXI_wid;
+  wire SLOT_0_AXI_wlast;
+  wire SLOT_0_AXI_wready;
+  wire [3:0]SLOT_0_AXI_wstrb;
+  wire SLOT_0_AXI_wvalid;
+  wire [31:0]SLOT_1_AXI_araddr;
+  wire [1:0]SLOT_1_AXI_arburst;
+  wire [3:0]SLOT_1_AXI_arcache;
+  wire [11:0]SLOT_1_AXI_arid;
+  wire [3:0]SLOT_1_AXI_arlen;
+  wire [1:0]SLOT_1_AXI_arlock;
+  wire [2:0]SLOT_1_AXI_arprot;
+  wire [3:0]SLOT_1_AXI_arqos;
+  wire SLOT_1_AXI_arready;
+  wire [2:0]SLOT_1_AXI_arsize;
+  wire SLOT_1_AXI_arvalid;
+  wire [31:0]SLOT_1_AXI_awaddr;
+  wire [1:0]SLOT_1_AXI_awburst;
+  wire [3:0]SLOT_1_AXI_awcache;
+  wire [11:0]SLOT_1_AXI_awid;
+  wire [3:0]SLOT_1_AXI_awlen;
+  wire [1:0]SLOT_1_AXI_awlock;
+  wire [2:0]SLOT_1_AXI_awprot;
+  wire [3:0]SLOT_1_AXI_awqos;
+  wire SLOT_1_AXI_awready;
+  wire [2:0]SLOT_1_AXI_awsize;
+  wire SLOT_1_AXI_awvalid;
+  wire [11:0]SLOT_1_AXI_bid;
+  wire SLOT_1_AXI_bready;
+  wire [1:0]SLOT_1_AXI_bresp;
+  wire SLOT_1_AXI_bvalid;
+  wire [31:0]SLOT_1_AXI_rdata;
+  wire [11:0]SLOT_1_AXI_rid;
+  wire SLOT_1_AXI_rlast;
+  wire SLOT_1_AXI_rready;
+  wire [1:0]SLOT_1_AXI_rresp;
+  wire SLOT_1_AXI_rvalid;
+  wire [31:0]SLOT_1_AXI_wdata;
+  wire [11:0]SLOT_1_AXI_wid;
+  wire SLOT_1_AXI_wlast;
+  wire SLOT_1_AXI_wready;
+  wire [3:0]SLOT_1_AXI_wstrb;
+  wire SLOT_1_AXI_wvalid;
+  wire [9:0]SLOT_2_AXI_araddr;
+  wire [2:0]SLOT_2_AXI_arprot;
+  wire SLOT_2_AXI_arready;
+  wire SLOT_2_AXI_arvalid;
+  wire [9:0]SLOT_2_AXI_awaddr;
+  wire [2:0]SLOT_2_AXI_awprot;
+  wire SLOT_2_AXI_awready;
+  wire SLOT_2_AXI_awvalid;
+  wire SLOT_2_AXI_bready;
+  wire [1:0]SLOT_2_AXI_bresp;
+  wire SLOT_2_AXI_bvalid;
+  wire [31:0]SLOT_2_AXI_rdata;
+  wire SLOT_2_AXI_rready;
+  wire [1:0]SLOT_2_AXI_rresp;
+  wire SLOT_2_AXI_rvalid;
+  wire [31:0]SLOT_2_AXI_wdata;
+  wire SLOT_2_AXI_wready;
+  wire [3:0]SLOT_2_AXI_wstrb;
+  wire SLOT_2_AXI_wvalid;
   wire clk;
-  wire [5:0]probe0;
-  wire [0:0]probe1;
-  wire [0:0]probe10;
-  wire [0:0]probe11;
-  wire [31:0]probe12;
-  wire [0:0]probe13;
-  wire [63:0]probe14;
-  wire [0:0]probe15;
-  wire [0:0]probe16;
-  wire [0:0]probe17;
-  wire [0:0]probe18;
-  wire [0:0]probe19;
-  wire [0:0]probe2;
-  wire [0:0]probe20;
-  wire [0:0]probe21;
-  wire [0:0]probe22;
-  wire [0:0]probe23;
-  wire [0:0]probe24;
-  wire [0:0]probe25;
-  wire [0:0]probe26;
-  wire [0:0]probe27;
-  wire [0:0]probe28;
-  wire [0:0]probe29;
-  wire [31:0]probe3;
-  wire [2:0]probe30;
-  wire [0:0]probe31;
-  wire [31:0]probe32;
-  wire [31:0]probe33;
-  wire [31:0]probe34;
-  wire [3:0]probe35;
-  wire [1:0]probe36;
-  wire [1:0]probe37;
-  wire [1:0]probe38;
-  wire [1:0]probe39;
-  wire [31:0]probe4;
-  wire [1:0]probe40;
-  wire [1:0]probe41;
-  wire [1:0]probe42;
-  wire [1:0]probe43;
-  wire [0:0]probe44;
-  wire [0:0]probe45;
-  wire [0:0]probe46;
-  wire [0:0]probe47;
-  wire [0:0]probe48;
-  wire [31:0]probe49;
-  wire [10:0]probe5;
-  wire [0:0]probe50;
-  wire [0:0]probe51;
-  wire [0:0]probe52;
-  wire [0:0]probe53;
-  wire [0:0]probe54;
-  wire [0:0]probe55;
-  wire [31:0]probe56;
-  wire [0:0]probe57;
-  wire [0:0]probe58;
-  wire [0:0]probe59;
-  wire [15:0]probe6;
-  wire [15:0]probe7;
-  wire [0:0]probe8;
-  wire [0:0]probe9;
+  wire [31:0]probe0;
+  wire resetn;
 
   bd_f60c bd_f60c_i
-       (.clk(clk),
+       (.SLOT_0_AXI_araddr(SLOT_0_AXI_araddr),
+        .SLOT_0_AXI_arburst(SLOT_0_AXI_arburst),
+        .SLOT_0_AXI_arcache(SLOT_0_AXI_arcache),
+        .SLOT_0_AXI_arid(SLOT_0_AXI_arid),
+        .SLOT_0_AXI_arlen(SLOT_0_AXI_arlen),
+        .SLOT_0_AXI_arlock(SLOT_0_AXI_arlock),
+        .SLOT_0_AXI_arprot(SLOT_0_AXI_arprot),
+        .SLOT_0_AXI_arqos(SLOT_0_AXI_arqos),
+        .SLOT_0_AXI_arready(SLOT_0_AXI_arready),
+        .SLOT_0_AXI_arsize(SLOT_0_AXI_arsize),
+        .SLOT_0_AXI_arvalid(SLOT_0_AXI_arvalid),
+        .SLOT_0_AXI_awaddr(SLOT_0_AXI_awaddr),
+        .SLOT_0_AXI_awburst(SLOT_0_AXI_awburst),
+        .SLOT_0_AXI_awcache(SLOT_0_AXI_awcache),
+        .SLOT_0_AXI_awid(SLOT_0_AXI_awid),
+        .SLOT_0_AXI_awlen(SLOT_0_AXI_awlen),
+        .SLOT_0_AXI_awlock(SLOT_0_AXI_awlock),
+        .SLOT_0_AXI_awprot(SLOT_0_AXI_awprot),
+        .SLOT_0_AXI_awqos(SLOT_0_AXI_awqos),
+        .SLOT_0_AXI_awready(SLOT_0_AXI_awready),
+        .SLOT_0_AXI_awsize(SLOT_0_AXI_awsize),
+        .SLOT_0_AXI_awvalid(SLOT_0_AXI_awvalid),
+        .SLOT_0_AXI_bid(SLOT_0_AXI_bid),
+        .SLOT_0_AXI_bready(SLOT_0_AXI_bready),
+        .SLOT_0_AXI_bresp(SLOT_0_AXI_bresp),
+        .SLOT_0_AXI_bvalid(SLOT_0_AXI_bvalid),
+        .SLOT_0_AXI_rdata(SLOT_0_AXI_rdata),
+        .SLOT_0_AXI_rid(SLOT_0_AXI_rid),
+        .SLOT_0_AXI_rlast(SLOT_0_AXI_rlast),
+        .SLOT_0_AXI_rready(SLOT_0_AXI_rready),
+        .SLOT_0_AXI_rresp(SLOT_0_AXI_rresp),
+        .SLOT_0_AXI_rvalid(SLOT_0_AXI_rvalid),
+        .SLOT_0_AXI_wdata(SLOT_0_AXI_wdata),
+        .SLOT_0_AXI_wid(SLOT_0_AXI_wid),
+        .SLOT_0_AXI_wlast(SLOT_0_AXI_wlast),
+        .SLOT_0_AXI_wready(SLOT_0_AXI_wready),
+        .SLOT_0_AXI_wstrb(SLOT_0_AXI_wstrb),
+        .SLOT_0_AXI_wvalid(SLOT_0_AXI_wvalid),
+        .SLOT_1_AXI_araddr(SLOT_1_AXI_araddr),
+        .SLOT_1_AXI_arburst(SLOT_1_AXI_arburst),
+        .SLOT_1_AXI_arcache(SLOT_1_AXI_arcache),
+        .SLOT_1_AXI_arid(SLOT_1_AXI_arid),
+        .SLOT_1_AXI_arlen(SLOT_1_AXI_arlen),
+        .SLOT_1_AXI_arlock(SLOT_1_AXI_arlock),
+        .SLOT_1_AXI_arprot(SLOT_1_AXI_arprot),
+        .SLOT_1_AXI_arqos(SLOT_1_AXI_arqos),
+        .SLOT_1_AXI_arready(SLOT_1_AXI_arready),
+        .SLOT_1_AXI_arsize(SLOT_1_AXI_arsize),
+        .SLOT_1_AXI_arvalid(SLOT_1_AXI_arvalid),
+        .SLOT_1_AXI_awaddr(SLOT_1_AXI_awaddr),
+        .SLOT_1_AXI_awburst(SLOT_1_AXI_awburst),
+        .SLOT_1_AXI_awcache(SLOT_1_AXI_awcache),
+        .SLOT_1_AXI_awid(SLOT_1_AXI_awid),
+        .SLOT_1_AXI_awlen(SLOT_1_AXI_awlen),
+        .SLOT_1_AXI_awlock(SLOT_1_AXI_awlock),
+        .SLOT_1_AXI_awprot(SLOT_1_AXI_awprot),
+        .SLOT_1_AXI_awqos(SLOT_1_AXI_awqos),
+        .SLOT_1_AXI_awready(SLOT_1_AXI_awready),
+        .SLOT_1_AXI_awsize(SLOT_1_AXI_awsize),
+        .SLOT_1_AXI_awvalid(SLOT_1_AXI_awvalid),
+        .SLOT_1_AXI_bid(SLOT_1_AXI_bid),
+        .SLOT_1_AXI_bready(SLOT_1_AXI_bready),
+        .SLOT_1_AXI_bresp(SLOT_1_AXI_bresp),
+        .SLOT_1_AXI_bvalid(SLOT_1_AXI_bvalid),
+        .SLOT_1_AXI_rdata(SLOT_1_AXI_rdata),
+        .SLOT_1_AXI_rid(SLOT_1_AXI_rid),
+        .SLOT_1_AXI_rlast(SLOT_1_AXI_rlast),
+        .SLOT_1_AXI_rready(SLOT_1_AXI_rready),
+        .SLOT_1_AXI_rresp(SLOT_1_AXI_rresp),
+        .SLOT_1_AXI_rvalid(SLOT_1_AXI_rvalid),
+        .SLOT_1_AXI_wdata(SLOT_1_AXI_wdata),
+        .SLOT_1_AXI_wid(SLOT_1_AXI_wid),
+        .SLOT_1_AXI_wlast(SLOT_1_AXI_wlast),
+        .SLOT_1_AXI_wready(SLOT_1_AXI_wready),
+        .SLOT_1_AXI_wstrb(SLOT_1_AXI_wstrb),
+        .SLOT_1_AXI_wvalid(SLOT_1_AXI_wvalid),
+        .SLOT_2_AXI_araddr(SLOT_2_AXI_araddr),
+        .SLOT_2_AXI_arprot(SLOT_2_AXI_arprot),
+        .SLOT_2_AXI_arready(SLOT_2_AXI_arready),
+        .SLOT_2_AXI_arvalid(SLOT_2_AXI_arvalid),
+        .SLOT_2_AXI_awaddr(SLOT_2_AXI_awaddr),
+        .SLOT_2_AXI_awprot(SLOT_2_AXI_awprot),
+        .SLOT_2_AXI_awready(SLOT_2_AXI_awready),
+        .SLOT_2_AXI_awvalid(SLOT_2_AXI_awvalid),
+        .SLOT_2_AXI_bready(SLOT_2_AXI_bready),
+        .SLOT_2_AXI_bresp(SLOT_2_AXI_bresp),
+        .SLOT_2_AXI_bvalid(SLOT_2_AXI_bvalid),
+        .SLOT_2_AXI_rdata(SLOT_2_AXI_rdata),
+        .SLOT_2_AXI_rready(SLOT_2_AXI_rready),
+        .SLOT_2_AXI_rresp(SLOT_2_AXI_rresp),
+        .SLOT_2_AXI_rvalid(SLOT_2_AXI_rvalid),
+        .SLOT_2_AXI_wdata(SLOT_2_AXI_wdata),
+        .SLOT_2_AXI_wready(SLOT_2_AXI_wready),
+        .SLOT_2_AXI_wstrb(SLOT_2_AXI_wstrb),
+        .SLOT_2_AXI_wvalid(SLOT_2_AXI_wvalid),
+        .clk(clk),
         .probe0(probe0),
-        .probe1(probe1),
-        .probe10(probe10),
-        .probe11(probe11),
-        .probe12(probe12),
-        .probe13(probe13),
-        .probe14(probe14),
-        .probe15(probe15),
-        .probe16(probe16),
-        .probe17(probe17),
-        .probe18(probe18),
-        .probe19(probe19),
-        .probe2(probe2),
-        .probe20(probe20),
-        .probe21(probe21),
-        .probe22(probe22),
-        .probe23(probe23),
-        .probe24(probe24),
-        .probe25(probe25),
-        .probe26(probe26),
-        .probe27(probe27),
-        .probe28(probe28),
-        .probe29(probe29),
-        .probe3(probe3),
-        .probe30(probe30),
-        .probe31(probe31),
-        .probe32(probe32),
-        .probe33(probe33),
-        .probe34(probe34),
-        .probe35(probe35),
-        .probe36(probe36),
-        .probe37(probe37),
-        .probe38(probe38),
-        .probe39(probe39),
-        .probe4(probe4),
-        .probe40(probe40),
-        .probe41(probe41),
-        .probe42(probe42),
-        .probe43(probe43),
-        .probe44(probe44),
-        .probe45(probe45),
-        .probe46(probe46),
-        .probe47(probe47),
-        .probe48(probe48),
-        .probe49(probe49),
-        .probe5(probe5),
-        .probe50(probe50),
-        .probe51(probe51),
-        .probe52(probe52),
-        .probe53(probe53),
-        .probe54(probe54),
-        .probe55(probe55),
-        .probe56(probe56),
-        .probe57(probe57),
-        .probe58(probe58),
-        .probe59(probe59),
-        .probe6(probe6),
-        .probe7(probe7),
-        .probe8(probe8),
-        .probe9(probe9));
+        .resetn(resetn));
 endmodule
