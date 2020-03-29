@@ -164,6 +164,21 @@ int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode,
 }
 
 /*
+ * Configure the trigger as an always-trigger.  The existing trigger configuration
+ * is cleared.
+ */
+void trig_configure_always()
+{
+	// Clear all prior trigger settings
+	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_MASK_ALL);
+
+	// Reset the trigger, then remove the reset and re-arm it
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET | TRIG_CTRL_TRIG_MODE_ALWAYS);
+	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET);
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_GLOBAL_ENABLE | TRIG_CTRL_TRIGGER_ARM);
+}
+
+/*
  * Configure the trigger as an edge-trigger.  The existing trigger configuration
  * is cleared; if a normal/auto mode or filter is required, this will need to be
  * set again after the configuration is loaded.

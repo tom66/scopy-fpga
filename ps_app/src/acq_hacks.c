@@ -105,7 +105,8 @@ void acq_hacks_run()
 		}
 
 		// Setup the trigger
-		trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+		//trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+		trig_configure_always();
 		trig_configure_holdoff(trig_holdoff);
 
 		// Wait for acq to be done
@@ -128,8 +129,8 @@ void acq_hacks_run()
 				case 'F': trig_edge = TRIG_EDGE_FALLING; break;
 				case 'Y': trig_hyst += 1; break;
 				case 'H': trig_hyst -= 1; break;
-				case 'O': trig_holdoff += 100000L; break;  // Add 0.1ms holdoff
-				case 'P': trig_holdoff -= 100000L; break;  // Remove 0.1ms holdoff
+				case 'O': trig_holdoff += 1000L; break;  // Add 1us holdoff
+				case 'P': trig_holdoff -= 1000L; break;  // Remove 1ums holdoff
 				default : no_key = 1; break;
 			}
 
@@ -154,9 +155,12 @@ void acq_hacks_run()
 			}
 
 			if(!no_key) {
-				trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+				//trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+				trig_configure_always();
 				trig_configure_holdoff(trig_holdoff);
-				d_printf(D_INFO, "level:0x%02x, hyst:0x%02x, edge:0x%02x, hold:0x%08x", (uint8_t)trig_level, (uint8_t)trig_hyst, (uint8_t)trig_edge, fabcfg_read(FAB_CFG_TRIG_HOLDOFF));
+				d_printf(D_INFO, "level:0x%02x, hyst:0x%02x, edge:0x%02x, hold:0x%08x (%d us)", \
+						(uint8_t)trig_level, (uint8_t)trig_hyst, (uint8_t)trig_edge, fabcfg_read(FAB_CFG_TRIG_HOLDOFF), \
+						(int32_t)(trig_holdoff / 1000L));
 				//trig_dump_state();
 			}
 		} while(!acq_is_done());
