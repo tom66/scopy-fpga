@@ -43,21 +43,20 @@ uint32_t test_sizeptr = 0;
 void _acq_irq_rx_handler(void *callback)
 {
 	XAxiDma_BdRing *bd_ring = (XAxiDma_BdRing *) callback;
-	uint32_t status, addr;
-	int error;
+	uint32_t irq_status, addr;
+	volatile uint32_t acq_status_a;
+	int error, irq_ackd = 0;
 	int i;
 
-	// Get status and ACK the interrupt.
-	status = XAxiDma_BdRingGetIrq(bd_ring);
-	XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-	XAxiDma_BdRingAckIrq(bd_ring, status);
+	// Get status. IRQ will be ack'd after next DMA xfer is started.
+	irq_status = XAxiDma_BdRingGetIrq(bd_ring);
 
 	/*
 	 * Check for a DMA Error.  Error conditions force an increase of the error
 	 * statistic counter and a reset of the state machine and DMA.
 	 */
-	if(status & XAXIDMA_IRQ_ERROR_MASK) {
-		_acq_irq_error_dma();
+	if(irq_status & XAXIDMA_IRQ_ERROR_MASK) {
+		_acq_irq_error_dma(0);
 		return;
 	}
 
@@ -75,7 +74,7 @@ void _acq_irq_rx_handler(void *callback)
 	 * the waveform rate of the instrument and the smaller a sample buffer that
 	 * can be used.
 	 */
-	if(status & XAXIDMA_IRQ_IOC_MASK) {
+	if(irq_status & XAXIDMA_IRQ_IOC_MASK) {
 		switch(g_acq_state.sub_state) {
 			// PRE_TRIG_FILL:  Fill up the buffer first, before accepting triggers.
 			case ACQSUBST_PRE_TRIG_FILL:
@@ -83,31 +82,45 @@ void _acq_irq_rx_handler(void *callback)
 				_acq_clear_ctrl_a(ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_AXI_RUN | ACQ_CTRL_A_POST_TRIG_MODE);
 
 				// Start the next transfer.
+				_acq_fast_dma_start(g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz);
+				/*
 				error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
 						g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 				if(error != XST_SUCCESS) {
-					_acq_irq_error_dma();
 					d_printf(D_ERROR, "acquire: unable to start transfer in IRQ, error %d", error);
+					_acq_irq_error_dma(1);
 					return;
 				}
+				*/
+
+				// Acknowledge IRQ, as promised
+				XAxiDma_BdRingAckIrq(bd_ring, irq_status);
+				XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+				irq_ackd = 1;
 
 				/*
 				 * If the FIFO is full, don't allow us to exit this state.  Instead, send a reset pulse
-				 * to the FIFO and revert back to PRE_TRIG_FILL.
+				 * to the FIFO and revert back to PRE_TRIG_FILL.  This only applies if the SHORT_WITH_RESET
+				 * flag isn't set.
 				 */
-				if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
-					_acq_reset_PL_fifo();
-					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
-					g_acq_state.state = ACQSTATE_PREP;
-					g_acq_state.stats.num_fifo_full++;
+				if(!(g_acq_state.acq_mode_flags & ACQ_MODE_SHORT_WITH_RESET)) {
+					if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
+						_acq_reset_PL_fifo();
+						g_acq_state.sub_state = ACQSUBST_PRE_TRIG_FILL;
+						g_acq_state.state = ACQSTATE_PREP;
+						g_acq_state.stats.num_fifo_full++;
+					} else {
+						g_acq_state.sub_state = ACQSUBST_PRE_TRIG_WAIT;
+						g_acq_state.state = ACQSTATE_WAIT_TRIG;
+					}
 				} else {
 					g_acq_state.sub_state = ACQSUBST_PRE_TRIG_WAIT;
 					g_acq_state.state = ACQSTATE_WAIT_TRIG;
 				}
 
 				// Demask triggers; start AXI bus transactions again.
-				_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_TRIG_MASK, ACQ_CTRL_A_AXI_RUN);
+				_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_FIFO_RESET, ACQ_CTRL_A_AXI_RUN);
 
 				// Statistics
 				g_acq_state.stats.num_samples += g_acq_state.pre_buffsz;
@@ -122,32 +135,46 @@ void _acq_irq_rx_handler(void *callback)
 				 * If a trigger has occurred (flag HAVE_TRIG is high) then jump address to the
 				 * post-trigger buffer; if not, then go back to the start.
 				 */
-				if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_HAVE_TRIG)) {
-					// Tell the PL that we want to use the 'B' channel acquisition depth now.
-					// Stop the AXI bus momentarily (TVALID will go low)
+				acq_status_a = fabcfg_read(FAB_CFG_ACQ_STATUS_A);
+
+				if(acq_status_a & ACQ_STATUS_A_HAVE_TRIG) {
+					/*
+					 * Tell the PL that we want to use the 'B' channel acquisition depth now.
+					 * Stop the AXI bus momentarily (TVALID will go low)
+					 */
 					_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_AXI_RUN, ACQ_CTRL_A_DEPTH_MUX);
 
 					/*
 					 * If the FIFO is full (DATA_LOSS flag set), capture the data but set the discard flag.
+					 * XXX: This should be reworked.  We should be able to go back to the start and
+					 * recover rather than completing this acquisition needlessly.
 					 */
-					if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
+					if(acq_status_a & ACQ_STATUS_A_DATA_LOSS) {
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
+
+					// Acknowledge IRQ, as promised
+					XAxiDma_BdRingAckIrq(bd_ring, irq_status);
+					XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+					irq_ackd = 1;
 
 					/*
 					 * Compute the address of the next DMA transfer and set it up.
 					 */
 					addr = ((uint32_t)g_acq_state.acq_current->buff_acq) + g_acq_state.pre_buffsz;
+					_acq_fast_dma_start((uint32_t*)addr, g_acq_state.post_buffsz);
 
+					/*
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, addr, \
 							g_acq_state.post_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
-						_acq_irq_error_dma();
 						d_printf(D_ERROR, "acquire: unable to start transfer in IRQ, error %d", error);
+						_acq_irq_error_dma(2);
 						return;
 					}
+					*/
 
 					/*
 					 * The transfer is now running, so record the address that the trigger occurred at
@@ -167,26 +194,38 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.stats.num_samples_raw += g_acq_state.acq_current->trigger_at;
 					g_acq_state.stats.num_samples += g_acq_state.acq_current->trigger_at;
 				} else {
-					// No trigger. So just re-arm the pre-trigger, starting from the beginning of
-					// the acquisition buffer.
+					/*
+					 * No trigger. So just re-arm the pre-trigger, starting from the beginning of
+					 * the acquisition buffer.
+					 */
 					_acq_clear_ctrl_a(ACQ_CTRL_A_AXI_RUN);
 
 					// If the FIFO is full, capture the data but set the discard flag.
-					if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DATA_LOSS)) {
+					if(acq_status_a & ACQ_STATUS_A_DATA_LOSS) {
 						_acq_reset_PL_fifo();
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
 
+					_acq_fast_dma_start(g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz);
+
+					/*
 					error = XAxiDma_SimpleTransfer(&g_acq_state.dma, g_acq_state.acq_current->buff_acq, \
 							g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
 
 					if(error != XST_SUCCESS) {
-						_acq_irq_error_dma();
 						d_printf(D_ERROR, "acquire: unable to start transfer in IRQ, error %d", error);
+						_acq_irq_error_dma(3);
 						return;
 					}
+					*/
 
+					// Acknowledge IRQ, as promised
+					XAxiDma_BdRingAckIrq(bd_ring, irq_status);
+					XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+					irq_ackd = 1;
+
+					// Start the next pre-trigger acquisition...
 					_acq_set_ctrl_a(ACQ_CTRL_A_AXI_RUN);
 					g_acq_state.stats.num_samples_raw += g_acq_state.pre_buffsz;
 				}
@@ -205,7 +244,7 @@ void _acq_irq_rx_handler(void *callback)
 				// If DONE signal not present at end of acquisition, then there is a fault.
 				if(!fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_DONE)) {
 					d_printf(D_ERROR, "acquire: PL reports not done, but DMA complete! (0x%08x)", fabcfg_read(FAB_CFG_ACQ_STATUS_A));
-					_acq_irq_error_dma();
+					_acq_irq_error_dma(4);
 					return;
 				}
 
@@ -226,12 +265,11 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.stats.num_fifo_pkt_dscd++;
 
 					// Start a new transfer, but without allocating a new buffer or increasing the waveform count
-					//_acq_reset_PL_fifo();
-					error = acq_start(1);
+					error = acq_start(ACQ_START_FIFO_RESET);
 
 					if(error != ACQRES_OK) {
 						d_printf(D_ERROR, "acquire: unable to reset current transfer, error %d", error);
-						_acq_irq_error_dma();
+						_acq_irq_error_dma(5);
 						return;
 					}
 				} else {
@@ -247,11 +285,11 @@ void _acq_irq_rx_handler(void *callback)
 					} else {
 						if(g_acq_state.acq_current->next != NULL) {
 							g_acq_state.acq_current = g_acq_state.acq_current->next;
-							error = acq_start(1);
+							error = acq_start(ACQ_START_FIFO_RESET);
 
 							if(error != ACQRES_OK) {
 								d_printf(D_ERROR, "acquire: unable to start next transfer, error %d", error);
-								_acq_irq_error_dma();
+								_acq_irq_error_dma(6);
 								return;
 							}
 						} else {
@@ -265,6 +303,12 @@ void _acq_irq_rx_handler(void *callback)
 				g_acq_state.stats.num_post_total++;
 				break;
 		}
+	}
+
+	// If IRQ not acknowledged above (default case or post trigger) do it now.
+	if(!irq_ackd) {
+		XAxiDma_BdRingAckIrq(bd_ring, irq_status);
+		XAxiDma_IntrAckIrq(&g_acq_state.dma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 	}
 
 #if 0
@@ -299,17 +343,13 @@ void _acq_irq_fifo_gen_rst(void *none)
 	//d_printf(D_ERROR, "acquire: FIFO stall, recovering");
 
 	if(fabcfg_test(FAB_CFG_ACQ_STATUS_A, ACQ_STATUS_A_RG_FIFO_STALL)) {
-		_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN, ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
-
-		//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN);
-		//fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
+		_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_RUN | ACQ_CTRL_A_AXI_RUN, ACQ_CTRL_A_FIFO_RESET /*| ACQ_CTRL_A_TRIG_RST*/ | ACQ_CTRL_A_ABORT);
 
 		// Wait until both FIFO level readouts report 0x0000
 		while(((fabcfg_read_no_dsb(FAB_CFG_ACQ_STATUS_A) & ACQ_STATUS_A_FIFO_MASK) != 0) && \
 			  ((fabcfg_read_no_dsb(FAB_CFG_ACQ_STATUS_B) & ACQ_STATUS_B_FIFO_MASK) != 0)) ;
 
-		_acq_clear_ctrl_a(ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
-		//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_FIFO_RESET | ACQ_CTRL_A_TRIG_RST | ACQ_CTRL_A_ABORT);
+		_acq_clear_ctrl_a(ACQ_CTRL_A_FIFO_RESET  /*| ACQ_CTRL_A_TRIG_RST*/ | ACQ_CTRL_A_ABORT);
 
 		// Reset the current acquisition and try again.  Set a tracking flag for diagnostics/debug.
 		g_acq_state.acq_current->flags |= ACQBUF_FLAG_NOTE_FIFOSTALL;
@@ -330,8 +370,6 @@ void _acq_irq_fifo_gen_rst(void *none)
 		stat_b = fabcfg_read(FAB_CFG_ACQ_STATUS_B);
 
 		// Start on 'A' mux: pre-trigger
-		//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE);
-		//fabcfg_set(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
 		_acq_clear_and_set_ctrl_a(ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_POST_TRIG_MODE, ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
 
 		//d_printf(D_ERROR, "acquire: FIFO stall recovery (0x%08x, 0x%08x)", stat_a, stat_b);
@@ -350,20 +388,18 @@ void _acq_irq_fifo_gen_rst(void *none)
 /*
  * Handler for DMA error conditions in IRQs.
  */
-void _acq_irq_error_dma()
+void _acq_irq_error_dma(int cause_index)
 {
-	//d_printf(D_ERROR, "acquire: DMA DataMover error");
+	//d_printf(D_ERROR, "acquire: _acq_irq_error_dma error (%d)", cause_index);
 
-	//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
-	//fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x33300000);
+	_acq_set_ctrl_a(ACQ_CTRL_A_TRIG_RST);
+
+	//fabcfg_write(FAB_CFG_TRIG_LEVEL0, 0x55555500 | (cause_index & 0xff));
 
 	g_acq_state.stats.num_err_total++;
 	g_acq_state.state = ACQSTATE_UNINIT;
 	g_acq_state.sub_state = ACQSUBST_NONE;
 	XAxiDma_Reset(&g_acq_state.dma);
-
-	//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, 0xfff00000);
-	//fabcfg_set(FAB_CFG_ACQ_CTRL_A,   0x44400000);
 
 	return;
 }
@@ -404,7 +440,28 @@ void _acq_wait_for_ndone()
 }
 
 /*
- * Core acquisition DMA setup.  Sets up DMA transfer only.
+ * Fast acquisition DMA setup, for use in IRQs.  Does not check for
+ * error conditions.
+ *
+ * Below partially based on Xilinx xaxidma.c.
+ */
+void _acq_fast_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
+{
+	XAxiDma_WriteReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_DESTADDR_OFFSET, buff_ptr);
+
+	// We track the DMACR state in memory and can apply a quick change without a RMW operation
+	g_acq_state.dmacr_state |= XAXIDMA_CR_RUNSTOP_MASK;
+	XAxiDma_WriteReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_CR_OFFSET, g_acq_state.dmacr_state);
+
+	// transaction started by writing to length register
+	XAxiDma_WriteReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_BUFFLEN_OFFSET, buff_sz);
+
+	return ACQRES_OK;
+}
+
+/*
+ * Core acquisition DMA setup.  Sets up DMA transfer only.  Logs CR register for
+ * fast write function.
  *
  * @return	ACQRES_DMA_FAIL if DMA task could not be started;
  * 			ACQRES_OK if DMA task started successfully.
@@ -419,6 +476,8 @@ int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
 		d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
 		return ACQRES_DMA_FAIL;
 	}
+
+	g_acq_state.dmacr_state = XAxiDma_ReadReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_CR_OFFSET);
 
 	return ACQRES_OK;
 }
@@ -602,7 +661,6 @@ int acq_append_next_alloc()
 		return ACQRES_MALLOC_FAIL;
 	}
 
-	// ?
 	next->next = NULL;
 	next->flags = ACQBUF_FLAG_ALLOC;
 	next->trigger_at = 0;
@@ -657,6 +715,36 @@ void acq_free_all_alloc()
 }
 
 /*
+ * Deallocate acquisition buffers without freeing the memory, then rewind the
+ * pointer to the start.  The buffers will contain stale data after this, but are
+ * made available for future use.
+ *
+ * This function cannot be used if the allocation size has changed.  Buffers must
+ * be freed and reallocated using `acq_free_all_alloc` and `acq_prepare_triggered`.
+ */
+void acq_dealloc_rewind()
+{
+	struct acq_buffer_t *next = g_acq_state.acq_first;
+
+	/*
+	 * Iterate through the list of allocations starting at the first allocation,
+	 * copy the next pointer, free the current allocation and repeat until we reach
+	 * a NULL next pointer.
+	 */
+	while(next->next != NULL) {
+		//d_printf(D_INFO, "%08x", next);
+
+		next->flags = ACQBUF_FLAG_ALLOC;
+		next->trigger_at = 0;
+
+		next = next->next;
+	}
+
+	g_acq_state.acq_current = g_acq_state.acq_first;
+	g_acq_state.num_acq_made = 0; // Reset wave counter
+}
+
+/*
  * Prepare a new triggered acquisition: allocate the first buffer, set up the state machine
  * and configure the fabric.
  *
@@ -667,12 +755,11 @@ void acq_free_all_alloc()
  * 								- If negative, it is taken as the number of post-trigger samples
  * 								- If zero, it configures the pre and post to be equal (1/2 post and 1/2 pre)
  *
- * 							For example: if configured with a bias point of +256 and a total_size of
- *
  * 							Note that the minimum pre- and post- trigger sizes must be obeyed, and they must be
  * 							appropriately aligned for the sample bit depth.
  *
- * @param	total_sz		Total acquisition size (number of samples to acquire)
+ * @param	total_sz		Total acquisition size (number of sample groups to acquire e.g. 8 samples per count
+ * 							on 8-bit mode.  N.B. This should probably change to pure sample counts...)
  *
  * @param	num_acq			Total acquisition count (number of acquisitions to complete)
  */
@@ -778,6 +865,12 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	g_acq_state.pre_sampct = pre_sampct;
 	g_acq_state.post_sampct = post_sampct;
 	g_acq_state.total_buffsz = total_sz;
+
+	// If the acquisition is small, set a flag indicating this which will trigger a FIFO reset mode
+	// to maximise performance
+	if(g_acq_state.total_buffsz <= ACQ_SHORT_THRESHOLD) {
+		mode_flags |= ACQ_MODE_SHORT_WITH_RESET;
+	}
 
 	/*
 	 * Ensure that the total acquisition size doesn't exceed the available memory.  If
@@ -899,8 +992,7 @@ int acq_start(int reset_fifo)
 		Xil_DCacheFlushRange((INTPTR)g_acq_state.acq_current->buff_acq, g_acq_state.total_buffsz);
 		dsb();
 
-		error = XAxiDma_SimpleTransfer(&g_acq_state.dma, (uint32_t)g_acq_state.acq_current->buff_acq, \
-				g_acq_state.pre_buffsz, XAXIDMA_DEVICE_TO_DMA);
+		error = _acq_core_dma_start((uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz);
 
 		if(error != XST_SUCCESS) {
 			d_printf(D_ERROR, "acquire: unable to start transfer, error %d", error);
@@ -919,12 +1011,12 @@ int acq_start(int reset_fifo)
 		_acq_clear_ctrl_a(ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_ABORT | ACQ_CTRL_A_POST_TRIG_MODE);
 		//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_DEPTH_MUX);
 
-		if(reset_fifo) {
+		if(reset_fifo == ACQ_START_FIFO_RESET) {
 			_acq_reset_PL_fifo();
 		}
 
 		// Reset the trigger before starting acquisition.
-		_acq_reset_trigger();
+		//_acq_reset_trigger();
 
 		// Start the transaction: initially with triggers masked and not in POST_TRIG mode
 		//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_ABORT | ACQ_CTRL_A_POST_TRIG_MODE);
@@ -1051,6 +1143,7 @@ void acq_debug_dump()
 	d_printf(D_INFO, "s.num_irqs            = %llu                    ", g_acq_state.stats.num_irqs);
 	d_printf(D_INFO, "s.num_fifo_full       = %llu                    ", g_acq_state.stats.num_fifo_full);
 	d_printf(D_INFO, "s.num_fifo_pkt_dscd   = %llu                    ", g_acq_state.stats.num_fifo_pkt_dscd);
+	d_printf(D_INFO, "s.num_fifo_stall_tot  = %llu                    ", g_acq_state.stats.num_fifo_stall_total);
 	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "Approx acq. rate      = %d acq/s                ", (int)acq_rate);
 	d_printf(D_INFO, "Approx sample rate    = %d Ksa/s                ", (int)sample_rate);

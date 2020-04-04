@@ -60,7 +60,7 @@ void trig_init()
 /*
  * Zero trigger levels and disable all trigger comparator channels.
  */
-void trig_zero_levels()
+int trig_zero_levels()
 {
 	fabcfg_write(FAB_CFG_TRIG_LEVEL0, 0x00000000);
 	fabcfg_write(FAB_CFG_TRIG_LEVEL1, 0x00000000);
@@ -70,6 +70,8 @@ void trig_zero_levels()
 	fabcfg_write(FAB_CFG_TRIG_LEVEL5, 0x00000000);
 	fabcfg_write(FAB_CFG_TRIG_LEVEL6, 0x00000000);
 	fabcfg_write(FAB_CFG_TRIG_LEVEL7, 0x00000000);
+
+	return TRIGRES_OK;
 }
 
 /*
@@ -137,10 +139,14 @@ int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode,
 	 * Other registers are left unchanged.
 	 */
 	if(demux_mode & ADCDEMUX_1CH) {
-		fabcfg_write(reg_base + 0x00, reg_write);
-		fabcfg_write(reg_base + 0x04, reg_write);
-		fabcfg_write(reg_base + 0x08, reg_write);
-		fabcfg_write(reg_base + 0x0c, reg_write);
+		if(chan_idx == 0) {
+			fabcfg_write(reg_base + 0x00, reg_write);
+			fabcfg_write(reg_base + 0x04, reg_write);
+			fabcfg_write(reg_base + 0x08, reg_write);
+			fabcfg_write(reg_base + 0x0c, reg_write);
+		} else {
+			return TRIGRES_PARAM_FAIL;
+		}
 	} else if(demux_mode & ADCDEMUX_2CH) {
 		if(chan_idx == 0 || chan_idx == 1) {
 			reg_base += chan_idx * 4;
@@ -161,13 +167,15 @@ int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode,
 	} else {
 		return TRIGRES_NOT_IMPLEMENTED;
 	}
+
+	return TRIGRES_OK;
 }
 
 /*
  * Configure the trigger as an always-trigger.  The existing trigger configuration
  * is cleared.
  */
-void trig_configure_always()
+int trig_configure_always()
 {
 	// Clear all prior trigger settings
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_MASK_ALL);
@@ -176,6 +184,8 @@ void trig_configure_always()
 	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET | TRIG_CTRL_TRIG_MODE_ALWAYS);
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET);
 	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_GLOBAL_ENABLE | TRIG_CTRL_TRIGGER_ARM);
+
+	return TRIGRES_OK;
 }
 
 /*
@@ -186,10 +196,7 @@ void trig_configure_always()
 int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_hyst, int edge_type)
 {
 	uint16_t trig_lo, trig_hi;
-
-	//d_printf(D_INFO, "trigger: edge trigger starting (trig_lvl=0x%02x)", trig_lvl);
-
-	//D_ASSERT(g_acq_state.state != ACQSTATE_UNINIT) ;
+	int res;
 
 	if(!(edge_type == TRIG_EDGE_FALLING || edge_type == TRIG_EDGE_RISING || edge_type == TRIG_EDGE_BOTH)) {
 		return TRIGRES_PARAM_FAIL;
@@ -205,8 +212,6 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 
 	trig_lo = trig_lvl - (trig_hyst / 2);
 	trig_hi = trig_lvl + (trig_hyst / 2);
-
-	//d_printf(D_INFO, "trigger: edge trigger zeroing");
 
 	// Disable interrupts while writing state
 	asm("cpsid I");
@@ -229,10 +234,8 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 		fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_EDGEA_BOTH);
 	}
 
-	//d_printf(D_INFO, "trigger: edge trigger writing levels");
-
 	// Write the levels for COMP_A (COMP_B is unused) and enable the trigger channels.
-	trig_write_levels(TRIG_COMP_A, chan_idx, g_acq_state.demux_reg, TRIG_COMP_POL_NORMAL, trig_hi, trig_lo);
+	res = trig_write_levels(TRIG_COMP_A, chan_idx, g_acq_state.demux_reg, TRIG_COMP_POL_NORMAL, trig_hi, trig_lo);
 
 	// Remove the resets, enable the trigger engine.
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET);
@@ -241,9 +244,12 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 	// Enable interrupts again
 	asm("cpsie I");
 
-	//d_printf(D_INFO, "trigger: edge trigger initialised");
+	// Check if level write succeeded
+	if(res != TRIGRES_OK) {
+		return res;
+	}
 
-	//trig_dump_state();
+	return TRIGRES_OK;
 }
 
 /*
@@ -253,14 +259,14 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
  *
  * A holdoff value of zero disables holdoff completely.
  */
-void trig_configure_holdoff(uint64_t holdoff_time_ns)
+int trig_configure_holdoff(uint64_t holdoff_time_ns)
 {
 	uint32_t holdoff_reg;
 
 	if(holdoff_time_ns == 0) {
 		fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_HOLDOFF_ENABLE);
 		fabcfg_write(FAB_CFG_TRIG_HOLDOFF, 0x00000000);
-		return;
+		return TRIGRES_OK;
 	}
 
 	if(holdoff_time_ns < HOLDOFF_NS_MINIMUM) {
@@ -274,6 +280,8 @@ void trig_configure_holdoff(uint64_t holdoff_time_ns)
 	holdoff_reg = holdoff_time_ns / HOLDOFF_NS_PER_COUNT;
 	fabcfg_write(FAB_CFG_TRIG_HOLDOFF, holdoff_reg);
 	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_HOLDOFF_ENABLE);
+
+	return TRIGRES_OK;
 }
 
 /*

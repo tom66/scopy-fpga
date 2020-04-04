@@ -21,6 +21,7 @@
 #include "hal.h"
 #include "fabric_config.h"
 #include "clkwiz_interface.h"
+#include "spi.h"
 #include "version_tag.h"
 
 // Xilinx includes
@@ -87,8 +88,8 @@ void hal_init()
 	 * TODO:  Sending invalidate here causes a processor lockup; to be investigated.
 	 */
 	Xil_ICacheEnable();
-	//Xil_DCacheEnable();
-	Xil_DCacheDisable();
+	Xil_DCacheEnable();
+	//Xil_DCacheDisable();
 	d_printf(D_INFO, "boot: enabled D- and I-cache");
 
 	/*
@@ -211,6 +212,16 @@ void hal_init()
 	 * the clock for the MIPI block.
 	 */
 	clkwiz_init(&g_hal.clkwiz_mipi, CLKWIZ_CFG_MIPI, CLKWIZ_CFG_MIPI_REFCLK);
+
+	/*
+	 * Initialise the command SPI port processor.
+	 */
+	spi_init();
+
+	d_printf(D_ERROR, "hanging at SPI processor");
+	while(1) {
+
+	}
 }
 
 /**

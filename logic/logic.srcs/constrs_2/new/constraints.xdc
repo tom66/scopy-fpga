@@ -1,3 +1,21 @@
+## SPI Interface to MCU ##
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_irq1]
+set_property PACKAGE_PIN M15 [get_ports fpga_irq1]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_irq2]
+set_property PACKAGE_PIN J16 [get_ports fpga_irq2]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_irq3]
+set_property PACKAGE_PIN J15 [get_ports fpga_irq3]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_spi_miso]
+set_property PACKAGE_PIN M14 [get_ports fpga_spi_miso]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_spi_mosi]
+set_property PACKAGE_PIN L15 [get_ports fpga_spi_mosi]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_spi_sclk]
+set_property PACKAGE_PIN L14 [get_ports fpga_spi_sclk]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_spi_csn]
+set_property PACKAGE_PIN N16 [get_ports fpga_spi_csn]
+set_property IOSTANDARD LVCMOS18 [get_ports fpga_heartbeat]
+set_property PACKAGE_PIN K19 [get_ports fpga_heartbeat]
+
 ## Generic IO ##
 
 # Diagnostic LEDs

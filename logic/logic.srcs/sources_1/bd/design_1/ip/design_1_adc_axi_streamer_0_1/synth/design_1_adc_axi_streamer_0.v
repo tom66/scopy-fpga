@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 121
+// IP Revision: 125
 
 (* X_CORE_INFO = "adc_streamer,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_adc_axi_streamer_0,adc_streamer,{}" *)
-(* CORE_GENERATION_INFO = "design_1_adc_axi_streamer_0,adc_streamer,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=121,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
+(* CORE_GENERATION_INFO = "design_1_adc_axi_streamer_0,adc_streamer,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=adc_streamer,x_ipVersion=2.0,x_ipCoreRevision=125,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M00_AXIS_TDATA_WIDTH=64,C_M00_AXIS_START_COUNT=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_adc_axi_streamer_0 (
   adc_bus,
@@ -86,6 +86,8 @@ module design_1_adc_axi_streamer_0 (
   dbg_adc_fifo_gated_clk,
   dbg_acq_suspend,
   dbg_acq_post_trigger,
+  dbg_acq_fifo_full_data_loss,
+  dbg_acq_trig_super_mask,
   acq_ctrl_a,
   acq_status_a,
   acq_status_b,
@@ -165,6 +167,8 @@ output wire dbg_acq_holdoff_regd;
 output wire dbg_adc_fifo_gated_clk;
 output wire dbg_acq_suspend;
 output wire dbg_acq_post_trigger;
+output wire dbg_acq_fifo_full_data_loss;
+output wire dbg_acq_trig_super_mask;
 input wire [31 : 0] acq_ctrl_a;
 output wire [31 : 0] acq_status_a;
 output wire [31 : 0] acq_status_b;
@@ -249,6 +253,8 @@ input wire m00_axis_tready;
     .dbg_adc_fifo_gated_clk(dbg_adc_fifo_gated_clk),
     .dbg_acq_suspend(dbg_acq_suspend),
     .dbg_acq_post_trigger(dbg_acq_post_trigger),
+    .dbg_acq_fifo_full_data_loss(dbg_acq_fifo_full_data_loss),
+    .dbg_acq_trig_super_mask(dbg_acq_trig_super_mask),
     .acq_ctrl_a(acq_ctrl_a),
     .acq_status_a(acq_status_a),
     .acq_status_b(acq_status_b),

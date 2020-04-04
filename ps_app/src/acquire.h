@@ -41,12 +41,15 @@
 #define ACQSUBST_DONE_WAVE			4								// Post trigger done, so next waveform to be acquired
 #define ACQSUBST_DONE_ALL			5								// All waveforms acquired as requested
 
-#define ACQ_MIN_BUFFER_SIZE			1024							// Minimum 1K samples buffer size
+#define ACQ_MIN_BUFFER_SIZE			16								// Minimum 16 samples buffer size
 #define ACQ_MAX_BUFFER_SIZE			(64 * 1024 * 1024)				// Maximum 64M samples buffer size
 
-#define ACQ_MIN_PREPOST_SIZE		32								// Minimum size of any pre or post window.
+#define ACQ_MIN_PREPOST_SIZE		8								// Minimum size of any pre or post window.
 
 #define ACQ_WORD_SCALE				8								// Always 64-bit wide sample words by fabric design
+
+#define ACQ_SHORT_THRESHOLD			8192							// Acquisition windows below this threshold (total samples) cause
+																	// a FIFO reset at every pre-fill iteration.
 
 #define ACQ_MODE_8BIT				0x00000001						// 8-bit high speed
 #define ACQ_MODE_12BIT				0x00000002						// 12-bit mid speed
@@ -56,6 +59,7 @@
 #define ACQ_MODE_4CH				0x00000080						// 4 channel mode
 #define ACQ_MODE_TRIGGERED			0x00000100						// Triggered mode (normal/auto/single acquisition)
 #define ACQ_MODE_CONTINUOUS			0x00000200						// Special continuous mode (rolling buffer)
+#define ACQ_MODE_SHORT_WITH_RESET	0x00000400						// Short acquisition - FIFO reset on each cycle for performance
 
 #define ACQ_SAMPLES_ALIGN_8B		8								// Buffers must be 8-sample sized in 8-bit mode
 #define ACQ_SAMPLES_ALIGN_8B_AMOD	(ACQ_SAMPLES_ALIGN_8B - 1)
@@ -144,13 +148,17 @@
 #define ACQ_DMA_RX_IRQ_TRIG			0x03							// Rising edge trigger
 
 #define ACQ_FIFO_STALL_IRQ			XPS_FPGA1_INT_ID
-#define ACQ_FIFO_STALL_IRQ_PRIO		0x60							// Mid priority
+#define ACQ_FIFO_STALL_IRQ_PRIO		0x20							// Higher priority
 #define ACQ_FIFO_STALL_IRQ_TRIG		0x03							// ???
 
 // Trigger position signalling words (passed in trigger_pos from fabric)
 #define TRIGGER_INVALID_NOT_ACQ		0xfffffffe						// Trigger position invalid as acquisition not yet run
 #define TRIGGER_INVALID_NO_TRIG		0xffffffff						// Trigger position invalid as no trigger occurred within window
 #define TRIGGER_INVALID_MASK		0x80000000						// This bit set indicates invalid trigger pointer
+
+// Reset FIFO behaviour
+#define ACQ_START_NO_FIFO_RESET		0
+#define ACQ_START_FIFO_RESET		1
 
 // Line training data configuration
 #define ADC_LANE_L1A				0
@@ -222,6 +230,9 @@ struct acq_state_t {
 	// Local state of acq_ctrl_a register used to reduce number of RMW operations made
 	uint32_t acq_ctrl_a;
 
+	// Local state of DMACR register used to reduce number of RMW operations made
+	uint32_t dmacr_state;
+
 	/*
 	 * Sizes (in words) of the acquisition data;  the counts are given in 64-bit words
 	 * so there is an 8x or 4x relationship to the sample counts. This maximises the depth of
@@ -257,18 +268,19 @@ struct acq_state_t {
 
 extern struct acq_state_t g_acq_state;
 
-void _acq_irq_error_dma();
+void _acq_irq_error_dma(int cause_index);
 void _acq_irq_rx_handler(void *cb);
 void _acq_irq_fifo_gen_rst(void *none);
 void _acq_reset_PL_fifo();
 void _acq_reset_trigger();
-void _acq_wait_for_ndone();
+void _acq_fast_dma_start(uint32_t *buff_ptr, uint32_t buff_sz);
 int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz);
 void acq_init();
 void acq_write_training();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();
+void acq_dealloc_rewind();
 int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
 int acq_start(int reset_fifo);
 int acq_force_stop();
@@ -280,10 +292,10 @@ void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
 
 /*
- * Inlined functions that reduce RMW AXI pressure by keeping
- * track of the internal state of R_acq_ctrl_a on the PL.  It is
- * vital that *only* these functions be used to set and clear bits
- * in this register.
+ * Inlined functions that reduce RMW AXI pressure by keeping track of the internal state of
+ * R_acq_ctrl_a on the PL.  It is vital that *only* these functions be used to set and clear
+ * bits in this register.  Call a function whenever data needs to be updated on the PL, but
+ * try to bunch calls together as much as possible to reduce writes.
  */
 static inline void _acq_set_ctrl_a(uint32_t bitmask)
 {

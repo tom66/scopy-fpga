@@ -736,45 +736,6 @@
   M_AXI_GP0_BRESP,
   M_AXI_GP0_RRESP,
   M_AXI_GP0_RDATA,
-  M_AXI_GP1_ARVALID,
-  M_AXI_GP1_AWVALID,
-  M_AXI_GP1_BREADY,
-  M_AXI_GP1_RREADY,
-  M_AXI_GP1_WLAST,
-  M_AXI_GP1_WVALID,
-  M_AXI_GP1_ARID,
-  M_AXI_GP1_AWID,
-  M_AXI_GP1_WID,
-  M_AXI_GP1_ARBURST,
-  M_AXI_GP1_ARLOCK,
-  M_AXI_GP1_ARSIZE,
-  M_AXI_GP1_AWBURST,
-  M_AXI_GP1_AWLOCK,
-  M_AXI_GP1_AWSIZE,
-  M_AXI_GP1_ARPROT,
-  M_AXI_GP1_AWPROT,
-  M_AXI_GP1_ARADDR,
-  M_AXI_GP1_AWADDR,
-  M_AXI_GP1_WDATA,
-  M_AXI_GP1_ARCACHE,
-  M_AXI_GP1_ARLEN,
-  M_AXI_GP1_ARQOS,
-  M_AXI_GP1_AWCACHE,
-  M_AXI_GP1_AWLEN,
-  M_AXI_GP1_AWQOS,
-  M_AXI_GP1_WSTRB,
-  M_AXI_GP1_ACLK,
-  M_AXI_GP1_ARREADY,
-  M_AXI_GP1_AWREADY,
-  M_AXI_GP1_BVALID,
-  M_AXI_GP1_RLAST,
-  M_AXI_GP1_RVALID,
-  M_AXI_GP1_WREADY,
-  M_AXI_GP1_BID,
-  M_AXI_GP1_RID,
-  M_AXI_GP1_BRESP,
-  M_AXI_GP1_RRESP,
-  M_AXI_GP1_RDATA,
   S_AXI_HP0_ARREADY,
   S_AXI_HP0_AWREADY,
   S_AXI_HP0_BVALID,
@@ -820,51 +781,51 @@
   S_AXI_HP0_WID,
   S_AXI_HP0_WDATA,
   S_AXI_HP0_WSTRB,
-  S_AXI_HP1_ARREADY,
-  S_AXI_HP1_AWREADY,
-  S_AXI_HP1_BVALID,
-  S_AXI_HP1_RLAST,
-  S_AXI_HP1_RVALID,
-  S_AXI_HP1_WREADY,
-  S_AXI_HP1_BRESP,
-  S_AXI_HP1_RRESP,
-  S_AXI_HP1_BID,
-  S_AXI_HP1_RID,
-  S_AXI_HP1_RDATA,
-  S_AXI_HP1_RCOUNT,
-  S_AXI_HP1_WCOUNT,
-  S_AXI_HP1_RACOUNT,
-  S_AXI_HP1_WACOUNT,
-  S_AXI_HP1_ACLK,
-  S_AXI_HP1_ARVALID,
-  S_AXI_HP1_AWVALID,
-  S_AXI_HP1_BREADY,
-  S_AXI_HP1_RDISSUECAP1_EN,
-  S_AXI_HP1_RREADY,
-  S_AXI_HP1_WLAST,
-  S_AXI_HP1_WRISSUECAP1_EN,
-  S_AXI_HP1_WVALID,
-  S_AXI_HP1_ARBURST,
-  S_AXI_HP1_ARLOCK,
-  S_AXI_HP1_ARSIZE,
-  S_AXI_HP1_AWBURST,
-  S_AXI_HP1_AWLOCK,
-  S_AXI_HP1_AWSIZE,
-  S_AXI_HP1_ARPROT,
-  S_AXI_HP1_AWPROT,
-  S_AXI_HP1_ARADDR,
-  S_AXI_HP1_AWADDR,
-  S_AXI_HP1_ARCACHE,
-  S_AXI_HP1_ARLEN,
-  S_AXI_HP1_ARQOS,
-  S_AXI_HP1_AWCACHE,
-  S_AXI_HP1_AWLEN,
-  S_AXI_HP1_AWQOS,
-  S_AXI_HP1_ARID,
-  S_AXI_HP1_AWID,
-  S_AXI_HP1_WID,
-  S_AXI_HP1_WDATA,
-  S_AXI_HP1_WSTRB,
+  S_AXI_HP2_ARREADY,
+  S_AXI_HP2_AWREADY,
+  S_AXI_HP2_BVALID,
+  S_AXI_HP2_RLAST,
+  S_AXI_HP2_RVALID,
+  S_AXI_HP2_WREADY,
+  S_AXI_HP2_BRESP,
+  S_AXI_HP2_RRESP,
+  S_AXI_HP2_BID,
+  S_AXI_HP2_RID,
+  S_AXI_HP2_RDATA,
+  S_AXI_HP2_RCOUNT,
+  S_AXI_HP2_WCOUNT,
+  S_AXI_HP2_RACOUNT,
+  S_AXI_HP2_WACOUNT,
+  S_AXI_HP2_ACLK,
+  S_AXI_HP2_ARVALID,
+  S_AXI_HP2_AWVALID,
+  S_AXI_HP2_BREADY,
+  S_AXI_HP2_RDISSUECAP1_EN,
+  S_AXI_HP2_RREADY,
+  S_AXI_HP2_WLAST,
+  S_AXI_HP2_WRISSUECAP1_EN,
+  S_AXI_HP2_WVALID,
+  S_AXI_HP2_ARBURST,
+  S_AXI_HP2_ARLOCK,
+  S_AXI_HP2_ARSIZE,
+  S_AXI_HP2_AWBURST,
+  S_AXI_HP2_AWLOCK,
+  S_AXI_HP2_AWSIZE,
+  S_AXI_HP2_ARPROT,
+  S_AXI_HP2_AWPROT,
+  S_AXI_HP2_ARADDR,
+  S_AXI_HP2_AWADDR,
+  S_AXI_HP2_ARCACHE,
+  S_AXI_HP2_ARLEN,
+  S_AXI_HP2_ARQOS,
+  S_AXI_HP2_AWCACHE,
+  S_AXI_HP2_AWLEN,
+  S_AXI_HP2_AWQOS,
+  S_AXI_HP2_ARID,
+  S_AXI_HP2_AWID,
+  S_AXI_HP2_WID,
+  S_AXI_HP2_WDATA,
+  S_AXI_HP2_WSTRB,
   IRQ_F2P,
   FCLK_CLK0,
   FCLK_RESET0_N,
@@ -933,12 +894,12 @@
       parameter C_TRACE_INTERNAL_WIDTH = 2;
       parameter C_USE_AXI_NONSECURE = 0;
       parameter C_USE_M_AXI_GP0 = 1;
-      parameter C_USE_M_AXI_GP1 = 1;
+      parameter C_USE_M_AXI_GP1 = 0;
       parameter C_USE_S_AXI_GP0 = 0;
       parameter C_USE_S_AXI_GP1 = 0;
       parameter C_USE_S_AXI_HP0 = 1;
-      parameter C_USE_S_AXI_HP1 = 1;
-      parameter C_USE_S_AXI_HP2 = 0;
+      parameter C_USE_S_AXI_HP1 = 0;
+      parameter C_USE_S_AXI_HP2 = 1;
       parameter C_USE_S_AXI_HP3 = 0;
       parameter C_USE_S_AXI_ACP = 0;
       parameter C_PS7_SI_REV = "PRODUCTION";
@@ -1011,45 +972,6 @@
       input  [1 : 0] M_AXI_GP0_BRESP;
       input  [1 : 0] M_AXI_GP0_RRESP;
       input  [31 : 0] M_AXI_GP0_RDATA;
-      output  M_AXI_GP1_ARVALID;
-      output  M_AXI_GP1_AWVALID;
-      output  M_AXI_GP1_BREADY;
-      output  M_AXI_GP1_RREADY;
-      output  M_AXI_GP1_WLAST;
-      output  M_AXI_GP1_WVALID;
-      output  [11 : 0] M_AXI_GP1_ARID;
-      output  [11 : 0] M_AXI_GP1_AWID;
-      output  [11 : 0] M_AXI_GP1_WID;
-      output  [1 : 0] M_AXI_GP1_ARBURST;
-      output  [1 : 0] M_AXI_GP1_ARLOCK;
-      output  [2 : 0] M_AXI_GP1_ARSIZE;
-      output  [1 : 0] M_AXI_GP1_AWBURST;
-      output  [1 : 0] M_AXI_GP1_AWLOCK;
-      output  [2 : 0] M_AXI_GP1_AWSIZE;
-      output  [2 : 0] M_AXI_GP1_ARPROT;
-      output  [2 : 0] M_AXI_GP1_AWPROT;
-      output  [31 : 0] M_AXI_GP1_ARADDR;
-      output  [31 : 0] M_AXI_GP1_AWADDR;
-      output  [31 : 0] M_AXI_GP1_WDATA;
-      output  [3 : 0] M_AXI_GP1_ARCACHE;
-      output  [3 : 0] M_AXI_GP1_ARLEN;
-      output  [3 : 0] M_AXI_GP1_ARQOS;
-      output  [3 : 0] M_AXI_GP1_AWCACHE;
-      output  [3 : 0] M_AXI_GP1_AWLEN;
-      output  [3 : 0] M_AXI_GP1_AWQOS;
-      output  [3 : 0] M_AXI_GP1_WSTRB;
-      input  M_AXI_GP1_ACLK;
-      input  M_AXI_GP1_ARREADY;
-      input  M_AXI_GP1_AWREADY;
-      input  M_AXI_GP1_BVALID;
-      input  M_AXI_GP1_RLAST;
-      input  M_AXI_GP1_RVALID;
-      input  M_AXI_GP1_WREADY;
-      input  [11 : 0] M_AXI_GP1_BID;
-      input  [11 : 0] M_AXI_GP1_RID;
-      input  [1 : 0] M_AXI_GP1_BRESP;
-      input  [1 : 0] M_AXI_GP1_RRESP;
-      input  [31 : 0] M_AXI_GP1_RDATA;
       output  S_AXI_HP0_ARREADY;
       output  S_AXI_HP0_AWREADY;
       output  S_AXI_HP0_BVALID;
@@ -1095,51 +1017,51 @@
       input  [5 : 0] S_AXI_HP0_WID;
       input  [63 : 0] S_AXI_HP0_WDATA;
       input  [7 : 0] S_AXI_HP0_WSTRB;
-      output  S_AXI_HP1_ARREADY;
-      output  S_AXI_HP1_AWREADY;
-      output  S_AXI_HP1_BVALID;
-      output  S_AXI_HP1_RLAST;
-      output  S_AXI_HP1_RVALID;
-      output  S_AXI_HP1_WREADY;
-      output  [1 : 0] S_AXI_HP1_BRESP;
-      output  [1 : 0] S_AXI_HP1_RRESP;
-      output  [5 : 0] S_AXI_HP1_BID;
-      output  [5 : 0] S_AXI_HP1_RID;
-      output  [63 : 0] S_AXI_HP1_RDATA;
-      output  [7 : 0] S_AXI_HP1_RCOUNT;
-      output  [7 : 0] S_AXI_HP1_WCOUNT;
-      output  [2 : 0] S_AXI_HP1_RACOUNT;
-      output  [5 : 0] S_AXI_HP1_WACOUNT;
-      input  S_AXI_HP1_ACLK;
-      input  S_AXI_HP1_ARVALID;
-      input  S_AXI_HP1_AWVALID;
-      input  S_AXI_HP1_BREADY;
-      input  S_AXI_HP1_RDISSUECAP1_EN;
-      input  S_AXI_HP1_RREADY;
-      input  S_AXI_HP1_WLAST;
-      input  S_AXI_HP1_WRISSUECAP1_EN;
-      input  S_AXI_HP1_WVALID;
-      input  [1 : 0] S_AXI_HP1_ARBURST;
-      input  [1 : 0] S_AXI_HP1_ARLOCK;
-      input  [2 : 0] S_AXI_HP1_ARSIZE;
-      input  [1 : 0] S_AXI_HP1_AWBURST;
-      input  [1 : 0] S_AXI_HP1_AWLOCK;
-      input  [2 : 0] S_AXI_HP1_AWSIZE;
-      input  [2 : 0] S_AXI_HP1_ARPROT;
-      input  [2 : 0] S_AXI_HP1_AWPROT;
-      input  [31 : 0] S_AXI_HP1_ARADDR;
-      input  [31 : 0] S_AXI_HP1_AWADDR;
-      input  [3 : 0] S_AXI_HP1_ARCACHE;
-      input  [3 : 0] S_AXI_HP1_ARLEN;
-      input  [3 : 0] S_AXI_HP1_ARQOS;
-      input  [3 : 0] S_AXI_HP1_AWCACHE;
-      input  [3 : 0] S_AXI_HP1_AWLEN;
-      input  [3 : 0] S_AXI_HP1_AWQOS;
-      input  [5 : 0] S_AXI_HP1_ARID;
-      input  [5 : 0] S_AXI_HP1_AWID;
-      input  [5 : 0] S_AXI_HP1_WID;
-      input  [63 : 0] S_AXI_HP1_WDATA;
-      input  [7 : 0] S_AXI_HP1_WSTRB;
+      output  S_AXI_HP2_ARREADY;
+      output  S_AXI_HP2_AWREADY;
+      output  S_AXI_HP2_BVALID;
+      output  S_AXI_HP2_RLAST;
+      output  S_AXI_HP2_RVALID;
+      output  S_AXI_HP2_WREADY;
+      output  [1 : 0] S_AXI_HP2_BRESP;
+      output  [1 : 0] S_AXI_HP2_RRESP;
+      output  [5 : 0] S_AXI_HP2_BID;
+      output  [5 : 0] S_AXI_HP2_RID;
+      output  [63 : 0] S_AXI_HP2_RDATA;
+      output  [7 : 0] S_AXI_HP2_RCOUNT;
+      output  [7 : 0] S_AXI_HP2_WCOUNT;
+      output  [2 : 0] S_AXI_HP2_RACOUNT;
+      output  [5 : 0] S_AXI_HP2_WACOUNT;
+      input  S_AXI_HP2_ACLK;
+      input  S_AXI_HP2_ARVALID;
+      input  S_AXI_HP2_AWVALID;
+      input  S_AXI_HP2_BREADY;
+      input  S_AXI_HP2_RDISSUECAP1_EN;
+      input  S_AXI_HP2_RREADY;
+      input  S_AXI_HP2_WLAST;
+      input  S_AXI_HP2_WRISSUECAP1_EN;
+      input  S_AXI_HP2_WVALID;
+      input  [1 : 0] S_AXI_HP2_ARBURST;
+      input  [1 : 0] S_AXI_HP2_ARLOCK;
+      input  [2 : 0] S_AXI_HP2_ARSIZE;
+      input  [1 : 0] S_AXI_HP2_AWBURST;
+      input  [1 : 0] S_AXI_HP2_AWLOCK;
+      input  [2 : 0] S_AXI_HP2_AWSIZE;
+      input  [2 : 0] S_AXI_HP2_ARPROT;
+      input  [2 : 0] S_AXI_HP2_AWPROT;
+      input  [31 : 0] S_AXI_HP2_ARADDR;
+      input  [31 : 0] S_AXI_HP2_AWADDR;
+      input  [3 : 0] S_AXI_HP2_ARCACHE;
+      input  [3 : 0] S_AXI_HP2_ARLEN;
+      input  [3 : 0] S_AXI_HP2_ARQOS;
+      input  [3 : 0] S_AXI_HP2_AWCACHE;
+      input  [3 : 0] S_AXI_HP2_AWLEN;
+      input  [3 : 0] S_AXI_HP2_AWQOS;
+      input  [5 : 0] S_AXI_HP2_ARID;
+      input  [5 : 0] S_AXI_HP2_AWID;
+      input  [5 : 0] S_AXI_HP2_WID;
+      input  [63 : 0] S_AXI_HP2_WDATA;
+      input  [7 : 0] S_AXI_HP2_WSTRB;
       input  [1 : 0] IRQ_F2P;
       output  FCLK_CLK0;
       output  FCLK_RESET0_N;
@@ -1209,33 +1131,6 @@
       reg [3 : 0] M_AXI_GP0_AWLEN;
       reg [3 : 0] M_AXI_GP0_AWQOS;
       reg [3 : 0] M_AXI_GP0_WSTRB;
-      reg M_AXI_GP1_ARVALID;
-      reg M_AXI_GP1_AWVALID;
-      reg M_AXI_GP1_BREADY;
-      reg M_AXI_GP1_RREADY;
-      reg M_AXI_GP1_WLAST;
-      reg M_AXI_GP1_WVALID;
-      reg [11 : 0] M_AXI_GP1_ARID;
-      reg [11 : 0] M_AXI_GP1_AWID;
-      reg [11 : 0] M_AXI_GP1_WID;
-      reg [1 : 0] M_AXI_GP1_ARBURST;
-      reg [1 : 0] M_AXI_GP1_ARLOCK;
-      reg [2 : 0] M_AXI_GP1_ARSIZE;
-      reg [1 : 0] M_AXI_GP1_AWBURST;
-      reg [1 : 0] M_AXI_GP1_AWLOCK;
-      reg [2 : 0] M_AXI_GP1_AWSIZE;
-      reg [2 : 0] M_AXI_GP1_ARPROT;
-      reg [2 : 0] M_AXI_GP1_AWPROT;
-      reg [31 : 0] M_AXI_GP1_ARADDR;
-      reg [31 : 0] M_AXI_GP1_AWADDR;
-      reg [31 : 0] M_AXI_GP1_WDATA;
-      reg [3 : 0] M_AXI_GP1_ARCACHE;
-      reg [3 : 0] M_AXI_GP1_ARLEN;
-      reg [3 : 0] M_AXI_GP1_ARQOS;
-      reg [3 : 0] M_AXI_GP1_AWCACHE;
-      reg [3 : 0] M_AXI_GP1_AWLEN;
-      reg [3 : 0] M_AXI_GP1_AWQOS;
-      reg [3 : 0] M_AXI_GP1_WSTRB;
       reg S_AXI_HP0_ARREADY;
       reg S_AXI_HP0_AWREADY;
       reg S_AXI_HP0_BVALID;
@@ -1251,21 +1146,21 @@
       reg [7 : 0] S_AXI_HP0_WCOUNT;
       reg [2 : 0] S_AXI_HP0_RACOUNT;
       reg [5 : 0] S_AXI_HP0_WACOUNT;
-      reg S_AXI_HP1_ARREADY;
-      reg S_AXI_HP1_AWREADY;
-      reg S_AXI_HP1_BVALID;
-      reg S_AXI_HP1_RLAST;
-      reg S_AXI_HP1_RVALID;
-      reg S_AXI_HP1_WREADY;
-      reg [1 : 0] S_AXI_HP1_BRESP;
-      reg [1 : 0] S_AXI_HP1_RRESP;
-      reg [5 : 0] S_AXI_HP1_BID;
-      reg [5 : 0] S_AXI_HP1_RID;
-      reg [63 : 0] S_AXI_HP1_RDATA;
-      reg [7 : 0] S_AXI_HP1_RCOUNT;
-      reg [7 : 0] S_AXI_HP1_WCOUNT;
-      reg [2 : 0] S_AXI_HP1_RACOUNT;
-      reg [5 : 0] S_AXI_HP1_WACOUNT;
+      reg S_AXI_HP2_ARREADY;
+      reg S_AXI_HP2_AWREADY;
+      reg S_AXI_HP2_BVALID;
+      reg S_AXI_HP2_RLAST;
+      reg S_AXI_HP2_RVALID;
+      reg S_AXI_HP2_WREADY;
+      reg [1 : 0] S_AXI_HP2_BRESP;
+      reg [1 : 0] S_AXI_HP2_RRESP;
+      reg [5 : 0] S_AXI_HP2_BID;
+      reg [5 : 0] S_AXI_HP2_RID;
+      reg [63 : 0] S_AXI_HP2_RDATA;
+      reg [7 : 0] S_AXI_HP2_RCOUNT;
+      reg [7 : 0] S_AXI_HP2_WCOUNT;
+      reg [2 : 0] S_AXI_HP2_RACOUNT;
+      reg [5 : 0] S_AXI_HP2_WACOUNT;
       reg FCLK_CLK0;
       reg FCLK_RESET0_N;
       string ip_name;
@@ -1278,9 +1173,8 @@ import "DPI-C" function void ps7_set_int_param(input string name,input longint v
 import "DPI-C" function void ps7_init_c_model();
 import "DPI-C" function void ps7_set_input_IRQ_F2P(input int pinIdex, input int pinValue);
 import "DPI-C" function void ps7_init_m_axi_gp0(input int M_AXI_GP0_AWID_size,input int M_AXI_GP0_AWADDR_size,input int M_AXI_GP0_AWLEN_size,input int M_AXI_GP0_AWSIZE_size,input int M_AXI_GP0_AWBURST_size,input int M_AXI_GP0_AWLOCK_size,input int M_AXI_GP0_AWCACHE_size,input int M_AXI_GP0_AWPROT_size,input int M_AXI_GP0_AWQOS_size,input int M_AXI_GP0_AWVALID_size,input int M_AXI_GP0_AWREADY_size,input int M_AXI_GP0_WID_size,input int M_AXI_GP0_WDATA_size,input int M_AXI_GP0_WSTRB_size,input int M_AXI_GP0_WLAST_size,input int M_AXI_GP0_WVALID_size,input int M_AXI_GP0_WREADY_size,input int M_AXI_GP0_BID_size,input int M_AXI_GP0_BRESP_size,input int M_AXI_GP0_BVALID_size,input int M_AXI_GP0_BREADY_size,input int M_AXI_GP0_ARID_size,input int M_AXI_GP0_ARADDR_size,input int M_AXI_GP0_ARLEN_size,input int M_AXI_GP0_ARSIZE_size,input int M_AXI_GP0_ARBURST_size,input int M_AXI_GP0_ARLOCK_size,input int M_AXI_GP0_ARCACHE_size,input int M_AXI_GP0_ARPROT_size,input int M_AXI_GP0_ARQOS_size,input int M_AXI_GP0_ARVALID_size,input int M_AXI_GP0_ARREADY_size,input int M_AXI_GP0_RID_size,input int M_AXI_GP0_RDATA_size,input int M_AXI_GP0_RRESP_size,input int M_AXI_GP0_RLAST_size,input int M_AXI_GP0_RVALID_size,input int M_AXI_GP0_RREADY_size);
-import "DPI-C" function void ps7_init_m_axi_gp1(input int M_AXI_GP1_AWID_size,input int M_AXI_GP1_AWADDR_size,input int M_AXI_GP1_AWLEN_size,input int M_AXI_GP1_AWSIZE_size,input int M_AXI_GP1_AWBURST_size,input int M_AXI_GP1_AWLOCK_size,input int M_AXI_GP1_AWCACHE_size,input int M_AXI_GP1_AWPROT_size,input int M_AXI_GP1_AWQOS_size,input int M_AXI_GP1_AWVALID_size,input int M_AXI_GP1_AWREADY_size,input int M_AXI_GP1_WID_size,input int M_AXI_GP1_WDATA_size,input int M_AXI_GP1_WSTRB_size,input int M_AXI_GP1_WLAST_size,input int M_AXI_GP1_WVALID_size,input int M_AXI_GP1_WREADY_size,input int M_AXI_GP1_BID_size,input int M_AXI_GP1_BRESP_size,input int M_AXI_GP1_BVALID_size,input int M_AXI_GP1_BREADY_size,input int M_AXI_GP1_ARID_size,input int M_AXI_GP1_ARADDR_size,input int M_AXI_GP1_ARLEN_size,input int M_AXI_GP1_ARSIZE_size,input int M_AXI_GP1_ARBURST_size,input int M_AXI_GP1_ARLOCK_size,input int M_AXI_GP1_ARCACHE_size,input int M_AXI_GP1_ARPROT_size,input int M_AXI_GP1_ARQOS_size,input int M_AXI_GP1_ARVALID_size,input int M_AXI_GP1_ARREADY_size,input int M_AXI_GP1_RID_size,input int M_AXI_GP1_RDATA_size,input int M_AXI_GP1_RRESP_size,input int M_AXI_GP1_RLAST_size,input int M_AXI_GP1_RVALID_size,input int M_AXI_GP1_RREADY_size);
 import "DPI-C" function void ps7_init_s_axi_hp0(input int S_AXI_HP0_AWID_size,input int S_AXI_HP0_AWADDR_size,input int S_AXI_HP0_AWLEN_size,input int S_AXI_HP0_AWSIZE_size,input int S_AXI_HP0_AWBURST_size,input int S_AXI_HP0_AWLOCK_size,input int S_AXI_HP0_AWCACHE_size,input int S_AXI_HP0_AWPROT_size,input int S_AXI_HP0_AWQOS_size,input int S_AXI_HP0_AWVALID_size,input int S_AXI_HP0_AWREADY_size,input int S_AXI_HP0_WID_size,input int S_AXI_HP0_WDATA_size,input int S_AXI_HP0_WSTRB_size,input int S_AXI_HP0_WLAST_size,input int S_AXI_HP0_WVALID_size,input int S_AXI_HP0_WREADY_size,input int S_AXI_HP0_BID_size,input int S_AXI_HP0_BRESP_size,input int S_AXI_HP0_BVALID_size,input int S_AXI_HP0_BREADY_size,input int S_AXI_HP0_ARID_size,input int S_AXI_HP0_ARADDR_size,input int S_AXI_HP0_ARLEN_size,input int S_AXI_HP0_ARSIZE_size,input int S_AXI_HP0_ARBURST_size,input int S_AXI_HP0_ARLOCK_size,input int S_AXI_HP0_ARCACHE_size,input int S_AXI_HP0_ARPROT_size,input int S_AXI_HP0_ARQOS_size,input int S_AXI_HP0_ARVALID_size,input int S_AXI_HP0_ARREADY_size,input int S_AXI_HP0_RID_size,input int S_AXI_HP0_RDATA_size,input int S_AXI_HP0_RRESP_size,input int S_AXI_HP0_RLAST_size,input int S_AXI_HP0_RVALID_size,input int S_AXI_HP0_RREADY_size);
-import "DPI-C" function void ps7_init_s_axi_hp1(input int S_AXI_HP1_AWID_size,input int S_AXI_HP1_AWADDR_size,input int S_AXI_HP1_AWLEN_size,input int S_AXI_HP1_AWSIZE_size,input int S_AXI_HP1_AWBURST_size,input int S_AXI_HP1_AWLOCK_size,input int S_AXI_HP1_AWCACHE_size,input int S_AXI_HP1_AWPROT_size,input int S_AXI_HP1_AWQOS_size,input int S_AXI_HP1_AWVALID_size,input int S_AXI_HP1_AWREADY_size,input int S_AXI_HP1_WID_size,input int S_AXI_HP1_WDATA_size,input int S_AXI_HP1_WSTRB_size,input int S_AXI_HP1_WLAST_size,input int S_AXI_HP1_WVALID_size,input int S_AXI_HP1_WREADY_size,input int S_AXI_HP1_BID_size,input int S_AXI_HP1_BRESP_size,input int S_AXI_HP1_BVALID_size,input int S_AXI_HP1_BREADY_size,input int S_AXI_HP1_ARID_size,input int S_AXI_HP1_ARADDR_size,input int S_AXI_HP1_ARLEN_size,input int S_AXI_HP1_ARSIZE_size,input int S_AXI_HP1_ARBURST_size,input int S_AXI_HP1_ARLOCK_size,input int S_AXI_HP1_ARCACHE_size,input int S_AXI_HP1_ARPROT_size,input int S_AXI_HP1_ARQOS_size,input int S_AXI_HP1_ARVALID_size,input int S_AXI_HP1_ARREADY_size,input int S_AXI_HP1_RID_size,input int S_AXI_HP1_RDATA_size,input int S_AXI_HP1_RRESP_size,input int S_AXI_HP1_RLAST_size,input int S_AXI_HP1_RVALID_size,input int S_AXI_HP1_RREADY_size);
+import "DPI-C" function void ps7_init_s_axi_hp2(input int S_AXI_HP2_AWID_size,input int S_AXI_HP2_AWADDR_size,input int S_AXI_HP2_AWLEN_size,input int S_AXI_HP2_AWSIZE_size,input int S_AXI_HP2_AWBURST_size,input int S_AXI_HP2_AWLOCK_size,input int S_AXI_HP2_AWCACHE_size,input int S_AXI_HP2_AWPROT_size,input int S_AXI_HP2_AWQOS_size,input int S_AXI_HP2_AWVALID_size,input int S_AXI_HP2_AWREADY_size,input int S_AXI_HP2_WID_size,input int S_AXI_HP2_WDATA_size,input int S_AXI_HP2_WSTRB_size,input int S_AXI_HP2_WLAST_size,input int S_AXI_HP2_WVALID_size,input int S_AXI_HP2_WREADY_size,input int S_AXI_HP2_BID_size,input int S_AXI_HP2_BRESP_size,input int S_AXI_HP2_BVALID_size,input int S_AXI_HP2_BREADY_size,input int S_AXI_HP2_ARID_size,input int S_AXI_HP2_ARADDR_size,input int S_AXI_HP2_ARLEN_size,input int S_AXI_HP2_ARSIZE_size,input int S_AXI_HP2_ARBURST_size,input int S_AXI_HP2_ARLOCK_size,input int S_AXI_HP2_ARCACHE_size,input int S_AXI_HP2_ARPROT_size,input int S_AXI_HP2_ARQOS_size,input int S_AXI_HP2_ARVALID_size,input int S_AXI_HP2_ARREADY_size,input int S_AXI_HP2_RID_size,input int S_AXI_HP2_RDATA_size,input int S_AXI_HP2_RRESP_size,input int S_AXI_HP2_RLAST_size,input int S_AXI_HP2_RVALID_size,input int S_AXI_HP2_RREADY_size);
 import "DPI-C" function void ps7_simulate_single_cycle_FCLK_CLK0();
 import "DPI-C" function void ps7_simulate_single_cycle_M_AXI_GP0_ACLK();
 import "DPI-C" function void ps7_set_inputs_m_axi_gp0_M_AXI_GP0_ACLK(
@@ -1324,50 +1218,6 @@ output bit [2 : 0] M_AXI_GP0_ARPROT,
 output bit [3 : 0] M_AXI_GP0_ARQOS,
 output bit M_AXI_GP0_ARVALID,
 output bit M_AXI_GP0_RREADY
-);
-
-import "DPI-C" function void ps7_simulate_single_cycle_M_AXI_GP1_ACLK();
-import "DPI-C" function void ps7_set_inputs_m_axi_gp1_M_AXI_GP1_ACLK(
-input bit M_AXI_GP1_AWREADY,
-input bit M_AXI_GP1_WREADY,
-input bit [11 : 0] M_AXI_GP1_BID,
-input bit [1 : 0] M_AXI_GP1_BRESP,
-input bit M_AXI_GP1_BVALID,
-input bit M_AXI_GP1_ARREADY,
-input bit [11 : 0] M_AXI_GP1_RID,
-input bit [31 : 0] M_AXI_GP1_RDATA,
-input bit [1 : 0] M_AXI_GP1_RRESP,
-input bit M_AXI_GP1_RLAST,
-input bit M_AXI_GP1_RVALID
-);
-import "DPI-C" function void ps7_get_outputs_m_axi_gp1_M_AXI_GP1_ACLK(
-output bit [11 : 0] M_AXI_GP1_AWID,
-output bit [31 : 0] M_AXI_GP1_AWADDR,
-output bit [3 : 0] M_AXI_GP1_AWLEN,
-output bit [2 : 0] M_AXI_GP1_AWSIZE,
-output bit [1 : 0] M_AXI_GP1_AWBURST,
-output bit [1 : 0] M_AXI_GP1_AWLOCK,
-output bit [3 : 0] M_AXI_GP1_AWCACHE,
-output bit [2 : 0] M_AXI_GP1_AWPROT,
-output bit [3 : 0] M_AXI_GP1_AWQOS,
-output bit M_AXI_GP1_AWVALID,
-output bit [11 : 0] M_AXI_GP1_WID,
-output bit [31 : 0] M_AXI_GP1_WDATA,
-output bit [3 : 0] M_AXI_GP1_WSTRB,
-output bit M_AXI_GP1_WLAST,
-output bit M_AXI_GP1_WVALID,
-output bit M_AXI_GP1_BREADY,
-output bit [11 : 0] M_AXI_GP1_ARID,
-output bit [31 : 0] M_AXI_GP1_ARADDR,
-output bit [3 : 0] M_AXI_GP1_ARLEN,
-output bit [2 : 0] M_AXI_GP1_ARSIZE,
-output bit [1 : 0] M_AXI_GP1_ARBURST,
-output bit [1 : 0] M_AXI_GP1_ARLOCK,
-output bit [3 : 0] M_AXI_GP1_ARCACHE,
-output bit [2 : 0] M_AXI_GP1_ARPROT,
-output bit [3 : 0] M_AXI_GP1_ARQOS,
-output bit M_AXI_GP1_ARVALID,
-output bit M_AXI_GP1_RREADY
 );
 
 import "DPI-C" function void ps7_simulate_single_cycle_S_AXI_HP0_ACLK();
@@ -1414,48 +1264,48 @@ output bit S_AXI_HP0_RLAST,
 output bit S_AXI_HP0_RVALID
 );
 
-import "DPI-C" function void ps7_simulate_single_cycle_S_AXI_HP1_ACLK();
-import "DPI-C" function void ps7_set_inputs_s_axi_hp1_S_AXI_HP1_ACLK(
-input bit [5 : 0] S_AXI_HP1_AWID,
-input bit [31 : 0] S_AXI_HP1_AWADDR,
-input bit [3 : 0] S_AXI_HP1_AWLEN,
-input bit [2 : 0] S_AXI_HP1_AWSIZE,
-input bit [1 : 0] S_AXI_HP1_AWBURST,
-input bit [1 : 0] S_AXI_HP1_AWLOCK,
-input bit [3 : 0] S_AXI_HP1_AWCACHE,
-input bit [2 : 0] S_AXI_HP1_AWPROT,
-input bit [3 : 0] S_AXI_HP1_AWQOS,
-input bit S_AXI_HP1_AWVALID,
-input bit [5 : 0] S_AXI_HP1_WID,
-input bit [63 : 0] S_AXI_HP1_WDATA,
-input bit [7 : 0] S_AXI_HP1_WSTRB,
-input bit S_AXI_HP1_WLAST,
-input bit S_AXI_HP1_WVALID,
-input bit S_AXI_HP1_BREADY,
-input bit [5 : 0] S_AXI_HP1_ARID,
-input bit [31 : 0] S_AXI_HP1_ARADDR,
-input bit [3 : 0] S_AXI_HP1_ARLEN,
-input bit [2 : 0] S_AXI_HP1_ARSIZE,
-input bit [1 : 0] S_AXI_HP1_ARBURST,
-input bit [1 : 0] S_AXI_HP1_ARLOCK,
-input bit [3 : 0] S_AXI_HP1_ARCACHE,
-input bit [2 : 0] S_AXI_HP1_ARPROT,
-input bit [3 : 0] S_AXI_HP1_ARQOS,
-input bit S_AXI_HP1_ARVALID,
-input bit S_AXI_HP1_RREADY
+import "DPI-C" function void ps7_simulate_single_cycle_S_AXI_HP2_ACLK();
+import "DPI-C" function void ps7_set_inputs_s_axi_hp2_S_AXI_HP2_ACLK(
+input bit [5 : 0] S_AXI_HP2_AWID,
+input bit [31 : 0] S_AXI_HP2_AWADDR,
+input bit [3 : 0] S_AXI_HP2_AWLEN,
+input bit [2 : 0] S_AXI_HP2_AWSIZE,
+input bit [1 : 0] S_AXI_HP2_AWBURST,
+input bit [1 : 0] S_AXI_HP2_AWLOCK,
+input bit [3 : 0] S_AXI_HP2_AWCACHE,
+input bit [2 : 0] S_AXI_HP2_AWPROT,
+input bit [3 : 0] S_AXI_HP2_AWQOS,
+input bit S_AXI_HP2_AWVALID,
+input bit [5 : 0] S_AXI_HP2_WID,
+input bit [63 : 0] S_AXI_HP2_WDATA,
+input bit [7 : 0] S_AXI_HP2_WSTRB,
+input bit S_AXI_HP2_WLAST,
+input bit S_AXI_HP2_WVALID,
+input bit S_AXI_HP2_BREADY,
+input bit [5 : 0] S_AXI_HP2_ARID,
+input bit [31 : 0] S_AXI_HP2_ARADDR,
+input bit [3 : 0] S_AXI_HP2_ARLEN,
+input bit [2 : 0] S_AXI_HP2_ARSIZE,
+input bit [1 : 0] S_AXI_HP2_ARBURST,
+input bit [1 : 0] S_AXI_HP2_ARLOCK,
+input bit [3 : 0] S_AXI_HP2_ARCACHE,
+input bit [2 : 0] S_AXI_HP2_ARPROT,
+input bit [3 : 0] S_AXI_HP2_ARQOS,
+input bit S_AXI_HP2_ARVALID,
+input bit S_AXI_HP2_RREADY
 );
-import "DPI-C" function void ps7_get_outputs_s_axi_hp1_S_AXI_HP1_ACLK(
-output bit S_AXI_HP1_AWREADY,
-output bit S_AXI_HP1_WREADY,
-output bit [5 : 0] S_AXI_HP1_BID,
-output bit [1 : 0] S_AXI_HP1_BRESP,
-output bit S_AXI_HP1_BVALID,
-output bit S_AXI_HP1_ARREADY,
-output bit [5 : 0] S_AXI_HP1_RID,
-output bit [63 : 0] S_AXI_HP1_RDATA,
-output bit [1 : 0] S_AXI_HP1_RRESP,
-output bit S_AXI_HP1_RLAST,
-output bit S_AXI_HP1_RVALID
+import "DPI-C" function void ps7_get_outputs_s_axi_hp2_S_AXI_HP2_ACLK(
+output bit S_AXI_HP2_AWREADY,
+output bit S_AXI_HP2_WREADY,
+output bit [5 : 0] S_AXI_HP2_BID,
+output bit [1 : 0] S_AXI_HP2_BRESP,
+output bit S_AXI_HP2_BVALID,
+output bit S_AXI_HP2_ARREADY,
+output bit [5 : 0] S_AXI_HP2_RID,
+output bit [63 : 0] S_AXI_HP2_RDATA,
+output bit [1 : 0] S_AXI_HP2_RRESP,
+output bit S_AXI_HP2_RLAST,
+output bit S_AXI_HP2_RVALID
 );
 
    export "DPI-C" function ps7_stop_sim;
@@ -1554,11 +1404,9 @@ output bit S_AXI_HP1_RVALID
 
   ps7_init_m_axi_gp0($bits(M_AXI_GP0_AWID),$bits(M_AXI_GP0_AWADDR),$bits(M_AXI_GP0_AWLEN),$bits(M_AXI_GP0_AWSIZE),$bits(M_AXI_GP0_AWBURST),$bits(M_AXI_GP0_AWLOCK),$bits(M_AXI_GP0_AWCACHE),$bits(M_AXI_GP0_AWPROT),$bits(M_AXI_GP0_AWQOS),$bits(M_AXI_GP0_AWVALID),$bits(M_AXI_GP0_AWREADY),$bits(M_AXI_GP0_WID),$bits(M_AXI_GP0_WDATA),$bits(M_AXI_GP0_WSTRB),$bits(M_AXI_GP0_WLAST),$bits(M_AXI_GP0_WVALID),$bits(M_AXI_GP0_WREADY),$bits(M_AXI_GP0_BID),$bits(M_AXI_GP0_BRESP),$bits(M_AXI_GP0_BVALID),$bits(M_AXI_GP0_BREADY),$bits(M_AXI_GP0_ARID),$bits(M_AXI_GP0_ARADDR),$bits(M_AXI_GP0_ARLEN),$bits(M_AXI_GP0_ARSIZE),$bits(M_AXI_GP0_ARBURST),$bits(M_AXI_GP0_ARLOCK),$bits(M_AXI_GP0_ARCACHE),$bits(M_AXI_GP0_ARPROT),$bits(M_AXI_GP0_ARQOS),$bits(M_AXI_GP0_ARVALID),$bits(M_AXI_GP0_ARREADY),$bits(M_AXI_GP0_RID),$bits(M_AXI_GP0_RDATA),$bits(M_AXI_GP0_RRESP),$bits(M_AXI_GP0_RLAST),$bits(M_AXI_GP0_RVALID),$bits(M_AXI_GP0_RREADY));
 
-  ps7_init_m_axi_gp1($bits(M_AXI_GP1_AWID),$bits(M_AXI_GP1_AWADDR),$bits(M_AXI_GP1_AWLEN),$bits(M_AXI_GP1_AWSIZE),$bits(M_AXI_GP1_AWBURST),$bits(M_AXI_GP1_AWLOCK),$bits(M_AXI_GP1_AWCACHE),$bits(M_AXI_GP1_AWPROT),$bits(M_AXI_GP1_AWQOS),$bits(M_AXI_GP1_AWVALID),$bits(M_AXI_GP1_AWREADY),$bits(M_AXI_GP1_WID),$bits(M_AXI_GP1_WDATA),$bits(M_AXI_GP1_WSTRB),$bits(M_AXI_GP1_WLAST),$bits(M_AXI_GP1_WVALID),$bits(M_AXI_GP1_WREADY),$bits(M_AXI_GP1_BID),$bits(M_AXI_GP1_BRESP),$bits(M_AXI_GP1_BVALID),$bits(M_AXI_GP1_BREADY),$bits(M_AXI_GP1_ARID),$bits(M_AXI_GP1_ARADDR),$bits(M_AXI_GP1_ARLEN),$bits(M_AXI_GP1_ARSIZE),$bits(M_AXI_GP1_ARBURST),$bits(M_AXI_GP1_ARLOCK),$bits(M_AXI_GP1_ARCACHE),$bits(M_AXI_GP1_ARPROT),$bits(M_AXI_GP1_ARQOS),$bits(M_AXI_GP1_ARVALID),$bits(M_AXI_GP1_ARREADY),$bits(M_AXI_GP1_RID),$bits(M_AXI_GP1_RDATA),$bits(M_AXI_GP1_RRESP),$bits(M_AXI_GP1_RLAST),$bits(M_AXI_GP1_RVALID),$bits(M_AXI_GP1_RREADY));
-
   ps7_init_s_axi_hp0($bits(S_AXI_HP0_AWID),$bits(S_AXI_HP0_AWADDR),$bits(S_AXI_HP0_AWLEN),$bits(S_AXI_HP0_AWSIZE),$bits(S_AXI_HP0_AWBURST),$bits(S_AXI_HP0_AWLOCK),$bits(S_AXI_HP0_AWCACHE),$bits(S_AXI_HP0_AWPROT),$bits(S_AXI_HP0_AWQOS),$bits(S_AXI_HP0_AWVALID),$bits(S_AXI_HP0_AWREADY),$bits(S_AXI_HP0_WID),$bits(S_AXI_HP0_WDATA),$bits(S_AXI_HP0_WSTRB),$bits(S_AXI_HP0_WLAST),$bits(S_AXI_HP0_WVALID),$bits(S_AXI_HP0_WREADY),$bits(S_AXI_HP0_BID),$bits(S_AXI_HP0_BRESP),$bits(S_AXI_HP0_BVALID),$bits(S_AXI_HP0_BREADY),$bits(S_AXI_HP0_ARID),$bits(S_AXI_HP0_ARADDR),$bits(S_AXI_HP0_ARLEN),$bits(S_AXI_HP0_ARSIZE),$bits(S_AXI_HP0_ARBURST),$bits(S_AXI_HP0_ARLOCK),$bits(S_AXI_HP0_ARCACHE),$bits(S_AXI_HP0_ARPROT),$bits(S_AXI_HP0_ARQOS),$bits(S_AXI_HP0_ARVALID),$bits(S_AXI_HP0_ARREADY),$bits(S_AXI_HP0_RID),$bits(S_AXI_HP0_RDATA),$bits(S_AXI_HP0_RRESP),$bits(S_AXI_HP0_RLAST),$bits(S_AXI_HP0_RVALID),$bits(S_AXI_HP0_RREADY));
 
-  ps7_init_s_axi_hp1($bits(S_AXI_HP1_AWID),$bits(S_AXI_HP1_AWADDR),$bits(S_AXI_HP1_AWLEN),$bits(S_AXI_HP1_AWSIZE),$bits(S_AXI_HP1_AWBURST),$bits(S_AXI_HP1_AWLOCK),$bits(S_AXI_HP1_AWCACHE),$bits(S_AXI_HP1_AWPROT),$bits(S_AXI_HP1_AWQOS),$bits(S_AXI_HP1_AWVALID),$bits(S_AXI_HP1_AWREADY),$bits(S_AXI_HP1_WID),$bits(S_AXI_HP1_WDATA),$bits(S_AXI_HP1_WSTRB),$bits(S_AXI_HP1_WLAST),$bits(S_AXI_HP1_WVALID),$bits(S_AXI_HP1_WREADY),$bits(S_AXI_HP1_BID),$bits(S_AXI_HP1_BRESP),$bits(S_AXI_HP1_BVALID),$bits(S_AXI_HP1_BREADY),$bits(S_AXI_HP1_ARID),$bits(S_AXI_HP1_ARADDR),$bits(S_AXI_HP1_ARLEN),$bits(S_AXI_HP1_ARSIZE),$bits(S_AXI_HP1_ARBURST),$bits(S_AXI_HP1_ARLOCK),$bits(S_AXI_HP1_ARCACHE),$bits(S_AXI_HP1_ARPROT),$bits(S_AXI_HP1_ARQOS),$bits(S_AXI_HP1_ARVALID),$bits(S_AXI_HP1_ARREADY),$bits(S_AXI_HP1_RID),$bits(S_AXI_HP1_RDATA),$bits(S_AXI_HP1_RRESP),$bits(S_AXI_HP1_RLAST),$bits(S_AXI_HP1_RVALID),$bits(S_AXI_HP1_RREADY));
+  ps7_init_s_axi_hp2($bits(S_AXI_HP2_AWID),$bits(S_AXI_HP2_AWADDR),$bits(S_AXI_HP2_AWLEN),$bits(S_AXI_HP2_AWSIZE),$bits(S_AXI_HP2_AWBURST),$bits(S_AXI_HP2_AWLOCK),$bits(S_AXI_HP2_AWCACHE),$bits(S_AXI_HP2_AWPROT),$bits(S_AXI_HP2_AWQOS),$bits(S_AXI_HP2_AWVALID),$bits(S_AXI_HP2_AWREADY),$bits(S_AXI_HP2_WID),$bits(S_AXI_HP2_WDATA),$bits(S_AXI_HP2_WSTRB),$bits(S_AXI_HP2_WLAST),$bits(S_AXI_HP2_WVALID),$bits(S_AXI_HP2_WREADY),$bits(S_AXI_HP2_BID),$bits(S_AXI_HP2_BRESP),$bits(S_AXI_HP2_BVALID),$bits(S_AXI_HP2_BREADY),$bits(S_AXI_HP2_ARID),$bits(S_AXI_HP2_ARADDR),$bits(S_AXI_HP2_ARLEN),$bits(S_AXI_HP2_ARSIZE),$bits(S_AXI_HP2_ARBURST),$bits(S_AXI_HP2_ARLOCK),$bits(S_AXI_HP2_ARCACHE),$bits(S_AXI_HP2_ARPROT),$bits(S_AXI_HP2_ARQOS),$bits(S_AXI_HP2_ARVALID),$bits(S_AXI_HP2_ARREADY),$bits(S_AXI_HP2_RID),$bits(S_AXI_HP2_RDATA),$bits(S_AXI_HP2_RRESP),$bits(S_AXI_HP2_RLAST),$bits(S_AXI_HP2_RVALID),$bits(S_AXI_HP2_RREADY));
   ps7_init_c_model();
   end
   initial
@@ -1566,7 +1414,7 @@ output bit S_AXI_HP1_RVALID
      FCLK_CLK0 = 1'b0;
   end
 
-  always #(2.5) FCLK_CLK0 <= ~FCLK_CLK0;
+  always #(2.824858757062147) FCLK_CLK0 <= ~FCLK_CLK0;
 
   always@(posedge FCLK_CLK0)
   begin
@@ -1644,59 +1492,6 @@ always@(posedge M_AXI_GP0_ACLK)
    end
 
 
-always@(posedge M_AXI_GP1_ACLK)
-  begin
-
-   ps7_set_ip_context(ip_name);
-
-   ps7_set_inputs_m_axi_gp1_M_AXI_GP1_ACLK(
-    M_AXI_GP1_AWREADY,
-    M_AXI_GP1_WREADY,
-    M_AXI_GP1_BID,
-    M_AXI_GP1_BRESP,
-    M_AXI_GP1_BVALID,
-    M_AXI_GP1_ARREADY,
-    M_AXI_GP1_RID,
-    M_AXI_GP1_RDATA,
-    M_AXI_GP1_RRESP,
-    M_AXI_GP1_RLAST,
-    M_AXI_GP1_RVALID
-  );
-
-   ps7_simulate_single_cycle_M_AXI_GP1_ACLK();
-
-   ps7_get_outputs_m_axi_gp1_M_AXI_GP1_ACLK(
-    M_AXI_GP1_AWID,
-    M_AXI_GP1_AWADDR,
-    M_AXI_GP1_AWLEN,
-    M_AXI_GP1_AWSIZE,
-    M_AXI_GP1_AWBURST,
-    M_AXI_GP1_AWLOCK,
-    M_AXI_GP1_AWCACHE,
-    M_AXI_GP1_AWPROT,
-    M_AXI_GP1_AWQOS,
-    M_AXI_GP1_AWVALID,
-    M_AXI_GP1_WID,
-    M_AXI_GP1_WDATA,
-    M_AXI_GP1_WSTRB,
-    M_AXI_GP1_WLAST,
-    M_AXI_GP1_WVALID,
-    M_AXI_GP1_BREADY,
-    M_AXI_GP1_ARID,
-    M_AXI_GP1_ARADDR,
-    M_AXI_GP1_ARLEN,
-    M_AXI_GP1_ARSIZE,
-    M_AXI_GP1_ARBURST,
-    M_AXI_GP1_ARLOCK,
-    M_AXI_GP1_ARCACHE,
-    M_AXI_GP1_ARPROT,
-    M_AXI_GP1_ARQOS,
-    M_AXI_GP1_ARVALID,
-    M_AXI_GP1_RREADY
-  );
-   end
-
-
 always@(posedge S_AXI_HP0_ACLK)
   begin
 
@@ -1750,55 +1545,55 @@ always@(posedge S_AXI_HP0_ACLK)
    end
 
 
-always@(posedge S_AXI_HP1_ACLK)
+always@(posedge S_AXI_HP2_ACLK)
   begin
 
    ps7_set_ip_context(ip_name);
 
-   ps7_set_inputs_s_axi_hp1_S_AXI_HP1_ACLK(
-    S_AXI_HP1_AWID,
-    S_AXI_HP1_AWADDR,
-    S_AXI_HP1_AWLEN,
-    S_AXI_HP1_AWSIZE,
-    S_AXI_HP1_AWBURST,
-    S_AXI_HP1_AWLOCK,
-    S_AXI_HP1_AWCACHE,
-    S_AXI_HP1_AWPROT,
-    S_AXI_HP1_AWQOS,
-    S_AXI_HP1_AWVALID,
-    S_AXI_HP1_WID,
-    S_AXI_HP1_WDATA,
-    S_AXI_HP1_WSTRB,
-    S_AXI_HP1_WLAST,
-    S_AXI_HP1_WVALID,
-    S_AXI_HP1_BREADY,
-    S_AXI_HP1_ARID,
-    S_AXI_HP1_ARADDR,
-    S_AXI_HP1_ARLEN,
-    S_AXI_HP1_ARSIZE,
-    S_AXI_HP1_ARBURST,
-    S_AXI_HP1_ARLOCK,
-    S_AXI_HP1_ARCACHE,
-    S_AXI_HP1_ARPROT,
-    S_AXI_HP1_ARQOS,
-    S_AXI_HP1_ARVALID,
-    S_AXI_HP1_RREADY
+   ps7_set_inputs_s_axi_hp2_S_AXI_HP2_ACLK(
+    S_AXI_HP2_AWID,
+    S_AXI_HP2_AWADDR,
+    S_AXI_HP2_AWLEN,
+    S_AXI_HP2_AWSIZE,
+    S_AXI_HP2_AWBURST,
+    S_AXI_HP2_AWLOCK,
+    S_AXI_HP2_AWCACHE,
+    S_AXI_HP2_AWPROT,
+    S_AXI_HP2_AWQOS,
+    S_AXI_HP2_AWVALID,
+    S_AXI_HP2_WID,
+    S_AXI_HP2_WDATA,
+    S_AXI_HP2_WSTRB,
+    S_AXI_HP2_WLAST,
+    S_AXI_HP2_WVALID,
+    S_AXI_HP2_BREADY,
+    S_AXI_HP2_ARID,
+    S_AXI_HP2_ARADDR,
+    S_AXI_HP2_ARLEN,
+    S_AXI_HP2_ARSIZE,
+    S_AXI_HP2_ARBURST,
+    S_AXI_HP2_ARLOCK,
+    S_AXI_HP2_ARCACHE,
+    S_AXI_HP2_ARPROT,
+    S_AXI_HP2_ARQOS,
+    S_AXI_HP2_ARVALID,
+    S_AXI_HP2_RREADY
   );
 
-   ps7_simulate_single_cycle_S_AXI_HP1_ACLK();
+   ps7_simulate_single_cycle_S_AXI_HP2_ACLK();
 
-   ps7_get_outputs_s_axi_hp1_S_AXI_HP1_ACLK(
-    S_AXI_HP1_AWREADY,
-    S_AXI_HP1_WREADY,
-    S_AXI_HP1_BID,
-    S_AXI_HP1_BRESP,
-    S_AXI_HP1_BVALID,
-    S_AXI_HP1_ARREADY,
-    S_AXI_HP1_RID,
-    S_AXI_HP1_RDATA,
-    S_AXI_HP1_RRESP,
-    S_AXI_HP1_RLAST,
-    S_AXI_HP1_RVALID
+   ps7_get_outputs_s_axi_hp2_S_AXI_HP2_ACLK(
+    S_AXI_HP2_AWREADY,
+    S_AXI_HP2_WREADY,
+    S_AXI_HP2_BID,
+    S_AXI_HP2_BRESP,
+    S_AXI_HP2_BVALID,
+    S_AXI_HP2_ARREADY,
+    S_AXI_HP2_RID,
+    S_AXI_HP2_RDATA,
+    S_AXI_HP2_RRESP,
+    S_AXI_HP2_RLAST,
+    S_AXI_HP2_RVALID
   );
    end
 

@@ -16,6 +16,7 @@ C_SRCS += \
 ../src/main.c \
 ../src/mipi_csi_hacks.c \
 ../src/platform.c \
+../src/spi.c \
 ../src/trigger.c 
 
 OBJS += \
@@ -28,6 +29,7 @@ OBJS += \
 ./src/main.o \
 ./src/mipi_csi_hacks.o \
 ./src/platform.o \
+./src/spi.o \
 ./src/trigger.o 
 
 C_DEPS += \
@@ -40,6 +42,7 @@ C_DEPS += \
 ./src/main.d \
 ./src/mipi_csi_hacks.d \
 ./src/platform.d \
+./src/spi.d \
 ./src/trigger.d 
 
 
@@ -47,7 +50,7 @@ C_DEPS += \
 src/%.o: ../src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: ARM v7 gcc compiler'
-	arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -c -fmessage-length=0 -MT"$@" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -I"../.\src\Collections-C\src\include" -c -fmessage-length=0 -MT"$@" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

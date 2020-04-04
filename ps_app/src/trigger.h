@@ -99,11 +99,11 @@
 #define HOLDOFF_NS_MAXIMUM					((0xfffffffc) * HOLDOFF_NS_PER_COUNT)		// Max ~34.35s
 
 void trig_init();
-void trig_zero_levels();
+int trig_zero_levels();
 int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode, int comp_pol, uint16_t trig_lvl_high, uint16_t trig_lvl_low);
 int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_hyst, int edge_type);
-void trig_configure_always();
-void trig_configure_holdoff(uint64_t holdoff_time_ns);
+int trig_configure_always();
+int trig_configure_holdoff(uint64_t holdoff_time_ns);
 void trig_dump_state();
 void trig_force();
 void trig_arm();

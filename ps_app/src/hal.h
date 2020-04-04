@@ -77,8 +77,14 @@
 																// at a later date (26/01/2020)
 
 #define CLKWIZ_CFG_MIPI				(XPAR_CLK_WIZ_0_DEVICE_ID)
-#define CLKWIZ_CFG_MIPI_REFCLK		200							// Should be adjusted to meet the refclk into the ClkWiz.  Bug in XSA generation makes
+#define CLKWIZ_CFG_MIPI_REFCLK		177.77777777				// Should be adjusted to meet the refclk into the ClkWiz.  Bug in XSA generation makes
 																// this otherwise invalid.
+
+#define FPGA0_CLK_CTRL				0xF8000170
+#define PS_CLK_REG_DIVISOR0_SHIFT	8
+#define PS_CLK_REG_DIVISOR1_SHIFT	20
+#define PS_CLK_REG_DIVISOR0_MASK	((0x3f) << PS_CLK_REG_DIVISOR0_SHIFT)
+#define PS_CLK_REG_DIVISOR1_MASK	((0x3f) << PS_CLK_REG_DIVISOR1_SHIFT)
 
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))

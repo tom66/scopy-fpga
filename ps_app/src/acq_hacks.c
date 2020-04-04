@@ -15,13 +15,13 @@
 
 extern uint8_t norway_512x512_grey[];
 
-#define N_WAVES			128
-#define N_WAVESIZE		8192
+#define N_WAVES			500
+#define N_WAVESIZE		1152
 #define LINE_SIZE		4096
 #define BUFFER_SIZE		(N_WAVES * N_WAVESIZE)
 #define N_CSI_LINES		(BUFFER_SIZE / LINE_SIZE)
 
-//#define PRETTY_DEBUG
+#define PRETTY_DEBUG
 
 /*
  * Acquistion hacks.  Ties together the acquisition engine and CSI transmitter
@@ -70,8 +70,27 @@ void acq_hacks_run()
 
 	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
 
+	d_printf(D_WARN, "starting acquisition engine...");
+	acq_free_all_alloc();
+
+	// possible to go as low as 1k sampcount, 8k bytes.
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, wave_size_counts, n_waves);
+
+	if(res != ACQRES_OK) {
+		d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);
+		exit(-1);
+	}
+
 	d_printf(D_WARN, "starting trigger engine...");
 	trig_init();
+
+	// Setup the trigger
+	res = trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
+	d_printf(D_WARN, "trigger=%i", res);
+	trig_dump_state();
+
+	//trig_configure_always();
+	//trig_configure_holdoff(trig_holdoff);
 
 	d_printf(D_WARN, "starting acquisition hacks...");
 
@@ -95,31 +114,17 @@ void acq_hacks_run()
 		// Start overall timer
 		d_start_timing(7);
 
-		// Setup the acquisition
-		d_start_timing(5);
-		acq_free_all_alloc();
-
-		// possible to go as low as 1k sampcount, 8k bytes.
-		res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, wave_size_counts, n_waves);
-
-		if(res != ACQRES_OK) {
-			d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);
-			exit(-1);
-		}
-
 		// Start the acquisition
+		d_start_timing(5);
 		d_start_timing(4);
-		res = acq_start(1);
+		acq_dealloc_rewind();
+
+		res = acq_start(ACQ_START_FIFO_RESET);
 
 		if(res != ACQRES_OK) {
 			d_printf(D_ERROR, "acq_start error: %d", res);
 			exit(-1);
 		}
-
-		// Setup the trigger
-		trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
-		//trig_configure_always();
-		trig_configure_holdoff(trig_holdoff);
 
 		// Wait for acq to be done
 		do {
@@ -130,6 +135,7 @@ void acq_hacks_run()
 
 			//outbyte('X');
 
+			/*
 			// Check key input, if any
 			no_key = 0;
 
@@ -175,9 +181,11 @@ void acq_hacks_run()
 						(int32_t)(trig_holdoff / 1000L));
 				//trig_dump_state();
 			}
+			*/
 		} while(!acq_is_done());
 
 		d_stop_timing(4);
+
 		wave_raw_time = d_read_timing_us(4);
 		microsec = wave_raw_time;
 

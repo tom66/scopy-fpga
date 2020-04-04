@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_streamer:2.0
-// IP Revision: 121
+// IP Revision: 125
 
 `timescale 1ns/1ps
 
@@ -85,6 +85,8 @@ module design_1_adc_axi_streamer_0 (
   dbg_adc_fifo_gated_clk,
   dbg_acq_suspend,
   dbg_acq_post_trigger,
+  dbg_acq_fifo_full_data_loss,
+  dbg_acq_trig_super_mask,
   acq_ctrl_a,
   acq_status_a,
   acq_status_b,
@@ -164,6 +166,8 @@ output wire dbg_acq_holdoff_regd;
 output wire dbg_adc_fifo_gated_clk;
 output wire dbg_acq_suspend;
 output wire dbg_acq_post_trigger;
+output wire dbg_acq_fifo_full_data_loss;
+output wire dbg_acq_trig_super_mask;
 input wire [31 : 0] acq_ctrl_a;
 output wire [31 : 0] acq_status_a;
 output wire [31 : 0] acq_status_b;
@@ -248,6 +252,8 @@ input wire m00_axis_tready;
     .dbg_adc_fifo_gated_clk(dbg_adc_fifo_gated_clk),
     .dbg_acq_suspend(dbg_acq_suspend),
     .dbg_acq_post_trigger(dbg_acq_post_trigger),
+    .dbg_acq_fifo_full_data_loss(dbg_acq_fifo_full_data_loss),
+    .dbg_acq_trig_super_mask(dbg_acq_trig_super_mask),
     .acq_ctrl_a(acq_ctrl_a),
     .acq_status_a(acq_status_a),
     .acq_status_b(acq_status_b),

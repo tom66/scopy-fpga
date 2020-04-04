@@ -160,6 +160,7 @@ static inline uint32_t fabcfg_test(uint32_t reg, uint32_t mask)
 static inline void fabcfg_write(uint32_t reg, uint32_t data)
 {
 	reg &= FAB_CFG_ADDR_MASK;
+	//d_printf(D_RAW, "%08x : %08x\r\n", reg, data);
 	//dsb();
 	_FAB_CFG_ACCESS(reg) = data;
 	//dsb();

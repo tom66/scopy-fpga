@@ -7,6 +7,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module main(  
+    // ### MCU interface including SPI (slave) ###
+    fpga_heartbeat,
+    fpga_irq1,
+    fpga_irq2,
+    fpga_irq3,
+    fpga_spi_miso,
+    fpga_spi_mosi,
+    fpga_spi_sclk,
+    fpga_spi_csn,
+    
     // ### CSI interface ###
     csi_clk_p,      // clock lane positive
     csi_clk_n,      // clock lane negative
@@ -69,12 +79,39 @@ parameter EMIO_CSI_STOP = 23;
 parameter EMIO_CSI_SLEEP = 24;
 parameter EMIO_CSI_DONE = 25;
 
+parameter EMIO_HEARTBEAT = 60;      // Toggled by PS regularly (~5ms tick)
+parameter EMIO_IRQ1 = 61;
+parameter EMIO_IRQ2 = 62;
+parameter EMIO_IRQ3 = 63;
+
+output fpga_heartbeat, fpga_irq1, fpga_irq2, fpga_irq3, fpga_spi_miso;
+input fpga_spi_mosi, fpga_spi_sclk, fpga_spi_csn;
+
 output csi_clk_p, csi_clk_n, csi_d0_p, csi_d0_n, csi_d1_p, csi_d1_n, csi_lpd0_n, csi_lpd0_p, csi_lpd1_n, csi_lpd1_p, csi_lpclk_n, csi_lpclk_p;
 input adc_l1a_p, adc_l1a_n, adc_l1b_p, adc_l1b_n, adc_l2a_p, adc_l2a_n, adc_l2b_p, adc_l2b_n, adc_l3a_p, adc_l3a_n;
 input adc_l3b_p, adc_l3b_n, adc_l4a_p, adc_l4a_n, adc_l4b_p, adc_l4b_n, adc_lclk_p, adc_lclk_n, adc_fclk_p, adc_fclk_n;
 
 output led_PL0, led_PL1;
 wire g_rst_gen;
+
+/*
+ * SPI Out Tristate Logic
+ */
+wire fpga_spi_miso_out, fpga_spi_miso_out_tris;
+
+OBUFT (
+    .I(fpga_spi_miso_out),
+    .T(fpga_spi_miso_out_tris),
+    .O(fpga_spi_miso)
+);
+
+/*
+ * EMIO IRQ assignment
+ */
+assign fpga_heartbeat = emio_output[EMIO_HEARTBEAT];
+assign fpga_irq1 = emio_output[EMIO_IRQ1];
+assign fpga_irq2 = emio_output[EMIO_IRQ2];
+assign fpga_irq3 = emio_output[EMIO_IRQ3];
 
 /*
  * Global reset generator.
@@ -132,6 +169,13 @@ wire [15:0] csi_debug_data_mux_out;
 wire [5:0] csi_debug_ctrl_bram_base;
 
 design_1 (
+    // SPI/MCU interface
+    .SPI_DATA_OUT(fpga_spi_miso_out),
+    .SPI_DATA_OUT_TRIS(fpga_spi_miso_out_tris),
+    .SPI_DATA_IN(fpga_spi_mosi),
+    .SPI_CLK(fpga_spi_sclk),
+    .SPI_CSN(fpga_spi_csn),
+
     // ADC LVDS interface
     .ADC_L1A_P(adc_l1a_p),
     .ADC_L1A_N(adc_l1a_n),
