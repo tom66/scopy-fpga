@@ -86,6 +86,9 @@
 #define PS_CLK_REG_DIVISOR0_MASK	((0x3f) << PS_CLK_REG_DIVISOR0_SHIFT)
 #define PS_CLK_REG_DIVISOR1_MASK	((0x3f) << PS_CLK_REG_DIVISOR1_SHIFT)
 
+#define REG_SET_BIT(base, rg, msk)	Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) | (msk))
+#define REG_CLR_BIT(base, rg, msk)	Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) & (~(msk)))
+
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))
 #define MIN(a,b) 					((a) < (b) ? (a) : (b))

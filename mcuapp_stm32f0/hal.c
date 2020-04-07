@@ -23,6 +23,7 @@
 
 #include "hal.h"
 #include "hmcad151x.h"
+#include "zynq_spi.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -69,7 +70,7 @@ volatile void SysTick_Handler(void) __attribute__ ((optimize(0)))
     // failure.
     if(HAL_ADC_PollForConversion(&g_ADCHandle, 0) == HAL_OK) {
         code = HAL_ADC_GetValue(&g_ADCHandle);
-        sys_state.dc_input_mv = (code * ADC_DC_INPUT_SCALE) >> ADC_DC_INPUT_SHIFT;
+        sys_state.dc_input_mv = ((code * ADC_DC_INPUT_SCALE) >> ADC_DC_INPUT_SHIFT) + ADC_DC_INPUT_OFFSET;
         //uart_printf("code=%d, mv=%d\r\n", code, sys_state.dc_input_mv);
         HAL_ADC_Start(&g_ADCHandle);
     } else {
@@ -144,11 +145,16 @@ void hal_init()
     RCC_OscInitDef.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
     RCC_OscInitDef.HSI48State = RCC_HSI48_ON;
     RCC_OscInitDef.HSI14State = RCC_HSI14_ON;
+    //RCC_OscInitDef.PLL.PLLState = RCC_PLL_ON;
+    //RCC_OscInitDef.PLL.PLLSource = RCC_PLLSOURCE_HSI48;
+    //RCC_OscInitDef.PLL.PREDIV = RCC_PREDIV_DIV2;
+    //RCC_OscInitDef.PLL.PLLMUL = RCC_PLL_MUL2;
     HAL_RCC_OscConfig(&RCC_OscInitDef);
 
+    RCC_ClkInitDef.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1);
     RCC_ClkInitDef.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitDef.APB1CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitDef.SYSCLKSource = RCC_CFGR_SW_PLL;
+    RCC_ClkInitDef.SYSCLKSource = RCC_SYSCLKSOURCE_HSI48;
     RCC_ClkInitDef.ClockType = RCC_CLOCKTYPE_SYSCLK;
     HAL_RCC_ClockConfig(&RCC_ClkInitDef, FLASH_LATENCY_1);
     
@@ -243,7 +249,7 @@ void hal_init()
     g_ADCHandle.Init.LowPowerAutoWait = ENABLE;
     g_ADCHandle.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
     g_ADCHandle.Init.Resolution = ADC_RESOLUTION_12B;
-    g_ADCHandle.Init.SamplingTimeCommon = ADC_SAMPLETIME_239CYCLES_5;    // Initial guess
+    g_ADCHandle.Init.SamplingTimeCommon = ADC_SAMPLETIME_7CYCLES_5;      // Fast sampling
     g_ADCHandle.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;          // Ignored
 
     HAL_ADC_Init(&g_ADCHandle);
@@ -257,7 +263,7 @@ void hal_init()
     
     ADC_ChannelDef.Channel = ADC_CHANNEL_11;
     ADC_ChannelDef.Rank = 1;
-    ADC_ChannelDef.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+    ADC_ChannelDef.SamplingTime = ADC_SAMPLETIME_28CYCLES_5;
     
     HAL_ADC_ConfigChannel(&g_ADCHandle, &ADC_ChannelDef);
     
@@ -267,6 +273,7 @@ void hal_init()
      * Configure SysTick to generate 1ms interrupts
      */
     SysTick_Config(SystemCoreClock / 1000);
+    //SysTick_Config(SystemCoreClock / 5);
     
     /*
      * Disable all rails on boot.
@@ -287,20 +294,11 @@ void hal_init()
     uart_putsraw("hal: main pwr OFF\r\n");
     
     uart_putsraw("hal: rails start OFF\r\n");
-    
+  
     /*
-    shell_init();
-    
-    while(1) {
-        HAL_ADC_Start(&g_ADCHandle);
-        
-        if(HAL_ADC_PollForConversion(&g_ADCHandle, 0) == HAL_OK) {
-            code = HAL_ADC_GetValue(&g_ADCHandle);
-            sys_state.dc_input_mv = (code * ADC_DC_INPUT_SCALE) >> ADC_DC_INPUT_SHIFT;
-            uart_printf("code=%d, mv=%d\r\n", code, sys_state.dc_input_mv);
-        }
-    }
-    */
+     * Initialise the SPI peripheral for Zynq communication.
+     */
+    zynq_spi_init();
 }
 
 /**
@@ -385,9 +383,19 @@ char uart_getchar_nb()
  * uart_char_is_available:  Query if a character is available.  Return '1' if
  * true, '0' if false.
  */
-uint32_t uart_char_is_available()
+int uart_char_is_available()
 {
     return !!(g_UARTHandle.Instance->ISR & UART_FLAG_RXNE);
+}
+
+/*
+ * uart_flush:  Flush the received data in the UART FIFO, if any exists.
+ */
+void uart_flush()
+{
+    while(uart_char_is_available()) {
+        uart_getchar_nb();
+    }
 }
 
 /*
@@ -503,6 +511,8 @@ void main_psu_power_on()
     systick_wait(80);
     
     sys_state.flags |= FLAG_MAIN_DCDC_ON;
+    
+    uart_putsraw("hal: main DC-DC banks ON\r\n");
 }
 
 /**
@@ -564,6 +574,8 @@ void raspi_power_on()
     systick_wait(20);
     
     sys_state.flags |= FLAG_RASPI_ON;
+    
+    uart_putsraw("hal: raspi pwr ON\r\n");
 }
 
 /**
@@ -659,6 +671,8 @@ void zynq_power_on()
     sys_state.flags |= FLAG_ZYNQ_ON;
     
     gpio_prot_power_end();
+    
+    uart_putsraw("hal: zynq pwr ON\r\n");
 }
 
 /**

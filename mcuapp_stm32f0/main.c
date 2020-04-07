@@ -12,17 +12,14 @@ void main()
      */
     main_psu_power_on();
     raspi_power_on();
-    //zynq_power_on();
+    zynq_power_on();
     hmcad151x_init();
     adf435x_init();
     adf435x_rf_on();
     
-    shell_init();    
-    shell_run();
+    // XXX: We should load a profile instead
+    adf435x_change_frequency(1000);
     
-    /*
-    while(1) {        
-        uart_printf("%d\r\n", sys_state.dc_input_mv);
-    }
-    */
+    shell_init(); 
+    shell_run();
 }

@@ -25,6 +25,7 @@
 #include <math.h>
 #include <ctype.h>
 
+#include "zynq_spi.h"
 #include "shell_commands.h"
 #include "shell.h"
 #include "hmcad151x.h"
@@ -58,6 +59,7 @@ struct shell_command_t shell_commands[] = {
     { "lvdsadv",   ARG_INT,    ARG_NONE,   ARG_NONE,   ARG_NONE,  &scmd_adc_lvds_adv },     // Select LVDS advance/delay options
     { "lvdsphas",  ARG_INT,    ARG_NONE,   ARG_NONE,   ARG_NONE,  &scmd_adc_lvds_phas },    // Select LVDS phase options
     { "lvdsdef",   ARG_NONE,   ARG_NONE,   ARG_NONE,   ARG_NONE,  &scmd_adc_lvds_def },     // Load LVDS defaults
+    { "zspi",      ARG_NONE,   ARG_NONE,   ARG_NONE,   ARG_NONE,  &scmd_zynq_spi_test },    // Zynq SPI test
     //{ "sleep",     ARG_NONE,   ARG_NONE,   ARG_NONE,   ARG_NONE,  0 },
     //{ "ledon",     ARG_INT,    ARG_NONE,   ARG_NONE,   ARG_NONE,  0 },
     //{ "ledoff",    ARG_INT,    ARG_NONE,   ARG_NONE,   ARG_NONE,  0 },

@@ -32,8 +32,12 @@
 
 #include <stdint.h>
 
+// These are deprecated and to be replaced with a shiftless macro
 #define GPIO_FAST_SET_PIN(port, pin)    ((port)->BSRR = ((1 << pin) & 0xffff));
 #define GPIO_FAST_CLR_PIN(port, pin)    ((port)->BRR = ((1 << pin) & 0xffff));
+
+#define GPIO_FAST_SET_PINDEF(port, pin) ((port)->BSRR = (pin & 0xffff));
+#define GPIO_FAST_CLR_PINDEF(port, pin) ((port)->BRR = (pin & 0xffff));
 
 #define UART_DEBUG_PORT                 GPIOC
 #define UART_DEBUG_TX_PIN               GPIO_PIN_10
@@ -59,6 +63,33 @@
 
 #define FPGA_PS_POR_B_PIN               GPIO_PIN_6
 #define FPGA_PS_SRST_B_PIN              GPIO_PIN_7
+
+#define FPGA_CSN_3V3_PORT               GPIOA
+#define FPGA_CSN_3V3_PIN                GPIO_PIN_15
+#define FPGA_SCLK_3V3_PORT              GPIOB
+#define FPGA_SCLK_3V3_PIN               GPIO_PIN_3
+#define FPGA_MISO_3V3_PORT              GPIOB
+#define FPGA_MISO_3V3_PIN               GPIO_PIN_4
+#define FPGA_MOSI_3V3_PORT              GPIOB
+#define FPGA_MOSI_3V3_PIN               GPIO_PIN_5
+
+#define FPGA_SPI_AF                     GPIO_AF0_SPI1
+
+#define FPGA_IRQ1_PORT                  GPIOE
+#define FPGA_IRQ1_PIN                   GPIO_PIN_2
+#define FPGA_IRQ2_PORT                  GPIOE
+#define FPGA_IRQ2_PIN                   GPIO_PIN_3
+#define FPGA_IRQ3_PORT                  GPIOE
+#define FPGA_IRQ3_PIN                   GPIO_PIN_4
+
+#define FPGA_PS_IRQ1_PORT               GPIOC
+#define FPGA_PS_IRQ1_PIN                GPIO_PIN_14
+#define FPGA_PS_IRQ2_PORT               GPIOC
+#define FPGA_PS_IRQ2_PIN                GPIO_PIN_15
+#define FPGA_PS_IRQ3_PORT               GPIOF
+#define FPGA_PS_IRQ3_PIN                GPIO_PIN_9
+#define FPGA_PS_IRQ4_PORT               GPIOF
+#define FPGA_PS_IRQ4_PIN                GPIO_PIN_10
 
 #define DDR_VTT_VREF_EN_PORT            GPIOA
 #define DDR_VTT_VREF_EN_PIN             GPIO_PIN_12
@@ -103,10 +134,11 @@
 
 #define DC_INPUT_LOW_THRESHOLD          9500            // Input below 9.5V triggers shutdown
 #define DC_INPUT_HIGH_THRESHOLD         11000           // Input above 11V allows restart
-#define DC_INPUT_HIGH_FAULT_THRESHOLD   16000           // Input above 11V allows restart
+#define DC_INPUT_HIGH_FAULT_THRESHOLD   14800           // Input above 14.8V is a fault condition
 
 // MCU onboard ADC
-#define ADC_DC_INPUT_SCALE              15766
+#define ADC_DC_INPUT_SCALE              16097           // 15766
+#define ADC_DC_INPUT_OFFSET             265
 #define ADC_DC_INPUT_SHIFT              12
 
 #define TEMP_TOO_HOT_ZYNQ               8000            // 80C limit for Zynq
@@ -153,7 +185,7 @@ struct sys_state_t {
     // Power supply voltage
     uint32_t dc_input_mv;
     
-    // 
+    // Mutexing flag for power protection groups
     uint32_t prot_power_grp;
 };
 
@@ -165,6 +197,7 @@ struct prot_power_rail_t {
 
 extern volatile struct sys_state_t sys_state;
 
+volatile void SysTick_Handler(void) __attribute__ ((optimize(0)));
 void hal_init();
 void arb_delay(volatile uint32_t n);
 void systick_wait(uint32_t ms);
@@ -172,7 +205,8 @@ void uart_putsraw(char *str);
 void uart_printf(char *fmt, ...);
 char uart_getchar();
 char uart_getchar_nb();
-uint32_t uart_char_is_available();
+int uart_char_is_available();
+void uart_flush();
 void gpio_set_output(GPIO_TypeDef *gpio_port, uint32_t gpio_pin);
 void gpio_set_input(GPIO_TypeDef *gpio_port, uint32_t gpio_pin);
 void gpio_prot_power_rail_enable(struct prot_power_rail_t *rail, int32_t dly);

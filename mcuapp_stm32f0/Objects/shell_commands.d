@@ -2,6 +2,9 @@
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\shell_commands.o: zynq_spi.h
+.\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\shell_commands.o: shell_commands.h
 .\objects\shell_commands.o: shell.h
 .\objects\shell_commands.o: hmcad151x.h
@@ -17,7 +20,6 @@
 .\objects\shell_commands.o: C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\mcuapp_stm32f0\RTE\RTE_Components.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_rcc.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_def.h
-.\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_rcc_ex.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_gpio.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_gpio_ex.h

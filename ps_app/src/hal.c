@@ -217,11 +217,6 @@ void hal_init()
 	 * Initialise the command SPI port processor.
 	 */
 	spi_init();
-
-	d_printf(D_ERROR, "hanging at SPI processor");
-	while(1) {
-
-	}
 }
 
 /**

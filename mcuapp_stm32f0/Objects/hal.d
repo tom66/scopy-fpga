@@ -57,4 +57,5 @@
 .\objects\hal.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_wwdg.h
 .\objects\hal.o: hmcad151x.h
 .\objects\hal.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\hal.o: zynq_spi.h
 .\objects\hal.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
