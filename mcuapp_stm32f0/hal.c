@@ -324,6 +324,16 @@ void systick_wait(uint32_t ms)
 }
 
 /*
+ * uart_putchar:  Put a character on the UART port, blocking until
+ * the character is output.
+ */
+void uart_putchar(char c)
+{
+    while(!(g_UARTHandle.Instance->ISR & UART_FLAG_TXE)) ;
+    g_UARTHandle.Instance->TDR = c;
+}
+
+/*
  * uart_putsraw:  Put debug string without any formatting.
  *
  * @param   string      String to print

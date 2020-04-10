@@ -5,9 +5,7 @@
 .\objects\shell_commands.o: zynq_spi.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\shell_commands.o: shell_commands.h
-.\objects\shell_commands.o: shell.h
-.\objects\shell_commands.o: hmcad151x.h
+.\objects\shell_commands.o: hal.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f0xx.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include\stm32f071xb.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm0.h
@@ -61,6 +59,8 @@
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart_ex.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_wwdg.h
+.\objects\shell_commands.o: shell_commands.h
+.\objects\shell_commands.o: shell.h
+.\objects\shell_commands.o: hmcad151x.h
 .\objects\shell_commands.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\shell_commands.o: adf435x.h
-.\objects\shell_commands.o: hal.h

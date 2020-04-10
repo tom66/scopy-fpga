@@ -7,222 +7,357 @@
         AREA ||i.scmd_zynq_spi_test||, CODE, READONLY, ALIGN=2
 
 scmd_zynq_spi_test PROC
-        PUSH     {r0-r6,lr}
-        MOVS     r4,#0
-        LDR      r0,|L1.144|
+        PUSH     {r3-r7,lr}
+        MOVS     r6,#0
+        LDR      r0,|L1.136|
         LDR      r0,[r0,#0]  ; sys_state
         LSLS     r0,r0,#31
         LSRS     r0,r0,#31
         CMP      r0,#0
         BNE      |L1.24|
-        ADR      r0,|L1.148|
+        ADR      r0,|L1.140|
         BL       uart_putsraw
 |L1.22|
-        POP      {r0-r6,pc}
+        POP      {r3-r7,pc}
 |L1.24|
         MOVS     r0,#1
         LSLS     r0,r0,#15
         MOVS     r1,#9
         LSLS     r1,r1,#27
         STR      r0,[r1,#0x18]
-        ADR      r3,|L1.172|
-        LDM      r3,{r0-r3}
-        STR      r3,[sp,#0xc]
-        MOV      r3,sp
-        STM      r3!,{r0-r2}
-        ADR      r0,|L1.188|
+        ADR      r0,|L1.164|
+        LDR      r0,[r0,#0]
+        STR      r0,[sp,#0]
+        ADR      r0,|L1.168|
         BL       uart_putsraw
         BL       uart_flush
-        B        |L1.130|
-|L1.56|
+        B        |L1.120|
+|L1.52|
+        MOVS     r4,#0
         MOVS     r5,#0
-        MOVS     r6,#0
-        B        |L1.110|
-|L1.62|
+        B        |L1.100|
+|L1.58|
         MOV      r2,sp
-        MOVS     r1,#0xd
-        MOVS     r0,#0x10
-        BL       zynq_command_transmit
-        MOV      r0,sp
-        STRB     r4,[r0,#0]
-        STRB     r4,[r0,#1]
-        CMP      r5,#0
-        BEQ      |L1.94|
+        MOVS     r1,#2
+        MOVS     r0,#1
+        BL       zynq_command_transmit_with_response
+        CMP      r4,#0
+        BEQ      |L1.84|
         MOVS     r2,#1
         MOV      r1,r2
-        LDR      r0,|L1.236|
+        LDR      r0,|L1.216|
         BL       HAL_GPIO_WritePin
-        B        |L1.104|
-|L1.94|
+        B        |L1.94|
+|L1.84|
         MOVS     r2,#0
         MOVS     r1,#1
-        LDR      r0,|L1.236|
+        LDR      r0,|L1.216|
         BL       HAL_GPIO_WritePin
-|L1.104|
-        MVNS     r5,r5
-        ADDS     r4,r4,#1
+|L1.94|
+        MVNS     r4,r4
         ADDS     r6,r6,#1
-|L1.110|
-        CMP      r6,#0xb4
-        BLT      |L1.62|
+        ADDS     r5,r5,#1
+|L1.100|
+        CMP      r5,#0xb4
+        BLT      |L1.58|
         MOVS     r0,#0xa
         BL       systick_wait
         BL       uart_char_is_available
         CMP      r0,#0
-        BEQ      |L1.130|
-        B        |L1.132|
-|L1.130|
-        B        |L1.56|
-|L1.132|
+        BEQ      |L1.120|
+        B        |L1.122|
+|L1.120|
+        B        |L1.52|
+|L1.122|
         NOP      
-        ADR      r0,|L1.240|
+        ADR      r0,|L1.220|
         BL       uart_putsraw
         NOP      
         B        |L1.22|
         ENDP
 
-|L1.144|
+        DCW      0x0000
+|L1.136|
         DCD      sys_state
-|L1.148|
+|L1.140|
         DCB      "Zynq not powered on!\r\n",0
         DCB      0
-|L1.172|
+|L1.164|
+        DCB      "\b",128,0
         DCB      0
-        DCB      0
-        DCB      127,255,0
-        DCB      0
-        DCB      127,255,1,0
-        DCB      0
-        DCB      0
-        DCB      128,0
-        DCB      0
-        DCB      0
-|L1.188|
+|L1.168|
         DCB      "Starting Zynq SPI test, press a key to abort\r\n",0
         DCB      0
-|L1.236|
+|L1.216|
         DCD      0x48000800
-|L1.240|
+|L1.220|
         DCB      "Ends\r\n",0
         DCB      0
 
         AREA ||i.zynq_command_transmit||, CODE, READONLY, ALIGN=2
 
 zynq_command_transmit PROC
-        PUSH     {r0-r2,r4-r7,lr}
-        SUB      sp,sp,#0x14
-        MOV      r4,r0
-        MOV      r3,r1
-        LDR      r5,|L2.200|
+        PUSH     {r4-r7,lr}
+        SUB      sp,sp,#0x1c
+        MOV      r6,r0
+        MOV      r5,r1
+        MOV      r7,r2
+        LDR      r0,|L2.156|
+        STR      r0,[sp,#0x18]
         MOVS     r0,#0
-        STR      r0,[sp,#4]
         STR      r0,[sp,#8]
         STR      r0,[sp,#0xc]
         STR      r0,[sp,#0x10]
-        ADD      r0,sp,#4
-        STR      r0,[sp,#0]
+        STR      r0,[sp,#0x14]
+        ADD      r0,sp,#8
+        STR      r0,[sp,#4]
         MOV      r0,sp
-        STRB     r4,[r0,#4]
-        MOVS     r2,#0
-        B        |L2.44|
-|L2.32|
-        LDR      r0,[sp,#0x1c]
-        LDRB     r1,[r0,r2]
-        ADD      r6,sp,#4
-        ADDS     r0,r2,#1
-        STRB     r1,[r6,r0]
-        ADDS     r2,r2,#1
-|L2.44|
-        CMP      r2,r3
-        BLT      |L2.32|
+        STRB     r6,[r0,#8]
+        MOVS     r4,#0
+        B        |L2.46|
+|L2.36|
+        LDRB     r1,[r7,r4]
+        ADD      r2,sp,#8
+        ADDS     r0,r4,#1
+        STRB     r1,[r2,r0]
+        ADDS     r4,r4,#1
+|L2.46|
+        CMP      r4,r5
+        BLT      |L2.36|
         MOVS     r0,#1
         LSLS     r0,r0,#15
         MOVS     r1,#9
         LSLS     r1,r1,#27
         STR      r0,[r1,#0x28]
-        ADDS     r1,r3,#1
-        LDR      r0,[sp,#0]
-        B        |L2.110|
-|L2.64|
-        LDR      r6,|L2.204|
-        LDR      r6,[r6,#0]  ; zynq_spi
-        LDR      r6,[r6,#8]
-        MOVS     r7,#1
-        LSLS     r7,r7,#12
-        ANDS     r6,r6,r7
-        CMP      r6,#0
-        BNE      |L2.110|
-        CMP      r1,#2
-        BCC      |L2.98|
-        LDRH     r6,[r0,#0]
-        LDR      r7,|L2.204|
-        LDR      r7,[r7,#0]  ; zynq_spi
-        STR      r6,[r7,#0xc]
-        ADDS     r0,r0,#2
-        SUBS     r1,r1,#2
-        B        |L2.110|
-|L2.98|
-        LDRB     r6,[r0,#0]
-        LDR      r7,|L2.204|
-        LDR      r7,[r7,#0]  ; zynq_spi
-        STRB     r6,[r7,#0xc]
-        ADDS     r0,r0,#1
-        SUBS     r1,r1,#1
-|L2.110|
-        CMP      r1,#0
-        BNE      |L2.64|
-        NOP      
+        ADDS     r1,r5,#1
+        LDR      r0,[sp,#4]
+        BL       zynq_spi_transmit_no_read
         CPSID    i
         NOP      
-|L2.120|
-        LDR      r0,|L2.204|
+|L2.72|
+        LDR      r0,|L2.160|
         LDR      r0,[r0,#0]  ; zynq_spi
         LDR      r0,[r0,#8]
         MOVS     r1,#2
         ANDS     r0,r0,r1
         CMP      r0,#0
-        BNE      |L2.142|
-        MOV      r0,r5
-        SUBS     r5,r5,#1
+        BNE      |L2.96|
+        LDR      r0,[sp,#0x18]
+        SUBS     r1,r0,#1
+        STR      r1,[sp,#0x18]
         CMP      r0,#0
-        BNE      |L2.120|
-|L2.142|
-        LDR      r0,|L2.204|
+        BNE      |L2.72|
+|L2.96|
+        LDR      r0,|L2.160|
         LDR      r0,[r0,#0]  ; zynq_spi
         LDR      r0,[r0,#0]
         MOVS     r1,#1
         LSLS     r1,r1,#12
         ORRS     r0,r0,r1
-        LDR      r1,|L2.204|
+        LDR      r1,|L2.160|
         LDR      r1,[r1,#0]  ; zynq_spi
         STR      r0,[r1,#0]
         NOP      
-|L2.162|
-        LDR      r0,|L2.204|
+|L2.116|
+        LDR      r0,|L2.160|
         LDR      r0,[r0,#0]  ; zynq_spi
         LDR      r0,[r0,#8]
         MOVS     r1,#0x80
         ANDS     r0,r0,r1
         CMP      r0,#0
-        BEQ      |L2.184|
-        MOV      r0,r5
-        SUBS     r5,r5,#1
+        BEQ      |L2.140|
+        LDR      r0,[sp,#0x18]
+        SUBS     r1,r0,#1
+        STR      r1,[sp,#0x18]
         CMP      r0,#0
-        BNE      |L2.162|
-|L2.184|
+        BNE      |L2.116|
+|L2.140|
         CPSIE    i
         MOVS     r0,#1
         LSLS     r0,r0,#15
         MOVS     r1,#9
         LSLS     r1,r1,#27
         STR      r0,[r1,#0x18]
-        ADD      sp,sp,#0x20
+        ADD      sp,sp,#0x1c
         POP      {r4-r7,pc}
         ENDP
 
-|L2.200|
+|L2.156|
         DCD      0x00002710
-|L2.204|
+|L2.160|
+        DCD      zynq_spi
+
+        AREA ||i.zynq_command_transmit_with_response||, CODE, READONLY, ALIGN=2
+
+zynq_command_transmit_with_response PROC
+        PUSH     {r0-r2,r4-r7,lr}
+        SUB      sp,sp,#0x20
+        MOV      r7,r1
+        LDR      r0,|L3.244|
+        STR      r0,[sp,#0x1c]
+        MOVS     r0,#0
+        STR      r0,[sp,#0xc]
+        STR      r0,[sp,#0x10]
+        STR      r0,[sp,#0x14]
+        STR      r0,[sp,#0x18]
+        ADD      r0,sp,#0xc
+        STR      r0,[sp,#8]
+        MOV      r1,sp
+        LDR      r0,[sp,#0x20]
+        STRB     r0,[r1,#0xc]
+        MOVS     r5,#0
+        B        |L3.46|
+|L3.34|
+        LDR      r0,[sp,#0x28]
+        LDRB     r1,[r0,r5]
+        ADD      r2,sp,#0xc
+        ADDS     r0,r5,#1
+        STRB     r1,[r2,r0]
+        ADDS     r5,r5,#1
+|L3.46|
+        CMP      r5,r7
+        BLT      |L3.34|
+        MOVS     r0,#1
+        LSLS     r0,r0,#15
+        MOVS     r1,#9
+        LSLS     r1,r1,#27
+        STR      r0,[r1,#0x28]
+        ADDS     r1,r7,#1
+        LDR      r0,[sp,#8]
+        BL       zynq_spi_transmit_no_read
+        CPSID    i
+        LDR      r0,|L3.248|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        LDR      r0,[r0,#0]
+        MOVS     r1,#1
+        LSLS     r1,r1,#12
+        ORRS     r0,r0,r1
+        LDR      r1,|L3.248|
+        LDR      r1,[r1,#0]  ; zynq_spi
+        STR      r0,[r1,#0]
+        NOP      
+|L3.90|
+        LDR      r0,|L3.248|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        LDR      r0,[r0,#8]
+        MOVS     r1,#2
+        ANDS     r0,r0,r1
+        CMP      r0,#0
+        BNE      |L3.114|
+        LDR      r0,[sp,#0x1c]
+        SUBS     r1,r0,#1
+        STR      r1,[sp,#0x1c]
+        CMP      r0,#0
+        BNE      |L3.90|
+|L3.114|
+        NOP      
+|L3.116|
+        LDR      r0,|L3.248|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        LDR      r0,[r0,#8]
+        MOVS     r1,#0x80
+        ANDS     r0,r0,r1
+        CMP      r0,#0
+        BEQ      |L3.140|
+        LDR      r0,[sp,#0x1c]
+        SUBS     r1,r0,#1
+        STR      r1,[sp,#0x1c]
+        CMP      r0,#0
+        BNE      |L3.116|
+|L3.140|
+        CPSIE    i
+        B        |L3.202|
+|L3.144|
+        MOVS     r0,#0
+        BL       zynq_spi_byte_txrx
+        STR      r0,[sp,#4]
+        LDR      r0,[sp,#4]
+        CMP      r0,#0xcc
+        BNE      |L3.202|
+        ADR      r0,|L3.252|
+        BL       uart_printf
+        MOVS     r0,#0
+        BL       zynq_spi_byte_txrx
+        MOV      r4,r0
+        CMP      r4,#0x80
+        BLE      |L3.198|
+        MOVS     r0,#0
+        BL       zynq_spi_byte_txrx
+        STR      r0,[sp,#0]
+        MOV      r0,r4
+        SUBS     r0,r0,#0x80
+        LSLS     r1,r0,#8
+        LDR      r0,[sp,#0]
+        ADDS     r0,r1,r0
+        UXTH     r6,r0
+        B        |L3.200|
+|L3.198|
+        MOV      r6,r4
+|L3.200|
+        B        |L3.204|
+|L3.202|
+        B        |L3.144|
+|L3.204|
+        NOP      
+        CMP      r6,#0
+        BLE      |L3.228|
+        B        |L3.218|
+|L3.212|
+        MOVS     r0,#0xf
+        BL       zynq_spi_byte_txrx
+|L3.218|
+        MOV      r0,r6
+        SUBS     r1,r6,#1
+        UXTH     r6,r1
+        CMP      r0,#0
+        BNE      |L3.212|
+|L3.228|
+        MOVS     r0,#1
+        LSLS     r0,r0,#15
+        MOVS     r1,#9
+        LSLS     r1,r1,#27
+        STR      r0,[r1,#0x18]
+        ADD      sp,sp,#0x2c
+        POP      {r4-r7,pc}
+        ENDP
+
+        DCW      0x0000
+|L3.244|
+        DCD      0x00002710
+|L3.248|
+        DCD      zynq_spi
+|L3.252|
+        DCB      "RX CC\r\n",0
+
+        AREA ||i.zynq_spi_byte_txrx||, CODE, READONLY, ALIGN=2
+
+zynq_spi_byte_txrx PROC
+        PUSH     {r4,lr}
+        MOV      r4,r0
+        B        |L4.12|
+|L4.6|
+        MOVS     r0,#0x3f
+        BL       uart_putchar
+|L4.12|
+        LDR      r0,|L4.44|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        LDR      r0,[r0,#8]
+        MOVS     r1,#3
+        LSLS     r1,r1,#11
+        ANDS     r0,r0,r1
+        ANDS     r0,r0,r1
+        CMP      r0,#0
+        BNE      |L4.6|
+        LDR      r0,|L4.44|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        STRB     r4,[r0,#0xc]
+        LDR      r0,|L4.44|
+        LDR      r0,[r0,#0]  ; zynq_spi
+        LDRB     r0,[r0,#0xc]
+        POP      {r4,pc}
+        ENDP
+
+|L4.44|
         DCD      zynq_spi
 
         AREA ||i.zynq_spi_init||, CODE, READONLY, ALIGN=2
@@ -240,7 +375,7 @@ zynq_spi_init PROC
         MOVS     r0,#0
         STR      r0,[sp,#0x18]
         ADD      r1,sp,#8
-        LDR      r0,|L3.284|
+        LDR      r0,|L5.284|
         BL       HAL_GPIO_Init
         MOVS     r0,#0x10
         STR      r0,[sp,#8]
@@ -252,7 +387,7 @@ zynq_spi_init PROC
         MOVS     r0,#0
         STR      r0,[sp,#0x18]
         ADD      r1,sp,#8
-        LDR      r0,|L3.284|
+        LDR      r0,|L5.284|
         BL       HAL_GPIO_Init
         MOVS     r0,#0x20
         STR      r0,[sp,#8]
@@ -264,7 +399,7 @@ zynq_spi_init PROC
         MOVS     r0,#0
         STR      r0,[sp,#0x18]
         ADD      r1,sp,#8
-        LDR      r0,|L3.284|
+        LDR      r0,|L5.284|
         BL       HAL_GPIO_Init
         MOVS     r1,#1
         LSLS     r1,r1,#15
@@ -273,37 +408,37 @@ zynq_spi_init PROC
         BL       gpio_set_output
         MOVS     r1,#1
         LSLS     r1,r1,#14
-        LDR      r0,|L3.288|
+        LDR      r0,|L5.288|
         BL       gpio_set_input
         MOVS     r1,#1
         LSLS     r1,r1,#15
-        LDR      r0,|L3.288|
+        LDR      r0,|L5.288|
         BL       gpio_set_input
         MOVS     r1,#1
         LSLS     r1,r1,#9
-        LDR      r0,|L3.292|
+        LDR      r0,|L5.292|
         BL       gpio_set_input
         MOVS     r1,#1
         LSLS     r1,r1,#10
-        LDR      r0,|L3.292|
+        LDR      r0,|L5.292|
         BL       gpio_set_input
         MOVS     r1,#4
-        LDR      r0,|L3.296|
+        LDR      r0,|L5.296|
         BL       gpio_set_input
         MOVS     r1,#8
-        LDR      r0,|L3.296|
+        LDR      r0,|L5.296|
         BL       gpio_set_input
         MOVS     r1,#0x10
-        LDR      r0,|L3.296|
+        LDR      r0,|L5.296|
         BL       gpio_set_input
-        LDR      r0,|L3.300|
-        LDR      r1,|L3.304|
+        LDR      r0,|L5.300|
+        LDR      r1,|L5.304|
         STR      r0,[r1,#0]  ; zynq_spi
         MOVS     r0,#0xff
         ADDS     r0,#5
         STR      r0,[r1,#4]  ; zynq_spi
         MOVS     r1,#0
-        LDR      r0,|L3.304|
+        LDR      r0,|L5.304|
         STR      r1,[r0,#8]
         MOVS     r1,#7
         LSLS     r1,r1,#8
@@ -329,12 +464,12 @@ zynq_spi_init PROC
         MOVS     r1,#0
         STR      r1,[r0,#0x34]
         NOP      
-        LDR      r0,|L3.308|
+        LDR      r0,|L5.308|
         LDR      r0,[r0,#0x18]
         MOVS     r1,#1
         LSLS     r1,r1,#12
         ORRS     r0,r0,r1
-        LDR      r1,|L3.308|
+        LDR      r1,|L5.308|
         STR      r0,[r1,#0x18]
         MOV      r0,r1
         LDR      r0,[r0,#0x18]
@@ -343,39 +478,78 @@ zynq_spi_init PROC
         STR      r0,[sp,#4]
         NOP      
         NOP      
-        LDR      r0,|L3.304|
+        LDR      r0,|L5.304|
         BL       HAL_SPI_Init
-        LDR      r0,|L3.304|
+        LDR      r0,|L5.304|
         LDR      r0,[r0,#0]  ; zynq_spi
         LDR      r0,[r0,#0]
         MOVS     r1,#0x40
         ORRS     r0,r0,r1
-        LDR      r1,|L3.304|
+        LDR      r1,|L5.304|
         LDR      r1,[r1,#0]  ; zynq_spi
         STR      r0,[r1,#0]
-        ADR      r0,|L3.312|
+        ADR      r0,|L5.312|
         BL       uart_putsraw
         ADD      sp,sp,#0x1c
         POP      {pc}
         ENDP
 
-|L3.284|
+|L5.284|
         DCD      0x48000400
-|L3.288|
+|L5.288|
         DCD      0x48000800
-|L3.292|
+|L5.292|
         DCD      0x48001400
-|L3.296|
+|L5.296|
         DCD      0x48001000
-|L3.300|
+|L5.300|
         DCD      0x40013000
-|L3.304|
+|L5.304|
         DCD      zynq_spi
-|L3.308|
+|L5.308|
         DCD      0x40021000
-|L3.312|
+|L5.312|
         DCB      "spi: initialised\r\n",0
         DCB      0
+
+        AREA ||i.zynq_spi_transmit_no_read||, CODE, READONLY, ALIGN=2
+
+zynq_spi_transmit_no_read PROC
+        B        |L6.48|
+|L6.2|
+        LDR      r2,|L6.56|
+        LDR      r2,[r2,#0]  ; zynq_spi
+        LDR      r2,[r2,#8]
+        MOVS     r3,#1
+        LSLS     r3,r3,#12
+        ANDS     r2,r2,r3
+        CMP      r2,#0
+        BNE      |L6.48|
+        CMP      r1,#2
+        BCC      |L6.36|
+        LDRH     r2,[r0,#0]
+        LDR      r3,|L6.56|
+        LDR      r3,[r3,#0]  ; zynq_spi
+        STR      r2,[r3,#0xc]
+        ADDS     r0,r0,#2
+        SUBS     r1,r1,#2
+        B        |L6.48|
+|L6.36|
+        LDRB     r2,[r0,#0]
+        LDR      r3,|L6.56|
+        LDR      r3,[r3,#0]  ; zynq_spi
+        STRB     r2,[r3,#0xc]
+        ADDS     r0,r0,#1
+        SUBS     r1,r1,#1
+|L6.48|
+        CMP      r1,#0
+        BNE      |L6.2|
+        BX       lr
+        ENDP
+
+        DCW      0x0000
+|L6.56|
+        DCD      zynq_spi
 
         AREA ||.arm_vfe_header||, DATA, READONLY, NOALLOC, ALIGN=2
 
@@ -414,20 +588,26 @@ zynq_spi
 
         EXPORT scmd_zynq_spi_test [CODE]
         EXPORT zynq_command_transmit [CODE]
+        EXPORT zynq_command_transmit_with_response [CODE]
         EXPORT zynq_spi_init [CODE]
         EXPORT zynq_spi [DATA,SIZE=100]
 
         IMPORT ||Lib$$Request$$armlib|| [CODE,WEAK]
+        IMPORT uart_putchar [CODE]
         IMPORT HAL_GPIO_Init [CODE]
         IMPORT gpio_set_output [CODE]
         IMPORT gpio_set_input [CODE]
         IMPORT HAL_SPI_Init [CODE]
         IMPORT uart_putsraw [CODE]
+        IMPORT uart_printf [CODE]
         IMPORT uart_flush [CODE]
         IMPORT HAL_GPIO_WritePin [CODE]
         IMPORT systick_wait [CODE]
         IMPORT uart_char_is_available [CODE]
         IMPORT sys_state [DATA]
+
+        KEEP zynq_spi_byte_txrx
+        KEEP zynq_spi_transmit_no_read
 
         ATTR FILESCOPE
         ATTR SETVALUE Tag_ABI_PCS_wchar_t,2

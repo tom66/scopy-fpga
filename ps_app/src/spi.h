@@ -11,6 +11,7 @@
 #define SRC_SPI_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "Collections-C/src/include/deque.h"
 
@@ -39,13 +40,19 @@
 #define SPI_STATE_RESPONSE_SIZE			5
 #define SPI_STATE_RESPONSE				6
 
+#define SPIPROC_STATE_UNPACK			1
+#define SPIPROC_STATE_SPIN_RESPONSE		2
+
 #define SPI_RESPONSE_1BYTE_MAX			127
 #define SPI_RESPONSE_2BYTE_MAX			32640
 #define SPI_RESPONSE_PACK_SIZE			24								// How many bytes we pack at a time into the TX FIFO
 #define SPI_TX_OVERWATER_DEFAULT		104								// 128 byte FIFO - 24 byte pack size
 
+#define SPIRET_OK						0
+#define SPIRET_MEM_ERROR				-1
 
 extern struct spi_state_t g_spi_state;
+extern struct spi_version_resp_t g_version_resp;
 
 #define SPI_IS_TX_FULL()				(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXFULL_MASK))
 #define SPI_IS_TX_OVERWATER()			(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXOW_MASK))
@@ -77,10 +84,13 @@ struct spi_command_alloc_t {
 	int alloc_idx, nargs;
 	uint8_t cmd;
 	uint8_t args[SPI_COMMAND_MAX_ARGS];
-	int resp_ready;
 	int resp_size;
-	int crc_valid;
 	uint8_t *resp_data;
+	unsigned int resp_ready : 1;
+	unsigned int resp_done : 1;
+	unsigned int resp_error : 1;
+	unsigned int free_resp_reqd : 1;
+	unsigned int crc_valid : 1;
 };
 
 /*
@@ -100,13 +110,17 @@ struct spi_state_t {
 	uint8_t cmd_argdata[SPI_COMMAND_MAX_ARGS];
 	int cmd_argpop;
 	int cmd_argidx;
-	int has_response;
+	bool has_response;
 	uint8_t crc;
 
 	// Last command allocated
 	struct spi_command_alloc_t *last_cmd;
 	uint8_t *resp_data_ptr;
 	int resp_bytes;
+
+	// Command being processed by the main thread
+	struct spi_command_alloc_t *proc_cmd;
+	int proc_state;
 
 	/*
 	 * Look-up table for CRC calculation.
@@ -137,8 +151,8 @@ struct spi_command_def_t {
 	uint8_t cmd_id;
 	char *short_name;
 	int nargs;
-	int has_response;
-	void (*cmd_processor)(struct spi_command_t *);
+	bool has_response;
+	void (*cmd_processor)(struct spi_command_alloc_t *);
 };
 
 /*
@@ -149,8 +163,8 @@ struct spi_command_lut_t {
 	uint8_t valid;
 	char short_name[SPI_COMMAND_SHORT_NAME_MAX + 1];
 	int nargs;
-	int has_response;
-	void (*cmd_processor)(struct spi_command_t *);
+	bool has_response;
+	void (*cmd_processor)(struct spi_command_alloc_t *);
 };
 
 /*
@@ -169,17 +183,29 @@ void spi_crc_lut_gen();
 void spi_command_lut_gen();
 void spi_isr_handler(void *unused);
 int spi_command_find_free_slot();
-int spi_transmit_packet_nonblock(uint8_t *pkt, uint8_t bytes);
+int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz);
+int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes);
 void spi_command_tick();
 
 /*
- * Transmit a byte via the SPI port while there is space free in the transmit FIFO.
+ * Transmit a byte via the SPI port IF there is space free in the transmit FIFO.
  */
-inline void spi_transmit(uint8_t byte)
+inline int spi_transmit(uint8_t byte)
 {
-	while(!SPI_IS_TX_FULL()) {
-		XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, (uint32_t)byte);
+	if(!SPI_IS_TX_FULL()) {
+		XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, byte);
+		return 1;
+	} else {
+		return 0;
 	}
+}
+
+/*
+ * Transmit a byte via the SPI port, blocking until there is space free.
+ */
+inline void spi_transmit_wait_free(uint8_t byte)
+{
+	while(!spi_transmit(byte)) ;
 }
 
 /*

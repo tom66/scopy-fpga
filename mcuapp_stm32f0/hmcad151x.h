@@ -87,10 +87,10 @@ extern const float hmcad_lvds_current_lut[];
 /*
  * Function prototypes
  */
-void hmcad151x_init();
+void hmcad151x_init(void);
 void hmcad151x_write_reg(uint8_t reg, uint16_t data);
 void hmcad151x_test_mode(uint32_t mode, uint16_t word);
-void hmcad151x_sync_lvds_settings();
-void hmcad151x_sync_channel_settings();
+void hmcad151x_sync_lvds_settings(void);
+void hmcad151x_sync_channel_settings(void);
 
 #endif // ___HMCAD151X_H___

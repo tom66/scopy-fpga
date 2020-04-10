@@ -17,6 +17,7 @@ C_SRCS += \
 ../src/mipi_csi_hacks.c \
 ../src/platform.c \
 ../src/spi.c \
+../src/spi_commands.c \
 ../src/trigger.c 
 
 OBJS += \
@@ -30,6 +31,7 @@ OBJS += \
 ./src/mipi_csi_hacks.o \
 ./src/platform.o \
 ./src/spi.o \
+./src/spi_commands.o \
 ./src/trigger.o 
 
 C_DEPS += \
@@ -43,6 +45,7 @@ C_DEPS += \
 ./src/mipi_csi_hacks.d \
 ./src/platform.d \
 ./src/spi.d \
+./src/spi_commands.d \
 ./src/trigger.d 
 
 

@@ -65,8 +65,8 @@ struct shell_state_t {
 
 extern struct shell_command_t shell_commands[];
 
-void shell_init();
-void shell_print_help();
+void shell_init(void);
+void shell_print_help(void);
 void shell_error(char *s);
 void _shell_print_wrapper(char *s);
 int _shell_execute(void *userdata, int32_t argc, char **argv);
@@ -75,14 +75,14 @@ int32_t shell_push_arg_int(int32_t arg);
 int32_t shell_push_arg_float(float arg);
 int32_t shell_push_arg_string(char *arg);
 int32_t shell_unpop_arg(struct shell_arg_t *arg);
-int32_t shell_unpop_int();
-float shell_unpop_float();
-char* shell_unpop_string();
-void shell_unpop_all_args();
+int32_t shell_unpop_int(void);
+float shell_unpop_float(void);
+char* shell_unpop_string(void);
+void shell_unpop_all_args(void);
 int32_t _shell_arg_is_true(char *arg);
 int32_t _shell_arg_is_false(char *arg);
-void _shell_sigint();
-void shell_run();
-void shell_iter();
+void _shell_sigint(void);
+void shell_run(void);
+void shell_iter(void);
 
 #endif // ___SHELL_H___

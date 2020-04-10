@@ -28,30 +28,30 @@
 
 extern struct shell_command_t shell_commands[];
 
-void scmd_help();
-void scmd_reset();
-void scmd_volts();
-void scmd_adc_pwr();
-void scmd_pll_pwr();
-void scmd_zynq_pwr();
-void scmd_raspi_pwr();
-void scmd_all_off();
-void scmd_pll_freq();
-void scmd_pll_tune();
-void scmd_pll_profile();
-void scmd_adc_reset();
-void scmd_adc_test();
-void scmd_adc_walk();
-void scmd_adc_lvds_cdrv();
-void scmd_adc_lvds_fdrv();
-void scmd_adc_lvds_ddrv();
-void scmd_adc_lvds_drv();
-void scmd_adc_lvds_cterm();
-void scmd_adc_lvds_fterm();
-void scmd_adc_lvds_dterm();
-void scmd_adc_lvds_term();
-void scmd_adc_lvds_adv();
-void scmd_adc_lvds_phas();
-void scmd_adc_lvds_def();
+void scmd_help(void);
+void scmd_reset(void);
+void scmd_volts(void);
+void scmd_adc_pwr(void);
+void scmd_pll_pwr(void);
+void scmd_zynq_pwr(void);
+void scmd_raspi_pwr(void);
+void scmd_all_off(void);
+void scmd_pll_freq(void);
+void scmd_pll_tune(void);
+void scmd_pll_profile(void);
+void scmd_adc_reset(void);
+void scmd_adc_test(void);
+void scmd_adc_walk(void);
+void scmd_adc_lvds_cdrv(void);
+void scmd_adc_lvds_fdrv(void);
+void scmd_adc_lvds_ddrv(void);
+void scmd_adc_lvds_drv(void);
+void scmd_adc_lvds_cterm(void);
+void scmd_adc_lvds_fterm(void);
+void scmd_adc_lvds_dterm(void);
+void scmd_adc_lvds_term(void);
+void scmd_adc_lvds_adv(void);
+void scmd_adc_lvds_phas(void);
+void scmd_adc_lvds_def(void);
 
 #endif // ___SHELL_COMMANDS_H___

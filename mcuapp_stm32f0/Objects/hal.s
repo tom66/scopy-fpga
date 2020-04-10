@@ -1370,32 +1370,53 @@ uart_printf PROC
 |L26.40|
         DCD      vsnprint_buffer
 
-        AREA ||i.uart_putsraw||, CODE, READONLY, ALIGN=2
+        AREA ||i.uart_putchar||, CODE, READONLY, ALIGN=2
 
-uart_putsraw PROC
+uart_putchar PROC
         NOP      
 |L27.2|
-        NOP      
-|L27.4|
-        LDR      r1,|L27.36|
+        LDR      r1,|L27.24|
         LDR      r1,[r1,#0]  ; g_UARTHandle
         LDR      r1,[r1,#0x1c]
         MOVS     r2,#0x80
         ANDS     r1,r1,r2
         CMP      r1,#0
-        BEQ      |L27.4|
+        BEQ      |L27.2|
+        LDR      r1,|L27.24|
+        LDR      r1,[r1,#0]  ; g_UARTHandle
+        STRH     r0,[r1,#0x28]
+        BX       lr
+        ENDP
+
+|L27.24|
+        DCD      g_UARTHandle
+
+        AREA ||i.uart_putsraw||, CODE, READONLY, ALIGN=2
+
+uart_putsraw PROC
+        NOP      
+|L28.2|
+        NOP      
+|L28.4|
+        LDR      r1,|L28.36|
+        LDR      r1,[r1,#0]  ; g_UARTHandle
+        LDR      r1,[r1,#0x1c]
+        MOVS     r2,#0x80
+        ANDS     r1,r1,r2
+        CMP      r1,#0
+        BEQ      |L28.4|
         LDRB     r1,[r0,#0]
-        LDR      r2,|L27.36|
+        LDR      r2,|L28.36|
         LDR      r2,[r2,#0]  ; g_UARTHandle
         STRH     r1,[r2,#0x28]
         LDRB     r2,[r0,#0]
         ADDS     r0,r0,#1
         CMP      r2,#0
-        BNE      |L27.2|
+        BNE      |L28.2|
         BX       lr
         ENDP
 
-|L27.36|
+|L28.36|
         DCD      g_UARTHandle
 
         AREA ||i.zynq_power_off||, CODE, READONLY, ALIGN=2
@@ -1405,160 +1426,160 @@ zynq_power_off PROC
         BL       gpio_prot_power_start
         MOVS     r2,#0
         MOVS     r1,#0x80
-        LDR      r0,|L28.104|
+        LDR      r0,|L29.104|
         BL       HAL_GPIO_WritePin
         MOVS     r0,#4
         BL       systick_wait
         MOVS     r2,#0
         MOVS     r1,#0x40
-        LDR      r0,|L28.104|
+        LDR      r0,|L29.104|
         BL       HAL_GPIO_WritePin
         MOVS     r0,#0x32
         BL       systick_wait
         MOVS     r1,#0
-        LDR      r0,|L28.108|
+        LDR      r0,|L29.108|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0xa
-        LDR      r0,|L28.112|
+        LDR      r0,|L29.112|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0
-        LDR      r0,|L28.116|
+        LDR      r0,|L29.116|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0xa
-        LDR      r0,|L28.120|
+        LDR      r0,|L29.120|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#2
-        LDR      r0,|L28.124|
+        LDR      r0,|L29.124|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#2
-        LDR      r0,|L28.128|
+        LDR      r0,|L29.128|
         BL       gpio_prot_power_rail_disable
-        LDR      r0,|L28.132|
+        LDR      r0,|L29.132|
         LDR      r0,[r0,#0]  ; sys_state
         LSRS     r0,r0,#1
         LSLS     r0,r0,#1
-        LDR      r1,|L28.132|
+        LDR      r1,|L29.132|
         STR      r0,[r1,#0]  ; sys_state
         BL       gpio_prot_power_end
         POP      {r4,pc}
         ENDP
 
-|L28.104|
+|L29.104|
         DCD      0x48000c00
-|L28.108|
+|L29.108|
         DCD      prot_rail_fpga_pl_1v8_io
-|L28.112|
+|L29.112|
         DCD      prot_rail_fpga_ps_pl_io
-|L28.116|
+|L29.116|
         DCD      prot_rail_1v5_ddr
-|L28.120|
+|L29.120|
         DCD      prot_rail_vtt_ddr
-|L28.124|
+|L29.124|
         DCD      prot_rail_1v05_zynq
-|L28.128|
+|L29.128|
         DCD      prot_rail_fpga_aux_pll_adc
-|L28.132|
+|L29.132|
         DCD      sys_state
 
         AREA ||i.zynq_power_on||, CODE, READONLY, ALIGN=2
 
 zynq_power_on PROC
         PUSH     {r4,lr}
-        LDR      r0,|L29.180|
+        LDR      r0,|L30.180|
         LDR      r0,[r0,#0]  ; sys_state
         MOVS     r1,#3
         LSLS     r1,r1,#8
         ANDS     r0,r0,r1
         CMP      r0,#0
-        BEQ      |L29.34|
-        LDR      r0,|L29.180|
+        BEQ      |L30.34|
+        LDR      r0,|L30.180|
         LDR      r0,[r0,#0]  ; sys_state
         MOV      r2,r1
         ANDS     r0,r0,r2
         MOV      r1,r0
-        LDR      r0,|L29.184|
+        LDR      r0,|L30.184|
         BL       uart_printf
-|L29.32|
+|L30.32|
         POP      {r4,pc}
-|L29.34|
+|L30.34|
         BL       gpio_prot_power_start
         MOVS     r2,#0
         MOVS     r1,#0x40
-        LDR      r0,|L29.188|
+        LDR      r0,|L30.188|
         BL       HAL_GPIO_WritePin
         MOVS     r0,#0x1e
         BL       systick_wait
-        LDR      r0,|L29.192|
+        LDR      r0,|L30.192|
         BL       arb_delay
         MOVS     r1,#0x64
-        LDR      r0,|L29.196|
+        LDR      r0,|L30.196|
         BL       gpio_prot_power_rail_enable
         MOVS     r1,#0x14
-        LDR      r0,|L29.200|
+        LDR      r0,|L30.200|
         BL       gpio_prot_power_rail_enable
         MOVS     r1,#0x14
-        LDR      r0,|L29.204|
+        LDR      r0,|L30.204|
         BL       gpio_prot_power_rail_enable
         MOVS     r1,#0x32
-        LDR      r0,|L29.208|
+        LDR      r0,|L30.208|
         BL       gpio_prot_power_rail_enable
         MOVS     r1,#0x32
-        LDR      r0,|L29.212|
+        LDR      r0,|L30.212|
         BL       gpio_prot_power_rail_enable
         MOVS     r1,#0
-        LDR      r0,|L29.216|
+        LDR      r0,|L30.216|
         BL       gpio_prot_power_rail_enable
         MOVS     r2,#1
         MOVS     r1,#0x80
-        LDR      r0,|L29.188|
+        LDR      r0,|L30.188|
         BL       HAL_GPIO_WritePin
         MOVS     r0,#0xa
         BL       systick_wait
         MOVS     r0,#0xc8
         BL       systick_wait
-        LDR      r0,|L29.192|
+        LDR      r0,|L30.192|
         BL       arb_delay
         MOVS     r2,#1
         MOVS     r1,#0x40
-        LDR      r0,|L29.188|
+        LDR      r0,|L30.188|
         BL       HAL_GPIO_WritePin
         MOVS     r0,#0xa
         BL       systick_wait
-        LDR      r0,|L29.180|
+        LDR      r0,|L30.180|
         LDR      r0,[r0,#0]  ; sys_state
         MOVS     r1,#1
         ORRS     r0,r0,r1
-        LDR      r1,|L29.180|
+        LDR      r1,|L30.180|
         STR      r0,[r1,#0]  ; sys_state
         BL       gpio_prot_power_end
-        ADR      r0,|L29.220|
+        ADR      r0,|L30.220|
         BL       uart_putsraw
         NOP      
-        B        |L29.32|
+        B        |L30.32|
         ENDP
 
         DCW      0x0000
-|L29.180|
+|L30.180|
         DCD      sys_state
-|L29.184|
+|L30.184|
         DCD      ||.conststring||+0x90
-|L29.188|
+|L30.188|
         DCD      0x48000c00
-|L29.192|
+|L30.192|
         DCD      0x00002710
-|L29.196|
+|L30.196|
         DCD      prot_rail_1v05_zynq
-|L29.200|
+|L30.200|
         DCD      prot_rail_fpga_aux_pll_adc
-|L29.204|
+|L30.204|
         DCD      prot_rail_fpga_pl_1v8_io
-|L29.208|
+|L30.208|
         DCD      prot_rail_fpga_ps_pl_io
-|L29.212|
+|L30.212|
         DCD      prot_rail_1v5_ddr
-|L29.216|
+|L30.216|
         DCD      prot_rail_vtt_ddr
-|L29.220|
+|L30.220|
         DCB      "hal: zynq pwr ON\r\n",0
         DCB      0
 
@@ -1568,67 +1589,67 @@ zynq_rapid_power_off PROC
         PUSH     {r4,lr}
         MOVS     r2,#0
         MOVS     r1,#0x80
-        LDR      r0,|L30.104|
+        LDR      r0,|L31.104|
         BL       HAL_GPIO_WritePin
-        LDR      r0,|L30.108|
+        LDR      r0,|L31.108|
         BL       arb_delay
         MOVS     r2,#0
         MOVS     r1,#0x40
-        LDR      r0,|L30.104|
+        LDR      r0,|L31.104|
         BL       HAL_GPIO_WritePin
-        LDR      r0,|L30.112|
+        LDR      r0,|L31.112|
         BL       arb_delay
         MOVS     r1,#0
-        LDR      r0,|L30.116|
+        LDR      r0,|L31.116|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0
-        LDR      r0,|L30.120|
+        LDR      r0,|L31.120|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0
-        LDR      r0,|L30.124|
+        LDR      r0,|L31.124|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0
-        LDR      r0,|L30.128|
+        LDR      r0,|L31.128|
         BL       gpio_prot_power_rail_disable
-        LDR      r0,|L30.132|
+        LDR      r0,|L31.132|
         BL       arb_delay
         MOVS     r1,#0
-        LDR      r0,|L30.136|
+        LDR      r0,|L31.136|
         BL       gpio_prot_power_rail_disable
         MOVS     r1,#0
-        LDR      r0,|L30.140|
+        LDR      r0,|L31.140|
         BL       gpio_prot_power_rail_disable
-        LDR      r0,|L30.144|
+        LDR      r0,|L31.144|
         LDR      r0,[r0,#0]  ; sys_state
         LSRS     r0,r0,#1
         LSLS     r0,r0,#1
-        LDR      r1,|L30.144|
+        LDR      r1,|L31.144|
         STR      r0,[r1,#0]  ; sys_state
         POP      {r4,pc}
         ENDP
 
         DCW      0x0000
-|L30.104|
+|L31.104|
         DCD      0x48000c00
-|L30.108|
+|L31.108|
         DCD      0x00001388
-|L30.112|
+|L31.112|
         DCD      0x00004e20
-|L30.116|
+|L31.116|
         DCD      prot_rail_fpga_pl_1v8_io
-|L30.120|
+|L31.120|
         DCD      prot_rail_fpga_ps_pl_io
-|L30.124|
+|L31.124|
         DCD      prot_rail_1v5_ddr
-|L30.128|
+|L31.128|
         DCD      prot_rail_vtt_ddr
-|L30.132|
+|L31.132|
         DCD      0x00002710
-|L30.136|
+|L31.136|
         DCD      prot_rail_1v05_zynq
-|L30.140|
+|L31.140|
         DCD      prot_rail_fpga_aux_pll_adc
-|L30.144|
+|L31.144|
         DCD      sys_state
 
         AREA ||.arm_vfe_header||, DATA, READONLY, NOALLOC, ALIGN=2
@@ -1748,6 +1769,7 @@ ms_counter
         EXPORT uart_getchar [CODE]
         EXPORT uart_getchar_nb [CODE]
         EXPORT uart_printf [CODE]
+        EXPORT uart_putchar [CODE]
         EXPORT uart_putsraw [CODE]
         EXPORT zynq_power_off [CODE]
         EXPORT zynq_power_on [CODE]

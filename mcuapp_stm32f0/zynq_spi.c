@@ -110,7 +110,7 @@ void zynq_spi_init()
 }
 
 /*
- * Transmit a command with 0-8 argument bytes and a CRC8.
+ * Transmit a command with 0-16 argument bytes and a CRC8.
  */
 void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
 {
@@ -128,7 +128,6 @@ void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
     
     // Transmit bytes.  Drive CS throughout transaction.
     GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
-    //GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     zynq_spi_transmit_no_read(data, nargs + 1);
     
     __disable_irq();
@@ -145,27 +144,87 @@ void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
     __enable_irq();
     
     // Remove drive on CS.
-    //GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
 }
-
 /*
- * Fast transmit with discard read.  CS is not driven.
+ * Transmit a command and read the response.
  */
-inline void zynq_spi_transmit_no_read(uint8_t *data, uint32_t size)
+void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t *args)
 {
-    while(size > 0) {
-        if(!((zynq_spi.Instance->SR & SPI_FLAG_FTLVL) & SPI_FTLVL_HALF_FULL)) {
-            if(size >= 2) {
-                zynq_spi.Instance->DR = *((uint16_t *)data);
-                data += 2;
-                size -= 2;
+    int timeout = 10000;
+    int i;
+    uint8_t command_data[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t *data = (uint8_t*)&command_data;
+    uint8_t byte, size_1, size_2;
+    uint16_t size;
+    
+    command_data[0] = command;
+    
+    // Pack arguments.  Unused arguments packed as NUL.
+    for(i = 0; i < nargs; i++) {
+        command_data[i + 1] = *(args + i);
+    }
+    
+    // Transmit bytes.  Drive CS throughout transaction.
+    //GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    zynq_spi_transmit_no_read(data, nargs + 1);
+    
+    __disable_irq();
+    
+    // Send CRC using the hardware CRC generator.
+    zynq_spi.Instance->CR1 |= SPI_CR1_CRCNEXT;
+    
+    // Wait for the transmit FIFO to empty
+    while(!(zynq_spi.Instance->SR & SPI_FLAG_TXE) && timeout--) ;
+    
+    // Wait for the busy flag to clear
+    while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
+    
+    __enable_irq();
+    
+    // Transmit 0x00 while reading the response from the Zynq.
+    // Response of 0x0f or 0xff from Zynq indicates that data is still pending;
+    // Response of 0xcc indicates data is following.
+    // Any other response aborts.
+    while(1) {
+        byte = zynq_spi_byte_txrx(0x00);
+        //arb_delay(10);
+        
+        if(byte == 0xcc) {
+            uart_printf("RX CC\r\n");
+            size_1 = zynq_spi_byte_txrx(0x00);
+            
+            if(size_1 > 0x80) {
+                size_2 = zynq_spi_byte_txrx(0x00);
+                size = ((size_1 - 0x80) << 8) + size_2;
             } else {
-                *((__IO uint8_t *)&zynq_spi.Instance->DR) = (*data++);
-                size--;
+                size = size_1;
             }
+            
+            break;
+        } /* else if(byte != 0xff && byte != 0x0f) {
+            uart_printf("Zynq abort 0x%02x\r\n", byte);
+            size = 0;
+            break;
+        } */
+        
+        if(uart_char_is_available()) {
+            uart_printf("AbortKey\r\n");
+            goto early_end;
         }
     }
+    
+    // Read "size" bytes; discard read.
+    if(size > 0) {
+        while(size--) {
+            zynq_spi_byte_txrx(0x0f);
+        }
+    }
+    
+early_end:
+    // Remove drive on CS.
+    //GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    return;
 }
 
 /*
@@ -173,7 +232,7 @@ inline void zynq_spi_transmit_no_read(uint8_t *data, uint32_t size)
  */
 void scmd_zynq_spi_test()
 {
-    int state, j, i = 0;
+    int state, j, i = 0, run = 1;
     
     if(!(sys_state.flags & FLAG_ZYNQ_ON)) {
         uart_putsraw("Zynq not powered on!\r\n");
@@ -188,18 +247,20 @@ void scmd_zynq_spi_test()
     //uint8_t test_msg1[] = { 0x00, 0x55 };
     //uint8_t test_msg2[] = { 0x01 };
     
-    uint8_t test_args[] = { 0x00, 0x00, 0x7f, 0xff, 0x00, 0x00, 0x7f, 0xff, 0x01, 0x00, 0x00, 0x00, 0x80 };
+    uint8_t test_args[] = { 0x08, 0x80 };
     
     uart_putsraw("Starting Zynq SPI test, press a key to abort\r\n");
     uart_flush();
     
-    while(1) {
+    while(run) {
+        uart_putsraw("Itr\r\n");
+        
         state = 0;
         
         for(j = 0; j < 180; j++) {
-            zynq_command_transmit(0x10, 13, (uint8_t*)&test_args);
-            test_args[0] = i;
-            test_args[1] = i;
+            zynq_command_transmit_with_response(0x01, 2, (uint8_t*)&test_args);
+            //test_args[0] = i;
+            //test_args[1] = i;
             
             if(state)
                 HAL_GPIO_WritePin(LED_3_PORT, LED_3_PIN, GPIO_PIN_SET);
@@ -210,14 +271,15 @@ void scmd_zynq_spi_test()
             
             //uart_printf("%d ", j);
             i++;
+            
+            if(uart_char_is_available()) {
+                run = 0;
+                break;
+            }
         }
         
         systick_wait(10);
             
-        if(uart_char_is_available()) {
-            break;
-        }
-        
         //arb_delay(400);
     }
     
