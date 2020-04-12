@@ -46,7 +46,7 @@
 #define SPI_RESPONSE_1BYTE_MAX			127
 #define SPI_RESPONSE_2BYTE_MAX			32640
 #define SPI_RESPONSE_PACK_SIZE			24								// How many bytes we pack at a time into the TX FIFO
-#define SPI_TX_OVERWATER_DEFAULT		104								// 128 byte FIFO - 24 byte pack size
+#define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE)	// 128 byte FIFO - 24 byte pack size
 
 #define SPIRET_OK						0
 #define SPIRET_MEM_ERROR				-1
@@ -57,6 +57,8 @@ extern struct spi_version_resp_t g_version_resp;
 #define SPI_IS_TX_FULL()				(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXFULL_MASK))
 #define SPI_IS_TX_OVERWATER()			(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXOW_MASK))
 
+#define SPI_RST_CTRL_MASK				0x00000005
+#define SPI_RST_CTRL_REG_SLCR			0xF800021C
 
 /*
  * Statistics.
@@ -122,6 +124,10 @@ struct spi_state_t {
 	struct spi_command_alloc_t *proc_cmd;
 	int proc_state;
 
+	// Byte from previous cycle to be transmitted
+	uint8_t byte_tx;
+	int byte_send : 1;
+
 	/*
 	 * Look-up table for CRC calculation.
 	 */
@@ -179,6 +185,7 @@ struct spi_version_resp_t {
 
 
 void spi_init();
+void spi_reset_hw();
 void spi_crc_lut_gen();
 void spi_command_lut_gen();
 void spi_isr_handler(void *unused);
@@ -188,12 +195,30 @@ int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes);
 void spi_command_tick();
 
 /*
+ * Receive a byte via the SPI port (without checking if it is available.)  May return
+ * stale data if overrun occurs.
+ */
+inline uint8_t spi_receive_no_wait()
+{
+	return XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_RXD_OFFSET);
+}
+
+/*
+ * Transmit a byte via the SPI port (without checking if space is available.)  May return
+ * stale data if overrun occurs.
+ */
+inline void spi_transmit_no_wait(uint8_t byte)
+{
+	XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
+}
+
+/*
  * Transmit a byte via the SPI port IF there is space free in the transmit FIFO.
  */
 inline int spi_transmit(uint8_t byte)
 {
 	if(!SPI_IS_TX_FULL()) {
-		XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, byte);
+		XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
 		return 1;
 	} else {
 		return 0;

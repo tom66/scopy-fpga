@@ -88,6 +88,10 @@
 
 #define REG_SET_BIT(base, rg, msk)	Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) | (msk))
 #define REG_CLR_BIT(base, rg, msk)	Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) & (~(msk)))
+#define REG_TOG_BIT(base, rg, msk)	Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) ^ (msk))
+
+#define REG_MASK_BIT(base, rg, msk)	(Xil_In32((base) + (rg)) & msk)
+#define REG_TEST_BIT(base, rg, msk)	(!!(REG_MASK_BIT(base, rg, msk)))
 
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))

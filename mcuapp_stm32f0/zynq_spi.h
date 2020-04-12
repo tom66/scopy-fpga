@@ -51,7 +51,7 @@ void scmd_zynq_spi_test(void);
 /*
  * Fast transmit with discard read.  CS is not driven.
  */
-static void inline zynq_spi_transmit_no_read(uint8_t *data, uint32_t size)
+static void inline zynq_spi_transmit_no_read_crc_end(uint8_t *data, uint32_t size)
 {
     while(size > 0) {
         if(!((zynq_spi.Instance->SR & SPI_FLAG_FTLVL) & SPI_FTLVL_HALF_FULL)) {
@@ -61,27 +61,17 @@ static void inline zynq_spi_transmit_no_read(uint8_t *data, uint32_t size)
                 data += 2;
                 size -= 2;
             } else */ {
-                GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+                //GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
                 SPI_BYTE_WRITE(*data++);
                 
-                while(!(zynq_spi.Instance->SR & SPI_FLAG_TXE)) ;
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
-                __asm("nop");
+                //while(zynq_spi.Instance->SR & SPI_FLAG_BSY) ;
                 
-                GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+                if(size == 1) {
+                    // Send CRC using the hardware CRC generator.
+                    zynq_spi.Instance->CR1 |= SPI_CR1_CRCNEXT;
+                }
+                
+                //GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
                 size--;
             }
         }
@@ -95,32 +85,13 @@ static uint8_t inline zynq_spi_byte_txrx(uint8_t tx)
 {
     uint8_t byte;
     
-    while(((zynq_spi.Instance->SR & SPI_FLAG_FTLVL) & SPI_FTLVL_FULL)) {
-        uart_putchar('?');
-    }
+    while(zynq_spi.Instance->SR & SPI_FTLVL_FULL) ;
     
-    GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    //GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     SPI_BYTE_WRITE(tx);
-    
-    while(!(zynq_spi.Instance->SR & SPI_FLAG_TXE)) ;
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    __asm("nop");
-    
     byte = SPI_BYTE_READ();
-    GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    
+    //GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     return byte;
 }
 

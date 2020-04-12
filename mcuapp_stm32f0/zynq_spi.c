@@ -94,7 +94,7 @@ void zynq_spi_init()
     zynq_spi.Init.CLKPolarity = SPI_POLARITY_LOW;
     zynq_spi.Init.CLKPhase = SPI_PHASE_1EDGE;
     zynq_spi.Init.NSS = SPI_NSS_SOFT;
-    zynq_spi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4; // FPClk/4 (12MHz SPI)
+    zynq_spi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8; // FPClk/4 (12MHz SPI)
     zynq_spi.Init.FirstBit = SPI_FIRSTBIT_MSB;
     zynq_spi.Init.TIMode = SPI_TIMODE_DISABLE;
     zynq_spi.Init.CRCCalculation = SPI_CRCCALCULATION_ENABLE;
@@ -126,17 +126,11 @@ void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
         command_data[i + 1] = *(args + i);
     }
     
-    // Transmit bytes.  Drive CS throughout transaction.
+    // Transmit bytes.  Drive CS throughout transaction and pack CRC at end.
     GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
-    zynq_spi_transmit_no_read(data, nargs + 1);
+    zynq_spi_transmit_no_read_crc_end(data, nargs + 1);
     
     __disable_irq();
-    
-    // Wait for the transmit FIFO to empty
-    while(!(zynq_spi.Instance->SR & SPI_FLAG_TXE) && timeout--) ;
-    
-    // Send CRC using the hardware CRC generator.
-    zynq_spi.Instance->CR1 |= SPI_CR1_CRCNEXT;
     
     // Wait for the busy flag to clear
     while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
@@ -146,6 +140,7 @@ void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
     // Remove drive on CS.
     GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
 }
+
 /*
  * Transmit a command and read the response.
  */
@@ -166,16 +161,17 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
     }
     
     // Transmit bytes.  Drive CS throughout transaction.
-    //GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
-    zynq_spi_transmit_no_read(data, nargs + 1);
+    GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    zynq_spi_transmit_no_read_crc_end(data, nargs + 1);
     
     __disable_irq();
     
-    // Send CRC using the hardware CRC generator.
-    zynq_spi.Instance->CR1 |= SPI_CR1_CRCNEXT;
+    /*
+    // Wait for the busy flag to clear
+    while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
     
-    // Wait for the transmit FIFO to empty
-    while(!(zynq_spi.Instance->SR & SPI_FLAG_TXE) && timeout--) ;
+    zynq_spi.Instance->CR1 |= SPI_CR1_CRCNEXT;
+    */
     
     // Wait for the busy flag to clear
     while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
@@ -223,7 +219,7 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
     
 early_end:
     // Remove drive on CS.
-    //GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     return;
 }
 
@@ -258,6 +254,8 @@ void scmd_zynq_spi_test()
         state = 0;
         
         for(j = 0; j < 180; j++) {
+            zynq_command_transmit(0x00, 0, NULL);
+            
             zynq_command_transmit_with_response(0x01, 2, (uint8_t*)&test_args);
             //test_args[0] = i;
             //test_args[1] = i;

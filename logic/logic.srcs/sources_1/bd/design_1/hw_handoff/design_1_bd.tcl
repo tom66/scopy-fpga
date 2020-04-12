@@ -985,7 +985,7 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets zynq_ps_M_AXI_GP0] [get_bd_intf_
   connect_bd_net -net xlconstant_2_dout [get_bd_pins simple_reset_control_0/g_rst_trig_ps] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net xlconstant_3_dout [get_bd_pins adc_trigger_0/trig_input_external] [get_bd_pins xlconstant_3/dout]
   connect_bd_net -net xlconstant_4_dout [get_bd_pins adc_trigger_0/trig_input_ac] [get_bd_pins xlconstant_4/dout]
-  connect_bd_net -net zynq_ps_SPI0_MISO_O [get_bd_ports SPI_DATA_OUT] [get_bd_pins zynq_ps/SPI0_MISO_O]
+  connect_bd_net -net zynq_ps_SPI0_MISO_O [get_bd_ports SPI_DATA_OUT] [get_bd_pins zynq_ps/SPI0_MISO_I] [get_bd_pins zynq_ps/SPI0_MISO_O]
   connect_bd_net -net zynq_ps_SPI0_MISO_T [get_bd_ports SPI_DATA_OUT_TRIS] [get_bd_pins zynq_ps/SPI0_MISO_T]
 
   # Create address segments
