@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\MCU_Application.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\MCU_Application.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Sat Apr 11 23:21:34 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Apr 13 10:47:35 2020
 <BR><P>
 <H3>Maximum Stack Usage =        376 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2619,7 +2619,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> shell_commands.o(.data)
 </UL>
 <P><STRONG><a name="[1f]"></a>scmd_zynq_spi_test</STRONG> (Thumb, 154 bytes, Stack size 24 bytes, zynq_spi.o(i.scmd_zynq_spi_test))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
 <LI>Call Chain = scmd_zynq_spi_test &rArr; zynq_command_transmit_with_response &rArr; uart_printf &rArr; vsnprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -2887,8 +2887,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
 
-<P><STRONG><a name="[16c]"></a>zynq_command_transmit_with_response</STRONG> (Thumb, 216 bytes, Stack size 64 bytes, zynq_spi.o(i.zynq_command_transmit_with_response))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208 + Unknown Stack Size
+<P><STRONG><a name="[16c]"></a>zynq_command_transmit_with_response</STRONG> (Thumb, 140 bytes, Stack size 48 bytes, zynq_spi.o(i.zynq_command_transmit_with_response))
+<BR><BR>[Stack]<UL><LI>Max Depth = 192 + Unknown Stack Size
 <LI>Call Chain = zynq_command_transmit_with_response &rArr; uart_printf &rArr; vsnprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_printf

@@ -269,28 +269,6 @@ volatile void bogo_delay(volatile uint32_t delay)
 }
 
 /**
- * Control one of the two LEDs attached to the PS.
- *
- * @param	index		0 or 1, for PS LEDs 0 and 1
- * @param	enable		0 = off, 1 = on
- */
-void gpio_led_write(int index, int enable)
-{
-	// Ensure value is zero or one
-	enable = !!(enable);
-
-	switch(index) {
-		case 0:
-			XGpioPs_WritePin(&g_hal.xgpio_ps, GPIO_PS_LED_0_PIN, enable);
-			break;
-
-		case 1:
-			XGpioPs_WritePin(&g_hal.xgpio_ps, GPIO_PS_LED_1_PIN, enable);
-			break;
-	}
-}
-
-/**
  * Debug handler.
  *
  * @param	debug_code	D_RAW, D_EXINFO, D_INFO, D_WARN, D_ERR, etc.  The print might be ignored if a filter is applied.
@@ -525,5 +503,5 @@ void d_dump_timing_ex(char *s, int index)
  */
 void d_xilinx_assert(const char8 *file, s32 line)
 {
-	d_printf(D_ERROR, "Assert failed at line %d of file `%s'\r\n", line, file);
+	d_printf(D_ERROR, "XilAssert failed at line %d of file `%s'\r\n", line, file);
 }

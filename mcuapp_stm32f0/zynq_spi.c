@@ -186,6 +186,7 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
         byte = zynq_spi_byte_txrx(0x00);
         //arb_delay(10);
         
+#if 0
         if(byte == 0xcc) {
             uart_printf("RX CC\r\n");
             size_1 = zynq_spi_byte_txrx(0x00);
@@ -203,6 +204,7 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
             size = 0;
             break;
         } */
+#endif
         
         if(uart_char_is_available()) {
             uart_printf("AbortKey\r\n");

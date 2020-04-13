@@ -124,7 +124,6 @@ extern struct hal_t g_hal;
 
 void hal_init();
 void bogo_delay(uint32_t us);
-void gpio_led_write(int index, int enable);
 void d_printf(int debug_code, char *fmt, ...);
 void d_waitkey();
 bool d_iskeypress();
@@ -145,7 +144,39 @@ void d_xilinx_assert(const char8 *File, s32 Line);
  */
 
 /*
+ * Write a pin on the GPIO EM port quickly.  Only supports pins in range 0 ~ 53.
+ */
+inline static void gpio_fast_write(unsigned int pin, int state)
+{
+	unsigned int bank;
+	uint32_t write;
+	uint32_t *reg;
+
+	D_ASSERT(pin >= 0 && pin <= 53) ;
+
+	state &= 1;
+	bank = (pin >> 5); // divide by 32, starting at offset '0'
+	reg = (uint32_t*)(bank * XGPIOPS_DATA_MASK_OFFSET);
+	pin &= 31; // Likely also need to port this to emio_fast_write to fix bug
+
+	if(pin > 15) {
+		pin -= 16;
+		reg += XGPIOPS_DATA_MSW_OFFSET;
+	} else {
+		reg += XGPIOPS_DATA_LSW_OFFSET;
+	}
+
+	write = ~(1 << (pin + 16)) & ((state << pin) | 0xffff0000);
+
+	// d_printf(D_RAW, "p:%2d,b:%d,s:%d,reg:0x%08,write:0x%08x\r\n", pin, bank, state, reg, write);
+
+	XGpioPs_WriteReg(XPS_GPIO_BASEADDR, reg, write);
+}
+
+/*
  * Write a pin on the EMIO port quickly.  Only supports pins in range 53 ~ 117.
+ *
+ * XXX: Is 53 an EMIO?
  */
 inline static void emio_fast_write(unsigned int pin, int state)
 {
@@ -188,6 +219,29 @@ inline static int emio_fast_read(unsigned int pin)
 	reg = (uint32_t*)(bank * XGPIOPS_DATA_BANK_OFFSET);
 
 	return (XGpioPs_ReadReg(XPS_GPIO_BASEADDR, ((bank) * XGPIOPS_DATA_BANK_OFFSET) + XGPIOPS_DATA_RO_OFFSET) >> pin) & 0x01;
+}
+
+/**
+ * Control one of the two LEDs attached to the PS.  Fast inlinable function.
+ *
+ * @param	index		0 or 1, for PS LEDs 0 and 1
+ * @param	enable		0 = off, 1 = on
+ */
+inline static void gpio_led_write(int index, int enable)
+{
+	// Permit LEDs 0 or 1, ensure enable is 0/1
+	D_ASSERT(index == 0 || index == 1);
+	enable = !!(enable);
+
+	switch(index) {
+		case 0:
+			gpio_fast_write(GPIO_PS_LED_0_PIN, enable);
+			break;
+
+		case 1:
+			gpio_fast_write(GPIO_PS_LED_1_PIN, enable);
+			break;
+	}
 }
 
 #endif /* SRC_HAL_H_ */

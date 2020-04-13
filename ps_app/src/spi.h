@@ -60,6 +60,18 @@ extern struct spi_version_resp_t g_version_resp;
 #define SPI_RST_CTRL_MASK				0x00000005
 #define SPI_RST_CTRL_REG_SLCR			0xF800021C
 
+#define SPI_SET_RESPONSE(x)				{ g_spi_state.byte_tx = x; g_spi_state.byte_send = 1; }
+
+#define SPI_RESP_NONE					0x00
+#define SPI_RESP_PENDING				0x08
+#define SPI_RESP_NO_RESPONSE			0xa5
+#define SPI_RESP_ABORT_RESPONSE			0xab
+#define SPI_RESP_WAIT_RESPONSE			0xb0
+#define SPI_RESP_SIZE_FOLLOWS			0xcc
+#define SPI_RESP_INTERNAL_ERROR			0xfd
+#define SPI_RESP_CRC_ERROR				0xfe
+#define SPI_RESP_CMD_ERROR				0xff
+
 /*
  * Statistics.
  */
@@ -112,7 +124,7 @@ struct spi_state_t {
 	uint8_t cmd_argdata[SPI_COMMAND_MAX_ARGS];
 	int cmd_argpop;
 	int cmd_argidx;
-	bool has_response;
+	int has_response : 1;
 	uint8_t crc;
 
 	// Last command allocated
@@ -223,6 +235,21 @@ inline int spi_transmit(uint8_t byte)
 	} else {
 		return 0;
 	}
+}
+
+/*
+ * Read the SR of the SPI twice to avoid errata #47575.
+ */
+inline uint32_t spi_read_sr_errata()
+{
+	uint32_t x, y;
+
+	x = XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET);
+	asm("nop");
+	y = XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET);
+	asm("nop");
+
+	return y;
 }
 
 /*

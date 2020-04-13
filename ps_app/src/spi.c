@@ -67,20 +67,11 @@ void spi_init()
 	XSpiPs_Reset(&g_spi_state.spi);
 
 	/*
-	 * SPI starts as slave.  Configure CPOL and CPHA to zero.
+	 * SPI starts as slave.  Configure CPOL and CPHA to zero.  Disable ModeFail.
+	 *
+	 * The XSpiPs_SetOptions function is bugged;  write the bits manually.
 	 */
-	//error = XSpiPs_SetOptions(&g_spi_state.spi, XSPIPS_CR_CPHA_MASK | XSPIPS_CR_CPOL_MASK);
-	//error = XSpiPs_SetOptions(&g_spi_state.spi, XSPIPS_CLK_ACTIVE_LOW_OPTION);
-	//error = XSpiPs_SetOptions(&g_spi_state.spi, XSPIPS_CLK_ACTIVE_LOW_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
-
-	/*
-	if(error != XST_SUCCESS) {
-		d_printf(D_ERROR, "spi: unable to configure options: error %d", error);
-		exit(-1);
-	}
-	 */
-
-	// Slave mode, CPOL = 0, CPHA = 0
+	REG_CLR_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET, XSPIPS_CR_MODF_GEN_EN_MASK);
 	REG_CLR_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET, XSPIPS_CR_MSTREN_MASK);
 	REG_CLR_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET, XSPIPS_CR_CPOL_MASK);
 	REG_CLR_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET, XSPIPS_CR_CPHA_MASK);
@@ -97,7 +88,6 @@ void spi_init()
 	/*
 	 * Connect interrupts to the SPI peripheral, then enable the peripheral.
 	 */
-	/*
 	error = XScuGic_Connect(&g_hal.xscu_gic, XPAR_XSPIPS_0_INTR, (Xil_ExceptionHandler)spi_isr_handler, NULL);
 
 	if(error != XST_SUCCESS) {
@@ -105,10 +95,9 @@ void spi_init()
 		exit(-1);
 	}
 
-	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_IER_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK);
-	*/
+	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_IER_OFFSET, XSPIPS_IXR_MODF_MASK | XSPIPS_IXR_TXUF_MASK | XSPIPS_IXR_RXNEMPTY_MASK);
 	XSpiPs_Enable(&g_spi_state.spi);
-	//XScuGic_Enable(&g_hal.xscu_gic, XPAR_XSPIPS_0_INTR);
+	XScuGic_Enable(&g_hal.xscu_gic, XPAR_XSPIPS_0_INTR);
 
 	d_printf(D_INFO, "spi: peripheral initialised @ 0x%08x", g_spi_state.spi_config->BaseAddress);
 
@@ -127,6 +116,9 @@ void spi_init()
 	// Set default values
 	g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 	g_spi_state.proc_state = SPIPROC_STATE_UNPACK;
+
+	g_spi_state.byte_tx = 0x00;
+	g_spi_state.byte_send = 1;
 
 	/*
 	 * Initialise the Deque for commands.  Prepare the allocation table.
@@ -169,6 +161,19 @@ void spi_init()
 	i = 0;
 
 	while(1) {
+		/*
+		d_printf(D_RAW, "%d SR:0x%08x CR:0x%08x IER:0x%08x IMR:0x%08x ER:0x%08x\r\n", i++, \
+				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET), \
+				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_CR_OFFSET), \
+				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_IER_OFFSET), \
+				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_IMR_OFFSET), \
+				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_ER_OFFSET));
+		bogo_delay(40000);
+		*/
+
+		test_counter++;
+
+		/*
 		//buff1[0] = i++;
 		//XSpiPs_PolledTransfer(&g_spi_state.spi, &buff1, NULL, 1);
 
@@ -176,8 +181,8 @@ void spi_init()
 
 		if(REG_TEST_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK)) {
 			//d_printf(D_ERROR, "iter %d (SR 0x%08x)", i, XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET));
-			spi_receive_no_wait();
 			spi_transmit_no_wait((i & 1) ? 0x55 : 0xaa);
+			spi_receive_no_wait();
 
 			REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK | XSPIPS_IXR_RXOVR_MASK | XSPIPS_IXR_MODF_MASK);
 
@@ -188,6 +193,7 @@ void spi_init()
 		}
 
 		//spi_command_tick();
+		*/
 	}
 }
 
@@ -268,6 +274,8 @@ void spi_isr_handler(void *unused)
 
 	gpio_led_write(1, 1);
 
+	//d_printf(D_RAW, "I (SR=0x%08x)", spi_read_sr_errata());
+
 	/*
 	 * What we do in this ISR is entirely dependent on the state we are in.
 	 *
@@ -284,22 +292,35 @@ void spi_isr_handler(void *unused)
 	 *
 	 * The state machine executes one iteration for each byte available.
 	 *
+	 * Output bytes:
+	 *   - 0x00 = Pending/no state
+	 *   - 0x08 = Processing command/wait for response
+	 *   - 0xa5 = No response/end of process
+	 *   - 0xcc = Size byte(s) follow
+	 *   - 0xfd = Internal error
+	 *   - 0xfe = Error with checksum
+	 *   - 0xff = Error with command
+	 *
 	 * Error states can occur, which will revert the state machine back to the header
 	 * processing stage.
 	 */
-	while(XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_RXNEMPTY_MASK) {
+	while(spi_read_sr_errata() & XSPIPS_IXR_RXNEMPTY_MASK) {
 		g_spi_state.stats.num_bytes_rxtx++;
 
+		/*
 		if(g_spi_state.byte_send) {
-			spi_transmit_no_wait(g_spi_state.byte_tx);
+			if(!spi_transmit(g_spi_state.byte_tx)) {
+				d_printf(D_RAW, "err-FIFO\r\n");
+			}
 		}
-		byte_rx = spi_receive_no_wait();
+		*/
 
-		//d_printf(D_RAW, "%02x ", byte_rx);
+		byte_rx = spi_receive_no_wait();
+		spi_transmit_no_wait(g_spi_state.byte_tx);
 
 		// Default byte to pack.
-		g_spi_state.byte_tx = g_spi_state.cmd_state;
-		g_spi_state.byte_send = 1;
+		//g_spi_state.byte_tx = test_counter++; // g_spi_state.cmd_state;
+		//g_spi_state.byte_send = 1;
 
 		switch(g_spi_state.cmd_state) {
 			case SPI_STATE_CMD_HEADER:
@@ -318,6 +339,7 @@ void spi_isr_handler(void *unused)
 
 					g_spi_state.stats.num_bytes_rx_valid++;
 					g_spi_state.stats.num_command_ok++;
+					SPI_SET_RESPONSE(SPI_RESP_PENDING);
 
 					// Zero arguments: no args pushed into the stack, so jump straight to checksum state
 					if(g_spi_state.cmd_argpop == 0) {
@@ -327,6 +349,7 @@ void spi_isr_handler(void *unused)
 					}
 				} else {
 					g_spi_state.stats.num_command_errors++;
+					SPI_SET_RESPONSE(SPI_RESP_CMD_ERROR);
 				}
 				break;
 
@@ -343,6 +366,8 @@ void spi_isr_handler(void *unused)
 				if(g_spi_state.cmd_argpop == 0) {
 					g_spi_state.cmd_state = SPI_STATE_CHECKSUM;
 				}
+
+				SPI_SET_RESPONSE(SPI_RESP_PENDING);
 				break;
 
 			case SPI_STATE_CHECKSUM:
@@ -380,6 +405,7 @@ void spi_isr_handler(void *unused)
 					slot_idx = spi_command_find_free_slot();
 
 					if(slot_idx == -1) {
+						SPI_SET_RESPONSE(SPI_RESP_INTERNAL_ERROR);
 						g_spi_state.stats.num_command_lost_full_alloc++;
 						g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 					} else {
@@ -395,6 +421,7 @@ void spi_isr_handler(void *unused)
 						// But this shouldn't normally happen, as we only have SPI_QUEUE_ALLOC_MAX slots available,
 						// in our static allocation buffer, one less than the size of the deque SPI_QUEUE_SIZE.
 						if(deque_add_last(g_spi_state.command_dq, slot) != CC_OK) {
+							SPI_SET_RESPONSE(SPI_RESP_INTERNAL_ERROR);
 							g_spi_state.stats.num_command_lost_full_deque++;
 							g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 							d_printf(D_ERROR, "Out of space for SPI commands");
@@ -406,27 +433,23 @@ void spi_isr_handler(void *unused)
 							// If the command has a response go to the response handler state.
 							if(g_spi_state.has_response) {
 								//d_printf(D_RAW, "R");
-								g_spi_state.byte_tx = 0x55;
-								g_spi_state.byte_send = 1;
-
+								SPI_SET_RESPONSE(SPI_RESP_WAIT_RESPONSE);
 								g_spi_state.cmd_state = SPI_STATE_RESPONSE_WAIT;
 							} else {
-								//d_printf(D_RAW, "H");
-
+								SPI_SET_RESPONSE(SPI_RESP_NO_RESPONSE);
 								g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 							}
 						}
 					}
 				} else {
 					// Invalid CRC.  Discard the packet after incrementing the relevant statistic.
+					SPI_SET_RESPONSE(SPI_RESP_CRC_ERROR);
 					g_spi_state.stats.num_crc_errors++;
 					g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 				}
 				break;
 
 			case SPI_STATE_RESPONSE_WAIT:
-				//d_printf(D_RAW, "RW");
-
 				/*
 				 * We hang out in this state until the most recent command is ready to
 				 * return a response.  Commands that return a response are "blocking" - we
@@ -445,17 +468,13 @@ void spi_isr_handler(void *unused)
 				if(byte_rx == 0x00) {
 					//d_printf(D_RAW, "ZERO");
 					if(g_spi_state.last_cmd->resp_ready) {
-						//d_printf(D_RAW, "RDY!");
+						SPI_SET_RESPONSE(SPI_RESP_SIZE_FOLLOWS);
 						g_spi_state.cmd_state = SPI_STATE_RESPONSE_SIZE;
-
-						g_spi_state.byte_tx = 0xcc;
-						g_spi_state.byte_send = 1;
 					} else {
-						g_spi_state.byte_tx = 0xf0;
-						g_spi_state.byte_send = 1;
+						SPI_SET_RESPONSE(SPI_RESP_WAIT_RESPONSE);
 					}
 				} else {
-					//d_printf(D_RAW, "ABRT");
+					SPI_SET_RESPONSE(SPI_RESP_ABORT_RESPONSE);
 					g_spi_state.last_cmd->resp_done = 1;  // Signal done as we've aborted
 					g_spi_state.stats.num_resp_aborts_byte_rec++;
 					g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
@@ -477,8 +496,7 @@ void spi_isr_handler(void *unused)
 				if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_1BYTE_MAX) {
 					// Pack one byte, then advance state machine.
 					//spi_transmit_wait_free(g_spi_state.last_cmd->resp_size);
-					g_spi_state.byte_tx = g_spi_state.last_cmd->resp_size;
-					g_spi_state.byte_send = 1;
+					SPI_SET_RESPONSE(g_spi_state.last_cmd->resp_size);
 				} else if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_2BYTE_MAX) {
 					d_printf(D_RAW, "2ByteError!");
 					/*
@@ -537,7 +555,13 @@ void spi_isr_handler(void *unused)
 				g_spi_state.byte_send = 0;
 				break;
 		}
+
+		// Clear NEMPTY bit
+		REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK);
 	}
+
+	// Clear other ISR bits
+	REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_WR_TO_CLR_MASK);
 
 	gpio_led_write(1, 0);
 	gpio_led_write(0, 0);
