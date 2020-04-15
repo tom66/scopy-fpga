@@ -44,6 +44,7 @@
 extern SPI_HandleTypeDef zynq_spi;
 
 void zynq_spi_init(void);
+uint8_t zynq_command_nop();
 void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args);
 void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t *args);
 void scmd_zynq_spi_test(void);

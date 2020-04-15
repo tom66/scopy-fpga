@@ -79,7 +79,7 @@ void spi_init()
 	// Set slave clock cycle count to 1 (effectively disables clock filtering?)
 	//XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SICR_OFFSET, 0x00000001);
 
-	XSpiPs_SetRXWatermark(&g_spi_state.spi, 1);
+	XSpiPs_SetRXWatermark(&g_spi_state.spi, 2);
 	XSpiPs_SetTXWatermark(&g_spi_state.spi, SPI_TX_OVERWATER_DEFAULT);
 
 	d_printf(D_WARN, "SpiCR=0x%08x", XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET));
@@ -106,12 +106,6 @@ void spi_init()
 	 */
 	spi_crc_lut_gen();
 	spi_command_lut_gen();
-
-	// Pack a few bytes into the TX FIFO which seems to fix a bug with the SPI controller.
-	spi_transmit(0x00);
-	spi_transmit(0x00);
-	spi_transmit(0x00);
-	spi_transmit(0x00);
 
 	// Set default values
 	g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
@@ -161,39 +155,7 @@ void spi_init()
 	i = 0;
 
 	while(1) {
-		/*
-		d_printf(D_RAW, "%d SR:0x%08x CR:0x%08x IER:0x%08x IMR:0x%08x ER:0x%08x\r\n", i++, \
-				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET), \
-				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_CR_OFFSET), \
-				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_IER_OFFSET), \
-				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_IMR_OFFSET), \
-				XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_ER_OFFSET));
-		bogo_delay(40000);
-		*/
-
-		test_counter++;
-
-		/*
-		//buff1[0] = i++;
-		//XSpiPs_PolledTransfer(&g_spi_state.spi, &buff1, NULL, 1);
-
-		x = REG_TEST_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK);
-
-		if(REG_TEST_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK)) {
-			//d_printf(D_ERROR, "iter %d (SR 0x%08x)", i, XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET));
-			spi_transmit_no_wait((i & 1) ? 0x55 : 0xaa);
-			spi_receive_no_wait();
-
-			REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK | XSPIPS_IXR_RXOVR_MASK | XSPIPS_IXR_MODF_MASK);
-
-			i += 1;
-			i &= 0xff;
-		} else {
-			//d_printf(D_ERROR, "full (SR 0x%08x)", XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET));
-		}
-
-		//spi_command_tick();
-		*/
+		spi_command_tick();
 	}
 }
 
@@ -295,7 +257,11 @@ void spi_isr_handler(void *unused)
 	 * Output bytes:
 	 *   - 0x00 = Pending/no state
 	 *   - 0x08 = Processing command/wait for response
+	 *   - 0x18 = Packing arguments
+	 *   - 0x55 = NOP response
 	 *   - 0xa5 = No response/end of process
+	 *   - 0xab = Abort response
+	 *   - 0xb0 = Waiting for command to complete
 	 *   - 0xcc = Size byte(s) follow
 	 *   - 0xfd = Internal error
 	 *   - 0xfe = Error with checksum
@@ -304,7 +270,7 @@ void spi_isr_handler(void *unused)
 	 * Error states can occur, which will revert the state machine back to the header
 	 * processing stage.
 	 */
-	while(spi_read_sr_errata() & XSPIPS_IXR_RXNEMPTY_MASK) {
+	do {
 		g_spi_state.stats.num_bytes_rxtx++;
 
 		/*
@@ -316,7 +282,18 @@ void spi_isr_handler(void *unused)
 		*/
 
 		byte_rx = spi_receive_no_wait();
-		spi_transmit_no_wait(g_spi_state.byte_tx);
+
+#if 0
+		// Check for FIFO TXUF
+		if(REG_TEST_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK)) {
+			/*
+			while(1) {
+				gpio_led_write(0, 1);
+				gpio_led_write(0, 0);
+			}
+			*/
+		}
+#endif
 
 		// Default byte to pack.
 		//g_spi_state.byte_tx = test_counter++; // g_spi_state.cmd_state;
@@ -325,31 +302,41 @@ void spi_isr_handler(void *unused)
 		switch(g_spi_state.cmd_state) {
 			case SPI_STATE_CMD_HEADER:
 				/*
-				 * Check to see if this byte is a valid command.  If it is, we advance to the
-				 * next state with the argument count and command stored.
+				 * Command 0x00: special NOP, does not get processed or packed onto the stack
+				 * and does not need any checksum.  Responds with 0x55 when ready.
 				 */
-				if(g_spi_command_lut[byte_rx].valid) {
-					g_spi_state.cmd_id = byte_rx;
-					g_spi_state.has_response = g_spi_command_lut[byte_rx].has_response;
-					g_spi_state.cmd_argpop = g_spi_command_lut[byte_rx].nargs;
-					//d_printf(D_RAW, "CmdId%d,N%d,rr%d,", byte_rx, g_spi_command_lut[byte_rx].nargs, g_spi_state.has_response);
-					g_spi_state.cmd_argidx = 0;
-					g_spi_state.crc = g_spi_state.crc_table[byte_rx];
-					memset(&g_spi_state.cmd_argdata, 0, SPI_COMMAND_MAX_ARGS);
-
+				if(byte_rx == 0x00) {
 					g_spi_state.stats.num_bytes_rx_valid++;
-					g_spi_state.stats.num_command_ok++;
-					SPI_SET_RESPONSE(SPI_RESP_PENDING);
-
-					// Zero arguments: no args pushed into the stack, so jump straight to checksum state
-					if(g_spi_state.cmd_argpop == 0) {
-						g_spi_state.cmd_state = SPI_STATE_CHECKSUM;
-					} else {
-						g_spi_state.cmd_state = SPI_STATE_ARGS;
-					}
+					g_spi_state.stats.num_command_nop++;
+					SPI_SET_RESPONSE(SPI_RESP_CMD_NOP_READY);
 				} else {
-					g_spi_state.stats.num_command_errors++;
-					SPI_SET_RESPONSE(SPI_RESP_CMD_ERROR);
+					/*
+					 * Check to see if this byte is a valid command.  If it is, we advance to the
+					 * next state with the argument count and command stored.
+					 */
+					if(g_spi_command_lut[byte_rx].valid) {
+						g_spi_state.cmd_id = byte_rx;
+						g_spi_state.has_response = g_spi_command_lut[byte_rx].has_response;
+						g_spi_state.cmd_argpop = g_spi_command_lut[byte_rx].nargs;
+						//d_printf(D_RAW, "CmdId%d,N%d,rr%d,", byte_rx, g_spi_command_lut[byte_rx].nargs, g_spi_state.has_response);
+						g_spi_state.cmd_argidx = 0;
+						g_spi_state.crc = g_spi_state.crc_table[byte_rx];
+						memset(&g_spi_state.cmd_argdata, 0, SPI_COMMAND_MAX_ARGS);
+
+						g_spi_state.stats.num_bytes_rx_valid++;
+						g_spi_state.stats.num_command_ok++;
+						SPI_SET_RESPONSE(SPI_RESP_PENDING);
+
+						// Zero arguments: no args pushed into the stack, so jump straight to checksum state
+						if(g_spi_state.cmd_argpop == 0) {
+							g_spi_state.cmd_state = SPI_STATE_CHECKSUM;
+						} else {
+							g_spi_state.cmd_state = SPI_STATE_ARGS;
+						}
+					} else {
+						g_spi_state.stats.num_command_errors++;
+						SPI_SET_RESPONSE(SPI_RESP_CMD_ERROR);
+					}
 				}
 				break;
 
@@ -367,34 +354,11 @@ void spi_isr_handler(void *unused)
 					g_spi_state.cmd_state = SPI_STATE_CHECKSUM;
 				}
 
-				SPI_SET_RESPONSE(SPI_RESP_PENDING);
+				SPI_SET_RESPONSE(SPI_RESP_PENDING_ARGS);
 				break;
 
 			case SPI_STATE_CHECKSUM:
 				g_spi_state.stats.num_bytes_rx_valid++;
-
-				/*
-				if(g_spi_state.crc != byte) {
-					gpio_led_write(0, 1);
-
-					d_printf(D_INFO, "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x (CRC:%02x)", \
-							g_spi_state.cmd_id, \
-							g_spi_state.cmd_argdata[0], \
-							g_spi_state.cmd_argdata[1], \
-							g_spi_state.cmd_argdata[2], \
-							g_spi_state.cmd_argdata[3], \
-							g_spi_state.cmd_argdata[4], \
-							g_spi_state.cmd_argdata[5], \
-							g_spi_state.cmd_argdata[6], \
-							g_spi_state.cmd_argdata[7], \
-							g_spi_state.cmd_argdata[8], \
-							g_spi_state.cmd_argdata[9], \
-							g_spi_state.cmd_argdata[10], \
-							g_spi_state.cmd_argdata[11], \
-							g_spi_state.cmd_argdata[12], \
-							byte, g_spi_state.crc);
-				}
-				*/
 
 				if(g_spi_state.crc == byte_rx) {
 					/*
@@ -486,31 +450,29 @@ void spi_isr_handler(void *unused)
 				 * Size packet prefixes any returned data.  Size packet is 1 or 2 bytes.
 				 *
 				 * For transfers 1 ~ 127 bytes the size packet is 0x01 ~ 0x7f.
-				 * For transfers 128 ~ 32640 bytes, the size packet is 0x80 ~ 0xff followed
+				 * For transfers 128 ~ 32384 bytes, the size packet is 0x80 ~ 0xff followed
 				 * by another 8 bits (total of ~15 bits.)
 				 */
-				d_printf(D_RAW, "Sz");
-
 				D_ASSERT(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_2BYTE_MAX) ;
-
-				if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_1BYTE_MAX) {
-					// Pack one byte, then advance state machine.
-					//spi_transmit_wait_free(g_spi_state.last_cmd->resp_size);
-					SPI_SET_RESPONSE(g_spi_state.last_cmd->resp_size);
-				} else if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_2BYTE_MAX) {
-					d_printf(D_RAW, "2ByteError!");
-					/*
-					// Pack two bytes, then advance state machine -- it doesn't matter
-					// if these aren't aligned to our IRQ, they will be transmitted eventually anyway.
-					spi_transmit_wait_free((g_spi_state.last_cmd->resp_size >> 8) + 0x80);
-					spi_transmit_wait_free(g_spi_state.last_cmd->resp_size & 0xff);
-					g_spi_state.byte_send = 0;
-					g_spi_state.stats.num_bytes_rxtx++; // possibly off-by-one here, but it's just a statistic.
-					*/
-				}
 
 				g_spi_state.resp_bytes = g_spi_state.last_cmd->resp_size;
 				g_spi_state.resp_data_ptr = g_spi_state.last_cmd->resp_data;
+
+				if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_1BYTE_MAX) {
+					// Pack one byte, then advance state machine.
+					SPI_SET_RESPONSE(g_spi_state.last_cmd->resp_size);
+					g_spi_state.cmd_state = SPI_STATE_RESPONSE;
+				} else if(g_spi_state.last_cmd->resp_size <= SPI_RESPONSE_2BYTE_MAX) {
+					// Pack two bytes; first in this state, and second in subsequent state
+					SPI_SET_RESPONSE(0x80 + (g_spi_state.last_cmd->resp_size / 256));
+					g_spi_state.resp_sz2 = g_spi_state.last_cmd->resp_size & 0xff;
+					g_spi_state.cmd_state = SPI_STATE_RESPONSE_SIZE_EXTRA;
+				}
+				break;
+
+			case SPI_STATE_RESPONSE_SIZE_EXTRA:
+				// Pack remaining size LSB then pack the response
+				SPI_SET_RESPONSE(g_spi_state.resp_sz2);
 				g_spi_state.cmd_state = SPI_STATE_RESPONSE;
 				break;
 
@@ -519,14 +481,14 @@ void spi_isr_handler(void *unused)
 				 * Pack up to SPI_RESPONSE_PACK_SIZE bytes at a time to reduce CPU load.
 				 * We return to CMD_HEADER once all bytes have been sent.
 				 */
-				//d_printf(D_RAW, "XRsp");
-
 				if(g_spi_state.resp_bytes > 0) {
 					tx_bytes = MIN(g_spi_state.resp_bytes, SPI_RESPONSE_PACK_SIZE);
 					//d_printf(D_RAW, "[TX:%d,rem:%d]", tx_bytes, g_spi_state.resp_bytes);
 
+					XSpiPs_SetTXWatermark(&g_spi_state.spi, SPI_TX_OVERWATER_DEFAULT); // ???
+
 					sent_bytes = spi_transmit_packet_nonblock(g_spi_state.resp_data_ptr, tx_bytes);
-					//d_printf(D_RAW, "[Sn:%d]", sent_bytes);
+					//d_printf(D_RAW, ",%d", sent_bytes);
 
 					g_spi_state.resp_data_ptr += sent_bytes;
 					g_spi_state.resp_bytes -= sent_bytes;
@@ -537,13 +499,9 @@ void spi_isr_handler(void *unused)
 					 * Wait until the TX buffer is empty then we are done.  To check if it is
 					 * empty, we set the TXFIFO UW level to 1.
 					 */
-					d_printf(D_RAW, "Zzzz");
-
 					XSpiPs_SetTXWatermark(&g_spi_state.spi, 1);
 
 					if(!SPI_IS_TX_OVERWATER()) {
-						d_printf(D_RAW, "nOW!");
-
 						XSpiPs_SetTXWatermark(&g_spi_state.spi, SPI_TX_OVERWATER_DEFAULT);
 						g_spi_state.stats.num_resps++;
 						g_spi_state.last_cmd->resp_done = 1;
@@ -556,9 +514,22 @@ void spi_isr_handler(void *unused)
 				break;
 		}
 
-		// Clear NEMPTY bit
-		REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK);
-	}
+		// Send byte (from last iteration), if required
+		if(g_spi_state.byte_send) {
+			gpio_led_write(0, 1);
+			spi_transmit_no_wait(g_spi_state.byte_tx);
+
+			// If TXUF bit is set, attempt to recover: pack the byte again
+			if(REG_TEST_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK)) {
+				spi_transmit_no_wait(g_spi_state.byte_tx);
+			}
+
+			gpio_led_write(0, 0);
+		}
+
+		// Clear NEMPTY bit & TXUF
+		REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_RXNEMPTY_MASK | XSPIPS_IXR_TXUF_MASK);
+	} while(spi_read_sr_errata() & XSPIPS_IXR_RXNEMPTY_MASK) ;
 
 	// Clear other ISR bits
 	REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_WR_TO_CLR_MASK);
@@ -575,26 +546,39 @@ void spi_isr_handler(void *unused)
  */
 int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes)
 {
-	int bytes_written = 0;
+	int bytes_written = 0, i;
 
 	D_ASSERT(bytes > 0);
 
 	if(SPI_IS_TX_OVERWATER()) {
+		//d_printf(D_RAW, "OW!");
 		return 0;
 	}
 
-	do {
-		if(!SPI_IS_TX_FULL()) {
-			XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, (uint8_t)(*pkt));
-			bytes_written++;
-			pkt++;
-			bytes--;
-		} else {
-			break;
+	/*
+	 * We know that we can pack at least (SPI_RESPONSE_PACK_SIZE - 1) bytes into the FIFO as it is
+	 * not overwater.  Anything past this point is a bonus but we need to check the FULL flag for
+	 * each byte we pack.
+	 *
+	 * We need to check for the case where we are transmitting less than (SPI_RESPONSE_PACK_SIZE - 1)
+	 * bytes, but the bulk condition should be unrollable nicely.
+	 */
+	if(bytes < (SPI_RESPONSE_PACK_SIZE - 1)) {
+		return _spi_transmit_fill_fifo(pkt, bytes);
+	} else {
+		for(i = 0; i < (SPI_RESPONSE_PACK_SIZE - 1); i++) {
+			XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, (uint8_t)(*pkt++));
 		}
-	} while(bytes > 0);
 
-	return bytes_written;
+		bytes_written += (SPI_RESPONSE_PACK_SIZE - 1);
+		bytes -= (SPI_RESPONSE_PACK_SIZE - 1);
+
+		if(bytes > 0) {
+			bytes_written += _spi_transmit_fill_fifo(pkt, bytes);
+		}
+
+		return bytes_written;
+	}
 }
 
 /*
@@ -619,6 +603,23 @@ int spi_command_find_free_slot()
 	}
 
 	return -1;
+}
+
+/*
+ * Count the number of commands currently allocated.
+ */
+int spi_command_count_allocated()
+{
+	uint32_t free_mask;
+	unsigned int i;
+	int count = 0;
+
+	for(i = 0; i < SPI_QUEUE_ALLOC_BITMASK_SIZE; i++) {
+		free_mask = g_spi_state.cmd_free_bitmask[i];
+		count += __builtin_popcount(free_mask);
+	}
+
+	return count;
 }
 
 /*
@@ -665,6 +666,8 @@ void spi_command_tick()
 {
 	struct spi_command_alloc_t *cmd;
 
+	d_printf(D_RAW, "%d\r\n", spi_command_count_allocated());
+
 	switch(g_spi_state.proc_state) {
 		case SPIPROC_STATE_UNPACK:
 			if(deque_size(g_spi_state.command_dq) > 0) {
@@ -674,7 +677,7 @@ void spi_command_tick()
 
 			if(g_spi_state.proc_cmd != NULL) {
 				//d_printf(D_INFO, "spi: executing callback for cmd 0x%02x", cmd->cmd);
-				d_printf(D_RAW, "X(0x%02x)", cmd->cmd);
+				//d_printf(D_RAW, "X(0x%02x)", cmd->cmd);
 
 				// If the command has a callback, deal with that.
 				if(g_spi_command_lut[cmd->cmd].cmd_processor != NULL) {
@@ -709,7 +712,7 @@ void spi_command_tick()
 
 				// Free any malloc'd buffer if necessary
 				if(cmd->free_resp_reqd) {
-					d_printf(D_INFO, "spi: freeing response buffer 0x%08x", cmd->resp_data);
+					//d_printf(D_INFO, "spi: freeing response buffer 0x%08x", cmd->resp_data);
 					free(cmd->resp_data);
 				}
 
@@ -720,26 +723,5 @@ void spi_command_tick()
 			// TODO: Should we add a timeout here?
 			break;
 	}
-
-#if 0
-	/*
-	 * See how many entries in the queue are available.  Process each entry.
-	 *
-	 * This is written to be re-entrant for packets with a response.  We spin
-	 * on their readiness flag until the packet response is transmitted entirely.
-	 */
-	while(deque_size(g_spi_state.command_dq) > 0) {
-		// Pop the entry off the queue head
-		deque_remove_first(g_spi_state.command_dq, (void*)&cmd);
-
-		// If the command has a callback, deal with that.
-		if(g_spi_command_lut[cmd->cmd].cmd_processor != NULL) {
-			g_spi_command_lut[cmd->cmd].cmd_processor(&cmd);
-		}
-
-		// Free the alloc from the table making it available for later use
-		spi_command_mark_slot_free(cmd->alloc_idx);
-	}
-#endif
 }
 

@@ -170,10 +170,12 @@
 #define ADC_LANE_L4A				6
 #define ADC_LANE_L4B				7
 
+extern struct acq_state_t g_acq_state;
+
 /*
  * Statistics counters for acquisition engine.
  */
-struct acq_stat_t {
+struct acq_stats_t {
 	uint64_t num_acq_total;				// Total number of acq. completed
 	uint64_t num_pre_total;				// Total number of pre-trigger acq. completed
 	uint64_t num_pre_fill_total;		// Total number of pre-trigger fill acq. completed
@@ -249,11 +251,11 @@ struct acq_state_t {
 	uint32_t dbg_isr_acq_status_a, dbg_isr_acq_status_b, dbg_isr_acq_trig_ptr;
 
 	// Statistics counters
-	struct acq_stat_t stats;
+	struct acq_stats_t stats;
 
 	// Structure used to calculate acquisition rate
 	uint64_t last_debug_timer;
-	struct acq_stat_t stat_last;
+	struct acq_stats_t stat_last;
 
 	// Pointer to the first and current acquisiton buffers.
 	struct acq_buffer_t *acq_first;

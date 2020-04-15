@@ -9,6 +9,7 @@
 
 #include "spi.h"
 #include "spi_commands.h"
+#include "acquire.h"
 
 /*
  * This file contains the list of supported commands.  A look up table is
@@ -16,12 +17,12 @@
  */
 const struct spi_command_def_t spi_command_defs[] = {
 	// ID    SHORT_NAME                  # ARGS   RESP?		CALLBACK
-	{  0x00, "NOP",                      0,       0,		NULL },
+	{  0x00, "NOP",                      0,       0,		NULL }, 			// The only command that doesn't need a checksum
 	{  0x01, "HELLO",                    2,       1,		spicmd_hello },
 	{  0x02, "VERSION",                  0,       1,		spicmd_version },
 	{  0x03, "POWER_STATE",              1,       0,		NULL },
 	{  0x04, "FPGA_HEALTH",              0,       1,		NULL },
-	{  0x05, "DEVICE_STATISTICS",        1,       1,		NULL },
+	{  0x05, "DEVICE_STATISTICS",        1,       1,		spicmd_stats },
 
 	{  0x08, "WAIT_QUEUE",               0,       0,		NULL },
 	{  0x09, "CLEAR_COMMAND_QUEUE",      2,       0,		NULL },
@@ -56,4 +57,21 @@ void spicmd_version(struct spi_command_alloc_t *cmd)
 	spi_command_pack_response_simple(cmd, &g_version_resp, sizeof(g_version_resp));
 }
 
+/*
+ * Statistics command.  Responds with mega-structure of statistics.
+ */
+void spicmd_stats(struct spi_command_alloc_t *cmd)
+{
+	int i;
+	struct spi_cmd_resp_stats_t resp;
+	uint8_t *resp2 = (uint8_t*)&resp;
 
+	resp.spi_stats = g_spi_state.stats;
+	resp.acq_stats = g_acq_state.stats;
+
+	for(i = 0; i < sizeof(resp); i++) {
+		*resp2++ = i;
+	}
+
+	spi_command_pack_response_simple(cmd, &resp, sizeof(struct spi_cmd_resp_stats_t));
+}

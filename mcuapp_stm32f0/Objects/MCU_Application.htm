@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\MCU_Application.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\MCU_Application.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Apr 13 10:47:35 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Tue Apr 14 21:22:30 2020
 <BR><P>
 <H3>Maximum Stack Usage =        376 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2026,6 +2026,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_rapid_power_off
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_power_on
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hmcad151x_init
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
 
 <P><STRONG><a name="[114]"></a>atof</STRONG> (Thumb, 42 bytes, Stack size 24 bytes, atof.o(i.atof))
@@ -2618,17 +2619,17 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> shell_commands.o(.data)
 </UL>
-<P><STRONG><a name="[1f]"></a>scmd_zynq_spi_test</STRONG> (Thumb, 154 bytes, Stack size 24 bytes, zynq_spi.o(i.scmd_zynq_spi_test))
-<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
+<P><STRONG><a name="[1f]"></a>scmd_zynq_spi_test</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, zynq_spi.o(i.scmd_zynq_spi_test))
+<BR><BR>[Stack]<UL><LI>Max Depth = 232 + Unknown Stack Size
 <LI>Call Chain = scmd_zynq_spi_test &rArr; zynq_command_transmit_with_response &rArr; uart_printf &rArr; vsnprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_putsraw
 <LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_flush
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;systick_wait
-<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
+<LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arb_delay
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
+<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_nop
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> shell_commands.o(.data)
 </UL>
@@ -2662,7 +2663,7 @@ Global Symbols
 <LI>Call Chain = shell_iter &rArr; microrl_insert_char &rArr; escape_process &rArr; hist_search &rArr; terminal_print_line &rArr; terminal_reset_cursor &rArr; __2snprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_getchar
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;microrl_insert_char
 </UL>
 <BR>[Called By]<UL><LI><a href="#[156]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shell_run
@@ -2794,14 +2795,13 @@ Global Symbols
 <LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main_psu_power_on
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hmcad151x_init
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adf435x_init
-<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 <LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_adc_walk
 </UL>
 
-<P><STRONG><a name="[16d]"></a>uart_char_is_available</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, hal.o(i.uart_char_is_available))
+<P><STRONG><a name="[16c]"></a>uart_char_is_available</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, hal.o(i.uart_char_is_available))
 <BR><BR>[Called By]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shell_iter
 <LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_flush
-<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
 
@@ -2809,7 +2809,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = uart_flush
 </UL>
 <BR>[Calls]<UL><LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_getchar_nb
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
@@ -2840,7 +2840,7 @@ Global Symbols
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;raspi_power_on
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hmcad151x_init
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adf435x_change_frequency
-<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
 <LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_pwr
 <LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_volts
 <LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_raspi_pwr
@@ -2879,22 +2879,22 @@ Global Symbols
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shell_print_help
 </UL>
 
-<P><STRONG><a name="[16b]"></a>zynq_command_transmit</STRONG> (Thumb, 112 bytes, Stack size 48 bytes, zynq_spi.o(i.zynq_command_transmit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = zynq_command_transmit
+<P><STRONG><a name="[16b]"></a>zynq_command_nop</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, zynq_spi.o(i.zynq_command_nop))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = zynq_command_nop
 </UL>
-<BR>[Calls]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_transmit_no_read_crc_end
+<BR>[Calls]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_byte_txrx
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
 
-<P><STRONG><a name="[16c]"></a>zynq_command_transmit_with_response</STRONG> (Thumb, 140 bytes, Stack size 48 bytes, zynq_spi.o(i.zynq_command_transmit_with_response))
-<BR><BR>[Stack]<UL><LI>Max Depth = 192 + Unknown Stack Size
+<P><STRONG><a name="[16d]"></a>zynq_command_transmit_with_response</STRONG> (Thumb, 256 bytes, Stack size 64 bytes, zynq_spi.o(i.zynq_command_transmit_with_response))
+<BR><BR>[Stack]<UL><LI>Max Depth = 208 + Unknown Stack Size
 <LI>Call Chain = zynq_command_transmit_with_response &rArr; uart_printf &rArr; vsnprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_printf
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
-<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_transmit_no_read_crc_end
-<LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_byte_txrx
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_char_is_available
+<LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_transmit_no_read_crc_end
+<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_spi_byte_txrx
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scmd_zynq_spi_test
 </UL>
@@ -3108,13 +3108,13 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_init
 </UL>
 
-<P><STRONG><a name="[172]"></a>zynq_spi_byte_txrx</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, zynq_spi.o(i.zynq_spi_byte_txrx))
-<BR><BR>[Called By]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
+<P><STRONG><a name="[171]"></a>zynq_spi_byte_txrx</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, zynq_spi.o(i.zynq_spi_byte_txrx))
+<BR><BR>[Called By]<UL><LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
+<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_nop
 </UL>
 
-<P><STRONG><a name="[171]"></a>zynq_spi_transmit_no_read_crc_end</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, zynq_spi.o(i.zynq_spi_transmit_no_read_crc_end))
-<BR><BR>[Called By]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit
+<P><STRONG><a name="[172]"></a>zynq_spi_transmit_no_read_crc_end</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, zynq_spi.o(i.zynq_spi_transmit_no_read_crc_end))
+<BR><BR>[Called By]<UL><LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zynq_command_transmit_with_response
 </UL>
 
 <P><STRONG><a name="[137]"></a>escape_process</STRONG> (Thumb, 236 bytes, Stack size 16 bytes, microrl.o(i.escape_process))

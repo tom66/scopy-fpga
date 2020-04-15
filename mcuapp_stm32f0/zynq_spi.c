@@ -110,6 +110,33 @@ void zynq_spi_init()
 }
 
 /*
+ * Transmit a NOP command (0x00).  NOP does not have a checksum.   Byte
+ * read is returned.
+ */
+uint8_t zynq_command_nop()
+{
+    uint8_t res;
+    int timeout = 10000;
+    
+    // Transmit byte.  Drive CS through transaction.
+    GPIO_FAST_CLR_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    res = zynq_spi_byte_txrx(0x00);
+    
+    __disable_irq();
+    
+    // Wait for the busy flag to clear
+    while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
+    
+    __enable_irq();
+    
+    // Remove drive on CS.
+    GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    
+    return res;
+}
+
+
+/*
  * Transmit a command with 0-16 argument bytes and a CRC8.
  */
 void zynq_command_transmit(uint8_t command, uint8_t nargs, uint8_t *args)
@@ -186,25 +213,23 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
         byte = zynq_spi_byte_txrx(0x00);
         //arb_delay(10);
         
-#if 0
         if(byte == 0xcc) {
-            uart_printf("RX CC\r\n");
             size_1 = zynq_spi_byte_txrx(0x00);
             
-            if(size_1 > 0x80) {
+            if(size_1 >= 0x80) {
                 size_2 = zynq_spi_byte_txrx(0x00);
                 size = ((size_1 - 0x80) << 8) + size_2;
             } else {
                 size = size_1;
             }
             
+            uart_printf("s%d\r\n", size);
             break;
-        } /* else if(byte != 0xff && byte != 0x0f) {
-            uart_printf("Zynq abort 0x%02x\r\n", byte);
+        } else if((byte & 0xf0) == 0xf0) {
+            //uart_printf("Zynq: Abort 0x%02x, size=%d\r\n", byte, size);
             size = 0;
             break;
-        } */
-#endif
+        } 
         
         if(uart_char_is_available()) {
             uart_printf("AbortKey\r\n");
@@ -220,6 +245,9 @@ void zynq_command_transmit_with_response(uint8_t command, uint8_t nargs, uint8_t
     }
     
 early_end:
+    // Wait for the busy flag to clear
+    while((zynq_spi.Instance->SR & SPI_FLAG_BSY) && timeout--) ;
+
     // Remove drive on CS.
     GPIO_FAST_SET_PINDEF(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
     return;
@@ -256,9 +284,22 @@ void scmd_zynq_spi_test()
         state = 0;
         
         for(j = 0; j < 180; j++) {
-            zynq_command_transmit(0x00, 0, NULL);
+            // Wait to read 0x55 back from NOP
+            while(1) {
+                if(zynq_command_nop() == 0x55) {
+                    break;
+                } else {
+                    uart_putsraw("N");
+                }
+                
+                if(uart_char_is_available()) {
+                    run = 0;
+                    break;
+                }
+            }
             
-            zynq_command_transmit_with_response(0x01, 2, (uint8_t*)&test_args);
+            zynq_command_transmit_with_response(0x05, 0, (uint8_t*)&test_args);
+            
             //test_args[0] = i;
             //test_args[1] = i;
             
@@ -276,10 +317,11 @@ void scmd_zynq_spi_test()
                 run = 0;
                 break;
             }
+            
+            arb_delay(100);
         }
         
-        systick_wait(10);
-            
+        //systick_wait(10);
         //arb_delay(400);
     }
     

@@ -38,15 +38,16 @@
 #define SPI_STATE_CHECKSUM				3
 #define SPI_STATE_RESPONSE_WAIT			4
 #define SPI_STATE_RESPONSE_SIZE			5
-#define SPI_STATE_RESPONSE				6
+#define SPI_STATE_RESPONSE_SIZE_EXTRA	6
+#define SPI_STATE_RESPONSE				7
 
 #define SPIPROC_STATE_UNPACK			1
 #define SPIPROC_STATE_SPIN_RESPONSE		2
 
 #define SPI_RESPONSE_1BYTE_MAX			127
-#define SPI_RESPONSE_2BYTE_MAX			32640
-#define SPI_RESPONSE_PACK_SIZE			24								// How many bytes we pack at a time into the TX FIFO
-#define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE)	// 128 byte FIFO - 24 byte pack size
+#define SPI_RESPONSE_2BYTE_MAX			32384
+#define SPI_RESPONSE_PACK_SIZE			24									// How many bytes we pack at a time into the TX FIFO
+#define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE - 1)	// 128 byte FIFO - 24 byte pack size + 1 byte spare
 
 #define SPIRET_OK						0
 #define SPIRET_MEM_ERROR				-1
@@ -54,16 +55,22 @@
 extern struct spi_state_t g_spi_state;
 extern struct spi_version_resp_t g_version_resp;
 
+// TXFULL is HIGH when FIFO is FULL
 #define SPI_IS_TX_FULL()				(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXFULL_MASK))
-#define SPI_IS_TX_OVERWATER()			(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXOW_MASK))
+
+// TXOW signal is HIGH when FIFO has space
+#define SPI_IS_TX_OVERWATER()			(!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXOW_MASK))
 
 #define SPI_RST_CTRL_MASK				0x00000005
 #define SPI_RST_CTRL_REG_SLCR			0xF800021C
 
 #define SPI_SET_RESPONSE(x)				{ g_spi_state.byte_tx = x; g_spi_state.byte_send = 1; }
 
+// Response bytes. Used for debugging and state machine control on command issuer side.
 #define SPI_RESP_NONE					0x00
 #define SPI_RESP_PENDING				0x08
+#define SPI_RESP_PENDING_ARGS			0x18
+#define SPI_RESP_CMD_NOP_READY			0x55
 #define SPI_RESP_NO_RESPONSE			0xa5
 #define SPI_RESP_ABORT_RESPONSE			0xab
 #define SPI_RESP_WAIT_RESPONSE			0xb0
@@ -71,6 +78,8 @@ extern struct spi_version_resp_t g_version_resp;
 #define SPI_RESP_INTERNAL_ERROR			0xfd
 #define SPI_RESP_CRC_ERROR				0xfe
 #define SPI_RESP_CMD_ERROR				0xff
+
+extern struct spi_state_t g_spi_state;
 
 /*
  * Statistics.
@@ -80,6 +89,7 @@ struct spi_stats_t {
 	uint64_t num_bytes_tx_valid;			// Useful transmitted bytes
 	uint64_t num_bytes_rx_valid;			// Read bytes that were valid (state was useful)
 	uint64_t num_command_ok;				// Bytes received that were valid command IDs
+	uint64_t num_command_nop;				// Bytes received that were NOP commands
 	uint64_t num_command_errors;			// Errors that have occurred due to an invalid command in the queue
 	uint64_t num_command_accepted;			// Commands accepted and packed into the queue
 	uint64_t num_command_processed;			// Commands actually processed
@@ -110,14 +120,10 @@ struct spi_command_alloc_t {
 /*
  * This struct stores the state of the command processor and contains
  * pointers to the SPI peripheral.
+ *
+ * Hot and cold reorderine done 14/04/2020.
  */
 struct spi_state_t {
-	XSpiPs spi;
-	XSpiPs_Config *spi_config;
-
-	// Deque for command task list (Collections-C)
-	Deque *command_dq;
-
 	// State of command processor
 	int cmd_state;
 	uint8_t cmd_id;
@@ -127,23 +133,19 @@ struct spi_state_t {
 	int has_response : 1;
 	uint8_t crc;
 
-	// Last command allocated
-	struct spi_command_alloc_t *last_cmd;
-	uint8_t *resp_data_ptr;
-	int resp_bytes;
-
-	// Command being processed by the main thread
-	struct spi_command_alloc_t *proc_cmd;
-	int proc_state;
-
 	// Byte from previous cycle to be transmitted
 	uint8_t byte_tx;
 	int byte_send : 1;
 
-	/*
-	 * Look-up table for CRC calculation.
-	 */
+	// Statistics counters.
+	struct spi_stats_t stats;
+
+	// Look-up table for CRC calculation.
 	uint8_t crc_table[256];
+
+	// SPI controller
+	XSpiPs spi;
+	XSpiPs_Config *spi_config;
 
 	/*
 	 * Allocation table for the command task list.  Commands are packed into the Deque
@@ -155,10 +157,19 @@ struct spi_state_t {
 	struct spi_command_alloc_t cmd_alloc_table[SPI_QUEUE_ALLOC_MAX];
 	int commands_queued;
 
-	/*
-	 * Statistics counters.
-	 */
-	struct spi_stats_t stats;
+	// Last command allocated
+	struct spi_command_alloc_t *last_cmd;
+	uint8_t *resp_data_ptr;
+	int resp_bytes;
+	uint8_t resp_sz2;
+
+	// Deque for command task list (Collections-C)
+	Deque *command_dq;
+
+	// Command being processed by the main thread
+	struct spi_command_alloc_t *proc_cmd;
+	int proc_state;
+
 };
 
 /*
@@ -202,6 +213,7 @@ void spi_crc_lut_gen();
 void spi_command_lut_gen();
 void spi_isr_handler(void *unused);
 int spi_command_find_free_slot();
+int spi_command_count_allocated();
 int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz);
 int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes);
 void spi_command_tick();
@@ -221,6 +233,8 @@ inline uint8_t spi_receive_no_wait()
  */
 inline void spi_transmit_no_wait(uint8_t byte)
 {
+	// Clear TXUF bit if set
+	//REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK);
 	XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
 }
 
@@ -274,6 +288,27 @@ inline void spi_command_mark_slot_occupied(unsigned int slot)
 inline void spi_command_mark_slot_free(unsigned int slot)
 {
 	g_spi_state.cmd_free_bitmask[slot / 32] |= (1 << (slot % 32));
+}
+
+/*
+ * Internal inline block to fill the FIFO for spi_transmit_packet_nonblock(), not recommended
+ * for general use.
+ */
+inline int _spi_transmit_fill_fifo(uint8_t *pkt, uint8_t bytes)
+{
+	int bytes_written = 0, i;
+
+	do {
+		if(!SPI_IS_TX_FULL()) {
+			XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, (uint8_t)(*pkt++));
+			bytes_written++;
+			bytes--;
+		} else {
+			break;
+		}
+	} while(bytes > 0);
+
+	return bytes_written;
 }
 
 #endif // SRC_SPI_H_
