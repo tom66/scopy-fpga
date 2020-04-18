@@ -30,7 +30,7 @@
 
 #define SPI_SHORTEST_MESSAGE			2								// Shortest message is cmd byte + CRC8
 
-#define SPI_CRC8_POLY					0x9b							// P.Koopman, CMU
+#define SPI_CRC8_POLY					0x31							// P.Koopman, CMU.  CRC8-MAXIM
 
 #define SPI_STATE_UNINIT				0
 #define SPI_STATE_CMD_HEADER			1
@@ -51,6 +51,8 @@
 
 #define SPIRET_OK						0
 #define SPIRET_MEM_ERROR				-1
+
+#define SPI_IGNORE_CRC					1
 
 extern struct spi_state_t g_spi_state;
 extern struct spi_version_resp_t g_version_resp;

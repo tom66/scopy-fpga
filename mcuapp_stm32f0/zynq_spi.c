@@ -44,6 +44,7 @@ void zynq_spi_init()
     GPIO_InitTypeDef gpio_init;
     CRC_HandleTypeDef crc_init;
     
+#if 0
     // Configure GPIO for the SPI
     gpio_init.Pin = FPGA_SCLK_3V3_PIN;
     gpio_init.Mode = GPIO_MODE_AF_PP;
@@ -107,6 +108,36 @@ void zynq_spi_init()
     __HAL_SPI_ENABLE(&zynq_spi);
     
     uart_putsraw("spi: initialised\r\n");
+#else
+    gpio_init.Pin = FPGA_SCLK_3V3_PIN;
+    gpio_init.Mode = GPIO_MODE_INPUT;
+    gpio_init.Pull = GPIO_PULLDOWN;
+    gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(FPGA_SCLK_3V3_PORT, &gpio_init);
+
+    gpio_init.Pin = FPGA_MISO_3V3_PIN;
+    gpio_init.Mode = GPIO_MODE_INPUT;
+    gpio_init.Pull = GPIO_PULLDOWN;
+    gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(FPGA_MISO_3V3_PORT, &gpio_init);
+
+    gpio_init.Pin = FPGA_MOSI_3V3_PIN;
+    gpio_init.Mode = GPIO_MODE_INPUT;
+    gpio_init.Pull = GPIO_PULLDOWN;
+    gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(FPGA_MOSI_3V3_PORT, &gpio_init);
+    
+    gpio_set_input(FPGA_CSN_3V3_PORT, FPGA_CSN_3V3_PIN);
+    gpio_set_input(FPGA_PS_IRQ1_PORT, FPGA_PS_IRQ1_PIN);
+    gpio_set_input(FPGA_PS_IRQ2_PORT, FPGA_PS_IRQ2_PIN);
+    gpio_set_input(FPGA_PS_IRQ3_PORT, FPGA_PS_IRQ3_PIN);
+    gpio_set_input(FPGA_PS_IRQ4_PORT, FPGA_PS_IRQ4_PIN);
+    gpio_set_input(FPGA_IRQ1_PORT, FPGA_IRQ1_PIN);
+    gpio_set_input(FPGA_IRQ2_PORT, FPGA_IRQ2_PIN);
+    gpio_set_input(FPGA_IRQ3_PORT, FPGA_IRQ3_PIN);
+
+    uart_putsraw("spi: tristate mode\r\n");
+#endif
 }
 
 /*
