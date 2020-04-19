@@ -40,7 +40,7 @@ const struct spi_command_def_t spi_command_defs[] = {
 };
 
 /*
- * Hello command.  Responds with the first argument byte echoed.
+ * Hello command.  Responds with 55 CC followed by the two argument bytes (echo self test)
  */
 void spicmd_hello(struct spi_command_alloc_t *cmd)
 {

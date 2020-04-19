@@ -41,12 +41,15 @@
 #define SPI_STATE_RESPONSE_SIZE_EXTRA	6
 #define SPI_STATE_RESPONSE				7
 
-#define SPIPROC_STATE_UNPACK			1
-#define SPIPROC_STATE_SPIN_RESPONSE		2
+#define SPIPROC_STATE_DEQUEUE			1
+#define SPIPROC_STATE_EXECUTE			2
+#define SPIPROC_STATE_OUTPUT_RESP_INIT	3
+#define SPIPROC_STATE_OUTPUT_RESP_CONT	4
+#define SPIPROC_STATE_OUTPUT_DONE_WAIT	5
 
 #define SPI_RESPONSE_1BYTE_MAX			127
 #define SPI_RESPONSE_2BYTE_MAX			32384
-#define SPI_RESPONSE_PACK_SIZE			24									// How many bytes we pack at a time into the TX FIFO
+#define SPI_RESPONSE_PACK_SIZE			32									// How many bytes we pack at a time into the TX FIFO
 #define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE - 1)	// 128 byte FIFO - 24 byte pack size + 1 byte spare
 
 #define SPIRET_OK						0
@@ -63,23 +66,23 @@ extern struct spi_version_resp_t g_version_resp;
 // TXOW signal is HIGH when FIFO has space
 #define SPI_IS_TX_OVERWATER()			(!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXOW_MASK))
 
+// TXUF is HIGH when FIFO has underflowed
+#define SPI_IS_TX_UNDERFLOW()			(!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXUF_MASK))
+
+// Clear TXUF bit by writing '1' to it
+#define SPI_CLEAR_TX_UNDERFLOW()		REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK)
+
 #define SPI_RST_CTRL_MASK				0x00000005
 #define SPI_RST_CTRL_REG_SLCR			0xF800021C
 
 #define SPI_SET_RESPONSE(x)				{ g_spi_state.byte_tx = x; g_spi_state.byte_send = 1; }
 
+#define SPI_SCUGIC_ENABLE()				{ XScuGic_Enable(&g_hal.xscu_gic, XPAR_XSPIPS_0_INTR); }
+#define SPI_SCUGIC_DISABLE()			{ XScuGic_Disable(&g_hal.xscu_gic, XPAR_XSPIPS_0_INTR); }
+
 // Response bytes. Used for debugging and state machine control on command issuer side.
 #define SPI_RESP_NONE					0x00
-#define SPI_RESP_PENDING				0x08
-#define SPI_RESP_PENDING_ARGS			0x18
-#define SPI_RESP_CMD_NOP_READY			0x55
-#define SPI_RESP_NO_RESPONSE			0xa5
-#define SPI_RESP_ABORT_RESPONSE			0xab
-#define SPI_RESP_WAIT_RESPONSE			0xb0
-#define SPI_RESP_SIZE_FOLLOWS			0xcc
-#define SPI_RESP_INTERNAL_ERROR			0xfd
-#define SPI_RESP_CRC_ERROR				0xfe
-#define SPI_RESP_CMD_ERROR				0xff
+#define SPI_RESP_SIZE_FOLLOWS			0xf5
 
 extern struct spi_state_t g_spi_state;
 
@@ -133,6 +136,7 @@ struct spi_state_t {
 	int cmd_argpop;
 	int cmd_argidx;
 	int has_response : 1;
+	volatile int resp_done : 1;
 	uint8_t crc;
 
 	// Byte from previous cycle to be transmitted
@@ -162,7 +166,7 @@ struct spi_state_t {
 	// Last command allocated
 	struct spi_command_alloc_t *last_cmd;
 	uint8_t *resp_data_ptr;
-	int resp_bytes;
+	uint16_t resp_bytes;
 	uint8_t resp_sz2;
 
 	// Deque for command task list (Collections-C)
@@ -171,7 +175,6 @@ struct spi_state_t {
 	// Command being processed by the main thread
 	struct spi_command_alloc_t *proc_cmd;
 	int proc_state;
-
 };
 
 /*
@@ -246,11 +249,28 @@ inline void spi_transmit_no_wait(uint8_t byte)
 inline int spi_transmit(uint8_t byte)
 {
 	if(!SPI_IS_TX_FULL()) {
+		/*
+		// If TXUF is set, we need to pack one extra byte due to underflow
+		if(SPI_IS_TX_UNDERFLOW()) {
+			XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
+			SPI_CLEAR_TX_UNDERFLOW();
+		}
+		*/
+
 		XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
+		SPI_CLEAR_TX_UNDERFLOW();
 		return 1;
 	} else {
 		return 0;
 	}
+}
+
+/*
+ * Transmit a byte via the SPI port, blocking until there is space free.
+ */
+inline void spi_transmit_wait_free(uint8_t byte)
+{
+	while(!spi_transmit(byte)) ;
 }
 
 /*
@@ -266,14 +286,6 @@ inline uint32_t spi_read_sr_errata()
 	asm("nop");
 
 	return y;
-}
-
-/*
- * Transmit a byte via the SPI port, blocking until there is space free.
- */
-inline void spi_transmit_wait_free(uint8_t byte)
-{
-	while(!spi_transmit(byte)) ;
 }
 
 /*
