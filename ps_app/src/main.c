@@ -17,6 +17,8 @@
 
 #include "hal.h"
 #include "acquire.h"
+#include "spi.h"
+#include "system_control.h"
 
 //uint8_t src_buffer[16384] __attribute__((aligned(32)));
 //uint8_t dest_buffer[16384] __attribute__((aligned(32)));
@@ -29,12 +31,19 @@ int main()
 
 	hal_init();
 	acq_init();
+	spi_init();
+	sysctrl_init();
 
+	// Run system control main loop;  we never leave that function.
+	sysctrl_main_loop();
+
+	/*
 	d_printf(D_INFO, "Press key to start...");
 	d_waitkey();
 
 	acq_hacks_init();
 	acq_hacks_run();
+	*/
 
     cleanup_platform();
 }

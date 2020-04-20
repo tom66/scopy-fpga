@@ -49,13 +49,16 @@
 
 #define SPI_RESPONSE_1BYTE_MAX			127
 #define SPI_RESPONSE_2BYTE_MAX			32384
-#define SPI_RESPONSE_PACK_SIZE			32									// How many bytes we pack at a time into the TX FIFO
-#define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE - 1)	// 128 byte FIFO - 24 byte pack size + 1 byte spare
+#define SPI_RESPONSE_PACK_SIZE			63									// How many bytes we pack at a time into the TX FIFO
+#define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE - 1)	// 128 byte FIFO - 63 byte pack size - 1 byte spare
 
 #define SPIRET_OK						0
 #define SPIRET_MEM_ERROR				-1
 
 #define SPI_IGNORE_CRC					1
+
+#define SPIENGINE_IDLE					1
+#define SPIENGINE_WORKING				2
 
 extern struct spi_state_t g_spi_state;
 extern struct spi_version_resp_t g_version_resp;
@@ -221,7 +224,7 @@ int spi_command_find_free_slot();
 int spi_command_count_allocated();
 int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz);
 int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes);
-void spi_command_tick();
+int spi_command_tick();
 
 /*
  * Receive a byte via the SPI port (without checking if it is available.)  May return
@@ -323,6 +326,21 @@ inline int _spi_transmit_fill_fifo(uint8_t *pkt, uint8_t bytes)
 	} while(bytes > 0);
 
 	return bytes_written;
+}
+
+/*
+ * Free the buffer associated with a command and deallocate it.
+ */
+inline void spi_command_cleanup(struct spi_command_alloc_t *cmd)
+{
+	D_ASSERT(cmd != NULL);
+	D_ASSERT(cmd->resp_data != NULL);
+
+	cmd->resp_done = 0;
+	cmd->resp_error = 0;
+	cmd->resp_ready = 0;
+	free(cmd->resp_data);
+	cmd->resp_data = NULL;
 }
 
 #endif // SRC_SPI_H_

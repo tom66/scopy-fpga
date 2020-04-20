@@ -27,13 +27,13 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x08, "WAIT_QUEUE",               0,       0,		NULL },
 	{  0x09, "CLEAR_COMMAND_QUEUE",      2,       0,		NULL },
 
-	{  0x10, "ACQ_SETUP_TRIGGERED",      13,      0,		NULL },
-	{  0x11, "ACQ_START",                0,       0,		NULL },
-	{  0x12, "ACQ_STOP",                 0,       0,		NULL },
-	{  0x13, "ACQ_PAUSE",                0,       0,		NULL },
-	{  0x14, "ACQ_STATUS",               0,       1,		NULL },
+	{  0x10, "ACQ_SETUP_TRIGGERED",      13,      0,		spicmd_acq_setup_trigd },
+	{  0x11, "ACQ_START",                1,       0,		spicmd_acq_start },
+	{  0x12, "ACQ_STOP",                 0,       0,		spicmd_acq_stop },
+	{  0x13, "ACQ_PAUSE",                0,       0,		spicmd_acq_pause },
+	{  0x14, "ACQ_STATUS",               0,       1,		spicmd_acq_status },
 	{  0x15, "ACQ_FORCE_TRAIN",          0,       0,		NULL },
-	{  0x16, "ACQ_TRAIN_STATUS",         0,       1,		NULL },
+	{  0x16, "ACQ_STATUS_TRAIN",         0,       1,		NULL },
 
 	// Last command 0xff not supported: end of initialisation table
 	{  0xff, "NULL",					 0,		  0,		NULL },
@@ -70,8 +70,71 @@ void spicmd_stats(struct spi_command_alloc_t *cmd)
 	resp.acq_stats = g_acq_state.stats;
 
 	for(i = 0; i < sizeof(resp); i++) {
-		*resp2++ = i;
+		*resp2++ = 'A' + (i & 31);
 	}
 
 	spi_command_pack_response_simple(cmd, &resp, sizeof(struct spi_cmd_resp_stats_t));
+}
+
+/*
+ * Acquisition triggered setup command.
+ */
+void spicmd_acq_setup_trigd(struct spi_command_alloc_t *cmd)
+{
+	uint32_t wavect, pre_sz, post_sz;
+	uint8_t mode;
+	int status;
+
+	pre_sz = UINT32_UNPACK(cmd, 0);
+	post_sz = UINT32_UNPACK(cmd, 4);
+	mode = cmd->args[9];
+	wavect = UINT32_UNPACK(cmd, 10);
+
+	d_printf(D_INFO, "spi: new acquisition (pre:%d, post:%d, mode:%d, wavect:%d)", pre_sz, post_sz, mode, wavect);
+
+	status = acq_prepare_triggered(mode | ACQ_MODE_TRIGGERED, pre_sz, post_sz, wavect);
+
+	d_printf(D_INFO, "spi: new acquisition status=%d", status);
+}
+
+/*
+ * Start the acquisition.
+ */
+void spicmd_acq_start(struct spi_command_alloc_t *cmd)
+{
+	int status;
+
+	status = acq_start(cmd->args[0] & 0x01);
+
+	if(status != ACQRES_OK) {
+		d_printf(D_ERROR, "spi: acquistion unable to start: %d", status);
+	}
+}
+
+/*
+ * Stop the acquisition.
+ */
+void spicmd_acq_stop(struct spi_command_alloc_t *cmd)
+{
+	int status;
+
+	status = acq_force_stop();
+
+	if(status != ACQRES_OK) {
+		d_printf(D_ERROR, "spi: acquistion unable to stop: %d", status);
+	}
+}
+
+/*
+ * Pause the acquisition.  Not currently implemented.
+ */
+void spicmd_acq_pause(struct spi_command_alloc_t *cmd)
+{
+}
+
+/*
+ * Request status of acquistion.  Not currently implemented.
+ */
+void spicmd_acq_status(struct spi_command_alloc_t *cmd)
+{
 }

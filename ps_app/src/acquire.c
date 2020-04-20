@@ -749,31 +749,21 @@ void acq_dealloc_rewind()
  * and configure the fabric.
  *
  * @param	mode_flags		Mode flags of type ACQ_MODE used to configure the sampling engine.
- *
- * @param	bias_point		This parameter is a positive, negative or zero value:
- * 								- If positive, it is taken as the number of pre-trigger samples
- * 								- If negative, it is taken as the number of post-trigger samples
- * 								- If zero, it configures the pre and post to be equal (1/2 post and 1/2 pre)
- *
- * 							Note that the minimum pre- and post- trigger sizes must be obeyed, and they must be
- * 							appropriately aligned for the sample bit depth.
- *
- * @param	total_sz		Total acquisition size (number of sample groups to acquire e.g. 8 samples per count
- * 							on 8-bit mode.  N.B. This should probably change to pure sample counts...)
- *
+ * @param	pre_sz			Pre trigger buffer size
+ * @param	post_sz			Post trigger buffer size
  * @param	num_acq			Total acquisition count (number of acquisitions to complete)
  */
-int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t total_sz, uint32_t num_acq)
+int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq)
 {
 	struct acq_buffer_t *first;
-	uint32_t pre_sz = 0, post_sz = 0, pre_sampct = 0, post_sampct = 0;
+	uint32_t pre_sampct = 0, post_sampct = 0;
 	uint32_t total_acq_sz;
 	uint32_t align_mask;
 	uint32_t demux;
 	int i, error = 0;
 
 	// How can we acquire an empty buffer of no waveforms?
-	if(num_acq == 0 || total_sz == 0) {
+	if(num_acq == 0 || pre_sz == 0 || post_sz == 0) {
 		return ACQRES_PARAM_FAIL;
 	}
 
@@ -792,6 +782,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 		return ACQRES_PARAM_FAIL;
 	}
 
+#if 0
 	/*
 	 * Compute the pre and post trigger buffer sizes, and verify that everything is
 	 * lined up nicely along the required sample boundaries.
@@ -806,6 +797,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 		post_sz = bias_point;
 		pre_sz = total_sz - post_sz;
 	}
+#endif
 
 	error = 0;
 
@@ -838,22 +830,20 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	}
 
 	if(error) {
-		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary or too small (pre=%d post=%d total_sz=%d req_align_mask=0x%08x test=0x%08x)", \
-				pre_sz, post_sz, total_sz, align_mask, post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD);
+		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary or too small (pre=%d post=%d req_align_mask=0x%08x test=0x%08x)", \
+				pre_sz, post_sz, align_mask, post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD);
 		return ACQRES_ALIGN_FAIL;
 	}
 
 	// Scale total_sz and pre/post sizes, if appropriate
 	if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
 		// 4 samples per readout (64-bit)
-		total_sz *= 4;
 		pre_sampct = pre_sz;
 		post_sampct = post_sz;
 		post_sz *= 4;
 		pre_sz *= 4;
 	} else if(mode_flags & (ACQ_MODE_8BIT)) {
 		// 8 samples per readout (64-bit)
-		total_sz *= 8;
 		pre_sampct = pre_sz;
 		post_sampct = post_sz;
 		post_sz *= 8;
@@ -864,7 +854,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	g_acq_state.post_buffsz = post_sz;
 	g_acq_state.pre_sampct = pre_sampct;
 	g_acq_state.post_sampct = post_sampct;
-	g_acq_state.total_buffsz = total_sz;
+	g_acq_state.total_buffsz = pre_sz + post_sz;
 
 	// If the acquisition is small, set a flag indicating this which will trigger a FIFO reset mode
 	// to maximise performance
@@ -877,7 +867,7 @@ int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t tota
 	 * that's OK, then free any existing buffers and allocate the memory blocks.  Include an
 	 * allocation penalty in our size calculation.
 	 */
-	total_acq_sz = (total_sz + ACQ_BUFFER_ALIGN) * num_acq;
+	total_acq_sz = (g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN) * num_acq;
 
 	if(total_acq_sz > ACQ_TOTAL_MEMORY_AVAIL) {
 		return ACQRES_TOTAL_MALLOC_FAIL;
@@ -1050,7 +1040,6 @@ int acq_force_stop()
 	int error;
 
 	error = XAxiDma_Pause(&g_acq_state.dma);
-	//fabcfg_clear(FAB_CFG_ACQ_CTRL_A, ACQ_CTRL_A_AXI_RUN);
 	_acq_clear_ctrl_a(ACQ_CTRL_A_AXI_RUN);
 
 	if(error != XST_SUCCESS) {
@@ -1059,7 +1048,6 @@ int acq_force_stop()
 	}
 
 	_acq_set_ctrl_a(ACQ_CTRL_A_ABORT);
-	//XGpioPs_WritePin(&g_hal.xgpio_ps, ACQ_EMIO_ABORT, 1);
 
 	g_acq_state.state = ACQSTATE_STOPPED;
 

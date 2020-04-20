@@ -82,14 +82,7 @@ void spi_init()
 	XSpiPs_SetRXWatermark(&g_spi_state.spi, 2);
 	XSpiPs_SetTXWatermark(&g_spi_state.spi, SPI_RESPONSE_PACK_SIZE);
 
-	d_printf(D_WARN, "SpiCR=0x%08x", XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET));
-
-	// Pack some shit into TX FIFO, you know, because why not
-	/*
-	for(i = 0; i < 120; i++) {
-		spi_transmit_no_wait(i);
-	}
-	*/
+	d_printf(D_WARN, "spi: init SpiCR state: 0x%08x", XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_CR_OFFSET));
 
 	// Ensure RX FIFO is completely empty
 	while(spi_read_sr_errata() & XSPIPS_IXR_RXNEMPTY_MASK) {
@@ -159,23 +152,12 @@ void spi_init()
 	g_version_resp.ps_app_id = PS_APP_VERSION_INT;
 	g_version_resp.build_timestamp = 0x00000000; // TBD
 
-	//uint8_t buff1[1] = { test_counter };
-	//uint8_t buff2[1];
-
-	i = 0;
-
 	/*
 	 * Enable SPI interrupts.  Clear initial interrupts.
 	 */
 	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_WR_TO_CLR_MASK);
 	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_IER_OFFSET, XSPIPS_IXR_MODF_MASK | XSPIPS_IXR_TXUF_MASK | XSPIPS_IXR_RXNEMPTY_MASK);
 	SPI_SCUGIC_ENABLE();
-
-	d_printf(D_ERROR, "hanging at SPI processor");
-
-	while(1) {
-		spi_command_tick();
-	}
 }
 
 /*
@@ -251,8 +233,6 @@ void spi_isr_handler(void *unused)
 	int tx_bytes = 0, sent_bytes = 0, slot_idx = 0;
 	struct spi_command_alloc_t *slot;
 
-	gpio_led_write(1, 1);
-
 	/*
 	 * What we do in this ISR is entirely dependent on the state we are in.
 	 *
@@ -267,7 +247,6 @@ void spi_isr_handler(void *unused)
 	 *
 	 * Error states can occur, which will revert the state machine back to the header processing stage.
 	 */
-	//if(spi_read_sr_errata() & XSPIPS_IXR_RXNEMPTY_MASK) {
 	do {
 		g_spi_state.stats.num_bytes_rxtx++;
 		byte_rx = spi_receive_no_wait();
@@ -406,8 +385,6 @@ void spi_isr_handler(void *unused)
 	// Clear other ISR bits
 	REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_WR_TO_CLR_MASK);
 
-	gpio_led_write(1, 0);
-	//gpio_led_write(0, 0);
 }
 
 /*
@@ -501,81 +478,84 @@ int spi_command_count_allocated()
  */
 int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz)
 {
-	// Malloc the response buffer.  This'll be freed by the command tick once the response is done.
-	cmd->resp_data = malloc(respsz);
+	int res;
 
-	//d_printf(D_INFO, "spi: packing response 0x%08x into 0x%08x size:%d", resp, cmd->resp_data, respsz);
+	GLOBAL_IRQ_DISABLE();
+
+	cmd->resp_data = malloc(respsz);  // Malloc the response buffer.  This'll be freed by the command tick once the response is done.
+	cmd->resp_ready = 1;
 
 	if(cmd->resp_data == NULL) {
 		d_printf(D_ERROR, "spi: error allocating %d bytes for command response - response failed", respsz);
 
-		asm("cpsid I"); // Disable interrupts while we update key state
 		cmd->resp_size = 0;
-		cmd->resp_ready = 1;
 		cmd->resp_error = 1;
-		asm("cpsie I"); // Enable interrupts again
 
-		return SPIRET_MEM_ERROR;
+		res = SPIRET_MEM_ERROR;
+	} else {
+		memcpy(cmd->resp_data, resp, respsz);
+
+		cmd->resp_size = respsz;
+		cmd->resp_error = 0;
+		cmd->free_resp_reqd = 1;
+
+		res = SPIRET_OK;
 	}
 
-	memcpy(cmd->resp_data, resp, respsz);
+	GLOBAL_IRQ_ENABLE();
 
-	asm("cpsid I");
-	cmd->resp_size = respsz;
-	cmd->resp_ready = 1;
-	cmd->resp_error = 0;
-	cmd->free_resp_reqd = 1;
-	asm("cpsie I");
-
-	return SPIRET_OK;
+	return res;
 }
 
 /*
  * Process any commands in the command buffer.  Commands that are completed are popped
  * from the buffer.
  */
-void spi_command_tick()
+int spi_command_tick()
 {
-	int i, tx_bytes, sent_bytes;
+	int tx_bytes, sent_bytes, res;
 	struct spi_command_alloc_t *cmd;
+	struct spi_command_alloc_t *proc_cmd = g_spi_state.proc_cmd; // Shorthand
 
-	//d_printf(D_RAW, ".");
+	res = SPIENGINE_IDLE;
 
 	switch(g_spi_state.proc_state) {
 		case SPIPROC_STATE_DEQUEUE:
-			//d_printf(D_RAW, "d");
-
 			if(deque_size(g_spi_state.command_dq) > 0) {
 				deque_remove_first(g_spi_state.command_dq, (void*)&cmd);
 				g_spi_state.proc_cmd = cmd;
 				g_spi_state.proc_state = SPIPROC_STATE_EXECUTE;
+
+				// Tell outer task that we're still busy, while we try to handle this command
+				res = SPIENGINE_WORKING;
 			}
 			break;
 
 		case SPIPROC_STATE_EXECUTE:
-			// Shorthand
-			cmd = g_spi_state.proc_cmd;
-
 			// If the command has a callback, deal with that.
-			gpio_led_write(0, 1);
-			if(g_spi_command_lut[cmd->cmd].cmd_processor != NULL) {
-				g_spi_command_lut[cmd->cmd].cmd_processor(cmd);
+			if(g_spi_command_lut[proc_cmd->cmd].cmd_processor != NULL) {
+				g_spi_command_lut[proc_cmd->cmd].cmd_processor(proc_cmd);
 			}
-			gpio_led_write(0, 0);
 
 			/*
 			 * If the command generated a response then we need to transmit the
 			 * response.  If it didn't, then we free the slot and are done here.
 			 */
-			if(cmd->resp_ready) {
-				g_spi_state.resp_bytes = cmd->resp_size;
-				g_spi_state.resp_data_ptr = cmd->resp_data;
+			if(proc_cmd->resp_ready && !proc_cmd->resp_error) {
+				g_spi_state.resp_bytes = proc_cmd->resp_size;
+				g_spi_state.resp_data_ptr = proc_cmd->resp_data;
 				g_spi_state.proc_state = SPIPROC_STATE_OUTPUT_RESP_INIT;
-				gpio_led_write(0, 1);
+				res = SPIENGINE_WORKING;  // Tell outer task that we're still busy
 			} else {
-				spi_command_mark_slot_free(cmd->alloc_idx);
-				cmd->resp_ready = 0;
-				cmd->resp_done = 0;
+				if(proc_cmd->resp_error) {
+					d_printf(D_WARN, "spi: command idx %d has error", proc_cmd->alloc_idx);
+				}
+
+				spi_command_mark_slot_free(proc_cmd->alloc_idx);
+				spi_command_cleanup(proc_cmd);
+
+				proc_cmd->resp_ready = 0;
+				proc_cmd->resp_done = 0;
 				g_spi_state.proc_cmd = NULL;
 				g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
 			}
@@ -610,7 +590,6 @@ void spi_command_tick()
 			g_spi_state.resp_data_ptr += sent_bytes;
 			g_spi_state.resp_bytes -= sent_bytes;
 
-			gpio_led_write(0, 0);
 			SPI_SCUGIC_ENABLE();
 
 			/*
@@ -620,6 +599,7 @@ void spi_command_tick()
 			 */
 			if(g_spi_state.resp_bytes > 0) {
 				g_spi_state.proc_state = SPIPROC_STATE_OUTPUT_RESP_CONT;
+				res = SPIENGINE_WORKING;  // Tell outer task that we're still busy
 			} else {
 				g_spi_state.proc_state = SPIPROC_STATE_OUTPUT_DONE_WAIT;
 			}
@@ -640,6 +620,9 @@ void spi_command_tick()
 					g_spi_state.proc_state = SPIPROC_STATE_OUTPUT_DONE_WAIT;
 				}
 			}
+
+			// Tell outer task that we're still busy, while we wait for FIFO to empty
+			res = SPIENGINE_WORKING;
 			break;
 
 		case SPIPROC_STATE_OUTPUT_DONE_WAIT:
@@ -647,17 +630,27 @@ void spi_command_tick()
 			 * We have sent the command.  Free the slot, mark the command as done and
 			 * wait for the FIFO to be empty.
 			 */
-			spi_command_mark_slot_free(cmd->alloc_idx);
+			spi_command_mark_slot_free(proc_cmd->alloc_idx);
+			spi_command_cleanup(proc_cmd);
 			g_spi_state.resp_done = 1;
 
-			// Wait for ISR to set state to zero, then we can process another command
-			while(g_spi_state.resp_done) {
-				//d_printf(D_RAW, "*");
-			}
+			/*
+			 * Wait for ISR to set state to zero, then we can process another command;
+			 * this should happen fairly quickly so no need to block here.
+			 */
+			while(g_spi_state.resp_done) ;
 
 			g_spi_state.proc_cmd = NULL;
 			g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
+
+			/*
+			 * Tell outer task that we're still busy, while we wait for command to complete and
+			 * go back to the idle state.
+			 */
+			res = SPIENGINE_WORKING;
 			break;
 	}
+
+	return res;
 }
 

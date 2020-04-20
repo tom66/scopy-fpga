@@ -212,11 +212,6 @@ void hal_init()
 	 * the clock for the MIPI block.
 	 */
 	clkwiz_init(&g_hal.clkwiz_mipi, CLKWIZ_CFG_MIPI, CLKWIZ_CFG_MIPI_REFCLK);
-
-	/*
-	 * Initialise the command SPI port processor.
-	 */
-	spi_init();
 }
 
 /**

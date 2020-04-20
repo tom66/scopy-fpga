@@ -18,6 +18,7 @@ C_SRCS += \
 ../src/platform.c \
 ../src/spi.c \
 ../src/spi_commands.c \
+../src/system_control.c \
 ../src/trigger.c 
 
 OBJS += \
@@ -32,6 +33,7 @@ OBJS += \
 ./src/platform.o \
 ./src/spi.o \
 ./src/spi_commands.o \
+./src/system_control.o \
 ./src/trigger.o 
 
 C_DEPS += \
@@ -46,6 +48,7 @@ C_DEPS += \
 ./src/platform.d \
 ./src/spi.d \
 ./src/spi_commands.d \
+./src/system_control.d \
 ./src/trigger.d 
 
 

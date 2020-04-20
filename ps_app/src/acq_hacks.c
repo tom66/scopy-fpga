@@ -74,7 +74,7 @@ void acq_hacks_run()
 	acq_free_all_alloc();
 
 	// possible to go as low as 1k sampcount, 8k bytes.
-	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, 0, wave_size_counts, n_waves);
+	res = acq_prepare_triggered(ACQ_MODE_8BIT | ACQ_MODE_1CH, wave_size_counts / 2, wave_size_counts / 2, n_waves);
 
 	if(res != ACQRES_OK) {
 		d_printf(D_ERROR, "acq_prepare_triggered error: %d", res);

@@ -93,6 +93,9 @@
 #define REG_MASK_BIT(base, rg, msk)	(Xil_In32((base) + (rg)) & msk)
 #define REG_TEST_BIT(base, rg, msk)	(!!(REG_MASK_BIT(base, rg, msk)))
 
+#define GLOBAL_IRQ_DISABLE()		asm("cpsid I")
+#define GLOBAL_IRQ_ENABLE()			asm("cpsie I")
+
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))
 #define MIN(a,b) 					((a) < (b) ? (a) : (b))

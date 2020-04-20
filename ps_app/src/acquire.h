@@ -283,7 +283,7 @@ int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();
 void acq_dealloc_rewind();
-int acq_prepare_triggered(uint32_t mode_flags, int32_t bias_point, uint32_t acq_total_size, uint32_t num_acq);
+int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq);
 int acq_start(int reset_fifo);
 int acq_force_stop();
 bool acq_is_done();
