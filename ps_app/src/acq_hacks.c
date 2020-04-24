@@ -16,7 +16,7 @@
 extern uint8_t norway_512x512_grey[];
 
 #define N_WAVES			500
-#define N_WAVESIZE		1152
+#define N_WAVESIZE		8192	//	1152
 #define LINE_SIZE		4096
 #define BUFFER_SIZE		(N_WAVES * N_WAVESIZE)
 #define N_CSI_LINES		(BUFFER_SIZE / LINE_SIZE)
@@ -43,6 +43,7 @@ void acq_hacks_run()
 	int trig_level = 0x80;
 	int trig_hyst = 0x04;
 	int trig_edge = TRIG_EDGE_RISING;
+	int acq_abort = 0;
 	int64_t trig_holdoff = 0;
 	int no_key;
 
@@ -101,7 +102,7 @@ void acq_hacks_run()
 	while(1) {
 #ifdef PRETTY_DEBUG
 		if(iter > 10) {
-			d_printf(D_RAW, "\033[2J");
+			//d_printf(D_RAW, "\033[2J");
 			iter = 0;
 		}
 #endif
@@ -129,13 +130,12 @@ void acq_hacks_run()
 		// Wait for acq to be done
 		do {
 #ifdef PRETTY_DEBUG
-			d_printf(D_RAW, "\033[;H");
-			acq_debug_dump();
+			//d_printf(D_RAW, "\033[;H");
+			//acq_debug_dump();
 #endif
 
 			//outbyte('X');
 
-			/*
 			// Check key input, if any
 			no_key = 0;
 
@@ -148,7 +148,8 @@ void acq_hacks_run()
 				case 'Y': trig_hyst += 1; break;
 				case 'H': trig_hyst -= 1; break;
 				case 'O': trig_holdoff += 1000L; break;  // Add 1us holdoff
-				case 'P': trig_holdoff -= 1000L; break;  // Remove 1ums holdoff
+				case 'P': trig_holdoff -= 1000L; break;  // Remove 1us holdoff
+				case 'X': acq_abort = 1; break;
 				default : no_key = 1; break;
 			}
 
@@ -172,6 +173,17 @@ void acq_hacks_run()
 				trig_holdoff = 30000000000L;
 			}
 
+			if(acq_abort) {
+				acq_stop();
+
+				//d_printf(D_WARN, "Press key for debug");
+				d_waitkey();
+
+				//d_printf(D_RAW, "\033[;H");
+				acq_debug_dump();
+				break;
+			}
+
 			if(!no_key) {
 				trig_configure_edge(TRIG_ADCSRC1, trig_level, trig_hyst, trig_edge);
 				//trig_configure_always();
@@ -181,10 +193,16 @@ void acq_hacks_run()
 						(int32_t)(trig_holdoff / 1000L));
 				//trig_dump_state();
 			}
-			*/
-		} while(!acq_is_done());
+		} while(!acq_is_done() && !acq_abort_done());
 
 		d_stop_timing(4);
+
+		if(acq_abort) {
+			d_printf(D_ERROR, "Acquisition is stopped... press any key to resume");
+			d_waitkey();
+			acq_abort = 0;
+			continue;
+		}
 
 		wave_raw_time = d_read_timing_us(4);
 		microsec = wave_raw_time;

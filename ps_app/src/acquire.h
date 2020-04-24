@@ -33,6 +33,7 @@
 #define ACQSTATE_WAIT_TRIG			3								// Waiting for trigger, pre-trigger buffer running
 #define ACQSTATE_RUNNING			4								// Data acquisition in progress
 #define ACQSTATE_DONE				5								// All acquisitions complete
+#define ACQSTATE_ERROR				6								// Error condition occurred: may not be recoverable
 
 #define ACQSUBST_NONE				0								// Sub state machine not running
 #define ACQSUBST_PRE_TRIG_FILL		1								// Gathering first pre-trigger buffer
@@ -70,8 +71,9 @@
 #define ACQ_BUFFER_ALIGN			32								// Required byte alignment for AXI DMA (Must be a power of two)
 #define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
 
-#define ACQRES_WAVE_NOT_READY		-10
-#define ACQRES_WAVE_NOT_FOUND		-9
+#define ACQRES_WAVE_NOT_READY		-11
+#define ACQRES_WAVE_NOT_FOUND		-10
+#define ACQRES_NOT_RUNNING			-9
 #define ACQRES_NOT_STOPPED			-8
 #define ACQRES_NOT_IMPLEMENTED		-7
 #define ACQRES_NOT_INITIALISED		-6
@@ -92,7 +94,7 @@
 #define ACQ_CTRL_A_ABORT			0x00000040
 #define ACQ_CTRL_A_EOF				0x00000080
 #define ACQ_CTRL_A_DATA_VALID		0x00000100
-#define ACQ_CTRL_A_EARLY_TLAST		0x00000800
+#define ACQ_CTRL_A_END_EARLY		0x00000800
 #define ACQ_CTRL_A_ACQ_SUSPEND		0x00010000
 #define ACQ_CTRL_A_POST_TRIG_MODE	0x00020000
 
@@ -170,6 +172,15 @@
 #define ADC_LANE_L4A				6
 #define ADC_LANE_L4B				7
 
+// Acquisition status flags for Pi host
+#define ACQSTA_DONE					0x0001
+#define ACQSTA_ALL_REQUESTED		0x0002
+#define ACQSTA_TRIGD_NORMAL			0x0004
+#define ACQSTA_TRIGD_AUTO			0x0008
+#define ACQSTA_STARTED				0x0010
+#define ACQSTA_STOPPED				0x0020
+#define ACQSTA_INTERNAL_ERROR		0x0040
+
 extern struct acq_state_t g_acq_state;
 
 /*
@@ -208,6 +219,8 @@ struct acq_buffer_t {
 /*
  * The global structure storing all related control variables for the acquisition
  * engine, and the root of the linked list of acquisition buffers.
+ *
+ * TODO: Hot/cold rearrangement for cache performance.
  */
 struct acq_state_t {
 	// States of the acquisition state machine
@@ -220,6 +233,11 @@ struct acq_state_t {
 
 	// Acquisition control flags
 	uint32_t acq_mode_flags;
+
+	// Abort signal:  if this flag is set then an abort of the current acquisition is triggered,
+	// provided the fabric is also ready to stop.
+	int acq_early_abort : 1;
+	int acq_abort_done : 1;
 
 	// Sizes of the acquisition ranges (in bytes) and number of acquisitions to make
 	uint32_t pre_buffsz;
@@ -268,6 +286,17 @@ struct acq_state_t {
 	uint8_t line_train[8];
 };
 
+/*
+ * Acquisition status: returned back to Pi host.
+ *
+ * Do not modify this structure without considering the changes required on
+ * the Pi side first!
+ */
+struct __attribute__ ((packed)) acq_status_resp_t {
+	uint32_t waves_done;
+	uint16_t flags;
+};
+
 extern struct acq_state_t g_acq_state;
 
 void _acq_irq_error_dma(int cause_index);
@@ -285,8 +314,10 @@ void acq_free_all_alloc();
 void acq_dealloc_rewind();
 int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq);
 int acq_start(int reset_fifo);
-int acq_force_stop();
+int acq_stop();
+bool acq_abort_done();
 bool acq_is_done();
+void acq_make_status(struct acq_status_resp_t *status_resp);
 void acq_debug_dump();
 void acq_debug_dump_wave();
 int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);

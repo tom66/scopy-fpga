@@ -34,6 +34,8 @@ int main()
 	spi_init();
 	sysctrl_init();
 
+	acq_hacks_run();
+
 	// Run system control main loop;  we never leave that function.
 	sysctrl_main_loop();
 

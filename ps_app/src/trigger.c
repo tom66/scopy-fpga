@@ -328,3 +328,54 @@ void trig_dump_state()
 
 	//fabcfg_dump_state();
 }
+
+/*
+ * Read the TRIG'D state from the trigger engine and clear the TRIG'D flag if set.
+ * Auto trigger status also returned.
+ *
+ * Returns one of the following results:
+ *   - TRIG_STATUS_TRIGD
+ *   - TRIG_STATUS_AUTO
+ *   - TRIG_STATUS_NONE
+ */
+int trig_has_trigd()
+{
+	int res = TRIG_STATUS_NONE;
+	uint32_t state;
+
+	state = fabcfg_read(FAB_CFG_TRIG_STATE_A);
+
+	// Possible complication: what to do if we get a TRIG'D & AUTO event in same window?
+	if(state & TRIG_STATE_A_TRIGD) {
+		res = TRIG_STATUS_TRIGD;
+	} else if(state & (TRIG_STATE_A_AUTO_TRIGD | TRIG_STATE_A_AUTO_TRIG_REPD)) {
+		res = TRIG_STATUS_AUTO;
+	}
+
+	return res;
+}
+
+/*
+ * Arm the trigger.
+ */
+void trig_arm()
+{
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_ARM);
+}
+
+/*
+ * Disarm the trigger.
+ */
+void trig_disarm()
+{
+	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_ARM);
+}
+
+/*
+ * Force the trigger.  Trigger should be armed.
+ */
+void trig_force()
+{
+	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_FORCE_TRIGGER);
+	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_FORCE_TRIGGER);
+}

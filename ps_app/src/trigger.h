@@ -94,6 +94,10 @@
 #define TRIG_LVL_MAX_PREC					2047
 #define TRIG_LVL_MAX_8B						255
 
+#define TRIG_STATUS_NONE					0
+#define TRIG_STATUS_TRIGD					1
+#define TRIG_STATUS_AUTO					2
+
 #define HOLDOFF_NS_PER_COUNT				8
 #define HOLDOFF_NS_MINIMUM					32											// Min ~8ns
 #define HOLDOFF_NS_MAXIMUM					((0xfffffffc) * HOLDOFF_NS_PER_COUNT)		// Max ~34.35s

@@ -552,7 +552,9 @@ int spi_command_tick()
 				}
 
 				spi_command_mark_slot_free(proc_cmd->alloc_idx);
-				spi_command_cleanup(proc_cmd);
+				if(proc_cmd->resp_data != NULL) {
+					spi_command_cleanup(proc_cmd);
+				}
 
 				proc_cmd->resp_ready = 0;
 				proc_cmd->resp_done = 0;

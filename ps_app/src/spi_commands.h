@@ -43,7 +43,13 @@ void spicmd_stats(struct spi_command_alloc_t *cmd);
 void spicmd_acq_setup_trigd(struct spi_command_alloc_t *cmd);
 void spicmd_acq_start(struct spi_command_alloc_t *cmd);
 void spicmd_acq_stop(struct spi_command_alloc_t *cmd);
-void spicmd_acq_pause(struct spi_command_alloc_t *cmd);
+void spicmd_acq_rewind(struct spi_command_alloc_t *cmd);
 void spicmd_acq_status(struct spi_command_alloc_t *cmd);
+
+void spicmd_trig_configure_edge(struct spi_command_alloc_t *cmd);
+void spicmd_trig_configure_always(struct spi_command_alloc_t *cmd);
+void spicmd_trig_force(struct spi_command_alloc_t *cmd);
+void spicmd_trig_disarm(struct spi_command_alloc_t *cmd);
+void spicmd_trig_arm(struct spi_command_alloc_t *cmd);
 
 #endif // SRC_SPI_COMMANDS_H_

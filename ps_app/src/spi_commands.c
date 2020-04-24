@@ -10,6 +10,7 @@
 #include "spi.h"
 #include "spi_commands.h"
 #include "acquire.h"
+#include "trigger.h"
 
 /*
  * This file contains the list of supported commands.  A look up table is
@@ -30,13 +31,31 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x10, "ACQ_SETUP_TRIGGERED",      13,      0,		spicmd_acq_setup_trigd },
 	{  0x11, "ACQ_START",                1,       0,		spicmd_acq_start },
 	{  0x12, "ACQ_STOP",                 0,       0,		spicmd_acq_stop },
-	{  0x13, "ACQ_PAUSE",                0,       0,		spicmd_acq_pause },
+	{  0x13, "ACQ_REWIND",               0,       0,		spicmd_acq_rewind },
 	{  0x14, "ACQ_STATUS",               0,       1,		spicmd_acq_status },
 	{  0x15, "ACQ_FORCE_TRAIN",          0,       0,		NULL },
 	{  0x16, "ACQ_STATUS_TRAIN",         0,       1,		NULL },
 
-	// Last command 0xff not supported: end of initialisation table
-	{  0xff, "NULL",					 0,		  0,		NULL },
+	{  0x30, "TRIG_CONFIGURE_HOLDOFF",   8,       0,        NULL },
+	{  0x31, "TRIG_CONFIGURE_SETTINGS",  1,       0,        NULL },
+	{  0x32, "TRIG_CONFIGURE_EDGE",      6,       0,        spicmd_trig_configure_edge },
+	{  0x33, "TRIG_CONFIGURE_ALWAYS",    0,       0,        spicmd_trig_configure_always },
+
+	{  0x3c, "TRIG_WRITE_TIMER",         0,       0,        NULL },
+	{  0x3d, "TRIG_FORCE",               0,       0,        spicmd_trig_force },
+	{  0x3e, "TRIG_ARM",                 0,       0,        spicmd_trig_arm },
+	{  0x3f, "TRIG_DISARM",              0,       0,        spicmd_trig_disarm },
+
+	{  0x60, "CSI_SETUP_ADDR_RANGE",     8,       0,        NULL },
+	{  0x61, "CSI_SETUP_WAVE_RANGE",     8,       0,        NULL },
+	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        NULL },
+	{  0x63, "CSI_SETUP_TRIGPOS_DATA",   8,       0,        NULL },
+	{  0x63, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        NULL },
+
+	{  0x68, "CSI_SETUP_TESTPATT",       1,       0,        NULL },
+
+	// Last command 0xff is required to be a NOP (marks end of table)
+	{  0xff, "NOP",					     0,		  0,		NULL },
 };
 
 /*
@@ -54,6 +73,7 @@ void spicmd_hello(struct spi_command_alloc_t *cmd)
  */
 void spicmd_version(struct spi_command_alloc_t *cmd)
 {
+	//d_printf(D_RAW, "version");
 	spi_command_pack_response_simple(cmd, &g_version_resp, sizeof(g_version_resp));
 }
 
@@ -87,12 +107,12 @@ void spicmd_acq_setup_trigd(struct spi_command_alloc_t *cmd)
 
 	pre_sz = UINT32_UNPACK(cmd, 0);
 	post_sz = UINT32_UNPACK(cmd, 4);
-	mode = cmd->args[9];
-	wavect = UINT32_UNPACK(cmd, 10);
+	wavect = UINT32_UNPACK(cmd, 8);
+	mode = cmd->args[12];
 
-	d_printf(D_INFO, "spi: new acquisition (pre:%d, post:%d, mode:%d, wavect:%d)", pre_sz, post_sz, mode, wavect);
+	d_printf(D_INFO, "spi: new acquisition (pre:%d, post:%d, mode:0x%02x, wavect:%d)", pre_sz, post_sz, mode, wavect);
 
-	status = acq_prepare_triggered(mode | ACQ_MODE_TRIGGERED, pre_sz, post_sz, wavect);
+	status = acq_prepare_triggered(mode, pre_sz, post_sz, wavect);
 
 	d_printf(D_INFO, "spi: new acquisition status=%d", status);
 }
@@ -118,23 +138,81 @@ void spicmd_acq_stop(struct spi_command_alloc_t *cmd)
 {
 	int status;
 
-	status = acq_force_stop();
+	status = acq_stop();
 
 	if(status != ACQRES_OK) {
 		d_printf(D_ERROR, "spi: acquistion unable to stop: %d", status);
 	}
+
+	//d_printf(D_INFO, "stop");
 }
 
 /*
- * Pause the acquisition.  Not currently implemented.
+ * Rewind the acquisition buffer, preparing to reacquire based on existing settings.
  */
-void spicmd_acq_pause(struct spi_command_alloc_t *cmd)
+void spicmd_acq_rewind(struct spi_command_alloc_t *cmd)
 {
+	acq_dealloc_rewind();
 }
 
 /*
- * Request status of acquistion.  Not currently implemented.
+ * Request status of acquistion.
  */
 void spicmd_acq_status(struct spi_command_alloc_t *cmd)
 {
+	struct acq_status_resp_t status_resp;
+
+	acq_make_status(&status_resp);
+	spi_command_pack_response_simple(cmd, &status_resp, sizeof(struct acq_status_resp_t));
+
+	//acq_debug_dump();
+	//d_printf(D_INFO, "status");
+}
+
+/*
+ * Configure the edge trigger.
+ */
+void spicmd_trig_configure_edge(struct spi_command_alloc_t *cmd)
+{
+	uint8_t ch, edge;
+	uint16_t lvl, hyst;
+
+	ch = cmd->args[0];
+	edge = cmd->args[1];
+	lvl = UINT16_UNPACK(cmd, 2);
+	hyst = UINT16_UNPACK(cmd, 4);
+
+	trig_configure_edge(ch, lvl, hyst, edge);
+}
+
+/*
+ * Configure the always trigger.
+ */
+void spicmd_trig_configure_always(struct spi_command_alloc_t *cmd)
+{
+	trig_configure_always();
+}
+
+/*
+ * Force a trigger.
+ */
+void spicmd_trig_force(struct spi_command_alloc_t *cmd)
+{
+	trig_force();
+}
+
+/*
+ * Arm the trigger.
+ */
+void spicmd_trig_arm(struct spi_command_alloc_t *cmd)
+{
+	trig_arm();
+}
+
+/*
+ * Disarm the trigger.
+ */
+void spicmd_trig_disarm(struct spi_command_alloc_t *cmd)
+{
+	trig_disarm();
 }

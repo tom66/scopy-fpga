@@ -1,21 +1,21 @@
-21:42:33 **** Incremental Build of configuration Release for project ps_app ****
+08:12:32 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
 make --no-print-directory main-build
-'Building file: ../src/system_control.c'
+'Building file: ../src/acquire.c'
 'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -I"../.\src\Collections-C\src\include" -c -fmessage-length=0 -MT"src/system_control.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -MMD -MP -MF"src/system_control.d" -MT"src/system_control.o" -o "src/system_control.o" "../src/system_control.c"
+arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -I"../.\src\Collections-C\src\include" -c -fmessage-length=0 -MT"src/acquire.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -MMD -MP -MF"src/acquire.d" -MT"src/acquire.o" -o "src/acquire.o" "../src/acquire.c"
 In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:114,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
                  from ../src/hal.h:32,
-                 from ../src/system_control.c:10:
+                 from ../src/acquire.c:23:
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:12:2: warning: #warning DEBUG is enabled [-Wcpp]
  #warning DEBUG is enabled
   ^~~~~~~
-In file included from ../src/system_control.c:10:
+In file included from ../src/acquire.c:23:
 ../src/hal.h: In function 'emio_fast_read':
 ../src/hal.h:216:12: warning: variable 'reg' set but not used [-Wunused-but-set-variable]
   uint32_t *reg;
@@ -23,128 +23,106 @@ In file included from ../src/system_control.c:10:
 ../src/hal.h:215:11: warning: unused variable 'read' [-Wunused-variable]
   uint32_t read;
            ^~~~
-In file included from ../src/system_control.c:11:
-../src/spi.h: In function 'spi_read_sr_errata':
-../src/spi.h:284:11: warning: variable 'x' set but not used [-Wunused-but-set-variable]
-  uint32_t x, y;
-           ^
-../src/spi.h: In function '_spi_transmit_fill_fifo':
-../src/spi.h:316:25: warning: unused variable 'i' [-Wunused-variable]
-  int bytes_written = 0, i;
-                         ^
-../src/system_control.c: In function 'sysctrl_init':
-../src/system_control.c:38:6: warning: unused variable 'error' [-Wunused-variable]
-  int error;
+../src/acquire.c: In function '_acq_irq_rx_handler':
+../src/acquire.c:51:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+../src/acquire.c: In function '_acq_irq_fifo_gen_rst':
+../src/acquire.c:384:6: warning: unused variable 'i' [-Wunused-variable]
+  int i;
+      ^
+../src/acquire.c:383:28: warning: variable 'stat_b' set but not used [-Wunused-but-set-variable]
+  volatile uint32_t stat_a, stat_b;
+                            ^~~~~~
+../src/acquire.c:383:20: warning: variable 'stat_a' set but not used [-Wunused-but-set-variable]
+  volatile uint32_t stat_a, stat_b;
+                    ^~~~~~
+../src/acquire.c: In function '_acq_reset_trigger':
+../src/acquire.c:482:15: warning: unused variable 'i' [-Wunused-variable]
+  volatile int i;
+               ^
+In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:112,
+                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
+                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
+                 from ../src/hal.h:32,
+                 from ../src/acquire.c:23:
+../src/acquire.c: In function '_acq_fast_dma_start':
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_hw.h:333:48: warning: passing argument 2 of 'Xil_Out32' makes integer from pointer without a cast [-Wint-conversion]
+     XAxiDma_Out32((BaseAddress) + (RegOffset), (Data))
+                                                ^~~~~~
+../src/acquire.c:505:2: note: in expansion of macro 'XAxiDma_WriteReg'
+  XAxiDma_WriteReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_DESTADDR_OFFSET, buff_ptr);
+  ^~~~~~~~~~~~~~~~
+In file included from ../src/hal.h:28,
+                 from ../src/acquire.c:23:
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h:217:48: note: expected 'u32' {aka 'long unsigned int'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+ static INLINE void Xil_Out32(UINTPTR Addr, u32 Value)
+                                            ~~~~^~~~~
+In file included from ../src/acquire.c:24:
+../src/acquire.h:85:23: warning: 'return' with a value, in function returning void
+ #define ACQRES_OK     0
+                       ^
+../src/acquire.c:514:9: note: in expansion of macro 'ACQRES_OK'
+  return ACQRES_OK;
+         ^~~~~~~~~
+../src/acquire.c:503:6: note: declared here
+ void _acq_fast_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
+      ^~~~~~~~~~~~~~~~~~~
+../src/acquire.c: In function 'acq_start':
+../src/acquire.c:1049:31: warning: passing argument 1 of '_acq_core_dma_start' makes pointer from integer without a cast [-Wint-conversion]
+   error = _acq_core_dma_start((uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz);
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/acquire.c:524:35: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'long unsigned int'
+ int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
+                         ~~~~~~~~~~^~~~~~~~
+../src/acquire.c: In function 'acq_get_ll_pointer':
+../src/acquire.c:1300:3: warning: multi-line comment [-Wcomment]
+   //d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x, trigger_at:0x%08x %d)", \
+   ^
+../src/acquire.c: In function 'acq_debug_dump_wave':
+../src/acquire.c:1376:14: warning: assignment to 'uint32_t' {aka 'long unsigned int'} from 'uint32_t *' {aka 'long unsigned int *'} makes integer from pointer without a cast [-Wint-conversion]
+   addr_start = wave->buff_acq; // + (wave->trigger_at * 8);
+              ^
+../src/acquire.c:1329:6: warning: unused variable 'first' [-Wunused-variable]
+  int first, i;
       ^~~~~
-../src/system_control.c: In function 'sysctrl_tick_irq':
-../src/system_control.c:79:11: warning: variable 'status' set but not used [-Wunused-but-set-variable]
-  uint32_t status;
-           ^~~~~~
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips.h:270,
-                 from ../src/spi.h:18,
-                 from ../src/system_control.c:11:
-../src/system_control.c: At top level:
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:258:22: warning: 'Xil_Out32' is static but used in inline function '_spi_transmit_fill_fifo' which is not static
- #define XSpiPs_Out32 Xil_Out32
-                      ^~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:294:5: note: in expansion of macro 'XSpiPs_Out32'
-     XSpiPs_Out32((BaseAddress) + (RegOffset), (RegisterValue))
-     ^~~~~~~~~~~~
-../src/spi.h:320:4: note: in expansion of macro 'XSpiPs_WriteReg'
-    XSpiPs_WriteReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_TXD_OFFSET, (uint8_t)(*pkt++));
-    ^~~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:257:21: warning: 'Xil_In32' is static but used in inline function '_spi_transmit_fill_fifo' which is not static
- #define XSpiPs_In32 Xil_In32
-                     ^~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:275:2: note: in expansion of macro 'XSpiPs_In32'
-  XSpiPs_In32((BaseAddress) + (RegOffset))
-  ^~~~~~~~~~~
-../src/spi.h:67:33: note: in expansion of macro 'XSpiPs_ReadReg'
- #define SPI_IS_TX_FULL()    (!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXFULL_MASK))
-                                 ^~~~~~~~~~~~~~
-../src/spi.h:319:7: note: in expansion of macro 'SPI_IS_TX_FULL'
-   if(!SPI_IS_TX_FULL()) {
-       ^~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:257:21: warning: 'Xil_In32' is static but used in inline function 'spi_read_sr_errata' which is not static
- #define XSpiPs_In32 Xil_In32
-                     ^~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:275:2: note: in expansion of macro 'XSpiPs_In32'
-  XSpiPs_In32((BaseAddress) + (RegOffset))
-  ^~~~~~~~~~~
-../src/spi.h:288:6: note: in expansion of macro 'XSpiPs_ReadReg'
-  y = XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET);
-      ^~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:257:21: warning: 'Xil_In32' is static but used in inline function 'spi_read_sr_errata' which is not static
- #define XSpiPs_In32 Xil_In32
-                     ^~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:275:2: note: in expansion of macro 'XSpiPs_In32'
-  XSpiPs_In32((BaseAddress) + (RegOffset))
-  ^~~~~~~~~~~
-../src/spi.h:286:6: note: in expansion of macro 'XSpiPs_ReadReg'
-  x = XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET);
-      ^~~~~~~~~~~~~~
-In file included from ../src/system_control.c:10:
-../src/hal.h:89:61: warning: 'Xil_In32' is static but used in inline function 'spi_transmit' which is not static
- #define REG_SET_BIT(base, rg, msk) Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) | (msk))
-                                                             ^~~~~~~~
-../src/spi.h:76:35: note: in expansion of macro 'REG_SET_BIT'
- #define SPI_CLEAR_TX_UNDERFLOW()  REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK)
-                                   ^~~~~~~~~~~
-../src/spi.h:264:3: note: in expansion of macro 'SPI_CLEAR_TX_UNDERFLOW'
-   SPI_CLEAR_TX_UNDERFLOW();
-   ^~~~~~~~~~~~~~~~~~~~~~
-../src/hal.h:89:36: warning: 'Xil_Out32' is static but used in inline function 'spi_transmit' which is not static
- #define REG_SET_BIT(base, rg, msk) Xil_Out32((base) + (rg), Xil_In32((base) + (rg)) | (msk))
-                                    ^~~~~~~~~
-../src/spi.h:76:35: note: in expansion of macro 'REG_SET_BIT'
- #define SPI_CLEAR_TX_UNDERFLOW()  REG_SET_BIT(g_spi_state.spi_config->BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_TXUF_MASK)
-                                   ^~~~~~~~~~~
-../src/spi.h:264:3: note: in expansion of macro 'SPI_CLEAR_TX_UNDERFLOW'
-   SPI_CLEAR_TX_UNDERFLOW();
-   ^~~~~~~~~~~~~~~~~~~~~~
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips.h:270,
-                 from ../src/spi.h:18,
-                 from ../src/system_control.c:11:
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:258:22: warning: 'Xil_Out32' is static but used in inline function 'spi_transmit' which is not static
- #define XSpiPs_Out32 Xil_Out32
-                      ^~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:294:5: note: in expansion of macro 'XSpiPs_Out32'
-     XSpiPs_Out32((BaseAddress) + (RegOffset), (RegisterValue))
-     ^~~~~~~~~~~~
-../src/spi.h:263:3: note: in expansion of macro 'XSpiPs_WriteReg'
-   XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
-   ^~~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:257:21: warning: 'Xil_In32' is static but used in inline function 'spi_transmit' which is not static
- #define XSpiPs_In32 Xil_In32
-                     ^~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:275:2: note: in expansion of macro 'XSpiPs_In32'
-  XSpiPs_In32((BaseAddress) + (RegOffset))
-  ^~~~~~~~~~~
-../src/spi.h:67:33: note: in expansion of macro 'XSpiPs_ReadReg'
- #define SPI_IS_TX_FULL()    (!!(XSpiPs_ReadReg(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET) & XSPIPS_IXR_TXFULL_MASK))
-                                 ^~~~~~~~~~~~~~
-../src/spi.h:254:6: note: in expansion of macro 'SPI_IS_TX_FULL'
-  if(!SPI_IS_TX_FULL()) {
-      ^~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:258:22: warning: 'Xil_Out32' is static but used in inline function 'spi_transmit_no_wait' which is not static
- #define XSpiPs_Out32 Xil_Out32
-                      ^~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:294:5: note: in expansion of macro 'XSpiPs_Out32'
-     XSpiPs_Out32((BaseAddress) + (RegOffset), (RegisterValue))
-     ^~~~~~~~~~~~
-../src/spi.h:246:2: note: in expansion of macro 'XSpiPs_WriteReg'
-  XSpiPs_WriteReg(g_spi_state.spi_config->BaseAddress, XSPIPS_TXD_OFFSET, byte);
-  ^~~~~~~~~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:257:21: warning: 'Xil_In32' is static but used in inline function 'spi_receive_no_wait' which is not static
- #define XSpiPs_In32 Xil_In32
-                     ^~~~~~~~
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:275:2: note: in expansion of macro 'XSpiPs_In32'
-  XSpiPs_In32((BaseAddress) + (RegOffset))
-  ^~~~~~~~~~~
-../src/spi.h:235:9: note: in expansion of macro 'XSpiPs_ReadReg'
-  return XSpiPs_ReadReg(g_spi_state.spi_config->BaseAddress, XSPIPS_RXD_OFFSET);
-         ^~~~~~~~~~~~~~
-'Finished building: ../src/system_control.c'
+../src/acquire.c:1328:12: warning: unused variable 'deref' [-Wunused-variable]
+  uint32_t *deref;
+            ^~~~~
+../src/acquire.c:1327:12: warning: unused variable 'addr2' [-Wunused-variable]
+  uint32_t *addr2;
+            ^~~~~
+../src/acquire.c:1326:45: warning: unused variable 'sz' [-Wunused-variable]
+  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+                                             ^~
+../src/acquire.c:1326:39: warning: unused variable 'offs' [-Wunused-variable]
+  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+                                       ^~~~
+../src/acquire.c:1326:29: warning: unused variable 'addr_end' [-Wunused-variable]
+  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+                             ^~~~~~~~
+../src/acquire.c:1326:17: warning: variable 'addr_start' set but not used [-Wunused-but-set-variable]
+  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+                 ^~~~~~~~~~
+../src/acquire.c:1326:11: warning: unused variable 'addr' [-Wunused-variable]
+  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+           ^~~~
+../src/acquire.c: In function 'acq_copy_slow_mipi':
+../src/acquire.c:1462:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+../src/acquire.c: In function 'acq_debug_dump':
+../src/acquire.c:1246:2: warning: 'time_delta_us' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  d_printf(D_INFO, "Debug delta           = %d us                   ", (int)time_delta_us);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/acquire.c:1257:31: warning: 'timer_value' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  g_acq_state.last_debug_timer = timer_value;
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+../src/acquire.c: In function 'acq_debug_dump_wave':
+../src/acquire.c:1385:3: warning: 'end_post' may be used uninitialized in this function [-Wmaybe-uninitialized]
+   d_printf(D_INFO, "sz=%d, start=%d, end_post=%d", end, start, end_post);
+   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'Finished building: ../src/acquire.c'
 ' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
@@ -160,7 +138,7 @@ gcc version 8.2.0 (GCC)
 COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
 LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
- g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccCngypi.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccckB41U.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
 'Finished building target: ps_app.elf'
 ' '
@@ -171,9 +149,9 @@ arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
- 438304	   3696	202030288	202472288	c117b60	ps_app.elf
+ 441184	   3704	205550288	205995176	c473ca8	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '
 
-21:42:34 Build Finished (took 1s.408ms)
+08:12:35 Build Finished (took 3s.356ms)
 

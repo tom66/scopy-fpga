@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Sun Apr 12 09:01:23 2020
+//Date        : Thu Apr 23 22:54:50 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=37,numReposBlks=26,numNonXlnxBlks=0,numHierBlks=11,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"=1,\"\"\"da_axi4_cnt\"\"\"=1,\"\"\"da_clkrst_cnt\"\"\"=2,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=37,numReposBlks=26,numNonXlnxBlks=0,numHierBlks=11,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"=1,\"\"\"\"\"\"da_axi4_cnt\"\"\"\"\"\"=1,\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"=2,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (ADC_FCLK_N,
     ADC_FCLK_P,
@@ -254,6 +254,7 @@ module design_1
   wire adc_axi_streamer_dbg_acq_axi_run;
   wire adc_axi_streamer_dbg_acq_axi_running;
   wire adc_axi_streamer_dbg_acq_depth_mux;
+  wire adc_axi_streamer_dbg_acq_end_early;
   wire adc_axi_streamer_dbg_acq_fifo_full_data_loss;
   wire adc_axi_streamer_dbg_acq_fifo_reset;
   wire adc_axi_streamer_dbg_acq_have_trig;
@@ -450,44 +451,44 @@ module design_1
   wire [0:0]xlconstant_2_dout;
   wire [0:0]xlconstant_3_dout;
   wire [0:0]xlconstant_4_dout;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARADDR" *) (* DONT_TOUCH *) wire [31:0]zynq_ps_M_AXI_GP0_ARADDR;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARBURST" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_ARBURST;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARCACHE" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_ARCACHE;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARID" *) (* DONT_TOUCH *) wire [11:0]zynq_ps_M_AXI_GP0_ARID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARLEN" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_ARLEN;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARLOCK" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_ARLOCK;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARPROT" *) (* DONT_TOUCH *) wire [2:0]zynq_ps_M_AXI_GP0_ARPROT;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARQOS" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_ARQOS;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARREADY" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_ARREADY;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARSIZE" *) (* DONT_TOUCH *) wire [2:0]zynq_ps_M_AXI_GP0_ARSIZE;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 ARVALID" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_ARVALID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWADDR" *) (* DONT_TOUCH *) wire [31:0]zynq_ps_M_AXI_GP0_AWADDR;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWBURST" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_AWBURST;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWCACHE" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_AWCACHE;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWID" *) (* DONT_TOUCH *) wire [11:0]zynq_ps_M_AXI_GP0_AWID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWLEN" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_AWLEN;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWLOCK" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_AWLOCK;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWPROT" *) (* DONT_TOUCH *) wire [2:0]zynq_ps_M_AXI_GP0_AWPROT;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWQOS" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_AWQOS;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWREADY" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_AWREADY;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWSIZE" *) (* DONT_TOUCH *) wire [2:0]zynq_ps_M_AXI_GP0_AWSIZE;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 AWVALID" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_AWVALID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 BID" *) (* DONT_TOUCH *) wire [11:0]zynq_ps_M_AXI_GP0_BID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 BREADY" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_BREADY;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 BRESP" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_BRESP;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 BVALID" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_BVALID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RDATA" *) (* DONT_TOUCH *) wire [31:0]zynq_ps_M_AXI_GP0_RDATA;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RID" *) (* DONT_TOUCH *) wire [11:0]zynq_ps_M_AXI_GP0_RID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RLAST" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_RLAST;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RREADY" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_RREADY;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RRESP" *) (* DONT_TOUCH *) wire [1:0]zynq_ps_M_AXI_GP0_RRESP;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 RVALID" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_RVALID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WDATA" *) (* DONT_TOUCH *) wire [31:0]zynq_ps_M_AXI_GP0_WDATA;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WID" *) (* DONT_TOUCH *) wire [11:0]zynq_ps_M_AXI_GP0_WID;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WLAST" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_WLAST;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WREADY" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_WREADY;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WSTRB" *) (* DONT_TOUCH *) wire [3:0]zynq_ps_M_AXI_GP0_WSTRB;
-  (* CONN_BUS_INFO = "zynq_ps_M_AXI_GP0 xilinx.com:interface:aximm:1.0 AXI3 WVALID" *) (* DONT_TOUCH *) wire zynq_ps_M_AXI_GP0_WVALID;
+  wire [31:0]zynq_ps_M_AXI_GP0_ARADDR;
+  wire [1:0]zynq_ps_M_AXI_GP0_ARBURST;
+  wire [3:0]zynq_ps_M_AXI_GP0_ARCACHE;
+  wire [11:0]zynq_ps_M_AXI_GP0_ARID;
+  wire [3:0]zynq_ps_M_AXI_GP0_ARLEN;
+  wire [1:0]zynq_ps_M_AXI_GP0_ARLOCK;
+  wire [2:0]zynq_ps_M_AXI_GP0_ARPROT;
+  wire [3:0]zynq_ps_M_AXI_GP0_ARQOS;
+  wire zynq_ps_M_AXI_GP0_ARREADY;
+  wire [2:0]zynq_ps_M_AXI_GP0_ARSIZE;
+  wire zynq_ps_M_AXI_GP0_ARVALID;
+  wire [31:0]zynq_ps_M_AXI_GP0_AWADDR;
+  wire [1:0]zynq_ps_M_AXI_GP0_AWBURST;
+  wire [3:0]zynq_ps_M_AXI_GP0_AWCACHE;
+  wire [11:0]zynq_ps_M_AXI_GP0_AWID;
+  wire [3:0]zynq_ps_M_AXI_GP0_AWLEN;
+  wire [1:0]zynq_ps_M_AXI_GP0_AWLOCK;
+  wire [2:0]zynq_ps_M_AXI_GP0_AWPROT;
+  wire [3:0]zynq_ps_M_AXI_GP0_AWQOS;
+  wire zynq_ps_M_AXI_GP0_AWREADY;
+  wire [2:0]zynq_ps_M_AXI_GP0_AWSIZE;
+  wire zynq_ps_M_AXI_GP0_AWVALID;
+  wire [11:0]zynq_ps_M_AXI_GP0_BID;
+  wire zynq_ps_M_AXI_GP0_BREADY;
+  wire [1:0]zynq_ps_M_AXI_GP0_BRESP;
+  wire zynq_ps_M_AXI_GP0_BVALID;
+  wire [31:0]zynq_ps_M_AXI_GP0_RDATA;
+  wire [11:0]zynq_ps_M_AXI_GP0_RID;
+  wire zynq_ps_M_AXI_GP0_RLAST;
+  wire zynq_ps_M_AXI_GP0_RREADY;
+  wire [1:0]zynq_ps_M_AXI_GP0_RRESP;
+  wire zynq_ps_M_AXI_GP0_RVALID;
+  wire [31:0]zynq_ps_M_AXI_GP0_WDATA;
+  wire [11:0]zynq_ps_M_AXI_GP0_WID;
+  wire zynq_ps_M_AXI_GP0_WLAST;
+  wire zynq_ps_M_AXI_GP0_WREADY;
+  wire [3:0]zynq_ps_M_AXI_GP0_WSTRB;
+  wire zynq_ps_M_AXI_GP0_WVALID;
   wire zynq_ps_SPI0_MISO_O;
   wire zynq_ps_SPI0_MISO_T;
 
@@ -615,6 +616,7 @@ module design_1
         .dbg_acq_axi_run(adc_axi_streamer_dbg_acq_axi_run),
         .dbg_acq_axi_running(adc_axi_streamer_dbg_acq_axi_running),
         .dbg_acq_depth_mux(adc_axi_streamer_dbg_acq_depth_mux),
+        .dbg_acq_end_early(adc_axi_streamer_dbg_acq_end_early),
         .dbg_acq_fifo_full_data_loss(adc_axi_streamer_dbg_acq_fifo_full_data_loss),
         .dbg_acq_fifo_reset(adc_axi_streamer_dbg_acq_fifo_reset),
         .dbg_acq_have_trig(adc_axi_streamer_dbg_acq_have_trig),
@@ -1087,52 +1089,14 @@ module design_1
         .g_rst_gen(simple_reset_control_0_g_rst_gen),
         .g_rst_trig_ps(xlconstant_2_dout));
   design_1_system_ila_0_0 system_ila_0
-       (.SLOT_0_AXI_araddr(zynq_ps_M_AXI_GP0_ARADDR),
-        .SLOT_0_AXI_arburst(zynq_ps_M_AXI_GP0_ARBURST),
-        .SLOT_0_AXI_arcache(zynq_ps_M_AXI_GP0_ARCACHE),
-        .SLOT_0_AXI_arid(zynq_ps_M_AXI_GP0_ARID),
-        .SLOT_0_AXI_arlen(zynq_ps_M_AXI_GP0_ARLEN),
-        .SLOT_0_AXI_arlock(zynq_ps_M_AXI_GP0_ARLOCK),
-        .SLOT_0_AXI_arprot(zynq_ps_M_AXI_GP0_ARPROT),
-        .SLOT_0_AXI_arqos(zynq_ps_M_AXI_GP0_ARQOS),
-        .SLOT_0_AXI_arready(zynq_ps_M_AXI_GP0_ARREADY),
-        .SLOT_0_AXI_arsize(zynq_ps_M_AXI_GP0_ARSIZE),
-        .SLOT_0_AXI_arvalid(zynq_ps_M_AXI_GP0_ARVALID),
-        .SLOT_0_AXI_awaddr(zynq_ps_M_AXI_GP0_AWADDR),
-        .SLOT_0_AXI_awburst(zynq_ps_M_AXI_GP0_AWBURST),
-        .SLOT_0_AXI_awcache(zynq_ps_M_AXI_GP0_AWCACHE),
-        .SLOT_0_AXI_awid(zynq_ps_M_AXI_GP0_AWID),
-        .SLOT_0_AXI_awlen(zynq_ps_M_AXI_GP0_AWLEN),
-        .SLOT_0_AXI_awlock(zynq_ps_M_AXI_GP0_AWLOCK),
-        .SLOT_0_AXI_awprot(zynq_ps_M_AXI_GP0_AWPROT),
-        .SLOT_0_AXI_awqos(zynq_ps_M_AXI_GP0_AWQOS),
-        .SLOT_0_AXI_awready(zynq_ps_M_AXI_GP0_AWREADY),
-        .SLOT_0_AXI_awsize(zynq_ps_M_AXI_GP0_AWSIZE),
-        .SLOT_0_AXI_awvalid(zynq_ps_M_AXI_GP0_AWVALID),
-        .SLOT_0_AXI_bid(zynq_ps_M_AXI_GP0_BID),
-        .SLOT_0_AXI_bready(zynq_ps_M_AXI_GP0_BREADY),
-        .SLOT_0_AXI_bresp(zynq_ps_M_AXI_GP0_BRESP),
-        .SLOT_0_AXI_bvalid(zynq_ps_M_AXI_GP0_BVALID),
-        .SLOT_0_AXI_rdata(zynq_ps_M_AXI_GP0_RDATA),
-        .SLOT_0_AXI_rid(zynq_ps_M_AXI_GP0_RID),
-        .SLOT_0_AXI_rlast(zynq_ps_M_AXI_GP0_RLAST),
-        .SLOT_0_AXI_rready(zynq_ps_M_AXI_GP0_RREADY),
-        .SLOT_0_AXI_rresp(zynq_ps_M_AXI_GP0_RRESP),
-        .SLOT_0_AXI_rvalid(zynq_ps_M_AXI_GP0_RVALID),
-        .SLOT_0_AXI_wdata(zynq_ps_M_AXI_GP0_WDATA),
-        .SLOT_0_AXI_wid(zynq_ps_M_AXI_GP0_WID),
-        .SLOT_0_AXI_wlast(zynq_ps_M_AXI_GP0_WLAST),
-        .SLOT_0_AXI_wready(zynq_ps_M_AXI_GP0_WREADY),
-        .SLOT_0_AXI_wstrb(zynq_ps_M_AXI_GP0_WSTRB),
-        .SLOT_0_AXI_wvalid(zynq_ps_M_AXI_GP0_WVALID),
-        .clk(processing_system7_0_FCLK_CLK0),
+       (.clk(processing_system7_0_FCLK_CLK0),
         .probe0(FabCfg_NextGen_0_R_trig_level_0),
         .probe1(adc_axi_streamer_dbg_adcstream_state),
         .probe10(adc_axi_streamer_dbg_acq_depth_mux),
         .probe11(adc_axi_streamer_dbg_acq_fifo_reset),
         .probe12(adc_axi_streamer_dbg_acq_abort),
         .probe13(adc_axi_streamer_dbg_acq_trig_super_mask),
-        .probe14(1'b0),
+        .probe14(adc_axi_streamer_dbg_acq_end_early),
         .probe15(adc_axi_streamer_dbg_trig_post_fifo),
         .probe16(adc_axi_streamer_dbg_acq_have_trig),
         .probe17(adc_axi_streamer_dbg_acq_tvalid_mask),
@@ -1166,8 +1130,7 @@ module design_1
         .probe6(adc_axi_streamer_m00_axis_tlast),
         .probe7(adc_axi_streamer_dbg_acq_axi_run),
         .probe8(adc_axi_streamer_dbg_acq_trig_mask),
-        .probe9(adc_axi_streamer_dbg_acq_trig_rst),
-        .resetn(rst_ps7_0_20M_peripheral_aresetn));
+        .probe9(adc_axi_streamer_dbg_acq_trig_rst));
   design_1_xlconcat_0_0 xlconcat_0
        (.In0(adc_axi_streamer_m00_axis_tdata[15:0]),
         .dout(xlconcat_0_dout));

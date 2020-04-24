@@ -78,6 +78,9 @@ module design_1_zynq_ps_0 (
   TTC0_WAVE0_OUT,
   TTC0_WAVE1_OUT,
   TTC0_WAVE2_OUT,
+  TTC1_WAVE0_OUT,
+  TTC1_WAVE1_OUT,
+  TTC1_WAVE2_OUT,
   M_AXI_GP0_ARVALID,
   M_AXI_GP0_AWVALID,
   M_AXI_GP0_BREADY,
@@ -270,6 +273,9 @@ output wire SPI0_SS_T;
 output wire TTC0_WAVE0_OUT;
 output wire TTC0_WAVE1_OUT;
 output wire TTC0_WAVE2_OUT;
+output wire TTC1_WAVE0_OUT;
+output wire TTC1_WAVE1_OUT;
+output wire TTC1_WAVE2_OUT;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_GP0 ARVALID" *)
 output wire M_AXI_GP0_ARVALID;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_GP0 AWVALID" *)
@@ -798,9 +804,9 @@ inout wire PS_PORB;
     .TTC0_CLK0_IN(1'B0),
     .TTC0_CLK1_IN(1'B0),
     .TTC0_CLK2_IN(1'B0),
-    .TTC1_WAVE0_OUT(),
-    .TTC1_WAVE1_OUT(),
-    .TTC1_WAVE2_OUT(),
+    .TTC1_WAVE0_OUT(TTC1_WAVE0_OUT),
+    .TTC1_WAVE1_OUT(TTC1_WAVE1_OUT),
+    .TTC1_WAVE2_OUT(TTC1_WAVE2_OUT),
     .TTC1_CLK0_IN(1'B0),
     .TTC1_CLK1_IN(1'B0),
     .TTC1_CLK2_IN(1'B0),
