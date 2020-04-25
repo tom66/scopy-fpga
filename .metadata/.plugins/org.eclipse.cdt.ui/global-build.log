@@ -1,21 +1,23 @@
-08:12:32 **** Incremental Build of configuration Release for project ps_app ****
+18:36:15 **** Incremental Build of configuration Release for project ps_app ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
 ' '
 make --no-print-directory main-build
-'Building file: ../src/acquire.c'
+'Building file: ../src/mipi_csi.c'
 'Invoking: ARM v7 gcc compiler'
-arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -I"../.\src\Collections-C\src\include" -c -fmessage-length=0 -MT"src/acquire.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -MMD -MP -MF"src/acquire.d" -MT"src/acquire.o" -o "src/acquire.o" "../src/acquire.c"
+arm-none-eabi-gcc -DDEBUG -Wall -O3 -g -IC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include -I"../.\src\Collections-C\src\include" -c -fmessage-length=0 -MT"src/mipi_csi.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -MMD -MP -MF"src/mipi_csi.d" -MT"src/mipi_csi.o" -o "src/mipi_csi.o" "../src/mipi_csi.c"
 In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:114,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
                  from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
                  from ../src/hal.h:32,
-                 from ../src/acquire.c:23:
+                 from ../src/mipi_csi.h:14,
+                 from ../src/mipi_csi.c:15:
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xdebug.h:12:2: warning: #warning DEBUG is enabled [-Wcpp]
  #warning DEBUG is enabled
   ^~~~~~~
-In file included from ../src/acquire.c:23:
+In file included from ../src/mipi_csi.h:14,
+                 from ../src/mipi_csi.c:15:
 ../src/hal.h: In function 'emio_fast_read':
 ../src/hal.h:216:12: warning: variable 'reg' set but not used [-Wunused-but-set-variable]
   uint32_t *reg;
@@ -23,110 +25,58 @@ In file included from ../src/acquire.c:23:
 ../src/hal.h:215:11: warning: unused variable 'read' [-Wunused-variable]
   uint32_t read;
            ^~~~
-../src/acquire.c: In function '_acq_irq_rx_handler':
-../src/acquire.c:51:6: warning: unused variable 'i' [-Wunused-variable]
-  int i;
-      ^
-../src/acquire.c: In function '_acq_irq_fifo_gen_rst':
-../src/acquire.c:384:6: warning: unused variable 'i' [-Wunused-variable]
-  int i;
-      ^
-../src/acquire.c:383:28: warning: variable 'stat_b' set but not used [-Wunused-but-set-variable]
-  volatile uint32_t stat_a, stat_b;
-                            ^~~~~~
-../src/acquire.c:383:20: warning: variable 'stat_a' set but not used [-Wunused-but-set-variable]
-  volatile uint32_t stat_a, stat_b;
-                    ^~~~~~
-../src/acquire.c: In function '_acq_reset_trigger':
-../src/acquire.c:482:15: warning: unused variable 'i' [-Wunused-variable]
-  volatile int i;
-               ^
-In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bd.h:112,
-                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:81,
-                 from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
+In file included from C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma.h:486,
                  from ../src/hal.h:32,
-                 from ../src/acquire.c:23:
-../src/acquire.c: In function '_acq_fast_dma_start':
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_hw.h:333:48: warning: passing argument 2 of 'Xil_Out32' makes integer from pointer without a cast [-Wint-conversion]
-     XAxiDma_Out32((BaseAddress) + (RegOffset), (Data))
-                                                ^~~~~~
-../src/acquire.c:505:2: note: in expansion of macro 'XAxiDma_WriteReg'
-  XAxiDma_WriteReg(g_acq_state.dma.RxBdRing[0].ChanBase, XAXIDMA_DESTADDR_OFFSET, buff_ptr);
-  ^~~~~~~~~~~~~~~~
-In file included from ../src/hal.h:28,
-                 from ../src/acquire.c:23:
-C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xil_io.h:217:48: note: expected 'u32' {aka 'long unsigned int'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
- static INLINE void Xil_Out32(UINTPTR Addr, u32 Value)
-                                            ~~~~^~~~~
-In file included from ../src/acquire.c:24:
-../src/acquire.h:85:23: warning: 'return' with a value, in function returning void
- #define ACQRES_OK     0
-                       ^
-../src/acquire.c:514:9: note: in expansion of macro 'ACQRES_OK'
-  return ACQRES_OK;
-         ^~~~~~~~~
-../src/acquire.c:503:6: note: declared here
- void _acq_fast_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
-      ^~~~~~~~~~~~~~~~~~~
-../src/acquire.c: In function 'acq_start':
-../src/acquire.c:1049:31: warning: passing argument 1 of '_acq_core_dma_start' makes pointer from integer without a cast [-Wint-conversion]
-   error = _acq_core_dma_start((uint32_t)g_acq_state.acq_current->buff_acq, g_acq_state.pre_buffsz);
-                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/acquire.c:524:35: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'long unsigned int'
- int _acq_core_dma_start(uint32_t *buff_ptr, uint32_t buff_sz)
-                         ~~~~~~~~~~^~~~~~~~
-../src/acquire.c: In function 'acq_get_ll_pointer':
-../src/acquire.c:1300:3: warning: multi-line comment [-Wcomment]
-   //d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x, trigger_at:0x%08x %d)", \
-   ^
-../src/acquire.c: In function 'acq_debug_dump_wave':
-../src/acquire.c:1376:14: warning: assignment to 'uint32_t' {aka 'long unsigned int'} from 'uint32_t *' {aka 'long unsigned int *'} makes integer from pointer without a cast [-Wint-conversion]
-   addr_start = wave->buff_acq; // + (wave->trigger_at * 8);
-              ^
-../src/acquire.c:1329:6: warning: unused variable 'first' [-Wunused-variable]
-  int first, i;
-      ^~~~~
-../src/acquire.c:1328:12: warning: unused variable 'deref' [-Wunused-variable]
-  uint32_t *deref;
-            ^~~~~
-../src/acquire.c:1327:12: warning: unused variable 'addr2' [-Wunused-variable]
-  uint32_t *addr2;
-            ^~~~~
-../src/acquire.c:1326:45: warning: unused variable 'sz' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
-                                             ^~
-../src/acquire.c:1326:39: warning: unused variable 'offs' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
-                                       ^~~~
-../src/acquire.c:1326:29: warning: unused variable 'addr_end' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
+                 from ../src/mipi_csi.h:14,
+                 from ../src/mipi_csi.c:15:
+../src/mipi_csi.h: In function '_mipi_csi_axidma_add_bd_entry':
+C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xaxidma_bdring.h:291:36: warning: returning 'unsigned int' from a function with return type 'u32 (*)[16]' {aka 'long unsigned int (*)[16]'} makes pointer from integer without a cast [-Wint-conversion]
+   (((UINTPTR)(BdPtr) >= (RingPtr)->LastBdAddr) ? \
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    (UINTPTR)(RingPtr)->FirstBdAddr : \
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+    (UINTPTR)((UINTPTR)(BdPtr) + (RingPtr)->Separation))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/mipi_csi.h:86:9: note: in expansion of macro 'XAxiDma_BdRingNext'
+  return XAxiDma_BdRingNext(ring, cur_bd);
+         ^~~~~~~~~~~~~~~~~~
+../src/mipi_csi.c: In function 'mipi_csi_generate_sg_list_for_waves':
+../src/mipi_csi.c:136:29: warning: implicit declaration of function 'memalign' [-Wimplicit-function-declaration]
+  g_mipi_csi_state.bd_area = memalign(XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries * XAXIDMA_BD_MINIMUM_ALIGNMENT);
                              ^~~~~~~~
-../src/acquire.c:1326:17: warning: variable 'addr_start' set but not used [-Wunused-but-set-variable]
-  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
-                 ^~~~~~~~~~
-../src/acquire.c:1326:11: warning: unused variable 'addr' [-Wunused-variable]
-  uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
-           ^~~~
-../src/acquire.c: In function 'acq_copy_slow_mipi':
-../src/acquire.c:1462:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-../src/acquire.c: In function 'acq_debug_dump':
-../src/acquire.c:1246:2: warning: 'time_delta_us' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  d_printf(D_INFO, "Debug delta           = %d us                   ", (int)time_delta_us);
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/acquire.c:1257:31: warning: 'timer_value' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  g_acq_state.last_debug_timer = timer_value;
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
-../src/acquire.c: In function 'acq_debug_dump_wave':
-../src/acquire.c:1385:3: warning: 'end_post' may be used uninitialized in this function [-Wmaybe-uninitialized]
-   d_printf(D_INFO, "sz=%d, start=%d, end_post=%d", end, start, end_post);
-   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-'Finished building: ../src/acquire.c'
+../src/mipi_csi.c:136:27: warning: assignment to 'void *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  g_mipi_csi_state.bd_area = memalign(XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries * XAXIDMA_BD_MINIMUM_ALIGNMENT);
+                           ^
+../src/mipi_csi.c:106:41: warning: unused variable 'size' [-Wunused-variable]
+  uint32_t total_sz, extra_chunks, base, size;
+                                         ^~~~
+../src/mipi_csi.c:106:35: warning: unused variable 'base' [-Wunused-variable]
+  uint32_t total_sz, extra_chunks, base, size;
+                                   ^~~~
+../src/mipi_csi.c:106:11: warning: variable 'total_sz' set but not used [-Wunused-but-set-variable]
+  uint32_t total_sz, extra_chunks, base, size;
+           ^~~~~~~~
+../src/mipi_csi.c:99:45: warning: unused variable 'c' [-Wunused-variable]
+  int status, n_waves, bd_entries, i, chcnt, c;
+                                             ^
+../src/mipi_csi.c:99:38: warning: unused variable 'chcnt' [-Wunused-variable]
+  int status, n_waves, bd_entries, i, chcnt, c;
+                                      ^~~~~
+../src/mipi_csi.c:145:11: warning: 'ring' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  status = XAxiDma_BdRingCreate(ring, (int)g_mipi_csi_state.bd_area, (int)g_mipi_csi_state.bd_area, XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries);
+           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../src/mipi_csi.c:15:
+../src/mipi_csi.h:83:11: warning: 'cur_bd_ptr' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  D_ASSERT(XAxiDma_BdSetLength(cur_bd, len, ring->MaxTransferLen) != XST_SUCCESS);
+           ^~~~~~~~~~~~~~~~~~~
+../src/mipi_csi.c:102:14: note: 'cur_bd_ptr' was declared here
+  XAxiDma_Bd* cur_bd_ptr;
+              ^~~~~~~~~~
+'Finished building: ../src/mipi_csi.c'
 ' '
 'Building target: ps_app.elf'
 'Invoking: ARM v7 gcc linker'
-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-Map=ps_app_gen.map --verbose -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o  ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-Map=ps_app_gen.map --verbose -Wl,-T -Wl,../src/lscript.ld -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -o "ps_app.elf"  ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o  ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 Using built-in specs.
 Reading specs from Xilinx.spec
 COLLECT_GCC=arm-none-eabi-gcc
@@ -138,7 +88,7 @@ gcc version 8.2.0 (GCC)
 COMPILER_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/bin/
 LIBRARY_PATH=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/;g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
- g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccckB41U.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
+ g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/collect2.exe -plugin g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/liblto_plugin-0.dll -plugin-opt=g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../libexec/gcc/arm-none-eabi/8.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\Tom\AppData\Local\Temp\ccmEpQTi.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=g:\xilinx\vitis\2019.2\gnu\aarch32\nt\gcc-arm-none-eabi\bin\../arm-none-eabi/libc --build-id -X -o ps_app.elf g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crti.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtbegin.o -LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0 -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib -Lg:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib -build-id=none -Map=ps_app_gen.map -T ../src/lscript.ld ./src/Collections-C/src/array.o ./src/Collections-C/src/common.o ./src/Collections-C/src/deque.o ./src/Collections-C/src/hashset.o ./src/Collections-C/src/hashtable.o ./src/Collections-C/src/list.o ./src/Collections-C/src/pqueue.o ./src/Collections-C/src/queue.o ./src/Collections-C/src/ring_buffer.o ./src/Collections-C/src/slist.o ./src/Collections-C/src/stack.o ./src/Collections-C/src/treeset.o ./src/Collections-C/src/treetable.o ./src/acq_hacks.o ./src/acquire.o ./src/clkwiz_interface.o ./src/demo_norway.o ./src/fabric_config.o ./src/hal.o ./src/main.o ./src/mipi_csi.o ./src/mipi_csi_hacks.o ./src/platform.o ./src/spi.o ./src/spi_commands.o ./src/system_control.o ./src/trigger.o --start-group -lxil -lgcc -lc --end-group --start-group -lgcc -lc --end-group g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtn.o
 COLLECT_GCC_OPTIONS='-mcpu=cortex-a9' '-mfpu=vfpv3' '-mfloat-abi=hard' '-specs=Xilinx.spec' '-v' '-LC:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bsplib/lib' '-o' 'ps_app.elf' '-marm' '-march=armv7-a+vfpv3'
 'Finished building target: ps_app.elf'
 ' '
@@ -149,6 +99,6 @@ arm-none-eabi-objdump -d -t -S ../Release/ps_app.elf > ../Release/ps_app.lst
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size ps_app.elf  |tee "ps_app.elf.size"
    text	   data	    bss	    dec	    hex	filename
- 441184	   3704	205550288	205995176	c473ca8	ps_app.elf
+ 444168	   3704	205552240	206000112	c474ff0	ps_app.elf
 'Finished building: ps_app.elf.size'
 ' '

@@ -513,9 +513,24 @@ int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *r
  */
 int spi_command_tick()
 {
-	int tx_bytes, sent_bytes, res;
+	int tx_bytes, sent_bytes, res, i;
 	struct spi_command_alloc_t *cmd;
 	struct spi_command_alloc_t *proc_cmd = g_spi_state.proc_cmd; // Shorthand
+	static int iter = 0;
+	int dqs = deque_size(g_spi_state.command_dq);
+	int alloc = spi_command_count_allocated();
+
+#if 0
+	if(dqs != 0 || alloc != 127) {
+		d_printf(D_RAW, "\r\n%d,%d,%d,%d,%d,%02x", dqs, alloc, g_spi_state.proc_state, g_spi_state.cmd_state, g_spi_state.resp_done, proc_cmd->cmd);
+	} else {
+		iter++;
+		if(iter > 100) {
+			d_printf(D_RAW, "*");
+			iter = 0;
+		}
+	}
+#endif
 
 	res = SPIENGINE_IDLE;
 
@@ -525,6 +540,7 @@ int spi_command_tick()
 				deque_remove_first(g_spi_state.command_dq, (void*)&cmd);
 				g_spi_state.proc_cmd = cmd;
 				g_spi_state.proc_state = SPIPROC_STATE_EXECUTE;
+				g_spi_state.resp_done = 0;
 
 				// Tell outer task that we're still busy, while we try to handle this command
 				res = SPIENGINE_WORKING;
@@ -556,8 +572,11 @@ int spi_command_tick()
 					spi_command_cleanup(proc_cmd);
 				}
 
+				//d_printf(D_RAW, "#");
+
 				proc_cmd->resp_ready = 0;
 				proc_cmd->resp_done = 0;
+				g_spi_state.resp_done = 1; // Tell SPI ISR state machine that we're done
 				g_spi_state.proc_cmd = NULL;
 				g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
 			}
@@ -573,6 +592,17 @@ int spi_command_tick()
 			D_ASSERT(g_spi_state.resp_bytes <= SPI_RESPONSE_2BYTE_MAX);
 
 			SPI_SCUGIC_DISABLE();
+
+			// Check for underflow flag set.  If set pack some null bytes to ensure underflow doesn't happen during header TX.
+			/*
+			if(SPI_IS_TX_UNDERFLOW()) {
+				for(i = 0; i < 16; i++) {
+					spi_transmit(0x00);
+				}
+			}
+			*/
+
+			spi_transmit(0x00);
 			spi_transmit(0x00);
 			spi_transmit(SPI_RESP_SIZE_FOLLOWS);
 

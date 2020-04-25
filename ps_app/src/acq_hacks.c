@@ -17,7 +17,7 @@ extern uint8_t norway_512x512_grey[];
 
 #define N_WAVES			500
 #define N_WAVESIZE		8192	//	1152
-#define LINE_SIZE		4096
+#define LINE_SIZE		4096	// 4096
 #define BUFFER_SIZE		(N_WAVES * N_WAVESIZE)
 #define N_CSI_LINES		(BUFFER_SIZE / LINE_SIZE)
 
@@ -52,7 +52,8 @@ void acq_hacks_run()
 	n_waves = N_WAVES;
 
 	csi_hack_init();
-	memset(buffer, 0, 32);
+
+	//memset(buffer, 0, 32);
 
 	/*
 	while(1) {
@@ -69,7 +70,7 @@ void acq_hacks_run()
 	}
 	*/
 
-	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 450);
+	clkwiz_change_mipi_freq(&g_hal.clkwiz_mipi, 300); // was 450
 
 	d_printf(D_WARN, "starting acquisition engine...");
 	acq_free_all_alloc();
@@ -115,6 +116,7 @@ void acq_hacks_run()
 		// Start overall timer
 		d_start_timing(7);
 
+#if 0
 		// Start the acquisition
 		d_start_timing(5);
 		d_start_timing(4);
@@ -206,20 +208,23 @@ void acq_hacks_run()
 
 		wave_raw_time = d_read_timing_us(4);
 		microsec = wave_raw_time;
+#endif
 
 		//d_printf(D_INFO, "Acquiring %d waves took %.4f microseconds", n_waves, microsec);
 
-		Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
-		dsb();
+		//Xil_DCacheInvalidateRange(buffer, sizeof(buffer));
+		//dsb();
 
 		d_start_timing(3);
 
+		/*
 		for(i = 0; i < n_waves; i++) {
 			acq_copy_slow_mipi(i, (uint8_t*)(buffer + (wave_size_bytes * i)));
 		}
+		*/
 
-		Xil_DCacheFlushRange(buffer, sizeof(buffer));
-		dsb();
+		//Xil_DCacheFlushRange(buffer, sizeof(buffer));
+		//dsb();
 
 		d_stop_timing(3);
 		//microsec = d_read_timing_us(3);
@@ -231,24 +236,28 @@ void acq_hacks_run()
 		fabcfg_write(FAB_CFG_CSI_LINE_BYTE_COUNT, LINE_SIZE - 2);
 
 		d_start_timing(2);
-		csi_hack_start_frame(N_CSI_LINES - 1);
+		/*
+		//csi_hack_start_frame(N_CSI_LINES - 1);
+		csi_hack_start_frame(255); // For King and Country, for Norway!
 
 		//for(j = 0; j < 8; j++) {
 		csi_hack_send_line_data(buffer, BUFFER_SIZE);
 		bytes += BUFFER_SIZE;
 		//}
+		*/
 
-		/*
-		csi_hack_start_frame(15);
+		memset(buffer, 0x55, sizeof(buffer));
+		memcpy(buffer, norway_512x512_grey, 262144);
+
+		Xil_DCacheFlushRange(buffer, sizeof(buffer));
+		dsb();
+
+		csi_hack_start_frame(7);
 
 		for(j = 0; j < 16; j++) {
-			Xil_DCacheFlushRange(buffer, sizeof(buffer));
-			dsb();
-
 			csi_hack_send_line_data(buffer + (j * 32768), 32768);
 			bytes += 32768;
 		}
-		*/
 
 		csi_hack_stop_frame();
 

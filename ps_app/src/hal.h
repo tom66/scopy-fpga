@@ -66,7 +66,7 @@
 #define GPIO_PS_LED_1_PIN			37
 
 #define D_ASSERT(expr)				{ \
-										if(!(expr)) { \
+										if(__builtin_expect(!(expr), 0)) { \
 											d_printf(D_ERROR, "assertion failed: `%s' (file %s, line %d)", #expr, __FILE__, __LINE__);  \
 											exit(-99) ; \
 										} \

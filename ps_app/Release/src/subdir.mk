@@ -14,6 +14,7 @@ C_SRCS += \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
+../src/mipi_csi.c \
 ../src/mipi_csi_hacks.c \
 ../src/platform.c \
 ../src/spi.c \
@@ -29,6 +30,7 @@ OBJS += \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
+./src/mipi_csi.o \
 ./src/mipi_csi_hacks.o \
 ./src/platform.o \
 ./src/spi.o \
@@ -44,6 +46,7 @@ C_DEPS += \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \
+./src/mipi_csi.d \
 ./src/mipi_csi_hacks.d \
 ./src/platform.d \
 ./src/spi.d \

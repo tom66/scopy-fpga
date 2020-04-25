@@ -50,9 +50,12 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x61, "CSI_SETUP_WAVE_RANGE",     8,       0,        NULL },
 	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        NULL },
 	{  0x63, "CSI_SETUP_TRIGPOS_DATA",   8,       0,        NULL },
-	{  0x63, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        NULL },
+	{  0x64, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        NULL },
+	{  0x65, "CSI_SETUP_TESTPATT",       1,       0,        NULL },
 
-	{  0x68, "CSI_SETUP_TESTPATT",       1,       0,        NULL },
+	{  0x6e, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        NULL },
+	{  0x6e, "CSI_STREAM_UNPOP_START",   0,       0,        NULL },
+	{  0x6f, "CSI_STREAM_STOP",          0,       0,        NULL },
 
 	// Last command 0xff is required to be a NOP (marks end of table)
 	{  0xff, "NOP",					     0,		  0,		NULL },

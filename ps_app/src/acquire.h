@@ -71,6 +71,7 @@
 #define ACQ_BUFFER_ALIGN			32								// Required byte alignment for AXI DMA (Must be a power of two)
 #define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
 
+#define ACQRES_END_OF_WAVE_LL		-12
 #define ACQRES_WAVE_NOT_READY		-11
 #define ACQRES_WAVE_NOT_FOUND		-10
 #define ACQRES_NOT_RUNNING			-9
@@ -181,6 +182,11 @@
 #define ACQSTA_STOPPED				0x0020
 #define ACQSTA_INTERNAL_ERROR		0x0040
 
+#define ACQ_TRIGGER_AT_TO_32IDX(x)	((((x) >> 3) + 1) * 2)	// Convert a trigger_at index to a 32-bit index
+#define ACQ_TRIGGER_AT_TO_BYPTR(x)	((((x) >> 3) + 1) * 8)	// Convert a trigger_at index to a byte offset pointer
+#define ACQ_64SAMPCT_TO_32IDX(x)	((x) * 2)				// Convert a 64-bit sampct to a 32-bit index; multiplies by two
+#define ACQ_64SAMPCT_TO_BYPTR(x)	((x) * 8)				// Convert a 64-bit sampct to a byte offset pointer; multiplies by eight
+
 extern struct acq_state_t g_acq_state;
 
 /*
@@ -287,6 +293,17 @@ struct acq_state_t {
 };
 
 /*
+ * Acquisition DMA helper response struct.  Returned by acq_dma_address_helper;
+ * this represents the addresses that a copy needs to be performed from to
+ * copy a single waveform.
+ */
+struct acq_dma_addr_t {
+	uint32_t pre_lower_start, pre_lower_end;
+	uint32_t pre_upper_start, pre_upper_end;
+	uint32_t post_start, post_end;
+};
+
+/*
  * Acquisition status: returned back to Pi host.
  *
  * Do not modify this structure without considering the changes required on
@@ -321,8 +338,10 @@ void acq_make_status(struct acq_status_resp_t *status_resp);
 void acq_debug_dump();
 void acq_debug_dump_wave();
 int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);
+int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next);
 void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
+void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
 
 /*
  * Inlined functions that reduce RMW AXI pressure by keeping track of the internal state of

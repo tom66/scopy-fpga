@@ -48,7 +48,7 @@
 #define SPIPROC_STATE_OUTPUT_DONE_WAIT	5
 
 #define SPI_RESPONSE_1BYTE_MAX			127
-#define SPI_RESPONSE_2BYTE_MAX			32384
+#define SPI_RESPONSE_2BYTE_MAX			32511
 #define SPI_RESPONSE_PACK_SIZE			63									// How many bytes we pack at a time into the TX FIFO
 #define SPI_TX_OVERWATER_DEFAULT		(128 - SPI_RESPONSE_PACK_SIZE - 1)	// 128 byte FIFO - 63 byte pack size - 1 byte spare
 
@@ -85,7 +85,7 @@ extern struct spi_version_resp_t g_version_resp;
 
 // Response bytes. Used for debugging and state machine control on command issuer side.
 #define SPI_RESP_NONE					0x00
-#define SPI_RESP_SIZE_FOLLOWS			0xf5
+#define SPI_RESP_SIZE_FOLLOWS			0xff
 
 extern struct spi_state_t g_spi_state;
 

@@ -68,7 +68,8 @@ void _acq_irq_rx_handler(void *callback)
 
 	/*
 	 * Check for IOC complete.  When an IOC event occurs it has occurred for one
-	 * of three reasons:
+	 * of four reasons:
+	 *  - We have filled our pre-trigger window.
 	 *  - We have reached the number of words requested and no trigger has occurred
 	 *    (when pre-triggering)
 	 *  - We have received a trigger and we should start the post-trigger phase.
@@ -91,7 +92,7 @@ void _acq_irq_rx_handler(void *callback)
 					g_acq_state.acq_abort_done = 1;
 					//fabcfg_write(FAB_CFG_TRIG_LEVEL0, 0x55555501);
 					_acq_clear_ctrl_a(ACQ_CTRL_A_END_EARLY);
-					_acq_irq_error_dma(999);
+					//_acq_irq_error_dma(999);
 					g_acq_state.sub_state = ACQSUBST_NONE;
 					dma_sent = 0;
 				} else {
@@ -171,7 +172,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * If the acquisition is to be aborted, then don't start another DMA.
 					 */
 					if(g_acq_state.acq_early_abort) {
-						d_printf(D_RAW, "ek");
+						//d_printf(D_RAW, "ek");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
 						_acq_clear_ctrl_a(ACQ_CTRL_A_END_EARLY);
@@ -224,7 +225,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * If the acquisition is to be aborted, then don't start another DMA.
 					 */
 					if(g_acq_state.acq_early_abort) {
-						d_printf(D_RAW, "eo");
+						//d_printf(D_RAW, "eo");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
 						_acq_clear_ctrl_a(ACQ_CTRL_A_END_EARLY);
@@ -287,7 +288,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * Don't start the transfer if we're trying to abort.
 					 */
 					if(g_acq_state.acq_early_abort) {
-						d_printf(D_RAW, "ep");
+						//d_printf(D_RAW, "ep");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
 						_acq_clear_ctrl_a(ACQ_CTRL_A_END_EARLY);
@@ -1316,6 +1317,26 @@ int acq_get_ll_pointer(int index, struct acq_buffer_t **buff)
 }
 
 /*
+ * Pass a reference to the next entry in a linked list, checking for the end
+ * of the list.
+ *
+ * @param	buff	Current waveform pointer
+ * @param	next	Pointer to result for next waveform pointer; set to NULL if no next exists
+ */
+int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next)
+{
+	D_ASSERT(this != NULL && next != NULL);
+
+	if(this->next != NULL) {
+		*next = this->next;
+		return ACQRES_OK;
+	}
+
+	*next = NULL;
+	return ACQRES_END_OF_WAVE_LL;
+}
+
+/*
  * Dump information from a wave N.
  *
  * @param	index	Index of wave to dump. Function will explore LL to find the waveform.
@@ -1459,4 +1480,44 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 	} else {
 		return ACQRES_WAVE_NOT_READY;
 	}
+}
+
+/*
+ * Return the pointers to be used to copy a given waveform.  These
+ * pointers will be used to do DMA copies to the MIPI peripherals,
+ * or for other tasks.
+ *
+ * @param	wave	Pointer to the waveform struct to provide pointers for
+ * @param	buff	Pointer to an addr_helper struct
+ *
+ * @return	ACQRES_OK if successful, ACQRES_WAVE_NOT_READY if waveform not
+ * 			ready for pointer calculation (e.g. unfilled.)
+ */
+void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper)
+{
+	uint32_t start, end;
+
+	D_ASSERT(wave != NULL);
+	D_ASSERT(addr_helper != NULL);
+
+	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_PKT_DONE)) {
+		return ACQRES_WAVE_NOT_READY;
+	}
+
+	//start = ACQ_TRIGGER_AT_TO_32PTR(wave->trigger_at);
+	//end = ACQ_64SAMPCT_TO_32PTR(wave->pre_sz);
+
+	start = ACQ_TRIGGER_AT_TO_BYPTR(wave->trigger_at);
+	end = wave->pre_sz;
+
+	addr_helper->pre_upper_start = wave->buff_acq + start;
+	addr_helper->pre_upper_end = addr_helper->pre_upper_start + end - start;
+
+	addr_helper->pre_lower_start = wave->buff_acq;
+	addr_helper->pre_lower_end = addr_helper->pre_lower_start + start;
+
+	addr_helper->post_start = wave->buff_acq + end;
+	addr_helper->post_end = addr_helper->post_start + wave->post_sz;
+
+	return ACQRES_OK;
 }
