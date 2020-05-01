@@ -17,12 +17,12 @@
 #include "xttcps.h"
 #include "xttcps_hw.h"
 
-#define SYSCTRL_WAKE_FREQUENCY		12500		// Wake every 80us
+#define SYSCTRL_WAKE_FREQUENCY		25000		// Wake frequently
 #define SYSCTRL_TIME_ADD_US			(1e6 / SYSCTRL_WAKE_FREQUENCY)
 
 #define SYSCTRL_SPI_DIVIDER			1			// Run SPI processor every iteration (changing this has no effect)
 #define SYSCTRL_ACQ_DIVIDER			1			// Run acquisition processor every iteration (changing this has no effect)
-#define SYSCTRL_XADC_DIVIDER		4095		// Run acquisition processor every 409.6ms
+#define SYSCTRL_XADC_DIVIDER		16383		// Run ADC task on this divider
 
 #define SYSCTRL_TTCPS_DEV_ID		XPAR_PS7_TTC_0_DEVICE_ID
 

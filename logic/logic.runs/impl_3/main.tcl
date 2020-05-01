@@ -60,21 +60,21 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param tcl.collectionResultDisplayLimit 0
   set_param general.maxThreads 8
   set_param chipscope.maxJobs 4
-  set_param xicom.use_bs_reader 1
   create_project -in_memory -part xc7z014sclg400-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
   set_property webtalk.parent_dir C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.cache/wt [current_project]
   set_property parent.project_path C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/logic/logic.xpr [current_project]
   set_property ip_repo_paths {
+  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/PL_debug_LED_controller_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_trigger_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/adc_receiver_core_1.0
   C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/simple_reset_controller_1.0
@@ -133,7 +133,7 @@ set rc [catch {
   if { [llength [get_debug_cores -quiet] ] > 0 }  { 
     implement_debug_core 
   } 
-  place_design -directive AltSpreadLogic_high
+  place_design 
   write_checkpoint -force main_placed.dcp
   create_report "impl_3_place_report_io_0" "report_io -file main_io_placed.rpt"
   create_report "impl_3_place_report_utilization_0" "report_utilization -file main_utilization_placed.rpt -pb main_utilization_placed.pb"
@@ -152,7 +152,7 @@ start_step phys_opt_design
 set ACTIVE_STEP phys_opt_design
 set rc [catch {
   create_msg_db phys_opt_design.pb
-  phys_opt_design -directive AggressiveExplore
+  phys_opt_design 
   write_checkpoint -force main_physopt.dcp
   close_msg_db -file phys_opt_design.pb
 } RESULT]
@@ -168,7 +168,7 @@ start_step route_design
 set ACTIVE_STEP route_design
 set rc [catch {
   create_msg_db route_design.pb
-  route_design -directive AlternateCLBRouting
+  route_design 
   write_checkpoint -force main_routed.dcp
   create_report "impl_3_route_report_drc_0" "report_drc -file main_drc_routed.rpt -pb main_drc_routed.pb -rpx main_drc_routed.rpx"
   create_report "impl_3_route_report_methodology_0" "report_methodology -file main_methodology_drc_routed.rpt -pb main_methodology_drc_routed.pb -rpx main_methodology_drc_routed.rpx"

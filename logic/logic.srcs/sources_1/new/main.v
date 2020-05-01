@@ -59,27 +59,7 @@ module main(
     led_PL1         // diagnostic LED PL1
  );
 
-// EMIO indexes for interface port
-parameter EMIO_ACQ_RUN = 0;
-parameter EMIO_ACQ_ABORT = 1;
-parameter EMIO_ACQ_DONE = 2;
-parameter EMIO_CFG_COMMIT = 3;
-parameter EMIO_CFG_DONE = 4;
-parameter EMIO_ACQ_TRIG_MASK = 5;
-parameter EMIO_ACQ_FIFO_RESET = 6;
-parameter EMIO_ACQ_HAVE_TRIG = 7;
-parameter EMIO_ACQ_TRIG_RST = 8;
-parameter EMIO_ACQ_DEPTH_MUX = 9;
-parameter EMIO_ACQ_AXI_RUN = 10;
-parameter EMIO_ACQ_DATA_LOSS = 12;
-parameter EMIO_CSI_START_LINES = 20;
-parameter EMIO_CSI_START_FRAME = 21;
-parameter EMIO_CSI_END_FRAME = 22;
-parameter EMIO_CSI_STOP = 23;
-parameter EMIO_CSI_SLEEP = 24;
-parameter EMIO_CSI_DONE = 25;
-
-parameter EMIO_HEARTBEAT = 60;      // Toggled by PS regularly (~5ms tick)
+parameter EMIO_HEARTBEAT = 60;      // To be toggled by PS regularly (~5ms tick)
 parameter EMIO_IRQ1 = 61;
 parameter EMIO_IRQ2 = 62;
 parameter EMIO_IRQ3 = 63;
@@ -123,50 +103,18 @@ g_rst_controller (
 );
 
 wire [1:0] R_gpio_test;
-wire clk_mipi_ref_dbg;
-
-assign led_PL0 = R_gpio_test[0]; // clk_mipi_ref_dbg; 
+assign led_PL0 = R_gpio_test[0];
 assign led_PL1 = R_gpio_test[1];
 
 /*
  * Connection to Block Design.
+ *
+ * XXX: 26/04/2020 - Much of this was stale and was removed.  Everything on AXI
+ * where possible now, with EMIO used only for LEDs and outside world interface.
  */
-wire csi_done;
-wire csi_start_lines = emio_output[EMIO_CSI_START_LINES];
-wire csi_start_frame = emio_output[EMIO_CSI_START_FRAME];
-wire csi_end_frame = emio_output[EMIO_CSI_END_FRAME];
-wire csi_stop = emio_output[EMIO_CSI_STOP];
-wire csi_sleep = emio_output[EMIO_CSI_SLEEP];
-assign emio_input[EMIO_CSI_DONE] = csi_done;
-
 wire [63:0] emio_output;
 wire [63:0] emio_input;
 reg [14:0] pl_irq;
-wire acq_done;
-wire [63:0] adc_bus;
-wire [31:0] cfg_bram_addrb;
-wire [31:0] cfg_bram_doutb;
-wire [31:0] cfg_bram_dinb;
-wire cfg_bram_clkb;
-wire [3:0] cfg_bram_web;
-wire cfg_bram_enb;
-wire cfg_bram_busyb;
-wire [2:0] trig_sub_word;
-
-wire [5:0] csi_ctrl_state_dbg;
-wire [15:0] csi_fifo_dout;
-wire csi_fifo_clk, csi_fifo_read_req, csi_fifo_read_valid;
-wire [5:0] csi_debug_mipi_state;
-
-wire clkwiz0_clkout1, clkwiz0_clkout2;
-wire csi_mipi_busy_dbg, csi_mipi_done_dbg, csi_mipi_init_short_dbg, csi_mipi_init_long_dbg, csi_mipi_init_idle_dbg;
-
-wire [15:0] csi_debug_tx_size;
-wire [15:0] csi_debug_state_timer;
-wire [15:0] csi_debug_state_timer2;
-wire csi_debug_state_timer_rst;
-wire [15:0] csi_debug_data_mux_out;
-wire [5:0] csi_debug_ctrl_bram_base;
 
 design_1 (
     // SPI/MCU interface
@@ -212,16 +160,9 @@ design_1 (
     .CSI_LPCLK_P(csi_lpclk_p),
     .CSI_LPCLK_N(csi_lpclk_n),
     
-    // CSI control signals via EMIO
-    .CSI_SLEEP(csi_sleep),
-    .CSI_START_LINES(csi_start_lines),
-    .CSI_START_FRAME(csi_start_frame),
-    .CSI_END_FRAME(csi_end_frame),
-    .CSI_STOP(csi_stop),
-    .CSI_DONE(csi_done),
-    
-    // GPIO LED outputs - in future the LEDs will be multiplexable between functions for debugging
-    .GPIO_TEST(R_gpio_test),
+    // LED channels from LED debug multiplexers
+    .LED_CH0(led_PL0),
+    .LED_CH1(led_PL1),
     
     // EMIO 64-bit low speed signalling bus between ARM and fabric
     .EMIO_I(emio_input),            // Data into ARM

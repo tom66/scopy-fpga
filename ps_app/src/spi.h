@@ -13,13 +13,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "hal.h"
+
 #include "Collections-C/src/include/deque.h"
 
 #include "xspips.h"
 
 #define SPI_DEVICE_ID					XPAR_PS7_SPI_0_DEVICE_ID
 
-#define SPI_QUEUE_ALLOC_MAX				127								// Allowed to enqueue up to 127 commands; must be one less than a power-of-two
+#define SPI_QUEUE_ALLOC_MAX				63								// Allowed to enqueue up to 63 commands; must be one less than a power-of-two
 #define SPI_QUEUE_ALLOC_BITMASK_SIZE	((SPI_QUEUE_ALLOC_MAX / 32) + 1)
 
 #define SPI_QUEUE_SIZE					(SPI_QUEUE_ALLOC_MAX + 1)		// Total of 128 slots in the deque; must be power-of-two
@@ -88,6 +90,7 @@ extern struct spi_version_resp_t g_version_resp;
 #define SPI_RESP_SIZE_FOLLOWS			0xff
 
 extern struct spi_state_t g_spi_state;
+extern uint8_t __attribute__ ((aligned(4))) spi_resp_buffer[SPI_RESPONSE_2BYTE_MAX + 1];
 
 /*
  * Statistics.
@@ -129,25 +132,19 @@ struct spi_command_alloc_t {
  * This struct stores the state of the command processor and contains
  * pointers to the SPI peripheral.
  *
- * Hot and cold reorderine done 14/04/2020.
+ * Hot and cold reordering done 14/04/2020 and revised 28/04/2020 with
+ * old fields removed.
  */
 struct spi_state_t {
 	// State of command processor
+	volatile unsigned int has_response : 1;
+	volatile unsigned int resp_done : 1;
 	int cmd_state;
 	uint8_t cmd_id;
 	uint8_t cmd_argdata[SPI_COMMAND_MAX_ARGS];
 	int cmd_argpop;
 	int cmd_argidx;
-	int has_response : 1;
-	volatile int resp_done : 1;
 	uint8_t crc;
-
-	// Byte from previous cycle to be transmitted
-	uint8_t byte_tx;
-	int byte_send : 1;
-
-	// Statistics counters.
-	struct spi_stats_t stats;
 
 	// Look-up table for CRC calculation.
 	uint8_t crc_table[256];
@@ -155,6 +152,9 @@ struct spi_state_t {
 	// SPI controller
 	XSpiPs spi;
 	XSpiPs_Config *spi_config;
+
+	// Statistics counters.
+	struct spi_stats_t stats;
 
 	/*
 	 * Allocation table for the command task list.  Commands are packed into the Deque
@@ -222,7 +222,8 @@ void spi_command_lut_gen();
 void spi_isr_handler(void *unused);
 int spi_command_find_free_slot();
 int spi_command_count_allocated();
-int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz);
+int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, void *resp, int respsz);
+void spi_command_pack_response_pre_alloc(struct spi_command_alloc_t *cmd, void *resp, int respsz);
 int spi_transmit_packet_nonblock(uint8_t *pkt, int bytes);
 int spi_command_tick();
 
@@ -339,6 +340,7 @@ inline void spi_command_cleanup(struct spi_command_alloc_t *cmd)
 	cmd->resp_done = 0;
 	cmd->resp_error = 0;
 	cmd->resp_ready = 0;
+	d_printf(D_INFO, "free %08x", cmd->resp_data);
 	free(cmd->resp_data);
 	cmd->resp_data = NULL;
 }

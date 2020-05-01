@@ -205,7 +205,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>fe0e7dc8</spirit:value>
+            <spirit:value>59e7b767</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -224,7 +224,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>fe0e7dc8</spirit:value>
+            <spirit:value>59e7b767</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -441,7 +441,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>csi_sleep</spirit:name>
+        <spirit:name>clkwiz_csi_locked</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
@@ -454,12 +454,16 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>csi_start_lines</spirit:name>
+        <spirit:name>R_csi_ctrl_a</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -467,12 +471,16 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>csi_start_frame</spirit:name>
+        <spirit:name>R_csi_ctrl_b</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -480,12 +488,16 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>csi_end_frame</spirit:name>
+        <spirit:name>R_csi_ctrl_c</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -493,105 +505,11 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>csi_stop</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>csi_done</spirit:name>
+        <spirit:name>R_csi_status_a</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>R_csi_line_count</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long">15</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic_vector</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>R_csi_line_byte_count</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long">20</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic_vector</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>R_csi_data_type</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long">7</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic_vector</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>R_csi_wct_frame</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long">15</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>std_logic_vector</spirit:typeName>
-              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>R_csi_control_flags</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long">15</spirit:left>
+            <spirit:left spirit:format="long">31</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -853,6 +771,53 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
+        <spirit:name>csi_debug_lp_state</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">1</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>csi_debug_lpclk_state</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">2</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>csi_debug_running</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
         <spirit:name>g_rst</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
@@ -1031,7 +996,7 @@
       <spirit:file>
         <spirit:name>hdl/csi_gearbox_dma_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_61c2bb5c</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_5cb75b49</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1143,8 +1108,8 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>csi_gearbox_dma_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>26</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2020-03-21T16:35:44Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>33</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2020-04-27T15:41:42Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@69b772c9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@398b59f0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
@@ -1391,13 +1356,81 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@7767a592_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@3e851311_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@76327ae4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@78d61d68_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d306520_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@525c76c4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@94b1fc5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b73410c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@785d241_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63632437_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@385a826f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59c37cc7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@8f443e3_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@32d11527_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4daeb02f_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c0554d1_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4eb01be7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c18776c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b2a69f5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@13611051_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4fb41304_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2487a875_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45cba850_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@336b20d0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58798322_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d953401_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73f3f1c2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@a90e7a9_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3470c666_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a8aa234_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b2f41ba_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fe37261_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45f30aa5_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@676c9b2a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@447bd0c7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62ee4f7d_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63756a58_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4fead201_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d7cf080_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@529dbf54_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6bfe618a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@571ca702_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5f45b93_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bf56e1a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@60e8794e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7837e249_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f5e32c6_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26552a8a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c6d3438_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30f5da87_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24f7484_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ca44209_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3985ef02_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37d61eb2_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e215e40_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c4c715e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f75ee11_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@c96a5ae_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c9244e0_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7013738a_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ed0cee_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@746120b7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ecfd97c_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4561cdb4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5cd31ebe_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f122c79_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b5cbae4_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@159d7594_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59cc5bb7_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@651b2bed_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@777d5f2e_ARCHIVE_LOCATION">c:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/ip_repo/csi_gearbox_dma_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2019.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="3755afa6"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="a9befae0"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="8e4fa42f"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="34fd3d55"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="2cc87405"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="90839094"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="88329062"/>
     </xilinx:packagingInfo>

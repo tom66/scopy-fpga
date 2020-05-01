@@ -11,6 +11,8 @@
 #include "spi_commands.h"
 #include "acquire.h"
 #include "trigger.h"
+#include "test_patterns.h"
+#include "mipi_csi.h"
 
 /*
  * This file contains the list of supported commands.  A look up table is
@@ -46,20 +48,32 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x3e, "TRIG_ARM",                 0,       0,        spicmd_trig_arm },
 	{  0x3f, "TRIG_DISARM",              0,       0,        spicmd_trig_disarm },
 
-	{  0x60, "CSI_SETUP_ADDR_RANGE",     8,       0,        NULL },
-	{  0x61, "CSI_SETUP_WAVE_RANGE",     8,       0,        NULL },
-	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        NULL },
-	{  0x63, "CSI_SETUP_TRIGPOS_DATA",   8,       0,        NULL },
-	{  0x64, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        NULL },
-	{  0x65, "CSI_SETUP_TESTPATT",       1,       0,        NULL },
+	{  0x60, "CSI_SETUP_ADDR_RANGE",     8,       0,        spicmd_csi_setup_addr_range },
+	{  0x61, "CSI_SETUP_WAVE_RANGE",     8,       0,        spicmd_csi_setup_wave_range },
+	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        spicmd_csi_setup_wave_all },
+	{  0x63, "CSI_SETUP_TRIGPOS_RANGE",  8,       0,        spicmd_csi_setup_trigpos_range },
+	{  0x64, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        spicmd_csi_setup_trigpos_all },
+	{  0x65, "CSI_SETUP_TESTPATT",       1,       0,        spicmd_csi_setup_testpatt },
+	{  0x65, "CSI_SETUP_BITPACK_WAVE",   1,       0,        spicmd_csi_setup_bitpack_wave },
 
-	{  0x6e, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        NULL },
-	{  0x6e, "CSI_STREAM_UNPOP_START",   0,       0,        NULL },
-	{  0x6f, "CSI_STREAM_STOP",          0,       0,        NULL },
+	{  0x6e, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        spicmd_csi_stream_clear_queue },
+	{  0x6e, "CSI_STREAM_UNPOP_START",   0,       0,        spicmd_csi_stream_unpop_start },
+	{  0x6f, "CSI_STREAM_STOP",          0,       0,        spicmd_csi_stream_stop },
+	{  0x70, "CSI_STATUS",               0,       1,        spicmd_csi_status },
+	{  0x71, "CSI_SET_PARAMS_QUEUE",     3,       0,        spicmd_csi_set_params_queue },
+
+	// Composite commands: these execute a combination of functions in one.  See spreadsheet for details.
+	{  0xc0, "COMP0",                    2,       1,        spicmd_comp0 },
+
+	// Command 0xfe is Marker NOP for debugging
+	{  0xfe, "NOP_MARK",                 0,       0,        NULL },
 
 	// Last command 0xff is required to be a NOP (marks end of table)
 	{  0xff, "NOP",					     0,		  0,		NULL },
 };
+
+// Test patterns
+extern const char norway_512x512_grey[];
 
 /*
  * Hello command.  Responds with 55 CC followed by the two argument bytes (echo self test)
@@ -155,7 +169,7 @@ void spicmd_acq_stop(struct spi_command_alloc_t *cmd)
  */
 void spicmd_acq_rewind(struct spi_command_alloc_t *cmd)
 {
-	acq_dealloc_rewind();
+	acq_rewind();
 }
 
 /*
@@ -218,4 +232,180 @@ void spicmd_trig_arm(struct spi_command_alloc_t *cmd)
 void spicmd_trig_disarm(struct spi_command_alloc_t *cmd)
 {
 	trig_disarm();
+}
+
+/*
+ * Set up a CSI data transfer over an address range.  Addresses must
+ * be 32-bit aligned.
+ */
+void spicmd_csi_setup_addr_range(struct spi_command_alloc_t *cmd)
+{
+	uint32_t start_addr, end_addr;
+
+	start_addr = UINT32_UNPACK(cmd, 0);
+	end_addr = UINT32_UNPACK(cmd, 4);
+
+	mipi_csi_queue_buffer(start_addr, end_addr);
+}
+
+void spicmd_csi_setup_wave_range(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_setup_wave_all(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_setup_trigpos_range(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_setup_trigpos_all(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_setup_testpatt(struct spi_command_alloc_t *cmd)
+{
+	uint8_t testpatt = cmd->args[0];
+	uint32_t base = 0;
+	uint32_t size = 0;
+
+	switch(testpatt) {
+		case 1:
+			base = (uint32_t)&norway_512x512_grey;
+			size = TESTPATT_NORWAY_512X512_SIZE;
+			break;
+
+		default:
+			return;
+			break;
+	}
+
+	mipi_csi_queue_buffer((uint32_t)base, (uint32_t)(base + size));
+}
+
+void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd)
+{
+}
+
+void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd)
+{
+	mipi_csi_clear_queue();
+}
+
+void spicmd_csi_stream_unpop_start(struct spi_command_alloc_t *cmd)
+{
+	mipi_csi_unpop_and_start();
+}
+
+void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd)
+{
+	mipi_csi_stop();
+}
+
+void spicmd_csi_status(struct spi_command_alloc_t *cmd)
+{
+	struct mipi_csi_status_t status_resp;
+
+	//d_printf(D_INFO, "StaReq");
+
+	mipi_csi_get_status(&status_resp);
+	spi_command_pack_response_simple(cmd, &status_resp, sizeof(struct mipi_csi_status_t));
+}
+
+/*
+ * Composite command 0.  This command can control acquisition stop/start/rewind/swap,
+ * as well as start streaming CSI data and return previously configured measurements.
+ */
+void spicmd_comp0(struct spi_command_alloc_t *cmd)
+{
+	const int resp_buff_maxsize = sizeof(struct acq_status_resp_t) + \
+								  sizeof(struct mipi_tx_size_resp_t);
+
+	struct acq_status_resp_t acq_status_resp;
+	struct mipi_tx_size_resp_t mipi_tx_size_resp;
+
+	uint16_t func = UINT16_UNPACK(cmd, 0);
+	int csi_to_send = 0;
+	void *resp_buffer_base;
+	void *resp_buffer;
+	int resp_size = 0, size = 0;
+
+	// Commands below must be executed in order to create the right behaviour...
+	if(func & SPICOMP0_ACQ_STOP) {
+		if(acq_get_state() != ACQSTATE_STOPPED) {
+			acq_stop();
+		}
+	}
+
+	if(func & SPICOMP0_ACQ_GET_STATUS) {
+		acq_make_status(&acq_status_resp);
+	}
+
+	if(func & SPICOMP0_RESP_CSI_SIZE) {
+		mipi_csi_get_size_report(&mipi_tx_size_resp);
+	}
+
+	if(func & SPICOMP0_ACQ_REWIND) {
+		acq_rewind();
+	}
+
+	if(func & SPICOMP0_ACQ_START_RESFIFO) {
+		acq_start(1);
+	} else if(func & SPICOMP0_ACQ_START_NORESFIFO) {
+		acq_start(0);
+	}
+
+	if(func & SPICOMP0_ACQ_SWAP) {
+		// TODO (once acquisition swapping enabled)
+	}
+
+	if(func & SPICOMP0_SEND_CSI_WAVES) {
+		mipi_csi_queue_all_waves();
+		csi_to_send = 1;
+	}
+
+	if(csi_to_send) {
+		mipi_csi_unpop_and_start_all();
+	}
+
+	/*
+	 * Check what we need to pack into the response buffer.  Malloc enough bytes for everything
+	 * to be added, but calculate the actual size later.  free() will be called when the transmission
+	 * is completed for this packet.
+	 */
+	resp_buffer_base = calloc(resp_buff_maxsize, 1);
+	D_ASSERT(resp_buffer_base != NULL);
+	resp_buffer = resp_buffer_base;
+
+	//d_printf(D_INFO, "resp_buffer=%08x, resp_size=%d, max_align_t=%d", resp_buffer, resp_buff_maxsize, sizeof(max_align_t));
+
+	if(func & SPICOMP0_ACQ_GET_STATUS) {
+		size = sizeof(struct acq_status_resp_t);
+		memcpy(resp_buffer, &acq_status_resp, size);
+		resp_buffer += size;
+		resp_size += size;
+	}
+
+	if(func & SPICOMP0_RESP_CSI_SIZE) {
+		size = sizeof(struct mipi_tx_size_resp_t);
+		memcpy(resp_buffer, &mipi_tx_size_resp, size);
+		resp_buffer += size;
+		resp_size += size;
+	}
+
+	d_printf(D_INFO, "resp_buffer=0x%08x resp_size=%d", resp_buffer_base, resp_size);
+	spi_command_pack_response_pre_alloc(cmd, resp_buffer_base, resp_size);
+
+	//d_printf(D_INFO, "spi_command_pack_response_pre_alloc");
+
+	//free(resp_buffer);
+	//d_printf(D_INFO, "done");
+
+	//spi_command_pack_response_simple(cmd, &acq_status_resp, 1);
+	//d_printf(D_INFO, "eof");
 }

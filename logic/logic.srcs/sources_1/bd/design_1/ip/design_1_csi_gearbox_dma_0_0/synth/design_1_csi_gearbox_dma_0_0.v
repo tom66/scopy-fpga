@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:csi_gearbox_dma:1.0
-// IP Revision: 26
+// IP Revision: 33
 
 (* X_CORE_INFO = "csi_gearbox_dma_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=26,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
+(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=33,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_csi_gearbox_dma_0_0 (
   csi_clk_p,
@@ -69,17 +69,11 @@ module design_1_csi_gearbox_dma_0_0 (
   csi_lpclk_n,
   mod_clk_I,
   mod_clk_Q,
-  csi_sleep,
-  csi_start_lines,
-  csi_start_frame,
-  csi_end_frame,
-  csi_stop,
-  csi_done,
-  R_csi_line_count,
-  R_csi_line_byte_count,
-  R_csi_data_type,
-  R_csi_wct_frame,
-  R_csi_control_flags,
+  clkwiz_csi_locked,
+  R_csi_ctrl_a,
+  R_csi_ctrl_b,
+  R_csi_ctrl_c,
+  R_csi_status_a,
   csi_ctrl_state_dbg,
   csi_mipi_busy_dbg,
   csi_mipi_done_dbg,
@@ -97,6 +91,9 @@ module design_1_csi_gearbox_dma_0_0 (
   csi_debug_mipi_read_req,
   dbg_fifo_data_ct,
   dbg_ref_clk,
+  csi_debug_lp_state,
+  csi_debug_lpclk_state,
+  csi_debug_running,
   g_rst,
   s00_axis_aclk,
   s00_axis_aresetn,
@@ -125,17 +122,11 @@ output wire csi_lpclk_p;
 output wire csi_lpclk_n;
 input wire mod_clk_I;
 input wire mod_clk_Q;
-input wire csi_sleep;
-input wire csi_start_lines;
-input wire csi_start_frame;
-input wire csi_end_frame;
-input wire csi_stop;
-output wire csi_done;
-input wire [15 : 0] R_csi_line_count;
-input wire [20 : 0] R_csi_line_byte_count;
-input wire [7 : 0] R_csi_data_type;
-input wire [15 : 0] R_csi_wct_frame;
-input wire [15 : 0] R_csi_control_flags;
+input wire clkwiz_csi_locked;
+input wire [31 : 0] R_csi_ctrl_a;
+input wire [31 : 0] R_csi_ctrl_b;
+input wire [31 : 0] R_csi_ctrl_c;
+output wire [31 : 0] R_csi_status_a;
 output wire [5 : 0] csi_ctrl_state_dbg;
 output wire csi_mipi_busy_dbg;
 output wire csi_mipi_done_dbg;
@@ -157,6 +148,9 @@ output wire [11 : 0] dbg_fifo_data_ct;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dbg_ref_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_csi_gearbox_dma_0_0_dbg_ref_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 dbg_ref_clk CLK" *)
 output wire dbg_ref_clk;
+output wire [1 : 0] csi_debug_lp_state;
+output wire [2 : 0] csi_debug_lpclk_state;
+output wire csi_debug_running;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME g_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 g_rst RST" *)
 input wire g_rst;
@@ -198,17 +192,11 @@ input wire s00_axis_tvalid;
     .csi_lpclk_n(csi_lpclk_n),
     .mod_clk_I(mod_clk_I),
     .mod_clk_Q(mod_clk_Q),
-    .csi_sleep(csi_sleep),
-    .csi_start_lines(csi_start_lines),
-    .csi_start_frame(csi_start_frame),
-    .csi_end_frame(csi_end_frame),
-    .csi_stop(csi_stop),
-    .csi_done(csi_done),
-    .R_csi_line_count(R_csi_line_count),
-    .R_csi_line_byte_count(R_csi_line_byte_count),
-    .R_csi_data_type(R_csi_data_type),
-    .R_csi_wct_frame(R_csi_wct_frame),
-    .R_csi_control_flags(R_csi_control_flags),
+    .clkwiz_csi_locked(clkwiz_csi_locked),
+    .R_csi_ctrl_a(R_csi_ctrl_a),
+    .R_csi_ctrl_b(R_csi_ctrl_b),
+    .R_csi_ctrl_c(R_csi_ctrl_c),
+    .R_csi_status_a(R_csi_status_a),
     .csi_ctrl_state_dbg(csi_ctrl_state_dbg),
     .csi_mipi_busy_dbg(csi_mipi_busy_dbg),
     .csi_mipi_done_dbg(csi_mipi_done_dbg),
@@ -226,6 +214,9 @@ input wire s00_axis_tvalid;
     .csi_debug_mipi_read_req(csi_debug_mipi_read_req),
     .dbg_fifo_data_ct(dbg_fifo_data_ct),
     .dbg_ref_clk(dbg_ref_clk),
+    .csi_debug_lp_state(csi_debug_lp_state),
+    .csi_debug_lpclk_state(csi_debug_lpclk_state),
+    .csi_debug_running(csi_debug_running),
     .g_rst(g_rst),
     .s00_axis_aclk(s00_axis_aclk),
     .s00_axis_aresetn(s00_axis_aresetn),

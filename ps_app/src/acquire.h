@@ -187,6 +187,10 @@
 #define ACQ_64SAMPCT_TO_32IDX(x)	((x) * 2)				// Convert a 64-bit sampct to a 32-bit index; multiplies by two
 #define ACQ_64SAMPCT_TO_BYPTR(x)	((x) * 8)				// Convert a 64-bit sampct to a byte offset pointer; multiplies by eight
 
+#define ACQ_REGION_PRE				0x01
+#define ACQ_REGION_POST				0x02
+#define ACQ_REGION_ALL				(ACQ_REGION_PRE | ACQ_REGION_POST)
+
 extern struct acq_state_t g_acq_state;
 
 /*
@@ -261,8 +265,8 @@ struct acq_state_t {
 
 	/*
 	 * Sizes (in words) of the acquisition data;  the counts are given in 64-bit words
-	 * so there is an 8x or 4x relationship to the sample counts. This maximises the depth of
-	 * the on-fabric 28-bit counter.
+	 * so there is an 8x or 4x relationship to the byte counts. This also maximises the
+	 * depth of the on-fabric 28-bit counter.
 	 */
 	uint32_t pre_sampct;
 	uint32_t post_sampct;
@@ -314,6 +318,18 @@ struct __attribute__ ((packed)) acq_status_resp_t {
 	uint16_t flags;
 };
 
+/*
+ * Packed trigger status: returned back to Pi host.
+ *
+ * Do not modify this structure without considering the changes required on
+ * the Pi side first!
+ */
+struct __attribute__ ((packed)) acq_trigger_data_resp_t {
+	uint32_t trig_pos;
+	uint8_t padA[2];
+	uint16_t level;
+};
+
 extern struct acq_state_t g_acq_state;
 
 void _acq_irq_error_dma(int cause_index);
@@ -328,7 +344,7 @@ void acq_write_training();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
 void acq_free_all_alloc();
-void acq_dealloc_rewind();
+void acq_rewind();
 int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq);
 int acq_start(int reset_fifo);
 int acq_stop();
@@ -342,6 +358,9 @@ int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next);
 void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
 void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
+unsigned int acq_get_wave_size_bytes(int region);
+int acq_get_wave_bit_depth();
+int acq_get_wave_bit_packed_depth();
 
 /*
  * Inlined functions that reduce RMW AXI pressure by keeping track of the internal state of
@@ -366,6 +385,22 @@ static inline void _acq_clear_and_set_ctrl_a(uint32_t bitmask_clear, uint32_t bi
 	g_acq_state.acq_ctrl_a &= ~bitmask_clear;
 	g_acq_state.acq_ctrl_a |= bitmask_set;
 	fabcfg_write(FAB_CFG_ACQ_CTRL_A, g_acq_state.acq_ctrl_a);
+}
+
+/*
+ * Return the number of waves done (have completed acquisition for.)
+ */
+inline int acq_get_nwaves_done()
+{
+	return g_acq_state.num_acq_made;
+}
+
+/*
+ * Return the state of the engine.
+ */
+inline int acq_get_state()
+{
+	return g_acq_state.state;
 }
 
 #endif // SRC_ACQUIRE_H_

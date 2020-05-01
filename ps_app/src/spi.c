@@ -27,6 +27,12 @@ struct spi_version_resp_t g_version_resp;
 volatile int test_counter = 0;
 
 /*
+ * Since we only ever have one response at any one time, all responses
+ * use a single response buffer of size SPI_RESPONSE_2BYTE_MAX + 1.
+ */
+uint8_t __attribute__ ((aligned(4)))  spi_resp_buffer[SPI_RESPONSE_2BYTE_MAX + 1];
+
+/*
  * Initialise the SPI controller.
  *
  * This must be called after the fabric configurator is loaded.
@@ -116,12 +122,11 @@ void spi_init()
 	g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 	g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
 
-	g_spi_state.byte_tx = 0x00;
-	g_spi_state.byte_send = 1;
-
 	/*
 	 * Initialise the Deque for commands.  Prepare the allocation table.
 	 */
+	d_printf(D_INFO, "spi: initialising deque");
+
 	error = deque_new(&g_spi_state.command_dq);
 
 	if(error != CC_OK) {
@@ -158,6 +163,8 @@ void spi_init()
 	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_SR_OFFSET, XSPIPS_IXR_WR_TO_CLR_MASK);
 	REG_SET_BIT(g_spi_state.spi.Config.BaseAddress, XSPIPS_IER_OFFSET, XSPIPS_IXR_MODF_MASK | XSPIPS_IXR_TXUF_MASK | XSPIPS_IXR_RXNEMPTY_MASK);
 	SPI_SCUGIC_ENABLE();
+
+	d_printf(D_INFO, "spi: done init");
 }
 
 /*
@@ -370,11 +377,15 @@ void spi_isr_handler(void *unused)
 				 * We hang out in this state until the main controller has indicated
 				 * that the response is done.
 				 */
+				/*
 				if(g_spi_state.resp_done) {
 					// Acknowledge the response, then process another command
 					g_spi_state.resp_done = 0;
 					g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 				}
+				*/
+				g_spi_state.resp_done = 0;
+				g_spi_state.cmd_state = SPI_STATE_CMD_HEADER;
 				break;
 		}
 
@@ -468,7 +479,7 @@ int spi_command_count_allocated()
 		count += __builtin_popcount(free_mask);
 	}
 
-	return count;
+	return SPI_QUEUE_ALLOC_MAX - count;
 }
 
 /*
@@ -476,35 +487,53 @@ int spi_command_count_allocated()
  * large commands as it has relatively high overheads in the form of a memcpy
  * (in case the response was on the stack beforehand.)
  */
-int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, uint8_t *resp, int respsz)
+int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, void *resp, int respsz)
 {
 	int res;
 
-	GLOBAL_IRQ_DISABLE();
-
 	cmd->resp_data = malloc(respsz);  // Malloc the response buffer.  This'll be freed by the command tick once the response is done.
-	cmd->resp_ready = 1;
 
 	if(cmd->resp_data == NULL) {
 		d_printf(D_ERROR, "spi: error allocating %d bytes for command response - response failed", respsz);
 
+		GLOBAL_IRQ_DISABLE();
+		cmd->resp_ready = 1;
 		cmd->resp_size = 0;
 		cmd->resp_error = 1;
+		GLOBAL_IRQ_ENABLE();
 
 		res = SPIRET_MEM_ERROR;
 	} else {
 		memcpy(cmd->resp_data, resp, respsz);
 
+		GLOBAL_IRQ_DISABLE();
+		cmd->resp_ready = 1;
 		cmd->resp_size = respsz;
 		cmd->resp_error = 0;
 		cmd->free_resp_reqd = 1;
+		GLOBAL_IRQ_ENABLE();
 
 		res = SPIRET_OK;
 	}
 
-	GLOBAL_IRQ_ENABLE();
-
 	return res;
+}
+
+/*
+ * Pack a response for a command using a pointer copy.  The buffer must have been
+ * allocated using malloc or friends, as it will be later freed using free().
+ */
+void spi_command_pack_response_pre_alloc(struct spi_command_alloc_t *cmd, void *resp, int respsz)
+{
+	D_ASSERT(resp != NULL);
+
+	GLOBAL_IRQ_DISABLE();
+	cmd->resp_data = resp;
+	cmd->resp_size = respsz;
+	cmd->resp_ready = 1;
+	cmd->resp_error = 0;
+	cmd->free_resp_reqd = 1;
+	GLOBAL_IRQ_ENABLE();
 }
 
 /*
@@ -521,8 +550,9 @@ int spi_command_tick()
 	int alloc = spi_command_count_allocated();
 
 #if 0
-	if(dqs != 0 || alloc != 127) {
-		d_printf(D_RAW, "\r\n%d,%d,%d,%d,%d,%02x", dqs, alloc, g_spi_state.proc_state, g_spi_state.cmd_state, g_spi_state.resp_done, proc_cmd->cmd);
+	if(dqs != 0 || alloc != 0) {
+		// Q: Deque size, a: alloc table, P: proc state, C: command state, r: has_response, D: done, c: cmd code
+		d_printf(D_RAW, "\r\n%d %d %d %d %d %d %02x", dqs, alloc, g_spi_state.proc_state, g_spi_state.cmd_state, g_spi_state.has_response, g_spi_state.resp_done, proc_cmd->cmd);
 	} else {
 		iter++;
 		if(iter > 100) {
@@ -532,25 +562,37 @@ int spi_command_tick()
 	}
 #endif
 
+	if(d_getkey() == 'd') {
+		d_printf(D_RAW, "\r\n\r\npause, press key to resume\r\n\r\n");
+		d_waitkey();
+	}
+
 	res = SPIENGINE_IDLE;
+
+	GLOBAL_IRQ_DISABLE();
 
 	switch(g_spi_state.proc_state) {
 		case SPIPROC_STATE_DEQUEUE:
-			if(deque_size(g_spi_state.command_dq) > 0) {
-				deque_remove_first(g_spi_state.command_dq, (void*)&cmd);
-				g_spi_state.proc_cmd = cmd;
-				g_spi_state.proc_state = SPIPROC_STATE_EXECUTE;
-				g_spi_state.resp_done = 0;
+			if(spi_command_count_allocated() > 0) {
+				// Disable IRQs while pinging the deque
+				if(deque_size(g_spi_state.command_dq) > 0) {
+					deque_remove_first(g_spi_state.command_dq, (void*)&cmd);
+					g_spi_state.proc_cmd = cmd;
+					g_spi_state.proc_state = SPIPROC_STATE_EXECUTE;
+					g_spi_state.resp_done = 0;
 
-				// Tell outer task that we're still busy, while we try to handle this command
-				res = SPIENGINE_WORKING;
+					// Tell outer task that we're still busy, while we try to handle this command
+					res = SPIENGINE_WORKING;
+				}
 			}
 			break;
 
 		case SPIPROC_STATE_EXECUTE:
 			// If the command has a callback, deal with that.
 			if(g_spi_command_lut[proc_cmd->cmd].cmd_processor != NULL) {
+				//d_printf(D_RAW, "C");
 				g_spi_command_lut[proc_cmd->cmd].cmd_processor(proc_cmd);
+				//d_printf(D_RAW, "^");
 			}
 
 			/*
@@ -562,6 +604,7 @@ int spi_command_tick()
 				g_spi_state.resp_data_ptr = proc_cmd->resp_data;
 				g_spi_state.proc_state = SPIPROC_STATE_OUTPUT_RESP_INIT;
 				res = SPIENGINE_WORKING;  // Tell outer task that we're still busy
+				//d_printf(D_RAW, "#");
 			} else {
 				if(proc_cmd->resp_error) {
 					d_printf(D_WARN, "spi: command idx %d has error", proc_cmd->alloc_idx);
@@ -579,6 +622,8 @@ int spi_command_tick()
 				g_spi_state.resp_done = 1; // Tell SPI ISR state machine that we're done
 				g_spi_state.proc_cmd = NULL;
 				g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
+				g_spi_state.commands_queued--;
+				//d_printf(D_RAW, "Q");
 			}
 			break;
 
@@ -594,13 +639,11 @@ int spi_command_tick()
 			SPI_SCUGIC_DISABLE();
 
 			// Check for underflow flag set.  If set pack some null bytes to ensure underflow doesn't happen during header TX.
-			/*
 			if(SPI_IS_TX_UNDERFLOW()) {
 				for(i = 0; i < 16; i++) {
 					spi_transmit(0x00);
 				}
 			}
-			*/
 
 			spi_transmit(0x00);
 			spi_transmit(0x00);
@@ -664,13 +707,14 @@ int spi_command_tick()
 			 */
 			spi_command_mark_slot_free(proc_cmd->alloc_idx);
 			spi_command_cleanup(proc_cmd);
+			g_spi_state.commands_queued--;
 			g_spi_state.resp_done = 1;
 
 			/*
 			 * Wait for ISR to set state to zero, then we can process another command;
-			 * this should happen fairly quickly so no need to block here.
+			 * this should happen fairly quickly so no need to not block here.
 			 */
-			while(g_spi_state.resp_done) ;
+			//while(g_spi_state.resp_done) ;
 
 			g_spi_state.proc_cmd = NULL;
 			g_spi_state.proc_state = SPIPROC_STATE_DEQUEUE;
@@ -682,6 +726,8 @@ int spi_command_tick()
 			res = SPIENGINE_WORKING;
 			break;
 	}
+
+	GLOBAL_IRQ_ENABLE();
 
 	return res;
 }

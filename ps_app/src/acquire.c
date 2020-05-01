@@ -157,7 +157,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * XXX: This should be reworked.  We should be able to go back to the start and
 					 * recover rather than completing this acquisition needlessly.
 					 */
-					if(acq_status_a & ACQ_STATUS_A_DATA_LOSS) {
+					if(COND_UNLIKELY(acq_status_a & ACQ_STATUS_A_DATA_LOSS)) {
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
 					}
@@ -171,7 +171,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * Compute the address of the next DMA transfer and set it up.
 					 * If the acquisition is to be aborted, then don't start another DMA.
 					 */
-					if(g_acq_state.acq_early_abort) {
+					if(COND_UNLIKELY(g_acq_state.acq_early_abort)) {
 						//d_printf(D_RAW, "ek");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
@@ -214,7 +214,7 @@ void _acq_irq_rx_handler(void *callback)
 					_acq_clear_ctrl_a(ACQ_CTRL_A_AXI_RUN);
 
 					// If the FIFO is full, capture the data but set the discard flag.
-					if(acq_status_a & ACQ_STATUS_A_DATA_LOSS) {
+					if(COND_UNLIKELY(acq_status_a & ACQ_STATUS_A_DATA_LOSS)) {
 						_acq_reset_PL_fifo();
 						g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_OVERRUN;
 						g_acq_state.stats.num_fifo_full++;
@@ -224,7 +224,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * Set the next DMA transfer up with pointer at the start of the current buffer.
 					 * If the acquisition is to be aborted, then don't start another DMA.
 					 */
-					if(g_acq_state.acq_early_abort) {
+					if(COND_UNLIKELY(g_acq_state.acq_early_abort)) {
 						//d_printf(D_RAW, "eo");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
@@ -287,7 +287,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * Start a new transfer, but without allocating a new buffer or increasing the waveform count.
 					 * Don't start the transfer if we're trying to abort.
 					 */
-					if(g_acq_state.acq_early_abort) {
+					if(COND_UNLIKELY(g_acq_state.acq_early_abort)) {
 						//d_printf(D_RAW, "ep");
 						g_acq_state.acq_early_abort = 0;
 						g_acq_state.acq_abort_done = 1;
@@ -324,6 +324,8 @@ void _acq_irq_rx_handler(void *callback)
 								g_acq_state.sub_state = ACQSUBST_NONE;
 							} else {
 								g_acq_state.acq_current = g_acq_state.acq_current->next;
+								//d_printf(D_INFO, "cur:%08x nxt:%08x", g_acq_state.acq_current, g_acq_state.acq_current->next);
+								//outbyte('x');
 								error = acq_start(ACQ_START_FIFO_RESET);
 
 								if(error != ACQRES_OK) {
@@ -713,7 +715,7 @@ int acq_append_next_alloc()
 	 * Allocate the struct that stores the buffer info first.  This is
 	 * just a few bytes, but could fail if we are near the memory limit.
 	 */
-	if(next == 0) {
+	if(next == NULL) {
 		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for alloc structure", sizeof(struct acq_buffer_t));
 		g_acq_state.stats.num_alloc_err_total++;
 		return ACQRES_MALLOC_FAIL;
@@ -737,6 +739,7 @@ int acq_append_next_alloc()
 	 * to be one higher than the last index then move the current pointer to reference
 	 * this structure.
 	 */
+	//d_printf(D_INFO, "AppNext cur:%08x cur->next:%08x next:%08x", g_acq_state.acq_current, g_acq_state.acq_current->next, next);
 	g_acq_state.acq_current->next = next;
 	g_acq_state.acq_current->next->idx = g_acq_state.acq_current->idx + 1;
 	g_acq_state.acq_current = next;
@@ -753,12 +756,19 @@ void acq_free_all_alloc()
 	struct acq_buffer_t *next = g_acq_state.acq_first;
 	struct acq_buffer_t *next_next;
 
+	//d_printf(D_INFO, "Start FreeAllAlloc");
+
+	// Disable interrupts while we process this as we're altering the linked list
+	GLOBAL_IRQ_DISABLE();
+
 	/*
 	 * Iterate through the list of allocations starting at the first allocation,
 	 * copy the next pointer, free the current allocation and repeat until we reach
 	 * a NULL next pointer.
 	 */
 	while(next != NULL) {
+		//d_printf(D_INFO, "FA n:%08x b:%08x idx:%d nn:%08x fl:%04x", next, next->buff_alloc, next->idx, next->next, next->flags);
+
 		next_next = next->next;
 
 		// Free the buffer *and* the acquisition structure
@@ -770,27 +780,36 @@ void acq_free_all_alloc()
 
 	g_acq_state.acq_first = NULL;
 	g_acq_state.acq_current = NULL;
+
+	GLOBAL_IRQ_ENABLE();
+
+	//d_printf(D_INFO, "Done FreeAllAlloc");
 }
 
 /*
- * Deallocate acquisition buffers without freeing the memory, then rewind the
- * pointer to the start.  The buffers will contain stale data after this, but are
- * made available for future use.
+ * Rewind the acquisition pointer to the start and mark all buffers as free.
+ * The buffers will contain stale data after this, but are made available for reuse.
  *
  * This function cannot be used if the allocation size has changed.  Buffers must
  * be freed and reallocated using `acq_free_all_alloc` and `acq_prepare_triggered`.
  */
-void acq_dealloc_rewind()
+void acq_rewind()
 {
 	struct acq_buffer_t *next = g_acq_state.acq_first;
 
+	//d_printf(D_INFO, "Start Rewind");
+
+	// Disable interrupts while we process this as we're altering the linked list
+	GLOBAL_IRQ_DISABLE();
+
+	//d_printf(D_INFO, "f:%08x c:%08x", g_acq_state.acq_first, g_acq_state.acq_current);
+
 	/*
 	 * Iterate through the list of allocations starting at the first allocation,
-	 * copy the next pointer, free the current allocation and repeat until we reach
-	 * a NULL next pointer.
+	 * clearing the flags and trigger position.
 	 */
-	while(next->next != NULL) {
-		//d_printf(D_INFO, "%08x", next);
+	while(next != NULL) {
+		//d_printf(D_INFO, "RW %08x %d %08x %04x", next, next->idx, next->next, next->flags);
 
 		next->flags = ACQBUF_FLAG_ALLOC;
 		next->trigger_at = 0;
@@ -800,15 +819,19 @@ void acq_dealloc_rewind()
 
 	g_acq_state.acq_current = g_acq_state.acq_first;
 	g_acq_state.num_acq_made = 0; // Reset wave counter
+
+	GLOBAL_IRQ_ENABLE();
+
+	//d_printf(D_INFO, "Done Rewind");
 }
 
 /*
- * Prepare a new triggered acquisition: allocate the first buffer, set up the state machine
+ * Prepare a new triggered acquisition: allocate the buffers, set up the state machine
  * and configure the fabric.
  *
  * @param	mode_flags		Mode flags of type ACQ_MODE used to configure the sampling engine.
- * @param	pre_sz			Pre trigger buffer size
- * @param	post_sz			Post trigger buffer size
+ * @param	pre_sz			Pre trigger buffer size (samples)
+ * @param	post_sz			Post trigger buffer size (samples)
  * @param	num_acq			Total acquisition count (number of acquisitions to complete)
  */
 int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq)
@@ -818,99 +841,72 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 	uint32_t total_acq_sz;
 	uint32_t align_mask;
 	uint32_t demux;
-	int i, error = 0;
+	int i, error;
 
 	// How can we acquire an empty buffer of no waveforms?
-	if(num_acq == 0 || pre_sz == 0 || post_sz == 0) {
+	if(COND_UNLIKELY(num_acq == 0 || pre_sz == 0 || post_sz == 0)) {
 		d_printf(D_ERROR, "acquire: zero buffer/zero wavecount");
 		return ACQRES_PARAM_FAIL;
 	}
 
 	// Must have at least one of 8-bit, 12-bit or 14-bit set
-	if(!(mode_flags & (ACQ_MODE_8BIT | ACQ_MODE_12BIT | ACQ_MODE_14BIT))) {
+	if(COND_UNLIKELY(!(mode_flags & (ACQ_MODE_8BIT | ACQ_MODE_12BIT | ACQ_MODE_14BIT)))) {
 		d_printf(D_ERROR, "acquire: bit-depth not provided");
 		return ACQRES_PARAM_FAIL;
 	}
 
 	// Must have at least one of 1ch, 2ch or 4ch set
-	if(!(mode_flags & (ACQ_MODE_1CH | ACQ_MODE_2CH | ACQ_MODE_4CH))) {
+	if(COND_UNLIKELY(!(mode_flags & (ACQ_MODE_1CH | ACQ_MODE_2CH | ACQ_MODE_4CH)))) {
 		d_printf(D_ERROR, "acquire: channel mode not provided");
 		return ACQRES_PARAM_FAIL;
 	}
 
 	// Must not have "CONTINUOUS" or "TRIGGERED" set
-	if(mode_flags & (ACQ_MODE_TRIGGERED | ACQ_MODE_CONTINUOUS)) {
+	if(COND_UNLIKELY(mode_flags & (ACQ_MODE_TRIGGERED | ACQ_MODE_CONTINUOUS))) {
 		d_printf(D_ERROR, "acquire: triggered or continuous flag set (both bits must be clear)");
 		return ACQRES_PARAM_FAIL;
 	}
-
-#if 0
-	/*
-	 * Compute the pre and post trigger buffer sizes, and verify that everything is
-	 * lined up nicely along the required sample boundaries.
-	 */
-	if(bias_point == 0) {
-		pre_sz = total_sz / 2;
-		post_sz = total_sz / 2;
-	} else if(bias_point < 0) {
-		pre_sz = -bias_point;
-		post_sz = total_sz - pre_sz;
-	} else if(bias_point > 0) {
-		post_sz = bias_point;
-		pre_sz = total_sz - post_sz;
-	}
-#endif
 
 	error = 0;
 
 	if(mode_flags & ACQ_MODE_8BIT) {
 		align_mask = ACQ_SAMPLES_ALIGN_8B_AMOD;
-
-		if(post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD) {
-			error = 1;
-		}
-
-		if(pre_sz & ACQ_SAMPLES_ALIGN_8B_AMOD) {
-			error = 1;
-		}
-	}
-
-	if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
+		pre_sampct = pre_sz / ACQ_SAMPLES_ALIGN_8B;
+		post_sampct = post_sz / ACQ_SAMPLES_ALIGN_8B;
+		error |= (post_sz & align_mask) | (pre_sz & align_mask);
+	} else if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
 		align_mask = ACQ_SAMPLES_ALIGN_PR_AMOD;
-
-		if(post_sz & ACQ_SAMPLES_ALIGN_PR_AMOD) {
-			error = 1;
-		}
-
-		if(pre_sz & ACQ_SAMPLES_ALIGN_PR_AMOD) {
-			error = 1;
-		}
+		pre_sampct = pre_sz / ACQ_SAMPLES_ALIGN_PR;
+		post_sampct = post_sz / ACQ_SAMPLES_ALIGN_PR;
+		error |= (post_sz & align_mask) | (pre_sz & align_mask);
 	}
 
-	if(pre_sz < ACQ_MIN_PREPOST_SIZE || post_sz < ACQ_MIN_PREPOST_SIZE) {
-		error = 1;
+	if(COND_UNLIKELY(pre_sz < ACQ_MIN_PREPOST_SIZE || post_sz < ACQ_MIN_PREPOST_SIZE)) {
+		error |= 1;
 	}
 
-	if(error) {
-		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary or too small (pre=%d post=%d req_align_mask=0x%08x test=0x%08x)", \
-				pre_sz, post_sz, align_mask, post_sz & ACQ_SAMPLES_ALIGN_8B_AMOD);
+	if(COND_UNLIKELY(error)) {
+		d_printf(D_ERROR, "acquire: pre or post buffers not aligned to required sample boundary or too small (pre=%d post=%d req_align_mask=0x%08x)", \
+				pre_sz, post_sz, align_mask);
 		return ACQRES_ALIGN_FAIL;
 	}
 
+#if 0
 	// Scale total_sz and pre/post sizes, if appropriate
 	if(mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT)) {
-		// 4 samples per readout (64-bit)
+		// 4 samples per data word (64-bit)
 		pre_sampct = pre_sz;
 		post_sampct = post_sz;
-		post_sz *= 4;
-		pre_sz *= 4;
+		//post_sz *= 4;
+		//pre_sz *= 4;
 	} else if(mode_flags & (ACQ_MODE_8BIT)) {
-		// 8 samples per readout (64-bit)
+		// 8 samples per per data word (64-bit)
 		pre_sampct = pre_sz;
 		post_sampct = post_sz;
-		post_sz *= 8;
-		pre_sz *= 8;
+		//post_sz *= 8;
+		//pre_sz *= 8;
 	}
+#endif
 
 	g_acq_state.pre_buffsz = pre_sz;
 	g_acq_state.post_buffsz = post_sz;
@@ -936,7 +932,9 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 	}
 
 	g_acq_state.state = ACQSTATE_UNINIT;
+	d_printf(D_INFO, "FreeALL");
 	acq_free_all_alloc();
+	d_printf(D_INFO, "FreeDone");
 
 	first = malloc(sizeof(struct acq_buffer_t));
 
@@ -1028,7 +1026,7 @@ int acq_start(int reset_fifo)
 
 	//d_printf(D_INFO, "acquire: starts");
 
-	if(g_acq_state.state == ACQSTATE_UNINIT) {
+	if(COND_UNLIKELY(g_acq_state.state == ACQSTATE_UNINIT)) {
 		d_printf(D_ERROR, "ACQSTATE_UNINIT");
 		return ACQRES_NOT_INITIALISED;
 	}
@@ -1078,7 +1076,7 @@ int acq_start(int reset_fifo)
 
 		return ACQRES_OK;
 	} else {
-		d_printf(D_ERROR, "mode unsupported");
+		d_printf(D_ERROR, "acquire: mode unsupported (0x%08x)", g_acq_state.acq_mode_flags);
 		return ACQRES_NOT_IMPLEMENTED;
 	}
 }
@@ -1217,13 +1215,13 @@ void acq_debug_dump()
 	d_printf(D_INFO, "R_acq_status_b        = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_STATUS_B), g_acq_state.dbg_isr_acq_status_b);
 	d_printf(D_INFO, "R_acq_trigger_ptr     = 0x%08x (last_isr:0x%08x)", fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR), g_acq_state.dbg_isr_acq_trig_ptr);
 	d_printf(D_INFO, "                                                ");
-	d_printf(D_INFO, "pre_buffsz            = %d bytes (0x%08x)       ", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
-	d_printf(D_INFO, "post_buffsz           = %d bytes (0x%08x)       ", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
-	d_printf(D_INFO, "total_buffsz          = %d bytes (0x%08x)       ", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
-	d_printf(D_INFO, "pre_sampct            = %d wavewords            ", g_acq_state.pre_sampct);
-	d_printf(D_INFO, "post_sampct           = %d wavewords            ", g_acq_state.post_sampct);
-	d_printf(D_INFO, "num_acq_request       = %d waves                ", g_acq_state.num_acq_request);
-	d_printf(D_INFO, "num_acq_made          = %d waves                ", g_acq_state.num_acq_made);
+	d_printf(D_INFO, "pre_buffsz            = %7d bytes (0x%08x)      ", g_acq_state.pre_buffsz, g_acq_state.pre_buffsz);
+	d_printf(D_INFO, "post_buffsz           = %7d bytes (0x%08x)      ", g_acq_state.post_buffsz, g_acq_state.post_buffsz);
+	d_printf(D_INFO, "total_buffsz          = %7d bytes (0x%08x)      ", g_acq_state.total_buffsz, g_acq_state.total_buffsz);
+	d_printf(D_INFO, "pre_sampct            = %7d wavewords           ", g_acq_state.pre_sampct);
+	d_printf(D_INFO, "post_sampct           = %7d wavewords           ", g_acq_state.post_sampct);
+	d_printf(D_INFO, "num_acq_request       = %7d waves               ", g_acq_state.num_acq_request);
+	d_printf(D_INFO, "num_acq_made          = %7d waves               ", g_acq_state.num_acq_made);
 	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "acq_current->flags    = 0x%04x                  ", g_acq_state.acq_current->flags);
 	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)             ", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
@@ -1520,4 +1518,61 @@ void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *ad
 	addr_helper->post_end = addr_helper->post_start + wave->post_sz;
 
 	return ACQRES_OK;
+}
+
+/*
+ * Helper function to get the size of the present waveform configuration,
+ * used by external callers.
+ *
+ * If the acquisition has not been initialised, this function might return
+ * garbage or invalid values.
+ *
+ * @param	region		bitmask of type ACQ_REGION_x
+ */
+unsigned int acq_get_wave_size_bytes(int region)
+{
+	unsigned int size = 0;
+
+	if(region & ACQ_REGION_PRE)
+		size += g_acq_state.pre_buffsz;
+
+	if(region & ACQ_REGION_POST)
+		size += g_acq_state.post_buffsz;
+
+	return size;
+}
+
+/*
+ * Get the waveform bit depth.  Returns 8, 12, or 14.
+ */
+int acq_get_wave_bit_depth()
+{
+	int res = 0;
+
+	if(g_acq_state.acq_mode_flags & ACQ_MODE_8BIT)
+		res = 8;
+
+	if(g_acq_state.acq_mode_flags & ACQ_MODE_12BIT)
+		res = 12;
+
+	if(g_acq_state.acq_mode_flags & ACQ_MODE_14BIT)
+		res = 14;
+
+	return res;
+}
+
+/*
+ * Get the packed waveform bit depth.  Returns 8 or 16.
+ */
+int acq_get_wave_bit_packed_depth()
+{
+	int res = 0;
+
+	if(g_acq_state.acq_mode_flags & ACQ_MODE_8BIT)
+		res = 8;
+
+	if(g_acq_state.acq_mode_flags & (ACQ_MODE_12BIT | ACQ_MODE_14BIT))
+		res = 16;
+
+	return res;
 }

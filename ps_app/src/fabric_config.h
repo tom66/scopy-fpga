@@ -75,11 +75,10 @@
 
 #define FAB_CFG_TRIG_HOLDOFF_DEBUG		0x00d4
 
-//#define FAB_CFG_GPIO_TEST				0x0050	// Deprecated, to be moved
-#define FAB_CFG_CSI_LINE_COUNT			0x0100
-#define FAB_CFG_CSI_LINE_BYTE_COUNT		0x0104
-#define FAB_CFG_CSI_DATA_TYPE			0x0108
-#define FAB_CFG_CSI_CTRL_FLAGS			0x010c
+#define FAB_CFG_CSI_CTRL_A				0x0100
+#define FAB_CFG_CSI_CTRL_B				0x0104
+#define FAB_CFG_CSI_CTRL_C				0x0108
+#define FAB_CFG_CSI_STATUS_A			0x010c
 
 #define FAB_CFG_ADDR_MASK				0x03fc
 #define FAB_CFG_MAGIC_VALUE				0x536d7670
@@ -207,5 +206,20 @@ static inline void fabcfg_toggle(uint32_t reg, uint32_t data)
 	_FAB_CFG_ACCESS(reg) ^= data;
 	//dsb();
 }
+
+/*
+ * Write value with mask and shift in fabric.
+ *
+ * @param	reg		Register index
+ * @param	data	Data to write
+ */
+static inline void fabcfg_write_masked(uint32_t reg, uint32_t data, uint32_t mask, int shift)
+{
+	reg &= FAB_CFG_ADDR_MASK;
+
+	_FAB_CFG_ACCESS(reg) &= ~mask;
+	_FAB_CFG_ACCESS(reg) |= (data << shift) & mask;
+}
+
 
 #endif /* SRC_FABRIC_CONFIG_H_ */

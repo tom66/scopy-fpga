@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-//Date        : Thu Apr 23 22:54:51 2020
+//Date        : Mon Apr 27 16:42:41 2020
 //Host        : TomsDesktop running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -38,18 +38,12 @@ module design_1_wrapper
     CSI_D0_P,
     CSI_D1_N,
     CSI_D1_P,
-    CSI_DONE,
-    CSI_END_FRAME,
     CSI_LPCLK_N,
     CSI_LPCLK_P,
     CSI_LPD0_N,
     CSI_LPD0_P,
     CSI_LPD1_N,
     CSI_LPD1_P,
-    CSI_SLEEP,
-    CSI_START_FRAME,
-    CSI_START_LINES,
-    CSI_STOP,
     DDR_addr,
     DDR_ba,
     DDR_cas_n,
@@ -74,7 +68,8 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    GPIO_TEST,
+    LED_CH0,
+    LED_CH1,
     SPI_CLK,
     SPI_CSN,
     SPI_DATA_IN,
@@ -109,18 +104,12 @@ module design_1_wrapper
   output CSI_D0_P;
   output CSI_D1_N;
   output CSI_D1_P;
-  output CSI_DONE;
-  input CSI_END_FRAME;
   output CSI_LPCLK_N;
   output CSI_LPCLK_P;
   output CSI_LPD0_N;
   output CSI_LPD0_P;
   output CSI_LPD1_N;
   output CSI_LPD1_P;
-  input CSI_SLEEP;
-  input CSI_START_FRAME;
-  input CSI_START_LINES;
-  input CSI_STOP;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -145,7 +134,8 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  output [1:0]GPIO_TEST;
+  output LED_CH0;
+  output LED_CH1;
   input SPI_CLK;
   input SPI_CSN;
   input SPI_DATA_IN;
@@ -181,18 +171,12 @@ module design_1_wrapper
   wire CSI_D0_P;
   wire CSI_D1_N;
   wire CSI_D1_P;
-  wire CSI_DONE;
-  wire CSI_END_FRAME;
   wire CSI_LPCLK_N;
   wire CSI_LPCLK_P;
   wire CSI_LPD0_N;
   wire CSI_LPD0_P;
   wire CSI_LPD1_N;
   wire CSI_LPD1_P;
-  wire CSI_SLEEP;
-  wire CSI_START_FRAME;
-  wire CSI_START_LINES;
-  wire CSI_STOP;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -217,7 +201,8 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
-  wire [1:0]GPIO_TEST;
+  wire LED_CH0;
+  wire LED_CH1;
   wire SPI_CLK;
   wire SPI_CSN;
   wire SPI_DATA_IN;
@@ -254,18 +239,12 @@ module design_1_wrapper
         .CSI_D0_P(CSI_D0_P),
         .CSI_D1_N(CSI_D1_N),
         .CSI_D1_P(CSI_D1_P),
-        .CSI_DONE(CSI_DONE),
-        .CSI_END_FRAME(CSI_END_FRAME),
         .CSI_LPCLK_N(CSI_LPCLK_N),
         .CSI_LPCLK_P(CSI_LPCLK_P),
         .CSI_LPD0_N(CSI_LPD0_N),
         .CSI_LPD0_P(CSI_LPD0_P),
         .CSI_LPD1_N(CSI_LPD1_N),
         .CSI_LPD1_P(CSI_LPD1_P),
-        .CSI_SLEEP(CSI_SLEEP),
-        .CSI_START_FRAME(CSI_START_FRAME),
-        .CSI_START_LINES(CSI_START_LINES),
-        .CSI_STOP(CSI_STOP),
         .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),
@@ -290,7 +269,8 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .GPIO_TEST(GPIO_TEST),
+        .LED_CH0(LED_CH0),
+        .LED_CH1(LED_CH1),
         .SPI_CLK(SPI_CLK),
         .SPI_CSN(SPI_CSN),
         .SPI_DATA_IN(SPI_DATA_IN),

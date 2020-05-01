@@ -9,7 +9,7 @@
 
 #include "hal.h"
 #include "acquire.h"
-#include "mipi_csi_hacks.h"
+//#include "mipi_csi_hacks.h"
 #include "fabric_config.h"
 #include "trigger.h"
 
@@ -29,6 +29,7 @@ extern uint8_t norway_512x512_grey[];
  */
 uint8_t buffer[BUFFER_SIZE] __attribute__((aligned(32)));
 
+#if 0
 void acq_hacks_init()
 {
 }
@@ -282,3 +283,4 @@ void acq_hacks_run()
 		iter++;
 	}
 }
+#endif

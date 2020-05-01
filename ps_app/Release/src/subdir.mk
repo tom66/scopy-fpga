@@ -10,48 +10,45 @@ C_SRCS += \
 ../src/acq_hacks.c \
 ../src/acquire.c \
 ../src/clkwiz_interface.c \
-../src/demo_norway.c \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
 ../src/mipi_csi.c \
-../src/mipi_csi_hacks.c \
 ../src/platform.c \
 ../src/spi.c \
 ../src/spi_commands.c \
 ../src/system_control.c \
+../src/test_patterns.c \
 ../src/trigger.c 
 
 OBJS += \
 ./src/acq_hacks.o \
 ./src/acquire.o \
 ./src/clkwiz_interface.o \
-./src/demo_norway.o \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
 ./src/mipi_csi.o \
-./src/mipi_csi_hacks.o \
 ./src/platform.o \
 ./src/spi.o \
 ./src/spi_commands.o \
 ./src/system_control.o \
+./src/test_patterns.o \
 ./src/trigger.o 
 
 C_DEPS += \
 ./src/acq_hacks.d \
 ./src/acquire.d \
 ./src/clkwiz_interface.d \
-./src/demo_norway.d \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \
 ./src/mipi_csi.d \
-./src/mipi_csi_hacks.d \
 ./src/platform.d \
 ./src/spi.d \
 ./src/spi_commands.d \
 ./src/system_control.d \
+./src/test_patterns.d \
 ./src/trigger.d 
 
 

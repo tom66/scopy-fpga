@@ -65,8 +65,11 @@
 #define GPIO_PS_LED_0_PIN			9
 #define GPIO_PS_LED_1_PIN			37
 
+#define COND_UNLIKELY(expr)			__builtin_expect((expr), 0)
+#define COND_LIKELY(expr)			__builtin_expect((expr), 1)
+
 #define D_ASSERT(expr)				{ \
-										if(__builtin_expect(!(expr), 0)) { \
+										if(COND_UNLIKELY(!(expr))) { \
 											d_printf(D_ERROR, "assertion failed: `%s' (file %s, line %d)", #expr, __FILE__, __LINE__);  \
 											exit(-99) ; \
 										} \
@@ -99,6 +102,21 @@
 // TODO:  Move to common utils file
 #define MAX(a,b) 					((a) > (b) ? (a) : (b))
 #define MIN(a,b) 					((a) < (b) ? (a) : (b))
+#define INT_IS_EVEN(x)				(((x) % 2) == 0)
+#define INT_IS_ODD(x)				(!IS_EVEN(x))
+
+typedef int16_t temp_t;			// Temperature represented from -273.15C to +327.68C
+typedef uint16_t mvolt_t;		// System voltages from 0.0 ~ 6.5535V
+
+struct __attribute__ ((packed)) hal_health_t {
+	// FPGA health.
+	temp_t die_temp;
+	mvolt_t vcore_ps;
+	mvolt_t vaux_ps;
+	mvolt_t vcore_pl;
+	mvolt_t vaux_pl;
+	mvolt_t vddr;
+};
 
 struct hal_t {
 	XScuGic xscu_gic;

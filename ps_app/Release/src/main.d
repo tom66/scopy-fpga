@@ -41,7 +41,9 @@ src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
  ../src/Collections-C/src/include/common.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h \
- ../src/system_control.h \
+ ../src/mipi_csi.h ../.\src\Collections-C\src\include/queue.h \
+ ../.\src\Collections-C\src\include/common.h \
+ ../.\src\Collections-C\src\include/deque.h ../src/system_control.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xttcps.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xttcps_hw.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xttcps_hw.h
@@ -137,6 +139,14 @@ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/s
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips.h:
 
 C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips_hw.h:
+
+../src/mipi_csi.h:
+
+../.\src\Collections-C\src\include/queue.h:
+
+../.\src\Collections-C\src\include/common.h:
+
+../.\src\Collections-C\src\include/deque.h:
 
 ../src/system_control.h:
 

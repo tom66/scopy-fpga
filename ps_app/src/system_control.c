@@ -10,6 +10,7 @@
 #include "hal.h"
 #include "spi.h"
 #include "system_control.h"
+#include "mipi_csi.h"
 
 #include "xscugic.h"
 #include "xttcps.h"
@@ -57,8 +58,9 @@ void sysctrl_init()
 	XTtcPs_SetInterval(&g_sysctrl_state.ttc, interval);
 	XTtcPs_SetPrescaler(&g_sysctrl_state.ttc, prescaler);
 
-	d_printf(D_INFO, "sysctrl: ttc configured [frequency:%d Hz, interval:%d, prescaler:%d]", \
-			SYSCTRL_WAKE_FREQUENCY, interval, prescaler);
+	d_printf(D_INFO, "sysctrl: ttc configured [input_clock:%d Hz, frequency:%d Hz, interval:%d, prescaler:%d, actual_freq:%d Hz]", \
+			g_sysctrl_state.ttc.Config.InputClockHz, SYSCTRL_WAKE_FREQUENCY, interval, \
+			prescaler, (g_sysctrl_state.ttc.Config.InputClockHz) / interval);
 
 	/*
 	 * Enable the interrupt on the SCUGIC controller and on the TTC0 channel,
@@ -139,6 +141,7 @@ void sysctrl_main_loop()
 {
 	int sleep_ok, gen_wakeup = 0;
 
+#if 0
 	while(1) {
 		sleep_ok = 1;
 
@@ -150,7 +153,7 @@ void sysctrl_main_loop()
 		/*
 		 * Execute always-tick functions.  SPI engine can block a processor sleep
 		 * request, and force continuous execution of the processing block regardless
-		 * of the state of the wakeup bit.
+		 * of the state of the wakeup bit.  The same applies for MIPI.
 		 *
 		 * LED tick only executes if microsecond TTC tick was source of wakeup.
 		 */
@@ -163,6 +166,8 @@ void sysctrl_main_loop()
 			sleep_ok = 0;
 			gen_wakeup = 1;
 		}
+
+		mipi_csi_tick();
 
 		/*
 		 * Execute XADC tick if the counter requires; but only if we aren't otherwise
@@ -193,5 +198,17 @@ void sysctrl_main_loop()
 			asm("wfi");
 			gpio_led_write(1, 1);
 		}
+	}
+#endif
+
+	while(1) {
+		if(g_sysctrl_state.wakeup) {
+			sysctrl_led_tick();
+			g_sysctrl_state.wakeup = 0;
+		}
+
+
+		spi_command_tick();
+		mipi_csi_tick();
 	}
 }
