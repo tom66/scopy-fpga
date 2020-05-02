@@ -65,6 +65,7 @@
 #define GPIO_PS_LED_0_PIN			9
 #define GPIO_PS_LED_1_PIN			37
 
+// TODO:  Move below to common utils file ***
 #define COND_UNLIKELY(expr)			__builtin_expect((expr), 0)
 #define COND_LIKELY(expr)			__builtin_expect((expr), 1)
 
@@ -74,6 +75,16 @@
 											exit(-99) ; \
 										} \
 									} \
+
+#define MAX(a,b) 					((a) > (b) ? (a) : (b))
+#define MIN(a,b) 					((a) < (b) ? (a) : (b))
+
+#define INT_IS_EVEN(x)				(((x) % 2) == 0)
+#define INT_IS_ODD(x)				(!IS_EVEN(x))
+
+#define GLOBAL_IRQ_DISABLE()		asm("cpsid I")
+#define GLOBAL_IRQ_ENABLE()			asm("cpsie I")
+// *** end
 
 #define BOGOCAL_ITERAMT				100000
 #define BOGOCAL_ITERCNT				2							// XXX: Bug if this is more than 2 causing shorter bogotimes than expected, to be investigated
@@ -95,15 +106,6 @@
 
 #define REG_MASK_BIT(base, rg, msk)	(Xil_In32((base) + (rg)) & msk)
 #define REG_TEST_BIT(base, rg, msk)	(!!(REG_MASK_BIT(base, rg, msk)))
-
-#define GLOBAL_IRQ_DISABLE()		asm("cpsid I")
-#define GLOBAL_IRQ_ENABLE()			asm("cpsie I")
-
-// TODO:  Move to common utils file
-#define MAX(a,b) 					((a) > (b) ? (a) : (b))
-#define MIN(a,b) 					((a) < (b) ? (a) : (b))
-#define INT_IS_EVEN(x)				(((x) % 2) == 0)
-#define INT_IS_ODD(x)				(!IS_EVEN(x))
 
 typedef int16_t temp_t;			// Temperature represented from -273.15C to +327.68C
 typedef uint16_t mvolt_t;		// System voltages from 0.0 ~ 6.5535V

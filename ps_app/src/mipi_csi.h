@@ -71,6 +71,7 @@
 #define CSI_CTRL_B_DATA_TYPE_SFT		24
 
 #define CSI_CTRL_C_WCT_HEADER_MSK		0x0000ffff
+#define CSI_CTRL_C_WCT_HEADER_SFT		0
 
 #define CSI_STATUS_A_DONE				0x00000001
 #define CSI_STATUS_A_CLKWIZ_LOCK		0x00000002
@@ -84,7 +85,9 @@
 #define CSI_STATUS_A_DBG_DB				0x00040000
 #define CSI_STATUS_A_DBG_DD				0x00080000
 #define CSI_STATUS_A_DBG_CTRL_ST_MSK	0x03f00000
+#define CSI_STATUS_A_DBG_CTRL_ST_SFT	20
 #define CSI_STATUS_A_DBG_MIPI_ST_MSK	0xfc000000
+#define CSI_STATUS_A_DBG_MIPI_ST_SFT	26
 
 #define CSI_TIMEOUT_STOP				1000
 
@@ -95,6 +98,7 @@ struct mipi_csi_stream_queue_item_t {
 	uint32_t core_flags;		// Currently ignored, eventually due to be passed to the FPGA
 	uint32_t start_addr;		// Can be wave ID or pointer
 	uint32_t end_addr;			// Can be wave ID or pointer
+	XAxiDma_BdRing *ring;		// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
 };
 
 struct mipi_csi_stats_t {
@@ -169,9 +173,10 @@ void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *item);
 void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr);
 void mipi_csi_queue_waverange(uint32_t start, uint32_t end);
 void mipi_csi_queue_all_waves();
+void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct);
 int mipi_csi_setup_bdring_and_bd(void *bd_area, int bd_entries, XAxiDma_BdRing **ring, XAxiDma_Bd **bd_ptr);
-void mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end);
-void mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end);
+void mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item);
+void mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct mipi_csi_stream_queue_item_t *q_item);
 void mipi_csi_send_sof();
 void mipi_csi_send_eof();
 void mipi_csi_transfer_packet();
@@ -189,12 +194,15 @@ void mipi_csi_tick();
  */
 inline XAxiDma_Bd *_mipi_csi_axidma_add_bd_entry(XAxiDma_BdRing *ring, XAxiDma_Bd *cur_bd, uint32_t buf_addr, uint32_t len, uint32_t ctrl)
 {
+	//d_printf(D_INFO, "ring:%08x, cur_bd:%08x, buf_addr:%08x, len:%d, ctrl:%08x", \
+			ring, cur_bd, buf_addr, len, ctrl);
+
 	/*
 	 * XXX: Consider replacing these with variants that do no bounds checking, if we can ensure
 	 * that we never do misaligned or out of range transfers.
 	 */
-	D_ASSERT(XAxiDma_BdSetBufAddr(cur_bd, buf_addr) != XST_SUCCESS);
-	D_ASSERT(XAxiDma_BdSetLength(cur_bd, len, ring->MaxTransferLen) != XST_SUCCESS);
+	D_ASSERT(XAxiDma_BdSetBufAddr(cur_bd, buf_addr) == XST_SUCCESS);
+	D_ASSERT(XAxiDma_BdSetLength(cur_bd, len, ring->MaxTransferLen) == XST_SUCCESS);
 	XAxiDma_BdSetCtrl(cur_bd, ctrl);
 
 	return XAxiDma_BdRingNext(ring, cur_bd);
@@ -203,11 +211,29 @@ inline XAxiDma_Bd *_mipi_csi_axidma_add_bd_entry(XAxiDma_BdRing *ring, XAxiDma_B
 /*
  * Helper inline to pack 8MB sized BD entries (1 or more).  Returns next Bd pointer.
  */
-inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_Bd *cur_bd, uint32_t size, uint32_t base, uint32_t ctrl)
+inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_Bd *cur_bd, int size, uint32_t base, bool sof, bool eof)
 {
-	int c, chcnt = size / CSISTRM_AXI_MAX_BD_SIZE;
+	int c;
+	int chcnt = (size / CSISTRM_AXI_MAX_BD_SIZE) + 1;
+	uint32_t ctrl = 0;
+
+	//d_printf(D_INFO, "size=%8d base=0x%08x maxsize=%8d chcnt=%5d", size, base, CSISTRM_AXI_MAX_BD_SIZE, chcnt);
 
 	for(c = 0; c < chcnt; c++) {
+		/*
+		 * Add SOF and EOF flags to actual first and last BD entries.
+		 *
+		 * SOF and EOF flags should be set per block according to the first and last block respectively
+		 * this logic ensures the tags are appended to the *true* start/end block.
+		 */
+		if(eof && ((c + 1) == chcnt)) {
+			ctrl |= XAXIDMA_BD_CTRL_TXEOF_MASK;
+		}
+
+		if(sof && (c == 0)) {
+			ctrl |= XAXIDMA_BD_CTRL_TXSOF_MASK;
+		}
+
 		cur_bd = _mipi_csi_axidma_add_bd_entry(ring, cur_bd, base, MIN(size, CSISTRM_AXI_MAX_BD_SIZE), ctrl);
 		base += CSISTRM_AXI_MAX_BD_SIZE;
 		size -= CSISTRM_AXI_MAX_BD_SIZE;

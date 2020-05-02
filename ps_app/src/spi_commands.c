@@ -290,6 +290,10 @@ void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd)
 
 void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd)
 {
+	uint8_t data_type = cmd->args[2];
+	uint16_t wct = UINT16_UNPACK(cmd, 0);
+
+	mipi_csi_set_datatype_and_frame_wct(data_type, wct);
 }
 
 void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd)
@@ -335,6 +339,8 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	void *resp_buffer;
 	int resp_size = 0, size = 0;
 
+	acq_debug_dump();
+
 	// Commands below must be executed in order to create the right behaviour...
 	if(func & SPICOMP0_ACQ_STOP) {
 		if(acq_get_state() != ACQSTATE_STOPPED) {
@@ -346,19 +352,23 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 		acq_make_status(&acq_status_resp);
 	}
 
+	d_printf(D_INFO, "spicmd_comp0 n_waves = %d", acq_status_resp.waves_done);
+
 	if(func & SPICOMP0_RESP_CSI_SIZE) {
 		mipi_csi_get_size_report(&mipi_tx_size_resp);
 	}
 
 	if(func & SPICOMP0_ACQ_REWIND) {
-		acq_rewind();
+		//acq_rewind();
 	}
 
+	/*
 	if(func & SPICOMP0_ACQ_START_RESFIFO) {
 		acq_start(1);
 	} else if(func & SPICOMP0_ACQ_START_NORESFIFO) {
 		acq_start(0);
 	}
+	*/
 
 	if(func & SPICOMP0_ACQ_SWAP) {
 		// TODO (once acquisition swapping enabled)

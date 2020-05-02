@@ -1131,7 +1131,8 @@ bool acq_is_done()
 }
 
 /*
- * Generate an acquisition status response.
+ * Generate an acquisition status response.  The response includes status information
+ * from the trigger engine.
  */
 void acq_make_status(struct acq_status_resp_t *status_resp)
 {
@@ -1508,13 +1509,13 @@ void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *ad
 	start = ACQ_TRIGGER_AT_TO_BYPTR(wave->trigger_at);
 	end = wave->pre_sz;
 
-	addr_helper->pre_upper_start = wave->buff_acq + start;
+	addr_helper->pre_upper_start = (uint32_t)wave->buff_acq + start;
 	addr_helper->pre_upper_end = addr_helper->pre_upper_start + end - start;
 
-	addr_helper->pre_lower_start = wave->buff_acq;
+	addr_helper->pre_lower_start = (uint32_t)wave->buff_acq;
 	addr_helper->pre_lower_end = addr_helper->pre_lower_start + start;
 
-	addr_helper->post_start = wave->buff_acq + end;
+	addr_helper->post_start = (uint32_t)wave->buff_acq + wave->pre_sz;
 	addr_helper->post_end = addr_helper->post_start + wave->post_sz;
 
 	return ACQRES_OK;
