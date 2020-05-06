@@ -506,6 +506,8 @@ int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, void *resp
 	} else {
 		memcpy(cmd->resp_data, resp, respsz);
 
+		//d_printf(D_INFO, "resp_simple ptr=0x%08x src=0x%08x resp_size=%d", cmd->resp_data, resp, respsz);
+
 		GLOBAL_IRQ_DISABLE();
 		cmd->resp_ready = 1;
 		cmd->resp_size = respsz;
@@ -526,6 +528,8 @@ int spi_command_pack_response_simple(struct spi_command_alloc_t *cmd, void *resp
 void spi_command_pack_response_pre_alloc(struct spi_command_alloc_t *cmd, void *resp, int respsz)
 {
 	D_ASSERT(resp != NULL);
+
+	//d_printf(D_INFO, "resp_pre_alloc ptr=0x%08x resp_size=%d", resp, respsz);
 
 	GLOBAL_IRQ_DISABLE();
 	cmd->resp_data = resp;

@@ -671,6 +671,10 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 	uint32_t *work;
 	uint32_t buf_sz;
 
+	/*
+	 * Buffer must align with a cache boundary (32 bytes) and end at the end of a cache boundary,
+	 * even if the whole size is not used.
+	 */
 	buf_sz = (g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN) & ~(ACQ_BUFFER_ALIGN_AMOD);
 	work = memalign(ACQ_BUFFER_ALIGN, buf_sz);
 
@@ -679,6 +683,8 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 		g_acq_state.stats.num_alloc_err_total++;
 		return ACQRES_MALLOC_FAIL;
 	}
+
+	//d_printf(D_INFO, "alloc 0x%08x onto 0x%08x [acq_get_next_alloc] size %d", work, next, buf_sz);
 
 	next->idx = 0;
 	next->trigger_at = 0;
@@ -710,6 +716,7 @@ int acq_append_next_alloc()
 	int res;
 
 	next = malloc(sizeof(struct acq_buffer_t));
+	//d_printf(D_INFO, "alloc 0x%08x [acq_append_next_alloc]", next);
 
 	/*
 	 * Allocate the struct that stores the buffer info first.  This is
@@ -749,17 +756,15 @@ int acq_append_next_alloc()
 }
 
 /*
- * Free all acquisition buffers safely.
+ * Free all acquisition buffers starting from a pointer.  Recommend disabling
+ * interrupts while executing this function.
  */
-void acq_free_all_alloc()
+void acq_free_all_alloc_core(struct acq_buffer_t *list_base)
 {
-	struct acq_buffer_t *next = g_acq_state.acq_first;
+	struct acq_buffer_t *next = list_base;
 	struct acq_buffer_t *next_next;
 
-	//d_printf(D_INFO, "Start FreeAllAlloc");
-
-	// Disable interrupts while we process this as we're altering the linked list
-	GLOBAL_IRQ_DISABLE();
+	D_ASSERT(list_base != NULL);
 
 	/*
 	 * Iterate through the list of allocations starting at the first allocation,
@@ -767,31 +772,64 @@ void acq_free_all_alloc()
 	 * a NULL next pointer.
 	 */
 	while(next != NULL) {
-		//d_printf(D_INFO, "FA n:%08x b:%08x idx:%d nn:%08x fl:%04x", next, next->buff_alloc, next->idx, next->next, next->flags);
+		//d_printf(D_INFO, "FA Ba:%08x n:%08x b:%08x idx:%d nn:%08x fl:%04x", list_base, next, next->buff_alloc, next->idx, next->next, next->flags);
 
 		next_next = next->next;
 
 		// Free the buffer *and* the acquisition structure
+		//d_printf(D_INFO, "free 0x%08x [BA]", next->buff_alloc);
 		free(next->buff_alloc);
+
+		//d_printf(D_INFO, "free 0x%08x (N)", next);
 		free(next);
+		//d_printf(D_INFO, "doneIter");
 
 		next = next_next;
 	}
 
-	g_acq_state.acq_first = NULL;
-	g_acq_state.acq_current = NULL;
-
-	GLOBAL_IRQ_ENABLE();
-
-	//d_printf(D_INFO, "Done FreeAllAlloc");
+	//d_printf(D_INFO, "donefree");
 }
 
 /*
- * Rewind the acquisition pointer to the start and mark all buffers as free.
- * The buffers will contain stale data after this, but are made available for reuse.
+ * Free all acquisition buffers safely.  Interrupts are inhibited while the lists
+ * are freed.
+ */
+void acq_free_all_alloc(int flags)
+{
+	//d_printf(D_INFO, "acq_free_all_alloc");
+
+	GLOBAL_IRQ_DISABLE();
+
+	if(flags & ACQLIST_ACQ) {
+		//d_printf(D_INFO, "ACQLIST_ACQ 0x%08x", g_acq_state.acq_first);
+
+		acq_free_all_alloc_core(g_acq_state.acq_first);
+
+		g_acq_state.acq_first = NULL;
+		g_acq_state.acq_current = NULL;
+	}
+
+	if(flags & ACQLIST_DONE) {
+		//d_printf(D_INFO, "ACQLIST_DONE 0x%08x", g_acq_state.acq_done_first);
+
+		acq_free_all_alloc_core(g_acq_state.acq_done_first);
+
+		g_acq_state.acq_done_first = NULL;
+		g_acq_state.acq_done_current = NULL;
+	}
+
+	GLOBAL_IRQ_ENABLE();
+
+	//d_printf(D_INFO, "END acq_free_all_alloc");
+}
+
+/*
+ * Rewind the acquisition pointer to the start and mark all buffers as ready to stream.
  *
  * This function cannot be used if the allocation size has changed.  Buffers must
  * be freed and reallocated using `acq_free_all_alloc` and `acq_prepare_triggered`.
+ *
+ * Only the currently active acquisition buffer is rewound.
  */
 void acq_rewind()
 {
@@ -811,8 +849,12 @@ void acq_rewind()
 	while(next != NULL) {
 		//d_printf(D_INFO, "RW %08x %d %08x %04x", next, next->idx, next->next, next->flags);
 
-		next->flags = ACQBUF_FLAG_ALLOC;
-		next->trigger_at = 0;
+		if(next->flags & ACQBUF_FLAG_PKT_DONE) {
+			next->flags = ACQBUF_FLAG_READY_CSI | ACQBUF_FLAG_ALLOC;
+		} else {
+			next->flags = ACQBUF_FLAG_ALLOC;
+			next->trigger_at = 0;
+		}
 
 		next = next->next;
 	}
@@ -826,6 +868,46 @@ void acq_rewind()
 }
 
 /*
+ * Swap the acquisition buffers, if acquisition swapping is supported.
+ *
+ * The lists are NOT wound back;  this should be done before or after the operation,
+ * as required.
+ *
+ * Interrupts are disabled while this process runs.
+ */
+void acq_swap()
+{
+	struct acq_buffer_t *temp_first, *temp_current;
+
+	GLOBAL_IRQ_DISABLE();
+
+	D_ASSERT(!(g_acq_state.control & ACQCTRL_FLAG_NO_SWAP));
+	D_ASSERT((g_acq_state.control & (ACQCTRL_FLAG_LIST_A_ACQ | ACQCTRL_FLAG_LIST_B_ACQ)));
+
+	if(g_acq_state.control & ACQCTRL_FLAG_LIST_A_ACQ) {
+		temp_first = g_acq_state.acq_first;
+		temp_current = g_acq_state.acq_current;
+		g_acq_state.acq_first = g_acq_state.acq_done_first;
+		g_acq_state.acq_current = g_acq_state.acq_done_current;
+		g_acq_state.acq_done_first = temp_first;
+		g_acq_state.acq_done_current = temp_current;
+
+		g_acq_state.control = ACQCTRL_FLAG_LIST_B_ACQ;
+	} else if(g_acq_state.control & ACQCTRL_FLAG_LIST_B_ACQ) {
+		temp_first = g_acq_state.acq_done_first;
+		temp_current = g_acq_state.acq_done_current;
+		g_acq_state.acq_done_first = g_acq_state.acq_first;
+		g_acq_state.acq_done_current = g_acq_state.acq_current;
+		g_acq_state.acq_first = temp_first;
+		g_acq_state.acq_current = temp_current;
+
+		g_acq_state.control = ACQCTRL_FLAG_LIST_A_ACQ;
+	}
+
+	GLOBAL_IRQ_ENABLE();
+}
+
+/*
  * Prepare a new triggered acquisition: allocate the buffers, set up the state machine
  * and configure the fabric.
  *
@@ -836,7 +918,7 @@ void acq_rewind()
  */
 int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq)
 {
-	struct acq_buffer_t *first;
+	struct acq_buffer_t *first_a, *first_b;
 	uint32_t pre_sampct = 0, post_sampct = 0;
 	uint32_t total_acq_sz;
 	uint32_t align_mask;
@@ -927,30 +1009,77 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 	 */
 	total_acq_sz = (g_acq_state.total_buffsz + ACQ_BUFFER_ALIGN) * num_acq;
 
+	if(mode_flags & ACQ_MODE_SUPPORT_SWAPPING) {
+		total_acq_sz *= 2; // Double memory allocation required for two buffers
+	}
+
 	if(total_acq_sz > ACQ_TOTAL_MEMORY_AVAIL) {
 		return ACQRES_TOTAL_MALLOC_FAIL;
 	}
 
 	g_acq_state.state = ACQSTATE_UNINIT;
-	d_printf(D_INFO, "FreeALL");
-	acq_free_all_alloc();
-	d_printf(D_INFO, "FreeDone");
 
-	first = malloc(sizeof(struct acq_buffer_t));
+	/*
+	 * If both lists pointers are identical (unified lists in use), only free once.
+	 * If the list pointers differ, then free both (distinct lists in use)
+	 *
+	 * XXX: Perhaps there's a better/saner way of doing this?
+	 */
+	if(g_acq_state.acq_first == g_acq_state.acq_done_first) {
+		if(g_acq_state.acq_first != NULL) {
+			acq_free_all_alloc(ACQLIST_ACQ);
+		}
 
-	if(first == NULL) {
-		d_printf(D_ERROR, "acquire: unable to allocate %d bytes for first entry in acquisition", sizeof(struct acq_buffer_t));
+		g_acq_state.acq_done_first = NULL;
+		g_acq_state.acq_first = NULL;
+	} else {
+		if(g_acq_state.acq_first != NULL) {
+			acq_free_all_alloc(ACQLIST_ACQ);
+		}
+
+		if(g_acq_state.acq_done_first != NULL) {
+			acq_free_all_alloc(ACQLIST_DONE);
+		}
+	}
+
+	first_a = malloc(sizeof(struct acq_buffer_t));
+
+	if(first_a == NULL) {
+		d_printf(D_ERROR, "acquire: unable to allocate %d bytes for first-A entry in acquisition", sizeof(struct acq_buffer_t));
 		return ACQRES_MALLOC_FAIL;
 	}
 
-	error = acq_get_next_alloc(first);
+	error = acq_get_next_alloc(first_a);
 	if(error != ACQRES_OK) {
-		d_printf(D_ERROR, "acquire: unable to get allocation for first buffer: error %d", error);
+		d_printf(D_ERROR, "acquire: unable to get allocation for first-A buffer: error %d", error);
 		return error;
 	}
 
-	g_acq_state.acq_first = first;
-	g_acq_state.acq_current = first;
+	g_acq_state.acq_first = first_a;
+	g_acq_state.acq_current = first_a;
+	g_acq_state.acq_A_first = first_a;
+
+	/*
+	 * If we support swapping, allocate a second linked list.
+	 */
+	if(mode_flags & ACQ_MODE_SUPPORT_SWAPPING) {
+		first_b = malloc(sizeof(struct acq_buffer_t));
+
+		if(first_b == NULL) {
+			d_printf(D_ERROR, "acquire: unable to allocate %d bytes for first-B entry in acquisition", sizeof(struct acq_buffer_t));
+			return ACQRES_MALLOC_FAIL;
+		}
+
+		error = acq_get_next_alloc(first_b);
+		if(error != ACQRES_OK) {
+			d_printf(D_ERROR, "acquire: unable to get allocation for first-B buffer: error %d", error);
+			return error;
+		}
+
+		g_acq_state.acq_done_first = first_b;
+		g_acq_state.acq_done_current = first_b;
+		g_acq_state.acq_B_first = first_b;
+	}
 
 	/*
 	 * Allocate all subsequent blocks on start up.  We can't allocate these in the IRQ. Then set
@@ -959,17 +1088,42 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 	 * If at any point this fails, bail out and free memory.
 	 */
 	for(i = 0; i < num_acq; i++) {
-		// d_printf(D_EXINFO, "acq_current: 0x%08x", g_acq_state.acq_current);
-
 		error = acq_append_next_alloc();
 		if(error != ACQRES_OK) {
-			d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d, aborting allocation", error, i);
-			acq_free_all_alloc();
+			d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d [A], aborting allocation", error, i);
+			acq_free_all_alloc(ACQLIST_ACQ);
 			return error;
 		}
 	}
 
-	g_acq_state.acq_current = g_acq_state.acq_first;
+	/*
+	 * If we support swapping, allocate the second linked list, but swap back to the 'A'
+	 * one once we're done.  We start acquisition into the 'A' list first.
+	 */
+	if(mode_flags & ACQ_MODE_SUPPORT_SWAPPING) {
+		g_acq_state.acq_first = g_acq_state.acq_B_first;
+		g_acq_state.acq_current = g_acq_state.acq_B_first;
+
+		for(i = 0; i < num_acq; i++) {
+			error = acq_append_next_alloc();
+			if(error != ACQRES_OK) {
+				d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d [A], aborting allocation", error, i);
+				acq_free_all_alloc(ACQLIST_ACQ); // param ACQLIST_ACQ is correct as we have temporarily swapped the list pointers
+				return error;
+			}
+		}
+
+		g_acq_state.acq_first = g_acq_state.acq_A_first;
+		g_acq_state.acq_current = g_acq_state.acq_A_first;
+		g_acq_state.control = ACQCTRL_FLAG_LIST_A_ACQ;
+	} else {
+		// If no swapping supported, both lists are identical and point to the same entries.
+		g_acq_state.acq_current = g_acq_state.acq_first;
+		g_acq_state.acq_done_first = g_acq_state.acq_first;
+		g_acq_state.acq_done_current = g_acq_state.acq_first;
+		g_acq_state.control = ACQCTRL_FLAG_NO_SWAP;
+	}
+
 	g_acq_state.num_acq_request = num_acq;
 	g_acq_state.num_acq_made = 0;
 	g_acq_state.acq_mode_flags = mode_flags | ACQ_MODE_TRIGGERED;
@@ -1099,6 +1253,7 @@ int acq_stop()
 	GLOBAL_IRQ_DISABLE();
 	g_acq_state.acq_abort_done = 0;
 	g_acq_state.acq_early_abort = 1;
+	g_acq_state.num_acq_made_done = g_acq_state.num_acq_made;
 	_acq_set_ctrl_a(ACQ_CTRL_A_END_EARLY);
 	GLOBAL_IRQ_ENABLE();
 
@@ -1207,6 +1362,8 @@ void acq_debug_dump()
 	d_printf(D_INFO, "sub_state             = %d [%s]                 ", g_acq_state.sub_state, acq_substate_to_str[g_acq_state.sub_state]);
 	d_printf(D_INFO, "acq_current           = 0x%08x                  ", g_acq_state.acq_current);
 	d_printf(D_INFO, "acq_first             = 0x%08x                  ", g_acq_state.acq_first);
+	d_printf(D_INFO, "acq_done_current      = 0x%08x                  ", g_acq_state.acq_done_current);
+	d_printf(D_INFO, "acq_done_first        = 0x%08x                  ", g_acq_state.acq_done_first);
 	d_printf(D_INFO, "dma                   = 0x%08x                  ", g_acq_state.dma);
 	d_printf(D_INFO, "dma_config            = 0x%08x                  ", g_acq_state.dma_config);
 	d_printf(D_INFO, "demux_reg             = 0x%02x                  ", g_acq_state.demux_reg);
@@ -1223,6 +1380,7 @@ void acq_debug_dump()
 	d_printf(D_INFO, "post_sampct           = %7d wavewords           ", g_acq_state.post_sampct);
 	d_printf(D_INFO, "num_acq_request       = %7d waves               ", g_acq_state.num_acq_request);
 	d_printf(D_INFO, "num_acq_made          = %7d waves               ", g_acq_state.num_acq_made);
+	d_printf(D_INFO, "num_acq_made_done     = %7d waves               ", g_acq_state.num_acq_made_done);
 	d_printf(D_INFO, "                                                ");
 	d_printf(D_INFO, "acq_current->flags    = 0x%04x                  ", g_acq_state.acq_current->flags);
 	d_printf(D_INFO, "acq_current->trig_at  = %d (0x%08x)             ", g_acq_state.acq_current->trigger_at, g_acq_state.acq_current->trigger_at);
@@ -1287,14 +1445,21 @@ void acq_debug_dump_waveraw()
  * to the passed parameter `buff`.
  *
  * @param	index	Index of wave
- * @param	buff	Pointer to a pointer for the acq_buffer_t struct
+ * @param	buff	Pointer to a pointer for the acq_buffer_t struct (result)
+ * @param	list	List set to use (Acquisition or Done list) [ACQLIST_ACQ, ACQLIST_DONE]
  *
  * @return	ACQRES_OK if waveform found (trigger state disregarded)
  * 			ACQRES_WAVE_NOT_FOUND if... well... the waveform wasn't found
  */
-int acq_get_ll_pointer(int index, struct acq_buffer_t **buff)
+int acq_get_ll_pointer(int index, struct acq_buffer_t **buff, int list_used)
 {
-	struct acq_buffer_t *wave = g_acq_state.acq_first;
+	struct acq_buffer_t *wave;
+	D_ASSERT(list_used == ACQLIST_ACQ || list_used == ACQLIST_DONE);
+
+	if(list_used == ACQLIST_ACQ)
+		wave = g_acq_state.acq_first;
+	else
+		wave = g_acq_state.acq_done_first;
 
 	while(wave != NULL) {
 		//d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x, trigger_at:0x%08x %d)", \
@@ -1307,7 +1472,7 @@ int acq_get_ll_pointer(int index, struct acq_buffer_t **buff)
 	}
 
 	if(wave == NULL) {
-		d_printf(D_ERROR, "Unable to find waveindex %d", index);
+		d_printf(D_ERROR, "Unable to find waveindex %d with list_used %02x", index, list_used);
 		return ACQRES_WAVE_NOT_FOUND;
 	}
 
@@ -1348,7 +1513,7 @@ void acq_debug_dump_wave(int index)
 	uint32_t *deref;
 	int first, i;
 
-	if(acq_get_ll_pointer(index, &wave) != ACQRES_OK) {
+	if(acq_get_ll_pointer(index, &wave, ACQLIST_ACQ) != ACQRES_OK) {
 		d_printf(D_ERROR, "Unable to dump for waveindex %d: couldn't find wave", index);
 		return;
 	}
@@ -1440,7 +1605,7 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
 	int res;
 
 	// Find the LL pointer to this waveindex
-	res = acq_get_ll_pointer(index, &wave);
+	res = acq_get_ll_pointer(index, &wave, ACQLIST_DONE);
 
 	if(res != ACQRES_OK) {
 		d_printf(D_ERROR, "Unable to dump for waveindex %d: couldn't find wave", index);
@@ -1492,14 +1657,14 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
  * @return	ACQRES_OK if successful, ACQRES_WAVE_NOT_READY if waveform not
  * 			ready for pointer calculation (e.g. unfilled.)
  */
-void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper)
+int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper)
 {
 	uint32_t start, end;
 
 	D_ASSERT(wave != NULL);
 	D_ASSERT(addr_helper != NULL);
 
-	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_PKT_DONE)) {
+	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_READY_CSI)) {
 		return ACQRES_WAVE_NOT_READY;
 	}
 

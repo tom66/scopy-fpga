@@ -60,7 +60,7 @@
 
 #define XSCUTIMER_NEAR_OVERFLOW		(XSCUTIMER_LOAD_VALUE - 0xff)
 
-#define NUM_DEBUG_TIMERS			16
+#define NUM_DEBUG_TIMERS			256
 
 #define GPIO_PS_LED_0_PIN			9
 #define GPIO_PS_LED_1_PIN			37
@@ -106,6 +106,10 @@
 
 #define REG_MASK_BIT(base, rg, msk)	(Xil_In32((base) + (rg)) & msk)
 #define REG_TEST_BIT(base, rg, msk)	(!!(REG_MASK_BIT(base, rg, msk)))
+
+#define TMR_MIPI_PERFORMANCE		0xf0
+#define TMR_MIPI_SG_OVERALL			0xf1
+#define TMR_MIPI_SG_BDFILL			0xf2
 
 typedef int16_t temp_t;			// Temperature represented from -273.15C to +327.68C
 typedef uint16_t mvolt_t;		// System voltages from 0.0 ~ 6.5535V

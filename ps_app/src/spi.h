@@ -340,7 +340,7 @@ inline void spi_command_cleanup(struct spi_command_alloc_t *cmd)
 	cmd->resp_done = 0;
 	cmd->resp_error = 0;
 	cmd->resp_ready = 0;
-	d_printf(D_INFO, "free %08x", cmd->resp_data);
+	//d_printf(D_INFO, "resp_free 0x%08x", cmd->resp_data);
 	free(cmd->resp_data);
 	cmd->resp_data = NULL;
 }

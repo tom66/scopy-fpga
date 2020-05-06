@@ -30,13 +30,14 @@
 
 #define CSISTRM_AXI_MAX_BD_SIZE			((1 << 23))
 
-#define MCSI_FLAG_CLOCK_IDLE_MODE		0x0001
 #define MCSI_FLAG_ERROR_TRANSFER_BUSY	0x0002
 #define MCSI_FLAG_ERROR_PARAMETER		0x0004
 #define MCSI_FLAG_ERROR_STOP_TIMEOUT	0x0008
 #define MCSI_FLAG_TRANSFER_RUNNING		0x0100
 #define MCSI_FLAG_QUEUE_EMPTY			0x0200
 #define MCSI_FLAG_STOP_DONE				0x0400
+#define MCSI_FLAG_CLOCK_IDLE_MODE_2		0x4000		// Clock idles between EoF and next SoF
+#define MCSI_FLAG_CLOCK_IDLE_MODE_1		0x8000		// Clock idles between each packet
 
 // Special flags that indicate the state from the CSI peripheral of the DONE and RUN flags
 #define MCSI_FLAG_SPECIAL_HW_DSTATE		0x4000
@@ -45,8 +46,11 @@
 #define MCSI_FLAG_ERROR_MASK			(MCSI_FLAG_ERROR_TRANSFER_BUSY | MCSI_FLAG_ERROR_PARAMETER | MCSI_FLAG_ERROR_STOP_TIMEOUT)
 
 #define MCSI_DEFAULT_LINE_WIDTH			2048
-#define MCSI_DEFAULT_LINE_COUNT			256
+#define MCSI_DEFAULT_LINE_COUNT			64
 #define MCSI_PACKET_MAX_SIZE			(MCSI_DEFAULT_LINE_WIDTH * MCSI_DEFAULT_LINE_COUNT)
+
+#define MCSI_DEFAULT_DATA_TYPE			0x2a
+#define MCSI_DEFAULT_WCT				0x0000
 
 #define MCSI_ST_IDLE					0
 #define MCSI_ST_WAIT_FOR_XFER			1
@@ -60,6 +64,8 @@
 #define CSI_CTRL_A_STOP					0x00000008
 #define CSI_CTRL_A_SLEEP				0x00000010
 #define CSI_CTRL_A_CLOCK_SLEEP_ENABLE	0x00000020
+#define CSI_CTRL_A_RESET_FIFO			0x00000040
+#define CSI_CTRL_A_RESET_PERIPHERAL		0x00000080
 #define CSI_CTRL_A_LINE_BYTE_COUNT_MSK	0xffff0000
 #define CSI_CTRL_A_LINE_BYTE_COUNT_SFT	16
 
@@ -89,24 +95,35 @@
 #define CSI_STATUS_A_DBG_MIPI_ST_MSK	0xfc000000
 #define CSI_STATUS_A_DBG_MIPI_ST_SFT	26
 
+#define CSIRES_ERROR_WAVES				-1
+#define CSIRES_OK						0
+
 #define CSI_TIMEOUT_STOP				1000
 
+#define CSI_DEFAULT_BIT_CLOCK			100			// Specified in MHz, FP values acceptable.  250MHz default, experimentation required to establish max bit clock
+
 struct mipi_csi_stream_queue_item_t {
-	int item_type;				// One of CSISTRM_TYPE_x values
-	uint8_t data_type;			// Datatype to be passed to CSI FPGA core (becomes CSI datatype)
-	uint16_t wct_header;		// Wordcount header to be passed to CSI FPGA core (becomes SOF/EOF wordcount field)
-	uint32_t core_flags;		// Currently ignored, eventually due to be passed to the FPGA
-	uint32_t start_addr;		// Can be wave ID or pointer
-	uint32_t end_addr;			// Can be wave ID or pointer
-	XAxiDma_BdRing *ring;		// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
+	int item_type;						// One of CSISTRM_TYPE_x values
+	uint8_t data_type;					// Datatype to be passed to CSI FPGA core (becomes CSI datatype)
+	uint16_t wct_header;				// Wordcount header to be passed to CSI FPGA core (becomes SOF/EOF wordcount field)
+	uint32_t core_flags;				// Currently ignored, eventually due to be passed to the FPGA
+	uint32_t start_addr;				// Can be wave ID or pointer
+	uint32_t end_addr;					// Can be wave ID or pointer
+	uint32_t calculated_size;			// Calculated size of any transfer in bytes, after the transfer has been processed and SG list packed
+	XAxiDma_BdRing *ring;				// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
 };
 
 struct mipi_csi_stats_t {
-	uint32_t items_queued;
-	uint32_t items_alloc;
-	uint32_t items_freed;
-	uint64_t data_xfer_bytes;
-	uint64_t num_bds_created;
+	uint32_t items_queued;				// Items queued in total
+	uint32_t items_alloc;				// Items queued that memory has been allocated for
+	uint32_t items_freed;				// Items freed in total (should closely match alloc)
+	uint64_t data_xfer_bytes;			// Total bytes sent
+	uint64_t num_bds_created;			// Total BD entries set up
+	float last_transfer_time_us;		// Last transfer time in microseconds
+	float last_transfer_perf_mbs;		// Last transfer rate in MB/s
+	uint64_t total_transfer_time_us;	// Total transfer time in microseconds
+	float last_sg_total_time_us;		// Total time to prepare the last scatter-gather list
+	float last_sg_bd_time_us;			// Time to prepare the last scatter-gather BD list (the O(n) part of the equation)
 };
 
 struct mipi_csi_state_t {
@@ -137,6 +154,9 @@ struct mipi_csi_state_t {
 
 	// Allocation of memory for BD Scatter-Gather list
 	void *bd_area;
+
+	// Bitclock for CSI port in MHz.  Valid range approx 50 ~ 550MHz.
+	float csi_bitclock;
 };
 
 /*
@@ -175,8 +195,8 @@ void mipi_csi_queue_waverange(uint32_t start, uint32_t end);
 void mipi_csi_queue_all_waves();
 void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct);
 int mipi_csi_setup_bdring_and_bd(void *bd_area, int bd_entries, XAxiDma_BdRing **ring, XAxiDma_Bd **bd_ptr);
-void mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item);
-void mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct mipi_csi_stream_queue_item_t *q_item);
+int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item);
+int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct mipi_csi_stream_queue_item_t *q_item);
 void mipi_csi_send_sof();
 void mipi_csi_send_eof();
 void mipi_csi_transfer_packet();
@@ -217,7 +237,7 @@ inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_B
 	int chcnt = (size / CSISTRM_AXI_MAX_BD_SIZE) + 1;
 	uint32_t ctrl = 0;
 
-	//d_printf(D_INFO, "size=%8d base=0x%08x maxsize=%8d chcnt=%5d", size, base, CSISTRM_AXI_MAX_BD_SIZE, chcnt);
+	//d_printf(D_INFO, "size=%10d base=0x%08x curbd=0x%08x maxsize=%8d chcnt=%5d", size, base, cur_bd, CSISTRM_AXI_MAX_BD_SIZE, chcnt);
 
 	for(c = 0; c < chcnt; c++) {
 		/*

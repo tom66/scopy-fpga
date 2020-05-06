@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+LIBS := -lxil -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 

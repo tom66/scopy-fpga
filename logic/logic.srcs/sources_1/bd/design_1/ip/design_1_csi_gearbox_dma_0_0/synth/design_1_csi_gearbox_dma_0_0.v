@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:csi_gearbox_dma:1.0
-// IP Revision: 33
+// IP Revision: 39
 
 (* X_CORE_INFO = "csi_gearbox_dma_v1_0,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{}" *)
-(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=33,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
+(* CORE_GENERATION_INFO = "design_1_csi_gearbox_dma_0_0,csi_gearbox_dma_v1_0,{x_ipProduct=Vivado 2019.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=csi_gearbox_dma,x_ipVersion=1.0,x_ipCoreRevision=39,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S00_AXIS_TDATA_WIDTH=64,C_PN_SWAP_D0=true,C_PN_SWAP_D1=true,C_PN_SWAP_CLK=true}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_csi_gearbox_dma_0_0 (
   csi_clk_p,
@@ -94,6 +94,7 @@ module design_1_csi_gearbox_dma_0_0 (
   csi_debug_lp_state,
   csi_debug_lpclk_state,
   csi_debug_running,
+  csi_debug_num_lines_rem,
   g_rst,
   s00_axis_aclk,
   s00_axis_aresetn,
@@ -151,6 +152,7 @@ output wire dbg_ref_clk;
 output wire [1 : 0] csi_debug_lp_state;
 output wire [2 : 0] csi_debug_lpclk_state;
 output wire csi_debug_running;
+output wire [15 : 0] csi_debug_num_lines_rem;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME g_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 g_rst RST" *)
 input wire g_rst;
@@ -217,6 +219,7 @@ input wire s00_axis_tvalid;
     .csi_debug_lp_state(csi_debug_lp_state),
     .csi_debug_lpclk_state(csi_debug_lpclk_state),
     .csi_debug_running(csi_debug_running),
+    .csi_debug_num_lines_rem(csi_debug_num_lines_rem),
     .g_rst(g_rst),
     .s00_axis_aclk(s00_axis_aclk),
     .s00_axis_aresetn(s00_axis_aresetn),

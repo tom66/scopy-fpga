@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:csi_gearbox_dma:1.0
-// IP Revision: 33
+// IP Revision: 39
 
 `timescale 1ns/1ps
 
@@ -93,6 +93,7 @@ module design_1_csi_gearbox_dma_0_0 (
   csi_debug_lp_state,
   csi_debug_lpclk_state,
   csi_debug_running,
+  csi_debug_num_lines_rem,
   g_rst,
   s00_axis_aclk,
   s00_axis_aresetn,
@@ -150,6 +151,7 @@ output wire dbg_ref_clk;
 output wire [1 : 0] csi_debug_lp_state;
 output wire [2 : 0] csi_debug_lpclk_state;
 output wire csi_debug_running;
+output wire [15 : 0] csi_debug_num_lines_rem;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME g_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 g_rst RST" *)
 input wire g_rst;
@@ -216,6 +218,7 @@ input wire s00_axis_tvalid;
     .csi_debug_lp_state(csi_debug_lp_state),
     .csi_debug_lpclk_state(csi_debug_lpclk_state),
     .csi_debug_running(csi_debug_running),
+    .csi_debug_num_lines_rem(csi_debug_num_lines_rem),
     .g_rst(g_rst),
     .s00_axis_aclk(s00_axis_aclk),
     .s00_axis_aresetn(s00_axis_aresetn),

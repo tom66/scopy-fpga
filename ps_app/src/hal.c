@@ -410,7 +410,7 @@ void d_read_global_timer(uint32_t *lsb_ret, uint32_t *msb_ret)
 /**
  * Record the current timer value for timing purposes under the given index.
  *
- * @param	Timer index (0-15)
+ * @param	Timer index (0-255)
  */
 void d_start_timing(int index)
 {
@@ -429,7 +429,7 @@ void d_start_timing(int index)
  * Capture the timer event and calculate the time since `d_start_timing` was
  * called, storing the result in the timer_deltas array.
  *
- * @param	Timer index (0-15)
+ * @param	Timer index (0-255)
  */
 void d_stop_timing(int index)
 {

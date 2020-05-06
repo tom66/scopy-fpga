@@ -52,15 +52,16 @@
 #define ACQ_SHORT_THRESHOLD			8192							// Acquisition windows below this threshold (total samples) cause
 																	// a FIFO reset at every pre-fill iteration.
 
-#define ACQ_MODE_8BIT				0x00000001						// 8-bit high speed
-#define ACQ_MODE_12BIT				0x00000002						// 12-bit mid speed
-#define ACQ_MODE_14BIT				0x00000004						// 14-bit low speed
-#define ACQ_MODE_1CH				0x00000020						// 1 channel mode
-#define ACQ_MODE_2CH				0x00000040						// 2 channel mode
-#define ACQ_MODE_4CH				0x00000080						// 4 channel mode
-#define ACQ_MODE_TRIGGERED			0x00000100						// Triggered mode (normal/auto/single acquisition)
-#define ACQ_MODE_CONTINUOUS			0x00000200						// Special continuous mode (rolling buffer)
-#define ACQ_MODE_SHORT_WITH_RESET	0x00000400						// Short acquisition - FIFO reset on each cycle for performance
+#define ACQ_MODE_8BIT				0x0001							// 8-bit high speed
+#define ACQ_MODE_12BIT				0x0002							// 12-bit mid speed
+#define ACQ_MODE_14BIT				0x0004							// 14-bit low speed
+#define ACQ_MODE_1CH				0x0020							// 1 channel mode
+#define ACQ_MODE_2CH				0x0040							// 2 channel mode
+#define ACQ_MODE_4CH				0x0080							// 4 channel mode
+#define ACQ_MODE_TRIGGERED			0x0100							// Triggered mode (normal/auto/single acquisition)
+#define ACQ_MODE_CONTINUOUS			0x0200							// Special continuous mode (rolling buffer)
+#define ACQ_MODE_SHORT_WITH_RESET	0x0400							// Short acquisition - FIFO reset on each cycle for performance
+#define ACQ_MODE_SUPPORT_SWAPPING	0x0800							// Support acquisition list swapping for performance;  two lists allocated
 
 #define ACQ_SAMPLES_ALIGN_8B		8								// Buffers must be 8-sample sized in 8-bit mode
 #define ACQ_SAMPLES_ALIGN_8B_AMOD	(ACQ_SAMPLES_ALIGN_8B - 1)
@@ -129,6 +130,7 @@
 #define ACQBUF_FLAG_PKT_OVERRUN		0x0002							// Packet contains bad data due to FIFO overrun and will be discarded
 #define ACQBUF_FLAG_NOTE_FIFOSTALL	0x0004							// "Note" flag to indicate that this packet was recovered from a FIFO stall condition
 #define ACQBUF_FLAG_ALLOC			0x0080							// Marker flag set when memory allocated for this buffer
+#define ACQBUF_FLAG_READY_CSI		0x0100							// Ready for CSI
 
 // Demux register on PL.  6-bits wide  [to be implemented]
 #define ADCDEMUX_1CH				0x01
@@ -191,6 +193,15 @@
 #define ACQ_REGION_POST				0x02
 #define ACQ_REGION_ALL				(ACQ_REGION_PRE | ACQ_REGION_POST)
 
+#define ACQLIST_ACQ					0x01
+#define ACQLIST_DONE				0x02
+#define ACQLIST_BOTH				(ACQLIST_ACQ | ACQLIST_DONE)
+
+#define ACQCTRL_FLAG_LIST_A_ACQ		0x0001					// Acquiring into list A, list B (will, once one acquisition is complete) contain done data
+#define ACQCTRL_FLAG_LIST_B_ACQ		0x0002					// Acquiring into list B, list A contains complete data
+#define ACQCTRL_FLAG_NO_SWAP		0x0004					// Set if no list swapping to be used; i.e. for large acquisitions that use the whole memory
+#define ACQCTRL_FLAG_B_IS_VALID		0x0008					// Set after first acquisition is complete; B contains valid data
+
 extern struct acq_state_t g_acq_state;
 
 /*
@@ -242,7 +253,10 @@ struct acq_state_t {
 	XAxiDma_Config *dma_config;
 
 	// Acquisition control flags
-	uint32_t acq_mode_flags;
+	uint16_t acq_mode_flags;
+
+	// General control flags.  TODO: move early abort and abort complete signals here.
+	uint16_t control;
 
 	// Abort signal:  if this flag is set then an abort of the current acquisition is triggered,
 	// provided the fabric is also ready to stop.
@@ -253,9 +267,10 @@ struct acq_state_t {
 	uint32_t pre_buffsz;
 	uint32_t post_buffsz;
 	uint32_t total_buffsz;
-	uint32_t aligned_buffsz;	// Aligned buffsz so that buffer terminates within a cache line
-	uint32_t num_acq_request;	// Number of acquisitions requested
-	uint32_t num_acq_made;		// Number of acquisitions made so far
+	uint32_t aligned_buffsz;		// Aligned buffsz so that buffer terminates within a cache line
+	uint32_t num_acq_request;		// Number of acquisitions requested
+	uint32_t num_acq_made;			// Number of acquisitions made so far
+	uint32_t num_acq_made_done;		// Number of acquisitions done when the acq_stop() function is called
 
 	// Local state of acq_ctrl_a register used to reduce number of RMW operations made
 	uint32_t acq_ctrl_a;
@@ -285,9 +300,26 @@ struct acq_state_t {
 	uint64_t last_debug_timer;
 	struct acq_stats_t stat_last;
 
-	// Pointer to the first and current acquisiton buffers.
+	/*
+	 * Pointer to the first and current acquisition buffers for the working
+	 * acquisition list.
+	 */
 	struct acq_buffer_t *acq_first;
 	struct acq_buffer_t *acq_current;
+
+	/*
+	 * Pointer to the first and current acquisition buffers for the completed
+	 * acquisition list.
+	 */
+	struct acq_buffer_t *acq_done_first;
+	struct acq_buffer_t *acq_done_current;
+
+	/*
+	 * Pointers to the two base lists that are allocated and swapped into the
+	 * above pointers on every cycle.
+	 */
+	struct acq_buffer_t *acq_A_first;
+	struct acq_buffer_t *acq_B_first;
 
 	/*
 	 * Line training data.  These are computed during line training which will be
@@ -343,8 +375,10 @@ void acq_init();
 void acq_write_training();
 int acq_get_next_alloc(struct acq_buffer_t *next);
 int acq_append_next_alloc();
-void acq_free_all_alloc();
+void acq_free_all_alloc(int flags);
+void acq_free_all_alloc_core(struct acq_buffer_t *list_base);
 void acq_rewind();
+void acq_swap();
 int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz, uint32_t num_acq);
 int acq_start(int reset_fifo);
 int acq_stop();
@@ -353,11 +387,11 @@ bool acq_is_done();
 void acq_make_status(struct acq_status_resp_t *status_resp);
 void acq_debug_dump();
 void acq_debug_dump_wave();
-int acq_get_ll_pointer(int index, struct acq_buffer_t **buff);
+int acq_get_ll_pointer(int index, struct acq_buffer_t **buff, int list_used);
 int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next);
 void acq_debug_dump_wave(int index);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
-void acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
+int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
 unsigned int acq_get_wave_size_bytes(int region);
 int acq_get_wave_bit_depth();
 int acq_get_wave_bit_packed_depth();
@@ -388,11 +422,12 @@ static inline void _acq_clear_and_set_ctrl_a(uint32_t bitmask_clear, uint32_t bi
 }
 
 /*
- * Return the number of waves done (have completed acquisition for.)
+ * Return the number of waves done (have completed acquisition for.)  The number
+ * of waves done is copied when the acquisition is stopped.
  */
 inline int acq_get_nwaves_done()
 {
-	return g_acq_state.num_acq_made;
+	return g_acq_state.num_acq_made_done;
 }
 
 /*

@@ -339,7 +339,7 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	void *resp_buffer;
 	int resp_size = 0, size = 0;
 
-	acq_debug_dump();
+	//acq_debug_dump();
 
 	// Commands below must be executed in order to create the right behaviour...
 	if(func & SPICOMP0_ACQ_STOP) {
@@ -352,34 +352,34 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 		acq_make_status(&acq_status_resp);
 	}
 
-	d_printf(D_INFO, "spicmd_comp0 n_waves = %d", acq_status_resp.waves_done);
+	//d_printf(D_INFO, "w:%d", acq_status_resp.waves_done);
 
 	if(func & SPICOMP0_RESP_CSI_SIZE) {
 		mipi_csi_get_size_report(&mipi_tx_size_resp);
 	}
 
 	if(func & SPICOMP0_ACQ_REWIND) {
-		//acq_rewind();
+		acq_rewind();
 	}
 
-	/*
 	if(func & SPICOMP0_ACQ_START_RESFIFO) {
 		acq_start(1);
 	} else if(func & SPICOMP0_ACQ_START_NORESFIFO) {
 		acq_start(0);
 	}
-	*/
 
 	if(func & SPICOMP0_ACQ_SWAP) {
-		// TODO (once acquisition swapping enabled)
+		acq_swap();
 	}
 
 	if(func & SPICOMP0_SEND_CSI_WAVES) {
+		//d_printf(D_INFO, "q_waves");
 		mipi_csi_queue_all_waves();
 		csi_to_send = 1;
 	}
 
 	if(csi_to_send) {
+		//d_printf(D_INFO, "u_sall");
 		mipi_csi_unpop_and_start_all();
 	}
 
@@ -392,12 +392,13 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	D_ASSERT(resp_buffer_base != NULL);
 	resp_buffer = resp_buffer_base;
 
-	//d_printf(D_INFO, "resp_buffer=%08x, resp_size=%d, max_align_t=%d", resp_buffer, resp_buff_maxsize, sizeof(max_align_t));
+	//d_printf(D_INFO, "resp_buffer=0x%08x, resp_size=%d", resp_buffer, resp_buff_maxsize);
 
 	if(func & SPICOMP0_ACQ_GET_STATUS) {
 		size = sizeof(struct acq_status_resp_t);
 		memcpy(resp_buffer, &acq_status_resp, size);
 		resp_buffer += size;
+		//d_printf(D_INFO, "resp_buffer=0x%08x acq_status_ptr=0x%08x size=%d", resp_buffer, &acq_status_resp, size);
 		resp_size += size;
 	}
 
@@ -405,10 +406,11 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 		size = sizeof(struct mipi_tx_size_resp_t);
 		memcpy(resp_buffer, &mipi_tx_size_resp, size);
 		resp_buffer += size;
+		//d_printf(D_INFO, "resp_buffer=0x%08x csi_status_ptr=0x%08x size=%d", resp_buffer, &mipi_tx_size_resp, size);
 		resp_size += size;
 	}
 
-	d_printf(D_INFO, "resp_buffer=0x%08x resp_size=%d", resp_buffer_base, resp_size);
+	//d_printf(D_INFO, "resp_buffer=0x%08x resp_size=%d", resp_buffer_base, resp_size);
 	spi_command_pack_response_pre_alloc(cmd, resp_buffer_base, resp_size);
 
 	//d_printf(D_INFO, "spi_command_pack_response_pre_alloc");
