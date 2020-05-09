@@ -14,6 +14,8 @@
 #include "test_patterns.h"
 #include "mipi_csi.h"
 
+#include <stdlib.h>
+
 /*
  * This file contains the list of supported commands.  A look up table is
  * constructed from this list upon initialisation.
@@ -53,14 +55,15 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        spicmd_csi_setup_wave_all },
 	{  0x63, "CSI_SETUP_TRIGPOS_RANGE",  8,       0,        spicmd_csi_setup_trigpos_range },
 	{  0x64, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        spicmd_csi_setup_trigpos_all },
-	{  0x65, "CSI_SETUP_TESTPATT",       1,       0,        spicmd_csi_setup_testpatt },
-	{  0x65, "CSI_SETUP_BITPACK_WAVE",   1,       0,        spicmd_csi_setup_bitpack_wave },
+	{  0x65, "CSI_SETUP_TESTPATT",       9,       0,        spicmd_csi_setup_testpatt },
+	{  0x66, "CSI_SETUP_BITPACK_WAVE",   1,       0,        spicmd_csi_setup_bitpack_wave },
 
-	{  0x6e, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        spicmd_csi_stream_clear_queue },
-	{  0x6e, "CSI_STREAM_UNPOP_START",   0,       0,        spicmd_csi_stream_unpop_start },
+	{  0x6d, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        spicmd_csi_stream_clear_queue },
+	{  0x6e, "CSI_STREAM_START",         0,       0,        spicmd_csi_stream_unpop_start },
 	{  0x6f, "CSI_STREAM_STOP",          0,       0,        spicmd_csi_stream_stop },
 	{  0x70, "CSI_STATUS",               0,       1,        spicmd_csi_status },
 	{  0x71, "CSI_SET_PARAMS_QUEUE",     3,       0,        spicmd_csi_set_params_queue },
+	{  0x72, "CSI_STREAM_START_ALL",     0,       0,        spicmd_csi_stream_unpop_start_all },
 
 	// Composite commands: these execute a combination of functions in one.  See spreadsheet for details.
 	{  0xc0, "COMP0",                    2,       1,        spicmd_comp0 },
@@ -73,7 +76,8 @@ const struct spi_command_def_t spi_command_defs[] = {
 };
 
 // Test patterns
-extern const char norway_512x512_grey[];
+extern const uint8_t testpat__norway_512x512_grey[];
+uint8_t __attribute__((aligned(32))) testpatt_buffer[262144];
 
 /*
  * Hello command.  Responds with 55 CC followed by the two argument bytes (echo self test)
@@ -245,7 +249,7 @@ void spicmd_csi_setup_addr_range(struct spi_command_alloc_t *cmd)
 	start_addr = UINT32_UNPACK(cmd, 0);
 	end_addr = UINT32_UNPACK(cmd, 4);
 
-	mipi_csi_queue_buffer(start_addr, end_addr);
+	mipi_csi_queue_buffer(start_addr, end_addr, NULL);
 }
 
 void spicmd_csi_setup_wave_range(struct spi_command_alloc_t *cmd)
@@ -266,22 +270,123 @@ void spicmd_csi_setup_trigpos_all(struct spi_command_alloc_t *cmd)
 
 void spicmd_csi_setup_testpatt(struct spi_command_alloc_t *cmd)
 {
-	uint8_t testpatt = cmd->args[0];
+	int i, j;
+	uint8_t testpatt = cmd->args[8];
+	uint32_t size = UINT32_UNPACK(cmd, 0);
+	uint32_t init_value = UINT32_UNPACK(cmd, 4);
 	uint32_t base = 0;
-	uint32_t size = 0;
+	uint8_t *buffer = NULL;
 
+	/*
+	 * BER test: Should be odd number of bytes to disperse across lanes
+	 *
+	 * 0xaa = High frequency test (@ bitclock)
+	 * 0xcc = Mid frequency test (@ 50% bitclock)
+	 * 0x0f = Low frequency test (@ 25% bitclock)
+	 * 0x24 = Single bits set in each nybble
+	 * 0xdb = Single bits clear in each nybble
+	 * 0x04 = Single bit set in each byte
+	 * 0xfe = Single bit clear in each byte
+	 */
+	const uint8_t ber_test[] = { 0xaa, 0xcc, 0x0f, 0x24, 0xdb, 0x04, 0xfe };
+
+	/*
+	 * Allocate a buffer of size bytes, rounded to the nearest 32 bytes, if we are
+	 * doing a non-image transfer.  Only "Norway" (pattern #1) is image, so all
+	 * other patterns require a buffer to be allocated.
+	 *
+	 * Buffer should be 32-byte aligned (cache line boundary).
+	 */
+	if(testpatt != 1) {
+		size += 31;
+		size &= ~31;
+
+		buffer = (uint8_t*)memalign(32, size);
+		if(buffer == NULL) {
+			d_printf(D_ERROR, "spicmd: Unable to allocate %d bytes for test pattern", size);
+			return;
+		}
+
+		base = (uint32_t)buffer;
+	}
+
+	d_printf(D_INFO, "spicmd: buffer 0x%08x size %d (0x%08x) bytes", base, size, size);
+
+	/*
+	 * Important: all test pattern buffers must be aligned to 4 byte boundaries
+	 * Misaligned data will cause an AXIDMA exception.
+	 */
 	switch(testpatt) {
 		case 1:
-			base = (uint32_t)&norway_512x512_grey;
+			// Norway Vastness
+			base = (uint32_t)&testpatt_norway_512x512_grey;
 			size = TESTPATT_NORWAY_512X512_SIZE;
 			break;
 
+		case 2:
+			// All Zeroes
+			d_printf(D_INFO, "All Zeroes");
+			memset(buffer, 0x00, size);
+			break;
+
+		case 3:
+			// All Ones
+			d_printf(D_INFO, "All Ones");
+			memset(buffer, 0xff, size);
+			break;
+
+		case 4:
+			// Bit Error Rate test - see ber_test comment above for explanation
+			for(i = 0, j = 0; i < size; i++) {
+				*(buffer + i) = ber_test[j++ % sizeof(ber_test)];
+			}
+			break;
+
+		case 5:
+			// 32-bit counter test:  Detects line sync issues/word loss issues.  Each word increments by 1.
+			for(i = 0, j = init_value; i < size; i += 4, j++) {
+				*(buffer + i + 0) = (j >> 24) & 0xff;
+				*(buffer + i + 1) = (j >> 16) & 0xff;
+				*(buffer + i + 2) = (j >> 8) & 0xff;
+				*(buffer + i + 3) = j & 0xff;
+			}
+			break;
+
+		case 6:
+			// 16-bit counter test:  Detects line sync issues/word loss issues.  Each halfword increments by 1.
+			for(i = 0, j = init_value; i < size; i += 2, j++) {
+				*(buffer + i + 1) = (j >> 8) & 0xff;
+				*(buffer + i + 0) = j & 0xff;
+			}
+			break;
+
+		case 7:
+			// 8-bit counter test:  Detects line sync issues/word loss issues.  Each byte increments by 1.
+			for(i = 0, j = init_value; i < size; i++, j++) {
+				*(buffer + i) = j & 0xff;
+			}
+			break;
+
+		case 8:
+			// Repeats 32-bit word in init_value
+			for(i = 0; i < size; i += 4) {
+				*(buffer + i + 0) = (init_value >> 24) & 0xff;
+				*(buffer + i + 1) = (init_value >> 16) & 0xff;
+				*(buffer + i + 2) = (init_value >> 8) & 0xff;
+				*(buffer + i + 3) = init_value & 0xff;
+			}
+			break;
+
 		default:
-			return;
+			// Undefined; but we want to free the buffer to avoid a leak!
+			d_printf(D_WARN, "spicmd: undefined testpatt!");
 			break;
 	}
 
-	mipi_csi_queue_buffer((uint32_t)base, (uint32_t)(base + size));
+	// `buffer` will be freed when the CSI operation is done
+	//d_printf(D_INFO, "Base 0x%08x Base+Size 0x%08x", base, base + size);
+	base = 0x01000000;
+	mipi_csi_queue_buffer(base, base + size, 0 /*buffer*/);
 }
 
 void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd)
@@ -304,6 +409,11 @@ void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd)
 void spicmd_csi_stream_unpop_start(struct spi_command_alloc_t *cmd)
 {
 	mipi_csi_unpop_and_start();
+}
+
+void spicmd_csi_stream_unpop_start_all(struct spi_command_alloc_t *cmd)
+{
+	mipi_csi_unpop_and_start_all();
 }
 
 void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd)

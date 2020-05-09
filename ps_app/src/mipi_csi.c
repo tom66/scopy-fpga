@@ -135,7 +135,11 @@ struct mipi_csi_stream_queue_item_t *mipi_csi_alloc_item()
 	struct mipi_csi_stream_queue_item_t *item;
 
 	item = calloc(sizeof(struct mipi_csi_stream_queue_item_t), 1);
-	D_ASSERT(item != NULL);
+
+	if(item == NULL) {
+		d_printf(D_ERROR, "mipi_csi: Unable to calloc %d bytes for queued item", sizeof(struct mipi_csi_stream_queue_item_t));
+		return NULL;
+	}
 
 	item->item_type = CSISTRM_TYPE_ALLOC_UNDEF;
 	g_mipi_csi_state.stats.items_alloc++;
@@ -151,39 +155,60 @@ struct mipi_csi_stream_queue_item_t *mipi_csi_alloc_item()
 void mipi_csi_free_item(struct mipi_csi_stream_queue_item_t *item)
 {
 	D_ASSERT(item != NULL);
-	//d_printf(D_INFO, "free_item 0x%08x", item);
+
+	free(item->free_done);
 	free(item);
+
 	g_mipi_csi_state.stats.items_freed++;
 }
 
 /*
  * Queue a waveform range into the CSI task queue.
+ *
+ * @param	start_addr
+ * @param	end_addr
+ * @param	free_done		Buffer to free when done (or if an error occurs)
  */
-void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr)
+void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr, void *free_done)
 {
 	struct mipi_csi_stream_queue_item_t *item;
 
 	if(start_addr > end_addr) {
 		d_printf(D_ERROR, "mipi_csi: buffer range invalid, not queueing request");
+		free(free_done);
 		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_PARAMETER;
 		return;
 	}
 
-	if((start_addr % 4) != 0 || (end_addr % 4) != 0) {
-		d_printf(D_ERROR, "mipi_csi: buffer range misaligned, not queueing request");
+	if((start_addr % 32) != 0 || (end_addr % 32) != 0) {
+		d_printf(D_ERROR, "mipi_csi: buffer range misaligned (0x%08x 0x%08x, align 32), not queueing request", \
+				start_addr, end_addr);
 		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_PARAMETER;
+		free(free_done);
 		return;
 	}
 
 	item = mipi_csi_alloc_item();
+
+	if(item == NULL) {
+		d_printf(D_ERROR, "mipi_csi: failed in mipi_csi_alloc_item()");
+		free(free_done);
+		return;
+	}
+
 	item->data_type = g_mipi_csi_state.csi_data_type;
 	item->wct_header = g_mipi_csi_state.csi_frame_wct;
-	item->item_type = CSISTRM_TYPE_WAVEFORM_RANGE;
+	item->item_type = CSISTRM_TYPE_RAW_MEMORY;
 	item->start_addr = start_addr;
 	item->end_addr = end_addr;
+	item->free_done = free_done;
 
-	D_ASSERT(queue_enqueue(g_mipi_csi_state.item_queue, item) == CC_OK);
-	g_mipi_csi_state.stats.items_queued++;
+	if(queue_enqueue(g_mipi_csi_state.item_queue, item) != CC_OK) {
+		d_printf(D_ERROR, "mipi_csi: failed to enqueue item into task queue: no space?");
+		mipi_csi_free_item(item);
+	} else {
+		g_mipi_csi_state.stats.items_queued++;
+	}
 }
 
 
@@ -213,6 +238,7 @@ void mipi_csi_queue_waverange(uint32_t start, uint32_t end)
 	item->item_type = CSISTRM_TYPE_WAVEFORM_RANGE;
 	item->start_addr = start;
 	item->end_addr = end;
+	item->free_done = NULL;
 
 	//d_printf(D_INFO, "queue=0x%08x, item=0x%08x", g_mipi_csi_state.item_queue, item);
 	D_ASSERT(queue_enqueue(g_mipi_csi_state.item_queue, item) == CC_OK);
@@ -300,8 +326,8 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 
 	d_start_timing(TMR_MIPI_SG_OVERALL);
 
-	D_ASSERT((addr_start % 4) == 0);
-	D_ASSERT((addr_end % 4) == 0);
+	D_ASSERT((addr_start % 32) == 0);
+	D_ASSERT((addr_end % 32) == 0);
 	D_ASSERT(addr_end >= addr_start);
 
 	size = addr_end - addr_start;
@@ -311,16 +337,21 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 	// Reset the DMA peripheral, terminating any existing transactions
 	XAxiDma_Reset(&g_mipi_csi_state.mipi_dma);
 
+	// Force a cache flush for the specified range
+	//d_printf(D_INFO, "mipi_csi: cache flush 0x%08x size %d bytes", addr_start, addr_end - addr_start);
+	Xil_DCacheFlushRange(addr_start, addr_end - addr_start);
+
 	/*
 	 * Free the old BD list, if it's present.  Then, attempt to create a new BD list,
-	 * the size of which is equal to the number of 8MB chunks to be transmitted.
+	 * the size of which is equal to the number of CSISTRM_AXI_MAX_BD_SIZE chunks
+	 * to be transmitted.
 	 */
 	if(g_mipi_csi_state.bd_area != NULL) {
 		d_printf(D_INFO, "FreeBD=0x%08x I", g_mipi_csi_state.bd_area);
 		free(g_mipi_csi_state.bd_area);
 	}
 
-	bd_entries = (size / CSISTRM_AXI_MAX_BD_SIZE) + 1;
+	bd_entries = (size / CSISTRM_AXI_MAX_BD_SIZE);
 	g_mipi_csi_state.bd_area = (void *)memalign(XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries * XAXIDMA_BD_MINIMUM_ALIGNMENT);
 
 	if(g_mipi_csi_state.bd_area == NULL) {
@@ -342,6 +373,7 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 	 */
 	cur_bd_ptr = bd_ptr;
 
+	/*
 	for(i = 0; i < bd_entries; i++) {
 		pk_size = MIN(size, CSISTRM_AXI_MAX_BD_SIZE);
 		sof = (i == 0);
@@ -352,6 +384,10 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 		size -= pk_size;
 		xfer_size += pk_size;
 	}
+	*/
+
+	pk_size = addr_end - addr_start;
+	_mipi_csi_axidma_add_bd_block(ring, bd_ptr, pk_size, (uint32_t*)buff, 1, 1);
 
 	g_mipi_csi_state.transfer_size = pk_size;
 
@@ -469,22 +505,23 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 			return CSIRES_ERROR_WAVES;
 		}
 
-		/*
-		d_printf(D_INFO, "i = %4d, n_waves = %d, sof = %d, eof = %d, wave = 0x%08x, wave_flags = 0x%04x", i, n_waves, sof, eof, wave, wave->flags);
+		//d_printf(D_INFO, "i = %4d, n_waves = %d, sof = %d, eof = %d, wave = 0x%08x, wave_flags = 0x%04x", i, n_waves, sof, eof, wave, wave->flags);
 
-		d_printf(D_INFO, "PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x", \
+		/*
+		d_printf(D_INFO, "WaveBase = 0x%08x, Trigger = 0x%08x, PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x", \
+				wave->buff_acq, wave->trigger_at, \
 				addr_helper.pre_lower_start, addr_helper.pre_lower_end, \
 				addr_helper.pre_upper_start, addr_helper.pre_upper_end, \
 				addr_helper.post_start, addr_helper.post_end);
 		*/
 
-		// Add the pre-lower section in 8MB chunks
-		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, \
-				addr_helper.pre_lower_end - addr_helper.pre_lower_start, addr_helper.pre_lower_start, sof, 0);
-
 		// Add the pre-upper section in 8MB chunks
 		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, \
-				addr_helper.pre_upper_end - addr_helper.pre_upper_start, addr_helper.pre_upper_start, 0, 0);
+				addr_helper.pre_upper_end - addr_helper.pre_upper_start, addr_helper.pre_upper_start, sof, 0);
+
+		// Add the pre-lower section in 8MB chunks
+		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, \
+				addr_helper.pre_lower_end - addr_helper.pre_lower_start, addr_helper.pre_lower_start, 0, 0);
 
 		// Add the post section in 8MB chunks
 		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, \
@@ -553,8 +590,10 @@ void mipi_csi_send_sof()
 
 	fabcfg_write_masked(FAB_CFG_CSI_CTRL_C, g_mipi_csi_state.csi_frame_wct, CSI_CTRL_C_WCT_HEADER_MSK, CSI_CTRL_C_WCT_HEADER_SFT);
 
+	// TODO: There is probably a better way to do this.
 	fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_START_FRAME);
 	//while( fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  // wait for DONE to go LOW - ack of command
+	bogo_delay(1);
 	while(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  // then wait for DONE to go HIGH - command done
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_START_FRAME);
 
@@ -571,10 +610,11 @@ void mipi_csi_send_eof()
 
 	fabcfg_write_masked(FAB_CFG_CSI_CTRL_C, g_mipi_csi_state.csi_frame_wct, CSI_CTRL_C_WCT_HEADER_MSK, CSI_CTRL_C_WCT_HEADER_SFT);
 
+	// TODO: There is probably a better way to do this.
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_START_LINES | CSI_CTRL_A_START_FRAME);
 	fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_END_FRAME);
-	//while( fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  // wait for DONE to go LOW - ack of command
-	while(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  // then wait for DONE to go HIGH - command done
+	bogo_delay(1);
+	while(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  //  wait for DONE to go HIGH - command done
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_END_FRAME);
 
 	outbyte('.');
@@ -586,6 +626,37 @@ void mipi_csi_send_eof()
 	if(g_mipi_csi_state.flags & MCSI_FLAG_CLOCK_IDLE_MODE_2) {
 		fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_CLOCK_SLEEP_ENABLE);
 	}
+}
+
+/*
+ * Stop any running transcation.  To stop:
+ *   - Check RUNNING is set, indicating core is processing data; if not this has no effect.
+ *   - STOP signal is asserted
+ *   - We wait for the core to respond by waiting for RUNNING to go low (may take up to one
+ *     data line transmission.)
+ */
+void mipi_csi_stop()
+{
+	int timeout = CSI_TIMEOUT_STOP;
+
+	// If not running don't bother stopping...
+	if(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_RUNNING)) {
+		return;
+	}
+
+	// Send STOP and test for RUNNING - time out eventually
+	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_INIT_SIGNALS);
+	fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_STOP);
+
+	while(fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_RUNNING) && timeout--) ;
+
+	if(timeout == 0) {
+		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_STOP_TIMEOUT;
+	} else {
+		g_mipi_csi_state.flags |= MCSI_FLAG_STOP_DONE;
+	}
+
+	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_STOP);
 }
 
 /*
@@ -698,37 +769,6 @@ void mipi_csi_unpop_and_start_all()
 		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_TRANSFER_BUSY;
 		//d_printf(D_INFO, "unpop_and_start_all not possible");
 	}
-}
-
-/*
- * Stop any running transcation.  To stop:
- *   - Check RUNNING is set, indicating core is processing data; if not this has no effect.
- *   - STOP signal is asserted
- *   - We wait for the core to respond by waiting for RUNNING to go low (may take up to one
- *     data line transmission.)
- */
-void mipi_csi_stop()
-{
-	int timeout = CSI_TIMEOUT_STOP;
-
-	// If not running don't bother stopping...
-	if(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_RUNNING)) {
-		return;
-	}
-
-	// Send STOP and test for RUNNING - time out eventually
-	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_INIT_SIGNALS);
-	fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_STOP);
-
-	while(fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_RUNNING) && timeout--) ;
-
-	if(timeout == 0) {
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_STOP_TIMEOUT;
-	} else {
-		g_mipi_csi_state.flags |= MCSI_FLAG_STOP_DONE;
-	}
-
-	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_STOP);
 }
 
 /*

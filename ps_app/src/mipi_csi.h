@@ -28,7 +28,7 @@
 
 #define CSISTRM_WAVE_ALL				0xffffffff
 
-#define CSISTRM_AXI_MAX_BD_SIZE			((1 << 23))
+#define CSISTRM_AXI_MAX_BD_SIZE			(1 << 15)	// 1 << 23
 
 #define MCSI_FLAG_ERROR_TRANSFER_BUSY	0x0002
 #define MCSI_FLAG_ERROR_PARAMETER		0x0004
@@ -46,7 +46,7 @@
 #define MCSI_FLAG_ERROR_MASK			(MCSI_FLAG_ERROR_TRANSFER_BUSY | MCSI_FLAG_ERROR_PARAMETER | MCSI_FLAG_ERROR_STOP_TIMEOUT)
 
 #define MCSI_DEFAULT_LINE_WIDTH			2048
-#define MCSI_DEFAULT_LINE_COUNT			64
+#define MCSI_DEFAULT_LINE_COUNT			2048
 #define MCSI_PACKET_MAX_SIZE			(MCSI_DEFAULT_LINE_WIDTH * MCSI_DEFAULT_LINE_COUNT)
 
 #define MCSI_DEFAULT_DATA_TYPE			0x2a
@@ -100,7 +100,7 @@
 
 #define CSI_TIMEOUT_STOP				1000
 
-#define CSI_DEFAULT_BIT_CLOCK			100			// Specified in MHz, FP values acceptable.  250MHz default, experimentation required to establish max bit clock
+#define CSI_DEFAULT_BIT_CLOCK			450			// Specified in MHz, FP values acceptable.  250MHz default, experimentation required to establish max bit clock
 
 struct mipi_csi_stream_queue_item_t {
 	int item_type;						// One of CSISTRM_TYPE_x values
@@ -110,6 +110,7 @@ struct mipi_csi_stream_queue_item_t {
 	uint32_t start_addr;				// Can be wave ID or pointer
 	uint32_t end_addr;					// Can be wave ID or pointer
 	uint32_t calculated_size;			// Calculated size of any transfer in bytes, after the transfer has been processed and SG list packed
+	void *free_done;					// Buffer to free when done.  If set to NULL, this is ignored.
 	XAxiDma_BdRing *ring;				// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
 };
 
@@ -190,7 +191,7 @@ void mipi_csi_init();
 struct mipi_csi_stream_queue_item_t *mipi_csi_alloc_item();
 void mipi_csi_free_item(struct mipi_csi_stream_queue_item_t *item);
 void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *item);
-void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr);
+void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr, void *free_done);
 void mipi_csi_queue_waverange(uint32_t start, uint32_t end);
 void mipi_csi_queue_all_waves();
 void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct);
@@ -234,12 +235,14 @@ inline XAxiDma_Bd *_mipi_csi_axidma_add_bd_entry(XAxiDma_BdRing *ring, XAxiDma_B
 inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_Bd *cur_bd, int size, uint32_t base, bool sof, bool eof)
 {
 	int c;
-	int chcnt = (size / CSISTRM_AXI_MAX_BD_SIZE) + 1;
+	int chcnt = (size / CSISTRM_AXI_MAX_BD_SIZE);
+	int block_size = 0;
 	uint32_t ctrl = 0;
 
 	//d_printf(D_INFO, "size=%10d base=0x%08x curbd=0x%08x maxsize=%8d chcnt=%5d", size, base, cur_bd, CSISTRM_AXI_MAX_BD_SIZE, chcnt);
 
-	for(c = 0; c < chcnt; c++) {
+	//for(c = 0; c < chcnt; c++) {
+	for(c = 0; size > 0; c++) {
 		/*
 		 * Add SOF and EOF flags to actual first and last BD entries.
 		 *
@@ -247,16 +250,17 @@ inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_B
 		 * this logic ensures the tags are appended to the *true* start/end block.
 		 */
 		if(eof && ((c + 1) == chcnt)) {
-			ctrl |= XAXIDMA_BD_CTRL_TXEOF_MASK;
+			ctrl = XAXIDMA_BD_CTRL_TXEOF_MASK;
+		} else if(sof && (c == 0)) {
+			ctrl = XAXIDMA_BD_CTRL_TXSOF_MASK;
+		} else {
+			ctrl = 0;
 		}
 
-		if(sof && (c == 0)) {
-			ctrl |= XAXIDMA_BD_CTRL_TXSOF_MASK;
-		}
-
-		cur_bd = _mipi_csi_axidma_add_bd_entry(ring, cur_bd, base, MIN(size, CSISTRM_AXI_MAX_BD_SIZE), ctrl);
-		base += CSISTRM_AXI_MAX_BD_SIZE;
-		size -= CSISTRM_AXI_MAX_BD_SIZE;
+		block_size = MIN(size, CSISTRM_AXI_MAX_BD_SIZE);
+		cur_bd = _mipi_csi_axidma_add_bd_entry(ring, cur_bd, base, block_size, ctrl);
+		base += block_size;
+		size -= block_size;
 	}
 
 	g_mipi_csi_state.stats.num_bds_created += chcnt;

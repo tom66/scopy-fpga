@@ -78,6 +78,7 @@ void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd);
 void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd);
 void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd);
 void spicmd_csi_stream_unpop_start(struct spi_command_alloc_t *cmd);
+void spicmd_csi_stream_unpop_start_all(struct spi_command_alloc_t *cmd);
 void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd);
 void spicmd_csi_status(struct spi_command_alloc_t *cmd);
 

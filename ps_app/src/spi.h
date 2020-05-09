@@ -118,6 +118,7 @@ struct spi_stats_t {
 struct spi_command_alloc_t {
 	int alloc_idx, nargs;
 	uint8_t cmd;
+	uint8_t pad0[3]; // Padding to align args on 4-byte boundary
 	uint8_t args[SPI_COMMAND_MAX_ARGS];
 	int resp_size;
 	uint8_t *resp_data;
