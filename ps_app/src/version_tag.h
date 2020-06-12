@@ -8,7 +8,7 @@
 #ifndef SRC_VERSION_TAG_H_
 #define SRC_VERSION_TAG_H_
 
-#define PS_APP_VERSION_TAG		"v0.0.2-beta"
+#define PS_APP_VERSION_TAG		"v0.0.3-beta"
 #define PS_APP_VERSION_INT		0x000002be
 
 #endif /* SRC_VERSION_TAG_H_ */

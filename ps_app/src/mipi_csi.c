@@ -46,6 +46,8 @@
 
 struct mipi_csi_state_t g_mipi_csi_state;
 
+int g_frame_ctr = 0;
+
 /*
  * Initialise the MIPI CSI controller.  Sets up the queue and resets
  * fabric control variables to zero.  Initialises the DMA.
@@ -106,6 +108,12 @@ void mipi_csi_init()
 	g_mipi_csi_state.csi_line_size = MCSI_DEFAULT_LINE_WIDTH;
 	g_mipi_csi_state.csi_line_count = MCSI_DEFAULT_LINE_COUNT;
 	mipi_csi_set_datatype_and_frame_wct(MCSI_DEFAULT_DATA_TYPE, MCSI_DEFAULT_WCT);
+
+	/*
+	 * Setup the DMA BD controller which handles the allocation of BD entries (a
+	 * replacement for the byzantine and buggy Xilinx library.)
+	 */
+	dma_bd_init();
 }
 
 /*
@@ -239,6 +247,7 @@ void mipi_csi_queue_waverange(uint32_t start, uint32_t end)
 	item->start_addr = start;
 	item->end_addr = end;
 	item->free_done = NULL;
+	item->wave_buffer_first = g_acq_state.acq_current;
 
 	//d_printf(D_INFO, "queue=0x%08x, item=0x%08x", g_mipi_csi_state.item_queue, item);
 	D_ASSERT(queue_enqueue(g_mipi_csi_state.item_queue, item) == CC_OK);
@@ -320,6 +329,7 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 	XAxiDma_Bd *cur_bd_ptr;
 	uint32_t *buff = (uint32_t*)addr_start;
 	uint32_t xfer_size = 0, pk_size = 0;
+	uint32_t bd_size;
 	int32_t size, bd_entries;
 	int i, status;
 	bool sof, eof;
@@ -352,6 +362,16 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 	}
 
 	bd_entries = (size / CSISTRM_AXI_MAX_BD_SIZE);
+
+	/*
+	 * Account for off-by-one error (this won't be necessary after we move away from Xil stuff
+	 * to pack the BD. [FIXME]
+	 */
+	bd_size = bd_entries * CSISTRM_AXI_MAX_BD_SIZE;
+	if(bd_size < size) {
+		bd_entries++;
+	}
+
 	g_mipi_csi_state.bd_area = (void *)memalign(XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries * XAXIDMA_BD_MINIMUM_ALIGNMENT);
 
 	if(g_mipi_csi_state.bd_area == NULL) {
@@ -392,6 +412,8 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 	g_mipi_csi_state.transfer_size = pk_size;
 
 	// Pass the BD to hardware for transmission
+	//d_printf(D_INFO, "cur_bd=0x%08x stat=0x%08x", bd_ptr, XAxiDma_BdGetCtrl(bd_ptr));
+
 	status = XAxiDma_BdRingToHw(ring, bd_entries, bd_ptr); // This function manages cache coherency for BDs
 	if (status != XST_SUCCESS) {
 		d_printf(D_ERROR, "mipi_csi: fatal error passing BD ring to hardware: %d", status);
@@ -413,8 +435,10 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
  *
  * @param	wave_start		Starting wave index
  * @param	wave_end		Ending wave index - must be more than or equal to starting index
+ *
+ * @param	q_item			Item in queue for additional tag information
  */
-int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct mipi_csi_stream_queue_item_t *q_item)
+int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct acq_buffer_t *base_wave, struct mipi_csi_stream_queue_item_t *q_item)
 {
 	int status, n_waves, bd_entries, i;
 	XAxiDma_BdRing *ring;
@@ -428,6 +452,9 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 	bool sof, eof;
 
 	//d_printf(D_INFO, "waves: %d %d", wave_start, wave_end);
+
+	//trig_dump_state();
+	//acq_debug_dump_wave(wave_start);
 
 	d_start_timing(TMR_MIPI_SG_OVERALL);
 
@@ -446,7 +473,9 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 	 * Wave bounds checking is handled gracefully elsewhere, so this assert shouldn't
 	 * be harmful.
 	 */
-	D_ASSERT(acq_get_ll_pointer(wave_start, &wave, ACQLIST_DONE) == ACQRES_OK);
+	//d_printf(D_INFO, "curptr=0x%08x", g_acq_state.acq_done_first);
+
+	D_ASSERT(acq_get_ll_pointer_in_base(wave_start, &wave, base_wave) == ACQRES_OK);
 	total_sz = wave->pre_sz + wave->post_sz;
 	extra_chunks  = wave->pre_sz / CSISTRM_AXI_MAX_BD_SIZE;
 	extra_chunks += wave->post_sz / CSISTRM_AXI_MAX_BD_SIZE;
@@ -494,6 +523,16 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 
 	d_start_timing(TMR_MIPI_SG_BDFILL);
 
+	/*
+	for(i = 0; i < 1; i++) {
+		if(acq_next_ll_pointer(wave, &next) != ACQRES_OK)
+			break;
+		wave = next;
+	}
+	*/
+
+	//acq_debug_dump_wave_pointer(wave);
+
 	for(i = 0; i < n_waves; i++) {
 		sof = (i == 0);
 		eof = (i == n_waves - 1);
@@ -506,14 +545,20 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 		}
 
 		//d_printf(D_INFO, "i = %4d, n_waves = %d, sof = %d, eof = %d, wave = 0x%08x, wave_flags = 0x%04x", i, n_waves, sof, eof, wave, wave->flags);
+#if 0
+		if(1 /*i == 0*/) {
+			d_printf(D_RAW, "\r\nWaveBase = 0x%08x, Trigger = 0x%08x, PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x, I = %3d, WavIdx = %3d, N = 0x%08x\r\n", \
+					wave->buff_acq, wave->trigger_at, \
+					addr_helper.pre_lower_start, addr_helper.pre_lower_end, \
+					addr_helper.pre_upper_start, addr_helper.pre_upper_end, \
+					addr_helper.post_start, addr_helper.post_end, i, wave->idx, wave->next);
 
-		/*
-		d_printf(D_INFO, "WaveBase = 0x%08x, Trigger = 0x%08x, PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x", \
-				wave->buff_acq, wave->trigger_at, \
-				addr_helper.pre_lower_start, addr_helper.pre_lower_end, \
-				addr_helper.pre_upper_start, addr_helper.pre_upper_end, \
-				addr_helper.post_start, addr_helper.post_end);
-		*/
+			d_printf(D_RAW, "DeBASED:                                     PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x\r\n", \
+					addr_helper.pre_lower_start - (uint32_t)wave->buff_acq, addr_helper.pre_lower_end - (uint32_t)wave->buff_acq, \
+					addr_helper.pre_upper_start - (uint32_t)wave->buff_acq, addr_helper.pre_upper_end - (uint32_t)wave->buff_acq, \
+					addr_helper.post_start - (uint32_t)wave->buff_acq, addr_helper.post_end - (uint32_t)wave->buff_acq);
+		}
+#endif
 
 		// Add the pre-upper section in 8MB chunks
 		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, \
@@ -531,6 +576,9 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 		if(acq_next_ll_pointer(wave, &next) != ACQRES_OK)
 			break;
 		wave = next;
+
+		//d_printf(D_ERROR, "dying here");
+		//break;
 	}
 
 	d_stop_timing(TMR_MIPI_SG_BDFILL);
@@ -559,7 +607,7 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
  */
 void mipi_csi_send_fifo_reset()
 {
-	outbyte('R');
+	//outbyte('R');
 
 	fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_RESET_FIFO);
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_RESET_FIFO);
@@ -571,7 +619,7 @@ void mipi_csi_send_fifo_reset()
  */
 void mipi_csi_send_sof()
 {
-	outbyte('S');
+	//outbyte('S');
 
 	/*
 	 * If clock idle flag #2 is set, then we turn off fabric clock idling so that clock goes active
@@ -597,7 +645,7 @@ void mipi_csi_send_sof()
 	while(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  // then wait for DONE to go HIGH - command done
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_START_FRAME);
 
-	outbyte(',');
+	//outbyte(',');
 }
 
 /*
@@ -606,7 +654,7 @@ void mipi_csi_send_sof()
  */
 void mipi_csi_send_eof()
 {
-	outbyte('E');
+	//outbyte('E');
 
 	fabcfg_write_masked(FAB_CFG_CSI_CTRL_C, g_mipi_csi_state.csi_frame_wct, CSI_CTRL_C_WCT_HEADER_MSK, CSI_CTRL_C_WCT_HEADER_SFT);
 
@@ -617,7 +665,9 @@ void mipi_csi_send_eof()
 	while(!fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;  //  wait for DONE to go HIGH - command done
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_END_FRAME);
 
-	outbyte('.');
+	//outbyte('.');
+
+	//d_printf(D_RAW, "[f%d]", g_frame_ctr++);
 
 	/*
 	 * If clock idle flag #2 is set, then we turn on fabric clock idling so that clock goes inactive
@@ -721,6 +771,22 @@ void mipi_csi_transfer_packet(struct mipi_csi_stream_queue_item_t *q_item)
 	g_mipi_csi_state.stats.data_xfer_bytes += size;
 
 	//d_printf(D_INFO, "mipi_csi: packet parameters: %d bytes remain", g_mipi_csi_state.transfer_rem);
+}
+
+/*
+ * Send a padding packet (N empty frames with no lines.)
+ */
+void mipi_csi_pack_padding(int frames)
+{
+	fabcfg_write_masked(FAB_CFG_CSI_CTRL_B, 0, CSI_CTRL_B_LINE_COUNT_MSK, CSI_CTRL_B_LINE_COUNT_SFT);
+
+	// Send the frame start signal first, then send the start lines signal.
+	while(frames--) {
+		//outbyte('0' + frames);
+		mipi_csi_send_sof();
+		//while(fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;
+		mipi_csi_send_eof();
+	}
 }
 
 /*
@@ -838,12 +904,12 @@ void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *q_item)
 			//d_printf(D_INFO, "CSISTRM_TYPE_WAVEFORM_RANGE");
 			if(q_item->start_addr == CSISTRM_WAVE_ALL && q_item->end_addr == CSISTRM_WAVE_ALL) {
 				if(acq_get_nwaves_done() > 0) {
-					if(mipi_csi_generate_sg_list_for_waves(0, acq_get_nwaves_done() - 1, q_item) == CSIRES_OK) {
+					if(mipi_csi_generate_sg_list_for_waves(0, acq_get_nwaves_done() - 1, q_item->wave_buffer_first, q_item) == CSIRES_OK) {
 						send_packet = 1;
 					}
 				}
 			} else {
-				if(mipi_csi_generate_sg_list_for_waves(q_item->start_addr, q_item->end_addr, q_item) == CSIRES_OK) {
+				if(mipi_csi_generate_sg_list_for_waves(q_item->start_addr, q_item->end_addr, q_item->wave_buffer_first, q_item) == CSIRES_OK) {
 					send_packet = 1;
 				}
 			}
@@ -1002,6 +1068,11 @@ void mipi_csi_tick()
 							g_mipi_csi_state.stats.last_transfer_time_us);
 
 					//d_printf(D_INFO, "Total_time=%.4f, BD_time=%.4f", g_mipi_csi_state.stats.last_sg_total_time_us, g_mipi_csi_state.stats.last_sg_bd_time_us);
+
+					// Pack EOFs
+					//d_printf(D_RAW, "^Se:");
+					//mipi_csi_pack_padding(8);
+					//d_printf(D_RAW, "...eofDone");
 
 					// End frame and return to idle.
 					mipi_csi_send_eof();

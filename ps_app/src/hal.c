@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <malloc.h>
 #include <ctype.h>
 
 // Local application includes
@@ -80,6 +81,8 @@ void hal_init()
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "Application is licenced under the MIT Licence");
 	d_printf(D_INFO, "For information see LICENCE in the Git repository");
+	d_printf(D_INFO, "");
+	d_dump_malloc_info();
 	d_printf(D_INFO, "");
 
 	/*
@@ -499,4 +502,25 @@ void d_dump_timing_ex(char *s, int index)
 void d_xilinx_assert(const char8 *file, s32 line)
 {
 	d_printf(D_ERROR, "XilAssert failed at line %d of file `%s'\r\n", line, file);
+}
+
+/*
+ * Print malloc info (more than malloc_stats).  TODO:  This should pull data from a common
+ * function so we can return same data over SPI port.
+ */
+void d_dump_malloc_info()
+{
+	struct mallinfo _mallinfo = mallinfo();
+	unsigned int heap_size, heap_alloc, heap_free;
+	float perc_free;
+
+	heap_size = (unsigned int)(&_HEAP_SIZE);
+	heap_alloc = _mallinfo.uordblks;
+	heap_free = heap_size - heap_alloc;
+	perc_free = 100.0f * ((float)heap_free / heap_size);
+
+	d_printf(D_INFO, "Compiled stack size: %7d KiB (%10d bytes)", (unsigned int)(&_STACK_SIZE) / 1024, (unsigned int)(&_STACK_SIZE));
+	d_printf(D_INFO, "Compiled heap size:  %7d KiB (%10d bytes)", heap_size / 1024, heap_size);
+	d_printf(D_INFO, "Total heap alloc'd:  %7d KIB (%10d bytes)", heap_alloc / 1024, heap_alloc);
+	d_printf(D_INFO, "Maximum heap free:   %7d KIB (%10d bytes) (%.1f%% free)", heap_free / 1024, heap_free, perc_free);
 }

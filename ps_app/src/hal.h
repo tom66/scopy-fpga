@@ -149,6 +149,10 @@ struct hal_t {
 
 extern struct hal_t g_hal;
 
+// Linker script values
+extern void *_STACK_SIZE;
+extern void *_HEAP_SIZE;
+
 void hal_init();
 void bogo_delay(uint32_t us);
 void d_printf(int debug_code, char *fmt, ...);
@@ -163,6 +167,7 @@ float d_read_timing_us(int index);
 void d_dump_timing(char *s, int index);
 void d_dump_timing_ex(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
+void d_dump_malloc_info();
 
 /**
  * Fast read/write functions for EMIO port.  These are inlined

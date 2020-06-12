@@ -72,6 +72,7 @@
 #define ACQ_BUFFER_ALIGN			32								// Required byte alignment for AXI DMA (Must be a power of two)
 #define ACQ_BUFFER_ALIGN_AMOD		(ACQ_BUFFER_ALIGN - 1)			// Modulo (binary-AND) used to determine alignment of above value
 
+#define ACQRES_WAVE_BOUNDS_INVALID	-13
 #define ACQRES_END_OF_WAVE_LL		-12
 #define ACQRES_WAVE_NOT_READY		-11
 #define ACQRES_WAVE_NOT_FOUND		-10
@@ -201,6 +202,11 @@
 #define ACQCTRL_FLAG_LIST_B_ACQ		0x0002					// Acquiring into list B, list A contains complete data
 #define ACQCTRL_FLAG_NO_SWAP		0x0004					// Set if no list swapping to be used; i.e. for large acquisitions that use the whole memory
 #define ACQCTRL_FLAG_B_IS_VALID		0x0008					// Set after first acquisition is complete; B contains valid data
+
+#define ACQBUF_PRE_LOWER_VALID		0x01
+#define ACQBUF_PRE_UPPER_VALID		0x02
+#define ACQBUF_POST_VALID			0x04
+#define ACQBUF_ALL_FLAGS			0x07
 
 extern struct acq_state_t g_acq_state;
 
@@ -332,11 +338,22 @@ struct acq_state_t {
  * Acquisition DMA helper response struct.  Returned by acq_dma_address_helper;
  * this represents the addresses that a copy needs to be performed from to
  * copy a single waveform.
+ *
+ * A flags register is used to encode which buffers are valid.
  */
 struct acq_dma_addr_t {
 	uint32_t pre_lower_start, pre_lower_end;
 	uint32_t pre_upper_start, pre_upper_end;
 	uint32_t post_start, post_end;
+	uint32_t wave_base;
+	uint8_t flags;
+};
+
+/*
+ * Clip range for a DMA waveform calculation.
+ */
+struct acq_wave_range_t {
+	uint32_t start, stop;
 };
 
 /*
@@ -386,10 +403,12 @@ bool acq_abort_done();
 bool acq_is_done();
 void acq_make_status(struct acq_status_resp_t *status_resp);
 void acq_debug_dump();
-void acq_debug_dump_wave();
+void acq_debug_ll_dump(struct acq_buffer_t *base, char *str);
 int acq_get_ll_pointer(int index, struct acq_buffer_t **buff, int list_used);
+int acq_get_ll_pointer_in_base(int index, struct acq_buffer_t **buff, struct acq_buffer_t *base_wave);
 int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next);
-void acq_debug_dump_wave(int index);
+void acq_debug_dump_wave(int index, int list);
+void acq_debug_dump_wave_pointer(struct acq_buffer_t *waveptr);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
 int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
 unsigned int acq_get_wave_size_bytes(int region);

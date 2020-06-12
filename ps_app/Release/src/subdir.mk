@@ -10,6 +10,7 @@ C_SRCS += \
 ../src/acq_hacks.c \
 ../src/acquire.c \
 ../src/clkwiz_interface.c \
+../src/dma_bd.c \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
@@ -25,6 +26,7 @@ OBJS += \
 ./src/acq_hacks.o \
 ./src/acquire.o \
 ./src/clkwiz_interface.o \
+./src/dma_bd.o \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
@@ -40,6 +42,7 @@ C_DEPS += \
 ./src/acq_hacks.d \
 ./src/acquire.d \
 ./src/clkwiz_interface.d \
+./src/dma_bd.d \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \

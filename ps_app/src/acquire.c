@@ -276,6 +276,8 @@ void _acq_irq_rx_handler(void *callback)
 				g_acq_state.stats.num_samples_raw += g_acq_state.post_buffsz;
 				g_acq_state.acq_current->flags |= ACQBUF_FLAG_PKT_DONE;
 
+				//d_printf(D_INFO, "Set flag on 0x%08x", g_acq_state.acq_current);
+
 				/*
 				 * If the OVERRUN flag was set, then this waveform should be discarded as it is not valid.  The
 				 * acquisition restarts on the same wave.
@@ -323,8 +325,8 @@ void _acq_irq_rx_handler(void *callback)
 								_acq_clear_ctrl_a(ACQ_CTRL_A_END_EARLY);
 								g_acq_state.sub_state = ACQSUBST_NONE;
 							} else {
+								//d_printf(D_RAW, "cur:%08x nxt:%08x cfl:0x%04x\r\n", g_acq_state.acq_current, g_acq_state.acq_current->next, g_acq_state.acq_current->flags);
 								g_acq_state.acq_current = g_acq_state.acq_current->next;
-								//d_printf(D_INFO, "cur:%08x nxt:%08x", g_acq_state.acq_current, g_acq_state.acq_current->next);
 								//outbyte('x');
 								error = acq_start(ACQ_START_FIFO_RESET);
 
@@ -468,6 +470,7 @@ void _acq_irq_error_dma(int cause_index)
 void _acq_reset_PL_fifo()
 {
 	_acq_set_ctrl_a(ACQ_CTRL_A_FIFO_RESET);
+	bogo_delay(10);
 	_acq_clear_ctrl_a(ACQ_CTRL_A_FIFO_RESET);
 
 	// Test the FIFO full signal; wait for it to deassert before handing control back over
@@ -482,8 +485,6 @@ void _acq_reset_PL_fifo()
  */
 void _acq_reset_trigger()
 {
-	volatile int i;
-
 	_acq_set_ctrl_a(ACQ_CTRL_A_TRIG_RST);
 	_acq_clear_ctrl_a(ACQ_CTRL_A_TRIG_RST);
 }
@@ -681,6 +682,7 @@ int acq_get_next_alloc(struct acq_buffer_t *next)
 	if(work == NULL) {
 		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for allocbuffer", buf_sz);
 		g_acq_state.stats.num_alloc_err_total++;
+		malloc_stats();
 		return ACQRES_MALLOC_FAIL;
 	}
 
@@ -725,6 +727,7 @@ int acq_append_next_alloc()
 	if(next == NULL) {
 		d_printf(D_ERROR, "acquire: failed to allocate %d bytes for alloc structure", sizeof(struct acq_buffer_t));
 		g_acq_state.stats.num_alloc_err_total++;
+		malloc_stats();
 		return ACQRES_MALLOC_FAIL;
 	}
 
@@ -892,7 +895,8 @@ void acq_swap()
 		g_acq_state.acq_done_first = temp_first;
 		g_acq_state.acq_done_current = temp_current;
 
-		g_acq_state.control = ACQCTRL_FLAG_LIST_B_ACQ;
+		g_acq_state.control &= ~ACQCTRL_FLAG_LIST_A_ACQ;
+		g_acq_state.control |= ACQCTRL_FLAG_LIST_B_ACQ;
 	} else if(g_acq_state.control & ACQCTRL_FLAG_LIST_B_ACQ) {
 		temp_first = g_acq_state.acq_done_first;
 		temp_current = g_acq_state.acq_done_current;
@@ -901,7 +905,8 @@ void acq_swap()
 		g_acq_state.acq_first = temp_first;
 		g_acq_state.acq_current = temp_current;
 
-		g_acq_state.control = ACQCTRL_FLAG_LIST_A_ACQ;
+		g_acq_state.control &= ~ACQCTRL_FLAG_LIST_B_ACQ;
+		g_acq_state.control |= ACQCTRL_FLAG_LIST_A_ACQ;
 	}
 
 	GLOBAL_IRQ_ENABLE();
@@ -1046,6 +1051,7 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 
 	if(first_a == NULL) {
 		d_printf(D_ERROR, "acquire: unable to allocate %d bytes for first-A entry in acquisition", sizeof(struct acq_buffer_t));
+		malloc_stats();
 		return ACQRES_MALLOC_FAIL;
 	}
 
@@ -1087,7 +1093,7 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 	 *
 	 * If at any point this fails, bail out and free memory.
 	 */
-	for(i = 0; i < num_acq; i++) {
+	for(i = 0; i < (num_acq - 1); i++) {
 		error = acq_append_next_alloc();
 		if(error != ACQRES_OK) {
 			d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d [A], aborting allocation", error, i);
@@ -1104,7 +1110,7 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 		g_acq_state.acq_first = g_acq_state.acq_B_first;
 		g_acq_state.acq_current = g_acq_state.acq_B_first;
 
-		for(i = 0; i < num_acq; i++) {
+		for(i = 0; i < (num_acq - 1); i++) {
 			error = acq_append_next_alloc();
 			if(error != ACQRES_OK) {
 				d_printf(D_ERROR, "acquire: error %d while allocating buffer #%d [A], aborting allocation", error, i);
@@ -1157,6 +1163,11 @@ int acq_prepare_triggered(uint32_t mode_flags, uint32_t pre_sz, uint32_t post_sz
 
 	g_acq_state.demux_reg = demux;
 	//fabcfg_write(FAB_CFG_ACQ_DEMUX_MODE, demux);
+
+	d_dump_malloc_info();
+
+	//acq_debug_ll_dump(g_acq_state.acq_first,      "CURR");
+	//acq_debug_ll_dump(g_acq_state.acq_done_first, "DONE");
 
 	return ACQRES_OK;
 }
@@ -1218,15 +1229,16 @@ int acq_start(int reset_fifo)
 		// Start on 'A' mux: pre-trigger
 		_acq_clear_ctrl_a(ACQ_CTRL_A_DEPTH_MUX | ACQ_CTRL_A_ABORT | ACQ_CTRL_A_END_EARLY | ACQ_CTRL_A_POST_TRIG_MODE);
 
-		if(reset_fifo == ACQ_START_FIFO_RESET) {
-			_acq_reset_PL_fifo();
-		}
-
 		// Reset the trigger before starting acquisition.
 		//_acq_reset_trigger();
 
 		// Start the transaction: initially with triggers masked and not in POST_TRIG mode
 		_acq_set_ctrl_a(ACQ_CTRL_A_DATA_VALID | ACQ_CTRL_A_RUN | ACQ_CTRL_A_TRIG_MASK | ACQ_CTRL_A_AXI_RUN);
+
+		// Reset the FIFO, if needed
+		if(reset_fifo == ACQ_START_FIFO_RESET) {
+			_acq_reset_PL_fifo();
+		}
 
 		return ACQRES_OK;
 	} else {
@@ -1246,7 +1258,7 @@ int acq_start(int reset_fifo)
 int acq_stop()
 {
 	if(g_acq_state.state == ACQSTATE_STOPPED) {
-		d_printf(D_ERROR, "acquire: acquisition already stopped");
+		d_printf(D_WARN, "acquire: acquisition already stopped");
 		return ACQRES_NOT_RUNNING;
 	}
 
@@ -1416,6 +1428,24 @@ void acq_debug_dump()
 }
 
 /*
+ * Dump the LL structure for debugging purposes.
+ */
+void acq_debug_ll_dump(struct acq_buffer_t *base, char *str)
+{
+	struct acq_buffer_t *wave = base;
+
+	d_printf(D_INFO, "** Acquisition Linked List State for 0x%08x %s **", base, str);
+	d_printf(D_INFO, "");
+
+	while(wave != NULL) {
+		d_printf(D_INFO, "info = 0x%08x, buffer = 0x%08x, next = 0x%08x, flags = 0x%04x, index = %8d", wave, wave->buff_acq, wave->next, wave->flags, wave->idx);
+		wave = wave->next;
+	}
+
+	d_printf(D_INFO, "");
+}
+
+/*
  * Dump raw contents of buffer in active acquisition.
  */
 void acq_debug_dump_waveraw()
@@ -1481,6 +1511,40 @@ int acq_get_ll_pointer(int index, struct acq_buffer_t **buff, int list_used)
 }
 
 /*
+ * Explore the linked list to find a waveform by an index and copy a pointer
+ * to the passed parameter `buff`.
+ *
+ * @param	index	Index of wave
+ * @param	buff	Pointer to a pointer for the acq_buffer_t struct (result)
+ * @param	base	Base pointer for the wave list
+ *
+ * @return	ACQRES_OK if waveform found (trigger state disregarded)
+ * 			ACQRES_WAVE_NOT_FOUND if... well... the waveform wasn't found
+ */
+int acq_get_ll_pointer_in_base(int index, struct acq_buffer_t **buff, struct acq_buffer_t *base_wave)
+{
+	struct acq_buffer_t *wave = base_wave;
+
+	while(wave != NULL) {
+		//d_printf(D_EXINFO, "explore: 0x%08x (%d) (buff_acq:0x%08x, trigger_at:0x%08x %d)", \
+				wave, wave->idx, wave->buff_acq, wave->trigger_at, wave->trigger_at);
+
+		if(wave->idx == index)
+			break;
+
+		wave = wave->next;
+	}
+
+	if(wave == NULL) {
+		d_printf(D_ERROR, "Unable to find waveindex %d with list_base 0x%08x", index, base_wave);
+		return ACQRES_WAVE_NOT_FOUND;
+	}
+
+	*buff = wave;
+	return ACQRES_OK;
+}
+
+/*
  * Pass a reference to the next entry in a linked list, checking for the end
  * of the list.
  *
@@ -1505,37 +1569,46 @@ int acq_next_ll_pointer(struct acq_buffer_t *this, struct acq_buffer_t **next)
  *
  * @param	index	Index of wave to dump. Function will explore LL to find the waveform.
  */
-void acq_debug_dump_wave(int index)
+void acq_debug_dump_wave(int index, int list)
 {
 	struct acq_buffer_t *wave;
-	uint32_t addr, addr_start, addr_end, offs, sz, start, end, end_post;
-	uint32_t *addr2;
-	uint32_t *deref;
-	int first, i;
 
-	if(acq_get_ll_pointer(index, &wave, ACQLIST_ACQ) != ACQRES_OK) {
+	D_ASSERT(list == ACQLIST_ACQ || list == ACQLIST_DONE);
+
+	if(acq_get_ll_pointer(index, &wave, list) != ACQRES_OK) {
 		d_printf(D_ERROR, "Unable to dump for waveindex %d: couldn't find wave", index);
 		return;
 	}
 
-	// d_printf(D_ERROR, "Pointer: 0x%08x", wave);
+	acq_debug_dump_wave_pointer(wave);
+}
+
+/*
+ * Dump information from a wave pointer.
+ *
+ * @param	wave		Pointer to the wave to dump.
+ */
+void acq_debug_dump_wave_pointer(struct acq_buffer_t *wave)
+{
+	uint32_t start, end;
+	int i;
 
 	// Dump info about this wave
 	d_printf(D_INFO, "");
-	d_printf(D_INFO, "** Waveinfo for index %d **", index);
+	d_printf(D_INFO, "** Waveinfo for index %d **", wave->idx);
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "buff_acq address      = 0x%08x", wave->buff_acq);
 	d_printf(D_INFO, "buff_alloc address    = 0x%08x", wave->buff_alloc);
 	d_printf(D_INFO, "");
 	d_printf(D_INFO, "idx                   = %d", wave->idx);
 	d_printf(D_INFO, "flags                 = 0x%04x", wave->flags);
-	d_printf(D_INFO, "trigger_at            = 0x%08x", wave->trigger_at);
+	d_printf(D_INFO, "trigger_at            = 0x%08x (%d)", wave->trigger_at, wave->trigger_at);
 	d_printf(D_INFO, "trigger_at(div8)      = 0x%08x (%d)", wave->trigger_at >> 3, wave->trigger_at >> 3);
 	d_printf(D_INFO, "trigger_at(div16)     = 0x%08x (%d)", wave->trigger_at >> 4, wave->trigger_at >> 4);
 	d_printf(D_INFO, "");
 
 	// If waveform is completed with trigger then display it
-	if(!(wave->trigger_at & TRIGGER_INVALID_MASK) && (wave->flags & ACQBUF_FLAG_PKT_DONE)) {
+	if(!(wave->trigger_at & TRIGGER_INVALID_MASK)) {
 		/*
 		 * To play back the waveform:
 		 *   - Invalidate the DCache for this line (do NOT flush line back to DDR3)
@@ -1554,37 +1627,32 @@ void acq_debug_dump_wave(int index)
 		 */
 		Xil_DCacheInvalidateRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
 		dmb();
-		//Xil_L2CacheFlushRange((INTPTR)wave->buff_acq, g_acq_state.total_buffsz);
-		//bogo_delay(1000000);
 
-		//offs = wave->trigger_at >> 3;
-		addr_start = wave->buff_acq; // + (wave->trigger_at * 8);
-		//addr_end = &wave->buff_acq + g_acq_state.pre_buffsz;
+		//addr_start = wave->buff_acq;
 
-		//addr2 = wave->buff_acq + (wave->trigger_at / 2);
 		start = (((wave->trigger_at >> 3) + 1) * 2);
 		end = g_acq_state.pre_sampct * 2;
-		//addr_start = wave->buff_acq[(wave->trigger_at >> 3)];
-		//addr_end = wave->buff_acq + (g_acq_state.pre_sampct * 2);
 
-		d_printf(D_INFO, "sz=%d, start=%d, end_post=%d", end, start, end_post);
+		//d_printf(D_INFO, "sz=%d, start=%d, end_post=%d", end, start, end_post);
+
+		d_printf(D_RAW, " bytepos word0     word1\r\n");
 
 		for(i = start; i < end; i += 2) {
-			d_printf(D_RAW, "\033[96m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
+			d_printf(D_RAW, "\033[96m%8d 0x%08x 0x%08x\033[0m\r\n", i * 4, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
 
 		for(i = 0; i < start; i += 2) {
-			d_printf(D_RAW, "\033[95m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
+			d_printf(D_RAW, "\033[95m%8d 0x%08x 0x%08x\033[0m\r\n", i * 4, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
 
 		start = g_acq_state.pre_sampct * 2;
 		end = (g_acq_state.pre_sampct + g_acq_state.post_sampct) * 2;
 
 		for(i = start; i < end; i += 2) {
-			d_printf(D_RAW, "\033[97m%8d 0x%08x 0x%08x\033[0m\r\n", i, wave->buff_acq[i], wave->buff_acq[i + 1]);
+			d_printf(D_RAW, "\033[97m%8d 0x%08x 0x%08x\033[0m\r\n", i * 4, wave->buff_acq[i], wave->buff_acq[i + 1]);
 		}
 	} else {
-		d_printf(D_ERROR, "Trigger invalid for waveindex %d or wave not done", index);
+		d_printf(D_ERROR, "Trigger invalid for waveindex %d or wave not done", wave->idx);
 	}
 
 	d_printf(D_INFO, "");
@@ -1664,9 +1732,12 @@ int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *add
 	D_ASSERT(wave != NULL);
 	D_ASSERT(addr_helper != NULL);
 
+	/*
 	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_READY_CSI)) {
+		d_printf(D_WARN, "wave_invalid trig=0x%08x flags=0x%04x", wave->trigger_at, wave->flags);
 		return ACQRES_WAVE_NOT_READY;
 	}
+	*/
 
 	//start = ACQ_TRIGGER_AT_TO_32PTR(wave->trigger_at);
 	//end = ACQ_64SAMPCT_TO_32PTR(wave->pre_sz);
@@ -1683,7 +1754,66 @@ int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *add
 	addr_helper->post_start = (uint32_t)wave->buff_acq + wave->pre_sz;
 	addr_helper->post_end = addr_helper->post_start + wave->post_sz;
 
+	addr_helper->wave_base = (uint32_t)wave->buff_acq;  // Alias for pre_lower_start but keeps the values distinct for future changes
+	addr_helper->flags = ACQBUF_ALL_FLAGS;
+
 	return ACQRES_OK;
+}
+
+/*
+ * Return the pointers to be used to copy a given waveform with
+ * a given clipping window applied.  These pointers will be used to
+ * do DMA copies to the MIPI peripherals, or for other tasks.
+ *
+ * @param	wave			Pointer to the waveform struct to provide pointers for
+ * @param	range			Pointer to a range struct which sets bounds
+ * @param	buff			Pointer to an addr_helper struct
+ *
+ * @return	ACQRES_OK if successful, ACQRES_WAVE_NOT_READY if waveform not
+ * 			ready for pointer calculation (e.g. unfilled) or ACQRES_WAVE_BOUNDS_INVALID
+ * 			if the range specified exceeds the valid range for the waveform.
+ */
+int acq_dma_clipped_address_helper(struct acq_buffer_t *wave, struct acq_wave_range_t *range, struct acq_dma_addr_t *addr_helper)
+{
+	struct acq_wave_range_t range_off;
+
+	if(acq_dma_address_helper(wave, &addr_helper) != ACQRES_OK) {
+		return ACQRES_WAVE_NOT_READY;
+	}
+
+	range_off = *range;
+	range_off.start += addr_helper->wave_base;
+	range_off.stop += addr_helper->wave_base;
+
+	addr_helper->pre_lower_start = MAX(addr_helper->pre_lower_start, range_off.start);
+	addr_helper->pre_lower_start = MIN(addr_helper->pre_lower_start, range_off.stop);
+
+	addr_helper->pre_lower_end = MAX(addr_helper->pre_lower_end, range_off.start);
+	addr_helper->pre_lower_end = MIN(addr_helper->pre_lower_end, range_off.stop);
+
+	addr_helper->pre_upper_start = MAX(addr_helper->pre_upper_start, range_off.start);
+	addr_helper->pre_upper_start = MIN(addr_helper->pre_upper_start, range_off.stop);
+
+	addr_helper->pre_upper_end = MAX(addr_helper->pre_upper_end, range_off.start);
+	addr_helper->pre_upper_end = MIN(addr_helper->pre_upper_end, range_off.stop);
+
+	addr_helper->post_start = MAX(addr_helper->pre_upper_start, range_off.start);
+	addr_helper->post_start = MIN(addr_helper->pre_upper_start, range_off.stop);
+
+	addr_helper->post_end = MAX(addr_helper->pre_upper_end, range_off.start);
+	addr_helper->post_end = MIN(addr_helper->pre_upper_end, range_off.stop);
+
+	if(addr_helper->pre_lower_start == addr_helper->pre_lower_end) {
+		addr_helper->flags &= ~ACQBUF_PRE_LOWER_VALID;
+	}
+
+	if(addr_helper->pre_upper_start == addr_helper->pre_upper_end) {
+		addr_helper->flags &= ~ACQBUF_PRE_UPPER_VALID;
+	}
+
+	if(addr_helper->post_start == addr_helper->post_end) {
+		addr_helper->flags &= ~ACQBUF_POST_VALID;
+	}
 }
 
 /*

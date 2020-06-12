@@ -28,7 +28,7 @@
 
 #define CSISTRM_WAVE_ALL				0xffffffff
 
-#define CSISTRM_AXI_MAX_BD_SIZE			(1 << 15)	// 1 << 23
+#define CSISTRM_AXI_MAX_BD_SIZE			(1 << 18)	// 1 << 23
 
 #define MCSI_FLAG_ERROR_TRANSFER_BUSY	0x0002
 #define MCSI_FLAG_ERROR_PARAMETER		0x0004
@@ -100,31 +100,32 @@
 
 #define CSI_TIMEOUT_STOP				1000
 
-#define CSI_DEFAULT_BIT_CLOCK			450			// Specified in MHz, FP values acceptable.  250MHz default, experimentation required to establish max bit clock
+#define CSI_DEFAULT_BIT_CLOCK			300			// Specified in MHz, FP values acceptable.  450MHz default, experimentation required to establish max rate.
 
 struct mipi_csi_stream_queue_item_t {
-	int item_type;						// One of CSISTRM_TYPE_x values
-	uint8_t data_type;					// Datatype to be passed to CSI FPGA core (becomes CSI datatype)
-	uint16_t wct_header;				// Wordcount header to be passed to CSI FPGA core (becomes SOF/EOF wordcount field)
-	uint32_t core_flags;				// Currently ignored, eventually due to be passed to the FPGA
-	uint32_t start_addr;				// Can be wave ID or pointer
-	uint32_t end_addr;					// Can be wave ID or pointer
-	uint32_t calculated_size;			// Calculated size of any transfer in bytes, after the transfer has been processed and SG list packed
-	void *free_done;					// Buffer to free when done.  If set to NULL, this is ignored.
-	XAxiDma_BdRing *ring;				// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
+	int item_type;								// One of CSISTRM_TYPE_x values
+	uint8_t data_type;							// Datatype to be passed to CSI FPGA core (becomes CSI datatype)
+	uint16_t wct_header;						// Wordcount header to be passed to CSI FPGA core (becomes SOF/EOF wordcount field)
+	uint32_t core_flags;						// Currently ignored, eventually due to be passed to the FPGA
+	uint32_t start_addr;						// Can be wave ID or pointer
+	uint32_t end_addr;							// Can be wave ID or pointer
+	uint32_t calculated_size;					// Calculated size of any transfer in bytes, after the transfer has been processed and SG list packed
+	void *free_done;							// Buffer to free when done.  If set to NULL, this is ignored.
+	struct acq_buffer_t *wave_buffer_first;		// Pointer to wave buffer's first entry, if this queue item is a waveform
+	XAxiDma_BdRing *ring;						// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
 };
 
 struct mipi_csi_stats_t {
-	uint32_t items_queued;				// Items queued in total
-	uint32_t items_alloc;				// Items queued that memory has been allocated for
-	uint32_t items_freed;				// Items freed in total (should closely match alloc)
-	uint64_t data_xfer_bytes;			// Total bytes sent
-	uint64_t num_bds_created;			// Total BD entries set up
-	float last_transfer_time_us;		// Last transfer time in microseconds
-	float last_transfer_perf_mbs;		// Last transfer rate in MB/s
-	uint64_t total_transfer_time_us;	// Total transfer time in microseconds
-	float last_sg_total_time_us;		// Total time to prepare the last scatter-gather list
-	float last_sg_bd_time_us;			// Time to prepare the last scatter-gather BD list (the O(n) part of the equation)
+	uint32_t items_queued;						// Items queued in total
+	uint32_t items_alloc;						// Items queued that memory has been allocated for
+	uint32_t items_freed;						// Items freed in total (should closely match alloc)
+	uint64_t data_xfer_bytes;					// Total bytes sent
+	uint64_t num_bds_created;					// Total BD entries set up
+	float last_transfer_time_us;				// Last transfer time in microseconds
+	float last_transfer_perf_mbs;				// Last transfer rate in MB/s
+	uint64_t total_transfer_time_us;			// Total transfer time in microseconds
+	float last_sg_total_time_us;				// Total time to prepare the last scatter-gather list
+	float last_sg_bd_time_us;					// Time to prepare the last scatter-gather BD list (the O(n) part of the equation)
 };
 
 struct mipi_csi_state_t {
@@ -197,10 +198,11 @@ void mipi_csi_queue_all_waves();
 void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct);
 int mipi_csi_setup_bdring_and_bd(void *bd_area, int bd_entries, XAxiDma_BdRing **ring, XAxiDma_Bd **bd_ptr);
 int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item);
-int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct mipi_csi_stream_queue_item_t *q_item);
+int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct acq_buffer_t *base_wave, struct mipi_csi_stream_queue_item_t *q_item);
 void mipi_csi_send_sof();
 void mipi_csi_send_eof();
 void mipi_csi_transfer_packet();
+void mipi_csi_pack_padding(int frames);
 void mipi_csi_clear_queue();
 void mipi_csi_unpop_and_start();
 void mipi_csi_unpop_and_start_all();
@@ -238,18 +240,21 @@ inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_B
 	int chcnt = (size / CSISTRM_AXI_MAX_BD_SIZE);
 	int block_size = 0;
 	uint32_t ctrl = 0;
+	XAxiDma_Bd *base_bd = cur_bd;
 
 	//d_printf(D_INFO, "size=%10d base=0x%08x curbd=0x%08x maxsize=%8d chcnt=%5d", size, base, cur_bd, CSISTRM_AXI_MAX_BD_SIZE, chcnt);
 
 	//for(c = 0; c < chcnt; c++) {
 	for(c = 0; size > 0; c++) {
+		D_ASSERT(!(cur_bd == base_bd && c != 0)); // Catch BD loopback bug
+
 		/*
 		 * Add SOF and EOF flags to actual first and last BD entries.
 		 *
 		 * SOF and EOF flags should be set per block according to the first and last block respectively
 		 * this logic ensures the tags are appended to the *true* start/end block.
 		 */
-		if(eof && ((c + 1) == chcnt)) {
+		if(eof && (c == chcnt)) {
 			ctrl = XAXIDMA_BD_CTRL_TXEOF_MASK;
 		} else if(sof && (c == 0)) {
 			ctrl = XAXIDMA_BD_CTRL_TXSOF_MASK;
@@ -259,6 +264,7 @@ inline XAxiDma_Bd* _mipi_csi_axidma_add_bd_block(XAxiDma_BdRing *ring, XAxiDma_B
 
 		block_size = MIN(size, CSISTRM_AXI_MAX_BD_SIZE);
 		cur_bd = _mipi_csi_axidma_add_bd_entry(ring, cur_bd, base, block_size, ctrl);
+
 		base += block_size;
 		size -= block_size;
 	}

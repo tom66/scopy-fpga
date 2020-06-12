@@ -32,7 +32,7 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x08, "WAIT_QUEUE",               0,       0,		NULL },
 	{  0x09, "CLEAR_COMMAND_QUEUE",      2,       0,		NULL },
 
-	{  0x10, "ACQ_SETUP_TRIGGERED",      13,      0,		spicmd_acq_setup_trigd },
+	{  0x10, "ACQ_SETUP_TRIGGERED",      14,      0,		spicmd_acq_setup_trigd },
 	{  0x11, "ACQ_START",                1,       0,		spicmd_acq_start },
 	{  0x12, "ACQ_STOP",                 0,       0,		spicmd_acq_stop },
 	{  0x13, "ACQ_REWIND",               0,       0,		spicmd_acq_rewind },
@@ -123,15 +123,15 @@ void spicmd_stats(struct spi_command_alloc_t *cmd)
 void spicmd_acq_setup_trigd(struct spi_command_alloc_t *cmd)
 {
 	uint32_t wavect, pre_sz, post_sz;
-	uint8_t mode;
+	uint16_t mode;
 	int status;
 
 	pre_sz = UINT32_UNPACK(cmd, 0);
 	post_sz = UINT32_UNPACK(cmd, 4);
 	wavect = UINT32_UNPACK(cmd, 8);
-	mode = cmd->args[12];
+	mode = UINT16_UNPACK(cmd, 12); // cmd->args[12];
 
-	d_printf(D_INFO, "spi: new acquisition (pre:%d, post:%d, mode:0x%02x, wavect:%d)", pre_sz, post_sz, mode, wavect);
+	d_printf(D_INFO, "spi: new acquisition (pre:%d, post:%d, mode:0x%04x, wavect:%d)", pre_sz, post_sz, mode, wavect);
 
 	status = acq_prepare_triggered(mode, pre_sz, post_sz, wavect);
 
@@ -153,16 +153,18 @@ void spicmd_acq_start(struct spi_command_alloc_t *cmd)
 }
 
 /*
- * Stop the acquisition.
+ * Stop the acquisition.  If the acquisition is not running this command has no effect.
  */
 void spicmd_acq_stop(struct spi_command_alloc_t *cmd)
 {
 	int status;
 
-	status = acq_stop();
+	if(g_acq_state.state != ACQSTATE_STOPPED) {
+		status = acq_stop();
 
-	if(status != ACQRES_OK) {
-		d_printf(D_ERROR, "spi: acquistion unable to stop: %d", status);
+		if(status != ACQRES_OK) {
+			d_printf(D_ERROR, "spi: acquistion unable to stop: %d", status);
+		}
 	}
 
 	//d_printf(D_INFO, "stop");
@@ -385,8 +387,7 @@ void spicmd_csi_setup_testpatt(struct spi_command_alloc_t *cmd)
 
 	// `buffer` will be freed when the CSI operation is done
 	//d_printf(D_INFO, "Base 0x%08x Base+Size 0x%08x", base, base + size);
-	base = 0x01000000;
-	mipi_csi_queue_buffer(base, base + size, 0 /*buffer*/);
+	mipi_csi_queue_buffer(base, base + size, buffer);
 }
 
 void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd)
@@ -398,6 +399,7 @@ void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd)
 	uint8_t data_type = cmd->args[2];
 	uint16_t wct = UINT16_UNPACK(cmd, 0);
 
+	d_printf(D_INFO, "spicmd_csi_set_params_queue: 0x%02x 0x%04x", data_type, wct);
 	mipi_csi_set_datatype_and_frame_wct(data_type, wct);
 }
 
@@ -438,7 +440,7 @@ void spicmd_csi_status(struct spi_command_alloc_t *cmd)
 void spicmd_comp0(struct spi_command_alloc_t *cmd)
 {
 	const int resp_buff_maxsize = sizeof(struct acq_status_resp_t) + \
-								  sizeof(struct mipi_tx_size_resp_t);
+								  sizeof(struct mipi_tx_size_resp_t) + 4;
 
 	struct acq_status_resp_t acq_status_resp;
 	struct mipi_tx_size_resp_t mipi_tx_size_resp;
@@ -448,8 +450,6 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	void *resp_buffer_base;
 	void *resp_buffer;
 	int resp_size = 0, size = 0;
-
-	//acq_debug_dump();
 
 	// Commands below must be executed in order to create the right behaviour...
 	if(func & SPICOMP0_ACQ_STOP) {
@@ -472,26 +472,43 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 		acq_rewind();
 	}
 
-	if(func & SPICOMP0_ACQ_START_RESFIFO) {
-		acq_start(1);
-	} else if(func & SPICOMP0_ACQ_START_NORESFIFO) {
-		acq_start(0);
+	//d_printf(D_INFO, " Old_Ptrs=0x%08x 0x%08x", g_acq_state.acq_first, g_acq_state.acq_done_first);
+
+	//d_printf(D_INFO, "Pfirstptr=0x%08x", g_acq_state.acq_first);
+
+	//d_printf(D_INFO, "Swap_Ptrs=0x%08x 0x%08x", g_acq_state.acq_first, g_acq_state.acq_done_first);
+
+	// for now, only stream if exact # waves available
+	if(g_acq_state.num_acq_made_done == g_acq_state.num_acq_request) {
+		if(func & SPICOMP0_SEND_CSI_WAVES) {
+			//d_printf(D_INFO, "q_waves");
+			mipi_csi_queue_all_waves();
+			csi_to_send = 1;
+		}
+	} else {
+		d_printf(D_ERROR, "No trigger!");
 	}
 
 	if(func & SPICOMP0_ACQ_SWAP) {
+		//d_printf(D_WARN, "SWAP");
 		acq_swap();
 	}
 
-	if(func & SPICOMP0_SEND_CSI_WAVES) {
-		//d_printf(D_INFO, "q_waves");
-		mipi_csi_queue_all_waves();
-		csi_to_send = 1;
+	if(func & SPICOMP0_ACQ_START_RESFIFO) {
+		//d_printf(D_INFO, "ResFifo");
+		acq_start(1);
+	} else if(func & SPICOMP0_ACQ_START_NORESFIFO) {
+		//d_printf(D_INFO, "NORESET");
+		acq_start(0);
 	}
 
 	if(csi_to_send) {
 		//d_printf(D_INFO, "u_sall");
 		mipi_csi_unpop_and_start_all();
 	}
+
+	//acq_debug_dump();
+	//trig_dump_state();
 
 	/*
 	 * Check what we need to pack into the response buffer.  Malloc enough bytes for everything
@@ -520,8 +537,16 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 		resp_size += size;
 	}
 
+	// Add trailing bytes: copy of flags transmitted plus 0x55 0xcc
+	*(uint8_t*)(resp_buffer + 0) = func >> 8;
+	*(uint8_t*)(resp_buffer + 1) = func;
+	*(uint8_t*)(resp_buffer + 2) = 0x55;
+	*(uint8_t*)(resp_buffer + 3) = 0xcc;
+
 	//d_printf(D_INFO, "resp_buffer=0x%08x resp_size=%d", resp_buffer_base, resp_size);
 	spi_command_pack_response_pre_alloc(cmd, resp_buffer_base, resp_size);
+
+	//acq_debug_dump_wave(10);
 
 	//d_printf(D_INFO, "spi_command_pack_response_pre_alloc");
 
