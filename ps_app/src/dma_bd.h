@@ -22,14 +22,16 @@
 // All BDs are effectively 64 bytes in size and must be aligned along this boundary
 #define BD_SIZE					64
 #define BD_ALIGN				64
+#define BD_ALIGN_MASK			(BD_ALIGN - 1)
 
-// We allocate up to 32 BDs at a time (2KB + tags)
-#define BD_ALLOC_BLOCK_COUNT	32
+// We allocate up to 128 BDs at a time (8KB + tags)
+#define BD_ALLOC_BLOCK_COUNT	128
 
 // Function responses
 #define BD_RES_OK				0
 #define BD_RES_MEM_ALLOC_ERR 	-1
 #define BD_RES_PARAM_ERR 		-2
+#define BD_RES_ZERO_SIZE		-3
 
 // Function parameters
 #define BD_NEXT_ENTRY			0
@@ -40,29 +42,36 @@
 #define BD_EOF					(1 << 27)
 #define BD_FLAGS_MASK			(BD_SOF | BD_EOF)
 
-#define BD_TRANSMIT				0
-#define BD_RECEIVE				1
+#define BD_STATUS_MASK			0x80000000
+
+#define BD_STFLAGS_TRANSMIT		0x00000001
+#define BD_STFLAGS_RECEIVE		0x00000002
+#define BD_STFLAGS_DUMP_DEBUG	0x00000004
 
 #define BD_VOID_ZONE_BYTES		65536
 
 #define BD_MAX_SIZE				(1 << 18)	// 256KB
 
 /*
- * Statistics counters.
+ * Statistics counters.  These are only reset by destroying the BD; they do not
+ * track the current state exclusively.
  */
 struct dma_bd_stats_t {
 	uint64_t num_bds_alloc;
 	uint64_t num_bds_filled;
 	uint64_t num_tags_alloc;
+	uint64_t total_bytes;
 };
 
 /*
  * Structure to store one BD ring, non Xilinx style :).
  */
 struct dma_bd_ring_t {
-	struct dma_bd_tag_t *dma_bd_base;
-	struct dma_bd_tag_t *dma_bd_current;
-	struct dma_bd_stats_t dma_bd_stats;
+	struct dma_bd_tag_t *base;							// First tag
+	struct dma_bd_tag_t *last;							// Last tag written to
+	struct dma_bd_tag_t *current;						// Current working tag
+	struct dma_bd_stats_t stats;
+	uint32_t total_bd_count;
 };
 
 /*
@@ -71,8 +80,9 @@ struct dma_bd_ring_t {
  */
 struct dma_bd_tag_t {
 	int n_bds, n_bds_free;
-	struct dma_bd_sg_descriptor_t *bd_base_ptr;
-	struct dma_bd_sg_descriptor_t *bd_working_ptr;
+	struct dma_bd_sg_descriptor_t *bd_base_ptr;			// First entry
+	struct dma_bd_sg_descriptor_t *bd_last_ptr;			// Last complete entry
+	struct dma_bd_sg_descriptor_t *bd_working_ptr;		// Location of next entry
 	struct dma_bd_tag_t *next_alloc;
 };
 
@@ -109,7 +119,9 @@ struct dma_bd_sg_userdata_t {
 };
 
 void dma_bd_init();
+int dma_bd_create_ring(struct dma_bd_ring_t **ring);
 int dma_bd_allocate(struct dma_bd_ring_t *ring, int n_bds_req, int first);
+int dma_bd_destroy_ring(struct dma_bd_ring_t *ring);
 void dma_bd_free_from(struct dma_bd_tag_t *tag_in);
 void dma_bd_free(struct dma_bd_ring_t *ring);
 void dma_bd_trim(struct dma_bd_ring_t *ring);
@@ -118,6 +130,12 @@ void dma_bd_rewind(struct dma_bd_ring_t *ring);
 int dma_bd_add_raw_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int size, int flags, struct dma_bd_sg_userdata_t *user);
 int dma_bd_add_large_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int size, int flags, struct dma_bd_sg_userdata_t *user);
 int dma_bd_add_zero_sg_entry(struct dma_bd_ring_t *ring, int size, int flags, struct dma_bd_sg_userdata_t *user);
+
+void dma_bd_flush_to_ram(struct dma_bd_ring_t *ring);
+int dma_bd_finalise(struct dma_bd_ring_t *ring);
 int dma_bd_start(XAxiDma *periph, struct dma_bd_ring_t *ring, int tx_rx);
+
+void dma_bd_debug_dump(struct dma_bd_ring_t *ring);
+void dma_bd_test();
 
 #endif // SRC_DMA_BD_H_

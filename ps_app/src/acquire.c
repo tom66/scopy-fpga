@@ -1719,8 +1719,8 @@ int acq_copy_slow_mipi(int index, uint32_t *buffer)
  * pointers will be used to do DMA copies to the MIPI peripherals,
  * or for other tasks.
  *
- * @param	wave	Pointer to the waveform struct to provide pointers for
- * @param	buff	Pointer to an addr_helper struct
+ * @param	wave			Pointer to the waveform struct to provide pointers for
+ * @param	addr_helper		Pointer to an addr_helper struct
  *
  * @return	ACQRES_OK if successful, ACQRES_WAVE_NOT_READY if waveform not
  * 			ready for pointer calculation (e.g. unfilled.)
@@ -1732,12 +1732,12 @@ int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *add
 	D_ASSERT(wave != NULL);
 	D_ASSERT(addr_helper != NULL);
 
-	/*
+	//d_printf(D_INFO, "0x%08x 0x%02x", wave->trigger_at, wave->flags);
+
 	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_READY_CSI)) {
-		d_printf(D_WARN, "wave_invalid trig=0x%08x flags=0x%04x", wave->trigger_at, wave->flags);
+		//d_printf(D_WARN, "wave_invalid trig=0x%08x flags=0x%04x", wave->trigger_at, wave->flags);
 		return ACQRES_WAVE_NOT_READY;
 	}
-	*/
 
 	//start = ACQ_TRIGGER_AT_TO_32PTR(wave->trigger_at);
 	//end = ACQ_64SAMPCT_TO_32PTR(wave->pre_sz);
@@ -1759,6 +1759,27 @@ int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *add
 
 	return ACQRES_OK;
 }
+
+/*
+ * Dump debug info for the passed address helper and wave.
+ *
+ * @param	wave			Pointer to the waveform struct for the address helper
+ * @param	addr_helper		Pointer to an addr_helper struct
+ */
+void acq_dma_address_helper_debug(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper)
+{
+	d_printf(D_RAW, "WaveBase = 0x%08x, Trigger = 0x%08x, PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x, WavIdx = %3d, N = 0x%08x\r\n", \
+			wave->buff_acq, wave->trigger_at, \
+			addr_helper->pre_lower_start, addr_helper->pre_lower_end, \
+			addr_helper->pre_upper_start, addr_helper->pre_upper_end, \
+			addr_helper->post_start, addr_helper->post_end,  wave->idx, wave->next);
+
+	d_printf(D_RAW, "DeBASED:                                     PrLS = 0x%08x, PrLE = 0x%08x, PrUS = 0x%08x, PrUE = 0x%08x, PoS = 0x%08x, PoE = 0x%08x\r\n\r\n", \
+			addr_helper->pre_lower_start - (uint32_t)wave->buff_acq, addr_helper->pre_lower_end - (uint32_t)wave->buff_acq, \
+			addr_helper->pre_upper_start - (uint32_t)wave->buff_acq, addr_helper->pre_upper_end - (uint32_t)wave->buff_acq, \
+			addr_helper->post_start - (uint32_t)wave->buff_acq, addr_helper->post_end - (uint32_t)wave->buff_acq);
+}
+
 
 /*
  * Return the pointers to be used to copy a given waveform with

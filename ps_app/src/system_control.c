@@ -88,6 +88,20 @@ void sysctrl_tick_irq(void *cb_ref)
 }
 
 /*
+ * Get the current SysCtrl time.  Not to be executed within an interrupt.
+ */
+uint64_t systick_get_time_us_nonirq()
+{
+	uint64_t time;
+
+	GLOBAL_IRQ_DISABLE();
+	time = g_sysctrl_state.time_us;
+	GLOBAL_IRQ_ENABLE();
+
+	return time;
+}
+
+/*
  * Change the LED mode.  In the default configuration PS#0 LED is a heartbeat/active
  * indicator LED.  It can be switched to a GP mode where it will be under pure
  * software control.

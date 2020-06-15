@@ -23,6 +23,7 @@
 #include "fabric_config.h"
 #include "clkwiz_interface.h"
 #include "spi.h"
+#include "dma_bd.h"
 #include "version_tag.h"
 
 // Xilinx includes
@@ -215,6 +216,12 @@ void hal_init()
 	 * the clock for the MIPI block.
 	 */
 	clkwiz_init(&g_hal.clkwiz_mipi, CLKWIZ_CFG_MIPI, CLKWIZ_CFG_MIPI_REFCLK);
+
+	/*
+	 * Initialise the DMA BD controller.  Must be initialised before any DMA BD operations
+	 * are performed.
+	 */
+	dma_bd_init();
 }
 
 /**
@@ -519,8 +526,20 @@ void d_dump_malloc_info()
 	heap_free = heap_size - heap_alloc;
 	perc_free = 100.0f * ((float)heap_free / heap_size);
 
+	d_printf(D_INFO, "---- MALLOC INFO ----");
 	d_printf(D_INFO, "Compiled stack size: %7d KiB (%10d bytes)", (unsigned int)(&_STACK_SIZE) / 1024, (unsigned int)(&_STACK_SIZE));
 	d_printf(D_INFO, "Compiled heap size:  %7d KiB (%10d bytes)", heap_size / 1024, heap_size);
-	d_printf(D_INFO, "Total heap alloc'd:  %7d KIB (%10d bytes)", heap_alloc / 1024, heap_alloc);
-	d_printf(D_INFO, "Maximum heap free:   %7d KIB (%10d bytes) (%.1f%% free)", heap_free / 1024, heap_free, perc_free);
+	d_printf(D_INFO, "Total heap alloc'd:  %7d KiB (%10d bytes)", heap_alloc / 1024, heap_alloc);
+	d_printf(D_INFO, "Maximum heap free:   %7d KiB (%10d bytes) (%.1f%% free)", heap_free / 1024, heap_free, perc_free);
+	d_printf(D_INFO, "---- END    INFO ----");
+}
+
+/*
+ * Die/trap handler point.  Prints debug, calls exit().
+ */
+void d_trap_handle()
+{
+	d_printf(D_ERROR, "d_trap_handle() - dying...");
+	d_dump_malloc_info();
+	exit(-1);
 }

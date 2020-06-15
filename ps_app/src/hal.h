@@ -34,6 +34,7 @@
 #include "xscutimer.h"
 #include "xdebug.h"
 
+#include "dma_bd.h"
 #include "clkwiz_interface.h"
 
 #define DBG_LEVEL					2
@@ -168,6 +169,7 @@ void d_dump_timing(char *s, int index);
 void d_dump_timing_ex(char *s, int index);
 void d_xilinx_assert(const char8 *File, s32 Line);
 void d_dump_malloc_info();
+void d_trap_handle();
 
 /**
  * Fast read/write functions for EMIO port.  These are inlined

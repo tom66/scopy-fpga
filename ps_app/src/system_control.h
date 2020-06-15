@@ -57,6 +57,7 @@ struct sysctrl_state_t {
 extern struct sysctrl_state_t g_sysctrl_state;
 
 void sysctrl_init();
+uint64_t systick_get_time_us_nonirq();
 void sysctrl_led_mode(int mode);
 void sysctrl_led_tick();
 void sysctrl_xadc_tick();

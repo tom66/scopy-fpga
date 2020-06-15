@@ -15,6 +15,7 @@ C_SRCS += \
 ../src/hal.c \
 ../src/main.c \
 ../src/mipi_csi.c \
+../src/mipi_csi_hw.c \
 ../src/platform.c \
 ../src/spi.c \
 ../src/spi_commands.c \
@@ -31,6 +32,7 @@ OBJS += \
 ./src/hal.o \
 ./src/main.o \
 ./src/mipi_csi.o \
+./src/mipi_csi_hw.o \
 ./src/platform.o \
 ./src/spi.o \
 ./src/spi_commands.o \
@@ -47,6 +49,7 @@ C_DEPS += \
 ./src/hal.d \
 ./src/main.d \
 ./src/mipi_csi.d \
+./src/mipi_csi_hw.d \
 ./src/platform.d \
 ./src/spi.d \
 ./src/spi_commands.d \

@@ -479,14 +479,10 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	//d_printf(D_INFO, "Swap_Ptrs=0x%08x 0x%08x", g_acq_state.acq_first, g_acq_state.acq_done_first);
 
 	// for now, only stream if exact # waves available
-	if(g_acq_state.num_acq_made_done == g_acq_state.num_acq_request) {
-		if(func & SPICOMP0_SEND_CSI_WAVES) {
-			//d_printf(D_INFO, "q_waves");
-			mipi_csi_queue_all_waves();
-			csi_to_send = 1;
-		}
-	} else {
-		d_printf(D_ERROR, "No trigger!");
+	if(func & SPICOMP0_SEND_CSI_WAVES) {
+		//d_printf(D_INFO, "q_waves");
+		mipi_csi_queue_all_waves();
+		csi_to_send = 1;
 	}
 
 	if(func & SPICOMP0_ACQ_SWAP) {
@@ -521,6 +517,9 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 
 	//d_printf(D_INFO, "resp_buffer=0x%08x, resp_size=%d", resp_buffer, resp_buff_maxsize);
 
+	// AWFUL HACK
+	acq_status_resp.waves_done = acq_get_nwaves_request();
+
 	if(func & SPICOMP0_ACQ_GET_STATUS) {
 		size = sizeof(struct acq_status_resp_t);
 		memcpy(resp_buffer, &acq_status_resp, size);
@@ -545,6 +544,9 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 
 	//d_printf(D_INFO, "resp_buffer=0x%08x resp_size=%d", resp_buffer_base, resp_size);
 	spi_command_pack_response_pre_alloc(cmd, resp_buffer_base, resp_size);
+
+	// Ugh.  HACK!
+	bogo_delay(5000);
 
 	//acq_debug_dump_wave(10);
 

@@ -411,6 +411,7 @@ void acq_debug_dump_wave(int index, int list);
 void acq_debug_dump_wave_pointer(struct acq_buffer_t *waveptr);
 int acq_copy_slow_mipi(int index, uint32_t *buffer);
 int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
+void acq_dma_address_helper_debug(struct acq_buffer_t *wave, struct acq_dma_addr_t *addr_helper);
 unsigned int acq_get_wave_size_bytes(int region);
 int acq_get_wave_bit_depth();
 int acq_get_wave_bit_packed_depth();
@@ -438,6 +439,14 @@ static inline void _acq_clear_and_set_ctrl_a(uint32_t bitmask_clear, uint32_t bi
 	g_acq_state.acq_ctrl_a &= ~bitmask_clear;
 	g_acq_state.acq_ctrl_a |= bitmask_set;
 	fabcfg_write(FAB_CFG_ACQ_CTRL_A, g_acq_state.acq_ctrl_a);
+}
+
+/*
+ * Return the number of waves configured for the currently active acquisition.
+ */
+inline int acq_get_nwaves_request()
+{
+	return g_acq_state.num_acq_request;
 }
 
 /*

@@ -58,49 +58,19 @@
 #define MCSI_RET_OK						0
 #define MCSI_RET_XAXIDMA_ERROR			-1
 
-#define CSI_CTRL_A_START_LINES			0x00000001
-#define CSI_CTRL_A_START_FRAME			0x00000002
-#define CSI_CTRL_A_END_FRAME			0x00000004
-#define CSI_CTRL_A_STOP					0x00000008
-#define CSI_CTRL_A_SLEEP				0x00000010
-#define CSI_CTRL_A_CLOCK_SLEEP_ENABLE	0x00000020
-#define CSI_CTRL_A_RESET_FIFO			0x00000040
-#define CSI_CTRL_A_RESET_PERIPHERAL		0x00000080
-#define CSI_CTRL_A_LINE_BYTE_COUNT_MSK	0xffff0000
-#define CSI_CTRL_A_LINE_BYTE_COUNT_SFT	16
+#define MCSI_WAVES_PAD_TO_NWAVES		0x0001
 
-#define CSI_CTRL_A_INIT_SIGNALS			(CSI_CTRL_A_START_LINES | CSI_CTRL_A_START_FRAME | CSI_CTRL_A_END_FRAME | CSI_CTRL_A_SLEEP)
+#define MCSI_MAGIC_HEADER_WAVES			0x576156655300ff00aaULLh
+#define MCSI_HEADER_MIN_SIZE			256				// 256 bytes available for header, not all are used
 
-#define CSI_CTRL_B_LINE_COUNT_MSK		0x0000ffff
-#define CSI_CTRL_B_LINE_COUNT_SFT		0
-#define CSI_CTRL_B_DATA_TYPE_MSK		0xff000000
-#define CSI_CTRL_B_DATA_TYPE_SFT		24
-
-#define CSI_CTRL_C_WCT_HEADER_MSK		0x0000ffff
-#define CSI_CTRL_C_WCT_HEADER_SFT		0
-
-#define CSI_STATUS_A_DONE				0x00000001
-#define CSI_STATUS_A_CLKWIZ_LOCK		0x00000002
-#define CSI_STATUS_A_RUNNING			0x00000004
-#define CSI_STATUS_A_DBG_RV				0x00001000
-#define CSI_STATUS_A_DBG_RR				0x00002000
-#define CSI_STATUS_A_DBG_SA				0x00004000
-#define CSI_STATUS_A_DBG_II				0x00008000
-#define CSI_STATUS_A_DBG_IL				0x00010000
-#define CSI_STATUS_A_DBG_IS				0x00020000
-#define CSI_STATUS_A_DBG_DB				0x00040000
-#define CSI_STATUS_A_DBG_DD				0x00080000
-#define CSI_STATUS_A_DBG_CTRL_ST_MSK	0x03f00000
-#define CSI_STATUS_A_DBG_CTRL_ST_SFT	20
-#define CSI_STATUS_A_DBG_MIPI_ST_MSK	0xfc000000
-#define CSI_STATUS_A_DBG_MIPI_ST_SFT	26
-
-#define CSIRES_ERROR_WAVES				-1
-#define CSIRES_OK						0
+#define CSI_TRIM_RATE					(4 * 1048576)	// Approx every 4 seconds we trim any excess BD allocations to keep memory available
 
 #define CSI_TIMEOUT_STOP				1000
 
-#define CSI_DEFAULT_BIT_CLOCK			300			// Specified in MHz, FP values acceptable.  450MHz default, experimentation required to establish max rate.
+#define CSI_DEFAULT_BIT_CLOCK			300				// Specified in MHz, FP values acceptable.  450MHz default, experimentation required to establish max rate.
+
+#define CSIRES_ERROR_WAVES				-1
+#define CSIRES_OK						0
 
 struct mipi_csi_stream_queue_item_t {
 	int item_type;								// One of CSISTRM_TYPE_x values
@@ -112,7 +82,7 @@ struct mipi_csi_stream_queue_item_t {
 	uint32_t calculated_size;					// Calculated size of any transfer in bytes, after the transfer has been processed and SG list packed
 	void *free_done;							// Buffer to free when done.  If set to NULL, this is ignored.
 	struct acq_buffer_t *wave_buffer_first;		// Pointer to wave buffer's first entry, if this queue item is a waveform
-	XAxiDma_BdRing *ring;						// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
+	struct dma_bd_ring_t *ring;					// Pointer for this configured ring (filled after this entry is processed and all BD entries calculated)
 };
 
 struct mipi_csi_stats_t {
@@ -128,10 +98,25 @@ struct mipi_csi_stats_t {
 	float last_sg_bd_time_us;					// Time to prepare the last scatter-gather BD list (the O(n) part of the equation)
 };
 
+struct mipi_csi_wave_header_t {
+	uint64_t magic_header;						// Magic sequence to identify this header
+	uint16_t crc;								// CRC of all following bytes, up to the first reserved field
+	uint32_t seq;								// Sequence number for this waveform
+	uint32_t n_waves_request;					// Number of waves requested
+	uint32_t n_waves_captured;					// Number of waves captured
+	uint32_t wave_stride;						// Bytes between each wave
+	uint32_t wavebuffer_ptr;					// Pointer for the waveform buffer
+	uint32_t tagbuffer_ptr;						// Pointer for the waveform tag buffer (trigger indexes)
+	char reserved1[64];							// Reserved 64 bytes for measurements in future
+};
+
 struct mipi_csi_state_t {
 	Queue *item_queue;
 	XAxiDma mipi_dma;
 	XAxiDma_Config *mipi_dma_config;
+
+	// Pointer for the configured dma_bd_ring.
+	struct dma_bd_ring_t *bd_ring;
 
 	// State machine
 	int state;
@@ -154,11 +139,11 @@ struct mipi_csi_state_t {
 
 	struct mipi_csi_stats_t stats;
 
-	// Allocation of memory for BD Scatter-Gather list
-	void *bd_area;
-
 	// Bitclock for CSI port in MHz.  Valid range approx 50 ~ 550MHz.
 	float csi_bitclock;
+
+	// Last time that a BD trim was performed in microseconds
+	uint64_t last_bd_trim;
 };
 
 /*
@@ -198,7 +183,7 @@ void mipi_csi_queue_all_waves();
 void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct);
 int mipi_csi_setup_bdring_and_bd(void *bd_area, int bd_entries, XAxiDma_BdRing **ring, XAxiDma_Bd **bd_ptr);
 int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item);
-int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, struct acq_buffer_t *base_wave, struct mipi_csi_stream_queue_item_t *q_item);
+int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, int flags, struct acq_buffer_t *base_wave, struct mipi_csi_stream_queue_item_t *q_item);
 void mipi_csi_send_sof();
 void mipi_csi_send_eof();
 void mipi_csi_transfer_packet();
