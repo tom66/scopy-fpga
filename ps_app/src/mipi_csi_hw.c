@@ -88,6 +88,9 @@ void mipi_csi_send_eof()
 	if(g_mipi_csi_state.flags & MCSI_FLAG_CLOCK_IDLE_MODE_2) {
 		fabcfg_set(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_CLOCK_SLEEP_ENABLE);
 	}
+
+	//d_printf(D_INFO, "EoF");
+	outbyte('E');
 }
 
 /*
@@ -138,7 +141,6 @@ void mipi_csi_transfer_packet(struct mipi_csi_stream_queue_item_t *q_item)
 	outbyte('x');
 
 	size = lines * g_mipi_csi_state.csi_line_size;
-
 	fabcfg_clear(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_START_LINES);
 
 	/*
@@ -154,7 +156,10 @@ void mipi_csi_transfer_packet(struct mipi_csi_stream_queue_item_t *q_item)
 		//d_printf(D_INFO, "mipi_csi: packet resize to %d lines", lines);
 	}
 
+	//lines -= 2; // HACK: XXXXXXXXX
+
 	//d_printf(D_INFO, "mipi_csi: packet parameters: %d lines, %d line size, %d total size, %d bytes left", lines, g_mipi_csi_state.csi_line_size, size, g_mipi_csi_state.transfer_rem - size);
+	//d_printf(D_INFO, "[%d / %d / %d / %d]", lines, g_mipi_csi_state.csi_line_size, size, g_mipi_csi_state.transfer_rem - size);
 
 	/*
 	 * Counts are off by one and two (bytes) respectively, as the core counts down
@@ -185,18 +190,3 @@ void mipi_csi_transfer_packet(struct mipi_csi_stream_queue_item_t *q_item)
 	//d_printf(D_INFO, "mipi_csi: packet parameters: %d bytes remain", g_mipi_csi_state.transfer_rem);
 }
 
-/*
- * Send a padding packet (N empty frames with no lines.)
- */
-void mipi_csi_pack_padding(int frames)
-{
-	fabcfg_write_masked(FAB_CFG_CSI_CTRL_B, 0, CSI_CTRL_B_LINE_COUNT_MSK, CSI_CTRL_B_LINE_COUNT_SFT);
-
-	// Send the frame start signal first, then send the start lines signal.
-	while(frames--) {
-		//outbyte('0' + frames);
-		mipi_csi_send_sof();
-		//while(fabcfg_test(FAB_CFG_CSI_STATUS_A, CSI_STATUS_A_DONE)) ;
-		mipi_csi_send_eof();
-	}
-}

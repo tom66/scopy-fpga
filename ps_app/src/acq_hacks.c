@@ -33,6 +33,7 @@ void acq_hacks_run()
 {
 	int i;
 
+#if 0
 	while(1) {
 		d_printf(D_ERROR, "Press key to iterate");
 		d_waitkey();
@@ -60,4 +61,5 @@ void acq_hacks_run()
 
 		d_printf(D_ERROR, "Done");
 	}
+#endif
 }

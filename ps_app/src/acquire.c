@@ -1735,7 +1735,7 @@ int acq_dma_address_helper(struct acq_buffer_t *wave, struct acq_dma_addr_t *add
 	//d_printf(D_INFO, "0x%08x 0x%02x", wave->trigger_at, wave->flags);
 
 	if((wave->trigger_at & TRIGGER_INVALID_MASK) || !(wave->flags & ACQBUF_FLAG_READY_CSI)) {
-		//d_printf(D_WARN, "wave_invalid trig=0x%08x flags=0x%04x", wave->trigger_at, wave->flags);
+		//d_printf(D_WARN, "wave_invalid trig=0x%08x flags=0x%04x idx=%d", wave->trigger_at, wave->flags, wave->idx);
 		return ACQRES_WAVE_NOT_READY;
 	}
 

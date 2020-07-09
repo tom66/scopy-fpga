@@ -43,6 +43,8 @@
 
 struct hal_t g_hal; // __attribute__((section(".force_ocm")));;
 
+const int gpio_ps_pins[] = { GPIO_PS_IRQ_1_PIN, GPIO_PS_IRQ_2_PIN, GPIO_PS_IRQ_3_PIN, GPIO_PS_IRQ_4_PIN };
+
 /**
  * Interrupt handler for XScuTimer.
  */
@@ -222,6 +224,65 @@ void hal_init()
 	 * are performed.
 	 */
 	dma_bd_init();
+}
+
+/*
+ * Set a PS port as an output and write to it.
+ *
+ * @param	index	1-4 for PS_IRQ1-4
+ * @param	mode	GPIO_HAL_OUTPUT / GPIO_HAL_INPUT
+ */
+void gpio_set_ps_irq_direction(int index, int mode)
+{
+	int pin;
+
+	D_ASSERT(index >= 1 && index <= 4);
+	D_ASSERT(mode == GPIO_HAL_OUTPUT || mode == GPIO_HAL_INPUT);
+
+	pin = gpio_ps_pins[index - 1];
+
+	if(mode == GPIO_HAL_OUTPUT) {
+		XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, pin, 1);
+		XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, pin, 1);
+	} else if(mode == GPIO_HAL_INPUT) {
+		XGpioPs_SetDirectionPin(&g_hal.xgpio_ps, pin, 0);
+		XGpioPs_SetOutputEnablePin(&g_hal.xgpio_ps, pin, 0);
+	}
+}
+
+/*
+ * Write a PS IRQ.
+ *
+ * @param	index	1-4 for PS_IRQ1-4
+ * @param	state	0 = off, others = on
+ */
+void gpio_write_ps_irq(int index, int state)
+{
+	int pin;
+
+	D_ASSERT(index >= 1 && index <= 4);
+
+	state = !!state;
+	pin = gpio_ps_pins[index - 1];
+
+	XGpioPs_WritePin(&g_hal.xgpio_ps, pin, state);
+}
+
+/*
+ * Read a PS IRQ.
+ *
+ * @param	index	1-4 for PS_IRQ1-4
+ *
+ * @return	0 = off, 1 = on
+ */
+int gpio_read_ps_irq(int index)
+{
+	int pin;
+
+	D_ASSERT(index >= 1 && index <= 4);
+	pin = gpio_ps_pins[index - 1];
+
+	return !!XGpioPs_ReadPin(&g_hal.xgpio_ps, pin);
 }
 
 /**

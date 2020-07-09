@@ -54,7 +54,21 @@ struct sysctrl_state_t {
 	int xadc_counter;
 };
 
+struct sysctrl_health_t {
+	uint64_t last_health_time;
+	int16_t fpga_temp;
+	uint16_t vcore_fpga;
+	uint16_t vcore_ps;
+	uint16_t vaux_fpga;
+	uint16_t vaux_ps;
+	uint16_t vddr;
+	uint16_t ddr_clock;
+	uint16_t cpu_clock;
+	uint16_t pl_clock;
+};
+
 extern struct sysctrl_state_t g_sysctrl_state;
+extern struct sysctrl_health_t g_sysctrl_health;
 
 void sysctrl_init();
 uint64_t systick_get_time_us_nonirq();

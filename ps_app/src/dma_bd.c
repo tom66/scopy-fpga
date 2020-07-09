@@ -252,6 +252,7 @@ void dma_bd_rewind(struct dma_bd_ring_t *ring)
 	}
 
 	ring->total_bd_count = 0;
+	ring->total_block_size = 0;
 	ring->current = ring->base;
 }
 
@@ -270,6 +271,10 @@ int dma_bd_add_raw_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int 
 	int res, alloc = 0;
 
 	D_ASSERT(ring != NULL);
+
+	// BD sizes and addresses must be 64-bit aligned
+	D_ASSERT((size & 7) == 0);
+	D_ASSERT((base_addr & 7) == 0);
 
 	//d_printf(D_INFO, "dma_bd_add_raw_sg_entry(0x%08x, 0x%08x, %8d, 0x%08x, 0x%08x)", ring, base_addr, size, flags, user);
 
@@ -314,6 +319,9 @@ int dma_bd_add_raw_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int 
 	ring->stats.total_bytes += size;
 	ring->current->n_bds_free--;
 
+	ring->total_bd_count++;
+	ring->total_block_size += size;
+
 	/*
 	 * Find a slot for the next descriptor.
 	 *
@@ -332,8 +340,6 @@ int dma_bd_add_raw_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int 
 	} else {
 		ring->current->bd_working_ptr++;
 	}
-
-	ring->total_bd_count++;
 
 	entry->nxtdesc = (uint32_t)ring->current->bd_working_ptr;
 	entry->nxtdesc_msb = 0;
@@ -489,8 +495,8 @@ int dma_bd_start(XAxiDma *periph, struct dma_bd_ring_t *ring, int flags)
 			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CR_OFFSET), \
 			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CDESC_OFFSET), \
 			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_TDESC_OFFSET), \
-			ring->stats.total_bytes);
-	 */
+			ring->total_block_size);
+	*/
 
 	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CDESC_OFFSET + reg_base, (uint32_t)ring->base->bd_base_ptr);
 
@@ -549,7 +555,6 @@ void dma_bd_debug_dump(struct dma_bd_ring_t *ring)
 			desc = tag->bd_base_ptr + i;
 			memcpy(&desc_as_bytes, desc, BD_SIZE);
 
-			/*
 			//desc_as_bytes = (char*)tag->bd_base_ptr;
 
 			d_printf(D_RAW, "0x%08x: ", desc);
@@ -572,7 +577,6 @@ void dma_bd_debug_dump(struct dma_bd_ring_t *ring)
 			d_printf(D_RAW, "    B:0x%08x, L:0x%08x (%8d) F:%c%c N:0x%08x S:0x%08x T:%9d %c\r\n", \
 					desc->buffer_address, desc->control & BD_SIZE_MASK, desc->control & BD_SIZE_MASK, s, e, desc->nxtdesc, desc->status, total_bytes, \
 					((desc->status & ~BD_STATUS_MASK) == (desc->control & BD_SIZE_MASK)) ? 'C' : '-');
-			*/
 		}
 
 		d_printf(D_RAW, "\r\n");

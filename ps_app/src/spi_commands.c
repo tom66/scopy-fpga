@@ -10,9 +10,11 @@
 #include "spi.h"
 #include "spi_commands.h"
 #include "acquire.h"
+#include "acq_ctrl.h"
 #include "trigger.h"
 #include "test_patterns.h"
 #include "mipi_csi.h"
+#include "mipi_csi_hw.h"
 
 #include <stdlib.h>
 
@@ -53,20 +55,25 @@ const struct spi_command_def_t spi_command_defs[] = {
 	{  0x60, "CSI_SETUP_ADDR_RANGE",     8,       0,        spicmd_csi_setup_addr_range },
 	{  0x61, "CSI_SETUP_WAVE_RANGE",     8,       0,        spicmd_csi_setup_wave_range },
 	{  0x62, "CSI_SETUP_WAVE_ALL",       0,       0,        spicmd_csi_setup_wave_all },
-	{  0x63, "CSI_SETUP_TRIGPOS_RANGE",  8,       0,        spicmd_csi_setup_trigpos_range },
+
 	{  0x64, "CSI_SETUP_TRIGPOS_ALL",    0,       0,        spicmd_csi_setup_trigpos_all },
 	{  0x65, "CSI_SETUP_TESTPATT",       9,       0,        spicmd_csi_setup_testpatt },
-	{  0x66, "CSI_SETUP_BITPACK_WAVE",   1,       0,        spicmd_csi_setup_bitpack_wave },
+	//{  0x  , "CSI_SETUP_BITPACK_WAVE",   1,       0,        spicmd_csi_setup_bitpack_wave },
+	//{  0x  , "CSI_SETUP_WAVE_CLIPPING",  8,       0,        spicmd_csi_setup_wave_clipping },
+	//{  0x  , "CSI_SETUP_WAVE_GROUP",     4,       0,        spicmd_csi_setup_wave_group },
 
-	{  0x6d, "CSI_STREAM_CLEAR_QUEUE",   0,       0,        spicmd_csi_stream_clear_queue },
-	{  0x6e, "CSI_STREAM_START",         0,       0,        spicmd_csi_stream_unpop_start },
-	{  0x6f, "CSI_STREAM_STOP",          0,       0,        spicmd_csi_stream_stop },
 	{  0x70, "CSI_STATUS",               0,       1,        spicmd_csi_status },
-	{  0x71, "CSI_SET_PARAMS_QUEUE",     3,       0,        spicmd_csi_set_params_queue },
-	{  0x72, "CSI_STREAM_START_ALL",     0,       0,        spicmd_csi_stream_unpop_start_all },
+	{  0x71, "CSI_SET_PARAMS",           3,       0,        spicmd_csi_set_params },
+	//{  0x72, "CSI_GET_SIZE",             0,       1,        spicmd_csi_get_size },
+	{  0x73, "CSI_STREAM_STOP",          0,       0,        spicmd_csi_stream_stop },
+
+	{  0x80, "AC_SETUP_ACQ_AND_STREAM",  4,       0,        spicmd_ac_setup_acq_and_stream },
+	{  0x81, "AC_STOP", 				 0,       0,        spicmd_ac_stop },
+	{  0x82, "AC_START",			     0,		  0,        spicmd_ac_start },
+	{  0x83, "AC_RESET",			     0,		  0,        spicmd_ac_reset },
 
 	// Composite commands: these execute a combination of functions in one.  See spreadsheet for details.
-	{  0xc0, "COMP0",                    2,       1,        spicmd_comp0 },
+	//{  0xc0, "COMP0",                    2,       1,        spicmd_comp0 },
 
 	// Command 0xfe is Marker NOP for debugging
 	{  0xfe, "NOP_MARK",                 0,       0,        NULL },
@@ -251,7 +258,7 @@ void spicmd_csi_setup_addr_range(struct spi_command_alloc_t *cmd)
 	start_addr = UINT32_UNPACK(cmd, 0);
 	end_addr = UINT32_UNPACK(cmd, 4);
 
-	mipi_csi_queue_buffer(start_addr, end_addr, NULL);
+	//mipi_csi_queue_buffer(start_addr, end_addr, NULL);
 }
 
 void spicmd_csi_setup_wave_range(struct spi_command_alloc_t *cmd)
@@ -387,35 +394,20 @@ void spicmd_csi_setup_testpatt(struct spi_command_alloc_t *cmd)
 
 	// `buffer` will be freed when the CSI operation is done
 	//d_printf(D_INFO, "Base 0x%08x Base+Size 0x%08x", base, base + size);
-	mipi_csi_queue_buffer(base, base + size, buffer);
+	//mipi_csi_queue_buffer(base, base + size, buffer);
 }
 
 void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd)
 {
 }
 
-void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd)
+void spicmd_csi_set_params(struct spi_command_alloc_t *cmd)
 {
 	uint8_t data_type = cmd->args[2];
 	uint16_t wct = UINT16_UNPACK(cmd, 0);
 
-	d_printf(D_INFO, "spicmd_csi_set_params_queue: 0x%02x 0x%04x", data_type, wct);
+	d_printf(D_INFO, "spicmd_csi_set_params: 0x%02x 0x%04x", data_type, wct);
 	mipi_csi_set_datatype_and_frame_wct(data_type, wct);
-}
-
-void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd)
-{
-	mipi_csi_clear_queue();
-}
-
-void spicmd_csi_stream_unpop_start(struct spi_command_alloc_t *cmd)
-{
-	mipi_csi_unpop_and_start();
-}
-
-void spicmd_csi_stream_unpop_start_all(struct spi_command_alloc_t *cmd)
-{
-	mipi_csi_unpop_and_start_all();
 }
 
 void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd)
@@ -433,10 +425,41 @@ void spicmd_csi_status(struct spi_command_alloc_t *cmd)
 	spi_command_pack_response_simple(cmd, &status_resp, sizeof(struct mipi_csi_status_t));
 }
 
+void spicmd_ac_setup_acq_and_stream(struct spi_command_alloc_t *cmd)
+{
+	uint32_t period = UINT32_UNPACK(cmd, 0);
+
+	d_printf(D_INFO, "spicmd_ac_setup_acq_and_stream(%d)", period);
+
+	acq_ctrl_setup_auto_period(period);
+}
+
+void spicmd_ac_stop(struct spi_command_alloc_t *cmd)
+{
+	acq_ctrl_stop();
+}
+
+void spicmd_ac_start(struct spi_command_alloc_t *cmd)
+{
+	int status = acq_ctrl_start();
+
+	if(status != ACQCTRL_RES_OK) {
+		d_printf(D_WARN, "spicmd: error while starting: %d", status);
+	}
+}
+
+void spicmd_ac_reset(struct spi_command_alloc_t *cmd)
+{
+	d_printf(D_INFO, "spicmd: ac reset");
+
+	acq_ctrl_reset();
+}
+
 /*
  * Composite command 0.  This command can control acquisition stop/start/rewind/swap,
  * as well as start streaming CSI data and return previously configured measurements.
  */
+#if 0
 void spicmd_comp0(struct spi_command_alloc_t *cmd)
 {
 	const int resp_buff_maxsize = sizeof(struct acq_status_resp_t) + \
@@ -558,3 +581,4 @@ void spicmd_comp0(struct spi_command_alloc_t *cmd)
 	//spi_command_pack_response_simple(cmd, &acq_status_resp, 1);
 	//d_printf(D_INFO, "eof");
 }
+#endif

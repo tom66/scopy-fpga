@@ -59,6 +59,5 @@ void mipi_csi_send_sof();
 void mipi_csi_send_eof();
 void mipi_csi_stop();
 void mipi_csi_transfer_packet(struct mipi_csi_stream_queue_item_t *q_item);
-void mipi_csi_pack_padding(int frames);
 
 #endif // SRC_MIPI_CSI_HW_H_

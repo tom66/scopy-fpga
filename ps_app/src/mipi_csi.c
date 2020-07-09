@@ -67,7 +67,7 @@ void mipi_csi_init()
 	 * Set up the task queue.
 	 */
 	queue_conf_init(&q_conf);
-	q_conf.capacity = CSISTRM_QUEUE_SIZE;
+	q_conf.capacity = MCSI_QUEUE_SIZE;
 
 	status = queue_new_conf(&q_conf, &g_mipi_csi_state.item_queue) ;
 
@@ -123,121 +123,18 @@ void mipi_csi_init()
 	 * for the byzantine and buggy Xilinx library.)
 	 */
 	dma_bd_create_ring(&g_mipi_csi_state.bd_ring);
-}
 
-/*
- * Allocate an item buffer and return the pointer.  Returns NULL if a buffer
- * could not be allocated.
- */
-struct mipi_csi_stream_queue_item_t *mipi_csi_alloc_item()
-{
-	struct mipi_csi_stream_queue_item_t *item;
+	/*
+	 * Allocate the header block.  Must be in main RAM (not on stack) and 32-byte aligned.
+	 */
+	g_mipi_csi_state.header = memalign(32, sizeof(struct mipi_csi_wave_header_t));
 
-	item = calloc(sizeof(struct mipi_csi_stream_queue_item_t), 1);
-
-	if(item == NULL) {
-		d_printf(D_ERROR, "mipi_csi: Unable to calloc %d bytes for queued item", sizeof(struct mipi_csi_stream_queue_item_t));
-		d_dump_malloc_info();
-		return NULL;
-	}
-
-	item->item_type = CSISTRM_TYPE_ALLOC_UNDEF;
-	g_mipi_csi_state.stats.items_alloc++;
-
-	return item;
-}
-
-/*
- * Queue a waveform range into the CSI task queue.
- *
- * @param	start_addr
- * @param	end_addr
- * @param	free_done		Buffer to free when done (or if an error occurs)
- */
-void mipi_csi_queue_buffer(uint32_t start_addr, uint32_t end_addr, void *free_done)
-{
-	struct mipi_csi_stream_queue_item_t *item;
-
-	if(start_addr > end_addr) {
-		d_printf(D_ERROR, "mipi_csi: buffer range invalid, not queueing request");
-		free(free_done);
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_PARAMETER;
+	if(g_mipi_csi_state.header == NULL) {
+		d_printf(D_ERROR, "mipi_csi: unable to allocate %d bytes for wave header", sizeof(struct mipi_csi_wave_header_t));
 		return;
 	}
 
-	if((start_addr % 32) != 0 || (end_addr % 32) != 0) {
-		d_printf(D_ERROR, "mipi_csi: buffer range misaligned (0x%08x 0x%08x, align 32), not queueing request", \
-				start_addr, end_addr);
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_PARAMETER;
-		free(free_done);
-		return;
-	}
-
-	item = mipi_csi_alloc_item();
-
-	if(item == NULL) {
-		d_printf(D_ERROR, "mipi_csi: failed in mipi_csi_alloc_item()");
-		free(free_done);
-		return;
-	}
-
-	item->data_type = g_mipi_csi_state.csi_data_type;
-	item->wct_header = g_mipi_csi_state.csi_frame_wct;
-	item->item_type = CSISTRM_TYPE_RAW_MEMORY;
-	item->start_addr = start_addr;
-	item->end_addr = end_addr;
-	item->free_done = free_done;
-
-	if(queue_enqueue(g_mipi_csi_state.item_queue, item) != CC_OK) {
-		d_printf(D_ERROR, "mipi_csi: failed to enqueue item into task queue: no space?");
-		mipi_csi_free_item(item);
-	} else {
-		g_mipi_csi_state.stats.items_queued++;
-	}
-}
-
-/*
- * Queue a waveform range into the CSI task queue.
- */
-void mipi_csi_queue_waverange(uint32_t start, uint32_t end)
-{
-	int i;
-	struct mipi_csi_stream_queue_item_t *item;
-	uint32_t nmax = acq_get_nwaves_request() - 1;
-	//uint32_t nmax = acq_get_nwaves_done() - 1;
-
-	if(start == CSISTRM_WAVE_ALL && end == CSISTRM_WAVE_ALL) {
-		start = 0;
-		end = nmax;
-	}
-
-	if(start > nmax || end > nmax) {
-		d_printf(D_ERROR, "mipi_csi: wave range OoB; not queueing request");
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_PARAMETER;
-		return;
-	}
-
-	item = mipi_csi_alloc_item();
-	item->data_type = g_mipi_csi_state.csi_data_type;
-	item->wct_header = g_mipi_csi_state.csi_frame_wct;
-	item->item_type = CSISTRM_TYPE_WAVEFORM_RANGE;
-	item->start_addr = start;
-	item->end_addr = end;
-	item->free_done = NULL;
-	item->wave_buffer_first = g_acq_state.acq_current;
-
-	//d_printf(D_INFO, "queue=0x%08x, item=0x%08x", g_mipi_csi_state.item_queue, item);
-	D_ASSERT(queue_enqueue(g_mipi_csi_state.item_queue, item) == CC_OK);
-	g_mipi_csi_state.stats.items_queued++;
-}
-
-/*
- * Queue all waveforms into the CSI task queue. Shorthand for calling
- * above with all FF values.
- */
-void mipi_csi_queue_all_waves()
-{
-	mipi_csi_queue_waverange(CSISTRM_WAVE_ALL, CSISTRM_WAVE_ALL);
+	d_printf(D_ERROR, "mipi_csi: header block at 0x%08x", g_mipi_csi_state.header);
 }
 
 /*
@@ -260,21 +157,6 @@ void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct)
 }
 
 /*
- * Free an item buffer.
- */
-void mipi_csi_free_item(struct mipi_csi_stream_queue_item_t *item)
-{
-	D_ASSERT(item != NULL);
-
-	//d_printf(D_INFO, "Freeing: 0x%08x 0x%08x", item->free_done, item);
-
-	free(item->free_done);
-	free(item);
-
-	g_mipi_csi_state.stats.items_freed++;
-}
-
-/*
  * Create a Scatter-Gather list for a given address range, which can be passed
  * to the AXIDMA module to stream arbitrary memory data.
  *
@@ -283,9 +165,9 @@ void mipi_csi_free_item(struct mipi_csi_stream_queue_item_t *item)
  * @param	addr_start		Start address.  Must be 32-bit aligned.
  * @param	addr_end		End address.  Must be 32-bit aligned, and greater or equal
  */
+#if 0
 int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item)
 {
-#if 0
 	XAxiDma_BdRing *ring;
 	XAxiDma_Bd *bd_ptr;
 	XAxiDma_Bd *cur_bd_ptr;
@@ -315,7 +197,7 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 
 	/*
 	 * Free the old BD list, if it's present.  Then, attempt to create a new BD list,
-	 * the size of which is equal to the number of CSISTRM_AXI_MAX_BD_SIZE chunks
+	 * the size of which is equal to the number of MCSI_AXI_MAX_BD_SIZE chunks
 	 * to be transmitted.
 	 */
 	if(g_mipi_csi_state.bd_area != NULL) {
@@ -323,13 +205,13 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 		free(g_mipi_csi_state.bd_area);
 	}
 
-	bd_entries = (size / CSISTRM_AXI_MAX_BD_SIZE);
+	bd_entries = (size / MCSI_AXI_MAX_BD_SIZE);
 
 	/*
 	 * Account for off-by-one error (this won't be necessary after we move away from Xil stuff
 	 * to pack the BD. [FIXME]
 	 */
-	bd_size = bd_entries * CSISTRM_AXI_MAX_BD_SIZE;
+	bd_size = bd_entries * MCSI_AXI_MAX_BD_SIZE;
 	if(bd_size < size) {
 		bd_entries++;
 	}
@@ -357,12 +239,12 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 
 	/*
 	for(i = 0; i < bd_entries; i++) {
-		pk_size = MIN(size, CSISTRM_AXI_MAX_BD_SIZE);
+		pk_size = MIN(size, MCSI_AXI_MAX_BD_SIZE);
 		sof = (i == 0);
 		eof = (i == (bd_entries - 1));
 
 		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, pk_size, (uint32_t*)buff, sof, eof);
-		buff += CSISTRM_AXI_MAX_BD_SIZE;
+		buff += MCSI_AXI_MAX_BD_SIZE;
 		size -= pk_size;
 		xfer_size += pk_size;
 	}
@@ -386,41 +268,37 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 
 	q_item->ring = ring;
 	return CSIRES_OK;
-#endif
 }
+#endif
 
 /*
- * Create a Scatter-Gather list for a given waveform range (CSISTRM_WAVE_ALL
+ * Create a Scatter-Gather list for a given waveform range (MCSI_WAVE_ALL
  * not supported) which can be passed to the AXIDMA module to stream
  * waveform data.
- *
- * Portions based on dma_ex_sg_v2_1 (Xilinx)
  *
  * @param	wave_start		Starting wave index
  * @param	wave_end		Ending wave index - must be more than or equal to starting index
  *
  * @param	q_item			Item in queue for additional tag information
  */
-int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, int flags, struct acq_buffer_t *base_wave, struct mipi_csi_stream_queue_item_t *q_item)
+int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_item)
 {
 	static int iter = 0;
-	int status, n_waves, bd_entries, i;
+	int status, n_waves, i;
 	// XAxiDma_Bd bd_template;
 	struct acq_buffer_t *wave;
 	struct acq_buffer_t *next;
 	struct dma_bd_ring_t *ring = g_mipi_csi_state.bd_ring;
 	struct acq_dma_addr_t addr_helper;
-	uint32_t total_wave_sz, total_bytes = 0, expect_total_bytes, pad;
+	uint32_t total_wave_sz, total_wave_bytes, expect_total_bytes, pad, line_pad;
+	uint32_t working_ptr = 0;
 
 	d_start_timing(TMR_MIPI_SG_OVERALL);
 
-	D_ASSERT(wave_start <= wave_end);
-	n_waves = (wave_end - wave_start) + 1;
+	D_ASSERT(q_item->config.wave_start <= q_item->config.wave_end);
+	n_waves = (q_item->config.wave_end - q_item->config.wave_start) + 1;
 	q_item->ring = NULL;
 	q_item->calculated_size = 0;
-
-	// Reset the DMA peripheral, terminating any existing transactions
-	XAxiDma_Reset(&g_mipi_csi_state.mipi_dma);
 
 	/*
 	 * Get the first waveform.  This is also used to retrieve the size of the waveforms
@@ -429,7 +307,7 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 	 * Wave bounds checking is handled gracefully elsewhere, so this assert shouldn't
 	 * be harmful.
 	 */
-	D_ASSERT(acq_get_ll_pointer_in_base(wave_start, &wave, base_wave) == ACQRES_OK);
+	D_ASSERT(acq_get_ll_pointer_in_base(q_item->config.wave_start, &wave, q_item->wave_buffer_first) == ACQRES_OK);
 	total_wave_sz = wave->pre_sz + wave->post_sz;
 	expect_total_bytes = n_waves * total_wave_sz;
 
@@ -437,15 +315,45 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 	 * Reset the BD list to the start so we can start adding entries.  Pack the
 	 * entries into the BD, using the acquisition helper function to calculate
 	 * the remapped addresses.  Large transfers are split up by the BD library.
+	 */
+	d_start_timing(TMR_MIPI_SG_BDFILL);
+	dma_bd_rewind(ring);
+
+	/*
+	 * Generate and add header data.  Header is allocated in RAM; clear any prior header
+	 * before writing this one.
 	 *
+	 * XXX: CRC not yet added. When CRC field added it will be necessary to move the cache
+	 * flush to after the CRC is calculated.
+	 */
+	memset(g_mipi_csi_state.header, 0x00, sizeof(struct mipi_csi_wave_header_t));
+
+	g_mipi_csi_state.header->magic_header = MCSI_MAGIC_HEADER_WAVES;
+	g_mipi_csi_state.header->subpkt = 1;   // Always '1' for now
+	g_mipi_csi_state.header->n_waves_done = acq_get_nwaves_done();
+	g_mipi_csi_state.header->n_waves_request = acq_get_nwaves_request();
+	g_mipi_csi_state.header->start_wave_index = q_item->config.wave_start;
+	g_mipi_csi_state.header->end_wave_index = q_item->config.wave_end;
+	g_mipi_csi_state.header->seq = q_item->config.seq;
+	g_mipi_csi_state.header->wave_stride = total_wave_sz;  // For now, assume no pre-header for each waveform transferred
+	g_mipi_csi_state.header->wave_length = total_wave_sz;
+
+	// Hmm, should we look at doing this via scatter-gather to reduce the copies made?
+	g_mipi_csi_state.header->health = g_sysctrl_health;
+	g_mipi_csi_state.header->stats = g_mipi_csi_state.stats;
+
+	dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, (uint32_t)g_mipi_csi_state.header, MCSI_HEADER_SIZE, 0, NULL);
+	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.header, sizeof(struct mipi_csi_wave_header_t));
+
+	working_ptr += MCSI_HEADER_SIZE;
+	total_wave_bytes = 0;
+
+	/*
 	 * As soon as we meet an invalid wave (non-acquired) we assume that the rest
 	 * of the waveforms are duff, and so end the streamout of waveforms and pad
 	 * the packet with zero bytes.
 	 */
-	d_start_timing(TMR_MIPI_SG_BDFILL);
-
-	// Rewind the ring to the beginning
-	dma_bd_rewind(ring);
+	g_mipi_csi_state.header->wavebuffer_ptr = working_ptr;
 
 	for(i = 0; i < n_waves; i++) {
 		if(acq_dma_address_helper(wave, &addr_helper) != ACQRES_OK) {
@@ -458,7 +366,7 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 		dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, addr_helper.pre_lower_start, addr_helper.pre_lower_end - addr_helper.pre_lower_start, 0, NULL);
 		dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, addr_helper.post_start, addr_helper.post_end - addr_helper.post_start, 0, NULL);
 
-		total_bytes += total_wave_sz;
+		total_wave_bytes += total_wave_sz;
 
 		// End of list?
 		if(acq_next_ll_pointer(wave, &next) != ACQRES_OK) {
@@ -469,32 +377,40 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 	}
 
 	/*
-	 * Pad data to meet the minimum buffer size and ensure it is a multiple of the
-	 * CSI line length.
+	 * Pad the wave buffer to the required length.
 	 */
-	D_ASSERT(expect_total_bytes >= total_bytes);
-	pad = (expect_total_bytes - total_bytes) + (MCSI_DEFAULT_LINE_WIDTH - (total_bytes % MCSI_DEFAULT_LINE_WIDTH));
-
-	//d_printf(D_INFO, "tb:%d eb:%d pad:%d", total_bytes, expect_total_bytes, pad);
-
+	pad = expect_total_bytes - total_wave_bytes;
 	if(pad > 0) {
 		dma_bd_add_zero_sg_entry(g_mipi_csi_state.bd_ring, pad, 0, NULL);
 	}
 
+	working_ptr += total_wave_bytes + pad;
+
+	/*
+	 * Nominally, at this point we'd add any other buffers, but those aren't presently
+	 * implemented in this function.
+	 */
+
+	/*
+	 * Pad data to meet one CSI line size.
+	 */
+	line_pad = (MCSI_DEFAULT_LINE_WIDTH - (working_ptr % MCSI_DEFAULT_LINE_WIDTH));
+	if(line_pad > 0) {
+		dma_bd_add_zero_sg_entry(g_mipi_csi_state.bd_ring, line_pad, 0, NULL);
+		working_ptr += line_pad;
+	}
+
+	//d_printf(D_INFO, "tb:%d eb:%d pad:%d line_pad:%d", total_wave_bytes, expect_total_bytes, pad, line_pad);
+
 	d_stop_timing(TMR_MIPI_SG_BDFILL);
 	g_mipi_csi_state.stats.last_sg_bd_time_us = d_read_timing_us(TMR_MIPI_SG_BDFILL);
 
-	// Pass the BD to hardware for transmission.
-	status = dma_bd_start(&g_mipi_csi_state.mipi_dma, g_mipi_csi_state.bd_ring, BD_STFLAGS_TRANSMIT /* | BD_STFLAGS_DUMP_DEBUG*/);
-
 	/*
-	iter++;
-	if((iter % 10) == 0) {
-		status = dma_bd_start(&g_mipi_csi_state.mipi_dma, g_mipi_csi_state.bd_ring, BD_STFLAGS_TRANSMIT | BD_STFLAGS_DUMP_DEBUG);
-	} else {
-		status = dma_bd_start(&g_mipi_csi_state.mipi_dma, g_mipi_csi_state.bd_ring, BD_STFLAGS_TRANSMIT);
-	}
-	*/
+	 * Pass the BD for transmission.  This function handles caching too.  We shouldn't
+	 * try to change any data in memory at this point though, as the behaviour is undefined.
+	 */
+	status = dma_bd_start(&g_mipi_csi_state.mipi_dma, g_mipi_csi_state.bd_ring, BD_STFLAGS_TRANSMIT /* | BD_STFLAGS_DUMP_DEBUG */);
+	q_item->calculated_size = dma_bd_get_total_block_size(g_mipi_csi_state.bd_ring);
 
 	if (status != BD_RES_OK) {
 		d_printf(D_ERROR, "mipi_csi: fatal error passing BD ring to hardware: %d", status);
@@ -503,63 +419,13 @@ int mipi_csi_generate_sg_list_for_waves(uint32_t wave_start, uint32_t wave_end, 
 
 	//d_printf(D_INFO, "mipi_csi: list sent to DMA...");
 
-	q_item->calculated_size = total_bytes + pad;
-	q_item->ring = ring;
-
 	d_stop_timing(TMR_MIPI_SG_OVERALL);
 	g_mipi_csi_state.stats.last_sg_total_time_us = d_read_timing_us(TMR_MIPI_SG_OVERALL);
+	g_mipi_csi_state.stats.num_bds_created += dma_bd_get_total_bd_count(g_mipi_csi_state.bd_ring);
 
 	//d_dump_malloc_info();
 
 	return CSIRES_OK;
-}
-
-/*
- * Clear the queue of all working buffers, excluding any in progress.  The
- * transfer that is in progress will be removed once complete.  (The transfer
- * that is working is not on the queue.)
- */
-void mipi_csi_clear_queue()
-{
-	struct mipi_csi_stream_queue_item_t *q_item;
-
-	// Free/dealloc all entries then delete queue
-	queue_poll(g_mipi_csi_state.item_queue, (void*)&q_item);
-
-	while(q_item != NULL) {
-		d_printf(D_INFO, "free_clear 0x%08x", q_item);
-		free(q_item);
-		queue_poll(g_mipi_csi_state.item_queue, (void*)&q_item);
-	}
-}
-
-/*
- * Unpop the oldest item from the queue and start work on it, if possible.
- *
- * If there is a task running already, this has no effect and an error state is
- * set in the flags register.
- */
-void mipi_csi_unpop_and_start()
-{
-	if(g_mipi_csi_state.working == NULL) {
-		g_mipi_csi_state.unpop_and_start = 1;
-	} else {
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_TRANSFER_BUSY;
-	}
-}
-
-/*
- * Unpop ALL items from the queue and transmit them sequentially.
- */
-void mipi_csi_unpop_and_start_all()
-{
-	if(!g_mipi_csi_state.unpop_and_start_all) {
-		g_mipi_csi_state.unpop_and_start_all = 1;
-		//d_printf(D_INFO, "unpop_and_start_all req");
-	} else {
-		g_mipi_csi_state.flags |= MCSI_FLAG_ERROR_TRANSFER_BUSY;
-		//d_printf(D_INFO, "unpop_and_start_all not possible");
-	}
 }
 
 /*
@@ -569,94 +435,46 @@ void mipi_csi_unpop_and_start_all()
 void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *q_item)
 {
 	uint32_t status;
-	int i, send_packet = 0;
+	int send_packet = 0;
+
 	D_ASSERT(q_item != NULL);
 	g_mipi_csi_state.working = q_item;
 
-	//d_printf(D_INFO, "q_item=%08x, item_type=%d, q_size=%d", q_item, q_item->item_type, queue_size(g_mipi_csi_state.item_queue));
+	q_item->data_type = g_mipi_csi_state.csi_data_type;
+	q_item->wct_header = g_mipi_csi_state.csi_frame_wct;
 
 	switch(q_item->item_type) {
-		case CSISTRM_TYPE_RAW_MEMORY:
-			//d_printf(D_INFO, "CSISTRM_TYPE_RAW_MEMORY");
+		/*
+		case MCSI_TYPE_RAW_MEMORY:
+			//d_printf(D_INFO, "MCSI_TYPE_RAW_MEMORY");
 			if(mipi_csi_generate_sg_list_for_buffer_range(q_item->start_addr, q_item->end_addr, q_item) == CSIRES_OK) {
 				send_packet = 1;
 			}
 			break;
+		*/
 
-		case CSISTRM_TYPE_WAVEFORM_RANGE:
-			//d_printf(D_INFO, "CSISTRM_TYPE_WAVEFORM_RANGE");
-			if(q_item->start_addr == CSISTRM_WAVE_ALL && q_item->end_addr == CSISTRM_WAVE_ALL) {
-				if(acq_get_nwaves_done() > 0) {
-					//d_printf(D_INFO, "Gen1");
-					mipi_csi_send_fifo_reset();  // Needed?
-					if(mipi_csi_generate_sg_list_for_waves(0, acq_get_nwaves_done() - 1, 0, q_item->wave_buffer_first, q_item) == CSIRES_OK) {
-						send_packet = 1;
-					}
-				} else {
-					d_printf(D_ERROR, "No waves?");
-				}
-			} else {
-				//d_printf(D_INFO, "Gen2 %d %d", q_item->start_addr, q_item->end_addr);
-				if(mipi_csi_generate_sg_list_for_waves(q_item->start_addr, q_item->end_addr, 0, q_item->wave_buffer_first, q_item) == CSIRES_OK) {
-					send_packet = 1;
-				}
+		case MCSI_TYPE_WAVEFORM_RANGE:
+			mipi_csi_send_fifo_reset();
+			if(mipi_csi_generate_sg_list_for_waves(q_item) == CSIRES_OK) {
+				send_packet = 1;
 			}
 			break;
+
+		default:
+			d_printf(D_INFO, "@ 0x%08x .. 0x%02x %d %d", q_item, q_item->item_type, q_item->config.wave_start, q_item->config.wave_end);
+			D_ASSERT(0);
+			return;
 	}
 
 	if(send_packet) {
 		D_ASSERT(q_item->calculated_size > 0);
+
 		g_mipi_csi_state.transfer_size = q_item->calculated_size;
 		g_mipi_csi_state.transfer_rem = q_item->calculated_size;
 		g_mipi_csi_state.state = MCSI_ST_WAIT_FOR_XFER;
 
-		// Send first and possibly only packet
-		//d_printf(D_INFO, "mipi_csi: starting packet transmission of %d bytes", g_mipi_csi_state.transfer_size);
-		D_ASSERT(q_item->ring != NULL);
-
-		/*
-		status = fabcfg_read(FAB_CFG_CSI_STATUS_A);
-		d_printf(D_INFO, "Ndone %08x (RV:%d, RR:%d, SA:%d, mipi_state:%d, ctrl_state:%d, DMACR:%08x, DMASR:%08x, CDESC:%08x, BD_NXTDST:%08x, BD_CTRLLEN:%08x, BD_STA:%08x, TDESC:%08x, SGCTL:%08x)", status, \
-				!!(status & CSI_STATUS_A_DBG_RV), \
-				!!(status & CSI_STATUS_A_DBG_RR), \
-				!!(status & CSI_STATUS_A_DBG_SA), \
-				(status & CSI_STATUS_A_DBG_MIPI_ST_MSK) >> CSI_STATUS_A_DBG_MIPI_ST_SFT, \
-				(status & CSI_STATUS_A_DBG_CTRL_ST_MSK) >> CSI_STATUS_A_DBG_CTRL_ST_SFT, \
-				XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CR_OFFSET), \
-				XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SR_OFFSET), \
-				XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET), \
-				*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_NDESC_OFFSET), \
-				*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_CTRL_LEN_OFFSET), \
-				*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_STS_OFFSET), \
-				XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET), \
-				XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SGCTL_OFFSET));
-		*/
-
 		d_start_timing(TMR_MIPI_PERFORMANCE);
 		mipi_csi_transfer_packet(q_item);
-
-		/*
-		for(i = 0; i < 200; i++) {
-			status = fabcfg_read(FAB_CFG_CSI_STATUS_A);
-			d_printf(D_INFO, "Ndone %08x (RV:%d, RR:%d, SA:%d, mipi_state:%d, ctrl_state:%d, DMACR:%08x, DMASR:%08x, CDESC:%08x, BD_NXTDST:%08x, BD_CTRLLEN:%08x, BD_STA:%08x, TDESC:%08x, SGCTL:%08x)", status, \
-					!!(status & CSI_STATUS_A_DBG_RV), \
-					!!(status & CSI_STATUS_A_DBG_RR), \
-					!!(status & CSI_STATUS_A_DBG_SA), \
-					(status & CSI_STATUS_A_DBG_MIPI_ST_MSK) >> CSI_STATUS_A_DBG_MIPI_ST_SFT, \
-					(status & CSI_STATUS_A_DBG_CTRL_ST_MSK) >> CSI_STATUS_A_DBG_CTRL_ST_SFT, \
-					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CR_OFFSET), \
-					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SR_OFFSET), \
-					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET), \
-					*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_NDESC_OFFSET), \
-					*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_CTRL_LEN_OFFSET), \
-					*(uint32_t*)(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) + XAXIDMA_BD_STS_OFFSET), \
-					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET), \
-					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SGCTL_OFFSET));
-		}
-
-		d_printf(D_ERROR, "Hang here...");
-		while(1) ;
-		*/
 
 		GLOBAL_IRQ_DISABLE();
 		g_mipi_csi_state.flags |= MCSI_FLAG_TRANSFER_RUNNING;
@@ -671,74 +489,20 @@ void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *q_item)
  */
 void mipi_csi_tick()
 {
-	uint64_t time;
-	struct mipi_csi_stream_queue_item_t *q_item;
-
-	//d_printf(D_INFO, "mcst=%d", g_mipi_csi_state.state);
-
-	/*
-	status = fabcfg_read(FAB_CFG_CSI_STATUS_A);
-
-	d_printf(D_INFO, "%08x (RV:%d, RR:%d, SA:%d, mipi_state:%d, ctrl_state:%d, DMACR:%08x, DMASR:%08x, CDESC:%08x, TDESC:%08x, SGCTL:%08x)", \
-			status, \
-			!!(status & CSI_STATUS_A_DBG_RV), \
-			!!(status & CSI_STATUS_A_DBG_RR), \
-			!!(status & CSI_STATUS_A_DBG_SA), \
-			(status & CSI_STATUS_A_DBG_MIPI_ST_MSK) >> CSI_STATUS_A_DBG_MIPI_ST_SFT, \
-			(status & CSI_STATUS_A_DBG_CTRL_ST_MSK) >> CSI_STATUS_A_DBG_CTRL_ST_SFT, \
-			XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CR_OFFSET), \
-			XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SR_OFFSET), \
-			XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET), \
-			XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET), \
-			XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SGCTL_OFFSET));
-	*/
-
-	/*
-	d_printf(D_INFO, "ca:%08x cb:%08x cc:%08x sa:%08x dt:%02x", \
-			fabcfg_read(FAB_CFG_CSI_CTRL_A),
-			fabcfg_read(FAB_CFG_CSI_CTRL_B),
-			fabcfg_read(FAB_CFG_CSI_CTRL_C),
-			fabcfg_read(FAB_CFG_CSI_STATUS_A),
-			g_mipi_csi_state.csi_data_type);
-	*/
-
 	switch(g_mipi_csi_state.state) {
 		case MCSI_ST_IDLE:
 			/*
-			 * Unqueue the oldest command and see what we need to do with that command.  This
-			 * may involve processing the command and setting up a DMA transfer.
-			 *
-			 * We only do this if we've received a command to unpop the command.
+			 * Occasionally, trim the BD list of any unused entries.
 			 */
-			if(g_mipi_csi_state.unpop_and_start || g_mipi_csi_state.unpop_and_start_all) {
-				//d_printf(D_RAW, "qs%d u%d,%d\r\n", queue_size(g_mipi_csi_state.item_queue), \
-						g_mipi_csi_state.unpop_and_start, g_mipi_csi_state.unpop_and_start_all);
-				g_mipi_csi_state.unpop_and_start = 0;
-
-				if(queue_size(g_mipi_csi_state.item_queue) > 0) {
-					queue_poll(g_mipi_csi_state.item_queue, (void *)&q_item);
-					mipi_csi_process_queue_item(q_item);
-				} else {
-					//d_printf(D_INFO, "mipi_csi: queue empty, unpop all ends");
-
-					g_mipi_csi_state.flags |= MCSI_FLAG_QUEUE_EMPTY;
-					g_mipi_csi_state.unpop_and_start_all = 0;
-				}
-			} else {
-				/*
-				 * Occasionally, trim the BD list of any unused entries.
-				 */
-				/*
-				time = systick_get_time_us_nonirq();
-				if(COND_UNLIKELY((time - g_mipi_csi_state.last_bd_trim) > CSI_TRIM_RATE)) {
-					d_printf(D_INFO, "Trim Start");
-					dma_bd_trim(g_mipi_csi_state.bd_ring);
-					d_printf(D_INFO, "Trim Stop");
-					g_mipi_csi_state.last_bd_trim = time;
-				}
-				*/
+#if 0
+			time = systick_get_time_us_nonirq();
+			if(COND_UNLIKELY((time - g_mipi_csi_state.last_bd_trim) > CSI_TRIM_RATE)) {
+				d_printf(D_INFO, "Trim Start");
+				dma_bd_trim(g_mipi_csi_state.bd_ring);
+				d_printf(D_INFO, "Trim Stop");
+				g_mipi_csi_state.last_bd_trim = time;
 			}
-
+#endif
 			break;
 
 		case MCSI_ST_WAIT_FOR_XFER:
@@ -754,7 +518,9 @@ void mipi_csi_tick()
 					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CR_OFFSET), \
 					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET), \
 					XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET));
+			*/
 
+			/*
 			if(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) == XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET)) {
 				d_printf(D_WARN, "*** Done DMA Xfer, Dump State... ***");
 				dma_bd_debug_dump(g_mipi_csi_state.bd_ring);
@@ -784,13 +550,10 @@ void mipi_csi_tick()
 
 					// End frame and return to idle.
 					mipi_csi_send_eof();
-					mipi_csi_free_item(g_mipi_csi_state.working);
-
+					g_mipi_csi_state.done = 1;
 					g_mipi_csi_state.working = NULL;
 					g_mipi_csi_state.state = MCSI_ST_IDLE;
 					g_mipi_csi_state.flags &= ~MCSI_FLAG_TRANSFER_RUNNING;
-
-					//malloc_stats();
 				}
 			} else {
 				/*
@@ -854,4 +617,17 @@ void mipi_csi_get_size_report(struct mipi_tx_size_resp_t *status)
 	status->bitpack_size = status->all_waves_size / acq_get_wave_bit_packed_depth();
 
 	GLOBAL_IRQ_ENABLE();
+}
+
+/*
+ * Return if the done reg is set and clear that register - used to see that
+ * another command can be executed/scheduled.
+ */
+int mcsi_get_task_done()
+{
+	int done = g_mipi_csi_state.done;
+
+	g_mipi_csi_state.done = 0;
+
+	return done;
 }

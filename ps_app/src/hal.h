@@ -66,6 +66,14 @@
 #define GPIO_PS_LED_0_PIN			9
 #define GPIO_PS_LED_1_PIN			37
 
+#define GPIO_PS_IRQ_1_PIN			32
+#define GPIO_PS_IRQ_2_PIN			34
+#define GPIO_PS_IRQ_3_PIN			50
+#define GPIO_PS_IRQ_4_PIN			36
+
+#define GPIO_HAL_OUTPUT				0
+#define GPIO_HAL_INPUT				1
+
 // TODO:  Move below to common utils file ***
 #define COND_UNLIKELY(expr)			__builtin_expect((expr), 0)
 #define COND_LIKELY(expr)			__builtin_expect((expr), 1)
@@ -155,6 +163,9 @@ extern void *_STACK_SIZE;
 extern void *_HEAP_SIZE;
 
 void hal_init();
+void gpio_set_ps_irq_direction(int index, int mode);
+void gpio_write_ps_irq(int index, int state);
+int gpio_read_ps_irq(int index);
 void bogo_delay(uint32_t us);
 void d_printf(int debug_code, char *fmt, ...);
 void d_waitkey();

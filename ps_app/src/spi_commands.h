@@ -75,13 +75,20 @@ void spicmd_csi_setup_trigpos_range(struct spi_command_alloc_t *cmd);
 void spicmd_csi_setup_trigpos_all(struct spi_command_alloc_t *cmd);
 void spicmd_csi_setup_testpatt(struct spi_command_alloc_t *cmd);
 void spicmd_csi_setup_bitpack_wave(struct spi_command_alloc_t *cmd);
-void spicmd_csi_set_params_queue(struct spi_command_alloc_t *cmd);
-void spicmd_csi_stream_clear_queue(struct spi_command_alloc_t *cmd);
-void spicmd_csi_stream_unpop_start(struct spi_command_alloc_t *cmd);
-void spicmd_csi_stream_unpop_start_all(struct spi_command_alloc_t *cmd);
-void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd);
-void spicmd_csi_status(struct spi_command_alloc_t *cmd);
+void spicmd_csi_setup_wave_clipping(struct spi_command_alloc_t *cmd);
+void spicmd_csi_setup_wave_group(struct spi_command_alloc_t *cmd);
+void spicmd_csi_setup_wave_clipping(struct spi_command_alloc_t *cmd);
 
-void spicmd_comp0(struct spi_command_alloc_t *cmd);
+void spicmd_csi_set_params(struct spi_command_alloc_t *cmd);
+void spicmd_csi_status(struct spi_command_alloc_t *cmd);
+void spicmd_csi_get_size(struct spi_command_alloc_t *cmd);
+void spicmd_csi_stream_stop(struct spi_command_alloc_t *cmd);
+
+void spicmd_ac_setup_acq_and_stream(struct spi_command_alloc_t *cmd);
+void spicmd_ac_stop(struct spi_command_alloc_t *cmd);
+void spicmd_ac_start(struct spi_command_alloc_t *cmd);
+void spicmd_ac_reset(struct spi_command_alloc_t *cmd);
+
+//void spicmd_comp0(struct spi_command_alloc_t *cmd);
 
 #endif // SRC_SPI_COMMANDS_H_

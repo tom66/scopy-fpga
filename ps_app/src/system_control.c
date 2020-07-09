@@ -11,6 +11,7 @@
 #include "spi.h"
 #include "system_control.h"
 #include "mipi_csi.h"
+#include "acq_ctrl.h"
 
 #include "xscugic.h"
 #include "xttcps.h"
@@ -27,6 +28,7 @@
  */
 
 struct sysctrl_state_t g_sysctrl_state;
+struct sysctrl_health_t g_sysctrl_health;
 
 /*
  * Initialise the system controller.  Sets up interrupts and timers.
@@ -221,7 +223,7 @@ void sysctrl_main_loop()
 			g_sysctrl_state.wakeup = 0;
 		}
 
-
+		acq_ctrl_tick();
 		spi_command_tick();
 		mipi_csi_tick();
 	}

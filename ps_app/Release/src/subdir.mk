@@ -7,6 +7,7 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
+../src/acq_ctrl.c \
 ../src/acq_hacks.c \
 ../src/acquire.c \
 ../src/clkwiz_interface.c \
@@ -24,6 +25,7 @@ C_SRCS += \
 ../src/trigger.c 
 
 OBJS += \
+./src/acq_ctrl.o \
 ./src/acq_hacks.o \
 ./src/acquire.o \
 ./src/clkwiz_interface.o \
@@ -41,6 +43,7 @@ OBJS += \
 ./src/trigger.o 
 
 C_DEPS += \
+./src/acq_ctrl.d \
 ./src/acq_hacks.d \
 ./src/acquire.d \
 ./src/clkwiz_interface.d \

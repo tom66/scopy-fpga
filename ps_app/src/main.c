@@ -17,14 +17,10 @@
 
 #include "hal.h"
 #include "acquire.h"
+#include "acq_ctrl.h"
 #include "spi.h"
 #include "mipi_csi.h"
 #include "system_control.h"
-
-//#define ACQ_HACKS_TEST
-
-//uint8_t src_buffer[16384] __attribute__((aligned(32)));
-//uint8_t dest_buffer[16384] __attribute__((aligned(32)));
 
 int main()
 {
@@ -34,6 +30,7 @@ int main()
 
 	hal_init();
 	acq_init();
+	acq_ctrl_init();
 	spi_init();
 	mipi_csi_init();
 	sysctrl_init();

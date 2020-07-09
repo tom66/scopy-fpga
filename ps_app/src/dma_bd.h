@@ -72,6 +72,7 @@ struct dma_bd_ring_t {
 	struct dma_bd_tag_t *current;						// Current working tag
 	struct dma_bd_stats_t stats;
 	uint32_t total_bd_count;
+	uint32_t total_block_size;
 };
 
 /*
@@ -137,5 +138,21 @@ int dma_bd_start(XAxiDma *periph, struct dma_bd_ring_t *ring, int tx_rx);
 
 void dma_bd_debug_dump(struct dma_bd_ring_t *ring);
 void dma_bd_test();
+
+/*
+ * Get BD size
+ */
+inline uint32_t dma_bd_get_total_block_size(struct dma_bd_ring_t *ring)
+{
+	return ring->total_block_size;
+}
+
+/*
+ * Get total number of BDs in given ring.
+ */
+inline uint64_t dma_bd_get_total_bd_count(struct dma_bd_ring_t *ring)
+{
+	return ring->total_bd_count;
+}
 
 #endif // SRC_DMA_BD_H_
