@@ -192,6 +192,7 @@ void _acq_irq_rx_handler(void *callback)
 					 * XXX: Do we need to do this on abort?
 					 */
 					g_acq_state.acq_current->trigger_at = fabcfg_read(FAB_CFG_ACQ_TRIGGER_PTR);
+					//d_printf(D_RAW, "%08x\r\n", g_acq_state.acq_current->trigger_at);
 
 					/*
 					 * Start the AXI bus again with triggers masked as we are no longer interested in triggers

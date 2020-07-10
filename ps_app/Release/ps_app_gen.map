@@ -766,399 +766,399 @@ LOAD g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-
                 0x00000000010105d4                d_trap_handle
  .text          0x00000000010105f4        0x0 ./src/main.o
  *fill*         0x00000000010105f4        0x4 
- .text          0x00000000010105f8      0x86c ./src/mipi_csi.o
+ .text          0x00000000010105f8      0x88c ./src/mipi_csi.o
                 0x00000000010105f8                mipi_csi_init
                 0x0000000001010800                mipi_csi_set_datatype_and_frame_wct
                 0x000000000101086c                mipi_csi_generate_sg_list_for_waves
-                0x0000000001010b84                mipi_csi_process_queue_item
-                0x0000000001010cb8                mipi_csi_tick
-                0x0000000001010d74                mipi_csi_get_status
-                0x0000000001010df0                mipi_csi_get_size_report
-                0x0000000001010e40                mcsi_get_task_done
- .text          0x0000000001010e64      0x378 ./src/mipi_csi_hw.o
-                0x0000000001010e64                mipi_csi_send_fifo_reset
-                0x0000000001010e88                mipi_csi_send_sof
-                0x0000000001010f48                mipi_csi_send_eof
-                0x0000000001010fe0                mipi_csi_stop
-                0x0000000001011080                mipi_csi_transfer_packet
- .text          0x00000000010111dc       0x14 ./src/platform.o
-                0x00000000010111dc                enable_caches
-                0x00000000010111e0                disable_caches
-                0x00000000010111e4                init_uart
-                0x00000000010111e8                init_platform
-                0x00000000010111ec                cleanup_platform
- .text          0x00000000010111f0     0x1398 ./src/spi.o
-                0x00000000010111f0                spi_isr_handler
-                0x0000000001011594                spi_init
-                0x00000000010119d0                spi_reset_hw
-                0x0000000001011a04                spi_crc_lut_gen
-                0x0000000001011a8c                spi_command_lut_gen
-                0x0000000001011b54                spi_transmit_packet_nonblock
-                0x0000000001011ca4                spi_command_find_free_slot
-                0x0000000001011cec                spi_command_count_allocated
-                0x0000000001011d18                spi_command_pack_response_simple
-                0x0000000001011da8                spi_command_pack_response_pre_alloc
-                0x0000000001011e0c                spi_command_tick
- .text          0x0000000001012588      0xa20 ./src/spi_commands.o
-                0x0000000001012588                spicmd_csi_setup_addr_range
-                0x000000000101258c                spicmd_hello
-                0x00000000010125bc                spicmd_version
-                0x00000000010125cc                spicmd_stats
-                0x0000000001012634                spicmd_acq_setup_trigd
-                0x00000000010126b0                spicmd_acq_start
-                0x00000000010126dc                spicmd_acq_rewind
-                0x00000000010126e0                spicmd_acq_status
-                0x000000000101270c                spicmd_trig_configure_edge
-                0x0000000001012738                spicmd_trig_configure_always
-                0x000000000101273c                spicmd_trig_force
-                0x0000000001012740                spicmd_trig_arm
-                0x0000000001012744                spicmd_trig_disarm
-                0x0000000001012748                spicmd_csi_setup_testpatt
-                0x0000000001012e7c                spicmd_csi_set_params
-                0x0000000001012ebc                spicmd_csi_stream_stop
-                0x0000000001012ec0                spicmd_csi_status
-                0x0000000001012eec                spicmd_ac_setup_acq_and_stream
-                0x0000000001012f18                spicmd_ac_stop
-                0x0000000001012f1c                spicmd_ac_start
-                0x0000000001012f40                spicmd_ac_reset
-                0x0000000001012f5c                spicmd_acq_stop
-                0x0000000001012f94                spicmd_csi_setup_trigpos_all
-                0x0000000001012f98                spicmd_csi_setup_wave_range
-                0x0000000001012f9c                spicmd_csi_setup_wave_all
-                0x0000000001012fa0                spicmd_csi_setup_trigpos_range
-                0x0000000001012fa4                spicmd_csi_setup_bitpack_wave
- .text          0x0000000001012fa8      0x354 ./src/system_control.o
-                0x0000000001012fa8                sysctrl_tick_irq
-                0x0000000001012ff8                sysctrl_init
-                0x0000000001013140                systick_get_time_us_nonirq
-                0x0000000001013158                sysctrl_led_mode
-                0x00000000010131c0                sysctrl_led_tick
-                0x000000000101324c                sysctrl_xadc_tick
-                0x0000000001013250                sysctrl_main_loop
- .text          0x00000000010132fc        0x0 ./src/test_patterns.o
- .text          0x00000000010132fc      0x744 ./src/trigger.o
-                0x00000000010132fc                trig_zero_levels
-                0x0000000001013330                trig_write_levels
-                0x0000000001013480                trig_configure_always
-                0x00000000010134c0                trig_configure_edge
-                0x0000000001013704                trig_configure_holdoff
-                0x0000000001013780                trig_dump_state
-                0x000000000101392c                trig_init
-                0x00000000010139c0                trig_has_trigd
-                0x00000000010139ec                trig_arm
-                0x0000000001013a04                trig_disarm
-                0x0000000001013a1c                trig_force
- .text          0x0000000001013a40      0x91c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
-                0x0000000001013a40                XAxiDma_Reset
-                0x0000000001013b54                XAxiDma_ResetIsDone
-                0x0000000001013ba0                XAxiDma_CfgInitialize
-                0x0000000001013ddc                XAxiDma_Pause
-                0x0000000001013e8c                XAxiDma_Resume
-                0x0000000001014144                XAxiDma_Busy
-                0x0000000001014160                XAxiDma_SelectKeyHole
-                0x0000000001014188                XAxiDma_SelectCyclicMode
-                0x00000000010141b0                XAxiDma_SimpleTransfer
- .text          0x000000000101435c       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
-                0x000000000101435c                XAxiDma_LookupConfig
-                0x000000000101438c                XAxiDma_LookupConfigBaseAddr
- .text          0x00000000010143bc       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
-                0x00000000010143bc                XAxiDma_Selftest
- .text          0x0000000001014434      0xfd4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
-                0x0000000001014434                XAxiDma_UpdateBdRingCDesc
-                0x00000000010145b8                XAxiDma_BdRingCreate
-                0x00000000010147d0                XAxiDma_BdRingClone
-                0x0000000001014908                XAxiDma_StartBdRingHw
-                0x0000000001014a34                XAxiDma_BdRingStart
-                0x0000000001014a88                XAxiDma_BdRingSetCoalesce
-                0x0000000001014afc                XAxiDma_BdRingGetCoalesce
-                0x0000000001014b18                XAxiDma_BdRingAlloc
-                0x0000000001014bb8                XAxiDma_BdRingUnAlloc
-                0x0000000001014c90                XAxiDma_BdRingToHw
-                0x0000000001014f30                XAxiDma_BdRingFromHw
-                0x0000000001015084                XAxiDma_BdRingFree
-                0x0000000001015138                XAxiDma_BdRingCheck
-                0x0000000001015350                XAxiDma_BdRingDumpRegs
- .text          0x0000000001015408        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
- .text          0x0000000001015408      0x150 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
-                0x0000000001015430                XClk_Wiz_CfgInitialize
-                0x00000000010154f8                XClk_Wiz_GetInterruptSettings
- .text          0x0000000001015558       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
-                0x0000000001015558                XClk_Wiz_LookupConfig
- .text          0x0000000001015574      0xcd8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
-                0x0000000001015574                XGpioPs_CfgInitialize
-                0x00000000010156f0                XGpioPs_Read
-                0x00000000010157a4                XGpioPs_Write
-                0x000000000101584c                XGpioPs_SetDirection
-                0x00000000010158f8                XGpioPs_GetDirection
-                0x00000000010159b0                XGpioPs_SetOutputEnable
-                0x0000000001015a5c                XGpioPs_GetOutputEnable
-                0x0000000001015b14                XGpioPs_GetBankPin
-                0x0000000001015c50                XGpioPs_ReadPin
-                0x0000000001015d34                XGpioPs_WritePin
-                0x0000000001015e34                XGpioPs_SetDirectionPin
-                0x0000000001015f58                XGpioPs_GetDirectionPin
-                0x0000000001016040                XGpioPs_SetOutputEnablePin
-                0x0000000001016164                XGpioPs_GetOutputEnablePin
- .text          0x000000000101624c       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
-                0x000000000101624c                XGpioPs_LookupConfig
- .text          0x0000000001016268      0xdd4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
-                0x0000000001016268                XGpioPs_IntrEnable
-                0x0000000001016314                XGpioPs_IntrEnablePin
-                0x00000000010163f0                XGpioPs_IntrDisable
-                0x000000000101649c                XGpioPs_IntrDisablePin
-                0x0000000001016578                XGpioPs_IntrGetEnabled
-                0x0000000001016634                XGpioPs_IntrGetEnabledPin
-                0x000000000101671c                XGpioPs_IntrGetStatus
-                0x00000000010167d4                XGpioPs_IntrGetStatusPin
-                0x00000000010168bc                XGpioPs_IntrClear
-                0x0000000001016968                XGpioPs_IntrClearPin
-                0x0000000001016a48                XGpioPs_SetIntrType
-                0x0000000001016b10                XGpioPs_GetIntrType
-                0x0000000001016be4                XGpioPs_SetIntrTypePin
-                0x0000000001016d84                XGpioPs_GetIntrTypePin
-                0x0000000001016e90                XGpioPs_SetCallbackHandler
-                0x0000000001016f30                XGpioPs_IntrHandler
-                0x0000000001017014                StubHandler
- .text          0x000000000101703c        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
- .text          0x000000000101703c       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
-                0x000000000101703c                XScuGic_InterruptHandler
- .text          0x00000000010170b4      0xaf4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
-                0x0000000001017104                XScuGic_Connect
-                0x00000000010171d8                XScuGic_Disconnect
-                0x00000000010172a4                XScuGic_SoftwareIntr
-                0x0000000001017388                XScuGic_SetPriorityTriggerType
-                0x00000000010174c0                XScuGic_GetPriorityTriggerType
-                0x00000000010175ec                XScuGic_InterruptMaptoCpu
-                0x0000000001017660                XScuGic_Enable
-                0x0000000001017734                XScuGic_InterruptUnmapFromCpu
-                0x00000000010177a8                XScuGic_Disable
-                0x000000000101787c                XScuGic_UnmapAllInterruptsFromCpu
-                0x00000000010178f8                XScuGic_Stop
-                0x00000000010179d4                XScuGic_CfgInitialize
-                0x0000000001017b48                XScuGic_SetCpuID
-                0x0000000001017b98                XScuGic_GetCpuID
- .text          0x0000000001017ba8       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
-                0x0000000001017ba8                XScuGic_LookupConfig
- .text          0x0000000001017bc4       0xb4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
-                0x0000000001017bc4                XScuGic_SelfTest
- .text          0x0000000001017c78      0x2d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
-                0x0000000001017c78                XScuTimer_CfgInitialize
-                0x0000000001017d28                XScuTimer_Start
-                0x0000000001017db8                XScuTimer_Stop
-                0x0000000001017e40                XScuTimer_SetPrescaler
-                0x0000000001017ec8                XScuTimer_GetPrescaler
- .text          0x0000000001017f50       0xbc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
-                0x0000000001017f50                XScuTimer_SelfTest
- .text          0x000000000101800c       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
-                0x000000000101800c                XScuTimer_LookupConfig
- .text          0x0000000001018028        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
- .text          0x0000000001018028      0xaf0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
-                0x0000000001018050                XSpiPs_Transfer
-                0x0000000001018230                XSpiPs_PolledTransfer
-                0x00000000010184b4                XSpiPs_SetSlaveSelect
-                0x0000000001018594                XSpiPs_GetSlaveSelect
-                0x000000000101863c                XSpiPs_SetStatusHandler
-                0x00000000010186dc                XSpiPs_Abort
-                0x0000000001018738                XSpiPs_Reset
-                0x00000000010187bc                XSpiPs_CfgInitialize
-                0x000000000101888c                XSpiPs_InterruptHandler
- .text          0x0000000001018b18       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
-                0x0000000001018b18                XSpiPs_LookupConfig
- .text          0x0000000001018b34        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
- .text          0x0000000001018b34      0x16c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
-                0x0000000001018b34                XSpiPs_SelfTest
- .text          0x0000000001018ca0       0x70 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
-                0x0000000001018ca0                Xil_Assert
-                0x0000000001018cfc                Xil_AssertSetCallback
-                0x0000000001018d0c                XNullHandler
- .text          0x0000000001018d10       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
-                0x0000000001018d10                print
- .text          0x0000000001018d38      0x96c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
-                0x0000000001018d38                Xil_DCacheInvalidateLine
-                0x0000000001018d70                Xil_DCacheInvalidateRange
-                0x0000000001018e58                Xil_DCacheFlushLine
-                0x0000000001018ea4                Xil_DCacheFlushRange
-                0x0000000001018ef8                Xil_DCacheStoreLine
-                0x0000000001018f30                Xil_ICacheInvalidateLine
-                0x0000000001018f68                Xil_ICacheInvalidateRange
-                0x0000000001018fc0                Xil_L1DCacheInvalidate
-                0x0000000001019074                Xil_L1DCacheEnable
-                0x0000000001019094                Xil_L1DCacheInvalidateLine
-                0x00000000010190ac                Xil_L1DCacheInvalidateRange
-                0x00000000010190f4                Xil_L1DCacheFlush
-                0x0000000001019180                Xil_L1DCacheDisable
-                0x0000000001019198                Xil_DCacheFlush
-                0x00000000010191f4                Xil_L1DCacheFlushLine
-                0x000000000101920c                Xil_L1DCacheFlushRange
-                0x0000000001019254                Xil_L1DCacheStoreLine
-                0x000000000101926c                Xil_L1ICacheEnable
-                0x0000000001019288                Xil_L1ICacheDisable
-                0x00000000010192a4                Xil_L1ICacheInvalidate
-                0x00000000010192bc                Xil_L1ICacheInvalidateLine
-                0x00000000010192d4                Xil_L1ICacheInvalidateRange
-                0x000000000101931c                Xil_L2CacheDisable
-                0x0000000001019390                Xil_DCacheDisable
-                0x00000000010193ac                Xil_ICacheDisable
-                0x00000000010193d0                Xil_L2CacheInvalidate
-                0x000000000101943c                Xil_DCacheInvalidate
-                0x000000000101945c                Xil_ICacheInvalidate
-                0x00000000010194e4                Xil_L2CacheEnable
-                0x00000000010194fc                Xil_DCacheEnable
-                0x0000000001019520                Xil_ICacheEnable
-                0x0000000001019550                Xil_L2CacheInvalidateLine
-                0x0000000001019564                Xil_L2CacheInvalidateRange
-                0x00000000010195cc                Xil_L2CacheFlush
-                0x0000000001019610                Xil_L2CacheFlushLine
-                0x0000000001019628                Xil_L2CacheFlushRange
-                0x0000000001019690                Xil_L2CacheStoreLine
- .text          0x00000000010196a4       0x10 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
-                0x00000000010196a4                outbyte
- .text          0x00000000010196b4        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
-                0x00000000010196b4                XGetPlatform_Info
- .text          0x00000000010196bc      0x6c0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
-                0x00000000010198f0                xil_printf
- .text          0x0000000001019d7c       0xe4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
-                0x0000000001019d80                Xil_DataAbortHandler
-                0x0000000001019db0                Xil_PrefetchAbortHandler
-                0x0000000001019de0                Xil_UndefinedExceptionHandler
-                0x0000000001019e00                Xil_ExceptionInit
-                0x0000000001019e04                Xil_ExceptionRegisterHandler
-                0x0000000001019e1c                Xil_GetExceptionRegisterHandler
-                0x0000000001019e3c                Xil_ExceptionRemoveHandler
- .text          0x0000000001019e60        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
- .text          0x0000000001019e60      0x5d4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
-                0x0000000001019e88                XTtcPs_CfgInitialize
-                0x0000000001019fa4                XTtcPs_SetMatchValue
-                0x000000000101a050                XTtcPs_GetMatchValue
-                0x000000000101a10c                XTtcPs_SetPrescaler
-                0x000000000101a1bc                XTtcPs_GetPrescaler
-                0x000000000101a254                XTtcPs_CalcIntervalFromFreq
-                0x000000000101a334                XTtcPs_InterruptHandler
-                0x000000000101a394                XTtcPs_SetStatusHandler
- .text          0x000000000101a434       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
-                0x000000000101a434                XTtcPs_LookupConfig
- .text          0x000000000101a474        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
- .text          0x000000000101a474      0x1ac C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
-                0x000000000101a474                XTtcPs_SetOptions
-                0x000000000101a568                XTtcPs_GetOptions
- .text          0x000000000101a620       0x88 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
-                0x000000000101a620                XUartPs_SendByte
-                0x000000000101a638                XUartPs_RecvByte
-                0x000000000101a654                XUartPs_ResetHw
- .text          0x000000000101a6a8        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
- .text          0x000000000101a6a8        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
- .text          0x000000000101a6a8      0x448 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
-                0x000000000101a6a8                XSpiPs_SetOptions
-                0x000000000101a7ac                XSpiPs_GetOptions
-                0x000000000101a860                XSpiPs_SetClkPrescaler
-                0x000000000101a920                XSpiPs_GetClkPrescaler
-                0x000000000101a9a8                XSpiPs_SetDelays
-                0x000000000101aa54                XSpiPs_GetDelays
- .text          0x000000000101aaf0       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
-                0x000000000101aaf0                FIQInterrupt
-                0x000000000101ab04                IRQInterrupt
-                0x000000000101ab18                UndefinedException
-                0x000000000101ab2c                SWInterrupt
-                0x000000000101ab40                DataAbortInterrupt
-                0x000000000101ab54                PrefetchAbortInterrupt
- .text          0x000000000101ab68        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
- .text          0x000000000101ab68       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
-                0x000000000101ab7c                _start
- .text          0x000000000101abe0        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(translation_table.o)
- .text          0x000000000101abe0       0x3c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
-                0x000000000101abe0                __cpu_init
- .text          0x000000000101ac1c       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
-                0x000000000101ac1c                XTime_SetTime
-                0x000000000101ac40                XTime_GetTime
- .text          0x000000000101ac68      0x278 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivsi3.o)
-                0x000000000101ac68                __aeabi_uidiv
-                0x000000000101ac68                __udivsi3
-                0x000000000101aec4                __aeabi_uidivmod
- .text          0x000000000101aee0      0x2b0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_divsi3.o)
-                0x000000000101aee0                __divsi3
-                0x000000000101aee0                __aeabi_idiv
-                0x000000000101b174                __aeabi_idivmod
- .text          0x000000000101b190        0x4 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_dvmd_tls.o)
-                0x000000000101b190                __aeabi_idiv0
-                0x000000000101b190                __aeabi_ldiv0
- .text          0x000000000101b194      0x378 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubdf3.o)
-                0x000000000101b194                __aeabi_drsub
-                0x000000000101b19c                __aeabi_dsub
-                0x000000000101b19c                __subdf3
-                0x000000000101b1a0                __aeabi_dadd
-                0x000000000101b1a0                __adddf3
-                0x000000000101b418                __floatunsidf
-                0x000000000101b418                __aeabi_ui2d
-                0x000000000101b438                __floatsidf
-                0x000000000101b438                __aeabi_i2d
-                0x000000000101b45c                __aeabi_f2d
-                0x000000000101b45c                __extendsfdf2
-                0x000000000101b4a0                __floatundidf
-                0x000000000101b4a0                __aeabi_ul2d
-                0x000000000101b4b0                __floatdidf
-                0x000000000101b4b0                __aeabi_l2d
- .text          0x000000000101b50c      0x21c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubsf3.o)
-                0x000000000101b50c                __aeabi_frsub
-                0x000000000101b514                __subsf3
-                0x000000000101b514                __aeabi_fsub
-                0x000000000101b518                __aeabi_fadd
-                0x000000000101b518                __addsf3
-                0x000000000101b678                __aeabi_ui2f
-                0x000000000101b678                __floatunsisf
-                0x000000000101b680                __aeabi_i2f
-                0x000000000101b680                __floatsisf
-                0x000000000101b69c                __aeabi_ul2f
-                0x000000000101b69c                __floatundisf
-                0x000000000101b6ac                __aeabi_l2f
-                0x000000000101b6ac                __floatdisf
- .text          0x000000000101b728       0x30 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_aeabi_uldivmod.o)
-                0x000000000101b728                __aeabi_uldivmod
- .text          0x000000000101b758       0x28 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_popcountsi2.o)
-                0x000000000101b758                __popcountsi2
- .text          0x000000000101b780       0x40 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_fixunssfdi.o)
-                0x000000000101b780                __fixunssfdi
-                0x000000000101b780                __aeabi_f2ulz
- .text          0x000000000101b7c0       0x40 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_fixunsdfdi.o)
-                0x000000000101b7c0                __fixunsdfdi
-                0x000000000101b7c0                __aeabi_d2ulz
- .text          0x000000000101b800      0x118 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x000000000101b800                __udivmoddi4
- .text          0x000000000101b918       0x14 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-calloc.o)
-                0x000000000101b918                calloc
- .text          0x000000000101b92c       0x64 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-callocr.o)
-                0x000000000101b92c                _calloc_r
- .text          0x000000000101b990       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-exit.o)
-                0x000000000101b990                exit
- .text          0x000000000101b9b0       0x30 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-fini.o)
-                0x000000000101b9b0                __libc_fini_array
- .text          0x000000000101b9e0        0x0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-impure.o)
- .text          0x000000000101b9e0       0x50 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-init.o)
-                0x000000000101b9e0                __libc_init_array
- .text          0x000000000101ba30      0x9e0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-locale.o)
-                0x000000000101ba9c                __loadlocale
-                0x000000000101c11c                __get_locale_env
-                0x000000000101c170                _setlocale_r
-                0x000000000101c3b4                __locale_mb_cur_max
-                0x000000000101c3d4                __locale_ctype_ptr_l
-                0x000000000101c3dc                __locale_ctype_ptr
-                0x000000000101c3fc                setlocale
- .text          0x000000000101c410       0x14 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malign.o)
-                0x000000000101c410                memalign
- .text          0x000000000101c424       0xf4 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malignr.o)
-                0x000000000101c424                _memalign_r
- .text          0x000000000101c518       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malloc.o)
-                0x000000000101c518                malloc
-                0x000000000101c528                free
- .text          0x000000000101c538      0x564 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-mallocr.o)
-                0x000000000101c538                _malloc_r
- .text          0x000000000101ca9c      0x4b8 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-mbtowc_r.o)
-                0x000000000101ca9c                _mbtowc_r
-                0x000000000101cac4                __ascii_mbtowc
-                0x000000000101cae8                __utf8_mbtowc
-                0x000000000101ccf0                __sjis_mbtowc
-                0x000000000101cd74                __eucjp_mbtowc
-                0x000000000101ce2c                __jis_mbtowc
- *fill*         0x000000000101cf54       0x2c 
+                0x0000000001010ba4                mipi_csi_process_queue_item
+                0x0000000001010cd8                mipi_csi_tick
+                0x0000000001010d94                mipi_csi_get_status
+                0x0000000001010e10                mipi_csi_get_size_report
+                0x0000000001010e60                mcsi_get_task_done
+ .text          0x0000000001010e84      0x378 ./src/mipi_csi_hw.o
+                0x0000000001010e84                mipi_csi_send_fifo_reset
+                0x0000000001010ea8                mipi_csi_send_sof
+                0x0000000001010f68                mipi_csi_send_eof
+                0x0000000001011000                mipi_csi_stop
+                0x00000000010110a0                mipi_csi_transfer_packet
+ .text          0x00000000010111fc       0x14 ./src/platform.o
+                0x00000000010111fc                enable_caches
+                0x0000000001011200                disable_caches
+                0x0000000001011204                init_uart
+                0x0000000001011208                init_platform
+                0x000000000101120c                cleanup_platform
+ .text          0x0000000001011210     0x1398 ./src/spi.o
+                0x0000000001011210                spi_isr_handler
+                0x00000000010115b4                spi_init
+                0x00000000010119f0                spi_reset_hw
+                0x0000000001011a24                spi_crc_lut_gen
+                0x0000000001011aac                spi_command_lut_gen
+                0x0000000001011b74                spi_transmit_packet_nonblock
+                0x0000000001011cc4                spi_command_find_free_slot
+                0x0000000001011d0c                spi_command_count_allocated
+                0x0000000001011d38                spi_command_pack_response_simple
+                0x0000000001011dc8                spi_command_pack_response_pre_alloc
+                0x0000000001011e2c                spi_command_tick
+ .text          0x00000000010125a8      0xa20 ./src/spi_commands.o
+                0x00000000010125a8                spicmd_csi_setup_addr_range
+                0x00000000010125ac                spicmd_hello
+                0x00000000010125dc                spicmd_version
+                0x00000000010125ec                spicmd_stats
+                0x0000000001012654                spicmd_acq_setup_trigd
+                0x00000000010126d0                spicmd_acq_start
+                0x00000000010126fc                spicmd_acq_rewind
+                0x0000000001012700                spicmd_acq_status
+                0x000000000101272c                spicmd_trig_configure_edge
+                0x0000000001012758                spicmd_trig_configure_always
+                0x000000000101275c                spicmd_trig_force
+                0x0000000001012760                spicmd_trig_arm
+                0x0000000001012764                spicmd_trig_disarm
+                0x0000000001012768                spicmd_csi_setup_testpatt
+                0x0000000001012e9c                spicmd_csi_set_params
+                0x0000000001012edc                spicmd_csi_stream_stop
+                0x0000000001012ee0                spicmd_csi_status
+                0x0000000001012f0c                spicmd_ac_setup_acq_and_stream
+                0x0000000001012f38                spicmd_ac_stop
+                0x0000000001012f3c                spicmd_ac_start
+                0x0000000001012f60                spicmd_ac_reset
+                0x0000000001012f7c                spicmd_acq_stop
+                0x0000000001012fb4                spicmd_csi_setup_trigpos_all
+                0x0000000001012fb8                spicmd_csi_setup_wave_range
+                0x0000000001012fbc                spicmd_csi_setup_wave_all
+                0x0000000001012fc0                spicmd_csi_setup_trigpos_range
+                0x0000000001012fc4                spicmd_csi_setup_bitpack_wave
+ .text          0x0000000001012fc8      0x354 ./src/system_control.o
+                0x0000000001012fc8                sysctrl_tick_irq
+                0x0000000001013018                sysctrl_init
+                0x0000000001013160                systick_get_time_us_nonirq
+                0x0000000001013178                sysctrl_led_mode
+                0x00000000010131e0                sysctrl_led_tick
+                0x000000000101326c                sysctrl_xadc_tick
+                0x0000000001013270                sysctrl_main_loop
+ .text          0x000000000101331c        0x0 ./src/test_patterns.o
+ .text          0x000000000101331c      0x744 ./src/trigger.o
+                0x000000000101331c                trig_zero_levels
+                0x0000000001013350                trig_write_levels
+                0x00000000010134a0                trig_configure_always
+                0x00000000010134e0                trig_configure_edge
+                0x0000000001013724                trig_configure_holdoff
+                0x00000000010137a0                trig_dump_state
+                0x000000000101394c                trig_init
+                0x00000000010139e0                trig_has_trigd
+                0x0000000001013a0c                trig_arm
+                0x0000000001013a24                trig_disarm
+                0x0000000001013a3c                trig_force
+ .text          0x0000000001013a60      0x91c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+                0x0000000001013a60                XAxiDma_Reset
+                0x0000000001013b74                XAxiDma_ResetIsDone
+                0x0000000001013bc0                XAxiDma_CfgInitialize
+                0x0000000001013dfc                XAxiDma_Pause
+                0x0000000001013eac                XAxiDma_Resume
+                0x0000000001014164                XAxiDma_Busy
+                0x0000000001014180                XAxiDma_SelectKeyHole
+                0x00000000010141a8                XAxiDma_SelectCyclicMode
+                0x00000000010141d0                XAxiDma_SimpleTransfer
+ .text          0x000000000101437c       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+                0x000000000101437c                XAxiDma_LookupConfig
+                0x00000000010143ac                XAxiDma_LookupConfigBaseAddr
+ .text          0x00000000010143dc       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+                0x00000000010143dc                XAxiDma_Selftest
+ .text          0x0000000001014454      0xfd4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+                0x0000000001014454                XAxiDma_UpdateBdRingCDesc
+                0x00000000010145d8                XAxiDma_BdRingCreate
+                0x00000000010147f0                XAxiDma_BdRingClone
+                0x0000000001014928                XAxiDma_StartBdRingHw
+                0x0000000001014a54                XAxiDma_BdRingStart
+                0x0000000001014aa8                XAxiDma_BdRingSetCoalesce
+                0x0000000001014b1c                XAxiDma_BdRingGetCoalesce
+                0x0000000001014b38                XAxiDma_BdRingAlloc
+                0x0000000001014bd8                XAxiDma_BdRingUnAlloc
+                0x0000000001014cb0                XAxiDma_BdRingToHw
+                0x0000000001014f50                XAxiDma_BdRingFromHw
+                0x00000000010150a4                XAxiDma_BdRingFree
+                0x0000000001015158                XAxiDma_BdRingCheck
+                0x0000000001015370                XAxiDma_BdRingDumpRegs
+ .text          0x0000000001015428        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
+ .text          0x0000000001015428      0x150 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+                0x0000000001015450                XClk_Wiz_CfgInitialize
+                0x0000000001015518                XClk_Wiz_GetInterruptSettings
+ .text          0x0000000001015578       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+                0x0000000001015578                XClk_Wiz_LookupConfig
+ .text          0x0000000001015594      0xcd8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+                0x0000000001015594                XGpioPs_CfgInitialize
+                0x0000000001015710                XGpioPs_Read
+                0x00000000010157c4                XGpioPs_Write
+                0x000000000101586c                XGpioPs_SetDirection
+                0x0000000001015918                XGpioPs_GetDirection
+                0x00000000010159d0                XGpioPs_SetOutputEnable
+                0x0000000001015a7c                XGpioPs_GetOutputEnable
+                0x0000000001015b34                XGpioPs_GetBankPin
+                0x0000000001015c70                XGpioPs_ReadPin
+                0x0000000001015d54                XGpioPs_WritePin
+                0x0000000001015e54                XGpioPs_SetDirectionPin
+                0x0000000001015f78                XGpioPs_GetDirectionPin
+                0x0000000001016060                XGpioPs_SetOutputEnablePin
+                0x0000000001016184                XGpioPs_GetOutputEnablePin
+ .text          0x000000000101626c       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+                0x000000000101626c                XGpioPs_LookupConfig
+ .text          0x0000000001016288      0xdd4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+                0x0000000001016288                XGpioPs_IntrEnable
+                0x0000000001016334                XGpioPs_IntrEnablePin
+                0x0000000001016410                XGpioPs_IntrDisable
+                0x00000000010164bc                XGpioPs_IntrDisablePin
+                0x0000000001016598                XGpioPs_IntrGetEnabled
+                0x0000000001016654                XGpioPs_IntrGetEnabledPin
+                0x000000000101673c                XGpioPs_IntrGetStatus
+                0x00000000010167f4                XGpioPs_IntrGetStatusPin
+                0x00000000010168dc                XGpioPs_IntrClear
+                0x0000000001016988                XGpioPs_IntrClearPin
+                0x0000000001016a68                XGpioPs_SetIntrType
+                0x0000000001016b30                XGpioPs_GetIntrType
+                0x0000000001016c04                XGpioPs_SetIntrTypePin
+                0x0000000001016da4                XGpioPs_GetIntrTypePin
+                0x0000000001016eb0                XGpioPs_SetCallbackHandler
+                0x0000000001016f50                XGpioPs_IntrHandler
+                0x0000000001017034                StubHandler
+ .text          0x000000000101705c        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
+ .text          0x000000000101705c       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+                0x000000000101705c                XScuGic_InterruptHandler
+ .text          0x00000000010170d4      0xaf4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+                0x0000000001017124                XScuGic_Connect
+                0x00000000010171f8                XScuGic_Disconnect
+                0x00000000010172c4                XScuGic_SoftwareIntr
+                0x00000000010173a8                XScuGic_SetPriorityTriggerType
+                0x00000000010174e0                XScuGic_GetPriorityTriggerType
+                0x000000000101760c                XScuGic_InterruptMaptoCpu
+                0x0000000001017680                XScuGic_Enable
+                0x0000000001017754                XScuGic_InterruptUnmapFromCpu
+                0x00000000010177c8                XScuGic_Disable
+                0x000000000101789c                XScuGic_UnmapAllInterruptsFromCpu
+                0x0000000001017918                XScuGic_Stop
+                0x00000000010179f4                XScuGic_CfgInitialize
+                0x0000000001017b68                XScuGic_SetCpuID
+                0x0000000001017bb8                XScuGic_GetCpuID
+ .text          0x0000000001017bc8       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+                0x0000000001017bc8                XScuGic_LookupConfig
+ .text          0x0000000001017be4       0xb4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+                0x0000000001017be4                XScuGic_SelfTest
+ .text          0x0000000001017c98      0x2d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+                0x0000000001017c98                XScuTimer_CfgInitialize
+                0x0000000001017d48                XScuTimer_Start
+                0x0000000001017dd8                XScuTimer_Stop
+                0x0000000001017e60                XScuTimer_SetPrescaler
+                0x0000000001017ee8                XScuTimer_GetPrescaler
+ .text          0x0000000001017f70       0xbc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+                0x0000000001017f70                XScuTimer_SelfTest
+ .text          0x000000000101802c       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+                0x000000000101802c                XScuTimer_LookupConfig
+ .text          0x0000000001018048        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
+ .text          0x0000000001018048      0xaf0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+                0x0000000001018070                XSpiPs_Transfer
+                0x0000000001018250                XSpiPs_PolledTransfer
+                0x00000000010184d4                XSpiPs_SetSlaveSelect
+                0x00000000010185b4                XSpiPs_GetSlaveSelect
+                0x000000000101865c                XSpiPs_SetStatusHandler
+                0x00000000010186fc                XSpiPs_Abort
+                0x0000000001018758                XSpiPs_Reset
+                0x00000000010187dc                XSpiPs_CfgInitialize
+                0x00000000010188ac                XSpiPs_InterruptHandler
+ .text          0x0000000001018b38       0x1c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+                0x0000000001018b38                XSpiPs_LookupConfig
+ .text          0x0000000001018b54        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
+ .text          0x0000000001018b54      0x16c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+                0x0000000001018b54                XSpiPs_SelfTest
+ .text          0x0000000001018cc0       0x70 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+                0x0000000001018cc0                Xil_Assert
+                0x0000000001018d1c                Xil_AssertSetCallback
+                0x0000000001018d2c                XNullHandler
+ .text          0x0000000001018d30       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+                0x0000000001018d30                print
+ .text          0x0000000001018d58      0x96c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+                0x0000000001018d58                Xil_DCacheInvalidateLine
+                0x0000000001018d90                Xil_DCacheInvalidateRange
+                0x0000000001018e78                Xil_DCacheFlushLine
+                0x0000000001018ec4                Xil_DCacheFlushRange
+                0x0000000001018f18                Xil_DCacheStoreLine
+                0x0000000001018f50                Xil_ICacheInvalidateLine
+                0x0000000001018f88                Xil_ICacheInvalidateRange
+                0x0000000001018fe0                Xil_L1DCacheInvalidate
+                0x0000000001019094                Xil_L1DCacheEnable
+                0x00000000010190b4                Xil_L1DCacheInvalidateLine
+                0x00000000010190cc                Xil_L1DCacheInvalidateRange
+                0x0000000001019114                Xil_L1DCacheFlush
+                0x00000000010191a0                Xil_L1DCacheDisable
+                0x00000000010191b8                Xil_DCacheFlush
+                0x0000000001019214                Xil_L1DCacheFlushLine
+                0x000000000101922c                Xil_L1DCacheFlushRange
+                0x0000000001019274                Xil_L1DCacheStoreLine
+                0x000000000101928c                Xil_L1ICacheEnable
+                0x00000000010192a8                Xil_L1ICacheDisable
+                0x00000000010192c4                Xil_L1ICacheInvalidate
+                0x00000000010192dc                Xil_L1ICacheInvalidateLine
+                0x00000000010192f4                Xil_L1ICacheInvalidateRange
+                0x000000000101933c                Xil_L2CacheDisable
+                0x00000000010193b0                Xil_DCacheDisable
+                0x00000000010193cc                Xil_ICacheDisable
+                0x00000000010193f0                Xil_L2CacheInvalidate
+                0x000000000101945c                Xil_DCacheInvalidate
+                0x000000000101947c                Xil_ICacheInvalidate
+                0x0000000001019504                Xil_L2CacheEnable
+                0x000000000101951c                Xil_DCacheEnable
+                0x0000000001019540                Xil_ICacheEnable
+                0x0000000001019570                Xil_L2CacheInvalidateLine
+                0x0000000001019584                Xil_L2CacheInvalidateRange
+                0x00000000010195ec                Xil_L2CacheFlush
+                0x0000000001019630                Xil_L2CacheFlushLine
+                0x0000000001019648                Xil_L2CacheFlushRange
+                0x00000000010196b0                Xil_L2CacheStoreLine
+ .text          0x00000000010196c4       0x10 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+                0x00000000010196c4                outbyte
+ .text          0x00000000010196d4        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
+                0x00000000010196d4                XGetPlatform_Info
+ .text          0x00000000010196dc      0x6c0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+                0x0000000001019910                xil_printf
+ .text          0x0000000001019d9c       0xe4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+                0x0000000001019da0                Xil_DataAbortHandler
+                0x0000000001019dd0                Xil_PrefetchAbortHandler
+                0x0000000001019e00                Xil_UndefinedExceptionHandler
+                0x0000000001019e20                Xil_ExceptionInit
+                0x0000000001019e24                Xil_ExceptionRegisterHandler
+                0x0000000001019e3c                Xil_GetExceptionRegisterHandler
+                0x0000000001019e5c                Xil_ExceptionRemoveHandler
+ .text          0x0000000001019e80        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
+ .text          0x0000000001019e80      0x5d4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+                0x0000000001019ea8                XTtcPs_CfgInitialize
+                0x0000000001019fc4                XTtcPs_SetMatchValue
+                0x000000000101a070                XTtcPs_GetMatchValue
+                0x000000000101a12c                XTtcPs_SetPrescaler
+                0x000000000101a1dc                XTtcPs_GetPrescaler
+                0x000000000101a274                XTtcPs_CalcIntervalFromFreq
+                0x000000000101a354                XTtcPs_InterruptHandler
+                0x000000000101a3b4                XTtcPs_SetStatusHandler
+ .text          0x000000000101a454       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+                0x000000000101a454                XTtcPs_LookupConfig
+ .text          0x000000000101a494        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
+ .text          0x000000000101a494      0x1ac C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+                0x000000000101a494                XTtcPs_SetOptions
+                0x000000000101a588                XTtcPs_GetOptions
+ .text          0x000000000101a640       0x88 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+                0x000000000101a640                XUartPs_SendByte
+                0x000000000101a658                XUartPs_RecvByte
+                0x000000000101a674                XUartPs_ResetHw
+ .text          0x000000000101a6c8        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
+ .text          0x000000000101a6c8        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
+ .text          0x000000000101a6c8      0x448 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+                0x000000000101a6c8                XSpiPs_SetOptions
+                0x000000000101a7cc                XSpiPs_GetOptions
+                0x000000000101a880                XSpiPs_SetClkPrescaler
+                0x000000000101a940                XSpiPs_GetClkPrescaler
+                0x000000000101a9c8                XSpiPs_SetDelays
+                0x000000000101aa74                XSpiPs_GetDelays
+ .text          0x000000000101ab10       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
+                0x000000000101ab10                FIQInterrupt
+                0x000000000101ab24                IRQInterrupt
+                0x000000000101ab38                UndefinedException
+                0x000000000101ab4c                SWInterrupt
+                0x000000000101ab60                DataAbortInterrupt
+                0x000000000101ab74                PrefetchAbortInterrupt
+ .text          0x000000000101ab88        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
+ .text          0x000000000101ab88       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
+                0x000000000101ab9c                _start
+ .text          0x000000000101ac00        0x0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(translation_table.o)
+ .text          0x000000000101ac00       0x3c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
+                0x000000000101ac00                __cpu_init
+ .text          0x000000000101ac3c       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+                0x000000000101ac3c                XTime_SetTime
+                0x000000000101ac60                XTime_GetTime
+ .text          0x000000000101ac88      0x278 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivsi3.o)
+                0x000000000101ac88                __aeabi_uidiv
+                0x000000000101ac88                __udivsi3
+                0x000000000101aee4                __aeabi_uidivmod
+ .text          0x000000000101af00      0x2b0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_divsi3.o)
+                0x000000000101af00                __divsi3
+                0x000000000101af00                __aeabi_idiv
+                0x000000000101b194                __aeabi_idivmod
+ .text          0x000000000101b1b0        0x4 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_dvmd_tls.o)
+                0x000000000101b1b0                __aeabi_idiv0
+                0x000000000101b1b0                __aeabi_ldiv0
+ .text          0x000000000101b1b4      0x378 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubdf3.o)
+                0x000000000101b1b4                __aeabi_drsub
+                0x000000000101b1bc                __aeabi_dsub
+                0x000000000101b1bc                __subdf3
+                0x000000000101b1c0                __aeabi_dadd
+                0x000000000101b1c0                __adddf3
+                0x000000000101b438                __floatunsidf
+                0x000000000101b438                __aeabi_ui2d
+                0x000000000101b458                __floatsidf
+                0x000000000101b458                __aeabi_i2d
+                0x000000000101b47c                __aeabi_f2d
+                0x000000000101b47c                __extendsfdf2
+                0x000000000101b4c0                __floatundidf
+                0x000000000101b4c0                __aeabi_ul2d
+                0x000000000101b4d0                __floatdidf
+                0x000000000101b4d0                __aeabi_l2d
+ .text          0x000000000101b52c      0x21c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubsf3.o)
+                0x000000000101b52c                __aeabi_frsub
+                0x000000000101b534                __subsf3
+                0x000000000101b534                __aeabi_fsub
+                0x000000000101b538                __aeabi_fadd
+                0x000000000101b538                __addsf3
+                0x000000000101b698                __aeabi_ui2f
+                0x000000000101b698                __floatunsisf
+                0x000000000101b6a0                __aeabi_i2f
+                0x000000000101b6a0                __floatsisf
+                0x000000000101b6bc                __aeabi_ul2f
+                0x000000000101b6bc                __floatundisf
+                0x000000000101b6cc                __aeabi_l2f
+                0x000000000101b6cc                __floatdisf
+ .text          0x000000000101b748       0x30 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+                0x000000000101b748                __aeabi_uldivmod
+ .text          0x000000000101b778       0x28 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_popcountsi2.o)
+                0x000000000101b778                __popcountsi2
+ .text          0x000000000101b7a0       0x40 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_fixunssfdi.o)
+                0x000000000101b7a0                __fixunssfdi
+                0x000000000101b7a0                __aeabi_f2ulz
+ .text          0x000000000101b7e0       0x40 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_fixunsdfdi.o)
+                0x000000000101b7e0                __fixunsdfdi
+                0x000000000101b7e0                __aeabi_d2ulz
+ .text          0x000000000101b820      0x118 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x000000000101b820                __udivmoddi4
+ .text          0x000000000101b938       0x14 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-calloc.o)
+                0x000000000101b938                calloc
+ .text          0x000000000101b94c       0x64 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-callocr.o)
+                0x000000000101b94c                _calloc_r
+ .text          0x000000000101b9b0       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-exit.o)
+                0x000000000101b9b0                exit
+ .text          0x000000000101b9d0       0x30 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-fini.o)
+                0x000000000101b9d0                __libc_fini_array
+ .text          0x000000000101ba00        0x0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-impure.o)
+ .text          0x000000000101ba00       0x50 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-init.o)
+                0x000000000101ba00                __libc_init_array
+ .text          0x000000000101ba50      0x9e0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-locale.o)
+                0x000000000101babc                __loadlocale
+                0x000000000101c13c                __get_locale_env
+                0x000000000101c190                _setlocale_r
+                0x000000000101c3d4                __locale_mb_cur_max
+                0x000000000101c3f4                __locale_ctype_ptr_l
+                0x000000000101c3fc                __locale_ctype_ptr
+                0x000000000101c41c                setlocale
+ .text          0x000000000101c430       0x14 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malign.o)
+                0x000000000101c430                memalign
+ .text          0x000000000101c444       0xf4 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malignr.o)
+                0x000000000101c444                _memalign_r
+ .text          0x000000000101c538       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-malloc.o)
+                0x000000000101c538                malloc
+                0x000000000101c548                free
+ .text          0x000000000101c558      0x564 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-mallocr.o)
+                0x000000000101c558                _malloc_r
+ .text          0x000000000101cabc      0x4b8 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-mbtowc_r.o)
+                0x000000000101cabc                _mbtowc_r
+                0x000000000101cae4                __ascii_mbtowc
+                0x000000000101cb08                __utf8_mbtowc
+                0x000000000101cd10                __sjis_mbtowc
+                0x000000000101cd94                __eucjp_mbtowc
+                0x000000000101ce4c                __jis_mbtowc
+ *fill*         0x000000000101cf74        0xc 
  .text          0x000000000101cf80      0x5e0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-memcpy.o)
                 0x000000000101cf80                memcpy
  .text          0x000000000101d560       0xd0 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-memmove.o)
@@ -2760,7 +2760,7 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .comment       0x0000000000000011       0x12 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
  .comment       0x0000000000000011       0x12 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard/crtend.o
 
-.debug_info     0x0000000000000000    0x6d22f
+.debug_info     0x0000000000000000    0x6d2d0
  .debug_info    0x0000000000000000     0x27e6 ./src/Collections-C/src/array.o
  .debug_info    0x00000000000027e6      0x984 ./src/Collections-C/src/common.o
  .debug_info    0x000000000000316a     0x3047 ./src/Collections-C/src/deque.o
@@ -2774,76 +2774,76 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_info    0x000000000001462f     0x1341 ./src/Collections-C/src/stack.o
  .debug_info    0x0000000000015970     0x139c ./src/Collections-C/src/treeset.o
  .debug_info    0x0000000000016d0c     0x52c7 ./src/Collections-C/src/treetable.o
- .debug_info    0x000000000001bfd3     0x2177 ./src/acq_ctrl.o
- .debug_info    0x000000000001e14a     0x1eae ./src/acq_hacks.o
- .debug_info    0x000000000001fff8     0x5bd2 ./src/acquire.o
- .debug_info    0x0000000000025bca     0x2117 ./src/clkwiz_interface.o
- .debug_info    0x0000000000027ce1     0x2d4a ./src/dma_bd.o
- .debug_info    0x000000000002aa2b     0x1537 ./src/fabric_config.o
- .debug_info    0x000000000002bf62     0x37a0 ./src/hal.o
- .debug_info    0x000000000002f702     0x2326 ./src/main.o
- .debug_info    0x0000000000031a28     0x3129 ./src/mipi_csi.o
- .debug_info    0x0000000000034b51     0x25d5 ./src/mipi_csi_hw.o
- .debug_info    0x0000000000037126       0xb4 ./src/platform.o
- .debug_info    0x00000000000371da     0x3cd1 ./src/spi.o
- .debug_info    0x000000000003aeab     0x2f4e ./src/spi_commands.o
- .debug_info    0x000000000003ddf9     0x2ca7 ./src/system_control.o
- .debug_info    0x0000000000040aa0       0xb3 ./src/test_patterns.o
- .debug_info    0x0000000000040b53     0x2c5f ./src/trigger.o
- .debug_info    0x00000000000437b2     0x1c60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
- .debug_info    0x0000000000045412      0xb8f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
- .debug_info    0x0000000000045fa1      0xccd C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
- .debug_info    0x0000000000046c6e     0x21ba C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
- .debug_info    0x0000000000048e28      0xad6 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
- .debug_info    0x00000000000498fe      0xede C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
- .debug_info    0x000000000004a7dc      0xad3 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
- .debug_info    0x000000000004b2af     0x19d2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
- .debug_info    0x000000000004cc81      0xa45 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
- .debug_info    0x000000000004d6c6     0x1f3f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
- .debug_info    0x000000000004f605      0x9f4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
- .debug_info    0x000000000004fff9      0xc2a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
- .debug_info    0x0000000000050c23     0x1e28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
- .debug_info    0x0000000000052a4b      0xab9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
- .debug_info    0x0000000000053504      0xba5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
- .debug_info    0x00000000000540a9      0xed1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
- .debug_info    0x0000000000054f7a      0xce2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
- .debug_info    0x0000000000055c5c      0xa45 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
- .debug_info    0x00000000000566a1      0x9f4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
- .debug_info    0x0000000000057095     0x1eaf C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
- .debug_info    0x0000000000058f44      0xa57 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
- .debug_info    0x000000000005999b      0xa06 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
- .debug_info    0x000000000005a3a1      0xd31 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
- .debug_info    0x000000000005b0d2      0x1dc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
- .debug_info    0x000000000005b2ae      0x97d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
- .debug_info    0x000000000005bc2b     0x31b8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
- .debug_info    0x000000000005ede3      0x9c5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
- .debug_info    0x000000000005f7a8      0x960 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
- .debug_info    0x0000000000060108     0x1006 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
- .debug_info    0x000000000006110e      0x436 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
- .debug_info    0x0000000000061544       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
- .debug_info    0x000000000006156a     0x1522 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
- .debug_info    0x0000000000062a8c      0xa60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
- .debug_info    0x00000000000634ec      0xa01 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
- .debug_info    0x0000000000063eed      0xd9c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
- .debug_info    0x0000000000064c89      0xe54 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
- .debug_info    0x0000000000065add      0xa8b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
- .debug_info    0x0000000000066568      0xa6c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
- .debug_info    0x0000000000066fd4     0x1214 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
- .debug_info    0x00000000000681e8      0x1ac C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
- .debug_info    0x0000000000068394       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
- .debug_info    0x00000000000683ba       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
- .debug_info    0x00000000000683e0       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
- .debug_info    0x0000000000068406      0xc33 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
- .debug_info    0x0000000000069039      0x16a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
- .debug_info    0x00000000000691a3      0xa2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
- .debug_info    0x0000000000069bcf      0xa5f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
- .debug_info    0x000000000006a62e      0xa57 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
- .debug_info    0x000000000006b085      0xb9b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
- .debug_info    0x000000000006bc20      0x95f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
- .debug_info    0x000000000006c57f      0x101 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
- .debug_info    0x000000000006c680      0x130 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
- .debug_info    0x000000000006c7b0      0x9b7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
- .debug_info    0x000000000006d167       0xc8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
+ .debug_info    0x000000000001bfd3     0x2184 ./src/acq_ctrl.o
+ .debug_info    0x000000000001e157     0x1ebb ./src/acq_hacks.o
+ .debug_info    0x0000000000020012     0x5bd2 ./src/acquire.o
+ .debug_info    0x0000000000025be4     0x2117 ./src/clkwiz_interface.o
+ .debug_info    0x0000000000027cfb     0x2d4a ./src/dma_bd.o
+ .debug_info    0x000000000002aa45     0x1537 ./src/fabric_config.o
+ .debug_info    0x000000000002bf7c     0x37a0 ./src/hal.o
+ .debug_info    0x000000000002f71c     0x2333 ./src/main.o
+ .debug_info    0x0000000000031a4f     0x317c ./src/mipi_csi.o
+ .debug_info    0x0000000000034bcb     0x25e2 ./src/mipi_csi_hw.o
+ .debug_info    0x00000000000371ad       0xb4 ./src/platform.o
+ .debug_info    0x0000000000037261     0x3cd1 ./src/spi.o
+ .debug_info    0x000000000003af32     0x2f5b ./src/spi_commands.o
+ .debug_info    0x000000000003de8d     0x2cb4 ./src/system_control.o
+ .debug_info    0x0000000000040b41       0xb3 ./src/test_patterns.o
+ .debug_info    0x0000000000040bf4     0x2c5f ./src/trigger.o
+ .debug_info    0x0000000000043853     0x1c60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_info    0x00000000000454b3      0xb8f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+ .debug_info    0x0000000000046042      0xccd C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+ .debug_info    0x0000000000046d0f     0x21ba C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_info    0x0000000000048ec9      0xad6 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
+ .debug_info    0x000000000004999f      0xede C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+ .debug_info    0x000000000004a87d      0xad3 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+ .debug_info    0x000000000004b350     0x19d2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_info    0x000000000004cd22      0xa45 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+ .debug_info    0x000000000004d767     0x1f3f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_info    0x000000000004f6a6      0x9f4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
+ .debug_info    0x000000000005009a      0xc2a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+ .debug_info    0x0000000000050cc4     0x1e28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_info    0x0000000000052aec      0xab9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+ .debug_info    0x00000000000535a5      0xba5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_info    0x000000000005414a      0xed1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_info    0x000000000005501b      0xce2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_info    0x0000000000055cfd      0xa45 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+ .debug_info    0x0000000000056742      0x9f4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
+ .debug_info    0x0000000000057136     0x1eaf C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_info    0x0000000000058fe5      0xa57 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+ .debug_info    0x0000000000059a3c      0xa06 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
+ .debug_info    0x000000000005a442      0xd31 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+ .debug_info    0x000000000005b173      0x1dc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+ .debug_info    0x000000000005b34f      0x97d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+ .debug_info    0x000000000005bccc     0x31b8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_info    0x000000000005ee84      0x9c5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+ .debug_info    0x000000000005f849      0x960 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
+ .debug_info    0x00000000000601a9     0x1006 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_info    0x00000000000611af      0x436 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_info    0x00000000000615e5       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
+ .debug_info    0x000000000006160b     0x1522 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_info    0x0000000000062b2d      0xa60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+ .debug_info    0x000000000006358d      0xa01 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
+ .debug_info    0x0000000000063f8e      0xd9c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_info    0x0000000000064d2a      0xe54 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_info    0x0000000000065b7e      0xa8b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
+ .debug_info    0x0000000000066609      0xa6c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
+ .debug_info    0x0000000000067075     0x1214 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_info    0x0000000000068289      0x1ac C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
+ .debug_info    0x0000000000068435       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
+ .debug_info    0x000000000006845b       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
+ .debug_info    0x0000000000068481       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
+ .debug_info    0x00000000000684a7      0xc33 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_info    0x00000000000690da      0x16a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
+ .debug_info    0x0000000000069244      0xa2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
+ .debug_info    0x0000000000069c70      0xa5f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
+ .debug_info    0x000000000006a6cf      0xa57 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
+ .debug_info    0x000000000006b126      0xb9b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
+ .debug_info    0x000000000006bcc1      0x95f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
+ .debug_info    0x000000000006c620      0x101 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
+ .debug_info    0x000000000006c721      0x130 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
+ .debug_info    0x000000000006c851      0x9b7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
+ .debug_info    0x000000000006d208       0xc8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
 
 .debug_abbrev   0x0000000000000000     0xfec6
  .debug_abbrev  0x0000000000000000      0x633 ./src/Collections-C/src/array.o
@@ -2930,7 +2930,7 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_abbrev  0x000000000000fc46      0x208 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
  .debug_abbrev  0x000000000000fe4e       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
 
-.debug_loc      0x0000000000000000    0x35f25
+.debug_loc      0x0000000000000000    0x35fd5
  .debug_loc     0x0000000000000000     0x2704 ./src/Collections-C/src/array.o
  .debug_loc     0x0000000000002704       0x4a ./src/Collections-C/src/common.o
  .debug_loc     0x000000000000274e     0x441c ./src/Collections-C/src/deque.o
@@ -2950,51 +2950,51 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_loc     0x000000000001da96     0x1eab ./src/dma_bd.o
  .debug_loc     0x000000000001f941      0x4b1 ./src/fabric_config.o
  .debug_loc     0x000000000001fdf2     0x154c ./src/hal.o
- .debug_loc     0x000000000002133e      0x63c ./src/mipi_csi.o
- .debug_loc     0x000000000002197a      0x69e ./src/mipi_csi_hw.o
- .debug_loc     0x0000000000022018     0x26c4 ./src/spi.o
- .debug_loc     0x00000000000246dc      0xc66 ./src/spi_commands.o
- .debug_loc     0x0000000000025342      0x5e1 ./src/system_control.o
- .debug_loc     0x0000000000025923     0x1524 ./src/trigger.o
- .debug_loc     0x0000000000026e47     0x1349 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
- .debug_loc     0x0000000000028190      0x114 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
- .debug_loc     0x00000000000282a4       0x8c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
- .debug_loc     0x0000000000028330     0x1f2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
- .debug_loc     0x000000000002a25c      0x317 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
- .debug_loc     0x000000000002a573       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
- .debug_loc     0x000000000002a598     0x13ca C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
- .debug_loc     0x000000000002b962       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
- .debug_loc     0x000000000002b987     0x185e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
- .debug_loc     0x000000000002d1e5      0x121 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
- .debug_loc     0x000000000002d306     0x1da5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
- .debug_loc     0x000000000002f0ab       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
- .debug_loc     0x000000000002f0d0      0x175 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
- .debug_loc     0x000000000002f245      0x42d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
- .debug_loc     0x000000000002f672      0x211 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
- .debug_loc     0x000000000002f883       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
- .debug_loc     0x000000000002f8a8     0x1769 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
- .debug_loc     0x0000000000031011       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
- .debug_loc     0x0000000000031036       0xfb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
- .debug_loc     0x0000000000031131       0x64 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
- .debug_loc     0x0000000000031195       0x31 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
- .debug_loc     0x00000000000311c6     0x235d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
- .debug_loc     0x0000000000033523       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
- .debug_loc     0x0000000000033548      0x74d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
- .debug_loc     0x0000000000033c95      0x139 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
- .debug_loc     0x0000000000033dce      0xcdc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
- .debug_loc     0x0000000000034aaa       0x88 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
- .debug_loc     0x0000000000034b32      0x286 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
- .debug_loc     0x0000000000034db8      0x380 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
- .debug_loc     0x0000000000035138      0x876 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
- .debug_loc     0x00000000000359ae      0x19e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
- .debug_loc     0x0000000000035b4c       0x3e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
- .debug_loc     0x0000000000035b8a       0x6f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
- .debug_loc     0x0000000000035bf9      0x115 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
- .debug_loc     0x0000000000035d0e      0x193 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
- .debug_loc     0x0000000000035ea1       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
- .debug_loc     0x0000000000035ec6       0x15 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
- .debug_loc     0x0000000000035edb       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
- .debug_loc     0x0000000000035f00       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
+ .debug_loc     0x000000000002133e      0x6ec ./src/mipi_csi.o
+ .debug_loc     0x0000000000021a2a      0x69e ./src/mipi_csi_hw.o
+ .debug_loc     0x00000000000220c8     0x26c4 ./src/spi.o
+ .debug_loc     0x000000000002478c      0xc66 ./src/spi_commands.o
+ .debug_loc     0x00000000000253f2      0x5e1 ./src/system_control.o
+ .debug_loc     0x00000000000259d3     0x1524 ./src/trigger.o
+ .debug_loc     0x0000000000026ef7     0x1349 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_loc     0x0000000000028240      0x114 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+ .debug_loc     0x0000000000028354       0x8c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+ .debug_loc     0x00000000000283e0     0x1f2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_loc     0x000000000002a30c      0x317 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+ .debug_loc     0x000000000002a623       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+ .debug_loc     0x000000000002a648     0x13ca C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_loc     0x000000000002ba12       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+ .debug_loc     0x000000000002ba37     0x185e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_loc     0x000000000002d295      0x121 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+ .debug_loc     0x000000000002d3b6     0x1da5 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_loc     0x000000000002f15b       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+ .debug_loc     0x000000000002f180      0x175 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_loc     0x000000000002f2f5      0x42d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_loc     0x000000000002f722      0x211 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_loc     0x000000000002f933       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+ .debug_loc     0x000000000002f958     0x1769 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_loc     0x00000000000310c1       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+ .debug_loc     0x00000000000310e6       0xfb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+ .debug_loc     0x00000000000311e1       0x64 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+ .debug_loc     0x0000000000031245       0x31 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+ .debug_loc     0x0000000000031276     0x235d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_loc     0x00000000000335d3       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+ .debug_loc     0x00000000000335f8      0x74d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_loc     0x0000000000033d45      0x139 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_loc     0x0000000000033e7e      0xcdc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_loc     0x0000000000034b5a       0x88 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+ .debug_loc     0x0000000000034be2      0x286 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_loc     0x0000000000034e68      0x380 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_loc     0x00000000000351e8      0x876 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_loc     0x0000000000035a5e      0x19e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_loc     0x0000000000035bfc       0x3e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
+ .debug_loc     0x0000000000035c3a       0x6f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
+ .debug_loc     0x0000000000035ca9      0x115 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
+ .debug_loc     0x0000000000035dbe      0x193 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
+ .debug_loc     0x0000000000035f51       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
+ .debug_loc     0x0000000000035f76       0x15 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
+ .debug_loc     0x0000000000035f8b       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
+ .debug_loc     0x0000000000035fb0       0x25 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
 
 .debug_aranges  0x0000000000000000      0xa20
  .debug_aranges
@@ -3164,7 +3164,7 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000a00       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
 
-.debug_ranges   0x0000000000000000     0x6d00
+.debug_ranges   0x0000000000000000     0x6d08
  .debug_ranges  0x0000000000000000      0x308 ./src/Collections-C/src/array.o
  .debug_ranges  0x0000000000000308      0x570 ./src/Collections-C/src/deque.o
  .debug_ranges  0x0000000000000878       0x30 ./src/Collections-C/src/hashset.o
@@ -3184,31 +3184,31 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_ranges  0x0000000000003978      0x278 ./src/fabric_config.o
  .debug_ranges  0x0000000000003bf0      0x4d0 ./src/hal.o
  .debug_ranges  0x00000000000040c0       0x10 ./src/main.o
- .debug_ranges  0x00000000000040d0       0xa0 ./src/mipi_csi.o
- .debug_ranges  0x0000000000004170      0x168 ./src/mipi_csi_hw.o
- .debug_ranges  0x00000000000042d8      0x9e8 ./src/spi.o
- .debug_ranges  0x0000000000004cc0       0x50 ./src/spi_commands.o
- .debug_ranges  0x0000000000004d10      0x268 ./src/system_control.o
- .debug_ranges  0x0000000000004f78      0x440 ./src/trigger.o
- .debug_ranges  0x00000000000053b8      0x2d0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
- .debug_ranges  0x0000000000005688      0x2e8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
- .debug_ranges  0x0000000000005970      0x140 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
- .debug_ranges  0x0000000000005ab0      0x1d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
- .debug_ranges  0x0000000000005c88      0x2c0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
- .debug_ranges  0x0000000000005f48       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
- .debug_ranges  0x0000000000005f70       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
- .debug_ranges  0x0000000000005fd0       0x50 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
- .debug_ranges  0x0000000000006020      0x2d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
- .debug_ranges  0x00000000000062f8      0x5e8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
- .debug_ranges  0x00000000000068e0       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
- .debug_ranges  0x0000000000006958       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
- .debug_ranges  0x0000000000006988      0x148 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
- .debug_ranges  0x0000000000006ad0       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
- .debug_ranges  0x0000000000006b30       0xf0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
- .debug_ranges  0x0000000000006c20       0x98 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
- .debug_ranges  0x0000000000006cb8       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_ranges  0x00000000000040d0       0xa8 ./src/mipi_csi.o
+ .debug_ranges  0x0000000000004178      0x168 ./src/mipi_csi_hw.o
+ .debug_ranges  0x00000000000042e0      0x9e8 ./src/spi.o
+ .debug_ranges  0x0000000000004cc8       0x50 ./src/spi_commands.o
+ .debug_ranges  0x0000000000004d18      0x268 ./src/system_control.o
+ .debug_ranges  0x0000000000004f80      0x440 ./src/trigger.o
+ .debug_ranges  0x00000000000053c0      0x2d0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_ranges  0x0000000000005690      0x2e8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_ranges  0x0000000000005978      0x140 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_ranges  0x0000000000005ab8      0x1d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_ranges  0x0000000000005c90      0x2c0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_ranges  0x0000000000005f50       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_ranges  0x0000000000005f78       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_ranges  0x0000000000005fd8       0x50 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_ranges  0x0000000000006028      0x2d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_ranges  0x0000000000006300      0x5e8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_ranges  0x00000000000068e8       0x78 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_ranges  0x0000000000006960       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_ranges  0x0000000000006990      0x148 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_ranges  0x0000000000006ad8       0x60 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_ranges  0x0000000000006b38       0xf0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_ranges  0x0000000000006c28       0x98 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_ranges  0x0000000000006cc0       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
 
-.debug_line     0x0000000000000000    0x2c575
+.debug_line     0x0000000000000000    0x2c5c0
  .debug_line    0x0000000000000000     0x15f2 ./src/Collections-C/src/array.o
  .debug_line    0x00000000000015f2      0x1ae ./src/Collections-C/src/common.o
  .debug_line    0x00000000000017a0     0x1b55 ./src/Collections-C/src/deque.o
@@ -3224,76 +3224,76 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_line    0x000000000000af89     0x2113 ./src/Collections-C/src/treetable.o
  .debug_line    0x000000000000d09c      0x6e8 ./src/acq_ctrl.o
  .debug_line    0x000000000000d784      0x3f2 ./src/acq_hacks.o
- .debug_line    0x000000000000db76     0x312d ./src/acquire.o
- .debug_line    0x0000000000010ca3      0xacd ./src/clkwiz_interface.o
- .debug_line    0x0000000000011770     0x161a ./src/dma_bd.o
- .debug_line    0x0000000000012d8a      0x7e6 ./src/fabric_config.o
- .debug_line    0x0000000000013570     0x124a ./src/hal.o
- .debug_line    0x00000000000147ba      0x441 ./src/main.o
- .debug_line    0x0000000000014bfb      0xe1d ./src/mipi_csi.o
- .debug_line    0x0000000000015a18      0xa3c ./src/mipi_csi_hw.o
- .debug_line    0x0000000000016454       0x46 ./src/platform.o
- .debug_line    0x000000000001649a     0x2566 ./src/spi.o
- .debug_line    0x0000000000018a00      0xe6f ./src/spi_commands.o
- .debug_line    0x000000000001986f      0x9a0 ./src/system_control.o
- .debug_line    0x000000000001a20f      0x125 ./src/test_patterns.o
- .debug_line    0x000000000001a334     0x1086 ./src/trigger.o
- .debug_line    0x000000000001b3ba      0xeeb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
- .debug_line    0x000000000001c2a5      0x29d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
- .debug_line    0x000000000001c542      0x2f0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
- .debug_line    0x000000000001c832     0x1401 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
- .debug_line    0x000000000001dc33      0x23b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
- .debug_line    0x000000000001de6e      0x50b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
- .debug_line    0x000000000001e379      0x24b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
- .debug_line    0x000000000001e5c4     0x1476 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
- .debug_line    0x000000000001fa3a      0x258 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
- .debug_line    0x000000000001fc92     0x1747 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
- .debug_line    0x00000000000213d9      0x22f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
- .debug_line    0x0000000000021608      0x333 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
- .debug_line    0x000000000002193b     0x162e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
- .debug_line    0x0000000000022f69      0x26b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
- .debug_line    0x00000000000231d4      0x349 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
- .debug_line    0x000000000002351d      0x730 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
- .debug_line    0x0000000000023c4d      0x48a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
- .debug_line    0x00000000000240d7      0x25c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
- .debug_line    0x0000000000024333      0x233 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
- .debug_line    0x0000000000024566     0x138f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
- .debug_line    0x00000000000258f5      0x256 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
- .debug_line    0x0000000000025b4b      0x22d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
- .debug_line    0x0000000000025d78      0x3d3 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
- .debug_line    0x000000000002614b      0x197 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
- .debug_line    0x00000000000262e2      0x1ba C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
- .debug_line    0x000000000002649c     0x14c8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
- .debug_line    0x0000000000027964      0x246 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
- .debug_line    0x0000000000027baa      0x21f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
- .debug_line    0x0000000000027dc9      0x70e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
- .debug_line    0x00000000000284d7      0x297 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
- .debug_line    0x000000000002876e       0x90 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
- .debug_line    0x00000000000287fe      0xc2a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
- .debug_line    0x0000000000029428      0x27f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
- .debug_line    0x00000000000296a7      0x22d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
- .debug_line    0x00000000000298d4      0x48a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
- .debug_line    0x0000000000029d5e      0x40c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
- .debug_line    0x000000000002a16a      0x221 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
- .debug_line    0x000000000002a38b      0x242 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
- .debug_line    0x000000000002a5cd      0x87f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
- .debug_line    0x000000000002ae4c      0x174 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
- .debug_line    0x000000000002afc0      0x13e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
- .debug_line    0x000000000002b0fe       0x55 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
- .debug_line    0x000000000002b153       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
- .debug_line    0x000000000002b19b      0x347 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
- .debug_line    0x000000000002b4e2      0x16b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
- .debug_line    0x000000000002b64d      0x1da C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
- .debug_line    0x000000000002b827      0x271 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
- .debug_line    0x000000000002ba98      0x268 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
- .debug_line    0x000000000002bd00      0x246 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
- .debug_line    0x000000000002bf46      0x141 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
- .debug_line    0x000000000002c087       0xc2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
- .debug_line    0x000000000002c149       0xb9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
- .debug_line    0x000000000002c202      0x247 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
- .debug_line    0x000000000002c449      0x12c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
+ .debug_line    0x000000000000db76     0x3131 ./src/acquire.o
+ .debug_line    0x0000000000010ca7      0xacd ./src/clkwiz_interface.o
+ .debug_line    0x0000000000011774     0x161a ./src/dma_bd.o
+ .debug_line    0x0000000000012d8e      0x7e6 ./src/fabric_config.o
+ .debug_line    0x0000000000013574     0x124a ./src/hal.o
+ .debug_line    0x00000000000147be      0x441 ./src/main.o
+ .debug_line    0x0000000000014bff      0xe64 ./src/mipi_csi.o
+ .debug_line    0x0000000000015a63      0xa3c ./src/mipi_csi_hw.o
+ .debug_line    0x000000000001649f       0x46 ./src/platform.o
+ .debug_line    0x00000000000164e5     0x2566 ./src/spi.o
+ .debug_line    0x0000000000018a4b      0xe6f ./src/spi_commands.o
+ .debug_line    0x00000000000198ba      0x9a0 ./src/system_control.o
+ .debug_line    0x000000000001a25a      0x125 ./src/test_patterns.o
+ .debug_line    0x000000000001a37f     0x1086 ./src/trigger.o
+ .debug_line    0x000000000001b405      0xeeb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_line    0x000000000001c2f0      0x29d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+ .debug_line    0x000000000001c58d      0x2f0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+ .debug_line    0x000000000001c87d     0x1401 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_line    0x000000000001dc7e      0x23b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
+ .debug_line    0x000000000001deb9      0x50b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+ .debug_line    0x000000000001e3c4      0x24b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+ .debug_line    0x000000000001e60f     0x1476 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_line    0x000000000001fa85      0x258 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+ .debug_line    0x000000000001fcdd     0x1747 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_line    0x0000000000021424      0x22f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
+ .debug_line    0x0000000000021653      0x333 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+ .debug_line    0x0000000000021986     0x162e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_line    0x0000000000022fb4      0x26b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+ .debug_line    0x000000000002321f      0x349 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_line    0x0000000000023568      0x730 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_line    0x0000000000023c98      0x48a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_line    0x0000000000024122      0x25c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+ .debug_line    0x000000000002437e      0x233 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
+ .debug_line    0x00000000000245b1     0x138f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_line    0x0000000000025940      0x256 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+ .debug_line    0x0000000000025b96      0x22d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
+ .debug_line    0x0000000000025dc3      0x3d3 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+ .debug_line    0x0000000000026196      0x197 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+ .debug_line    0x000000000002632d      0x1ba C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+ .debug_line    0x00000000000264e7     0x14c8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_line    0x00000000000279af      0x246 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+ .debug_line    0x0000000000027bf5      0x21f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
+ .debug_line    0x0000000000027e14      0x70e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_line    0x0000000000028522      0x297 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_line    0x00000000000287b9       0x90 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
+ .debug_line    0x0000000000028849      0xc2a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_line    0x0000000000029473      0x27f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+ .debug_line    0x00000000000296f2      0x22d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
+ .debug_line    0x000000000002991f      0x48a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_line    0x0000000000029da9      0x40c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_line    0x000000000002a1b5      0x221 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
+ .debug_line    0x000000000002a3d6      0x242 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
+ .debug_line    0x000000000002a618      0x87f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_line    0x000000000002ae97      0x174 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
+ .debug_line    0x000000000002b00b      0x13e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
+ .debug_line    0x000000000002b149       0x55 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
+ .debug_line    0x000000000002b19e       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
+ .debug_line    0x000000000002b1e6      0x347 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_line    0x000000000002b52d      0x16b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
+ .debug_line    0x000000000002b698      0x1da C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
+ .debug_line    0x000000000002b872      0x271 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
+ .debug_line    0x000000000002bae3      0x268 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
+ .debug_line    0x000000000002bd4b      0x246 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
+ .debug_line    0x000000000002bf91      0x141 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
+ .debug_line    0x000000000002c0d2       0xc2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
+ .debug_line    0x000000000002c194       0xb9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
+ .debug_line    0x000000000002c24d      0x247 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
+ .debug_line    0x000000000002c494      0x12c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
 
-.debug_str      0x0000000000000000     0x6ae2
+.debug_str      0x0000000000000000     0x6af4
  .debug_str     0x0000000000000000      0x950 ./src/Collections-C/src/array.o
                                         0xa52 (size before relaxing)
  .debug_str     0x0000000000000950       0x45 ./src/Collections-C/src/common.o
@@ -3320,148 +3320,148 @@ OUTPUT(ps_app.elf elf32-littlearm)
                                         0x9b7 (size before relaxing)
  .debug_str     0x0000000000001f70      0x1ef ./src/Collections-C/src/treetable.o
                                         0xa2d (size before relaxing)
- .debug_str     0x000000000000215f      0xf9c ./src/acq_ctrl.o
-                                       0x167c (size before relaxing)
- .debug_str     0x00000000000030fb       0x63 ./src/acq_hacks.o
-                                       0x14c8 (size before relaxing)
- .debug_str     0x000000000000315e      0x735 ./src/acquire.o
+ .debug_str     0x000000000000215f      0xf94 ./src/acq_ctrl.o
+                                       0x1683 (size before relaxing)
+ .debug_str     0x00000000000030f3       0x63 ./src/acq_hacks.o
+                                       0x14cf (size before relaxing)
+ .debug_str     0x0000000000003156      0x735 ./src/acquire.o
                                        0x16dc (size before relaxing)
- .debug_str     0x0000000000003893      0x1c4 ./src/clkwiz_interface.o
+ .debug_str     0x000000000000388b      0x1c4 ./src/clkwiz_interface.o
                                         0xc22 (size before relaxing)
- .debug_str     0x0000000000003a57      0x199 ./src/dma_bd.o
+ .debug_str     0x0000000000003a4f      0x199 ./src/dma_bd.o
                                         0xf0b (size before relaxing)
- .debug_str     0x0000000000003bf0       0x63 ./src/fabric_config.o
+ .debug_str     0x0000000000003be8       0x63 ./src/fabric_config.o
                                         0xa21 (size before relaxing)
- .debug_str     0x0000000000003c53      0x6dd ./src/hal.o
+ .debug_str     0x0000000000003c4b      0x6dd ./src/hal.o
                                        0x124e (size before relaxing)
- .debug_str     0x0000000000004330       0x6c ./src/main.o
-                                       0x1818 (size before relaxing)
- .debug_str     0x000000000000439c      0x1e4 ./src/mipi_csi.o
-                                       0x1de5 (size before relaxing)
- .debug_str     0x0000000000004580       0x6a ./src/mipi_csi_hw.o
-                                       0x1542 (size before relaxing)
- .debug_str     0x00000000000045ea       0x39 ./src/platform.o
+ .debug_str     0x0000000000004328       0x6c ./src/main.o
+                                       0x181f (size before relaxing)
+ .debug_str     0x0000000000004394      0x1fe ./src/mipi_csi.o
+                                       0x1e06 (size before relaxing)
+ .debug_str     0x0000000000004592       0x6a ./src/mipi_csi_hw.o
+                                       0x1549 (size before relaxing)
+ .debug_str     0x00000000000045fc       0x39 ./src/platform.o
                                         0x1aa (size before relaxing)
- .debug_str     0x0000000000004623      0x2bd ./src/spi.o
+ .debug_str     0x0000000000004635      0x2bd ./src/spi.o
                                        0x16ad (size before relaxing)
- .debug_str     0x00000000000048e0      0x303 ./src/spi_commands.o
-                                       0x1cc3 (size before relaxing)
- .debug_str     0x0000000000004be3       0xfe ./src/system_control.o
-                                       0x19a2 (size before relaxing)
- .debug_str     0x0000000000004ce1       0x17 ./src/test_patterns.o
+ .debug_str     0x00000000000048f2      0x303 ./src/spi_commands.o
+                                       0x1cca (size before relaxing)
+ .debug_str     0x0000000000004bf5       0xfe ./src/system_control.o
+                                       0x19a9 (size before relaxing)
+ .debug_str     0x0000000000004cf3       0x17 ./src/test_patterns.o
                                         0x187 (size before relaxing)
- .debug_str     0x0000000000004cf8      0x103 ./src/trigger.o
+ .debug_str     0x0000000000004d0a      0x103 ./src/trigger.o
                                        0x1031 (size before relaxing)
- .debug_str     0x0000000000004dfb      0x1d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_str     0x0000000000004e0d      0x1d8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
                                         0x9b1 (size before relaxing)
- .debug_str     0x0000000000004fd3       0x51 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+ .debug_str     0x0000000000004fe5       0x51 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
                                         0x71c (size before relaxing)
- .debug_str     0x0000000000005024       0x1e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+ .debug_str     0x0000000000005036       0x1e C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
                                         0x7cd (size before relaxing)
- .debug_str     0x0000000000005042      0x1d2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_str     0x0000000000005054      0x1d2 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
                                         0x9a8 (size before relaxing)
- .debug_str     0x0000000000005214        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
+ .debug_str     0x0000000000005226        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_g.o)
                                         0x6d0 (size before relaxing)
- .debug_str     0x0000000000005220      0x11c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+ .debug_str     0x0000000000005232      0x11c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
                                         0x895 (size before relaxing)
- .debug_str     0x000000000000533c       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+ .debug_str     0x000000000000534e       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
                                         0x6d2 (size before relaxing)
- .debug_str     0x0000000000005362      0x1b7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_str     0x0000000000005374      0x1b7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
                                         0x88f (size before relaxing)
- .debug_str     0x0000000000005519       0x24 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+ .debug_str     0x000000000000552b       0x24 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
                                         0x628 (size before relaxing)
- .debug_str     0x000000000000553d      0x1ef C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_str     0x000000000000554f      0x1ef C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
                                         0x8e5 (size before relaxing)
- .debug_str     0x000000000000572c        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
+ .debug_str     0x000000000000573e        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_g.o)
                                         0x602 (size before relaxing)
- .debug_str     0x0000000000005738       0xde C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+ .debug_str     0x000000000000574a       0xde C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
                                         0x71f (size before relaxing)
- .debug_str     0x0000000000005816      0x150 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_str     0x0000000000005828      0x150 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
                                         0x8e7 (size before relaxing)
- .debug_str     0x0000000000005966       0x24 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+ .debug_str     0x0000000000005978       0x24 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
                                         0x68d (size before relaxing)
- .debug_str     0x000000000000598a       0x1d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_str     0x000000000000599c       0x1d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
                                         0x6f0 (size before relaxing)
- .debug_str     0x00000000000059a7      0x104 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_str     0x00000000000059b9      0x104 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
                                         0x72e (size before relaxing)
- .debug_str     0x0000000000005aab       0x27 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_str     0x0000000000005abd       0x27 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
                                         0x6b0 (size before relaxing)
- .debug_str     0x0000000000005ad2       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+ .debug_str     0x0000000000005ae4       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
                                         0x632 (size before relaxing)
- .debug_str     0x0000000000005afa        0xe C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
+ .debug_str     0x0000000000005b0c        0xe C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_g.o)
                                         0x60a (size before relaxing)
- .debug_str     0x0000000000005b08      0x1ec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_str     0x0000000000005b1a      0x1ec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
                                         0x8c6 (size before relaxing)
- .debug_str     0x0000000000005cf4       0x22 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+ .debug_str     0x0000000000005d06       0x22 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
                                         0x633 (size before relaxing)
- .debug_str     0x0000000000005d16        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
+ .debug_str     0x0000000000005d28        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_g.o)
                                         0x60e (size before relaxing)
- .debug_str     0x0000000000005d21       0x6c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+ .debug_str     0x0000000000005d33       0x6c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
                                         0x76e (size before relaxing)
- .debug_str     0x0000000000005d8d       0xec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+ .debug_str     0x0000000000005d9f       0xec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
                                         0x258 (size before relaxing)
- .debug_str     0x0000000000005e79        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+ .debug_str     0x0000000000005e8b        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
                                         0x587 (size before relaxing)
- .debug_str     0x0000000000005e81      0x3b1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_str     0x0000000000005e93      0x3b1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
                                         0xa20 (size before relaxing)
- .debug_str     0x0000000000006232       0x1b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+ .debug_str     0x0000000000006244       0x1b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
                                         0x5d4 (size before relaxing)
- .debug_str     0x000000000000624d       0x11 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
+ .debug_str     0x000000000000625f       0x11 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
                                         0x5a2 (size before relaxing)
- .debug_str     0x000000000000625e       0xf1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_str     0x0000000000006270       0xf1 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
                                         0x6f4 (size before relaxing)
- .debug_str     0x000000000000634f      0x12f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_str     0x0000000000006361      0x12f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
                                         0x362 (size before relaxing)
- .debug_str     0x000000000000647e       0x1a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
+ .debug_str     0x0000000000006490       0x1a C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(asm_vectors.o)
                                          0xac (size before relaxing)
- .debug_str     0x0000000000006498      0x17b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_str     0x00000000000064aa      0x17b C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
                                         0x851 (size before relaxing)
- .debug_str     0x0000000000006613       0x22 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+ .debug_str     0x0000000000006625       0x22 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
                                         0x634 (size before relaxing)
- .debug_str     0x0000000000006635        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
+ .debug_str     0x0000000000006647        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_g.o)
                                         0x60f (size before relaxing)
- .debug_str     0x0000000000006640       0x5d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_str     0x0000000000006652       0x5d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
                                         0x72c (size before relaxing)
- .debug_str     0x000000000000669d       0xb8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_str     0x00000000000066af       0xb8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
                                         0x662 (size before relaxing)
- .debug_str     0x0000000000006755        0xd C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
+ .debug_str     0x0000000000006767        0xd C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_g.o)
                                         0x6ab (size before relaxing)
- .debug_str     0x0000000000006762        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
+ .debug_str     0x0000000000006774        0xc C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_g.o)
                                         0x667 (size before relaxing)
- .debug_str     0x000000000000676e       0x98 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_str     0x0000000000006780       0x98 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
                                         0x814 (size before relaxing)
- .debug_str     0x0000000000006806       0x6d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
+ .debug_str     0x0000000000006818       0x6d C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
                                         0x280 (size before relaxing)
- .debug_str     0x0000000000006873        0x7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
+ .debug_str     0x0000000000006885        0x7 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(boot.o)
                                          0xa5 (size before relaxing)
- .debug_str     0x000000000000687a        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
+ .debug_str     0x000000000000688c        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil-crt0.o)
                                          0xa9 (size before relaxing)
- .debug_str     0x0000000000006885        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
+ .debug_str     0x0000000000006897        0xb C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(cpu_init.o)
                                          0xa9 (size before relaxing)
- .debug_str     0x0000000000006890       0x39 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_str     0x00000000000068a2       0x39 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
                                         0x649 (size before relaxing)
- .debug_str     0x00000000000068c9       0x46 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
+ .debug_str     0x00000000000068db       0x46 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
                                         0x1fa (size before relaxing)
- .debug_str     0x000000000000690f       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
+ .debug_str     0x0000000000006921       0x26 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
                                         0x5c5 (size before relaxing)
- .debug_str     0x0000000000006935       0x1f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
+ .debug_str     0x0000000000006947       0x1f C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
                                         0x5b0 (size before relaxing)
- .debug_str     0x0000000000006954       0x17 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
+ .debug_str     0x0000000000006966       0x17 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
                                         0x5af (size before relaxing)
- .debug_str     0x000000000000696b      0x119 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
+ .debug_str     0x000000000000697d      0x119 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
                                         0x6ee (size before relaxing)
- .debug_str     0x0000000000006a84        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
+ .debug_str     0x0000000000006a96        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
                                         0x591 (size before relaxing)
- .debug_str     0x0000000000006a8c       0x34 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
+ .debug_str     0x0000000000006a9e       0x34 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
                                         0x1cd (size before relaxing)
- .debug_str     0x0000000000006ac0       0x11 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
+ .debug_str     0x0000000000006ad2       0x11 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
                                         0x1d0 (size before relaxing)
- .debug_str     0x0000000000006ad1        0x9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
+ .debug_str     0x0000000000006ae3        0x9 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
                                         0x5d2 (size before relaxing)
- .debug_str     0x0000000000006ada        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
+ .debug_str     0x0000000000006aec        0x8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
                                         0x1a5 (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x5394
+.debug_frame    0x0000000000000000     0x539c
  .debug_frame   0x0000000000000000      0x4dc ./src/Collections-C/src/array.o
  .debug_frame   0x00000000000004dc       0x20 ./src/Collections-C/src/common.o
  .debug_frame   0x00000000000004fc      0x570 ./src/Collections-C/src/deque.o
@@ -3483,59 +3483,59 @@ OUTPUT(ps_app.elf elf32-littlearm)
  .debug_frame   0x0000000000002e8c       0x74 ./src/fabric_config.o
  .debug_frame   0x0000000000002f00      0x348 ./src/hal.o
  .debug_frame   0x0000000000003248       0x28 ./src/main.o
- .debug_frame   0x0000000000003270      0x128 ./src/mipi_csi.o
- .debug_frame   0x0000000000003398       0x98 ./src/mipi_csi_hw.o
- .debug_frame   0x0000000000003430       0x60 ./src/platform.o
- .debug_frame   0x0000000000003490      0x1a8 ./src/spi.o
- .debug_frame   0x0000000000003638      0x2bc ./src/spi_commands.o
- .debug_frame   0x00000000000038f4       0xb8 ./src/system_control.o
- .debug_frame   0x00000000000039ac      0x10c ./src/trigger.o
- .debug_frame   0x0000000000003ab8      0x10c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
- .debug_frame   0x0000000000003bc4       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
- .debug_frame   0x0000000000003bf4       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
- .debug_frame   0x0000000000003c20      0x1e0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
- .debug_frame   0x0000000000003e00       0x5c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
- .debug_frame   0x0000000000003e5c       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
- .debug_frame   0x0000000000003e7c      0x224 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
- .debug_frame   0x00000000000040a0       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
- .debug_frame   0x00000000000040c0      0x268 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
- .debug_frame   0x0000000000004328       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
- .debug_frame   0x0000000000004354      0x18c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
- .debug_frame   0x00000000000044e0       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
- .debug_frame   0x0000000000004500       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
- .debug_frame   0x000000000000452c       0x90 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
- .debug_frame   0x00000000000045bc       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
- .debug_frame   0x00000000000045e8       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
- .debug_frame   0x0000000000004608      0x170 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
- .debug_frame   0x0000000000004778       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
- .debug_frame   0x0000000000004798       0x3c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
- .debug_frame   0x00000000000047d4       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
- .debug_frame   0x0000000000004820       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
- .debug_frame   0x0000000000004848      0x2f0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
- .debug_frame   0x0000000000004b38       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
- .debug_frame   0x0000000000004b58       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
- .debug_frame   0x0000000000004b78       0xec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
- .debug_frame   0x0000000000004c64       0xa8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
- .debug_frame   0x0000000000004d0c      0x100 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
- .debug_frame   0x0000000000004e0c       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
- .debug_frame   0x0000000000004e2c       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
- .debug_frame   0x0000000000004e78       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
- .debug_frame   0x0000000000004ec0       0xb4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
- .debug_frame   0x0000000000004f74       0x70 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
- .debug_frame   0x0000000000004fe4       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
- .debug_frame   0x0000000000005014       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivsi3.o)
- .debug_frame   0x0000000000005034       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_divsi3.o)
- .debug_frame   0x0000000000005054       0xac g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x0000000000005100       0x4c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubsf3.o)
- .debug_frame   0x000000000000514c       0x2c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000000000005178       0x68 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-strcmp.o)
- .debug_frame   0x00000000000051e0       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
- .debug_frame   0x0000000000005200       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
- .debug_frame   0x0000000000005240       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
- .debug_frame   0x0000000000005280       0x44 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
- .debug_frame   0x00000000000052c4       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
- .debug_frame   0x00000000000052e4       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
- .debug_frame   0x0000000000005304       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
- .debug_frame   0x0000000000005324       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
- .debug_frame   0x0000000000005354       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
- .debug_frame   0x0000000000005374       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
+ .debug_frame   0x0000000000003270      0x130 ./src/mipi_csi.o
+ .debug_frame   0x00000000000033a0       0x98 ./src/mipi_csi_hw.o
+ .debug_frame   0x0000000000003438       0x60 ./src/platform.o
+ .debug_frame   0x0000000000003498      0x1a8 ./src/spi.o
+ .debug_frame   0x0000000000003640      0x2bc ./src/spi_commands.o
+ .debug_frame   0x00000000000038fc       0xb8 ./src/system_control.o
+ .debug_frame   0x00000000000039b4      0x10c ./src/trigger.o
+ .debug_frame   0x0000000000003ac0      0x10c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma.o)
+ .debug_frame   0x0000000000003bcc       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_sinit.o)
+ .debug_frame   0x0000000000003bfc       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_selftest.o)
+ .debug_frame   0x0000000000003c28      0x1e0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xaxidma_bdring.o)
+ .debug_frame   0x0000000000003e08       0x5c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz.o)
+ .debug_frame   0x0000000000003e64       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xclk_wiz_sinit.o)
+ .debug_frame   0x0000000000003e84      0x224 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops.o)
+ .debug_frame   0x00000000000040a8       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_sinit.o)
+ .debug_frame   0x00000000000040c8      0x268 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xgpiops_intr.o)
+ .debug_frame   0x0000000000004330       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_intr.o)
+ .debug_frame   0x000000000000435c      0x18c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic.o)
+ .debug_frame   0x00000000000044e8       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_sinit.o)
+ .debug_frame   0x0000000000004508       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscugic_selftest.o)
+ .debug_frame   0x0000000000004534       0x90 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer.o)
+ .debug_frame   0x00000000000045c4       0x2c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_selftest.o)
+ .debug_frame   0x00000000000045f0       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xscutimer_sinit.o)
+ .debug_frame   0x0000000000004610      0x170 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips.o)
+ .debug_frame   0x0000000000004780       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_sinit.o)
+ .debug_frame   0x00000000000047a0       0x3c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_selftest.o)
+ .debug_frame   0x00000000000047dc       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_assert.o)
+ .debug_frame   0x0000000000004828       0x28 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(print.o)
+ .debug_frame   0x0000000000004850      0x2f0 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_cache.o)
+ .debug_frame   0x0000000000004b40       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(outbyte.o)
+ .debug_frame   0x0000000000004b60       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xplatform_info.o)
+ .debug_frame   0x0000000000004b80       0xec C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_printf.o)
+ .debug_frame   0x0000000000004c6c       0xa8 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xil_exception.o)
+ .debug_frame   0x0000000000004d14      0x100 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps.o)
+ .debug_frame   0x0000000000004e14       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_sinit.o)
+ .debug_frame   0x0000000000004e34       0x4c C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xttcps_options.o)
+ .debug_frame   0x0000000000004e80       0x48 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xuartps_hw.o)
+ .debug_frame   0x0000000000004ec8       0xb4 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xspips_options.o)
+ .debug_frame   0x0000000000004f7c       0x70 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(vectors.o)
+ .debug_frame   0x0000000000004fec       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(xtime_l.o)
+ .debug_frame   0x000000000000501c       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_udivsi3.o)
+ .debug_frame   0x000000000000503c       0x20 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_divsi3.o)
+ .debug_frame   0x000000000000505c       0xac g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x0000000000005108       0x4c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_arm_addsubsf3.o)
+ .debug_frame   0x0000000000005154       0x2c g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.0/thumb/v7-a+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000000000005180       0x68 g:/xilinx/vitis/2019.2/gnu/aarch32/nt/gcc-arm-none-eabi/bin/../arm-none-eabi/libc/usr/lib/thumb/v7-a+fp/hard\libc.a(lib_a-strcmp.o)
+ .debug_frame   0x00000000000051e8       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_sbrk.o)
+ .debug_frame   0x0000000000005208       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(lseek.o)
+ .debug_frame   0x0000000000005248       0x40 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(write.o)
+ .debug_frame   0x0000000000005288       0x44 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(read.o)
+ .debug_frame   0x00000000000052cc       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(fstat.o)
+ .debug_frame   0x00000000000052ec       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(errno.o)
+ .debug_frame   0x000000000000530c       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(_exit.o)
+ .debug_frame   0x000000000000532c       0x30 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(isatty.o)
+ .debug_frame   0x000000000000535c       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(inbyte.o)
+ .debug_frame   0x000000000000537c       0x20 C:\Users\Tom\Documents\Projects\Scopy_MVP_Platform\scopy-fpga\main\ps7_cortexa9_0\standalone_domain\bsp\ps7_cortexa9_0\lib\libxil.a(close.o)
