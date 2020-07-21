@@ -11,6 +11,8 @@
 #include "acquire.h"
 #include "fabric_config.h"
 
+struct trig_state_t g_trig_cur_state;
+
 /*
  * This file controls the trigger engine and the register space on the PL to
  * configure a trigger.  A trigger is necessary for a triggered acquisition to
@@ -198,6 +200,8 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 	uint16_t trig_lo, trig_hi;
 	int res;
 
+	d_printf(D_INFO, "trigger: edge (%02x, %04x, %04x, %02x)", chan_idx, trig_lvl, trig_hyst, edge_type);
+
 	if(!(edge_type == TRIG_EDGE_FALLING || edge_type == TRIG_EDGE_RISING || edge_type == TRIG_EDGE_BOTH)) {
 		return TRIGRES_PARAM_FAIL;
 	}
@@ -237,9 +241,22 @@ int trig_configure_edge(unsigned int chan_idx, uint16_t trig_lvl, uint16_t trig_
 	// Write the levels for COMP_A (COMP_B is unused) and enable the trigger channels.
 	res = trig_write_levels(TRIG_COMP_A, chan_idx, g_acq_state.demux_reg, TRIG_COMP_POL_NORMAL, trig_hi, trig_lo);
 
+	if(res != TRIGRES_OK) {
+		d_printf(D_ERROR, "trigger: edge trigger, error writing trigger levels: %d", res);
+	}
+
 	// Remove the resets, enable the trigger engine.
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_TRIGGER_RESET | TRIG_CTRL_COMPARATOR_RESET);
 	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_GLOBAL_ENABLE | TRIG_CTRL_TRIGGER_ARM);
+
+	// Update global state
+	g_trig_cur_state.type = TRIG_TYPE_EDGE;
+	g_trig_cur_state.chan_idx = chan_idx;
+	g_trig_cur_state.lvl = trig_lvl;
+	g_trig_cur_state.hyst = trig_hyst;
+	g_trig_cur_state.edge = edge_type;
+	g_trig_cur_state.lvl_hi = trig_hi;
+	g_trig_cur_state.lvl_lo = trig_lo;
 
 	// Enable interrupts again
 	asm("cpsie I");
@@ -356,7 +373,7 @@ int trig_has_trigd()
 }
 
 /*
- * Arm the trigger.
+ * Arm the trigger.TRIG_TYPE_EDGE
  */
 void trig_arm()
 {
@@ -378,4 +395,59 @@ void trig_force()
 {
 	fabcfg_set(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_FORCE_TRIGGER);
 	fabcfg_clear(FAB_CFG_TRIG_CONFIG_A, TRIG_CTRL_FORCE_TRIGGER);
+}
+
+/*
+ * Calculate the resulting real trigger position given a wave information
+ * structure and a trigger state.
+ *
+ * Linear interpolation is used to predict the position.  A fractional
+ * result is returned: the first 8 bits encode the sample position (+/-12)
+ * and the remaining 24 bits encode the fractional position.
+ *
+ * This function only works for 8 bit samples, 1 channel configuration.  Other
+ * functions will need to be created for other configurations.
+ */
+int32_t trig_calculate_corrected_position(struct trig_wave_pt_t *wave_pt, struct trig_state_t *trig_state)
+{
+	int i, found = 0;
+	int8_t _int = 0;
+	int32_t frac = 0;
+	uint8_t search;
+	uint8_t edge, sample;
+	uint64_t word;
+	uint64_t search_space[3];
+	uint8_t *byte_space = (uint8_t*)search_space;
+
+	search_space[0] = *wave_pt->pre;
+	search_space[1] = *wave_pt->event;
+	search_space[2] = *wave_pt->post;
+
+	// Depending on the trigger type, compute the level that we are looking for.
+	if(trig_state->type == TRIG_TYPE_EDGE) {
+		if(trig_state->edge == TRIG_EDGE_RISING) {
+			edge = 1;
+			search = trig_state->lvl_hi;
+		} else if(trig_state->edge == TRIG_EDGE_FALLING) {
+			edge = 0;
+			search = trig_state->lvl_lo;
+		}
+	}
+
+	// First task is to find the integer position in the provided wave pointer list.
+	for(i = 24; i > 0; i--) {
+		sample = byte_space[i];
+
+		if(edge == 1 && sample > search) {
+			_int = i - 12;
+			found = 1;
+			break;
+		} else if(edge == 1 && sample > search) {
+			_int = i;
+			found = 1;
+			break;
+		}
+	}
+
+	return (_int << 24) | (frac & 0x00ffffff);
 }

@@ -250,6 +250,15 @@ proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF { PARAM_VALUE.TRIG_STATE_TRIG
 	return true
 }
 
+proc update_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK } {
+	# Procedure called to update TRIG_STATE_TRIGD_HOLDOFF_ACK when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK } {
+	# Procedure called to validate TRIG_STATE_TRIGD_HOLDOFF_ACK
+	return true
+}
+
 proc update_PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD { PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_LOAD } {
 	# Procedure called to update TRIG_STATE_TRIGD_HOLDOFF_LOAD when any of the dependent parameters in the arguments change
 }
@@ -454,5 +463,10 @@ proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_AUTO_REPEAT { MODELPARAM_VALUE.TRI
 proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO { MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_FORCE_AUTO}
+}
+
+proc update_MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK { MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK}] ${MODELPARAM_VALUE.TRIG_STATE_TRIGD_HOLDOFF_ACK}
 }
 

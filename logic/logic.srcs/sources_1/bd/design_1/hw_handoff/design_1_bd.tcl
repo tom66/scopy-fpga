@@ -239,6 +239,11 @@ proc create_root_design { parentCell } {
 
   # Create instance: adc_trigger_0, and set properties
   set adc_trigger_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:adc_trigger:1.0 adc_trigger_0 ]
+  set_property -dict [ list \
+   CONFIG.TRIG_STATE_TRIGD_AUTO_INITIAL {5} \
+   CONFIG.TRIG_STATE_TRIGD_AUTO_REPEAT {6} \
+   CONFIG.TRIG_STATE_TRIGD_FORCE_AUTO {7} \
+ ] $adc_trigger_0
 
   # Create instance: axi_interconnect_0, and set properties
   set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
@@ -333,11 +338,10 @@ proc create_root_design { parentCell } {
   # Create instance: system_ila_0, and set properties
   set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
   set_property -dict [ list \
-   CONFIG.C_BRAM_CNT {46} \
-   CONFIG.C_DATA_DEPTH {4096} \
-   CONFIG.C_MON_TYPE {MIX} \
-   CONFIG.C_NUM_MONITOR_SLOTS {2} \
-   CONFIG.C_NUM_OF_PROBES {11} \
+   CONFIG.C_BRAM_CNT {8} \
+   CONFIG.C_DATA_DEPTH {16384} \
+   CONFIG.C_MON_TYPE {NATIVE} \
+   CONFIG.C_NUM_OF_PROBES {18} \
  ] $system_ila_0
 
   # Create instance: xlconcat_1, and set properties
@@ -392,7 +396,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_PCAP_PERIPHERAL_FREQMHZ {200.000000} \
    CONFIG.PCW_ACT_QSPI_PERIPHERAL_FREQMHZ {10.000000} \
-   CONFIG.PCW_ACT_SDIO_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_SDIO_PERIPHERAL_FREQMHZ {100.000000} \
    CONFIG.PCW_ACT_SMC_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_SPI_PERIPHERAL_FREQMHZ {160.000000} \
    CONFIG.PCW_ACT_TPIU_PERIPHERAL_FREQMHZ {200.000000} \
@@ -428,6 +432,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_ENET_RESET_ENABLE {0} \
    CONFIG.PCW_EN_CLK0_PORT {1} \
    CONFIG.PCW_EN_CLK1_PORT {0} \
+   CONFIG.PCW_EN_EMIO_CD_SDIO0 {0} \
    CONFIG.PCW_EN_EMIO_GPIO {1} \
    CONFIG.PCW_EN_EMIO_I2C0 {0} \
    CONFIG.PCW_EN_EMIO_MODEM_UART0 {0} \
@@ -437,11 +442,13 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_EN_EMIO_TTC0 {1} \
    CONFIG.PCW_EN_EMIO_TTC1 {1} \
    CONFIG.PCW_EN_EMIO_UART0 {0} \
+   CONFIG.PCW_EN_EMIO_WP_SDIO0 {0} \
    CONFIG.PCW_EN_GPIO {1} \
    CONFIG.PCW_EN_I2C0 {0} \
    CONFIG.PCW_EN_MODEM_UART0 {0} \
    CONFIG.PCW_EN_MODEM_UART1 {0} \
    CONFIG.PCW_EN_RST0_PORT {1} \
+   CONFIG.PCW_EN_SDIO0 {1} \
    CONFIG.PCW_EN_SPI0 {1} \
    CONFIG.PCW_EN_SPI1 {0} \
    CONFIG.PCW_EN_TTC0 {1} \
@@ -639,11 +646,11 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_MIO_45_IOTYPE {LVCMOS 3.3V} \
    CONFIG.PCW_MIO_45_PULLUP {enabled} \
    CONFIG.PCW_MIO_45_SLEW {slow} \
-   CONFIG.PCW_MIO_46_DIRECTION {inout} \
+   CONFIG.PCW_MIO_46_DIRECTION {in} \
    CONFIG.PCW_MIO_46_IOTYPE {LVCMOS 3.3V} \
    CONFIG.PCW_MIO_46_PULLUP {enabled} \
    CONFIG.PCW_MIO_46_SLEW {slow} \
-   CONFIG.PCW_MIO_47_DIRECTION {inout} \
+   CONFIG.PCW_MIO_47_DIRECTION {in} \
    CONFIG.PCW_MIO_47_IOTYPE {LVCMOS 3.3V} \
    CONFIG.PCW_MIO_47_PULLUP {enabled} \
    CONFIG.PCW_MIO_47_SLEW {slow} \
@@ -695,11 +702,20 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_MIO_9_IOTYPE {LVCMOS 3.3V} \
    CONFIG.PCW_MIO_9_PULLUP {enabled} \
    CONFIG.PCW_MIO_9_SLEW {slow} \
-   CONFIG.PCW_MIO_TREE_PERIPHERALS {GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#UART 1#UART 1#GPIO#GPIO#GPIO#GPIO} \
-   CONFIG.PCW_MIO_TREE_SIGNALS {gpio[0]#gpio[1]#gpio[2]#gpio[3]#gpio[4]#gpio[5]#gpio[6]#gpio[7]#gpio[8]#gpio[9]#gpio[10]#gpio[11]#gpio[12]#gpio[13]#gpio[14]#gpio[15]#gpio[16]#gpio[17]#gpio[18]#gpio[19]#gpio[20]#gpio[21]#gpio[22]#gpio[23]#gpio[24]#gpio[25]#gpio[26]#gpio[27]#gpio[28]#gpio[29]#gpio[30]#gpio[31]#gpio[32]#gpio[33]#gpio[34]#gpio[35]#gpio[36]#gpio[37]#gpio[38]#gpio[39]#gpio[40]#gpio[41]#gpio[42]#gpio[43]#gpio[44]#gpio[45]#gpio[46]#gpio[47]#tx#rx#gpio[50]#gpio[51]#gpio[52]#gpio[53]} \
+   CONFIG.PCW_MIO_TREE_PERIPHERALS {GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#GPIO#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#UART 1#UART 1#GPIO#GPIO#GPIO#GPIO} \
+   CONFIG.PCW_MIO_TREE_SIGNALS {gpio[0]#gpio[1]#gpio[2]#gpio[3]#gpio[4]#gpio[5]#gpio[6]#gpio[7]#gpio[8]#gpio[9]#gpio[10]#gpio[11]#gpio[12]#gpio[13]#gpio[14]#gpio[15]#gpio[16]#gpio[17]#gpio[18]#gpio[19]#gpio[20]#gpio[21]#gpio[22]#gpio[23]#gpio[24]#gpio[25]#gpio[26]#gpio[27]#gpio[28]#gpio[29]#gpio[30]#gpio[31]#gpio[32]#gpio[33]#gpio[34]#gpio[35]#gpio[36]#gpio[37]#gpio[38]#gpio[39]#clk#cmd#data[0]#data[1]#data[2]#data[3]#cd#wp#tx#rx#gpio[50]#gpio[51]#gpio[52]#gpio[53]} \
    CONFIG.PCW_PCAP_PERIPHERAL_DIVISOR0 {8} \
    CONFIG.PCW_QSPI_PERIPHERAL_DIVISOR0 {1} \
-   CONFIG.PCW_SDIO_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_SD0_GRP_CD_ENABLE {1} \
+   CONFIG.PCW_SD0_GRP_CD_IO {MIO 46} \
+   CONFIG.PCW_SD0_GRP_POW_ENABLE {0} \
+   CONFIG.PCW_SD0_GRP_WP_ENABLE {1} \
+   CONFIG.PCW_SD0_GRP_WP_IO {MIO 47} \
+   CONFIG.PCW_SD0_PERIPHERAL_ENABLE {1} \
+   CONFIG.PCW_SD0_SD0_IO {MIO 40 .. 45} \
+   CONFIG.PCW_SDIO_PERIPHERAL_DIVISOR0 {16} \
+   CONFIG.PCW_SDIO_PERIPHERAL_FREQMHZ {100} \
+   CONFIG.PCW_SDIO_PERIPHERAL_VALID {1} \
    CONFIG.PCW_SMC_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_SPI0_GRP_SS0_ENABLE {1} \
    CONFIG.PCW_SPI0_GRP_SS0_IO {EMIO} \
@@ -789,18 +805,16 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net axi_interconnect_1_M00_AXI [get_bd_intf_pins axi_interconnect_1/M00_AXI] [get_bd_intf_pins clk_wiz_0/s_axi_lite]
   connect_bd_intf_net -intf_net axi_interconnect_1_M01_AXI [get_bd_intf_pins adc_dma/S_AXI_LITE] [get_bd_intf_pins axi_interconnect_1/M01_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_1_M02_AXI [get_bd_intf_pins axi_interconnect_1/M02_AXI] [get_bd_intf_pins mipi_dma/S_AXI_LITE]
-connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_1_M02_AXI] [get_bd_intf_pins axi_interconnect_1/M02_AXI] [get_bd_intf_pins system_ila_0/SLOT_0_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_1_M03_AXI [get_bd_intf_pins FabCfg_NextGen_0/S00_AXI] [get_bd_intf_pins axi_interconnect_1/M03_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_2_M00_AXI [get_bd_intf_pins axi_interconnect_2/M00_AXI] [get_bd_intf_pins zynq_ps/S_AXI_HP2]
-connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_2_M00_AXI] [get_bd_intf_pins axi_interconnect_2/M00_AXI] [get_bd_intf_pins system_ila_0/SLOT_1_AXI]
   connect_bd_intf_net -intf_net mipi_dma_M_AXI_SG [get_bd_intf_pins axi_interconnect_2/S01_AXI] [get_bd_intf_pins mipi_dma/M_AXI_SG]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins zynq_ps/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins zynq_ps/FIXED_IO]
   connect_bd_intf_net -intf_net zynq_ps_M_AXI_GP0 [get_bd_intf_pins axi_interconnect_1/S00_AXI] [get_bd_intf_pins zynq_ps/M_AXI_GP0]
 
   # Create port connections
-  connect_bd_net -net ACQ_TRIGGER_IN_1 [get_bd_pins PL_debug_LED_control_0/trig_sig] [get_bd_pins PL_debug_LED_control_1/trig_sig] [get_bd_pins adc_axi_streamer/trigger_in] [get_bd_pins adc_trigger_0/trig_out]
-  connect_bd_net -net ACQ_TRIG_WORD_1 [get_bd_pins adc_axi_streamer/trigger_sub_word] [get_bd_pins adc_trigger_0/trig_sub_word]
+  connect_bd_net -net ACQ_TRIGGER_IN_1 [get_bd_pins PL_debug_LED_control_0/trig_sig] [get_bd_pins PL_debug_LED_control_1/trig_sig] [get_bd_pins adc_axi_streamer/trigger_in] [get_bd_pins adc_trigger_0/trig_out] [get_bd_pins system_ila_0/probe14]
+  connect_bd_net -net ACQ_TRIG_WORD_1 [get_bd_pins adc_axi_streamer/trigger_sub_word] [get_bd_pins adc_trigger_0/trig_sub_word] [get_bd_pins system_ila_0/probe10]
   connect_bd_net -net ADC_BUS_1 [get_bd_pins adc_axi_streamer/adc_bus] [get_bd_pins adc_receiver_core_0/adc_bus] [get_bd_pins adc_trigger_0/adc_bus]
   connect_bd_net -net ADC_DATA_CLK_2 [get_bd_pins adc_axi_streamer/adc_data_clk] [get_bd_pins adc_receiver_core_0/adc_data_clk] [get_bd_pins adc_trigger_0/adc_data_clk]
   connect_bd_net -net ADC_FCLK_N_1 [get_bd_ports ADC_FCLK_N] [get_bd_pins adc_receiver_core_0/adc_fclk_n]
@@ -847,21 +861,29 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_2_M00_AXI] [get
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_6 [get_bd_pins FabCfg_NextGen_0/R_trig_level_6] [get_bd_pins adc_trigger_0/trig_level_6]
   connect_bd_net -net FabCfg_NextGen_0_R_trig_level_7 [get_bd_pins FabCfg_NextGen_0/R_trig_level_7] [get_bd_pins adc_trigger_0/trig_level_7]
   connect_bd_net -net Net [get_bd_pins csi_gearbox_dma_0/s00_axis_tdata] [get_bd_pins mipi_dma/m_axis_mm2s_tdata]
-  connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid] [get_bd_pins system_ila_0/probe2]
+  connect_bd_net -net Net1 [get_bd_pins csi_gearbox_dma_0/s00_axis_tvalid] [get_bd_pins mipi_dma/m_axis_mm2s_tvalid]
   connect_bd_net -net PL_debug_LED_control_0_led_out [get_bd_ports LED_CH0] [get_bd_pins PL_debug_LED_control_0/led_out]
   connect_bd_net -net PL_debug_LED_control_1_led_out [get_bd_ports LED_CH1] [get_bd_pins PL_debug_LED_control_1/led_out]
   connect_bd_net -net SPI_CLK_1 [get_bd_ports SPI_CLK] [get_bd_pins PL_debug_LED_control_0/spi_clk] [get_bd_pins PL_debug_LED_control_1/spi_clk] [get_bd_pins zynq_ps/SPI0_SCLK_I]
   connect_bd_net -net SPI_CSN_1 [get_bd_ports SPI_CSN] [get_bd_pins PL_debug_LED_control_0/spi_csn] [get_bd_pins PL_debug_LED_control_1/spi_csn] [get_bd_pins zynq_ps/SPI0_SS_I]
   connect_bd_net -net SPI_DATA_IN_1 [get_bd_ports SPI_DATA_IN] [get_bd_pins zynq_ps/SPI0_MOSI_I]
-  connect_bd_net -net adc_axi_streamer_acq_armed_waiting_trig [get_bd_pins adc_axi_streamer/acq_armed_waiting_trig] [get_bd_pins adc_trigger_0/acq_armed_waiting_trig]
-  connect_bd_net -net adc_axi_streamer_acq_done [get_bd_pins PL_debug_LED_control_0/acq_done] [get_bd_pins PL_debug_LED_control_1/acq_done] [get_bd_pins adc_axi_streamer/acq_done] [get_bd_pins adc_trigger_0/acq_done]
+  connect_bd_net -net adc_axi_streamer_acq_armed_waiting_trig [get_bd_pins adc_axi_streamer/acq_armed_waiting_trig] [get_bd_pins adc_trigger_0/acq_armed_waiting_trig] [get_bd_pins system_ila_0/probe5]
+  connect_bd_net -net adc_axi_streamer_acq_done [get_bd_pins PL_debug_LED_control_0/acq_done] [get_bd_pins PL_debug_LED_control_1/acq_done] [get_bd_pins adc_axi_streamer/acq_done] [get_bd_pins adc_trigger_0/acq_done] [get_bd_pins system_ila_0/probe15]
   connect_bd_net -net adc_axi_streamer_acq_done_post [get_bd_pins adc_axi_streamer/acq_done_post] [get_bd_pins adc_trigger_0/acq_done_post]
-  connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_pins adc_axi_streamer/acq_have_trig] [get_bd_pins adc_trigger_0/acq_have_trig]
+  connect_bd_net -net adc_axi_streamer_acq_have_trig [get_bd_pins adc_axi_streamer/acq_have_trig] [get_bd_pins adc_trigger_0/acq_have_trig] [get_bd_pins system_ila_0/probe6]
   connect_bd_net -net adc_axi_streamer_acq_reset_irq_gen [get_bd_pins adc_axi_streamer/acq_reset_irq_gen] [get_bd_pins xlconcat_1/In1]
   connect_bd_net -net adc_axi_streamer_acq_status_a [get_bd_pins FabCfg_NextGen_0/R_acq_status_a] [get_bd_pins adc_axi_streamer/acq_status_a]
   connect_bd_net -net adc_axi_streamer_acq_status_b [get_bd_pins FabCfg_NextGen_0/R_acq_status_b] [get_bd_pins adc_axi_streamer/acq_status_b]
   connect_bd_net -net adc_axi_streamer_acq_status_c [get_bd_pins FabCfg_NextGen_0/R_acq_status_c] [get_bd_pins adc_axi_streamer/acq_status_c]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_axi_running [get_bd_pins adc_axi_streamer/dbg_acq_axi_running] [get_bd_pins system_ila_0/probe1]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_axi_upcounter [get_bd_pins adc_axi_streamer/dbg_acq_axi_upcounter] [get_bd_pins system_ila_0/probe0]
+  connect_bd_net -net adc_axi_streamer_dbg_acq_post_trigger [get_bd_pins adc_axi_streamer/dbg_acq_post_trigger] [get_bd_pins system_ila_0/probe2]
   connect_bd_net -net adc_axi_streamer_dbg_acq_run [get_bd_pins PL_debug_LED_control_0/acq_run] [get_bd_pins PL_debug_LED_control_1/acq_run] [get_bd_pins adc_axi_streamer/dbg_acq_run]
+  connect_bd_net -net adc_axi_streamer_dbg_adcstream_state [get_bd_pins adc_axi_streamer/dbg_adcstream_state] [get_bd_pins system_ila_0/probe8]
+  connect_bd_net -net adc_axi_streamer_dbg_axi_rdy [get_bd_pins adc_axi_streamer/dbg_axi_rdy] [get_bd_pins system_ila_0/probe4]
+  connect_bd_net -net adc_axi_streamer_dbg_trig_pos_post_fifo [get_bd_pins adc_axi_streamer/dbg_trig_pos_post_fifo] [get_bd_pins system_ila_0/probe16]
+  connect_bd_net -net adc_axi_streamer_dbg_trig_post_fifo [get_bd_pins adc_axi_streamer/dbg_trig_post_fifo] [get_bd_pins system_ila_0/probe3]
+  connect_bd_net -net adc_axi_streamer_dbg_wr_data_count [get_bd_pins adc_axi_streamer/dbg_wr_data_count] [get_bd_pins system_ila_0/probe17]
   connect_bd_net -net adc_axi_streamer_delay_l1a [get_bd_pins adc_axi_streamer/delay_l1a] [get_bd_pins adc_receiver_core_0/train_l1a]
   connect_bd_net -net adc_axi_streamer_delay_l1b [get_bd_pins adc_axi_streamer/delay_l1b] [get_bd_pins adc_receiver_core_0/train_l1b]
   connect_bd_net -net adc_axi_streamer_delay_l2a [get_bd_pins adc_axi_streamer/delay_l2a] [get_bd_pins adc_receiver_core_0/train_l2a]
@@ -874,12 +896,15 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_2_M00_AXI] [get
   connect_bd_net -net adc_axi_streamer_m00_axis_tdata [get_bd_pins adc_axi_streamer/m00_axis_tdata] [get_bd_pins adc_dma/s_axis_s2mm_tdata]
   connect_bd_net -net adc_axi_streamer_m00_axis_tlast [get_bd_pins adc_axi_streamer/m00_axis_tlast] [get_bd_pins adc_dma/s_axis_s2mm_tlast]
   connect_bd_net -net adc_axi_streamer_m00_axis_tvalid [get_bd_pins adc_axi_streamer/m00_axis_tvalid] [get_bd_pins adc_dma/s_axis_s2mm_tvalid]
-  connect_bd_net -net adc_axi_streamer_trigger_out [get_bd_ports TRIGGER_OUT] [get_bd_pins adc_axi_streamer/trigger_out]
-  connect_bd_net -net adc_axi_streamer_trigger_pos [get_bd_pins FabCfg_NextGen_0/R_acq_trigger_ptr] [get_bd_pins adc_axi_streamer/trigger_pos]
+  connect_bd_net -net adc_axi_streamer_trigger_out [get_bd_ports TRIGGER_OUT] [get_bd_pins adc_axi_streamer/trigger_out] [get_bd_pins system_ila_0/probe7]
+  connect_bd_net -net adc_axi_streamer_trigger_pos [get_bd_pins FabCfg_NextGen_0/R_acq_trigger_ptr] [get_bd_pins adc_axi_streamer/trigger_pos] [get_bd_pins system_ila_0/probe9]
   connect_bd_net -net adc_receiver_core_0_bitslip_locked [get_bd_pins adc_axi_streamer/train_bitslip_locked] [get_bd_pins adc_receiver_core_0/bitslip_locked]
   connect_bd_net -net adc_receiver_core_0_idelay_rdy [get_bd_pins adc_axi_streamer/train_idelaye2_ready] [get_bd_pins adc_receiver_core_0/idelay_rdy]
   connect_bd_net -net adc_receiver_core_0_train_done_load [get_bd_pins adc_axi_streamer/train_delay_loaded] [get_bd_pins adc_receiver_core_0/train_done_load]
   connect_bd_net -net adc_trigger_0_acq_holdoff [get_bd_pins adc_axi_streamer/acq_holdoff] [get_bd_pins adc_trigger_0/acq_holdoff]
+  connect_bd_net -net adc_trigger_0_dbg_edge_trig_logic [get_bd_pins adc_trigger_0/dbg_edge_trig_logic] [get_bd_pins system_ila_0/probe13]
+  connect_bd_net -net adc_trigger_0_dbg_trig_ch_code_state [get_bd_pins adc_trigger_0/dbg_trig_ch_code_state] [get_bd_pins system_ila_0/probe11]
+  connect_bd_net -net adc_trigger_0_dbg_trig_edge_out [get_bd_pins adc_trigger_0/dbg_trig_edge_out] [get_bd_pins system_ila_0/probe12]
   connect_bd_net -net adc_trigger_0_trig_holdoff_debug [get_bd_pins FabCfg_NextGen_0/R_trig_holdoff_debug] [get_bd_pins adc_trigger_0/trig_holdoff_debug]
   connect_bd_net -net adc_trigger_0_trig_state_a [get_bd_pins FabCfg_NextGen_0/R_trig_state_a] [get_bd_pins adc_trigger_0/trig_state_a]
   connect_bd_net -net axi_dma_s2mm_introut [get_bd_pins adc_dma/s2mm_introut] [get_bd_pins xlconcat_1/In0]
@@ -892,30 +917,22 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets axi_interconnect_2_M00_AXI] [get
   connect_bd_net -net csi_gearbox_dma_0_R_csi_status_a [get_bd_pins FabCfg_NextGen_0/R_csi_status_a] [get_bd_pins csi_gearbox_dma_0/R_csi_status_a]
   connect_bd_net -net csi_gearbox_dma_0_csi_clk_n [get_bd_ports CSI_CLK_N] [get_bd_pins csi_gearbox_dma_0/csi_clk_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_clk_p [get_bd_ports CSI_CLK_P] [get_bd_pins csi_gearbox_dma_0/csi_clk_p]
-  connect_bd_net -net csi_gearbox_dma_0_csi_ctrl_state_dbg [get_bd_pins csi_gearbox_dma_0/csi_ctrl_state_dbg] [get_bd_pins system_ila_0/probe8]
   connect_bd_net -net csi_gearbox_dma_0_csi_d0_n [get_bd_ports CSI_D0_N] [get_bd_pins csi_gearbox_dma_0/csi_d0_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_d0_p [get_bd_ports CSI_D0_P] [get_bd_pins csi_gearbox_dma_0/csi_d0_p]
   connect_bd_net -net csi_gearbox_dma_0_csi_d1_n [get_bd_ports CSI_D1_N] [get_bd_pins csi_gearbox_dma_0/csi_d1_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_d1_p [get_bd_ports CSI_D1_P] [get_bd_pins csi_gearbox_dma_0/csi_d1_p]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_fifo_read_valid [get_bd_pins csi_gearbox_dma_0/csi_debug_fifo_read_valid] [get_bd_pins system_ila_0/probe6]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_fifo_space_available [get_bd_pins csi_gearbox_dma_0/csi_debug_fifo_space_available] [get_bd_pins system_ila_0/probe4]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_mipi_read_req [get_bd_pins csi_gearbox_dma_0/csi_debug_mipi_read_req] [get_bd_pins system_ila_0/probe5]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_mipi_state [get_bd_pins csi_gearbox_dma_0/csi_debug_mipi_state] [get_bd_pins system_ila_0/probe7]
-  connect_bd_net -net csi_gearbox_dma_0_csi_debug_num_lines_rem [get_bd_pins csi_gearbox_dma_0/csi_debug_num_lines_rem] [get_bd_pins system_ila_0/probe10]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpclk_n [get_bd_ports CSI_LPCLK_N] [get_bd_pins csi_gearbox_dma_0/csi_lpclk_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpclk_p [get_bd_ports CSI_LPCLK_P] [get_bd_pins csi_gearbox_dma_0/csi_lpclk_p]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpd0_n [get_bd_ports CSI_LPD0_N] [get_bd_pins csi_gearbox_dma_0/csi_lpd0_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpd0_p [get_bd_ports CSI_LPD0_P] [get_bd_pins csi_gearbox_dma_0/csi_lpd0_p]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpd1_n [get_bd_ports CSI_LPD1_N] [get_bd_pins csi_gearbox_dma_0/csi_lpd1_n]
   connect_bd_net -net csi_gearbox_dma_0_csi_lpd1_p [get_bd_ports CSI_LPD1_P] [get_bd_pins csi_gearbox_dma_0/csi_lpd1_p]
-  connect_bd_net -net csi_gearbox_dma_0_dbg_fifo_data_ct [get_bd_pins csi_gearbox_dma_0/dbg_fifo_data_ct] [get_bd_pins system_ila_0/probe9]
-  connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins mipi_dma/m_axis_mm2s_tready] [get_bd_pins system_ila_0/probe1]
-  connect_bd_net -net mipi_dma_m_axis_mm2s_tlast [get_bd_pins csi_gearbox_dma_0/s00_axis_tlast] [get_bd_pins mipi_dma/m_axis_mm2s_tlast] [get_bd_pins system_ila_0/probe3]
-  connect_bd_net -net mipi_dma_mm2s_introut [get_bd_pins mipi_dma/mm2s_introut] [get_bd_pins system_ila_0/probe0]
+  connect_bd_net -net csi_gearbox_dma_0_s00_axis_tready [get_bd_pins csi_gearbox_dma_0/s00_axis_tready] [get_bd_pins mipi_dma/m_axis_mm2s_tready]
+  connect_bd_net -net mipi_dma_m_axis_mm2s_tlast [get_bd_pins csi_gearbox_dma_0/s00_axis_tlast] [get_bd_pins mipi_dma/m_axis_mm2s_tlast]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins FabCfg_NextGen_0/s00_axi_aclk] [get_bd_pins PL_debug_LED_control_0/axi_clk] [get_bd_pins PL_debug_LED_control_1/axi_clk] [get_bd_pins adc_axi_streamer/m00_axis_aclk] [get_bd_pins adc_dma/m_axi_s2mm_aclk] [get_bd_pins adc_dma/s_axi_lite_aclk] [get_bd_pins adc_receiver_core_0/clk_master] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_interconnect_1/ACLK] [get_bd_pins axi_interconnect_1/M00_ACLK] [get_bd_pins axi_interconnect_1/M01_ACLK] [get_bd_pins axi_interconnect_1/M02_ACLK] [get_bd_pins axi_interconnect_1/M03_ACLK] [get_bd_pins axi_interconnect_1/S00_ACLK] [get_bd_pins axi_interconnect_2/ACLK] [get_bd_pins axi_interconnect_2/M00_ACLK] [get_bd_pins axi_interconnect_2/S00_ACLK] [get_bd_pins axi_interconnect_2/S01_ACLK] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_in1] [get_bd_pins csi_gearbox_dma_0/s00_axis_aclk] [get_bd_pins mipi_dma/m_axi_mm2s_aclk] [get_bd_pins mipi_dma/m_axi_sg_aclk] [get_bd_pins mipi_dma/s_axi_lite_aclk] [get_bd_pins rst_ps7_0_20M/slowest_sync_clk] [get_bd_pins simple_reset_control_0/clk_master] [get_bd_pins system_ila_0/clk] [get_bd_pins zynq_ps/FCLK_CLK0] [get_bd_pins zynq_ps/M_AXI_GP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP0_ACLK] [get_bd_pins zynq_ps/S_AXI_HP2_ACLK]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins rst_ps7_0_20M/ext_reset_in] [get_bd_pins zynq_ps/FCLK_RESET0_N]
   connect_bd_net -net processing_system7_0_GPIO_O [get_bd_ports EMIO_O] [get_bd_pins zynq_ps/GPIO_O]
-  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins PL_debug_LED_control_0/axi_resetn] [get_bd_pins PL_debug_LED_control_1/axi_resetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/M02_ARESETN] [get_bd_pins axi_interconnect_1/M03_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins axi_interconnect_2/S01_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn] [get_bd_pins system_ila_0/resetn]
+  connect_bd_net -net rst_ps7_0_20M_peripheral_aresetn [get_bd_pins FabCfg_NextGen_0/s00_axi_aresetn] [get_bd_pins PL_debug_LED_control_0/axi_resetn] [get_bd_pins PL_debug_LED_control_1/axi_resetn] [get_bd_pins adc_axi_streamer/m00_axis_aresetn] [get_bd_pins adc_dma/axi_resetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_interconnect_1/ARESETN] [get_bd_pins axi_interconnect_1/M00_ARESETN] [get_bd_pins axi_interconnect_1/M01_ARESETN] [get_bd_pins axi_interconnect_1/M02_ARESETN] [get_bd_pins axi_interconnect_1/M03_ARESETN] [get_bd_pins axi_interconnect_1/S00_ARESETN] [get_bd_pins axi_interconnect_2/ARESETN] [get_bd_pins axi_interconnect_2/M00_ARESETN] [get_bd_pins axi_interconnect_2/S00_ARESETN] [get_bd_pins axi_interconnect_2/S01_ARESETN] [get_bd_pins clk_wiz_0/s_axi_aresetn] [get_bd_pins csi_gearbox_dma_0/s00_axis_aresetn] [get_bd_pins mipi_dma/axi_resetn] [get_bd_pins rst_ps7_0_20M/peripheral_aresetn]
   connect_bd_net -net simple_reset_control_0_g_rst_gen [get_bd_pins adc_receiver_core_0/g_rst] [get_bd_pins clk_wiz_1/reset] [get_bd_pins csi_gearbox_dma_0/g_rst] [get_bd_pins simple_reset_control_0/g_rst_gen]
   connect_bd_net -net xlconcat_1_dout [get_bd_pins xlconcat_1/dout] [get_bd_pins zynq_ps/IRQ_F2P]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins FabCfg_NextGen_0/K_in_bitstream_version] [get_bd_pins xlconstant_0/dout]

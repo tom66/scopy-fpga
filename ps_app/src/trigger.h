@@ -33,6 +33,10 @@
 #define TRIG_EDGE_BOTH						3
 #define TRIG_EDGE_NONE						4
 
+#define TRIG_TYPE_NONE						0
+#define TRIG_TYPE_ALWAYS					1
+#define TRIG_TYPE_EDGE						2
+
 #define TRIG_LVL_REG_LO_SHIFT				4
 #define TRIG_LVL_REG_HI_SHIFT				20
 
@@ -102,6 +106,22 @@
 #define HOLDOFF_NS_MINIMUM					32											// Min ~8ns
 #define HOLDOFF_NS_MAXIMUM					((0xfffffffc) * HOLDOFF_NS_PER_COUNT)		// Max ~34.35s
 
+struct trig_state_t {
+	int type;
+	int chan_idx;
+	uint16_t lvl;
+	uint16_t hyst;
+	uint16_t lvl_hi;
+	uint16_t lvl_lo;
+	int edge;
+};
+
+struct trig_wave_pt_t {
+	uint64_t *pre;
+	uint64_t *event;
+	uint64_t *post;
+};
+
 void trig_init();
 int trig_zero_levels();
 int trig_write_levels(int comp_group, unsigned int chan_idx, uint8_t demux_mode, int comp_pol, uint16_t trig_lvl_high, uint16_t trig_lvl_low);
@@ -113,5 +133,7 @@ void trig_force();
 void trig_arm();
 void trig_disarm();
 int trig_has_trigd();
+
+int32_t trig_calculate_corrected_position(struct trig_wave_pt_t *wave_pt, struct trig_state_t *trig_state);
 
 #endif /* SRC_TRIGGER_H_ */

@@ -38,6 +38,7 @@
 
 #include "system_control.h"
 #include "acquire.h"
+#include "acq_debug.h"
 #include "hal.h"
 #include "fabric_config.h"
 #include "spi.h"
@@ -284,7 +285,7 @@ int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t add
 int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_item)
 {
 	static int iter = 0;
-	int status, n_waves, i;
+	int status, n_waves, i, n;
 	// XAxiDma_Bd bd_template;
 	struct acq_buffer_t *wave;
 	struct acq_buffer_t *next;
@@ -292,11 +293,13 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	struct acq_dma_addr_t addr_helper;
 	uint32_t total_wave_sz, total_wave_bytes, expect_total_bytes, pad, line_pad;
 	uint32_t working_ptr = 0;
+	uint32_t trig_buffer_size = 0;
+	uint32_t *trig_buffer_ptr;
 
 	d_start_timing(TMR_MIPI_SG_OVERALL);
 
 	D_ASSERT(q_item->config.wave_start <= q_item->config.wave_end);
-	n_waves = (q_item->config.wave_end - q_item->config.wave_start) + 1;
+	n_waves = (q_item->config.wave_end - q_item->config.wave_start);
 	q_item->ring = NULL;
 	q_item->calculated_size = 0;
 
@@ -318,6 +321,19 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	 */
 	d_start_timing(TMR_MIPI_SG_BDFILL);
 	dma_bd_rewind(ring);
+
+	/*
+	 * Allocate trigger buffer block.  4 bytes per trigger index.  TODO:  Don't
+	 * reallocate this on each cycle.
+	 */
+	if(g_mipi_csi_state.trig_buffer_ptr != NULL) {
+		free(g_mipi_csi_state.trig_buffer_ptr);
+	}
+
+	trig_buffer_size = 4 * acq_get_nwaves_request();
+	trig_buffer_size += trig_buffer_size & 7; // Ensure trigger buffer size is 64-bit aligned
+
+	g_mipi_csi_state.trig_buffer_ptr = (uint32_t*)memalign(32, trig_buffer_size);
 
 	/*
 	 * Generate and add header data.  Header is allocated in RAM; clear any prior header
@@ -343,7 +359,6 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	g_mipi_csi_state.header->stats = g_mipi_csi_state.stats;
 
 	dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, (uint32_t)g_mipi_csi_state.header, MCSI_HEADER_SIZE, 0, NULL);
-	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.header, sizeof(struct mipi_csi_wave_header_t));
 
 	working_ptr += MCSI_HEADER_SIZE;
 	total_wave_bytes = 0;
@@ -354,17 +369,41 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	 * the packet with zero bytes.
 	 */
 	g_mipi_csi_state.header->wavebuffer_ptr = working_ptr;
+	trig_buffer_ptr = g_mipi_csi_state.trig_buffer_ptr;
 
 	for(i = 0; i < n_waves; i++) {
 		if(acq_dma_address_helper(wave, &addr_helper) != ACQRES_OK) {
 			break;
 		}
 
+		/*
+		if(i == 0) {
+			acq_debug_dump_wave_pointer(wave);
+		}
+		*/
+
 		// acq_dma_address_helper_debug(wave, addr_helper);
+		// d_printf(D_RAW, "%08x\r\n", wave->trigger_at);
 
 		dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, addr_helper.pre_upper_start, addr_helper.pre_upper_end - addr_helper.pre_upper_start, 0, NULL);
 		dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, addr_helper.pre_lower_start, addr_helper.pre_lower_end - addr_helper.pre_lower_start, 0, NULL);
 		dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, addr_helper.post_start, addr_helper.post_end - addr_helper.post_start, 0, NULL);
+
+		// Add the trigger pointer
+		*(trig_buffer_ptr + i) = (wave->trigger_at & 0x07) << 24;
+		//d_printf(D_RAW, "%08x\r\n", *(trig_buffer_ptr + i));
+
+		/*
+		for(n = 0; n < 8; n++) {
+			if(n == (wave->trigger_at & 0x07)) {
+				d_printf(D_RAW, "\033[93m");
+			}
+
+			d_printf(D_RAW, "%02x\033[0m", *(uint8_t*)(addr_helper.pre_upper_end + n));
+		}
+
+		d_printf(D_RAW, " %08x\r\n", wave->trigger_at);
+		*/
 
 		total_wave_bytes += total_wave_sz;
 
@@ -376,6 +415,8 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		wave = next;
 	}
 
+	d_printf(D_INFO, "ntot=%d I=%d", n_waves, i);
+
 	/*
 	 * Pad the wave buffer to the required length.
 	 */
@@ -384,12 +425,18 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		dma_bd_add_zero_sg_entry(g_mipi_csi_state.bd_ring, pad, 0, NULL);
 	}
 
+	d_printf(D_INFO, "pad: %d", pad);
 	working_ptr += total_wave_bytes + pad;
 
 	/*
-	 * Nominally, at this point we'd add any other buffers, but those aren't presently
-	 * implemented in this function.
+	 * Add the trigger buffer pointer.
 	 */
+	//d_printf(D_INFO, "add entry: 0x%08x size %d", g_mipi_csi_state.trig_buffer_ptr, trig_buffer_size);
+	dma_bd_add_large_sg_entry(g_mipi_csi_state.bd_ring, (uint32_t)g_mipi_csi_state.trig_buffer_ptr, trig_buffer_size, 0, NULL);
+	g_mipi_csi_state.header->tagbuffer_ptr = working_ptr;
+	working_ptr += trig_buffer_size;
+
+	//d_printf(D_INFO, "0x%08x 0x%08x", g_mipi_csi_state.header->wavebuffer_ptr, g_mipi_csi_state.header->tagbuffer_ptr);
 
 	/*
 	 * Pad data to meet one CSI line size.
@@ -404,6 +451,13 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 
 	d_stop_timing(TMR_MIPI_SG_BDFILL);
 	g_mipi_csi_state.stats.last_sg_bd_time_us = d_read_timing_us(TMR_MIPI_SG_BDFILL);
+
+	/*
+	 * Ensure the header is cache flushed, so that the DMA peripheral can read it correctly
+	 * Ensure the tag buffer is cache flushed.
+	 */
+	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.header, sizeof(struct mipi_csi_wave_header_t));
+	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.trig_buffer_ptr, trig_buffer_size);
 
 	/*
 	 * Pass the BD for transmission.  This function handles caching too.  We shouldn't

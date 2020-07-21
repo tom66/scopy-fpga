@@ -101,11 +101,11 @@ struct mipi_csi_wave_header_t {
 	uint32_t wave_stride;						// Bytes between each wave
 	uint32_t wave_length;						// Length of each wave
 
-	struct sysctrl_health_t health;				// Health state
-	struct mipi_csi_stats_t stats;				// Statistics
-
 	uint32_t wavebuffer_ptr;					// Pointer for the waveform buffer
 	uint32_t tagbuffer_ptr;						// Pointer for the waveform tag buffer (trigger indexes)
+
+	struct sysctrl_health_t health;				// Health state
+	struct mipi_csi_stats_t stats;				// Statistics
 
 	char reserved1[1024];						// Reserved 1K bytes for data in future
 };
@@ -161,6 +161,9 @@ struct mipi_csi_state_t {
 	uint8_t csi_data_type;
 
 	struct mipi_csi_stats_t stats;
+
+	// Trigger pointer buffer
+	uint32_t *trig_buffer_ptr;
 
 	// Bitclock for CSI port in MHz.  Valid range approx 50 ~ 550MHz.
 	float csi_bitclock;

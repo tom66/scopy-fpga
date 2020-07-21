@@ -446,6 +446,9 @@ void spicmd_ac_start(struct spi_command_alloc_t *cmd)
 	if(status != ACQCTRL_RES_OK) {
 		d_printf(D_WARN, "spicmd: error while starting: %d", status);
 	}
+
+	// d_printf(D_INFO, "spicmd: trigger dump follows");
+	// trig_dump_state();
 }
 
 void spicmd_ac_reset(struct spi_command_alloc_t *cmd)

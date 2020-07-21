@@ -18,6 +18,7 @@
 #include "hal.h"
 #include "acquire.h"
 #include "acq_ctrl.h"
+#include "trigger.h"
 #include "spi.h"
 #include "mipi_csi.h"
 #include "system_control.h"
@@ -30,6 +31,7 @@ int main()
 
 	hal_init();
 	acq_init();
+	trig_init();
 	acq_ctrl_init();
 	spi_init();
 	mipi_csi_init();

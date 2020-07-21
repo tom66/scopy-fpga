@@ -4,7 +4,7 @@
 	<MODE Name="Pre-Synthesis"/>
 	<SYSTEMINFO BOARD="" PART="xc7z014sclg400-1" ARCH="zynq" PACKAGE="clg400" DEVICE="7z014s" SPEED="-1" LUT="40600" FF="81200" BRAM="107" DSP="170"/>
 	<HIERARCHY Name="main"/>
-	<File Type="HW_HANDOFF" Name="design_1.hwh" DESIGN_HIERARCHY="nolabel_line137" BD_TYPE="DEFAULT_BD">
+	<File Type="HW_HANDOFF" Name="design_1.hwh" DESIGN_HIERARCHY="nolabel_line119" BD_TYPE="DEFAULT_BD">
 	</File>
 	<File Type="BD_TCL" Name="design_1_bd.tcl">
 	</File>
@@ -20,9 +20,9 @@
 	</File>
 	<File Type="PS_XMD_INIT" Name="ps7_init.tcl">
 	</File>
-	<File Type="HW_HANDOFF" Name="design_1_system_ila_0_0.hwh" DESIGN_HIERARCHY="nolabel_line137/system_ila_0/inst" BD_TYPE="SCOPED_BD">
+	<File Type="HW_HANDOFF" Name="design_1_system_ila_0_2.hwh" DESIGN_HIERARCHY="nolabel_line119/system_ila_0/inst" BD_TYPE="SCOPED_BD">
 	</File>
-	<File Type="BD_TCL" Name="design_1_system_ila_0_0_bd.tcl">
+	<File Type="BD_TCL" Name="design_1_system_ila_0_2_bd.tcl">
 	</File>
 	<DRIVERS>
 		<DRIVER IP_VLNV="xilinx.com:user:FabCfg_NextGen:1.0">
@@ -33,7 +33,23 @@
 			<File PATH="drivers/FabCfg_NextGen_v1_0/src/FabCfg_NextGen.c"/>
 			<File PATH="drivers/FabCfg_NextGen_v1_0/src/FabCfg_NextGen_selftest.c"/>
 		</DRIVER>
+		<DRIVER IP_VLNV="xilinx.com:user:PL_debug_LED_controller:1.0">
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/data/PL_debug_LED_controller.mdd"/>
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/data/PL_debug_LED_controller.tcl"/>
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/src/Makefile"/>
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/src/PL_debug_LED_controller.h"/>
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/src/PL_debug_LED_controller.c"/>
+			<File PATH="drivers/PL_debug_LED_controller_v1_0/src/PL_debug_LED_controller_selftest.c"/>
+		</DRIVER>
+		<DRIVER IP_VLNV="xilinx.com:user:adc_trigger:1.0">
+			<File PATH="drivers/adc_trigger_v1_0/data/adc_trigger.mdd"/>
+			<File PATH="drivers/adc_trigger_v1_0/data/adc_trigger.tcl"/>
+			<File PATH="drivers/adc_trigger_v1_0/src/Makefile"/>
+			<File PATH="drivers/adc_trigger_v1_0/src/adc_trigger.h"/>
+			<File PATH="drivers/adc_trigger_v1_0/src/adc_trigger.c"/>
+			<File PATH="drivers/adc_trigger_v1_0/src/adc_trigger_selftest.c"/>
+		</DRIVER>
 	</DRIVERS>
-	<USEDRESOURCES LUT="8792" FF="11748" BRAM="63" DSP="1"/>
+	<USEDRESOURCES LUT="8983" FF="12382" BRAM="68" DSP="1"/>
 </Project>
 

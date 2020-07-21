@@ -483,38 +483,12 @@ int dma_bd_start(XAxiDma *periph, struct dma_bd_ring_t *ring, int flags)
 		dma_bd_debug_dump(ring);
 	}
 
-	//d_printf(D_ERROR, "B:0x%08x C:0x%08x L:0x%08x", (uint32_t)ring->base->bd_base_ptr, (uint32_t)ring->current->bd_working_ptr, (uint32_t)ring->last->bd_last_ptr);
-	//while(1) ;
-
-	// We must write CDESC before TDESC, before starting the engine.  Page 20, Xil PG021.
-
-	/*
-	d_printf(D_INFO, "Pre-Write RB=0x%08x DMASR=0x%08x DMACR=0x%08x CDESC=0x%08x TDESC=0x%08x RingBytes=%llu", \
-			periph->RegBase, \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_SR_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CR_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CDESC_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_TDESC_OFFSET), \
-			ring->total_block_size);
-	*/
-
 	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CDESC_OFFSET + reg_base, (uint32_t)ring->base->bd_base_ptr);
 
 	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CR_OFFSET + reg_base, \
 			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CR_OFFSET + reg_base) | XAXIDMA_CR_RUNSTOP_MASK);
 
 	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_TDESC_OFFSET + reg_base, (uint32_t)ring->last->bd_last_ptr);
-
-	/*
-	d_printf(D_INFO, "PostWrite RB=0x%08x DMASR=0x%08x DMACR=0x%08x CDESC=0x%08x TDESC=0x%08x", \
-			periph->RegBase, \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_SR_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CR_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CDESC_OFFSET), \
-			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_TDESC_OFFSET));
-	*/
-
-	//while(1) ;
 
 	return BD_RES_OK;
 }

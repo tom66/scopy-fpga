@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:adc_trigger:1.0
-// IP Revision: 48
+// IP Revision: 89
 
 `timescale 1ns/1ps
 
@@ -97,22 +97,46 @@ module design_1_adc_trigger_0_0 (
   dbg_ev_counter_2_4567a,
   dbg_ev_counter_1_4567b,
   dbg_ev_counter_2_4567b,
-  dbg_adc_1a_hi_0123a,
-  dbg_adc_1a_lo_0123a,
-  dbg_adc_1b_hi_0123a,
-  dbg_adc_1b_lo_0123a,
-  dbg_adc_2a_hi_0123a,
-  dbg_adc_2a_lo_0123a,
-  dbg_adc_2b_hi_0123a,
-  dbg_adc_2b_lo_0123a,
-  dbg_adc_1a_hi_4567a,
-  dbg_adc_1a_lo_4567a,
-  dbg_adc_1b_hi_4567a,
-  dbg_adc_1b_lo_4567a,
-  dbg_adc_2a_hi_4567a,
-  dbg_adc_2a_lo_4567a,
-  dbg_adc_2b_hi_4567a,
-  dbg_adc_2b_lo_4567a,
+  dbg_cmp_1a_hi_a,
+  dbg_cmp_1b_hi_a,
+  dbg_cmp_2a_hi_a,
+  dbg_cmp_2b_hi_a,
+  dbg_cmp_3a_hi_a,
+  dbg_cmp_3b_hi_a,
+  dbg_cmp_4a_hi_a,
+  dbg_cmp_4b_hi_a,
+  dbg_cmp_1a_lo_a,
+  dbg_cmp_1b_lo_a,
+  dbg_cmp_2a_lo_a,
+  dbg_cmp_2b_lo_a,
+  dbg_cmp_3a_lo_a,
+  dbg_cmp_3b_lo_a,
+  dbg_cmp_4a_lo_a,
+  dbg_cmp_4b_lo_a,
+  dbg_trig_src_1a_group_a,
+  dbg_trig_src_1b_group_a,
+  dbg_trig_src_2a_group_a,
+  dbg_trig_src_2b_group_a,
+  dbg_trig_src_3a_group_a,
+  dbg_trig_src_3b_group_a,
+  dbg_trig_src_4a_group_a,
+  dbg_trig_src_4b_group_a,
+  dbg_trig_src_1a_group_b,
+  dbg_trig_src_1b_group_b,
+  dbg_trig_src_2a_group_b,
+  dbg_trig_src_2b_group_b,
+  dbg_trig_src_3a_group_b,
+  dbg_trig_src_3b_group_b,
+  dbg_trig_src_4a_group_b,
+  dbg_trig_src_4b_group_b,
+  dbg_trig_edge_out,
+  dbg_edge_trig_logic,
+  dbg_trig_sum_word,
+  dbg_edge_trig_ch_code_valid,
+  dbg_edge_decode_rst,
+  dbg_trig_src_4a4b_dly2,
+  dbg_trig_ch_code_state,
+  dbg_resv,
   trig_out,
   trig_sub_word
 );
@@ -162,22 +186,48 @@ output wire [1 : 0] dbg_ev_counter_1_4567a;
 output wire [1 : 0] dbg_ev_counter_2_4567a;
 output wire [1 : 0] dbg_ev_counter_1_4567b;
 output wire [1 : 0] dbg_ev_counter_2_4567b;
-output wire dbg_adc_1a_hi_0123a;
-output wire dbg_adc_1a_lo_0123a;
-output wire dbg_adc_1b_hi_0123a;
-output wire dbg_adc_1b_lo_0123a;
-output wire dbg_adc_2a_hi_0123a;
-output wire dbg_adc_2a_lo_0123a;
-output wire dbg_adc_2b_hi_0123a;
-output wire dbg_adc_2b_lo_0123a;
-output wire dbg_adc_1a_hi_4567a;
-output wire dbg_adc_1a_lo_4567a;
-output wire dbg_adc_1b_hi_4567a;
-output wire dbg_adc_1b_lo_4567a;
-output wire dbg_adc_2a_hi_4567a;
-output wire dbg_adc_2a_lo_4567a;
-output wire dbg_adc_2b_hi_4567a;
-output wire dbg_adc_2b_lo_4567a;
+output wire dbg_cmp_1a_hi_a;
+output wire dbg_cmp_1b_hi_a;
+output wire dbg_cmp_2a_hi_a;
+output wire dbg_cmp_2b_hi_a;
+output wire dbg_cmp_3a_hi_a;
+output wire dbg_cmp_3b_hi_a;
+output wire dbg_cmp_4a_hi_a;
+output wire dbg_cmp_4b_hi_a;
+output wire dbg_cmp_1a_lo_a;
+output wire dbg_cmp_1b_lo_a;
+output wire dbg_cmp_2a_lo_a;
+output wire dbg_cmp_2b_lo_a;
+output wire dbg_cmp_3a_lo_a;
+output wire dbg_cmp_3b_lo_a;
+output wire dbg_cmp_4a_lo_a;
+output wire dbg_cmp_4b_lo_a;
+output wire dbg_trig_src_1a_group_a;
+output wire dbg_trig_src_1b_group_a;
+output wire dbg_trig_src_2a_group_a;
+output wire dbg_trig_src_2b_group_a;
+output wire dbg_trig_src_3a_group_a;
+output wire dbg_trig_src_3b_group_a;
+output wire dbg_trig_src_4a_group_a;
+output wire dbg_trig_src_4b_group_a;
+output wire dbg_trig_src_1a_group_b;
+output wire dbg_trig_src_1b_group_b;
+output wire dbg_trig_src_2a_group_b;
+output wire dbg_trig_src_2b_group_b;
+output wire dbg_trig_src_3a_group_b;
+output wire dbg_trig_src_3b_group_b;
+output wire dbg_trig_src_4a_group_b;
+output wire dbg_trig_src_4b_group_b;
+output wire dbg_trig_edge_out;
+output wire dbg_edge_trig_logic;
+output wire [2 : 0] dbg_trig_sum_word;
+output wire dbg_edge_trig_ch_code_valid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME dbg_edge_decode_rst, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 dbg_edge_decode_rst RST" *)
+output wire dbg_edge_decode_rst;
+output wire [1 : 0] dbg_trig_src_4a4b_dly2;
+output wire [2 : 0] dbg_trig_ch_code_state;
+output wire dbg_resv;
 output wire trig_out;
 output wire [2 : 0] trig_sub_word;
 
@@ -213,7 +263,8 @@ output wire [2 : 0] trig_sub_word;
     .TRIG_STATE_TRIGD_HOLDOFF(4),
     .TRIG_STATE_TRIGD_AUTO_INITIAL(5),
     .TRIG_STATE_TRIGD_AUTO_REPEAT(6),
-    .TRIG_STATE_TRIGD_FORCE_AUTO(7)
+    .TRIG_STATE_TRIGD_FORCE_AUTO(7),
+    .TRIG_STATE_TRIGD_HOLDOFF_ACK(5)
   ) inst (
     .adc_bus(adc_bus),
     .adc_data_clk(adc_data_clk),
@@ -258,22 +309,46 @@ output wire [2 : 0] trig_sub_word;
     .dbg_ev_counter_2_4567a(dbg_ev_counter_2_4567a),
     .dbg_ev_counter_1_4567b(dbg_ev_counter_1_4567b),
     .dbg_ev_counter_2_4567b(dbg_ev_counter_2_4567b),
-    .dbg_adc_1a_hi_0123a(dbg_adc_1a_hi_0123a),
-    .dbg_adc_1a_lo_0123a(dbg_adc_1a_lo_0123a),
-    .dbg_adc_1b_hi_0123a(dbg_adc_1b_hi_0123a),
-    .dbg_adc_1b_lo_0123a(dbg_adc_1b_lo_0123a),
-    .dbg_adc_2a_hi_0123a(dbg_adc_2a_hi_0123a),
-    .dbg_adc_2a_lo_0123a(dbg_adc_2a_lo_0123a),
-    .dbg_adc_2b_hi_0123a(dbg_adc_2b_hi_0123a),
-    .dbg_adc_2b_lo_0123a(dbg_adc_2b_lo_0123a),
-    .dbg_adc_1a_hi_4567a(dbg_adc_1a_hi_4567a),
-    .dbg_adc_1a_lo_4567a(dbg_adc_1a_lo_4567a),
-    .dbg_adc_1b_hi_4567a(dbg_adc_1b_hi_4567a),
-    .dbg_adc_1b_lo_4567a(dbg_adc_1b_lo_4567a),
-    .dbg_adc_2a_hi_4567a(dbg_adc_2a_hi_4567a),
-    .dbg_adc_2a_lo_4567a(dbg_adc_2a_lo_4567a),
-    .dbg_adc_2b_hi_4567a(dbg_adc_2b_hi_4567a),
-    .dbg_adc_2b_lo_4567a(dbg_adc_2b_lo_4567a),
+    .dbg_cmp_1a_hi_a(dbg_cmp_1a_hi_a),
+    .dbg_cmp_1b_hi_a(dbg_cmp_1b_hi_a),
+    .dbg_cmp_2a_hi_a(dbg_cmp_2a_hi_a),
+    .dbg_cmp_2b_hi_a(dbg_cmp_2b_hi_a),
+    .dbg_cmp_3a_hi_a(dbg_cmp_3a_hi_a),
+    .dbg_cmp_3b_hi_a(dbg_cmp_3b_hi_a),
+    .dbg_cmp_4a_hi_a(dbg_cmp_4a_hi_a),
+    .dbg_cmp_4b_hi_a(dbg_cmp_4b_hi_a),
+    .dbg_cmp_1a_lo_a(dbg_cmp_1a_lo_a),
+    .dbg_cmp_1b_lo_a(dbg_cmp_1b_lo_a),
+    .dbg_cmp_2a_lo_a(dbg_cmp_2a_lo_a),
+    .dbg_cmp_2b_lo_a(dbg_cmp_2b_lo_a),
+    .dbg_cmp_3a_lo_a(dbg_cmp_3a_lo_a),
+    .dbg_cmp_3b_lo_a(dbg_cmp_3b_lo_a),
+    .dbg_cmp_4a_lo_a(dbg_cmp_4a_lo_a),
+    .dbg_cmp_4b_lo_a(dbg_cmp_4b_lo_a),
+    .dbg_trig_src_1a_group_a(dbg_trig_src_1a_group_a),
+    .dbg_trig_src_1b_group_a(dbg_trig_src_1b_group_a),
+    .dbg_trig_src_2a_group_a(dbg_trig_src_2a_group_a),
+    .dbg_trig_src_2b_group_a(dbg_trig_src_2b_group_a),
+    .dbg_trig_src_3a_group_a(dbg_trig_src_3a_group_a),
+    .dbg_trig_src_3b_group_a(dbg_trig_src_3b_group_a),
+    .dbg_trig_src_4a_group_a(dbg_trig_src_4a_group_a),
+    .dbg_trig_src_4b_group_a(dbg_trig_src_4b_group_a),
+    .dbg_trig_src_1a_group_b(dbg_trig_src_1a_group_b),
+    .dbg_trig_src_1b_group_b(dbg_trig_src_1b_group_b),
+    .dbg_trig_src_2a_group_b(dbg_trig_src_2a_group_b),
+    .dbg_trig_src_2b_group_b(dbg_trig_src_2b_group_b),
+    .dbg_trig_src_3a_group_b(dbg_trig_src_3a_group_b),
+    .dbg_trig_src_3b_group_b(dbg_trig_src_3b_group_b),
+    .dbg_trig_src_4a_group_b(dbg_trig_src_4a_group_b),
+    .dbg_trig_src_4b_group_b(dbg_trig_src_4b_group_b),
+    .dbg_trig_edge_out(dbg_trig_edge_out),
+    .dbg_edge_trig_logic(dbg_edge_trig_logic),
+    .dbg_trig_sum_word(dbg_trig_sum_word),
+    .dbg_edge_trig_ch_code_valid(dbg_edge_trig_ch_code_valid),
+    .dbg_edge_decode_rst(dbg_edge_decode_rst),
+    .dbg_trig_src_4a4b_dly2(dbg_trig_src_4a4b_dly2),
+    .dbg_trig_ch_code_state(dbg_trig_ch_code_state),
+    .dbg_resv(dbg_resv),
     .trig_out(trig_out),
     .trig_sub_word(trig_sub_word)
   );
