@@ -73,6 +73,10 @@ struct dma_bd_ring_t {
 	struct dma_bd_tag_t *base;							// First tag
 	struct dma_bd_tag_t *last;							// Last tag written to
 	struct dma_bd_tag_t *current;						// Current working tag
+
+	struct dma_bd_sg_descriptor_t *bd_base;
+	struct dma_bd_sg_descriptor_t *bd_current;
+
 	struct dma_bd_stats_t stats;
 	uint32_t total_bd_count;
 	uint32_t total_block_size;
