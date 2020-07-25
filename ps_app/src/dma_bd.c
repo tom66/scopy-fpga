@@ -121,8 +121,8 @@ int dma_bd_allocate(struct dma_bd_ring_t *ring, int n_bds_req, int first)
 			return BD_RES_OK;
 		} else {
 			// Cleanup if invalid tag.  Should not happen.
-			d_printf(D_WARN, "dma_bd: cleaning invalid tag 0x%08x", next_tag);
-			dma_bd_free_from(next_tag);
+			d_printf(D_WARN, "dma_bd: invalid tag 0x%08x, ignoring", next_tag);
+			//dma_bd_free_from(next_tag);
 		}
 	}
 
@@ -442,13 +442,26 @@ void dma_bd_flush_to_ram(struct dma_bd_ring_t *ring)
  */
 int dma_bd_finalise(struct dma_bd_ring_t *ring)
 {
+	struct dma_bd_sg_descriptor_t *first_ptr = ring->base->bd_base_ptr;
+
 	ring->base->bd_base_ptr->control |= BD_SOF;
 
 	// Create a circular linked list.  The AXIDMA peripheral stops when the next
 	// pointer points to the first pointer.
 	//ring->last->bd_last_ptr->nxtdesc = 0x00000000;
-	ring->last->bd_last_ptr->nxtdesc = (uint32_t)ring->base->bd_base_ptr;
+	if(ring->last->n_bds == 0) {
+		d_printf(D_WARN, "no BDs in last ptr");
+	}
+
+	ring->last->bd_last_ptr->nxtdesc = first_ptr;
 	ring->last->bd_last_ptr->control |= BD_EOF;
+
+	d_printf(D_ERROR, "base_bd:0x%08x last_bd:0x%08x curr_bd:0x%08x   base:0x%08x last:0x%08x curr:0x%08x   RingFinalPointer:0x%08x   BDs:B %d/L %d/C %d", \
+			ring->base->bd_base_ptr, ring->last->bd_last_ptr, ring->current->bd_working_ptr,
+			ring->base, ring->last, ring->current, first_ptr, ring->base->n_bds, ring->last->n_bds, ring->current->n_bds);
+
+	//dma_bd_debug_dump(ring);
+	//while(1) ;
 }
 
 /*
@@ -527,13 +540,13 @@ void dma_bd_debug_dump(struct dma_bd_ring_t *ring)
 
 		for(i = 0; i < used; i++) {
 			desc = tag->bd_base_ptr + i;
-			memcpy(&desc_as_bytes, desc, BD_SIZE);
+			memcpy(&desc_as_bytes, desc, 32 /*BD_SIZE*/);
 
 			//desc_as_bytes = (char*)tag->bd_base_ptr;
 
 			d_printf(D_RAW, "0x%08x: ", desc);
 
-			for(b = 0; b < BD_SIZE; b++) {
+			for(b = 0; b < 32 /*BD_SIZE*/; b++) {
 				c = desc_as_bytes[b];
 
 				if(c != '\0') {
@@ -541,6 +554,8 @@ void dma_bd_debug_dump(struct dma_bd_ring_t *ring)
 				} else {
 					d_printf(D_RAW, "%02x", c);
 				}
+
+				bogo_delay(100);  // Give UART receiver time to catch up
 			}
 
 			// Start/End flags
@@ -551,6 +566,8 @@ void dma_bd_debug_dump(struct dma_bd_ring_t *ring)
 			d_printf(D_RAW, "    B:0x%08x, L:0x%08x (%8d) F:%c%c N:0x%08x S:0x%08x T:%9d %c\r\n", \
 					desc->buffer_address, desc->control & BD_SIZE_MASK, desc->control & BD_SIZE_MASK, s, e, desc->nxtdesc, desc->status, total_bytes, \
 					((desc->status & ~BD_STATUS_MASK) == (desc->control & BD_SIZE_MASK)) ? 'C' : '-');
+
+			bogo_delay(4000);  // Give UART receiver time to catch up
 		}
 
 		d_printf(D_RAW, "\r\n");

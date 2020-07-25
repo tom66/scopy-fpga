@@ -19,6 +19,9 @@
 #ifndef SRC_DMA_BD_H_
 #define SRC_DMA_BD_H_
 
+#include <stdint.h>
+#include "xaxidma.h"
+
 // All BDs are effectively 64 bytes in size and must be aligned along this boundary
 #define BD_SIZE					64
 #define BD_ALIGN				64

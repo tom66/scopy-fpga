@@ -380,7 +380,8 @@ int main(void)
 	BootModeRegister = Xil_In32(BOOT_MODE_REG);
 	BootModeRegister &= BOOT_MODES_MASK;
 
-	BootModeRegister
+	// Force SD Boot Mode
+	BootModeRegister = SD_MODE;
 
 	/*
 	 * QSPI BOOT MODE

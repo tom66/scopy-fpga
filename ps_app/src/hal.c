@@ -20,10 +20,11 @@
 
 // Local application includes
 #include "hal.h"
+#include "spi.h"
 #include "fabric_config.h"
 #include "clkwiz_interface.h"
-#include "spi.h"
 #include "dma_bd.h"
+#include "memtest.h"
 #include "version_tag.h"
 
 // Xilinx includes
@@ -220,10 +221,10 @@ void hal_init()
 	clkwiz_init(&g_hal.clkwiz_mipi, CLKWIZ_CFG_MIPI, CLKWIZ_CFG_MIPI_REFCLK);
 
 	/*
-	 * Initialise the DMA BD controller.  Must be initialised before any DMA BD operations
-	 * are performed.
+	 * Do a memory test.
 	 */
-	dma_bd_init();
+	memtest_ocm();
+	memtest_ddr();
 }
 
 /*

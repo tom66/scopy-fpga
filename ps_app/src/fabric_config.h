@@ -212,6 +212,8 @@ static inline void fabcfg_toggle(uint32_t reg, uint32_t data)
  *
  * @param	reg		Register index
  * @param	data	Data to write
+ * @param	mask	Bitmask for data
+ * @param	shift	Shift (before bitmask) for data, 0..31
  */
 static inline void fabcfg_write_masked(uint32_t reg, uint32_t data, uint32_t mask, int shift)
 {
@@ -219,6 +221,20 @@ static inline void fabcfg_write_masked(uint32_t reg, uint32_t data, uint32_t mas
 
 	_FAB_CFG_ACCESS(reg) &= ~mask;
 	_FAB_CFG_ACCESS(reg) |= (data << shift) & mask;
+}
+
+/*
+ * Read value with mask and shift in fabric.
+ *
+ * @param	reg		Register index
+ * @param	mask	Bitmask for data
+ * @param	shift	Shift (after bitmask) for data, 0..31
+ */
+static inline uint32_t fabcfg_read_masked(uint32_t reg, uint32_t mask, int shift)
+{
+	reg &= FAB_CFG_ADDR_MASK;
+
+	return (fabcfg_read(reg) >> shift) & mask;
 }
 
 

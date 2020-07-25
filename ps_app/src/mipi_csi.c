@@ -158,121 +158,6 @@ void mipi_csi_set_datatype_and_frame_wct(uint8_t data_type, uint16_t frame_wct)
 }
 
 /*
- * Create a Scatter-Gather list for a given address range, which can be passed
- * to the AXIDMA module to stream arbitrary memory data.
- *
- * Portions based on dma_ex_sg_v2_1 (Xilinx)
- *
- * @param	addr_start		Start address.  Must be 32-bit aligned.
- * @param	addr_end		End address.  Must be 32-bit aligned, and greater or equal
- */
-#if 0
-int mipi_csi_generate_sg_list_for_buffer_range(uint32_t addr_start, uint32_t addr_end, struct mipi_csi_stream_queue_item_t *q_item)
-{
-	XAxiDma_BdRing *ring;
-	XAxiDma_Bd *bd_ptr;
-	XAxiDma_Bd *cur_bd_ptr;
-	uint32_t *buff = (uint32_t*)addr_start;
-	uint32_t xfer_size = 0, pk_size = 0;
-	uint32_t bd_size;
-	int32_t size, bd_entries;
-	int i, status;
-	bool sof, eof;
-
-	d_start_timing(TMR_MIPI_SG_OVERALL);
-
-	D_ASSERT((addr_start % 32) == 0);
-	D_ASSERT((addr_end % 32) == 0);
-	D_ASSERT(addr_end >= addr_start);
-
-	size = addr_end - addr_start;
-	q_item->ring = NULL;
-	q_item->calculated_size = size;
-
-	// Reset the DMA peripheral, terminating any existing transactions
-	XAxiDma_Reset(&g_mipi_csi_state.mipi_dma);
-
-	// Force a cache flush for the specified range
-	//d_printf(D_INFO, "mipi_csi: cache flush 0x%08x size %d bytes", addr_start, addr_end - addr_start);
-	Xil_DCacheFlushRange(addr_start, addr_end - addr_start);
-
-	/*
-	 * Free the old BD list, if it's present.  Then, attempt to create a new BD list,
-	 * the size of which is equal to the number of MCSI_AXI_MAX_BD_SIZE chunks
-	 * to be transmitted.
-	 */
-	if(g_mipi_csi_state.bd_area != NULL) {
-		d_printf(D_INFO, "FreeBD=0x%08x I", g_mipi_csi_state.bd_area);
-		free(g_mipi_csi_state.bd_area);
-	}
-
-	bd_entries = (size / MCSI_AXI_MAX_BD_SIZE);
-
-	/*
-	 * Account for off-by-one error (this won't be necessary after we move away from Xil stuff
-	 * to pack the BD. [FIXME]
-	 */
-	bd_size = bd_entries * MCSI_AXI_MAX_BD_SIZE;
-	if(bd_size < size) {
-		bd_entries++;
-	}
-
-	g_mipi_csi_state.bd_area = (void *)memalign(XAXIDMA_BD_MINIMUM_ALIGNMENT, bd_entries * XAXIDMA_BD_MINIMUM_ALIGNMENT);
-
-	if(g_mipi_csi_state.bd_area == NULL) {
-		d_printf(D_ERROR, "mipi_csi: fatal error allocating memory for DMA scatter-gather list!");
-		exit(-1);
-	}
-
-	D_ASSERT(((uint32_t)g_mipi_csi_state.bd_area % XAXIDMA_BD_MINIMUM_ALIGNMENT) == 0);
-
-	/*
-	 * Attempt to set up the BDRing.  This function prints an error if things go
-	 * wrong (and returns a failure code), so we just handle this condition with an assert.
-	 */
-	D_ASSERT(mipi_csi_setup_bdring_and_bd(g_mipi_csi_state.bd_area, bd_entries, &ring, &bd_ptr) == MCSI_RET_OK);
-
-	/*
-	 * Pack the entries into the BD. Each BD length must be less than 8MB, so large
-	 * transfers are split up.
-	 */
-	cur_bd_ptr = bd_ptr;
-
-	/*
-	for(i = 0; i < bd_entries; i++) {
-		pk_size = MIN(size, MCSI_AXI_MAX_BD_SIZE);
-		sof = (i == 0);
-		eof = (i == (bd_entries - 1));
-
-		cur_bd_ptr = _mipi_csi_axidma_add_bd_block(ring, cur_bd_ptr, pk_size, (uint32_t*)buff, sof, eof);
-		buff += MCSI_AXI_MAX_BD_SIZE;
-		size -= pk_size;
-		xfer_size += pk_size;
-	}
-	*/
-
-	pk_size = addr_end - addr_start;
-	_mipi_csi_axidma_add_bd_block(ring, bd_ptr, pk_size, (uint32_t*)buff, 1, 1);
-
-	g_mipi_csi_state.transfer_size = pk_size;
-
-	// Pass the BD to hardware for transmission
-	//d_printf(D_INFO, "cur_bd=0x%08x stat=0x%08x", bd_ptr, XAxiDma_BdGetCtrl(bd_ptr));
-
-	status = XAxiDma_BdRingToHw(ring, bd_entries, bd_ptr); // This function manages cache coherency for BDs
-	if (status != XST_SUCCESS) {
-		d_printf(D_ERROR, "mipi_csi: fatal error passing BD ring to hardware: %d", status);
-		exit(-1);
-	}
-
-	d_stop_timing(TMR_MIPI_SG_OVERALL);
-
-	q_item->ring = ring;
-	return CSIRES_OK;
-}
-#endif
-
-/*
  * Create a Scatter-Gather list for a given waveform range (MCSI_WAVE_ALL
  * not supported) which can be passed to the AXIDMA module to stream
  * waveform data.
@@ -425,7 +310,7 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		dma_bd_add_zero_sg_entry(g_mipi_csi_state.bd_ring, pad, 0, NULL);
 	}
 
-	d_printf(D_INFO, "pad: %d", pad);
+	//d_printf(D_INFO, "pad: %d", pad);
 	working_ptr += total_wave_bytes + pad;
 
 	/*
@@ -470,6 +355,8 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		d_printf(D_ERROR, "mipi_csi: fatal error passing BD ring to hardware: %d", status);
 		exit(-1);
 	}
+
+	d_printf(D_INFO, "pad: %8d  calc_size: %8d", pad, q_item->calculated_size);
 
 	//d_printf(D_INFO, "mipi_csi: list sent to DMA...");
 
@@ -543,6 +430,9 @@ void mipi_csi_process_queue_item(struct mipi_csi_stream_queue_item_t *q_item)
  */
 void mipi_csi_tick()
 {
+	static int match_ctr = 0;
+	uint32_t lines, line_size, status;
+
 	switch(g_mipi_csi_state.state) {
 		case MCSI_ST_IDLE:
 			/*
@@ -608,6 +498,7 @@ void mipi_csi_tick()
 					g_mipi_csi_state.working = NULL;
 					g_mipi_csi_state.state = MCSI_ST_IDLE;
 					g_mipi_csi_state.flags &= ~MCSI_FLAG_TRANSFER_RUNNING;
+					match_ctr = 0;
 				}
 			} else {
 				/*
@@ -626,6 +517,42 @@ void mipi_csi_tick()
 						XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET), \
 						XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SGCTL_OFFSET));
 				*/
+
+				// BUGFIX:  if CDESC == TDESC, we're done...maybe?
+				if(XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET) == XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET)) {
+					if(match_ctr > 1000) {
+						d_printf(D_ERROR, "mipi_csi: stall? (%d)", match_ctr);
+
+						dma_bd_debug_dump(g_mipi_csi_state.bd_ring);
+
+						status = fabcfg_read(FAB_CFG_CSI_STATUS_A);
+						lines = fabcfg_read_masked(FAB_CFG_CSI_CTRL_B, CSI_CTRL_B_LINE_COUNT_MSK, CSI_CTRL_B_LINE_COUNT_SFT);
+						line_size = fabcfg_read_masked(FAB_CFG_CSI_CTRL_A, CSI_CTRL_A_LINE_BYTE_COUNT_MSK, CSI_CTRL_A_LINE_BYTE_COUNT_SFT);
+
+						d_printf(D_INFO, "Ndone %08x (RV:%d, RR:%d, SA:%d, mipi_state:%d, ctrl_state:%d, DMACR:%08x, DMASR:%08x, CDESC:%08x, TDESC:%08x, SGCTL:%08x), "
+										 "lines %d, line size %d", \
+								status, \
+								!!(status & CSI_STATUS_A_DBG_RV), \
+								!!(status & CSI_STATUS_A_DBG_RR), \
+								!!(status & CSI_STATUS_A_DBG_SA), \
+								(status & CSI_STATUS_A_DBG_MIPI_ST_MSK) >> CSI_STATUS_A_DBG_MIPI_ST_SFT, \
+								(status & CSI_STATUS_A_DBG_CTRL_ST_MSK) >> CSI_STATUS_A_DBG_CTRL_ST_SFT, \
+
+								XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CR_OFFSET), \
+								XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SR_OFFSET), \
+								XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_CDESC_OFFSET), \
+								XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_TDESC_OFFSET), \
+								XAxiDma_ReadReg(g_mipi_csi_state.mipi_dma.RegBase, XAXIDMA_SGCTL_OFFSET),
+								lines, line_size);
+
+						match_ctr = 0;
+					}
+					match_ctr++;
+
+					//d_printf(D_ERROR, "mipi_csi: attempt to recover from stall");
+					//mipi_csi_send_eof();
+					//mipi_csi_stop();
+				}
 			}
 			break;
 	}

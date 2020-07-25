@@ -16,6 +16,7 @@ C_SRCS += \
 ../src/fabric_config.c \
 ../src/hal.c \
 ../src/main.c \
+../src/memtest.c \
 ../src/mipi_csi.c \
 ../src/mipi_csi_hw.c \
 ../src/platform.c \
@@ -23,6 +24,7 @@ C_SRCS += \
 ../src/spi_commands.c \
 ../src/system_control.c \
 ../src/test_patterns.c \
+../src/tests.c \
 ../src/trigger.c 
 
 OBJS += \
@@ -35,6 +37,7 @@ OBJS += \
 ./src/fabric_config.o \
 ./src/hal.o \
 ./src/main.o \
+./src/memtest.o \
 ./src/mipi_csi.o \
 ./src/mipi_csi_hw.o \
 ./src/platform.o \
@@ -42,6 +45,7 @@ OBJS += \
 ./src/spi_commands.o \
 ./src/system_control.o \
 ./src/test_patterns.o \
+./src/tests.o \
 ./src/trigger.o 
 
 C_DEPS += \
@@ -54,6 +58,7 @@ C_DEPS += \
 ./src/fabric_config.d \
 ./src/hal.d \
 ./src/main.d \
+./src/memtest.d \
 ./src/mipi_csi.d \
 ./src/mipi_csi_hw.d \
 ./src/platform.d \
@@ -61,6 +66,7 @@ C_DEPS += \
 ./src/spi_commands.d \
 ./src/system_control.d \
 ./src/test_patterns.d \
+./src/tests.d \
 ./src/trigger.d 
 
 

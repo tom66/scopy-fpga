@@ -116,6 +116,12 @@
 #define REG_MASK_BIT(base, rg, msk)	(Xil_In32((base) + (rg)) & msk)
 #define REG_TEST_BIT(base, rg, msk)	(!!(REG_MASK_BIT(base, rg, msk)))
 
+#define TMR_TESTS_0					0xe0
+#define TMR_TESTS_1					0xe1
+#define TMR_TESTS_2					0xe2
+#define TMR_TESTS_3					0xe3
+#define TMR_TESTS_4					0xe4
+
 #define TMR_MIPI_PERFORMANCE		0xf0
 #define TMR_MIPI_SG_OVERALL			0xf1
 #define TMR_MIPI_SG_BDFILL			0xf2

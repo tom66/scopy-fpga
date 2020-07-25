@@ -37,7 +37,7 @@ src/main.o src/main.o: ../src/main.c ../src/hal.h ../src/platform.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xclk_wiz_hw.h \
  ../src/acquire.h ../src/fabric_config.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xparameters.h \
- ../src/acq_ctrl.h ../src/trigger.h ../src/spi.h \
+ ../src/acq_ctrl.h ../src/trigger.h ../src/tests.h ../src/spi.h \
  ../src/Collections-C/src/include/deque.h \
  ../src/Collections-C/src/include/common.h \
  C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/sw/main/standalone_domain/bspinclude/include/xspips.h \
@@ -137,6 +137,8 @@ C:/Users/Tom/Documents/Projects/Scopy_MVP_Platform/scopy-fpga/main/export/main/s
 ../src/acq_ctrl.h:
 
 ../src/trigger.h:
+
+../src/tests.h:
 
 ../src/spi.h:
 

@@ -19,6 +19,7 @@
 #include "acquire.h"
 #include "acq_ctrl.h"
 #include "trigger.h"
+#include "tests.h"
 #include "spi.h"
 #include "mipi_csi.h"
 #include "system_control.h"
@@ -30,12 +31,19 @@ int main()
 	Xil_DCacheDisable();
 
 	hal_init();
+	dma_bd_init();
 	acq_init();
 	trig_init();
 	acq_ctrl_init();
 	spi_init();
 	mipi_csi_init();
 	sysctrl_init();
+
+	test_timing_many_mallocs(64, 1800, 1);
+	test_timing_many_mallocs(64, 1800, 1);
+	test_timing_many_mallocs(64, 1800, 1);
+
+	test_timing_dma_bd(10000);
 
 #ifdef ACQ_HACKS_TEST
 	acq_hacks_init();
