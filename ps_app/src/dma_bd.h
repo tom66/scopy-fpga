@@ -22,7 +22,10 @@
 #include <stdint.h>
 #include "xaxidma.h"
 
-// All BDs are effectively 64 bytes in size and must be aligned along this boundary
+/*
+ * All BDs are effectively 64 bytes in size and must be aligned along this boundary;
+ * if the size is changed then bugs will be introduced in the pointer arithmetic.
+ */
 #define BD_SIZE					64
 #define BD_ALIGN				64
 #define BD_ALIGN_MASK			(BD_ALIGN - 1)
@@ -73,13 +76,13 @@ struct dma_bd_ring_t {
 	struct dma_bd_tag_t *base;							// First tag
 	struct dma_bd_tag_t *last;							// Last tag written to
 	struct dma_bd_tag_t *current;						// Current working tag
-
-	struct dma_bd_sg_descriptor_t *bd_base;
-	struct dma_bd_sg_descriptor_t *bd_current;
-
 	struct dma_bd_stats_t stats;
 	uint32_t total_bd_count;
 	uint32_t total_block_size;
+
+	// Computed CDESC and TDESC values.  Written by dma_bd_finalise()
+	uint32_t dma_cdesc;
+	uint32_t dma_tdesc;
 };
 
 /*

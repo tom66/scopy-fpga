@@ -126,6 +126,25 @@
 #define TMR_MIPI_SG_OVERALL			0xf1
 #define TMR_MIPI_SG_BDFILL			0xf2
 
+#define PL_LED_MODE_OFF				0x00
+#define PL_LED_MODE_ON				0x01
+#define PL_LED_MODE_TOG_CSN			0x02
+#define PL_LED_MODE_EQU_CSN			0x03
+#define PL_LED_MODE_TOG_SPICLK		0x04
+#define PL_LED_MODE_EQU_SPICLK		0x05
+#define PL_LED_MODE_TOG_DONE		0x06
+#define PL_LED_MODE_EQU_DONE		0x07
+#define PL_LED_MODE_TOG_RUN			0x08
+#define PL_LED_MODE_EQU_RUN			0x09
+#define PL_LED_MODE_TOG_TRIG		0x0a
+#define PL_LED_MODE_EQU_TRIG		0x0b
+#define PL_LED_MODE_TOG_BUSCLK		0x0c
+
+#define PL_LED_0_MASK				0x000000ff
+#define PL_LED_0_SHIFT				0
+#define PL_LED_1_MASK				0x0000ff00
+#define PL_LED_1_SHIFT				8
+
 typedef int16_t temp_t;			// Temperature represented from -273.15C to +327.68C
 typedef uint16_t mvolt_t;		// System voltages from 0.0 ~ 6.5535V
 
@@ -169,6 +188,7 @@ extern void *_STACK_SIZE;
 extern void *_HEAP_SIZE;
 
 void hal_init();
+void fabric_led_ctrl(int mode0, int mode1);
 void gpio_set_ps_irq_direction(int index, int mode);
 void gpio_write_ps_irq(int index, int state);
 int gpio_read_ps_irq(int index);

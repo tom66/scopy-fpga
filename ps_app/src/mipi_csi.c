@@ -219,6 +219,7 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	trig_buffer_size += trig_buffer_size & 7; // Ensure trigger buffer size is 64-bit aligned
 
 	g_mipi_csi_state.trig_buffer_ptr = (uint32_t*)memalign(32, trig_buffer_size);
+	memset(g_mipi_csi_state.trig_buffer_ptr, 0, trig_buffer_size);
 
 	/*
 	 * Generate and add header data.  Header is allocated in RAM; clear any prior header
@@ -261,12 +262,6 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 			break;
 		}
 
-		/*
-		if(i == 0) {
-			acq_debug_dump_wave_pointer(wave);
-		}
-		*/
-
 		// acq_dma_address_helper_debug(wave, addr_helper);
 		// d_printf(D_RAW, "%08x\r\n", wave->trigger_at);
 
@@ -300,7 +295,7 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		wave = next;
 	}
 
-	d_printf(D_INFO, "ntot=%d I=%d", n_waves, i);
+	//d_printf(D_INFO, "ntot=%d I=%d", n_waves, i);
 
 	/*
 	 * Pad the wave buffer to the required length.
@@ -341,8 +336,8 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 	 * Ensure the header is cache flushed, so that the DMA peripheral can read it correctly
 	 * Ensure the tag buffer is cache flushed.
 	 */
-	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.header, sizeof(struct mipi_csi_wave_header_t));
 	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.trig_buffer_ptr, trig_buffer_size);
+	Xil_DCacheFlushRange((INTPTR)g_mipi_csi_state.header, sizeof(struct mipi_csi_wave_header_t));
 
 	/*
 	 * Pass the BD for transmission.  This function handles caching too.  We shouldn't
@@ -356,7 +351,7 @@ int mipi_csi_generate_sg_list_for_waves(struct mipi_csi_stream_queue_item_t *q_i
 		exit(-1);
 	}
 
-	d_printf(D_INFO, "pad: %8d  calc_size: %8d", pad, q_item->calculated_size);
+	//d_printf(D_INFO, "pad: %8d  calc_size: %8d", pad, q_item->calculated_size);
 
 	//d_printf(D_INFO, "mipi_csi: list sent to DMA...");
 

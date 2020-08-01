@@ -130,7 +130,6 @@ void test_timing_dma_bd(int num_bds)
 	d_stop_timing(TMR_TESTS_1);
 	d_stop_timing(TMR_TESTS_0);
 
-
 	/*
 	 * Print out a summary of the time taken and the time per malloc/free.
 	 */

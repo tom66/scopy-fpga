@@ -207,6 +207,10 @@ void hal_init()
 	// Initialise the fabric configuration engine
 	fabcfg_init();
 
+	// Setup fabric-controlled LEDs
+	d_printf(D_INFO, "hal: setting PL LED modes");
+	fabric_led_ctrl(PL_LED_MODE_TOG_BUSCLK, PL_LED_MODE_EQU_DONE);
+
 	d_printf(D_INFO, "XUartPs: resetting RX FIFO");
 
 	// Read the UART FIFO until it reports empty, to initialise waitkey operations, etc.
@@ -225,6 +229,23 @@ void hal_init()
 	 */
 	memtest_ocm();
 	memtest_ddr();
+}
+
+/*
+ * Set fabric LED mode.  Both must be set at once because the fabric register
+ * read back is undefined.
+ */
+void fabric_led_ctrl(int mode0, int mode1)
+{
+	int reg = ((mode0 << PL_LED_0_SHIFT) & PL_LED_0_MASK) | ((mode1 << PL_LED_1_SHIFT) & PL_LED_1_MASK);
+
+	//d_printf(D_ERROR, "mode: 0x%08x,  shifted: 0x%08x,  maskshift: 0x%08x", mode, mode << shift, (mode << shift) & mask);
+	//fabcfg_write_masked(FAB_CFG_LED_CTRL, mode, mask, shift);
+
+	//reg = 0x00000c01;
+
+	fabcfg_write(FAB_CFG_LED_CTRL, reg);
+	d_printf(D_ERROR, "reg:  0x%08x", reg);
 }
 
 /*

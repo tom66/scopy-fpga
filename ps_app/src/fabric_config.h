@@ -43,6 +43,7 @@
 #define FAB_CFG_USRACCESS				0x0010
 
 #define FAB_CFG_CLOCK_CTRL				0x0030	// Not presently used, will gate clocks for power consumption
+#define FAB_CFG_LED_CTRL				0x0034
 
 #define FAB_CFG_ACQ_SIZE_A				0x0040
 #define FAB_CFG_ACQ_SIZE_B				0x0044

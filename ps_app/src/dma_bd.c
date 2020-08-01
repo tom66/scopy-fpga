@@ -118,6 +118,7 @@ int dma_bd_allocate(struct dma_bd_ring_t *ring, int n_bds_req, int first)
 			next_tag->bd_working_ptr = next_tag->bd_base_ptr;
 			next_tag->bd_last_ptr = next_tag->bd_base_ptr;
 			next_tag->n_bds_free = next_tag->n_bds;
+			//d_printf(D_INFO, "reusing tag: work 0x%08x last 0x%08x", next_tag->bd_working_ptr, next_tag->bd_last_ptr);
 			return BD_RES_OK;
 		} else {
 			// Cleanup if invalid tag.  Should not happen.
@@ -153,7 +154,7 @@ int dma_bd_allocate(struct dma_bd_ring_t *ring, int n_bds_req, int first)
 
 	tag->bd_last_ptr = 0;
 	tag->bd_working_ptr = tag->bd_base_ptr;
-	tag->bd_base_ptr->nxtdesc = tag->bd_base_ptr + 1;  // Create first nxtdesc reference  [TODO: Fix warning]
+	//tag->bd_base_ptr->nxtdesc = tag->bd_base_ptr;  // Create first nxtdesc reference  [TODO: Fix warning]
 
 	if(tag->bd_base_ptr == NULL) {
 		d_printf(D_ERROR, "dma_bd: failed to allocate BD block (%d bytes, %d BDs)", bd_size, n_bds);
@@ -166,7 +167,9 @@ int dma_bd_allocate(struct dma_bd_ring_t *ring, int n_bds_req, int first)
 	memset(tag->bd_base_ptr, 0x00, bd_size);
 
 	if(first == BD_FIRST_ENTRY) {
-		// Make this block the first, last and current entry
+		/*
+		 *  Make this block the first, last and current entry
+		 */
 		ring->base = tag;
 		ring->current = tag;
 		ring->last = tag;
@@ -329,7 +332,7 @@ int dma_bd_add_raw_sg_entry(struct dma_bd_ring_t *ring, uint32_t base_addr, int 
 	 * and set the previous descriptor (the one we just added) to point to this
 	 * new buffer.
 	 */
-	ring->current->bd_last_ptr = entry;
+	ring->current->bd_last_ptr = ring->current->bd_working_ptr;
 	ring->last = ring->current;
 
 	if(ring->current->n_bds_free == 0) {
@@ -443,25 +446,65 @@ void dma_bd_flush_to_ram(struct dma_bd_ring_t *ring)
 int dma_bd_finalise(struct dma_bd_ring_t *ring)
 {
 	struct dma_bd_sg_descriptor_t *first_ptr = ring->base->bd_base_ptr;
+	struct dma_bd_sg_descriptor_t *last_ptr;
+	struct dma_bd_tag_t *tag;
 
 	ring->base->bd_base_ptr->control |= BD_SOF;
 
-	// Create a circular linked list.  The AXIDMA peripheral stops when the next
-	// pointer points to the first pointer.
-	//ring->last->bd_last_ptr->nxtdesc = 0x00000000;
-	if(ring->last->n_bds == 0) {
-		d_printf(D_WARN, "no BDs in last ptr");
+	/*
+	 * Create a circular linked list.  The AXIDMA peripheral stops when the next
+	 * pointer points to the first pointer.
+	 *
+	 * We need to handle the edge case of the last entry being at the end of the
+	 * last used BD tag.  If that occurs, we work through the BD list and find
+	 * the last entry and use that for the circular pointer.  Otherwise, we can
+	 * get a DMA BD lockup as the last pointer is not valid (it points to the
+	 * first entry of the next unallocated tag.)
+	 *
+	 * TODO: There may be a better structure for this, or a bug in the DMA BD
+	 * allocator that necessitates this solution -- look into this.
+	 */
+	if(ring->current->n_bds_free == ring->current->n_bds) {
+		// Need to go back to prior BD.  Seek through BD list until we find it.
+		//d_printf(D_WARN, "BdMatch die here");
+		tag = ring->base;
+
+		while(tag->next_alloc != ring->current) {
+			tag = tag->next_alloc;
+			//d_printf(D_WARN, "at tag 0x%08x", tag);
+		}
+
+		last_ptr = tag->bd_base_ptr + tag->n_bds - 1;
+		last_ptr->nxtdesc = first_ptr;
+		last_ptr->nxtdesc_msb = 0;
+
+		ring->dma_cdesc = (uint32_t)first_ptr;
+		ring->dma_tdesc = (uint32_t)last_ptr;
+
+		//d_printf(D_WARN, "LastTag:0x%08x", last_ptr);
+		//dma_bd_debug_dump(ring);
+	} else {
+		// Simple and most common case:  BDs not all used up so use last pointer
+		ring->current->bd_last_ptr->nxtdesc = first_ptr;
+		ring->current->bd_last_ptr->nxtdesc_msb = 0;
+		ring->current->bd_last_ptr->control |= BD_EOF;
+
+		ring->dma_cdesc = (uint32_t)first_ptr;
+		ring->dma_tdesc = (uint32_t)ring->current->bd_last_ptr;
 	}
 
-	ring->last->bd_last_ptr->nxtdesc = first_ptr;
-	ring->last->bd_last_ptr->control |= BD_EOF;
+	/*
+	d_printf(D_ERROR, "base_bd:0x%08x C_last_bd:0x%08x curr_bd:0x%08x   base:0x%08x last:0x%08x curr:0x%08x   RingFinalPointer:0x%08x   BDs:B %d/L %d/C %d", \
+			ring->base->bd_base_ptr, ring->current->bd_last_ptr, ring->current->bd_working_ptr,
+			ring->base, ring->last, ring->current, first_ptr, ring->base->n_bds_free, ring->last->n_bds_free, ring->current->n_bds_free);
+	 */
 
-	d_printf(D_ERROR, "base_bd:0x%08x last_bd:0x%08x curr_bd:0x%08x   base:0x%08x last:0x%08x curr:0x%08x   RingFinalPointer:0x%08x   BDs:B %d/L %d/C %d", \
-			ring->base->bd_base_ptr, ring->last->bd_last_ptr, ring->current->bd_working_ptr,
-			ring->base, ring->last, ring->current, first_ptr, ring->base->n_bds, ring->last->n_bds, ring->current->n_bds);
-
-	//dma_bd_debug_dump(ring);
-	//while(1) ;
+	/*
+	if(ring->stats.num_bds_filled % 128 == 0) {
+		dma_bd_debug_dump(ring);
+		while(1) ;
+	}
+	*/
 }
 
 /*
@@ -496,12 +539,14 @@ int dma_bd_start(XAxiDma *periph, struct dma_bd_ring_t *ring, int flags)
 		dma_bd_debug_dump(ring);
 	}
 
-	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CDESC_OFFSET + reg_base, (uint32_t)ring->base->bd_base_ptr);
+	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CDESC_OFFSET + reg_base, ring->dma_cdesc);
 
 	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_CR_OFFSET + reg_base, \
 			XAxiDma_ReadReg(periph->RegBase, XAXIDMA_CR_OFFSET + reg_base) | XAXIDMA_CR_RUNSTOP_MASK);
 
-	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_TDESC_OFFSET + reg_base, (uint32_t)ring->last->bd_last_ptr);
+	XAxiDma_WriteReg(periph->RegBase, XAXIDMA_TDESC_OFFSET + reg_base, ring->dma_tdesc);
+
+	//d_printf(D_INFO, "WriteAXI: C=0x%08x T=0x%08x", ring->dma_cdesc, ring->dma_tdesc);
 
 	return BD_RES_OK;
 }
